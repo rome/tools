@@ -1253,6 +1253,9 @@ pub struct Nursery {
     #[doc = "Enforce img alt prop does not contain the word \"image\", \"picture\", or \"photo\"."]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub no_redundant_alt: Option<RuleConfiguration>,
+    #[doc = "Enforce explicit role property is not the same as implicit/default role property on an element."]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub no_redundant_roles: Option<RuleConfiguration>,
     #[doc = "This rule allows you to specify global variable names that you don’t want to use in your application."]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub no_restricted_globals: Option<RuleConfiguration>,
@@ -1351,6 +1354,7 @@ impl Nursery {
         "noPrototypeBuiltins",
         "noRedeclare",
         "noRedundantAlt",
+        "noRedundantRoles",
         "noRestrictedGlobals",
         "noSelfAssign",
         "noSelfCompare",
@@ -1376,7 +1380,7 @@ impl Nursery {
         "useValidLang",
         "useYield",
     ];
-    const RECOMMENDED_RULES: [&'static str; 38] = [
+    const RECOMMENDED_RULES: [&'static str; 39] = [
         "noAssignInExpressions",
         "noBannedTypes",
         "noClassAssign",
@@ -1396,6 +1400,7 @@ impl Nursery {
         "noParameterAssign",
         "noRedeclare",
         "noRedundantAlt",
+        "noRedundantRoles",
         "noSelfAssign",
         "noSelfCompare",
         "noSvgWithoutTitle",
@@ -1416,7 +1421,7 @@ impl Nursery {
         "useValidLang",
         "useYield",
     ];
-    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 38] = [
+    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 39] = [
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[0]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[1]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[2]),
@@ -1618,6 +1623,11 @@ impl Nursery {
             }
         }
         if let Some(rule) = self.no_redundant_alt.as_ref() {
+            if rule.is_enabled() {
+                index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[21]));
+            }
+        }
+        if let Some(rule) = self.no_redundant_roles.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[21]));
             }
@@ -1851,7 +1861,11 @@ impl Nursery {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[20]));
             }
         }
+<<<<<<< HEAD
         if let Some(rule) = self.no_redundant_alt.as_ref() {
+=======
+        if let Some(rule) = self.no_redundant_roles.as_ref() {
+>>>>>>> 6e810553af (feat(rome_js_analyze): noRedundantRoles)
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[21]));
             }
@@ -1984,7 +1998,7 @@ impl Nursery {
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
     }
-    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 38] {
+    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 39] {
         Self::RECOMMENDED_RULES_AS_FILTERS
     }
     pub(crate) fn all_rules_as_filters() -> [RuleFilter<'static>; 46] { Self::ALL_RULES_AS_FILTERS }
@@ -2031,6 +2045,7 @@ impl Nursery {
             "noPrototypeBuiltins" => self.no_prototype_builtins.as_ref(),
             "noRedeclare" => self.no_redeclare.as_ref(),
             "noRedundantAlt" => self.no_redundant_alt.as_ref(),
+            "noRedundantRoles" => self.no_redundant_roles.as_ref(),
             "noRestrictedGlobals" => self.no_restricted_globals.as_ref(),
             "noSelfAssign" => self.no_self_assign.as_ref(),
             "noSelfCompare" => self.no_self_compare.as_ref(),

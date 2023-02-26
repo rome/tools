@@ -636,6 +636,13 @@
 						{ "type": "null" }
 					]
 				},
+				"noRedundantRoles": {
+					"description": "Enforce explicit role property is not the same as implicit/default role property on an element.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"noRestrictedGlobals": {
 					"description": "This rule allows you to specify global variable names that you don’t want to use in your application.",
 					"anyOf": [

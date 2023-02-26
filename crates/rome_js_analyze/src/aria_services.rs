@@ -4,8 +4,9 @@ use rome_analyze::{
 };
 use rome_aria::iso::{countries, is_valid_country, is_valid_language, languages};
 use rome_aria::{AriaProperties, AriaRoles};
-use rome_js_syntax::{AnyJsRoot, JsLanguage, JsSyntaxNode};
+use rome_js_syntax::{AnyJsRoot, AnyJsxAttribute, JsLanguage, JsSyntaxNode, JsxAttributeList};
 use rome_rowan::AstNode;
+use std::collections::HashMap;
 use std::sync::Arc;
 
 #[derive(Debug, Clone)]
@@ -37,6 +38,33 @@ impl AriaServices {
 
     pub fn iso_language_list(&self) -> &'static [&'static str] {
         languages()
+    }
+
+    /// Extracts defined attributes as HashMap (key: attribute name, value: attribute values).
+    pub fn extract_defined_attributes(
+        &self,
+        attribute_list: &JsxAttributeList,
+    ) -> Option<HashMap<String, Vec<String>>> {
+        let mut defined_attributes: HashMap<String, Vec<String>> = HashMap::new();
+        for attribute in attribute_list {
+            if let AnyJsxAttribute::JsxAttribute(attr) = attribute {
+                let name = attr.name().ok()?.syntax().text_trimmed();
+                let name = name.to_string().to_lowercase();
+                // handle name only attribute e.g. `<img aria-hidden alt="photo" />`
+                let Some(initializer) = attr.initializer() else {
+                    defined_attributes.entry(name).or_insert(vec!["".to_string()]);
+                    continue
+                };
+                let initializer = initializer.value().ok()?;
+                let text = initializer.inner_text_value().ok()??;
+                let text = text.to_lowercase();
+                // handle multiple values e.g. `<div role="button checkbox">`
+                let values = text.split(' ');
+                let values = values.map(|s| s.to_string()).collect::<Vec<String>>();
+                defined_attributes.entry(name).or_insert(values);
+            }
+        }
+        Some(defined_attributes)
     }
 }
 

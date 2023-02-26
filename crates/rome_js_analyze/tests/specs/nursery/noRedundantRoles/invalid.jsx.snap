@@ -1,0 +1,372 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: invalid.jsx
+---
+# Input
+```js
+<>
+	<a href="#" role="link"></a>
+	<article role="article"></article>
+	<button role="button"></buttton>
+	<html role="document"></html>
+	<h1 role="heading" aria-level="1"></h1>
+	<h2 role={`heading`}></h2>
+	<form role="form"></form>
+	<input type="checkbox" role="checkbox"></input>
+	<input type="search" role="searchbox"></input>
+	<input type="search" role="combobox" list="keywords"></input>
+	<input type="email" role="textbox"></input>
+	<input type="button" role="button"></input>
+	<img role="img"></img>
+	<img alt="alt" role="img button"></img>
+	<img alt="" role="presentation"></img>
+	<section aria-labelledby="valid-id" role="region"></section>
+	<select name="name" role="combobox"></select>
+	<select name="name" multiple size="4" role="listbox"></select>
+	<datalist role="listbox"></datalist>
+	<textarea role="textbox"></textarea>
+</>;
+
+```
+
+# Diagnostics
+```
+invalid.jsx:2:19 lint/nursery/noRedundantRoles ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Using the role attribute 'link' on the 'a' element is redundant.
+  
+    1 │ <>
+  > 2 │ 	<a href="#" role="link"></a>
+      │ 	                 ^^^^^^
+    3 │ 	<article role="article"></article>
+    4 │ 	<button role="button"></buttton>
+  
+  i 
+  
+
+```
+
+```
+invalid.jsx:3:16 lint/nursery/noRedundantRoles ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Using the role attribute 'article' on the 'article' element is redundant.
+  
+    1 │ <>
+    2 │ 	<a href="#" role="link"></a>
+  > 3 │ 	<article role="article"></article>
+      │ 	              ^^^^^^^^^
+    4 │ 	<button role="button"></buttton>
+    5 │ 	<html role="document"></html>
+  
+  i 
+  
+
+```
+
+```
+invalid.jsx:4:15 lint/nursery/noRedundantRoles ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Using the role attribute 'button' on the 'button' element is redundant.
+  
+    2 │ 	<a href="#" role="link"></a>
+    3 │ 	<article role="article"></article>
+  > 4 │ 	<button role="button"></buttton>
+      │ 	             ^^^^^^^^
+    5 │ 	<html role="document"></html>
+    6 │ 	<h1 role="heading" aria-level="1"></h1>
+  
+  i 
+  
+
+```
+
+```
+invalid.jsx:5:13 lint/nursery/noRedundantRoles ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Using the role attribute 'document' on the 'html' element is redundant.
+  
+    3 │ 	<article role="article"></article>
+    4 │ 	<button role="button"></buttton>
+  > 5 │ 	<html role="document"></html>
+      │ 	           ^^^^^^^^^^
+    6 │ 	<h1 role="heading" aria-level="1"></h1>
+    7 │ 	<h2 role={`heading`}></h2>
+  
+  i 
+  
+
+```
+
+```
+invalid.jsx:6:11 lint/nursery/noRedundantRoles ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Using the role attribute 'heading' on the 'h1' element is redundant.
+  
+    4 │ 	<button role="button"></buttton>
+    5 │ 	<html role="document"></html>
+  > 6 │ 	<h1 role="heading" aria-level="1"></h1>
+      │ 	         ^^^^^^^^^
+    7 │ 	<h2 role={`heading`}></h2>
+    8 │ 	<form role="form"></form>
+  
+  i 
+  
+
+```
+
+```
+invalid.jsx:7:11 lint/nursery/noRedundantRoles ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Using the role attribute 'heading' on the 'h2' element is redundant.
+  
+    5 │ 	<html role="document"></html>
+    6 │ 	<h1 role="heading" aria-level="1"></h1>
+  > 7 │ 	<h2 role={`heading`}></h2>
+      │ 	         ^^^^^^^^^^^
+    8 │ 	<form role="form"></form>
+    9 │ 	<input type="checkbox" role="checkbox"></input>
+  
+  i 
+  
+
+```
+
+```
+invalid.jsx:8:13 lint/nursery/noRedundantRoles ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Using the role attribute 'form' on the 'form' element is redundant.
+  
+     6 │ 	<h1 role="heading" aria-level="1"></h1>
+     7 │ 	<h2 role={`heading`}></h2>
+   > 8 │ 	<form role="form"></form>
+       │ 	           ^^^^^^
+     9 │ 	<input type="checkbox" role="checkbox"></input>
+    10 │ 	<input type="search" role="searchbox"></input>
+  
+  i 
+  
+
+```
+
+```
+invalid.jsx:9:30 lint/nursery/noRedundantRoles ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Using the role attribute 'checkbox' on the 'input' element is redundant.
+  
+     7 │ 	<h2 role={`heading`}></h2>
+     8 │ 	<form role="form"></form>
+   > 9 │ 	<input type="checkbox" role="checkbox"></input>
+       │ 	                            ^^^^^^^^^^
+    10 │ 	<input type="search" role="searchbox"></input>
+    11 │ 	<input type="search" role="combobox" list="keywords"></input>
+  
+  i 
+  
+
+```
+
+```
+invalid.jsx:10:28 lint/nursery/noRedundantRoles ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Using the role attribute 'searchbox' on the 'input' element is redundant.
+  
+     8 │ 	<form role="form"></form>
+     9 │ 	<input type="checkbox" role="checkbox"></input>
+  > 10 │ 	<input type="search" role="searchbox"></input>
+       │ 	                          ^^^^^^^^^^^
+    11 │ 	<input type="search" role="combobox" list="keywords"></input>
+    12 │ 	<input type="email" role="textbox"></input>
+  
+  i 
+  
+
+```
+
+```
+invalid.jsx:11:28 lint/nursery/noRedundantRoles ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Using the role attribute 'combobox' on the 'input' element is redundant.
+  
+     9 │ 	<input type="checkbox" role="checkbox"></input>
+    10 │ 	<input type="search" role="searchbox"></input>
+  > 11 │ 	<input type="search" role="combobox" list="keywords"></input>
+       │ 	                          ^^^^^^^^^^
+    12 │ 	<input type="email" role="textbox"></input>
+    13 │ 	<input type="button" role="button"></input>
+  
+  i 
+  
+
+```
+
+```
+invalid.jsx:12:27 lint/nursery/noRedundantRoles ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Using the role attribute 'textbox' on the 'input' element is redundant.
+  
+    10 │ 	<input type="search" role="searchbox"></input>
+    11 │ 	<input type="search" role="combobox" list="keywords"></input>
+  > 12 │ 	<input type="email" role="textbox"></input>
+       │ 	                         ^^^^^^^^^
+    13 │ 	<input type="button" role="button"></input>
+    14 │ 	<img role="img"></img>
+  
+  i 
+  
+
+```
+
+```
+invalid.jsx:13:28 lint/nursery/noRedundantRoles ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Using the role attribute 'button' on the 'input' element is redundant.
+  
+    11 │ 	<input type="search" role="combobox" list="keywords"></input>
+    12 │ 	<input type="email" role="textbox"></input>
+  > 13 │ 	<input type="button" role="button"></input>
+       │ 	                          ^^^^^^^^
+    14 │ 	<img role="img"></img>
+    15 │ 	<img alt="alt" role="img button"></img>
+  
+  i 
+  
+
+```
+
+```
+invalid.jsx:14:12 lint/nursery/noRedundantRoles ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Using the role attribute 'img' on the 'img' element is redundant.
+  
+    12 │ 	<input type="email" role="textbox"></input>
+    13 │ 	<input type="button" role="button"></input>
+  > 14 │ 	<img role="img"></img>
+       │ 	          ^^^^^
+    15 │ 	<img alt="alt" role="img button"></img>
+    16 │ 	<img alt="" role="presentation"></img>
+  
+  i 
+  
+
+```
+
+```
+invalid.jsx:15:22 lint/nursery/noRedundantRoles ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Using the role attribute 'img button' on the 'img' element is redundant.
+  
+    13 │ 	<input type="button" role="button"></input>
+    14 │ 	<img role="img"></img>
+  > 15 │ 	<img alt="alt" role="img button"></img>
+       │ 	                    ^^^^^^^^^^^^
+    16 │ 	<img alt="" role="presentation"></img>
+    17 │ 	<section aria-labelledby="valid-id" role="region"></section>
+  
+  i 
+  
+
+```
+
+```
+invalid.jsx:16:19 lint/nursery/noRedundantRoles ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Using the role attribute 'presentation' on the 'img' element is redundant.
+  
+    14 │ 	<img role="img"></img>
+    15 │ 	<img alt="alt" role="img button"></img>
+  > 16 │ 	<img alt="" role="presentation"></img>
+       │ 	                 ^^^^^^^^^^^^^^
+    17 │ 	<section aria-labelledby="valid-id" role="region"></section>
+    18 │ 	<select name="name" role="combobox"></select>
+  
+  i 
+  
+
+```
+
+```
+invalid.jsx:17:43 lint/nursery/noRedundantRoles ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Using the role attribute 'region' on the 'section' element is redundant.
+  
+    15 │ 	<img alt="alt" role="img button"></img>
+    16 │ 	<img alt="" role="presentation"></img>
+  > 17 │ 	<section aria-labelledby="valid-id" role="region"></section>
+       │ 	                                         ^^^^^^^^
+    18 │ 	<select name="name" role="combobox"></select>
+    19 │ 	<select name="name" multiple size="4" role="listbox"></select>
+  
+  i 
+  
+
+```
+
+```
+invalid.jsx:18:27 lint/nursery/noRedundantRoles ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Using the role attribute 'combobox' on the 'select' element is redundant.
+  
+    16 │ 	<img alt="" role="presentation"></img>
+    17 │ 	<section aria-labelledby="valid-id" role="region"></section>
+  > 18 │ 	<select name="name" role="combobox"></select>
+       │ 	                         ^^^^^^^^^^
+    19 │ 	<select name="name" multiple size="4" role="listbox"></select>
+    20 │ 	<datalist role="listbox"></datalist>
+  
+  i 
+  
+
+```
+
+```
+invalid.jsx:19:45 lint/nursery/noRedundantRoles ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Using the role attribute 'listbox' on the 'select' element is redundant.
+  
+    17 │ 	<section aria-labelledby="valid-id" role="region"></section>
+    18 │ 	<select name="name" role="combobox"></select>
+  > 19 │ 	<select name="name" multiple size="4" role="listbox"></select>
+       │ 	                                           ^^^^^^^^^
+    20 │ 	<datalist role="listbox"></datalist>
+    21 │ 	<textarea role="textbox"></textarea>
+  
+  i 
+  
+
+```
+
+```
+invalid.jsx:20:17 lint/nursery/noRedundantRoles ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Using the role attribute 'listbox' on the 'datalist' element is redundant.
+  
+    18 │ 	<select name="name" role="combobox"></select>
+    19 │ 	<select name="name" multiple size="4" role="listbox"></select>
+  > 20 │ 	<datalist role="listbox"></datalist>
+       │ 	               ^^^^^^^^^
+    21 │ 	<textarea role="textbox"></textarea>
+    22 │ </>;
+  
+  i 
+  
+
+```
+
+```
+invalid.jsx:21:17 lint/nursery/noRedundantRoles ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Using the role attribute 'textbox' on the 'textarea' element is redundant.
+  
+    19 │ 	<select name="name" multiple size="4" role="listbox"></select>
+    20 │ 	<datalist role="listbox"></datalist>
+  > 21 │ 	<textarea role="textbox"></textarea>
+       │ 	               ^^^^^^^^^
+    22 │ </>;
+    23 │ 
+  
+  i 
+  
+
+```
+
+

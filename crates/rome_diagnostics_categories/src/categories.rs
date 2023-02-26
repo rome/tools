@@ -103,6 +103,7 @@ define_categories! {
     // Insert new nursery rule here
     "lint/nursery/noRedeclare": "https://docs.rome.tools/lint/rules/noRedeclare",
     "lint/nursery/useNamespaceKeyword": "https://docs.rome.tools/lint/rules/useNamespaceKeyword",
+    "lint/nursery/noRedundantRoles": "https://docs.rome.tools/lint/rules/noRedundantRoles",
 
     // performance
     "lint/performance/noDelete": "https://docs.rome.tools/lint/rules/noDelete",

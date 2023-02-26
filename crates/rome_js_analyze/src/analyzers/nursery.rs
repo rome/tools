@@ -19,6 +19,7 @@ mod no_namespace;
 mod no_parameter_properties;
 mod no_prototype_builtins;
 mod no_redundant_alt;
+mod no_redundant_roles;
 mod no_self_assign;
 mod no_self_compare;
 mod no_svg_without_title;
