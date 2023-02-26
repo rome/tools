@@ -457,6 +457,10 @@ export interface Nursery {
 	 */
 	noUnusedLabels?: RuleConfiguration;
 	/**
+	 * Disallow unnecessary catch clauses.
+	 */
+	noUselessCatch?: RuleConfiguration;
+	/**
 	 * Disallow renaming import, export, and destructured assignments to the same name.
 	 */
 	noUselessRename?: RuleConfiguration;
@@ -881,6 +885,7 @@ export type Category =
 	| "lint/nursery/noGlobalObjectCalls"
 	| "lint/nursery/noPrototypeBuiltins"
 	| "lint/nursery/noSvgWithoutTitle"
+	| "lint/nursery/noUselessCatch"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"

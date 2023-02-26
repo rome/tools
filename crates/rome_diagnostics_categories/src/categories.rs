@@ -106,6 +106,7 @@ define_dategories! {
     "lint/nursery/noGlobalObjectCalls": "https://docs.rome.tools/lint/rules/noGlobalObjectCalls",
     "lint/nursery/noPrototypeBuiltins": "https://docs.rome.tools/lint/rules/noPrototypeBuiltins",
     "lint/nursery/noSvgWithoutTitle": "https://docs.rome.tools/lint/rules/noSvgWithoutTitle",
+    "lint/nursery/noUselessCatch": "https://docs.rome.tools/lint/rules/noUselessCatch",
     // Insert new nursery rule here
 
     // performance
