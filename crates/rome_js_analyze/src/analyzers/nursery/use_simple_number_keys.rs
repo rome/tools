@@ -3,7 +3,9 @@ use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Ast, Rule
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_syntax::{JsLiteralMemberName, JsSyntaxKind, JsSyntaxToken};
+use rome_js_syntax::{
+    AnyJsObjectMember, JsLiteralMemberName, JsObjectExpression, JsSyntaxKind, TextRange,
+};
 use rome_rowan::{AstNode, BatchMutationExt};
 use std::str::FromStr;
 
@@ -49,23 +51,28 @@ declare_rule! {
 #[derive(Clone)]
 pub enum NumberLiteral {
     Binary {
+        node: JsLiteralMemberName,
         value: String,
         big_int: bool,
     },
     Decimal {
+        node: JsLiteralMemberName,
         value: String,
         big_int: bool,
         underscore: bool,
     },
     Octal {
+        node: JsLiteralMemberName,
         value: String,
         big_int: bool,
     },
     Hexadecimal {
+        node: JsLiteralMemberName,
         value: String,
         big_int: bool,
     },
     FloatingPoint {
+        node: JsLiteralMemberName,
         value: String,
         exponent: bool,
         underscore: bool,
@@ -74,10 +81,18 @@ pub enum NumberLiteral {
 
 pub struct NumberLiteralError;
 
-impl TryFrom<JsSyntaxToken> for NumberLiteral {
+impl TryFrom<AnyJsObjectMember> for NumberLiteral {
     type Error = NumberLiteralError;
 
-    fn try_from(token: JsSyntaxToken) -> Result<Self, Self::Error> {
+    fn try_from(any_member: AnyJsObjectMember) -> Result<Self, Self::Error> {
+        let literal_member_name_syntax = any_member
+            .syntax()
+            .children()
+            .find(|x| JsLiteralMemberName::can_cast(x.kind()))
+            .unwrap();
+        let literal_member_name = JsLiteralMemberName::cast(literal_member_name_syntax).unwrap();
+
+        let token = literal_member_name.value().unwrap();
         match token.kind() {
             JsSyntaxKind::JS_NUMBER_LITERAL | JsSyntaxKind::JS_BIG_INT_LITERAL => {
                 let chars: Vec<char> = token.to_string().chars().collect();
@@ -129,6 +144,7 @@ impl TryFrom<JsSyntaxToken> for NumberLiteral {
 
                 if contains_dot {
                     return Ok(Self::FloatingPoint {
+                        node: literal_member_name,
                         value,
                         exponent,
                         underscore,
@@ -136,6 +152,7 @@ impl TryFrom<JsSyntaxToken> for NumberLiteral {
                 };
                 if !is_first_char_zero {
                     return Ok(Self::Decimal {
+                        node: literal_member_name,
                         value,
                         big_int,
                         underscore,
@@ -143,17 +160,40 @@ impl TryFrom<JsSyntaxToken> for NumberLiteral {
                 };
 
                 match is_second_char_a_letter {
-                    Some('b' | 'B') => return Ok(Self::Binary { value, big_int }),
-                    Some('o' | 'O') => return Ok(Self::Octal { value, big_int }),
-                    Some('x' | 'X') => return Ok(Self::Hexadecimal { value, big_int }),
+                    Some('b' | 'B') => {
+                        return Ok(Self::Binary {
+                            node: literal_member_name,
+                            value,
+                            big_int,
+                        })
+                    }
+                    Some('o' | 'O') => {
+                        return Ok(Self::Octal {
+                            node: literal_member_name,
+                            value,
+                            big_int,
+                        })
+                    }
+                    Some('x' | 'X') => {
+                        return Ok(Self::Hexadecimal {
+                            node: literal_member_name,
+                            value,
+                            big_int,
+                        })
+                    }
                     _ => (),
                 }
 
                 if largest_digit < '8' {
-                    return Ok(Self::Octal { value, big_int });
+                    return Ok(Self::Octal {
+                        node: literal_member_name,
+                        value,
+                        big_int,
+                    });
                 }
 
                 Ok(Self::Decimal {
+                    node: literal_member_name,
                     value,
                     big_int,
                     underscore,
@@ -165,6 +205,26 @@ impl TryFrom<JsSyntaxToken> for NumberLiteral {
 }
 
 impl NumberLiteral {
+    fn node(&self) -> JsLiteralMemberName {
+        match self {
+            Self::Decimal { node, .. } => node.clone(),
+            Self::Binary { node, .. } => node.clone(),
+            Self::FloatingPoint { node, .. } => node.clone(),
+            Self::Octal { node, .. } => node.clone(),
+            Self::Hexadecimal { node, .. } => node.clone(),
+        }
+    }
+
+    fn range(&self) -> TextRange {
+        match self {
+            Self::Decimal { node, .. } => node.range(),
+            Self::Binary { node, .. } => node.range(),
+            Self::FloatingPoint { node, .. } => node.range(),
+            Self::Octal { node, .. } => node.range(),
+            Self::Hexadecimal { node, .. } => node.range(),
+        }
+    }
+
     fn value(&self) -> &String {
         match self {
             Self::Decimal { value, .. } => value,
@@ -192,7 +252,7 @@ impl NumberLiteral {
 }
 
 impl Rule for UseSimpleNumberKeys {
-    type Query = Ast<JsLiteralMemberName>;
+    type Query = Ast<JsObjectExpression>;
     type State = NumberLiteral;
     type Signals = Vec<Self::State>;
     type Options = ();
@@ -201,23 +261,24 @@ impl Rule for UseSimpleNumberKeys {
         let mut signals: Self::Signals = Vec::new();
         let node = ctx.query();
 
-        if let Ok(token) = node.value() {
-            let number_literal = NumberLiteral::try_from(token).ok();
-
-            if let Some(number_literal) = number_literal {
-                match number_literal {
-                    NumberLiteral::Decimal { big_int: true, .. }
-                    | NumberLiteral::Decimal {
-                        underscore: true, ..
-                    } => signals.push(number_literal),
-                    NumberLiteral::FloatingPoint {
-                        underscore: true, ..
-                    } => signals.push(number_literal),
-                    NumberLiteral::Binary { .. } => signals.push(number_literal),
-                    NumberLiteral::Hexadecimal { .. } => signals.push(number_literal),
-                    NumberLiteral::Octal { .. } => signals.push(number_literal),
-                    _ => (),
-                }
+        for number_literal in node
+            .members()
+            .into_iter()
+            .flatten()
+            .filter_map(|member| NumberLiteral::try_from(member).ok())
+        {
+            match number_literal {
+                NumberLiteral::Decimal { big_int: true, .. }
+                | NumberLiteral::Decimal {
+                    underscore: true, ..
+                } => signals.push(number_literal),
+                NumberLiteral::FloatingPoint {
+                    underscore: true, ..
+                } => signals.push(number_literal),
+                NumberLiteral::Binary { .. } => signals.push(number_literal),
+                NumberLiteral::Hexadecimal { .. } => signals.push(number_literal),
+                NumberLiteral::Octal { .. } => signals.push(number_literal),
+                _ => (),
             }
         }
 
@@ -243,41 +304,36 @@ impl Rule for UseSimpleNumberKeys {
         };
 
         let diagnostic =
-            RuleDiagnostic::new(rule_category!(), _ctx.query().range(), title.to_string());
+            RuleDiagnostic::new(rule_category!(), number_literal.range(), title.to_string());
 
         Some(diagnostic)
     }
 
     fn action(ctx: &RuleContext<Self>, number_literal: &Self::State) -> Option<JsRuleAction> {
         let mut mutation = ctx.root().begin();
-        let node = ctx.query();
-        let message;
+        let node = number_literal.node();
+        let token = node.value().ok()?;
 
-        if let Ok(token) = node.value() {
-            match number_literal {
-                NumberLiteral::Binary { .. }
-                | NumberLiteral::Octal { .. }
-                | NumberLiteral::Hexadecimal { .. } => {
-                    let text = number_literal.to_base_ten()?;
-                    message = markup! ("Replace "{ node.to_string() } " with "{text.to_string()})
-                        .to_owned();
-                    mutation.replace_token(token, make::js_number_literal(text));
-                }
-                NumberLiteral::FloatingPoint { .. } | NumberLiteral::Decimal { .. } => {
-                    let text = number_literal.value();
-                    message = markup! ("Replace "{ node.to_string() } " with "{text}).to_owned();
-                    mutation.replace_token(token, make::js_number_literal(text));
-                }
-            };
+        let message = match number_literal {
+            NumberLiteral::Binary { .. }
+            | NumberLiteral::Octal { .. }
+            | NumberLiteral::Hexadecimal { .. } => {
+                let text = number_literal.to_base_ten()?;
+                mutation.replace_token(token, make::js_number_literal(text));
+                markup! ("Replace "{ node.to_string() } " with "{text.to_string()}).to_owned()
+            }
+            NumberLiteral::FloatingPoint { .. } | NumberLiteral::Decimal { .. } => {
+                let text = number_literal.value();
+                mutation.replace_token(token, make::js_number_literal(text));
+                markup! ("Replace "{ node.to_string() } " with "{text}).to_owned()
+            }
+        };
 
-            return Some(JsRuleAction {
-                category: ActionCategory::QuickFix,
-                applicability: Applicability::Always,
-                message,
-                mutation,
-            });
-        }
-
-        None
+        Some(JsRuleAction {
+            category: ActionCategory::QuickFix,
+            applicability: Applicability::Always,
+            message,
+            mutation,
+        })
     }
 }
