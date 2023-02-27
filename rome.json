@@ -1,4 +1,5 @@
 {
+	"$schema": "./npm/rome/configuration_schema.json",
 	"files": {
 		"ignore": [
 			"website/build",
@@ -10,5 +11,14 @@
 		"ignore": [
 			"configuration-schema.json"
 		]
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"suspicious": {
+				"noNonNullAssertion": "off"
+			}
+		}
 	}
 }

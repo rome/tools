@@ -173,12 +173,17 @@ pub fn load_config(
     base_path: ConfigurationBasePath,
 ) -> LoadConfig {
     let config_name = file_system.config_name();
-    let mut configuration_path = match base_path {
+    let working_directory = file_system.working_directory();
+    let mut configuration_directory = match base_path {
         ConfigurationBasePath::Lsp(ref path) | ConfigurationBasePath::FromUser(ref path) => {
-            path.join(config_name)
+            path.clone()
         }
-        _ => PathBuf::from(config_name),
+        _ => match working_directory {
+            Some(wd) => wd,
+            None => PathBuf::new(),
+        },
     };
+    let mut configuration_path = configuration_directory.join(config_name);
     let should_error = base_path.is_from_user();
     info!(
         "Attempting to read the configuration file from {}",
@@ -210,12 +215,20 @@ pub fn load_config(
             Err(err) => {
                 // base paths from users are not eligible for auto discovery
                 if !base_path.is_from_user() {
-                    if let Some(path) = configuration_path.parent() {
+                    let parent_path = if let Some(path) = configuration_directory.parent() {
                         if path.is_dir() {
-                            configuration_path = path.join(config_name);
-                            from_parent = true;
-                            continue;
+                            Some(PathBuf::from(path))
+                        } else {
+                            None
                         }
+                    } else {
+                        None
+                    };
+                    if let Some(new_path) = parent_path {
+                        configuration_directory = new_path;
+                        configuration_path = configuration_directory.join(config_name);
+                        from_parent = true;
+                        continue;
                     }
                 }
                 // We skip the error when the configuration file is not found.

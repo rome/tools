@@ -9,6 +9,7 @@ use rayon::{scope, Scope};
 use rome_diagnostics::{adapters::IoError, DiagnosticExt, Error};
 use std::fs::DirEntry;
 use std::{
+    env,
     ffi::OsStr,
     fs,
     io::{self, ErrorKind as IoErrorKind, Read, Seek, Write},
@@ -34,6 +35,10 @@ impl FileSystem for OsFileSystem {
         OsTraversalScope::with(move |scope| {
             func(scope);
         })
+    }
+
+    fn working_directory(&self) -> Option<PathBuf> {
+        env::current_dir().ok()
     }
 }
 

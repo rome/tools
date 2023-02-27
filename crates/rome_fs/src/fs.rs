@@ -28,6 +28,9 @@ pub trait FileSystem: Send + Sync + RefUnwindSafe {
     fn config_name(&self) -> &str {
         CONFIG_NAME
     }
+
+    /// Return the path to the working directory
+    fn working_directory(&self) -> Option<PathBuf>;
 }
 
 pub trait File {
@@ -164,6 +167,10 @@ where
 
     fn traversal<'scope>(&'scope self, func: BoxedTraversal<'_, 'scope>) {
         T::traversal(self, func)
+    }
+
+    fn working_directory(&self) -> Option<PathBuf> {
+        T::working_directory(self)
     }
 }
 
