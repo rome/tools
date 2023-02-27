@@ -215,7 +215,7 @@ pub fn load_config(
             Err(err) => {
                 // base paths from users are not eligible for auto discovery
                 if !base_path.is_from_user() {
-                    let parent_path = if let Some(path) = configuration_directory.parent() {
+                    let parent_directory = if let Some(path) = configuration_directory.parent() {
                         if path.is_dir() {
                             Some(PathBuf::from(path))
                         } else {
@@ -224,8 +224,8 @@ pub fn load_config(
                     } else {
                         None
                     };
-                    if let Some(new_path) = parent_path {
-                        configuration_directory = new_path;
+                    if let Some(parent_directory) = parent_directory {
+                        configuration_directory = parent_directory;
                         configuration_path = configuration_directory.join(config_name);
                         from_parent = true;
                         continue;
