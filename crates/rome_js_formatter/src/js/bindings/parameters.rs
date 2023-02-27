@@ -212,7 +212,7 @@ pub(crate) fn should_hug_function_parameters(
                                     matches!(type_annotation.ty(), Ok(AnyTsType::TsObjectType(_)))
                                 }),
                             AnyJsBinding(JsBogusBinding(_)) => {
-                                return Err(FormatError::SyntaxError)
+                                return Err(FormatError::SyntaxError);
                             }
                         }
                     }

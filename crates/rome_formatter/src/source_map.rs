@@ -52,7 +52,7 @@ use std::iter::FusedIterator;
 /// This is why the source map also tracks the mapped trimmed ranges for every node.
 #[derive(Debug, Clone)]
 pub struct TransformSourceMap {
-    source_text: String,
+    source_text: SourceText,
 
     /// The mappings stored in increasing order
     deleted_ranges: Vec<DeletedRange>,
@@ -64,7 +64,7 @@ pub struct TransformSourceMap {
 
 impl TransformSourceMap {
     /// Returns the text of the source document as it was before the transformation.
-    pub fn text(&self) -> &str {
+    pub fn source(&self) -> &SourceText {
         &self.source_text
     }
 
@@ -77,7 +77,7 @@ impl TransformSourceMap {
             self.source_offset(transformed_range.end(), RangePosition::End),
         );
 
-        debug_assert!(range.end() <= self.source_text.text_len(), "Mapped range {:?} exceeds the length of the source document {:?}. Please check if the passed `transformed_range` is a range of the transformed tree and not of the source tree, and that it belongs to the tree for which the source map was created for.", range, self.source_text.len());
+        debug_assert!(range.end() <= self.source_text.text.text_len() - self.source_text.offset, "Mapped range {:?} exceeds the length of the source document {:?}. Please check if the passed `transformed_range` is a range of the transformed tree and not of the source tree, and that it belongs to the tree for which the source map was created for.", range, self.source_text.text.text_len() - self.source_text.offset);
         range
     }
 
@@ -130,13 +130,13 @@ impl TransformSourceMap {
     /// Returns the source text of the trimmed range of `node`.
     pub fn trimmed_source_text<L: Language>(&self, node: &SyntaxNode<L>) -> &str {
         let range = self.trimmed_source_range(node);
-        &self.source_text[range]
+        self.source().text_slice(range)
     }
 
     /// Returns an iterator over all deleted ranges in increasing order by their start position.
     pub fn deleted_ranges(&self) -> DeletedRanges {
         DeletedRanges {
-            source_text: &self.source_text,
+            source_text: self.source(),
             deleted_ranges: self.deleted_ranges.iter(),
         }
     }
@@ -144,7 +144,7 @@ impl TransformSourceMap {
     #[cfg(test)]
     fn trimmed_source_text_from_transformed_range(&self, range: TextRange) -> &str {
         let range = self.trimmed_source_range_from_transformed_range(range);
-        &self.source_text[range]
+        self.source().text_slice(range)
     }
 
     fn source_offset(&self, transformed_offset: TextSize, position: RangePosition) -> TextSize {
@@ -276,6 +276,46 @@ impl TransformSourceMap {
     }
 }
 
+/// The transform function builds the source map by iterating over all tokens and pushing source text in the builder.
+/// This correctly builds up the source text for the sub-tree, but the offsets are incorrect if the root isn't at the start of the document.
+/// The struct wraps a String and the offset in the document of the formatting node to get correct text slice.
+#[derive(Debug, Default, Clone)]
+pub struct SourceText {
+    text: String,
+    offset: TextSize,
+}
+
+impl SourceText {
+    pub fn with_source(text: String) -> Self {
+        Self {
+            text,
+            ..Default::default()
+        }
+    }
+
+    pub fn with_offset(offset: TextSize) -> Self {
+        Self {
+            offset,
+            ..Default::default()
+        }
+    }
+
+    pub fn text_slice(&self, range: TextRange) -> &str {
+        debug_assert!(
+            range.start() >= self.offset,
+            "Range {:?} should be bigger than offset {:?}.",
+            range,
+            self.offset
+        );
+
+        &self.text[range - self.offset]
+    }
+
+    pub fn push_str(&mut self, string: &str) {
+        self.text.push_str(string)
+    }
+}
+
 #[derive(Debug, Copy, Clone)]
 struct TrimmedNodeRangeMapping {
     /// The original trimmed range of the node.
@@ -372,7 +412,7 @@ impl DeletedRange {
 #[derive(Debug, Default)]
 pub struct TransformSourceMapBuilder {
     /// The original source text of the tree before it was transformed.
-    source_text: String,
+    source_text: SourceText,
 
     /// The mappings in increasing order by transformed offset.
     deleted_ranges: Vec<TextRange>,
@@ -390,10 +430,17 @@ impl TransformSourceMapBuilder {
         }
     }
 
+    pub fn with_offset(offset: TextSize) -> Self {
+        Self {
+            source_text: SourceText::with_offset(offset),
+            ..Default::default()
+        }
+    }
+
     /// Creates a new builder for a document with the given source.
     pub fn with_source(source: String) -> Self {
         Self {
-            source_text: source,
+            source_text: SourceText::with_source(source),
             ..Default::default()
         }
     }
@@ -491,7 +538,7 @@ pub struct DeletedRangeEntry<'a> {
 ///
 /// Returns the ranges in increased order by their start position.
 pub struct DeletedRanges<'a> {
-    source_text: &'a str,
+    source_text: &'a SourceText,
 
     /// The mappings stored in increasing order
     deleted_ranges: std::slice::Iter<'a, DeletedRange>,
@@ -506,7 +553,7 @@ impl<'a> Iterator for DeletedRanges<'a> {
         Some(DeletedRangeEntry {
             source: next.source_range.start(),
             transformed: next.transformed_start(),
-            text: &self.source_text[next.source_range],
+            text: self.source_text.text_slice(next.source_range),
         })
     }
 
@@ -523,7 +570,7 @@ impl<'a> Iterator for DeletedRanges<'a> {
         Some(DeletedRangeEntry {
             source: last.source_range.start(),
             transformed: last.transformed_start(),
-            text: &self.source_text[last.source_range],
+            text: self.source_text.text_slice(last.source_range),
         })
     }
 }
@@ -535,7 +582,7 @@ impl DoubleEndedIterator for DeletedRanges<'_> {
         Some(DeletedRangeEntry {
             source: back.source_range.start(),
             transformed: back.transformed_start(),
-            text: &self.source_text[back.source_range],
+            text: self.source_text.text_slice(back.source_range),
         })
     }
 }
