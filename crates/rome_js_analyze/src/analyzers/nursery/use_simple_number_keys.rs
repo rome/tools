@@ -251,9 +251,18 @@ impl NumberLiteral {
     }
 }
 
+enum WrongNumberLiteralName {
+    Binary,
+    Hexadecimal,
+    Octal,
+    BigInt,
+    WithUnderscore,
+}
+pub struct RuleState(WrongNumberLiteralName, NumberLiteral);
+
 impl Rule for UseSimpleNumberKeys {
     type Query = Ast<JsObjectExpression>;
-    type State = NumberLiteral;
+    type State = RuleState;
     type Signals = Vec<Self::State>;
     type Options = ();
 
@@ -268,16 +277,28 @@ impl Rule for UseSimpleNumberKeys {
             .filter_map(|member| NumberLiteral::try_from(member).ok())
         {
             match number_literal {
-                NumberLiteral::Decimal { big_int: true, .. }
-                | NumberLiteral::Decimal {
-                    underscore: true, ..
-                } => signals.push(number_literal),
+                NumberLiteral::Decimal { big_int: true, .. } => {
+                    signals.push(RuleState(WrongNumberLiteralName::BigInt, number_literal))
+                }
                 NumberLiteral::FloatingPoint {
                     underscore: true, ..
-                } => signals.push(number_literal),
-                NumberLiteral::Binary { .. } => signals.push(number_literal),
-                NumberLiteral::Hexadecimal { .. } => signals.push(number_literal),
-                NumberLiteral::Octal { .. } => signals.push(number_literal),
+                }
+                | NumberLiteral::Decimal {
+                    underscore: true, ..
+                } => signals.push(RuleState(
+                    WrongNumberLiteralName::WithUnderscore,
+                    number_literal,
+                )),
+                NumberLiteral::Binary { .. } => {
+                    signals.push(RuleState(WrongNumberLiteralName::Binary, number_literal))
+                }
+                NumberLiteral::Hexadecimal { .. } => signals.push(RuleState(
+                    WrongNumberLiteralName::Hexadecimal,
+                    number_literal,
+                )),
+                NumberLiteral::Octal { .. } => {
+                    signals.push(RuleState(WrongNumberLiteralName::Octal, number_literal))
+                }
                 _ => (),
             }
         }
@@ -287,43 +308,43 @@ impl Rule for UseSimpleNumberKeys {
 
     fn diagnostic(
         _ctx: &RuleContext<Self>,
-        number_literal: &Self::State,
+        RuleState(reason, literal): &Self::State,
     ) -> Option<RuleDiagnostic> {
-        let title = match number_literal {
-            NumberLiteral::Decimal { big_int: true, .. } => "Bigint is not allowed here.",
-            NumberLiteral::Decimal {
-                underscore: true, ..
-            } => "Number literal with underscore is not allowed here.",
-            NumberLiteral::FloatingPoint {
-                underscore: true, ..
-            } => "Number literal with underscore is not allowed.",
-            NumberLiteral::Binary { .. } => "Binary number literal in is not allowed here.",
-            NumberLiteral::Hexadecimal { .. } => "Hexadecimal number literal is not allowed here.",
-            NumberLiteral::Octal { .. } => "Octal number literal is not allowed here.",
-            _ => "",
+        let title = match reason {
+            WrongNumberLiteralName::BigInt => "Bigint is not allowed here.",
+            WrongNumberLiteralName::WithUnderscore => {
+                "Number literal with underscore is not allowed here."
+            }
+            WrongNumberLiteralName::Binary => "Binary number literal in is not allowed here.",
+            WrongNumberLiteralName::Hexadecimal => {
+                "Hexadecimal number literal is not allowed here."
+            }
+            WrongNumberLiteralName::Octal => "Octal number literal is not allowed here.",
         };
 
-        let diagnostic =
-            RuleDiagnostic::new(rule_category!(), number_literal.range(), title.to_string());
+        let diagnostic = RuleDiagnostic::new(rule_category!(), literal.range(), title.to_string());
 
         Some(diagnostic)
     }
 
-    fn action(ctx: &RuleContext<Self>, number_literal: &Self::State) -> Option<JsRuleAction> {
+    fn action(
+        ctx: &RuleContext<Self>,
+        RuleState(reason, literal): &Self::State,
+    ) -> Option<JsRuleAction> {
         let mut mutation = ctx.root().begin();
-        let node = number_literal.node();
+        let node = literal.node();
         let token = node.value().ok()?;
 
-        let message = match number_literal {
-            NumberLiteral::Binary { .. }
-            | NumberLiteral::Octal { .. }
-            | NumberLiteral::Hexadecimal { .. } => {
-                let text = number_literal.to_base_ten()?;
+        let message = match reason {
+            WrongNumberLiteralName::Binary
+            | WrongNumberLiteralName::Octal
+            | WrongNumberLiteralName::Hexadecimal => {
+                let text = literal.to_base_ten()?;
                 mutation.replace_token(token, make::js_number_literal(text));
                 markup! ("Replace "{ node.to_string() } " with "{text.to_string()}).to_owned()
             }
-            NumberLiteral::FloatingPoint { .. } | NumberLiteral::Decimal { .. } => {
-                let text = number_literal.value();
+            WrongNumberLiteralName::WithUnderscore | WrongNumberLiteralName::BigInt => {
+                let text = literal.value();
                 mutation.replace_token(token, make::js_number_literal(text));
                 markup! ("Replace "{ node.to_string() } " with "{text}).to_owned()
             }

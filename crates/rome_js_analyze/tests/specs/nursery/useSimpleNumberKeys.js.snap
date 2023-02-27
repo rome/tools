@@ -170,7 +170,7 @@ useSimpleNumberKeys.js:14:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━
 ```
 useSimpleNumberKeys.js:15:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Number literal with underscore is not allowed.
+  ! Number literal with underscore is not allowed here.
   
     13 │ ({ 0o1: 1 });
     14 │ ({ 1_0: 1 });
@@ -194,7 +194,7 @@ useSimpleNumberKeys.js:15:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━
 ```
 useSimpleNumberKeys.js:16:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Number literal with underscore is not allowed.
+  ! Number literal with underscore is not allowed here.
   
     14 │ ({ 1_0: 1 });
     15 │ ({ 0.1e1_2: "ed" });
