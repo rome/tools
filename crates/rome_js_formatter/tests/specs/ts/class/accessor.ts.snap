@@ -1,0 +1,37 @@
+---
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+assertion_line: 212
+info: ts/class/accessor.ts
+---
+
+# Input
+
+```ts
+export abstract class C {
+    protected abstract accessor prop: number
+}
+```
+
+
+=============================
+
+# Outputs
+
+## Output 1
+
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+Quote properties: As needed
+Trailing comma: All
+Semicolons: Always
+-----
+
+```ts
+export abstract class C {
+	protected abstract accessor prop: number;
+}
+```
+
+

@@ -10,10 +10,10 @@ pub enum Modifiers {
     Accessibility,
     Declare,
     Static,
-    Accessor,
     Abstract,
     Override,
     Readonly,
+    Accessor,
 }
 
 impl From<&AnyTsIndexSignatureModifier> for Modifiers {
