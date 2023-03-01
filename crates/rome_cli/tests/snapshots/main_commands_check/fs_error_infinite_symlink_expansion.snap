@@ -16,6 +16,51 @@ internalError/io ━━━━━━━━━━━━━━━━━━━━━
 # Emitted Messages
 
 ```block
+Found errors in the configuration file, Rome will use its defaults for the sections that are incorrect.
+```
+
+```block
+/Users/ema/www/tools/rome.json:20:5 configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Found an unknown key `noNonNullAssertion`
+  
+    18 │ 			"recommended": true,
+    19 │ 			"suspicious": {
+  > 20 │ 				"noNonNullAssertion": "off"
+       │ 				^^^^^^^^^^^^^^^^^^^^
+    21 │ 			}
+    22 │ 		}
+  
+  i Accepted keys
+  
+  - recommended
+  - noArrayIndexKey
+  - noAsyncPromiseExecutor
+  - noCatchAssign
+  - noCommentText
+  - noCompareNegZero
+  - noConstEnum
+  - noDebugger
+  - noDoubleEquals
+  - noDuplicateObjectKeys
+  - noDuplicateParameters
+  - noEmptyInterface
+  - noExplicitAny
+  - noExtraNonNullAssertion
+  - noFunctionAssign
+  - noImportAssign
+  - noLabelVar
+  - noRedundantUseStrict
+  - noShadowRestrictedNames
+  - noSparseArray
+  - noUnsafeNegation
+  - useDefaultSwitchClauseLast
+  - useValidTypeof
+  
+
+```
+
+```block
 <TEMP_DIR>/rome_test_infinite_symlink_exapansion/prefix internalError/fs ━━━━━━━━━━━━━━━━━━━━
 
   ! Infinite symlink expansion

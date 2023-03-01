@@ -25,7 +25,7 @@ enum Version {
 }
 ```
 
-<pre class="language-text"><code class="language-text">correctness/useEnumInitializers.js:2:5 <a href="https://docs.rome.tools/lint/rules/useEnumInitializers">lint/correctness/useEnumInitializers</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">style/useEnumInitializers.js:2:5 <a href="https://docs.rome.tools/lint/rules/useEnumInitializers">lint/style/useEnumInitializers</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The </span><span style="color: Tomato;"><strong>enum member</strong></span><span style="color: Tomato;"> should be initialized.</span>
   
@@ -50,7 +50,7 @@ enum Status {
 }
 ```
 
-<pre class="language-text"><code class="language-text">correctness/useEnumInitializers.js:3:5 <a href="https://docs.rome.tools/lint/rules/useEnumInitializers">lint/correctness/useEnumInitializers</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">style/useEnumInitializers.js:3:5 <a href="https://docs.rome.tools/lint/rules/useEnumInitializers">lint/style/useEnumInitializers</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The </span><span style="color: Tomato;"><strong>enum member</strong></span><span style="color: Tomato;"> should be initialized.</span>
   
@@ -77,7 +77,7 @@ enum Color {
 }
 ```
 
-<pre class="language-text"><code class="language-text">correctness/useEnumInitializers.js:4:5 <a href="https://docs.rome.tools/lint/rules/useEnumInitializers">lint/correctness/useEnumInitializers</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">style/useEnumInitializers.js:4:5 <a href="https://docs.rome.tools/lint/rules/useEnumInitializers">lint/style/useEnumInitializers</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The </span><span style="color: Tomato;"><strong>enum member</strong></span><span style="color: Tomato;"> should be initialized.</span>
   

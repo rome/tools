@@ -45,12 +45,11 @@ define_categories! {
     "lint/correctness/noVoidElementsWithChildren": "https://docs.rome.tools/lint/rules/noVoidElementsWithChildren",
     "lint/correctness/useValidForDirection": "https://docs.rome.tools/lint/rules/useValidForDirection",
     "lint/correctness/noUnsafeFinally": "https://docs.rome.tools/lint/rules/noUnsafeFinally",
-    "lint/correctness/noDuplicateObjectKeys":"https://docs.rome.tools/lint/rules/noDuplicateObjectKeys",
     "lint/correctness/noConstructorReturn": "https://docs.rome.tools/lint/rules/noConstructorReturn",
-    "lint/correctness/useEnumInitializers":"https://docs.rome.tools/lint/rules/useEnumInitializers",
     "lint/correctness/noPrecisionLoss": "https://docs.rome.tools/lint/rules/noPrecisionLoss",
     "lint/correctness/noVoidTypeReturn": "https://docs.rome.tools/lint/rules/noVoidTypeReturn",
     "lint/correctness/noStringCaseMismatch": "https://docs.rome.tools/lint/rules/noStringCaseMismatch",
+    "lint/correctness/noSetterReturn": "https://docs.rome.tools/lint/rules/noSetterReturn",
 
 
     // nursery
@@ -127,6 +126,9 @@ define_categories! {
     "lint/style/useDefaultParameterLast":"https://docs.rome.tools/lint/rules/useDefaultParameterLast",
     "lint/style/useConst":"https://docs.rome.tools/lint/rules/useConst",
     "lint/style/noVar": "https://docs.rome.tools/lint/rules/noVar",
+    "lint/style/noNonNullAssertion": "https://docs.rome.tools/lint/rules/noNonNullAssertion",
+    "lint/style/useEnumInitializers":"https://docs.rome.tools/lint/rules/useEnumInitializers",
+
 
     // suspicious
     "lint/suspicious/noArrayIndexKey": "https://docs.rome.tools/lint/rules/noArrayIndexKey",
@@ -148,10 +150,10 @@ define_categories! {
     "lint/suspicious/noEmptyInterface": "https://docs.rome.tools/lint/rules/noEmptyInterface",
     "lint/suspicious/noExtraNonNullAssertion":"https://docs.rome.tools/lint/rules/noExtraNonNullAssertion",
     "lint/suspicious/noRedundantUseStrict": "https://docs.rome.tools/lint/rules/noRedundantUseStrict",
-    "lint/suspicious/noNonNullAssertion": "https://docs.rome.tools/lint/rules/noNonNullAssertion",
     "lint/suspicious/noConstEnum": "https://docs.rome.tools/lint/rules/noConstEnum",
-    "lint/suspicious/noSetterReturn": "https://docs.rome.tools/lint/rules/noSetterReturn",
     "lint/suspicious/useDefaultSwitchClauseLast":"https://docs.rome.tools/lint/rules/useDefaultSwitchClauseLast",
+    "lint/suspicious/noDuplicateObjectKeys":"https://docs.rome.tools/lint/rules/noDuplicateObjectKeys",
+
 
 
     ;

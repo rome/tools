@@ -221,13 +221,6 @@
 						{ "type": "null" }
 					]
 				},
-				"noDuplicateObjectKeys": {
-					"description": "Prevents object literals having more than one property declaration for the same name. If an object property with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored, which is likely a mistake.",
-					"anyOf": [
-						{ "$ref": "#/definitions/RuleConfiguration" },
-						{ "type": "null" }
-					]
-				},
 				"noEmptyPattern": {
 					"description": "Disallows empty destructuring patterns.",
 					"anyOf": [
@@ -251,6 +244,13 @@
 				},
 				"noRenderReturnValue": {
 					"description": "Prevent the usage of the return value of React.render.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
+				"noSetterReturn": {
+					"description": "Disallow returning a value from a setter",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }
@@ -315,13 +315,6 @@
 				"recommended": {
 					"description": "It enables the recommended rules for this group",
 					"type": ["boolean", "null"]
-				},
-				"useEnumInitializers": {
-					"description": "Require that each enum member value be explicitly initialized.",
-					"anyOf": [
-						{ "$ref": "#/definitions/RuleConfiguration" },
-						{ "type": "null" }
-					]
 				},
 				"useValidForDirection": {
 					"description": "Enforce \"for\" loop update clause moving the counter in the right direction.",
@@ -907,6 +900,13 @@
 						{ "type": "null" }
 					]
 				},
+				"noNonNullAssertion": {
+					"description": "Disallow non-null assertions using the ! postfix operator.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"noShoutyConstants": {
 					"description": "Disallow the use of constants which its value is the upper-case version of its name.",
 					"anyOf": [
@@ -948,6 +948,13 @@
 				},
 				"useDefaultParameterLast": {
 					"description": "Enforce default function parameters and optional parameters to be last.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
+				"useEnumInitializers": {
+					"description": "Require that each enum member value be explicitly initialized.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }
@@ -1078,6 +1085,13 @@
 						{ "type": "null" }
 					]
 				},
+				"noDuplicateObjectKeys": {
+					"description": "Prevents object literals having more than one property declaration for the same name. If an object property with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored, which is likely a mistake.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"noDuplicateParameters": {
 					"description": "Disallow duplicate function arguments name.",
 					"anyOf": [
@@ -1127,22 +1141,8 @@
 						{ "type": "null" }
 					]
 				},
-				"noNonNullAssertion": {
-					"description": "Disallow non-null assertions using the ! postfix operator.",
-					"anyOf": [
-						{ "$ref": "#/definitions/RuleConfiguration" },
-						{ "type": "null" }
-					]
-				},
 				"noRedundantUseStrict": {
 					"description": "Prevents from having redundant \"use strict\".",
-					"anyOf": [
-						{ "$ref": "#/definitions/RuleConfiguration" },
-						{ "type": "null" }
-					]
-				},
-				"noSetterReturn": {
-					"description": "Disallow returning a value from a setter",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }

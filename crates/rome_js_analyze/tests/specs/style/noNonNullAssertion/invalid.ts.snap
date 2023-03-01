@@ -29,7 +29,7 @@ x.y.z!!!?.();
 
 # Diagnostics
 ```
-invalid.ts:1:1 lint/suspicious/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:1:1 lint/style/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Forbidden non-null assertion.
   
@@ -42,7 +42,7 @@ invalid.ts:1:1 lint/suspicious/noNonNullAssertion ━━━━━━━━━━
 ```
 
 ```
-invalid.ts:2:1 lint/suspicious/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:2:1 lint/style/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Forbidden non-null assertion.
   
@@ -64,7 +64,7 @@ invalid.ts:2:1 lint/suspicious/noNonNullAssertion  FIXABLE  ━━━━━━�
 ```
 
 ```
-invalid.ts:3:1 lint/suspicious/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:3:1 lint/style/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Forbidden non-null assertion.
   
@@ -79,7 +79,7 @@ invalid.ts:3:1 lint/suspicious/noNonNullAssertion ━━━━━━━━━━
 ```
 
 ```
-invalid.ts:4:2 lint/suspicious/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:4:2 lint/style/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Forbidden non-null assertion.
   
@@ -103,7 +103,7 @@ invalid.ts:4:2 lint/suspicious/noNonNullAssertion  FIXABLE  ━━━━━━�
 ```
 
 ```
-invalid.ts:5:1 lint/suspicious/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:5:1 lint/style/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Forbidden non-null assertion.
   
@@ -127,7 +127,7 @@ invalid.ts:5:1 lint/suspicious/noNonNullAssertion  FIXABLE  ━━━━━━�
 ```
 
 ```
-invalid.ts:6:1 lint/suspicious/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:6:1 lint/style/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Forbidden non-null assertion.
   
@@ -151,7 +151,7 @@ invalid.ts:6:1 lint/suspicious/noNonNullAssertion  FIXABLE  ━━━━━━�
 ```
 
 ```
-invalid.ts:7:1 lint/suspicious/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:7:1 lint/style/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Forbidden non-null assertion.
   
@@ -175,7 +175,7 @@ invalid.ts:7:1 lint/suspicious/noNonNullAssertion  FIXABLE  ━━━━━━�
 ```
 
 ```
-invalid.ts:8:1 lint/suspicious/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:8:1 lint/style/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Forbidden non-null assertion.
   
@@ -199,7 +199,7 @@ invalid.ts:8:1 lint/suspicious/noNonNullAssertion  FIXABLE  ━━━━━━�
 ```
 
 ```
-invalid.ts:9:1 lint/suspicious/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:9:1 lint/style/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Forbidden non-null assertion.
   
@@ -223,7 +223,7 @@ invalid.ts:9:1 lint/suspicious/noNonNullAssertion  FIXABLE  ━━━━━━�
 ```
 
 ```
-invalid.ts:10:1 lint/suspicious/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:10:1 lint/style/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Forbidden non-null assertion.
   
@@ -238,7 +238,7 @@ invalid.ts:10:1 lint/suspicious/noNonNullAssertion ━━━━━━━━━�
 ```
 
 ```
-invalid.ts:11:1 lint/suspicious/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:11:1 lint/style/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Forbidden non-null assertion.
   
@@ -262,7 +262,7 @@ invalid.ts:11:1 lint/suspicious/noNonNullAssertion  FIXABLE  ━━━━━━�
 ```
 
 ```
-invalid.ts:12:1 lint/suspicious/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:12:1 lint/style/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Forbidden non-null assertion.
   
@@ -277,7 +277,7 @@ invalid.ts:12:1 lint/suspicious/noNonNullAssertion ━━━━━━━━━�
 ```
 
 ```
-invalid.ts:13:1 lint/suspicious/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:13:1 lint/style/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Forbidden non-null assertion.
   
@@ -301,7 +301,7 @@ invalid.ts:13:1 lint/suspicious/noNonNullAssertion  FIXABLE  ━━━━━━�
 ```
 
 ```
-invalid.ts:14:1 lint/suspicious/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:14:1 lint/style/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Forbidden non-null assertion.
   
@@ -320,7 +320,7 @@ invalid.ts:14:1 lint/suspicious/noNonNullAssertion  FIXABLE  ━━━━━━�
 ```
 
 ```
-invalid.ts:15:1 lint/suspicious/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:15:1 lint/style/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Forbidden non-null assertion.
   
@@ -339,7 +339,7 @@ invalid.ts:15:1 lint/suspicious/noNonNullAssertion  FIXABLE  ━━━━━━�
 ```
 
 ```
-invalid.ts:16:1 lint/suspicious/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:16:1 lint/style/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Forbidden non-null assertion.
   
@@ -358,7 +358,7 @@ invalid.ts:16:1 lint/suspicious/noNonNullAssertion  FIXABLE  ━━━━━━�
 ```
 
 ```
-invalid.ts:17:1 lint/suspicious/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:17:1 lint/style/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Forbidden non-null assertion.
   
@@ -377,7 +377,7 @@ invalid.ts:17:1 lint/suspicious/noNonNullAssertion  FIXABLE  ━━━━━━�
 ```
 
 ```
-invalid.ts:18:1 lint/suspicious/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:18:1 lint/style/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Forbidden non-null assertion.
   
@@ -396,7 +396,7 @@ invalid.ts:18:1 lint/suspicious/noNonNullAssertion  FIXABLE  ━━━━━━�
 ```
 
 ```
-invalid.ts:19:2 lint/suspicious/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:19:2 lint/style/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Forbidden non-null assertion.
   
@@ -411,7 +411,7 @@ invalid.ts:19:2 lint/suspicious/noNonNullAssertion ━━━━━━━━━�
 ```
 
 ```
-invalid.ts:20:2 lint/suspicious/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:20:2 lint/style/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Forbidden non-null assertion.
   

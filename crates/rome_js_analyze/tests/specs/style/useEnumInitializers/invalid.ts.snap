@@ -39,7 +39,7 @@ export enum IndexedColor {
 
 # Diagnostics
 ```
-invalid.ts:2:2 lint/correctness/useEnumInitializers  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:2:2 lint/style/useEnumInitializers  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The enum member should be initialized.
   
@@ -59,7 +59,7 @@ invalid.ts:2:2 lint/correctness/useEnumInitializers  FIXABLE  ━━━━━━
 ```
 
 ```
-invalid.ts:5:17 lint/correctness/useEnumInitializers  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:5:17 lint/style/useEnumInitializers  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The enum member should be initialized.
   
@@ -80,7 +80,7 @@ invalid.ts:5:17 lint/correctness/useEnumInitializers  FIXABLE  ━━━━━�
 ```
 
 ```
-invalid.ts:11:2 lint/correctness/useEnumInitializers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:11:2 lint/style/useEnumInitializers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The enum member should be initialized.
   
@@ -97,7 +97,7 @@ invalid.ts:11:2 lint/correctness/useEnumInitializers ━━━━━━━━━
 ```
 
 ```
-invalid.ts:15:2 lint/correctness/useEnumInitializers  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:15:2 lint/style/useEnumInitializers  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The enum member should be initialized.
   
@@ -117,7 +117,7 @@ invalid.ts:15:2 lint/correctness/useEnumInitializers  FIXABLE  ━━━━━�
 ```
 
 ```
-invalid.ts:16:2 lint/correctness/useEnumInitializers  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:16:2 lint/style/useEnumInitializers  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The enum member should be initialized.
   
@@ -138,7 +138,7 @@ invalid.ts:16:2 lint/correctness/useEnumInitializers  FIXABLE  ━━━━━�
 ```
 
 ```
-invalid.ts:17:2 lint/correctness/useEnumInitializers  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:17:2 lint/style/useEnumInitializers  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The enum member should be initialized.
   
@@ -159,7 +159,7 @@ invalid.ts:17:2 lint/correctness/useEnumInitializers  FIXABLE  ━━━━━�
 ```
 
 ```
-invalid.ts:18:2 lint/correctness/useEnumInitializers  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:18:2 lint/style/useEnumInitializers  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The enum member should be initialized.
   
@@ -180,7 +180,7 @@ invalid.ts:18:2 lint/correctness/useEnumInitializers  FIXABLE  ━━━━━�
 ```
 
 ```
-invalid.ts:24:2 lint/correctness/useEnumInitializers  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:24:2 lint/style/useEnumInitializers  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The enum member should be initialized.
   
@@ -201,7 +201,7 @@ invalid.ts:24:2 lint/correctness/useEnumInitializers  FIXABLE  ━━━━━�
 ```
 
 ```
-invalid.ts:30:2 lint/correctness/useEnumInitializers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:30:2 lint/style/useEnumInitializers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The enum member should be initialized.
   

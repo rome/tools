@@ -55,11 +55,11 @@ rome.json:6:13 configuration ━━━━━━━━━━━━━━━━━
   - noChildrenProp
   - noConstAssign
   - noConstructorReturn
-  - noDuplicateObjectKeys
   - noEmptyPattern
   - noNewSymbol
   - noPrecisionLoss
   - noRenderReturnValue
+  - noSetterReturn
   - noStringCaseMismatch
   - noUndeclaredVariables
   - noUnnecessaryContinue
@@ -68,7 +68,6 @@ rome.json:6:13 configuration ━━━━━━━━━━━━━━━━━
   - noUnusedVariables
   - noVoidElementsWithChildren
   - noVoidTypeReturn
-  - useEnumInitializers
   - useValidForDirection
   
 

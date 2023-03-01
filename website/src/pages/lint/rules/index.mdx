@@ -151,7 +151,6 @@ Enforce using concise optional chain instead of chained logical expressions.
 <section class="rule">
 <h3 data-toc-exclude id="useSimplifiedLogicExpression">
 	<a href="/lint/rules/useSimplifiedLogicExpression">useSimplifiedLogicExpression</a>
-	<span class="recommended">recommended</span>
 </h3>
 Discard redundant terms from logical expressions.
 </section>
@@ -184,14 +183,6 @@ Prevents from having <code>const</code> variables being re-assigned.
 Disallow returning a value from a <code>constructor</code>.
 </section>
 <section class="rule">
-<h3 data-toc-exclude id="noDuplicateObjectKeys">
-	<a href="/lint/rules/noDuplicateObjectKeys">noDuplicateObjectKeys</a>
-	<span class="recommended">recommended</span>
-</h3>
-Prevents object literals having more than one property declaration for the same name.
-If an object property with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored, which is likely a mistake.
-</section>
-<section class="rule">
 <h3 data-toc-exclude id="noEmptyPattern">
 	<a href="/lint/rules/noEmptyPattern">noEmptyPattern</a>
 	<span class="recommended">recommended</span>
@@ -218,6 +209,13 @@ Disallow literal numbers that lose precision
 	<span class="recommended">recommended</span>
 </h3>
 Prevent the usage of the return value of <code>React.render</code>.
+</section>
+<section class="rule">
+<h3 data-toc-exclude id="noSetterReturn">
+	<a href="/lint/rules/noSetterReturn">noSetterReturn</a>
+	<span class="recommended">recommended</span>
+</h3>
+Disallow returning a value from a setter
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="noStringCaseMismatch">
@@ -272,13 +270,6 @@ This rules prevents void elements (AKA self-closing elements) from having childr
 	<span class="recommended">recommended</span>
 </h3>
 Disallow returning a value from a function with the return type 'void'
-</section>
-<section class="rule">
-<h3 data-toc-exclude id="useEnumInitializers">
-	<a href="/lint/rules/useEnumInitializers">useEnumInitializers</a>
-	<span class="recommended">recommended</span>
-</h3>
-Require that each enum member value be explicitly initialized.
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="useValidForDirection">
@@ -349,6 +340,13 @@ Disallow implicit <code>true</code> values on JSX boolean attributes
 Disallow negation in the condition of an <code>if</code> statement if it has an <code>else</code> clause
 </section>
 <section class="rule">
+<h3 data-toc-exclude id="noNonNullAssertion">
+	<a href="/lint/rules/noNonNullAssertion">noNonNullAssertion</a>
+	<span class="recommended">recommended</span>
+</h3>
+Disallow non-null assertions using the <code>!</code> postfix operator.
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="noShoutyConstants">
 	<a href="/lint/rules/noShoutyConstants">noShoutyConstants</a>
 </h3>
@@ -388,6 +386,13 @@ Require <code>const</code> declarations for variables that are never reassigned 
 	<span class="recommended">recommended</span>
 </h3>
 Enforce default function parameters and optional parameters to be last.
+</section>
+<section class="rule">
+<h3 data-toc-exclude id="useEnumInitializers">
+	<a href="/lint/rules/useEnumInitializers">useEnumInitializers</a>
+	<span class="recommended">recommended</span>
+</h3>
+Require that each enum member value be explicitly initialized.
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="useExponentiationOperator">
@@ -514,6 +519,14 @@ Disallow the use of <code>debugger</code>
 Require the use of <code>===</code> and <code>!==</code>
 </section>
 <section class="rule">
+<h3 data-toc-exclude id="noDuplicateObjectKeys">
+	<a href="/lint/rules/noDuplicateObjectKeys">noDuplicateObjectKeys</a>
+	<span class="recommended">recommended</span>
+</h3>
+Prevents object literals having more than one property declaration for the same name.
+If an object property with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored, which is likely a mistake.
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="noDuplicateParameters">
 	<a href="/lint/rules/noDuplicateParameters">noDuplicateParameters</a>
 	<span class="recommended">recommended</span>
@@ -563,24 +576,10 @@ Disallow assigning to imported bindings
 Disallow labels that share a name with a variable
 </section>
 <section class="rule">
-<h3 data-toc-exclude id="noNonNullAssertion">
-	<a href="/lint/rules/noNonNullAssertion">noNonNullAssertion</a>
-	<span class="recommended">recommended</span>
-</h3>
-Disallow non-null assertions using the <code>!</code> postfix operator.
-</section>
-<section class="rule">
 <h3 data-toc-exclude id="noRedundantUseStrict">
 	<a href="/lint/rules/noRedundantUseStrict">noRedundantUseStrict</a>
 </h3>
 Prevents from having redundant <code>&quot;use strict&quot;</code>.
-</section>
-<section class="rule">
-<h3 data-toc-exclude id="noSetterReturn">
-	<a href="/lint/rules/noSetterReturn">noSetterReturn</a>
-	<span class="recommended">recommended</span>
-</h3>
-Disallow returning a value from a setter
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="noShadowRestrictedNames">

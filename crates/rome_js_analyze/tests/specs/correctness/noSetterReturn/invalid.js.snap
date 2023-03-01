@@ -193,7 +193,7 @@ class WhileSingleStatement {
 
 # Diagnostics
 ```
-invalid.js:3:3 lint/suspicious/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:3:3 lint/correctness/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The setter should not return a value.
   
@@ -221,7 +221,7 @@ invalid.js:3:3 lint/suspicious/noSetterReturn ━━━━━━━━━━━�
 ```
 
 ```
-invalid.js:9:3 lint/suspicious/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:9:3 lint/correctness/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The setter should not return a value.
   
@@ -249,7 +249,7 @@ invalid.js:9:3 lint/suspicious/noSetterReturn ━━━━━━━━━━━�
 ```
 
 ```
-invalid.js:16:4 lint/suspicious/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:16:4 lint/correctness/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The setter should not return a value.
   
@@ -279,7 +279,7 @@ invalid.js:16:4 lint/suspicious/noSetterReturn ━━━━━━━━━━━
 ```
 
 ```
-invalid.js:24:4 lint/suspicious/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:24:4 lint/correctness/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The setter should not return a value.
   
@@ -309,7 +309,7 @@ invalid.js:24:4 lint/suspicious/noSetterReturn ━━━━━━━━━━━
 ```
 
 ```
-invalid.js:33:4 lint/suspicious/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:33:4 lint/correctness/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The setter should not return a value.
   
@@ -340,7 +340,7 @@ invalid.js:33:4 lint/suspicious/noSetterReturn ━━━━━━━━━━━
 ```
 
 ```
-invalid.js:42:4 lint/suspicious/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:42:4 lint/correctness/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The setter should not return a value.
   
@@ -371,7 +371,7 @@ invalid.js:42:4 lint/suspicious/noSetterReturn ━━━━━━━━━━━
 ```
 
 ```
-invalid.js:50:4 lint/suspicious/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:50:4 lint/correctness/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The setter should not return a value.
   
@@ -401,7 +401,7 @@ invalid.js:50:4 lint/suspicious/noSetterReturn ━━━━━━━━━━━
 ```
 
 ```
-invalid.js:57:10 lint/suspicious/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:57:10 lint/correctness/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The setter should not return a value.
   
@@ -429,7 +429,7 @@ invalid.js:57:10 lint/suspicious/noSetterReturn ━━━━━━━━━━�
 ```
 
 ```
-invalid.js:64:4 lint/suspicious/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:64:4 lint/correctness/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The setter should not return a value.
   
@@ -459,7 +459,7 @@ invalid.js:64:4 lint/suspicious/noSetterReturn ━━━━━━━━━━━
 ```
 
 ```
-invalid.js:71:17 lint/suspicious/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:71:17 lint/correctness/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The setter should not return a value.
   
@@ -487,7 +487,7 @@ invalid.js:71:17 lint/suspicious/noSetterReturn ━━━━━━━━━━�
 ```
 
 ```
-invalid.js:78:4 lint/suspicious/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:78:4 lint/correctness/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The setter should not return a value.
   
@@ -517,7 +517,7 @@ invalid.js:78:4 lint/suspicious/noSetterReturn ━━━━━━━━━━━
 ```
 
 ```
-invalid.js:85:17 lint/suspicious/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:85:17 lint/correctness/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The setter should not return a value.
   
@@ -545,7 +545,7 @@ invalid.js:85:17 lint/suspicious/noSetterReturn ━━━━━━━━━━�
 ```
 
 ```
-invalid.js:92:4 lint/suspicious/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:92:4 lint/correctness/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The setter should not return a value.
   
@@ -575,7 +575,7 @@ invalid.js:92:4 lint/suspicious/noSetterReturn ━━━━━━━━━━━
 ```
 
 ```
-invalid.js:99:12 lint/suspicious/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:99:12 lint/correctness/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The setter should not return a value.
   
@@ -603,7 +603,7 @@ invalid.js:99:12 lint/suspicious/noSetterReturn ━━━━━━━━━━�
 ```
 
 ```
-invalid.js:107:5 lint/suspicious/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:107:5 lint/correctness/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The setter should not return a value.
   
@@ -633,7 +633,7 @@ invalid.js:107:5 lint/suspicious/noSetterReturn ━━━━━━━━━━�
 ```
 
 ```
-invalid.js:120:5 lint/suspicious/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:120:5 lint/correctness/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The setter should not return a value.
   
@@ -663,7 +663,7 @@ invalid.js:120:5 lint/suspicious/noSetterReturn ━━━━━━━━━━�
 ```
 
 ```
-invalid.js:128:4 lint/suspicious/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:128:4 lint/correctness/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The setter should not return a value.
   
@@ -693,7 +693,7 @@ invalid.js:128:4 lint/suspicious/noSetterReturn ━━━━━━━━━━�
 ```
 
 ```
-invalid.js:137:4 lint/suspicious/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:137:4 lint/correctness/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The setter should not return a value.
   
@@ -724,7 +724,7 @@ invalid.js:137:4 lint/suspicious/noSetterReturn ━━━━━━━━━━�
 ```
 
 ```
-invalid.js:145:4 lint/suspicious/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:145:4 lint/correctness/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The setter should not return a value.
   
@@ -754,7 +754,7 @@ invalid.js:145:4 lint/suspicious/noSetterReturn ━━━━━━━━━━�
 ```
 
 ```
-invalid.js:156:4 lint/suspicious/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:156:4 lint/correctness/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The setter should not return a value.
   
@@ -784,7 +784,7 @@ invalid.js:156:4 lint/suspicious/noSetterReturn ━━━━━━━━━━�
 ```
 
 ```
-invalid.js:167:4 lint/suspicious/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:167:4 lint/correctness/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The setter should not return a value.
   
@@ -814,7 +814,7 @@ invalid.js:167:4 lint/suspicious/noSetterReturn ━━━━━━━━━━�
 ```
 
 ```
-invalid.js:175:4 lint/suspicious/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:175:4 lint/correctness/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The setter should not return a value.
   
@@ -844,7 +844,7 @@ invalid.js:175:4 lint/suspicious/noSetterReturn ━━━━━━━━━━�
 ```
 
 ```
-invalid.js:182:16 lint/suspicious/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:182:16 lint/correctness/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The setter should not return a value.
   
