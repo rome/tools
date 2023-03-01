@@ -236,14 +236,14 @@ impl ParseSeparatedList for TsTypeParameterList {
 // 	let x: { y<in T, out T>(): any };
 
 // test_err ts type_parameter_modifier
-// type Foo<i\\u006E T> = T
-// type Foo<ou\\u0074 T> = T
-// type Foo<in in> = T
-// type Foo<out in> = T
-// type Foo<out in T> = T
-// type Foo<public T> = T
-// type Foo<in out in T> = T
-// type Foo<in out out T> = T
+// type Foo<i\\u006E T> = {}
+// type Foo<ou\\u0074 T> = {}
+// type Foo<in in> = {}
+// type Foo<out in> = {}
+// type Foo<out in T> = {}
+// type Foo<public T> = {}
+// type Foo<in out in T> = {}
+// type Foo<in out out T> = {}
 // function foo<in T>() {}
 // function foo<out T>() {}
 
@@ -257,15 +257,15 @@ impl ParseSeparatedList for TsTypeParameterList {
 // <in out T extends={true}></in>;
 
 // test ts type_parameter_modifier
-// type Foo<in T> = T
-// type Foo<out> = out
-// type Foo<out T> = T
-// type Foo<in out> = T
-// type Foo<out out> = T
-// type Foo<in out out> = T
-// type Foo<in X, out Y> = [X, Y]
-// type Foo<out X, in Y> = [X, Y]
-// type Foo<out X, out Y extends keyof X> = [X, Y]
+// type Foo<in T> = {}
+// type Foo<out> = {}
+// type Foo<out T> = {}
+// type Foo<in out> = {}
+// type Foo<out out> = {}
+// type Foo<in out out> = {}
+// type Foo<in X, out Y> = {}
+// type Foo<out X, in Y> = {}
+// type Foo<out X, out Y extends keyof X> = {}
 // class Foo<in T> {}
 // class Foo<out T> {}
 // export default class Foo<in T> {}
@@ -283,39 +283,30 @@ fn parse_ts_type_parameter(
     could_use_parameter_modifier: bool,
 ) -> ParsedSyntax {
     let m = p.start();
-    // parse_ts_type_parameter_modifier(p, could_use_parameter_modifier).ok();
-    // try to eat `in` modifier
+    if could_use_parameter_modifier {
+        parse_ts_type_parameter_modifiers(p);
+    }
+
+    let name = parse_ts_type_parameter_name(p);
+    parse_ts_type_constraint_clause(p, context).ok();
+    parse_ts_default_type_clause(p).ok();
+
+    if name.is_absent() {
+        m.abandon(p);
+        Absent
+    } else {
+        Present(m.complete(p, TS_TYPE_PARAMETER))
+    }
+}
+
+fn parse_ts_type_parameter_modifiers(p: &mut JsParser) {
     if p.at(T![in]) {
-        if could_use_parameter_modifier {
-            p.bump(T![in]);
-        } else {
-            // TODO: I am not sure if bump here is properly, but it is good for error recover
-            // let err = p
-            //     .err_builder("TypeParameterModifier `in` is not valid here")
-            //     .primary(p.cur_range(), "");
-            // p.error(err);
-            p.bump(T![in]);
-        }
+        p.eat(T![in]);
     }
 
     if p.at(T![out]) && !p.nth_at(1, T![,]) && !p.nth_at(1, T![>]) {
-        if could_use_parameter_modifier {
-            p.bump(T![out]);
-        } else {
-            // let err = p
-            //     .err_builder("TypeParameterModifier `out` is not valid here")
-            //     .primary(p.cur_range(), "");
-            // p.error(err);
-            p.bump(T![out]);
-        }
+        p.eat(T![out]);
     }
-
-    parse_ts_type_parameter_name(p).map(|name| {
-        let m = name.precede(p);
-        parse_ts_type_constraint_clause(p, context).ok();
-        parse_ts_default_type_clause(p).ok();
-        m.complete(p, TS_TYPE_PARAMETER)
-    })
 }
 
 // test ts ts_type_constraint_clause

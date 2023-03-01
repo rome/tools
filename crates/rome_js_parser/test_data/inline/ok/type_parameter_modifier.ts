@@ -1,12 +1,12 @@
-type Foo<in T> = T
-type Foo<out> = out
-type Foo<out T> = T
-type Foo<in out> = T
-type Foo<out out> = T
-type Foo<in out out> = T
-type Foo<in X, out Y> = [X, Y]
-type Foo<out X, in Y> = [X, Y]
-type Foo<out X, out Y extends keyof X> = [X, Y]
+type Foo<in T> = {}
+type Foo<out> = {}
+type Foo<out T> = {}
+type Foo<in out> = {}
+type Foo<out out> = {}
+type Foo<in out out> = {}
+type Foo<in X, out Y> = {}
+type Foo<out X, in Y> = {}
+type Foo<out X, out Y extends keyof X> = {}
 class Foo<in T> {}
 class Foo<out T> {}
 export default class Foo<in T> {}

@@ -102,6 +102,8 @@ JsModule {
                 l_angle_token: L_ANGLE@141..142 "<" [] [],
                 items: TsTypeParameterList [
                     TsTypeParameter {
+                        in_modifier_token: missing (optional),
+                        out_modifier_token: missing (optional),
                         name: TsTypeParameterName {
                             ident_token: IDENT@142..143 "T" [] [],
                         },
@@ -172,6 +174,8 @@ JsModule {
                 l_angle_token: L_ANGLE@215..216 "<" [] [],
                 items: TsTypeParameterList [
                     TsTypeParameter {
+                        in_modifier_token: missing (optional),
+                        out_modifier_token: missing (optional),
                         name: TsTypeParameterName {
                             ident_token: IDENT@216..217 "U" [] [],
                         },
@@ -180,6 +184,8 @@ JsModule {
                     },
                     COMMA@217..219 "," [] [Whitespace(" ")],
                     TsTypeParameter {
+                        in_modifier_token: missing (optional),
+                        out_modifier_token: missing (optional),
                         name: TsTypeParameterName {
                             ident_token: IDENT@219..220 "T" [] [],
                         },
@@ -255,6 +261,8 @@ JsModule {
                 l_angle_token: L_ANGLE@282..283 "<" [] [],
                 items: TsTypeParameterList [
                     TsTypeParameter {
+                        in_modifier_token: missing (optional),
+                        out_modifier_token: missing (optional),
                         name: TsTypeParameterName {
                             ident_token: IDENT@283..284 "T" [] [],
                         },
@@ -345,6 +353,8 @@ JsModule {
                 l_angle_token: L_ANGLE@360..361 "<" [] [],
                 items: TsTypeParameterList [
                     TsTypeParameter {
+                        in_modifier_token: missing (optional),
+                        out_modifier_token: missing (optional),
                         name: TsTypeParameterName {
                             ident_token: IDENT@361..362 "T" [] [],
                         },
@@ -478,6 +488,8 @@ JsModule {
                 l_angle_token: L_ANGLE@483..484 "<" [] [],
                 items: TsTypeParameterList [
                     TsTypeParameter {
+                        in_modifier_token: missing (optional),
+                        out_modifier_token: missing (optional),
                         name: TsTypeParameterName {
                             ident_token: IDENT@484..485 "T" [] [],
                         },
@@ -634,10 +646,12 @@ JsModule {
         0: L_ANGLE@141..142 "<" [] []
         1: TS_TYPE_PARAMETER_LIST@142..143
           0: TS_TYPE_PARAMETER@142..143
-            0: TS_TYPE_PARAMETER_NAME@142..143
-              0: IDENT@142..143 "T" [] []
+            0: (empty)
             1: (empty)
-            2: (empty)
+            2: TS_TYPE_PARAMETER_NAME@142..143
+              0: IDENT@142..143 "T" [] []
+            3: (empty)
+            4: (empty)
         2: R_ANGLE@143..145 ">" [] [Whitespace(" ")]
       3: EQ@145..147 "=" [] [Whitespace(" ")]
       4: TS_CONDITIONAL_TYPE@147..207
@@ -683,16 +697,20 @@ JsModule {
         0: L_ANGLE@215..216 "<" [] []
         1: TS_TYPE_PARAMETER_LIST@216..220
           0: TS_TYPE_PARAMETER@216..217
-            0: TS_TYPE_PARAMETER_NAME@216..217
-              0: IDENT@216..217 "U" [] []
+            0: (empty)
             1: (empty)
-            2: (empty)
+            2: TS_TYPE_PARAMETER_NAME@216..217
+              0: IDENT@216..217 "U" [] []
+            3: (empty)
+            4: (empty)
           1: COMMA@217..219 "," [] [Whitespace(" ")]
           2: TS_TYPE_PARAMETER@219..220
-            0: TS_TYPE_PARAMETER_NAME@219..220
-              0: IDENT@219..220 "T" [] []
+            0: (empty)
             1: (empty)
-            2: (empty)
+            2: TS_TYPE_PARAMETER_NAME@219..220
+              0: IDENT@219..220 "T" [] []
+            3: (empty)
+            4: (empty)
         2: R_ANGLE@220..222 ">" [] [Whitespace(" ")]
       3: EQ@222..224 "=" [] [Whitespace(" ")]
       4: TS_CONDITIONAL_TYPE@224..275
@@ -742,10 +760,12 @@ JsModule {
         0: L_ANGLE@282..283 "<" [] []
         1: TS_TYPE_PARAMETER_LIST@283..284
           0: TS_TYPE_PARAMETER@283..284
-            0: TS_TYPE_PARAMETER_NAME@283..284
-              0: IDENT@283..284 "T" [] []
+            0: (empty)
             1: (empty)
-            2: (empty)
+            2: TS_TYPE_PARAMETER_NAME@283..284
+              0: IDENT@283..284 "T" [] []
+            3: (empty)
+            4: (empty)
         2: R_ANGLE@284..286 ">" [] [Whitespace(" ")]
       3: EQ@286..288 "=" [] [Whitespace(" ")]
       4: TS_CONDITIONAL_TYPE@288..352
@@ -809,10 +829,12 @@ JsModule {
         0: L_ANGLE@360..361 "<" [] []
         1: TS_TYPE_PARAMETER_LIST@361..362
           0: TS_TYPE_PARAMETER@361..362
-            0: TS_TYPE_PARAMETER_NAME@361..362
-              0: IDENT@361..362 "T" [] []
+            0: (empty)
             1: (empty)
-            2: (empty)
+            2: TS_TYPE_PARAMETER_NAME@361..362
+              0: IDENT@361..362 "T" [] []
+            3: (empty)
+            4: (empty)
         2: R_ANGLE@362..364 ">" [] [Whitespace(" ")]
       3: EQ@364..366 "=" [] [Whitespace(" ")]
       4: TS_CONDITIONAL_TYPE@366..421
@@ -903,10 +925,12 @@ JsModule {
         0: L_ANGLE@483..484 "<" [] []
         1: TS_TYPE_PARAMETER_LIST@484..485
           0: TS_TYPE_PARAMETER@484..485
-            0: TS_TYPE_PARAMETER_NAME@484..485
-              0: IDENT@484..485 "T" [] []
+            0: (empty)
             1: (empty)
-            2: (empty)
+            2: TS_TYPE_PARAMETER_NAME@484..485
+              0: IDENT@484..485 "T" [] []
+            3: (empty)
+            4: (empty)
         2: R_ANGLE@485..487 ">" [] [Whitespace(" ")]
       3: EQ@487..489 "=" [] [Whitespace(" ")]
       4: TS_CONDITIONAL_TYPE@489..552
