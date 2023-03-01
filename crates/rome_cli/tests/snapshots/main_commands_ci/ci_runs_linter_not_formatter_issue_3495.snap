@@ -49,7 +49,7 @@ file.js:1:9 lint/complexity/useSimplifiedLogicExpression  FIXABLE  ━━━━�
 ```
 
 ```block
-file.js:1:1 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+file.js:1:1 lint/style/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × This 'let' declares a variable which is never re-assigned.
   
