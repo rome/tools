@@ -265,7 +265,7 @@ impl VariableDeclaration {
 /// Visit [JsIdentifierBinding] in the given [JsAnyBindingPattern].
 ///
 /// Traversal stops if the given function returns true.
-fn with_binding_pat_identifiers(
+pub(crate) fn with_binding_pat_identifiers(
     pat: AnyJsBindingPattern,
     f: &mut impl FnMut(JsIdentifierBinding) -> bool,
 ) -> bool {

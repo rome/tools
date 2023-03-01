@@ -405,6 +405,10 @@ export interface Nursery {
 	 */
 	noPrototypeBuiltins?: RuleConfiguration;
 	/**
+	 * Eliminate variables that have multiple declarations in the same scope.
+	 */
+	noRedeclaration?: RuleConfiguration;
+	/**
 	 * Enforce img alt prop does not contain the word "image", "picture", or "photo".
 	 */
 	noRedundantAlt?: RuleConfiguration;
@@ -886,6 +890,7 @@ export type Category =
 	| "lint/nursery/noPrototypeBuiltins"
 	| "lint/nursery/noSvgWithoutTitle"
 	| "lint/nursery/noUselessCatch"
+	| "lint/nursery/noRedeclaration"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"
