@@ -38,7 +38,7 @@ declare_rule! {
     /// ```
     ///
     pub(crate) NoExtraLabels {
-        version: "next",
+        version: "12.0.0",
         name: "noExtraLabels",
         recommended: true,
     }

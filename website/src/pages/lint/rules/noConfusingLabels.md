@@ -3,7 +3,7 @@ title: Lint Rule noConfusingLabels
 parent: lint/rules/index
 ---
 
-# noConfusingLabels (since vnext)
+# noConfusingLabels (since v12.0.0)
 
 Disallow labeled statements that are not loops.
 

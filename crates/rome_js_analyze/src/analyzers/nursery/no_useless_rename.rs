@@ -59,7 +59,7 @@ declare_rule! {
     /// ```
     ///
     pub(crate) NoUselessRename {
-        version: "next",
+        version: "12.0.0",
         name: "noUselessRename",
         recommended: true,
     }

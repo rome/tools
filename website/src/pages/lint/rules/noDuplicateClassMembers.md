@@ -3,7 +3,7 @@ title: Lint Rule noDuplicateClassMembers
 parent: lint/rules/index
 ---
 
-# noDuplicateClassMembers (since vnext)
+# noDuplicateClassMembers (since v12.0.0)
 
 Disallow duplicate class members.
 

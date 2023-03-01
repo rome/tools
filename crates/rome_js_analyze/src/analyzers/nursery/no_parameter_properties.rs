@@ -33,7 +33,7 @@ declare_rule! {
     /// ```
     ///
     pub(crate) NoParameterProperties {
-        version: "next",
+        version: "12.0.0",
         name: "noParameterProperties",
         recommended: false,
     }

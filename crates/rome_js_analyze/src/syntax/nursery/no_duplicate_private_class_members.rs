@@ -18,7 +18,7 @@ declare_rule! {
     //  }
     /// ```
     pub(crate) NoDuplicatePrivateClassMembers {
-        version: "next",
+        version: "12.0.0",
         name: "noDuplicatePrivateClassMembers",
         recommended: false,
     }

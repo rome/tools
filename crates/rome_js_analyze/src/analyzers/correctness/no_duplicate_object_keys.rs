@@ -56,7 +56,7 @@ declare_rule! {
     pub(crate) NoDuplicateObjectKeys {
         version: "11.0.0",
         name: "noDuplicateObjectKeys",
-        recommended: true, // should be once out of nursery
+        recommended: true,
     }
 }
 

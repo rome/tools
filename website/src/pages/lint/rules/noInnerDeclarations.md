@@ -3,7 +3,7 @@ title: Lint Rule noInnerDeclarations
 parent: lint/rules/index
 ---
 
-# noInnerDeclarations (since vnext)
+# noInnerDeclarations (since v12.0.0)
 
 Disallow `function` and `var` declarations in nested blocks.
 

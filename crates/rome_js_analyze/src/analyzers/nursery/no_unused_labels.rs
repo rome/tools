@@ -47,7 +47,7 @@ declare_rule! {
     /// ```
     ///
     pub(crate) NoUnusedLabels {
-        version: "next",
+        version: "12.0.0",
         name: "noUnusedLabels",
         recommended: true,
     }
