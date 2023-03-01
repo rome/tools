@@ -259,7 +259,7 @@ fn parse_getter_object_member(p: &mut JsParser) -> ParsedSyntax {
 
     // test_err ts ts_object_getter_type_parameters
     // ({ get a<A>(): A {} });
-    if let Present(type_parameters) = parse_ts_type_parameters(p, TypeContext::default(), false) {
+    if let Present(type_parameters) = parse_ts_type_parameters(p, TypeContext::default()) {
         p.error(ts_accessor_type_parameters_error(p, &type_parameters))
     }
 
@@ -291,7 +291,7 @@ fn parse_setter_object_member(p: &mut JsParser) -> ParsedSyntax {
 
     // test_err ts ts_object_setter_type_parameters
     // ({ set a<A>(value: A) {} });
-    if let Present(type_parameters) = parse_ts_type_parameters(p, TypeContext::default(), false) {
+    if let Present(type_parameters) = parse_ts_type_parameters(p, TypeContext::default()) {
         p.error(ts_accessor_type_parameters_error(p, &type_parameters))
     }
 
@@ -435,7 +435,7 @@ fn parse_method_object_member_body(p: &mut JsParser, flags: SignatureFlags) {
     TypeScript
         .parse_exclusive_syntax(
             p,
-            |p| parse_ts_type_parameters(p, TypeContext::default(), false),
+            |p| parse_ts_type_parameters(p, TypeContext::default()),
             |p, type_parameters| {
                 ts_only_syntax_error(p, "type parameters", type_parameters.range(p))
             },

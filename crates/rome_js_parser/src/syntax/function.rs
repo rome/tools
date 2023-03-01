@@ -231,7 +231,7 @@ fn parse_function(p: &mut JsParser, m: Marker, kind: FunctionKind) -> CompletedM
     TypeScript
         .parse_exclusive_syntax(
             p,
-            |p| parse_ts_type_parameters(p, TypeContext::default(), false),
+            |p| parse_ts_type_parameters(p, TypeContext::default()),
             |p, marker| {
                 p.err_builder(
                     "type parameters can only be used in TypeScript files",
@@ -411,7 +411,7 @@ fn parse_ambient_function(
     let binding = parse_binding(p);
     let binding_range = p.cur_range();
 
-    parse_ts_type_parameters(p, TypeContext::default(), false).ok();
+    parse_ts_type_parameters(p, TypeContext::default()).ok();
     parse_parameter_list(p, ParameterContext::Declaration, SignatureFlags::empty())
         .or_add_diagnostic(p, expected_parameters);
     parse_ts_return_type_annotation(p).ok();
@@ -540,7 +540,7 @@ fn try_parse_parenthesized_arrow_function_head(
     };
 
     if p.at(T![<]) {
-        parse_ts_type_parameters(p, TypeContext::default(), false).ok();
+        parse_ts_type_parameters(p, TypeContext::default()).ok();
 
         if ambiguity.is_disallowed() && p.last() != Some(T![>]) {
             return Err(m);
