@@ -584,7 +584,7 @@ impl<'a> SourceParentheses<'a> {
         match self {
             SourceParentheses::Empty => token.parent().unwrap(),
             SourceParentheses::SourceMap { map, .. } => {
-                debug_assert_eq!(&map.text()[parentheses_source_range], ")");
+                debug_assert_eq!(map.source().text_slice(parentheses_source_range), ")");
 
                 // How this works: We search the outer most node that, in the source document ends right after the `)`.
                 // The issue is, it is possible that multiple nodes end right after the `)`

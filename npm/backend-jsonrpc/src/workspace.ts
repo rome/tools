@@ -433,6 +433,10 @@ export interface Nursery {
 	 */
 	noStringCaseMismatch?: RuleConfiguration;
 	/**
+	 * Enforces the usage of the title element for the svg element.
+	 */
+	noSvgWithoutTitle?: RuleConfiguration;
+	/**
 	 * Disallow lexical declarations in switch clauses.
 	 */
 	noSwitchDeclarations?: RuleConfiguration;
@@ -452,6 +456,10 @@ export interface Nursery {
 	 * Disallow unused labels.
 	 */
 	noUnusedLabels?: RuleConfiguration;
+	/**
+	 * Disallow unnecessary catch clauses.
+	 */
+	noUselessCatch?: RuleConfiguration;
 	/**
 	 * Disallow renaming import, export, and destructured assignments to the same name.
 	 */
@@ -841,6 +849,7 @@ export type Category =
 	| "lint/nursery/noRedundantUseStrict"
 	| "lint/nursery/noRestrictedGlobals"
 	| "lint/nursery/noSelfCompare"
+	| "lint/nursery/noSelfAssignment"
 	| "lint/nursery/noSetterReturn"
 	| "lint/nursery/noStringCaseMismatch"
 	| "lint/nursery/noSwitchDeclarations"
@@ -875,7 +884,8 @@ export type Category =
 	| "lint/nursery/useYield"
 	| "lint/nursery/noGlobalObjectCalls"
 	| "lint/nursery/noPrototypeBuiltins"
-	| "lint/nursery/noSelfAssignment"
+	| "lint/nursery/noSvgWithoutTitle"
+	| "lint/nursery/noUselessCatch"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"

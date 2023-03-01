@@ -16,6 +16,9 @@ impl FormatRule<AnyJsClassMember> for FormatAnyJsClassMember {
             AnyJsClassMember::JsSetterClassMember(node) => node.format().fmt(f),
             AnyJsClassMember::TsConstructorSignatureClassMember(node) => node.format().fmt(f),
             AnyJsClassMember::TsPropertySignatureClassMember(node) => node.format().fmt(f),
+            AnyJsClassMember::TsInitializedPropertySignatureClassMember(node) => {
+                node.format().fmt(f)
+            }
             AnyJsClassMember::TsMethodSignatureClassMember(node) => node.format().fmt(f),
             AnyJsClassMember::TsGetterSignatureClassMember(node) => node.format().fmt(f),
             AnyJsClassMember::TsSetterSignatureClassMember(node) => node.format().fmt(f),

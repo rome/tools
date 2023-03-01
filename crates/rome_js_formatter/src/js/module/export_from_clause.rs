@@ -12,6 +12,7 @@ pub(crate) struct FormatJsExportFromClause;
 impl FormatNodeRule<JsExportFromClause> for FormatJsExportFromClause {
     fn fmt_fields(&self, node: &JsExportFromClause, f: &mut JsFormatter) -> FormatResult<()> {
         let JsExportFromClauseFields {
+            type_token,
             star_token,
             export_as,
             from_token,
@@ -19,6 +20,10 @@ impl FormatNodeRule<JsExportFromClause> for FormatJsExportFromClause {
             assertion,
             semicolon_token,
         } = node.as_fields();
+
+        if let Some(type_token) = type_token {
+            write!(f, [type_token.format(), space()])?;
+        }
 
         write!(f, [star_token.format(), space(),])?;
 

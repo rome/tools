@@ -94,7 +94,6 @@ impl Rule for UseEnumInitializers {
         let prev_enum_members = enum_member
             .syntax()
             .siblings(Direction::Prev)
-            .into_iter()
             .skip(1) // consume enum_member
             .filter_map(TsEnumMember::cast);
         let mut count = 0;

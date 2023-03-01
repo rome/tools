@@ -70,6 +70,7 @@ define_dategories! {
     "lint/nursery/noRedundantUseStrict": "https://docs.rome.tools/lint/rules/noRedundantUseStrict",
     "lint/nursery/noRestrictedGlobals": "https://docs.rome.tools/lint/rules/noRestrictedGlobals",
     "lint/nursery/noSelfCompare": "https://docs.rome.tools/lint/rules/noSelfCompare",
+    "lint/nursery/noSelfAssignment": "https://docs.rome.tools/lint/rules/noSelfAssignment",
     "lint/nursery/noSetterReturn": "https://docs.rome.tools/lint/rules/noSetterReturn",
     "lint/nursery/noStringCaseMismatch": "https://docs.rome.tools/lint/rules/noStringCaseMismatch",
     "lint/nursery/noSwitchDeclarations": "https://docs.rome.tools/lint/rules/noSwitchDeclarations",
@@ -104,7 +105,8 @@ define_dategories! {
     "lint/nursery/useYield": "https://docs.rome.tools/lint/rules/useYield",
     "lint/nursery/noGlobalObjectCalls": "https://docs.rome.tools/lint/rules/noGlobalObjectCalls",
     "lint/nursery/noPrototypeBuiltins": "https://docs.rome.tools/lint/rules/noPrototypeBuiltins",
-    "lint/nursery/noSelfAssignment": "https://docs.rome.tools/lint/rules/noSelfAssignment",
+    "lint/nursery/noSvgWithoutTitle": "https://docs.rome.tools/lint/rules/noSvgWithoutTitle",
+    "lint/nursery/noUselessCatch": "https://docs.rome.tools/lint/rules/noUselessCatch",
     // Insert new nursery rule here
 
     // performance

@@ -991,6 +991,7 @@ pub fn js_export_from_clause(
         star_token,
         from_token,
         source,
+        type_token: None,
         export_as: None,
         assertion: None,
         semicolon_token: None,
@@ -1000,11 +1001,16 @@ pub struct JsExportFromClauseBuilder {
     star_token: SyntaxToken,
     from_token: SyntaxToken,
     source: JsModuleSource,
+    type_token: Option<SyntaxToken>,
     export_as: Option<JsExportAsClause>,
     assertion: Option<JsImportAssertion>,
     semicolon_token: Option<SyntaxToken>,
 }
 impl JsExportFromClauseBuilder {
+    pub fn with_type_token(mut self, type_token: SyntaxToken) -> Self {
+        self.type_token = Some(type_token);
+        self
+    }
     pub fn with_export_as(mut self, export_as: JsExportAsClause) -> Self {
         self.export_as = Some(export_as);
         self
@@ -1021,6 +1027,7 @@ impl JsExportFromClauseBuilder {
         JsExportFromClause::unwrap_cast(SyntaxNode::new_detached(
             JsSyntaxKind::JS_EXPORT_FROM_CLAUSE,
             [
+                self.type_token.map(|token| SyntaxElement::Token(token)),
                 Some(SyntaxElement::Token(self.star_token)),
                 self.export_as
                     .map(|token| SyntaxElement::Node(token.into_syntax())),
@@ -5005,6 +5012,50 @@ impl TsInferTypeBuilder {
                 Some(SyntaxElement::Node(self.name.into_syntax())),
                 self.constraint
                     .map(|token| SyntaxElement::Node(token.into_syntax())),
+            ],
+        ))
+    }
+}
+pub fn ts_initialized_property_signature_class_member(
+    modifiers: TsPropertySignatureModifierList,
+    name: AnyJsClassMemberName,
+    value: JsInitializerClause,
+) -> TsInitializedPropertySignatureClassMemberBuilder {
+    TsInitializedPropertySignatureClassMemberBuilder {
+        modifiers,
+        name,
+        value,
+        question_mark_token: None,
+        semicolon_token: None,
+    }
+}
+pub struct TsInitializedPropertySignatureClassMemberBuilder {
+    modifiers: TsPropertySignatureModifierList,
+    name: AnyJsClassMemberName,
+    value: JsInitializerClause,
+    question_mark_token: Option<SyntaxToken>,
+    semicolon_token: Option<SyntaxToken>,
+}
+impl TsInitializedPropertySignatureClassMemberBuilder {
+    pub fn with_question_mark_token(mut self, question_mark_token: SyntaxToken) -> Self {
+        self.question_mark_token = Some(question_mark_token);
+        self
+    }
+    pub fn with_semicolon_token(mut self, semicolon_token: SyntaxToken) -> Self {
+        self.semicolon_token = Some(semicolon_token);
+        self
+    }
+    pub fn build(self) -> TsInitializedPropertySignatureClassMember {
+        TsInitializedPropertySignatureClassMember::unwrap_cast(SyntaxNode::new_detached(
+            JsSyntaxKind::TS_INITIALIZED_PROPERTY_SIGNATURE_CLASS_MEMBER,
+            [
+                Some(SyntaxElement::Node(self.modifiers.into_syntax())),
+                Some(SyntaxElement::Node(self.name.into_syntax())),
+                self.question_mark_token
+                    .map(|token| SyntaxElement::Token(token)),
+                Some(SyntaxElement::Node(self.value.into_syntax())),
+                self.semicolon_token
+                    .map(|token| SyntaxElement::Token(token)),
             ],
         ))
     }
