@@ -107,7 +107,6 @@ impl WorkspaceServer {
     fn build_rule_filter_list<'a>(&'a self, rules: Option<&'a Rules>) -> Vec<RuleFilter> {
         if let Some(rules) = rules {
             let enabled: IndexSet<RuleFilter> = rules.as_enabled_rules();
-            dbg!(&enabled);
             enabled.into_iter().collect::<Vec<RuleFilter>>()
         } else {
             vec![]
