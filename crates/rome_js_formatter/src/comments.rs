@@ -174,7 +174,7 @@ impl CommentStyle for JsCommentStyle {
                 .or_else(handle_call_expression_comment)
                 .or_else(handle_continue_break_comment)
                 .or_else(handle_mapped_type_comment)
-                .or_else(handle_switch_default_case_comment)
+                //.or_else(handle_switch_default_case_comment)
                 .or_else(handle_import_export_specifier_comment),
             CommentTextPosition::OwnLine => handle_member_expression_comment(comment)
                 .or_else(handle_function_declaration_comment)
