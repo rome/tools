@@ -82,16 +82,15 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
 
         group_rules_union.push(quote! {
             if let Some(group) = self.#property_group_name.as_ref() {
-                group.collect_preset_rules(self.is_recommended(), &mut enabled_rules);
+                group.collect_preset_rules(self.is_recommended(), &mut enabled_rules, &mut disabled_rules);
                 enabled_rules.extend(&group.get_enabled_rules());
                 disabled_rules.extend(&group.get_disabled_rules());
             } else if self.is_all() {
                 enabled_rules.extend(#group_struct_name::all_rules_as_filters());
+            } else if self.is_not_all() {
+                disabled_rules.extend(#group_struct_name::all_rules_as_filters());
             } else if #global_recommended {
                 enabled_rules.extend(#group_struct_name::recommended_rules_as_filters());
-            }
-            if self.is_not_all() {
-                disabled_rules.extend(#group_struct_name::all_rules_as_filters());
             }
         });
 
@@ -229,10 +228,6 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
             pub fn as_enabled_rules(&self) -> IndexSet<RuleFilter> {
                 let mut enabled_rules = IndexSet::new();
                 let mut disabled_rules = IndexSet::new();
-                // computing the disabled rules
-                #( #group_rules_union )*
-
-                // computing the enabled rules
                 #( #group_rules_union )*
 
                 enabled_rules.difference(&disabled_rules).cloned().collect()
@@ -487,6 +482,14 @@ fn generate_struct(group: &str, rules: &BTreeMap<&'static str, RuleMetadata>) ->
                 !matches!(self.recommended, Some(false))
             }
 
+            pub(crate) fn is_all(&self) -> bool {
+                matches!(self.all, Some(true))
+            }
+
+            pub(crate) fn is_not_all(&self) -> bool {
+                matches!(self.all, Some(false))
+            }
+
             pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
                let mut index_set = IndexSet::new();
                #( #rule_enabled_check_line )*
@@ -522,9 +525,12 @@ fn generate_struct(group: &str, rules: &BTreeMap<&'static str, RuleMetadata>) ->
                 &self,
                 is_recommended: bool,
                 enabled_rules: &mut IndexSet<RuleFilter>,
+                disabled_rules: &mut IndexSet<RuleFilter>,
             ) {
-                if self.all == Some(true) {
+                if self.is_all() {
                     enabled_rules.extend(Self::all_rules_as_filters());
+                } else if self.is_not_all() {
+                    disabled_rules.extend(Self::all_rules_as_filters());
                 } else if is_recommended || self.is_recommended() {
                     enabled_rules.extend(Self::recommended_rules_as_filters());
                 }
