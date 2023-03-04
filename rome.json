@@ -16,7 +16,7 @@
 		"enabled": true,
 		"rules": {
 			"recommended": true,
-			"suspicious": {
+			"style": {
 				"noNonNullAssertion": "off"
 			}
 		}
