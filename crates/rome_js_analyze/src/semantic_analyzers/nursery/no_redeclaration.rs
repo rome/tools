@@ -1,14 +1,11 @@
-use std::{collections::HashMap, hash::Hash, vec::IntoIter};
-
+use crate::semantic_services::SemanticServices;
+use rome_analyze::declare_rule;
+use rome_analyze::{context::RuleContext, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_semantic::{Binding, Scope};
-
-use crate::semantic_services::Semantic;
-use rome_analyze::{context::RuleContext, Rule, RuleDiagnostic};
-use rome_js_syntax::{JsModule, JsScript, TextRange};
-
-use rome_analyze::declare_rule;
-use rome_rowan::{declare_node_union, AstNode};
+use rome_js_syntax::{TextRange, TsMethodSignatureClassMember};
+use rome_rowan::AstNode;
+use std::{collections::HashMap, vec::IntoIter};
 
 declare_rule! {
     /// Eliminate variables that have multiple declarations in the same scope.
@@ -38,6 +35,14 @@ declare_rule! {
     /// a = 10;
     /// ```
     ///
+    /// ```ts
+    /// class Foo {
+    ///     bar(a: A);
+    ///     bar(a: A, b: B);
+    ///     bar(a: A, b: B) {}
+    /// }
+    /// ```
+    ///
     pub(crate) NoRedeclaration {
         version: "12.0.0",
         name: "noRedeclaration",
@@ -45,23 +50,19 @@ declare_rule! {
     }
 }
 
-declare_node_union! {
-    pub(crate) AnyJsBlock =  JsScript | JsModule
-}
-
 type Duplicates = HashMap<String, Vec<Binding>>;
 
 type Redeclaration = (String, TextRange, Binding);
 
 impl Rule for NoRedeclaration {
-    type Query = Semantic<AnyJsBlock>;
+    type Query = SemanticServices;
     type State = Redeclaration;
     type Signals = IntoIter<Redeclaration>;
     type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let mut redeclarations = Vec::default();
-        for scope in ctx.model().scopes() {
+        for scope in ctx.query().scopes() {
             check_redeclarations_in_single_scope(&scope, &mut redeclarations);
         }
         redeclarations.into_iter()
@@ -94,13 +95,21 @@ fn check_redeclarations_in_single_scope(scope: &Scope, redeclarations: &mut Vec<
         duplicates.entry(name).or_default().push(binding)
     }
 
-    // only keep the actual redeclarations
+    // only keep the actual re-declarations
     duplicates.retain(|_, list| list.len() > 1);
 
     for (name, list) in duplicates {
         let first_binding_range = list[0].syntax().text_trimmed_range();
         list.into_iter()
             .skip(1) // skip the first binding
-            .for_each(|binding| redeclarations.push((name.clone(), first_binding_range, binding)))
+            .for_each(|binding| {
+                if !binding
+                    .syntax()
+                    .ancestors()
+                    .any(|node| TsMethodSignatureClassMember::can_cast(node.kind()))
+                {
+                    redeclarations.push((name.clone(), first_binding_range, binding))
+                }
+            })
     }
 }
