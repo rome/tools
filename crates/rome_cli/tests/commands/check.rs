@@ -1372,7 +1372,7 @@ fn top_level_all_down_level_not_all() {
         Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
     );
 
-    assert!(result.is_err(), "run_cli returned {result:?}");
+    assert!(result.is_ok(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),

@@ -61,7 +61,7 @@ impl CliSnapshot {
             content.push_str("## `rome.json`\n\n");
             content.push_str("```json");
             content.push('\n');
-            content.push_str(&formatted.as_code());
+            content.push_str(formatted.as_code());
             content.push_str("```");
             content.push_str("\n\n")
         }
