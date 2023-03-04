@@ -54,14 +54,20 @@ rome.json:6:13 configuration ━━━━━━━━━━━━━━━━━
   - recommended
   - noChildrenProp
   - noConstAssign
+  - noConstructorReturn
   - noEmptyPattern
   - noNewSymbol
+  - noPrecisionLoss
   - noRenderReturnValue
+  - noSetterReturn
+  - noStringCaseMismatch
   - noUndeclaredVariables
   - noUnnecessaryContinue
   - noUnreachable
+  - noUnsafeFinally
   - noUnusedVariables
   - noVoidElementsWithChildren
+  - noVoidTypeReturn
   - useValidForDirection
   
 

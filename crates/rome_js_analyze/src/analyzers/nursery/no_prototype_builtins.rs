@@ -40,7 +40,7 @@ declare_rule! {
     /// ```
     ///
     pub(crate) NoPrototypeBuiltins {
-        version: "next",
+        version: "12.0.0",
         name: "noPrototypeBuiltins",
         recommended: false,
     }

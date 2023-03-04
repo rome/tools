@@ -3,7 +3,7 @@ title: Lint Rule noUselessCatch
 parent: lint/rules/index
 ---
 
-# noUselessCatch (since vnext)
+# noUselessCatch (since v12.0.0)
 
 Disallow unnecessary `catch` clauses.
 

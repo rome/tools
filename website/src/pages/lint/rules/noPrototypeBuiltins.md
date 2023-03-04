@@ -3,7 +3,7 @@ title: Lint Rule noPrototypeBuiltins
 parent: lint/rules/index
 ---
 
-# noPrototypeBuiltins (since vnext)
+# noPrototypeBuiltins (since v12.0.0)
 
 Disallow direct use of `Object.prototype` builtins.
 

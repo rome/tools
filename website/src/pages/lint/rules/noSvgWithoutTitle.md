@@ -3,7 +3,7 @@ title: Lint Rule noSvgWithoutTitle
 parent: lint/rules/index
 ---
 
-# noSvgWithoutTitle (since vnext)
+# noSvgWithoutTitle (since v12.0.0)
 
 Enforces the usage of the `title` element for the `svg` element.
 

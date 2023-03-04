@@ -85,7 +85,7 @@ declare_rule! {
     /// ```
     ///
     pub(crate) NoDuplicateClassMembers {
-        version: "next",
+        version: "12.0.0",
         name: "noDuplicateClassMembers",
         recommended: true,
     }

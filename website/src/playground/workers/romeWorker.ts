@@ -127,10 +127,6 @@ self.addEventListener("message", async (e) => {
 							useFragmentSyntax: "warn",
 						},
 						nursery: {
-							noAccessKey: "warn",
-							noNonNullAssertion: "warn",
-							noPrecisionLoss: "warn",
-							noRedundantUseStrict: "warn",
 							useAriaPropTypes: "warn",
 							noRestrictedGlobals: "warn",
 							useCamelCase: "warn",
