@@ -95,7 +95,7 @@ declare_rule! {
     /// ```
     ///
     pub(crate) NoInferrableTypes {
-        version: "next",
+        version: "12.0.0",
         name: "noInferrableTypes",
         recommended: true,
     }

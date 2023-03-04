@@ -5,11 +5,18 @@ parent: lint/rules/index
 
 # useDefaultSwitchClauseLast (since v11.0.0)
 
+> This rule is recommended by Rome.
+
 Enforce default clauses in switch statements to be last
 
 A switch statement can optionally have a default clause.
 
-If present, it’s usually the last clause, but it doesn’t need to be. It is also allowed to put the default clause before all case clauses, or anywhere between. The behavior is mostly the same as if it was the last clause. The default block will be still executed only if there is no match in the case clauses (including those defined after the default), but there is also the ability to “fall through” from the default clause to the following clause in the list. However, such flow is not common and it would be confusing to the readers.
+If present, it’s usually the last clause, but it doesn’t need to be. It is also allowed to put the default clause before all case clauses, or anywhere between.
+The behavior is mostly the same as if it was the last clause.
+
+The default block will be still executed only if there is no match in the case clauses (including those defined after the default),
+but there is also the ability to “fall through” from the default clause to the following clause in the list.
+However, such flow is not common and it would be confusing to the readers.
 
 Even if there is no "fall through" logic, it’s still unexpected to see the default clause before or between the case clauses. By convention, it is expected to be the last clause.
 
@@ -28,7 +35,7 @@ switch (foo) {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/useDefaultSwitchClauseLast.js:2:5 <a href="https://docs.rome.tools/lint/rules/useDefaultSwitchClauseLast">lint/nursery/useDefaultSwitchClauseLast</a> ━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">suspicious/useDefaultSwitchClauseLast.js:2:5 <a href="https://docs.rome.tools/lint/rules/useDefaultSwitchClauseLast">lint/suspicious/useDefaultSwitchClauseLast</a> ━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The </span><span style="color: Tomato;"><strong>default</strong></span><span style="color: Tomato;"> clause should be the last </span><span style="color: Tomato;"><strong>switch</strong></span><span style="color: Tomato;"> clause.</span>
   
@@ -64,7 +71,7 @@ switch (foo) {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/useDefaultSwitchClauseLast.js:2:5 <a href="https://docs.rome.tools/lint/rules/useDefaultSwitchClauseLast">lint/nursery/useDefaultSwitchClauseLast</a> ━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">suspicious/useDefaultSwitchClauseLast.js:2:5 <a href="https://docs.rome.tools/lint/rules/useDefaultSwitchClauseLast">lint/suspicious/useDefaultSwitchClauseLast</a> ━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The </span><span style="color: Tomato;"><strong>default</strong></span><span style="color: Tomato;"> clause should be the last </span><span style="color: Tomato;"><strong>switch</strong></span><span style="color: Tomato;"> clause.</span>
   
@@ -101,7 +108,7 @@ switch (foo) {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/useDefaultSwitchClauseLast.js:4:5 <a href="https://docs.rome.tools/lint/rules/useDefaultSwitchClauseLast">lint/nursery/useDefaultSwitchClauseLast</a> ━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">suspicious/useDefaultSwitchClauseLast.js:4:5 <a href="https://docs.rome.tools/lint/rules/useDefaultSwitchClauseLast">lint/suspicious/useDefaultSwitchClauseLast</a> ━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The </span><span style="color: Tomato;"><strong>default</strong></span><span style="color: Tomato;"> clause should be the last </span><span style="color: Tomato;"><strong>switch</strong></span><span style="color: Tomato;"> clause.</span>
   

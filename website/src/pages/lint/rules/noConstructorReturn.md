@@ -5,6 +5,8 @@ parent: lint/rules/index
 
 # noConstructorReturn (since v11.0.0)
 
+> This rule is recommended by Rome.
+
 Disallow returning a value from a `constructor`.
 
 Returning a value from a `constructor` of a class is a possible error.
@@ -26,7 +28,7 @@ class A {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noConstructorReturn.js:3:9 <a href="https://docs.rome.tools/lint/rules/noConstructorReturn">lint/nursery/noConstructorReturn</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">correctness/noConstructorReturn.js:3:9 <a href="https://docs.rome.tools/lint/rules/noConstructorReturn">lint/correctness/noConstructorReturn</a> ━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The </span><span style="color: Tomato;"><strong>constructor</strong></span><span style="color: Tomato;"> should not </span><span style="color: Tomato;"><strong>return</strong></span><span style="color: Tomato;"> a value.</span>
   

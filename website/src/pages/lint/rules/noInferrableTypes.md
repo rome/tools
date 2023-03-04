@@ -3,7 +3,7 @@ title: Lint Rule noInferrableTypes
 parent: lint/rules/index
 ---
 
-# noInferrableTypes (since vnext)
+# noInferrableTypes (since v12.0.0)
 
 Disallow type annotations for variables, parameters, and class properties initialized with a literal expression.
 

@@ -5,6 +5,8 @@ parent: lint/rules/index
 
 # useConst (since v11.0.0)
 
+> This rule is recommended by Rome.
+
 Require `const` declarations for variables that are never reassigned after declared.
 
 ## Examples
@@ -16,7 +18,7 @@ let a = 3;
 console.log(a);
 ```
 
-<pre class="language-text"><code class="language-text">nursery/useConst.js:1:1 <a href="https://docs.rome.tools/lint/rules/useConst">lint/nursery/useConst</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">style/useConst.js:1:1 <a href="https://docs.rome.tools/lint/rules/useConst">lint/style/useConst</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This 'let' declares a variable which is never re-assigned.</span>
   
@@ -48,7 +50,7 @@ for (let a of [1, 2, 3]) {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/useConst.js:2:6 <a href="https://docs.rome.tools/lint/rules/useConst">lint/nursery/useConst</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">style/useConst.js:2:6 <a href="https://docs.rome.tools/lint/rules/useConst">lint/style/useConst</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This 'let' declares a variable which is never re-assigned.</span>
   
@@ -83,7 +85,7 @@ for (let a in [1, 2, 3]) {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/useConst.js:2:6 <a href="https://docs.rome.tools/lint/rules/useConst">lint/nursery/useConst</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">style/useConst.js:2:6 <a href="https://docs.rome.tools/lint/rules/useConst">lint/style/useConst</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This 'let' declares a variable which is never re-assigned.</span>
   
@@ -119,7 +121,7 @@ let a = 3;
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/useConst.js:1:1 <a href="https://docs.rome.tools/lint/rules/useConst">lint/nursery/useConst</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">style/useConst.js:1:1 <a href="https://docs.rome.tools/lint/rules/useConst">lint/style/useConst</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This 'let' declares a variable which is never re-assigned.</span>
   

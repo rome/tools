@@ -3,7 +3,7 @@ title: Lint Rule noUnusedLabels
 parent: lint/rules/index
 ---
 
-# noUnusedLabels (since vnext)
+# noUnusedLabels (since v12.0.0)
 
 Disallow unused labels.
 

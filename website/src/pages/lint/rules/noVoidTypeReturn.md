@@ -5,6 +5,8 @@ parent: lint/rules/index
 
 # noVoidTypeReturn (since v11.0.0)
 
+> This rule is recommended by Rome.
+
 Disallow returning a value from a function with the return type 'void'
 
 'void' signals the absence of value. The returned value is likely to be ignored by the caller.
@@ -24,7 +26,7 @@ class A {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noVoidTypeReturn.js:3:9 <a href="https://docs.rome.tools/lint/rules/noVoidTypeReturn">lint/nursery/noVoidTypeReturn</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">correctness/noVoidTypeReturn.js:3:9 <a href="https://docs.rome.tools/lint/rules/noVoidTypeReturn">lint/correctness/noVoidTypeReturn</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The function should not </span><span style="color: Tomato;"><strong>return</strong></span><span style="color: Tomato;"> a value because its return type is </span><span style="color: Tomato;"><strong>void</strong></span><span style="color: Tomato;">.</span>
   
@@ -58,7 +60,7 @@ const a = {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noVoidTypeReturn.js:3:9 <a href="https://docs.rome.tools/lint/rules/noVoidTypeReturn">lint/nursery/noVoidTypeReturn</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">correctness/noVoidTypeReturn.js:3:9 <a href="https://docs.rome.tools/lint/rules/noVoidTypeReturn">lint/correctness/noVoidTypeReturn</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The function should not </span><span style="color: Tomato;"><strong>return</strong></span><span style="color: Tomato;"> a value because its return type is </span><span style="color: Tomato;"><strong>void</strong></span><span style="color: Tomato;">.</span>
   
@@ -90,7 +92,7 @@ function f(): void {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noVoidTypeReturn.js:2:5 <a href="https://docs.rome.tools/lint/rules/noVoidTypeReturn">lint/nursery/noVoidTypeReturn</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">correctness/noVoidTypeReturn.js:2:5 <a href="https://docs.rome.tools/lint/rules/noVoidTypeReturn">lint/correctness/noVoidTypeReturn</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The function should not </span><span style="color: Tomato;"><strong>return</strong></span><span style="color: Tomato;"> a value because its return type is </span><span style="color: Tomato;"><strong>void</strong></span><span style="color: Tomato;">.</span>
   
@@ -119,7 +121,7 @@ export default function(): void {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noVoidTypeReturn.js:2:5 <a href="https://docs.rome.tools/lint/rules/noVoidTypeReturn">lint/nursery/noVoidTypeReturn</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">correctness/noVoidTypeReturn.js:2:5 <a href="https://docs.rome.tools/lint/rules/noVoidTypeReturn">lint/correctness/noVoidTypeReturn</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The function should not </span><span style="color: Tomato;"><strong>return</strong></span><span style="color: Tomato;"> a value because its return type is </span><span style="color: Tomato;"><strong>void</strong></span><span style="color: Tomato;">.</span>
   
@@ -148,7 +150,7 @@ const g = (): void => {
 };
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noVoidTypeReturn.js:2:5 <a href="https://docs.rome.tools/lint/rules/noVoidTypeReturn">lint/nursery/noVoidTypeReturn</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">correctness/noVoidTypeReturn.js:2:5 <a href="https://docs.rome.tools/lint/rules/noVoidTypeReturn">lint/correctness/noVoidTypeReturn</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The function should not </span><span style="color: Tomato;"><strong>return</strong></span><span style="color: Tomato;"> a value because its return type is </span><span style="color: Tomato;"><strong>void</strong></span><span style="color: Tomato;">.</span>
   
@@ -177,7 +179,7 @@ const h = function(): void {
 };
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noVoidTypeReturn.js:2:5 <a href="https://docs.rome.tools/lint/rules/noVoidTypeReturn">lint/nursery/noVoidTypeReturn</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">correctness/noVoidTypeReturn.js:2:5 <a href="https://docs.rome.tools/lint/rules/noVoidTypeReturn">lint/correctness/noVoidTypeReturn</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The function should not </span><span style="color: Tomato;"><strong>return</strong></span><span style="color: Tomato;"> a value because its return type is </span><span style="color: Tomato;"><strong>void</strong></span><span style="color: Tomato;">.</span>
   

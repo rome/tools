@@ -5,6 +5,8 @@ parent: lint/rules/index
 
 # noDistractingElements (since v11.0.0)
 
+> This rule is recommended by Rome.
+
 Enforces that no distracting elements are used.
 
 Elements that can be visually distracting can cause accessibility issues with visually impaired users.
@@ -19,7 +21,7 @@ By default, the following elements are visually distracting: `<marquee>` and `<b
 <marquee/>
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noDistractingElements.js:1:1 <a href="https://docs.rome.tools/lint/rules/noDistractingElements">lint/nursery/noDistractingElements</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">a11y/noDistractingElements.js:1:1 <a href="https://docs.rome.tools/lint/rules/noDistractingElements">lint/a11y/noDistractingElements</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Don't use the 'marquee' element.</span>
   
@@ -39,7 +41,7 @@ By default, the following elements are visually distracting: `<marquee>` and `<b
 <blink/>
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noDistractingElements.js:1:1 <a href="https://docs.rome.tools/lint/rules/noDistractingElements">lint/nursery/noDistractingElements</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">a11y/noDistractingElements.js:1:1 <a href="https://docs.rome.tools/lint/rules/noDistractingElements">lint/a11y/noDistractingElements</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Don't use the 'blink' element.</span>
   

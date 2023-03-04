@@ -47,6 +47,13 @@
 			"description": "A list of rules that belong to this group",
 			"type": "object",
 			"properties": {
+				"noAccessKey": {
+					"description": "Enforce that the accessKey attribute is not used on any HTML element.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"noAutofocus": {
 					"description": "Avoid the autoFocus attribute",
 					"anyOf": [
@@ -56,6 +63,20 @@
 				},
 				"noBlankTarget": {
 					"description": "Disallow target=\"_blank\" attribute without rel=\"noreferrer\"",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
+				"noDistractingElements": {
+					"description": "Enforces that no distracting elements are used.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
+				"noHeaderScope": {
+					"description": "Check that the scope attribute is only used on th elements.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }
@@ -193,6 +214,13 @@
 						{ "type": "null" }
 					]
 				},
+				"noConstructorReturn": {
+					"description": "Disallow returning a value from a constructor.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"noEmptyPattern": {
 					"description": "Disallows empty destructuring patterns.",
 					"anyOf": [
@@ -207,8 +235,29 @@
 						{ "type": "null" }
 					]
 				},
+				"noPrecisionLoss": {
+					"description": "Disallow literal numbers that lose precision",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"noRenderReturnValue": {
 					"description": "Prevent the usage of the return value of React.render.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
+				"noSetterReturn": {
+					"description": "Disallow returning a value from a setter",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
+				"noStringCaseMismatch": {
+					"description": "Disallow comparison of expressions modifying the string case with non-compliant value.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }
@@ -235,6 +284,13 @@
 						{ "type": "null" }
 					]
 				},
+				"noUnsafeFinally": {
+					"description": "Disallow control flow statements in finally blocks.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"noUnusedVariables": {
 					"description": "Disallow unused variables.",
 					"anyOf": [
@@ -244,6 +300,13 @@
 				},
 				"noVoidElementsWithChildren": {
 					"description": "This rules prevents void elements (AKA self-closing elements) from having children.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
+				"noVoidTypeReturn": {
+					"description": "Disallow returning a value from a function with the return type 'void'",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }
@@ -403,13 +466,6 @@
 			"description": "A list of rules that belong to this group",
 			"type": "object",
 			"properties": {
-				"noAccessKey": {
-					"description": "Enforce that the accessKey attribute is not used on any HTML element.",
-					"anyOf": [
-						{ "$ref": "#/definitions/RuleConfiguration" },
-						{ "type": "null" }
-					]
-				},
 				"noAssignInExpressions": {
 					"description": "Disallow assignments in expressions.",
 					"anyOf": [
@@ -445,27 +501,6 @@
 						{ "type": "null" }
 					]
 				},
-				"noConstEnum": {
-					"description": "Disallow TypeScript const enum",
-					"anyOf": [
-						{ "$ref": "#/definitions/RuleConfiguration" },
-						{ "type": "null" }
-					]
-				},
-				"noConstructorReturn": {
-					"description": "Disallow returning a value from a constructor.",
-					"anyOf": [
-						{ "$ref": "#/definitions/RuleConfiguration" },
-						{ "type": "null" }
-					]
-				},
-				"noDistractingElements": {
-					"description": "Enforces that no distracting elements are used.",
-					"anyOf": [
-						{ "$ref": "#/definitions/RuleConfiguration" },
-						{ "type": "null" }
-					]
-				},
 				"noDuplicateCase": {
 					"description": "Disallow duplicate case labels. If a switch statement has duplicate test expressions in case clauses, it is likely that a programmer copied a case clause but forgot to change the test expression.",
 					"anyOf": [
@@ -487,29 +522,8 @@
 						{ "type": "null" }
 					]
 				},
-				"noDuplicateObjectKeys": {
-					"description": "Prevents object literals having more than one property declaration for the same name. If an object property with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored, which is likely a mistake.",
-					"anyOf": [
-						{ "$ref": "#/definitions/RuleConfiguration" },
-						{ "type": "null" }
-					]
-				},
-				"noEmptyInterface": {
-					"description": "Disallow the declaration of empty interfaces.",
-					"anyOf": [
-						{ "$ref": "#/definitions/RuleConfiguration" },
-						{ "type": "null" }
-					]
-				},
 				"noExtraLabels": {
 					"description": "Disallow unnecessary labels.",
-					"anyOf": [
-						{ "$ref": "#/definitions/RuleConfiguration" },
-						{ "type": "null" }
-					]
-				},
-				"noExtraNonNullAssertion": {
-					"description": "Prevents the wrong usage of the non-null assertion operator (!) in TypeScript files.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }
@@ -524,13 +538,6 @@
 				},
 				"noGlobalObjectCalls": {
 					"description": "Disallow calling global object properties as functions",
-					"anyOf": [
-						{ "$ref": "#/definitions/RuleConfiguration" },
-						{ "type": "null" }
-					]
-				},
-				"noHeaderScope": {
-					"description": "Check that the scope attribute is only used on th elements.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }
@@ -557,13 +564,6 @@
 						{ "type": "null" }
 					]
 				},
-				"noNonNullAssertion": {
-					"description": "Disallow non-null assertions using the ! postfix operator.",
-					"anyOf": [
-						{ "$ref": "#/definitions/RuleConfiguration" },
-						{ "type": "null" }
-					]
-				},
 				"noNoninteractiveElementToInteractiveRole": {
 					"description": "Enforce that interactive ARIA roles are not assigned to non-interactive HTML elements.",
 					"anyOf": [
@@ -573,13 +573,6 @@
 				},
 				"noParameterProperties": {
 					"description": "Disallow the use of parameter properties in class constructors.",
-					"anyOf": [
-						{ "$ref": "#/definitions/RuleConfiguration" },
-						{ "type": "null" }
-					]
-				},
-				"noPrecisionLoss": {
-					"description": "Disallow literal numbers that lose precision",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }
@@ -606,13 +599,6 @@
 						{ "type": "null" }
 					]
 				},
-				"noRedundantUseStrict": {
-					"description": "Prevents from having redundant \"use strict\".",
-					"anyOf": [
-						{ "$ref": "#/definitions/RuleConfiguration" },
-						{ "type": "null" }
-					]
-				},
 				"noRestrictedGlobals": {
 					"description": "This rule allows you to specify global variable names that you don’t want to use in your application.",
 					"anyOf": [
@@ -634,20 +620,6 @@
 						{ "type": "null" }
 					]
 				},
-				"noSetterReturn": {
-					"description": "Disallow returning a value from a setter",
-					"anyOf": [
-						{ "$ref": "#/definitions/RuleConfiguration" },
-						{ "type": "null" }
-					]
-				},
-				"noStringCaseMismatch": {
-					"description": "Disallow comparison of expressions modifying the string case with non-compliant value.",
-					"anyOf": [
-						{ "$ref": "#/definitions/RuleConfiguration" },
-						{ "type": "null" }
-					]
-				},
 				"noSvgWithoutTitle": {
 					"description": "Enforces the usage of the title element for the svg element.",
 					"anyOf": [
@@ -664,13 +636,6 @@
 				},
 				"noUnreachableSuper": {
 					"description": "Ensures the super() constructor is called exactly once on every code path in a class constructor before this is accessed if the class has a superclass",
-					"anyOf": [
-						{ "$ref": "#/definitions/RuleConfiguration" },
-						{ "type": "null" }
-					]
-				},
-				"noUnsafeFinally": {
-					"description": "Disallow control flow statements in finally blocks.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }
@@ -711,20 +676,6 @@
 						{ "type": "null" }
 					]
 				},
-				"noVar": {
-					"description": "Disallow the use of var",
-					"anyOf": [
-						{ "$ref": "#/definitions/RuleConfiguration" },
-						{ "type": "null" }
-					]
-				},
-				"noVoidTypeReturn": {
-					"description": "Disallow returning a value from a function with the return type 'void'",
-					"anyOf": [
-						{ "$ref": "#/definitions/RuleConfiguration" },
-						{ "type": "null" }
-					]
-				},
 				"noWith": {
 					"description": "Disallow with statements in non-strict contexts.",
 					"anyOf": [
@@ -757,43 +708,8 @@
 						{ "type": "null" }
 					]
 				},
-				"useConst": {
-					"description": "Require const declarations for variables that are never reassigned after declared.",
-					"anyOf": [
-						{ "$ref": "#/definitions/RuleConfiguration" },
-						{ "type": "null" }
-					]
-				},
-				"useDefaultParameterLast": {
-					"description": "Enforce default function parameters and optional parameters to be last.",
-					"anyOf": [
-						{ "$ref": "#/definitions/RuleConfiguration" },
-						{ "type": "null" }
-					]
-				},
-				"useDefaultSwitchClauseLast": {
-					"description": "Enforce default clauses in switch statements to be last",
-					"anyOf": [
-						{ "$ref": "#/definitions/RuleConfiguration" },
-						{ "type": "null" }
-					]
-				},
-				"useEnumInitializers": {
-					"description": "Require that each enum member value be explicitly initialized.",
-					"anyOf": [
-						{ "$ref": "#/definitions/RuleConfiguration" },
-						{ "type": "null" }
-					]
-				},
 				"useExhaustiveDependencies": {
 					"description": "Enforce all dependencies are correctly specified.",
-					"anyOf": [
-						{ "$ref": "#/definitions/RuleConfiguration" },
-						{ "type": "null" }
-					]
-				},
-				"useExponentiationOperator": {
-					"description": "Disallow the use of Math.pow in favor of the ** operator.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }
@@ -822,13 +738,6 @@
 				},
 				"useMediaCaption": {
 					"description": "Enforces that audio and video elements must have a track for captions.",
-					"anyOf": [
-						{ "$ref": "#/definitions/RuleConfiguration" },
-						{ "type": "null" }
-					]
-				},
-				"useNumericLiterals": {
-					"description": "Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }
@@ -991,6 +900,13 @@
 						{ "type": "null" }
 					]
 				},
+				"noNonNullAssertion": {
+					"description": "Disallow non-null assertions using the ! postfix operator.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"noShoutyConstants": {
 					"description": "Disallow the use of constants which its value is the upper-case version of its name.",
 					"anyOf": [
@@ -1000,6 +916,13 @@
 				},
 				"noUnusedTemplateLiteral": {
 					"description": "Disallow template literals if interpolation and special-character handling are not needed",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
+				"noVar": {
+					"description": "Disallow the use of var",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }
@@ -1016,8 +939,43 @@
 						{ "type": "null" }
 					]
 				},
+				"useConst": {
+					"description": "Require const declarations for variables that are never reassigned after declared.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
+				"useDefaultParameterLast": {
+					"description": "Enforce default function parameters and optional parameters to be last.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
+				"useEnumInitializers": {
+					"description": "Require that each enum member value be explicitly initialized.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
+				"useExponentiationOperator": {
+					"description": "Disallow the use of Math.pow in favor of the ** operator.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"useFragmentSyntax": {
 					"description": "This rule enforces the use of <>...</> over <Fragment>...</Fragment>.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
+				"useNumericLiterals": {
+					"description": "Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }
@@ -1106,6 +1064,13 @@
 						{ "type": "null" }
 					]
 				},
+				"noConstEnum": {
+					"description": "Disallow TypeScript const enum",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"noDebugger": {
 					"description": "Disallow the use of debugger",
 					"anyOf": [
@@ -1120,6 +1085,13 @@
 						{ "type": "null" }
 					]
 				},
+				"noDuplicateObjectKeys": {
+					"description": "Prevents object literals having more than one property declaration for the same name. If an object property with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored, which is likely a mistake.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"noDuplicateParameters": {
 					"description": "Disallow duplicate function arguments name.",
 					"anyOf": [
@@ -1127,8 +1099,22 @@
 						{ "type": "null" }
 					]
 				},
+				"noEmptyInterface": {
+					"description": "Disallow the declaration of empty interfaces.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"noExplicitAny": {
 					"description": "Disallow the any type usage.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
+				"noExtraNonNullAssertion": {
+					"description": "Prevents the wrong usage of the non-null assertion operator (!) in TypeScript files.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }
@@ -1150,6 +1136,13 @@
 				},
 				"noLabelVar": {
 					"description": "Disallow labels that share a name with a variable",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
+				"noRedundantUseStrict": {
+					"description": "Prevents from having redundant \"use strict\".",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }
@@ -1179,6 +1172,13 @@
 				"recommended": {
 					"description": "It enables the recommended rules for this group",
 					"type": ["boolean", "null"]
+				},
+				"useDefaultSwitchClauseLast": {
+					"description": "Enforce default clauses in switch statements to be last",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
 				},
 				"useValidTypeof": {
 					"description": "This rule verifies the result of typeof $expr unary expressions is being compared to valid values, either string literals containing valid type names or other typeof expressions",

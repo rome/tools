@@ -5,8 +5,6 @@ parent: lint/rules/index
 
 # useSimplifiedLogicExpression (since v0.7.0)
 
-> This rule is recommended by Rome.
-
 Discard redundant terms from logical expressions.
 
 ## Examples
@@ -20,7 +18,7 @@ const r = true && boolExp;
 
 <pre class="language-text"><code class="language-text">complexity/useSimplifiedLogicExpression.js:2:11 <a href="https://docs.rome.tools/lint/rules/useSimplifiedLogicExpression">lint/complexity/useSimplifiedLogicExpression</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━
 
-<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Logical expression contains unnecessary complexity.</span>
+<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Logical expression contains unnecessary complexity.</span>
   
     <strong>1 │ </strong>const boolExp = true;
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>const r = true &amp;&amp; boolExp;
@@ -40,7 +38,7 @@ const r2 = boolExp || true;
 
 <pre class="language-text"><code class="language-text">complexity/useSimplifiedLogicExpression.js:2:12 <a href="https://docs.rome.tools/lint/rules/useSimplifiedLogicExpression">lint/complexity/useSimplifiedLogicExpression</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━
 
-<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Logical expression contains unnecessary complexity.</span>
+<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Logical expression contains unnecessary complexity.</span>
   
     <strong>1 │ </strong>const boolExp2 = true;
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>const r2 = boolExp || true;
@@ -60,7 +58,7 @@ const r3 = null ?? nonNullExp;
 
 <pre class="language-text"><code class="language-text">complexity/useSimplifiedLogicExpression.js:2:12 <a href="https://docs.rome.tools/lint/rules/useSimplifiedLogicExpression">lint/complexity/useSimplifiedLogicExpression</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━
 
-<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Logical expression contains unnecessary complexity.</span>
+<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Logical expression contains unnecessary complexity.</span>
   
     <strong>1 │ </strong>const nonNullExp = 123;
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>const r3 = null ?? nonNullExp;
@@ -81,7 +79,7 @@ const r4 = !boolExpr1 || !boolExpr2;
 
 <pre class="language-text"><code class="language-text">complexity/useSimplifiedLogicExpression.js:3:12 <a href="https://docs.rome.tools/lint/rules/useSimplifiedLogicExpression">lint/complexity/useSimplifiedLogicExpression</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━
 
-<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Logical expression contains unnecessary complexity.</span>
+<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Logical expression contains unnecessary complexity.</span>
   
     <strong>1 │ </strong>const boolExpr1 = true;
     <strong>2 │ </strong>const boolExpr2 = false;

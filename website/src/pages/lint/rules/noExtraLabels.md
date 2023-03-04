@@ -3,7 +3,7 @@ title: Lint Rule noExtraLabels
 parent: lint/rules/index
 ---
 
-# noExtraLabels (since vnext)
+# noExtraLabels (since v12.0.0)
 
 Disallow unnecessary labels.
 
