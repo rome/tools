@@ -72,6 +72,14 @@ var a = 3;
 a = 10;
 ```
 
+```ts
+class Foo {
+    bar(a: A);
+    bar(a: A, b: B);
+    bar(a: A, b: B) {}
+}
+```
+
 ## Related links
 
 - [Disable a rule](/linter/#disable-a-lint-rule)
