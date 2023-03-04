@@ -8,7 +8,7 @@ expression: content
 {
   "javascript": {
     "formatter": {
-        "quoteStyle": "single"
+      "quoteStyle": "single"
     }
   }
 }

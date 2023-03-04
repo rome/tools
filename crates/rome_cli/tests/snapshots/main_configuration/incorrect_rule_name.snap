@@ -9,12 +9,12 @@ expression: content
   "linter": {
     "enabled": true,
     "rules": {
-        "correctness": {
-            "foo_rule": "off"
-        },
-        "style": {
-            "what_the_hell": "off"
-        }
+      "correctness": {
+        "foo_rule": "off"
+      },
+      "style": {
+        "what_the_hell": "off"
+      }
     }
   }
 }
@@ -52,6 +52,7 @@ rome.json:6:13 configuration ━━━━━━━━━━━━━━━━━
   i Accepted keys
   
   - recommended
+  - all
   - noChildrenProp
   - noConstAssign
   - noConstructorReturn

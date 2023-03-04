@@ -48,107 +48,59 @@ impl VisitNode<JsonLanguage> for Rules {
             }
             "a11y" => {
                 let mut visitor = A11y::default();
-                self.map_to_object(&value, name_text, &mut visitor, diagnostics)?;
-                if !are_recommended_and_all_correct(
-                    &value,
-                    visitor.recommended.as_ref(),
-                    visitor.all.as_ref(),
-                    diagnostics,
-                ) {
-                    visitor = A11y::default();
+                if are_recommended_and_all_correct(&value, name_text, diagnostics)? {
+                    self.map_to_object(&value, name_text, &mut visitor, diagnostics)?;
+                    self.a11y = Some(visitor);
                 }
-                self.a11y = Some(visitor);
             }
             "complexity" => {
                 let mut visitor = Complexity::default();
-                self.map_to_object(&value, name_text, &mut visitor, diagnostics)?;
-                if !are_recommended_and_all_correct(
-                    &value,
-                    visitor.recommended.as_ref(),
-                    visitor.all.as_ref(),
-                    diagnostics,
-                ) {
-                    visitor = Complexity::default();
+                if are_recommended_and_all_correct(&value, name_text, diagnostics)? {
+                    self.map_to_object(&value, name_text, &mut visitor, diagnostics)?;
+                    self.complexity = Some(visitor);
                 }
-                self.complexity = Some(visitor);
             }
             "correctness" => {
                 let mut visitor = Correctness::default();
-                self.map_to_object(&value, name_text, &mut visitor, diagnostics)?;
-                if !are_recommended_and_all_correct(
-                    &value,
-                    visitor.recommended.as_ref(),
-                    visitor.all.as_ref(),
-                    diagnostics,
-                ) {
-                    visitor = Correctness::default();
+                if are_recommended_and_all_correct(&value, name_text, diagnostics)? {
+                    self.map_to_object(&value, name_text, &mut visitor, diagnostics)?;
+                    self.correctness = Some(visitor);
                 }
-                self.correctness = Some(visitor);
             }
             "nursery" => {
                 let mut visitor = Nursery::default();
-                self.map_to_object(&value, name_text, &mut visitor, diagnostics)?;
-                if !are_recommended_and_all_correct(
-                    &value,
-                    visitor.recommended.as_ref(),
-                    visitor.all.as_ref(),
-                    diagnostics,
-                ) {
-                    visitor = Nursery::default();
+                if are_recommended_and_all_correct(&value, name_text, diagnostics)? {
+                    self.map_to_object(&value, name_text, &mut visitor, diagnostics)?;
+                    self.nursery = Some(visitor);
                 }
-                self.nursery = Some(visitor);
             }
             "performance" => {
                 let mut visitor = Performance::default();
-                self.map_to_object(&value, name_text, &mut visitor, diagnostics)?;
-                if !are_recommended_and_all_correct(
-                    &value,
-                    visitor.recommended.as_ref(),
-                    visitor.all.as_ref(),
-                    diagnostics,
-                ) {
-                    visitor = Performance::default();
+                if are_recommended_and_all_correct(&value, name_text, diagnostics)? {
+                    self.map_to_object(&value, name_text, &mut visitor, diagnostics)?;
+                    self.performance = Some(visitor);
                 }
-                self.performance = Some(visitor);
             }
             "security" => {
                 let mut visitor = Security::default();
-                self.map_to_object(&value, name_text, &mut visitor, diagnostics)?;
-                if !are_recommended_and_all_correct(
-                    &value,
-                    visitor.recommended.as_ref(),
-                    visitor.all.as_ref(),
-                    diagnostics,
-                ) {
-                    visitor = Security::default();
+                if are_recommended_and_all_correct(&value, name_text, diagnostics)? {
+                    self.map_to_object(&value, name_text, &mut visitor, diagnostics)?;
+                    self.security = Some(visitor);
                 }
-                self.security = Some(visitor);
             }
             "style" => {
                 let mut visitor = Style::default();
-                self.map_to_object(&value, name_text, &mut visitor, diagnostics)?;
-                if !are_recommended_and_all_correct(
-                    &value,
-                    visitor.recommended.as_ref(),
-                    visitor.all.as_ref(),
-                    diagnostics,
-                ) {
-                    visitor = Style::default();
+                if are_recommended_and_all_correct(&value, name_text, diagnostics)? {
+                    self.map_to_object(&value, name_text, &mut visitor, diagnostics)?;
+                    self.style = Some(visitor);
                 }
-                self.style = Some(visitor);
             }
             "suspicious" => {
                 let mut visitor = Suspicious::default();
-                self.map_to_object(&value, name_text, &mut visitor, diagnostics)?;
-                if !are_recommended_and_all_correct(
-                    &value,
-                    visitor.recommended.as_ref(),
-                    visitor.all.as_ref(),
-                    diagnostics,
-                ) {
-                    visitor = Suspicious::default();
+                if are_recommended_and_all_correct(&value, name_text, diagnostics)? {
+                    self.map_to_object(&value, name_text, &mut visitor, diagnostics)?;
+                    self.suspicious = Some(visitor);
                 }
-                self.suspicious = Some(visitor);
             }
             _ => {}
         }

@@ -8,10 +8,10 @@ expression: content
 {
   "linter": {
     "rules": {
-        "recommended": true,
-        "suspicious": {
-            "noDebugger": "warn"
-        }
+      "recommended": true,
+      "suspicious": {
+        "noDebugger": "warn"
+      }
     }
   }
 }

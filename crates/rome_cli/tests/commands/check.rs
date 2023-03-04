@@ -1300,3 +1300,37 @@ import { bar, foom, lorem } from "foo";
         result,
     ));
 }
+
+#[test]
+fn all_rules() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let rome_json = r#"{
+        "linter": {
+            "rules": { "all": true }
+        }
+    }"#;
+
+    let file_path = Path::new("fix.js");
+    fs.insert(file_path.into(), FIX_BEFORE.as_bytes());
+
+    let config_path = Path::new("rome.json");
+    fs.insert(config_path.into(), rome_json.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+    );
+
+    assert!(result.is_err(), "run_cli returned {result:?}");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "all_rules",
+        fs,
+        console,
+        result,
+    ));
+}

@@ -82,13 +82,16 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
 
         group_rules_union.push(quote! {
             if let Some(group) = self.#property_group_name.as_ref() {
-                if #global_recommended || group.is_recommended() {
-                    enabled_rules.extend(#group_struct_name::recommended_rules_as_filters());
-                }
+                group.collect_preset_rules(self.is_recommended(), &mut enabled_rules);
                 enabled_rules.extend(&group.get_enabled_rules());
                 disabled_rules.extend(&group.get_disabled_rules());
+            } else if self.is_all() {
+                enabled_rules.extend(#group_struct_name::all_rules_as_filters());
             } else if #global_recommended {
                 enabled_rules.extend(#group_struct_name::recommended_rules_as_filters());
+            }
+            if self.is_not_all() {
+                disabled_rules.extend(#group_struct_name::all_rules_as_filters());
             }
         });
 
@@ -113,16 +116,14 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
         rule_visitor_call.push(quote! {
             #group_name_string_literal => {
                 let mut visitor = #group_struct_name::default();
-                self.map_to_object(&value, name_text, &mut visitor, diagnostics)?;
-                if !are_recommended_and_all_correct(
+                if are_recommended_and_all_correct(
                     &value,
-                    visitor.recommended.as_ref(),
-                    visitor.all.as_ref(),
+                    name_text,
                     diagnostics,
-                ) {
-                    visitor = #group_struct_name::default();
+                )? {
+                    self.map_to_object(&value, name_text, &mut visitor, diagnostics)?;
+                    self.#property_group_name = Some(visitor);
                 }
-                self.#property_group_name = Some(visitor);
             }
         });
     }
@@ -204,11 +205,19 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
                 }
             }
 
-            pub(crate) fn is_recommended(&self) -> bool {
+            pub(crate) const fn is_recommended(&self) -> bool {
                 // It is only considered _not_ recommended when
                 // the configuration is `"recommended": false`.
-                // Hence, omission of the setting or set to `true` are considered recommneded.
+                // Hence, omission of the setting or set to `true` are considered recommended.
                 !matches!(self.recommended, Some(false))
+            }
+
+            pub(crate) const fn is_all(&self) -> bool {
+                matches!(self.all, Some(true))
+            }
+
+            pub(crate) const fn is_not_all(&self) -> bool {
+                matches!(self.all, Some(false))
             }
 
             /// It returns a tuple of filters. The first element of the tuple are the enabled rules,
@@ -325,6 +334,7 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
 fn generate_struct(group: &str, rules: &BTreeMap<&'static str, RuleMetadata>) -> TokenStream {
     let mut lines_recommended_rule = Vec::new();
     let mut lines_recommended_rule_as_filter = Vec::new();
+    let mut lines_all_rule_as_filter = Vec::new();
     let mut declarations = Vec::new();
     let mut lines_rule = Vec::new();
     let mut schema_lines_rules = Vec::new();
@@ -395,6 +405,9 @@ fn generate_struct(group: &str, rules: &BTreeMap<&'static str, RuleMetadata>) ->
             });
             number_of_recommended_rules += 1;
         }
+        lines_all_rule_as_filter.push(quote! {
+            RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[#rule_position])
+        });
         lines_rule.push(quote! {
              #rule
         });
@@ -466,6 +479,10 @@ fn generate_struct(group: &str, rules: &BTreeMap<&'static str, RuleMetadata>) ->
                 #( #lines_recommended_rule_as_filter ),*
             ];
 
+            const ALL_RULES_AS_FILTERS: [RuleFilter<'static>; #number_of_rules] = [
+                #( #lines_all_rule_as_filter ),*
+            ];
+
             pub(crate) fn is_recommended(&self) -> bool {
                 !matches!(self.recommended, Some(false))
             }
@@ -494,6 +511,23 @@ fn generate_struct(group: &str, rules: &BTreeMap<&'static str, RuleMetadata>) ->
 
             pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; #number_of_recommended_rules] {
                 Self::RECOMMENDED_RULES_AS_FILTERS
+            }
+
+            pub(crate) fn all_rules_as_filters() -> [RuleFilter<'static>; #number_of_rules] {
+                Self::ALL_RULES_AS_FILTERS
+            }
+
+            /// Select preset rules
+            pub(crate) fn collect_preset_rules(
+                &self,
+                is_recommended: bool,
+                enabled_rules: &mut IndexSet<RuleFilter>,
+            ) {
+                if self.all == Some(true) {
+                    enabled_rules.extend(Self::all_rules_as_filters());
+                } else if is_recommended || self.is_recommended() {
+                    enabled_rules.extend(Self::recommended_rules_as_filters());
+                }
             }
 
             pub(crate) fn get_rule_configuration(&self, rule_name: &str) -> Option<&RuleConfiguration> {
