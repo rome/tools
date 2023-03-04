@@ -1,9 +1,10 @@
 use crate::configuration::linter::{RulePlainConfiguration, RuleWithOptions};
 use crate::configuration::LinterConfiguration;
 use crate::{RuleConfiguration, Rules};
+use rome_console::markup;
 use rome_deserialize::json::{has_only_known_keys, with_only_known_variants, VisitJsonNode};
 use rome_deserialize::{DeserializationDiagnostic, VisitNode};
-use rome_json_syntax::{JsonLanguage, JsonSyntaxNode};
+use rome_json_syntax::{AnyJsonValue, JsonLanguage, JsonSyntaxNode};
 use rome_rowan::{AstNode, SyntaxNode};
 
 impl VisitJsonNode for LinterConfiguration {}
@@ -35,6 +36,14 @@ impl VisitNode<JsonLanguage> for LinterConfiguration {
             "rules" => {
                 let mut rules = Rules::default();
                 self.map_to_object(&value, name_text, &mut rules, diagnostics)?;
+                if !are_recommended_and_all_correct(
+                    &value,
+                    rules.recommended.as_ref(),
+                    rules.all.as_ref(),
+                    diagnostics,
+                ) {
+                    rules = Rules::default();
+                }
                 self.rules = Some(rules);
             }
             _ => {}
@@ -175,4 +184,24 @@ impl VisitNode<JsonLanguage> for RuleWithOptions {
         }
         Some(())
     }
+}
+
+pub(crate) fn are_recommended_and_all_correct(
+    current_node: &AnyJsonValue,
+    recommended: Option<&bool>,
+    all: Option<&bool>,
+    diagnostics: &mut Vec<DeserializationDiagnostic>,
+) -> bool {
+    if let (Some(recommended), Some(all)) = (recommended, all) {
+        if *recommended == true && *all == true {
+            diagnostics
+                .push(DeserializationDiagnostic::new(markup!(
+                    <Emphasis>"'recommended'"</Emphasis>" and "<Emphasis>"'all'"</Emphasis>" can't be both "<Emphasis>"'true'"</Emphasis>". You should choose only one of them."
+                ))
+                    .with_range(current_node.range())
+                    .with_note(markup!("Rome will fallback to its defaults for this section.")));
+            return false;
+        }
+    }
+    true
 }

@@ -53,7 +53,7 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
     let mut group_rules_union = Vec::new();
     let mut group_match_code = Vec::new();
     let mut group_get_severity = Vec::new();
-    let mut group_name_list = vec!["recommended"];
+    let mut group_name_list = vec!["recommended", "all"];
     let mut rule_visitor_call = Vec::new();
     let mut visitor_rule_list = Vec::new();
     let mut push_rule_list = Vec::new();
@@ -114,6 +114,14 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
             #group_name_string_literal => {
                 let mut visitor = #group_struct_name::default();
                 self.map_to_object(&value, name_text, &mut visitor, diagnostics)?;
+                if !are_recommended_and_all_correct(
+                    &value,
+                    visitor.recommended.as_ref(),
+                    visitor.all.as_ref(),
+                    diagnostics,
+                ) {
+                    visitor = #group_struct_name::default();
+                }
                 self.#property_group_name = Some(visitor);
             }
         });
@@ -136,6 +144,10 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
             #[serde(skip_serializing_if = "Option::is_none")]
             pub recommended: Option<bool>,
 
+            /// It enables ALL rules. The rules that belong to `nursery` won't be enabled.
+            #[serde(skip_serializing_if = "Option::is_none")]
+            pub all: Option<bool>,
+
             #( #line_groups ),*
         }
 
@@ -143,6 +155,7 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
             fn default() -> Self {
                 Self {
                     recommended: Some(true),
+                    all: None,
                     #( #default_for_groups ),*
                 }
             }
@@ -227,6 +240,7 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
         use rome_deserialize::{DeserializationDiagnostic, VisitNode};
         use rome_json_syntax::{AnyJsonValue, JsonLanguage};
         use rome_rowan::{AstNode, SyntaxNode};
+        use crate::configuration::parse::json::linter::are_recommended_and_all_correct;
 
         impl VisitJsonNode for Rules {}
 
@@ -249,6 +263,14 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
 
                 let name_text = name.text();
                 match name_text {
+                    "recommended" => {
+                        self.recommended = Some(self.map_to_boolean(&value, name_text, diagnostics)?);
+                    }
+
+                    "all" => {
+                        self.all = Some(self.map_to_boolean(&value, name_text, diagnostics)?);
+                    }
+
                     #( #rule_visitor_call )*
 
                     _ => {}
@@ -422,6 +444,10 @@ fn generate_struct(group: &str, rules: &BTreeMap<&'static str, RuleMetadata>) ->
             #[serde(skip_serializing_if = "Option::is_none")]
             pub recommended: Option<bool>,
 
+            /// It enables ALL rules for this group.
+            #[serde(skip_serializing_if = "Option::is_none")]
+            pub all: Option<bool>,
+
             #( #schema_lines_rules ),*
         }
 
@@ -482,7 +508,7 @@ fn generate_struct(group: &str, rules: &BTreeMap<&'static str, RuleMetadata>) ->
 
 fn generate_visitor(group: &str, rules: &BTreeMap<&'static str, RuleMetadata>) -> TokenStream {
     let group_struct_name = Ident::new(&group.to_capitalized(), Span::call_site());
-    let mut group_rules = vec![Literal::string("recommended")];
+    let mut group_rules = vec![Literal::string("recommended"), Literal::string("all")];
     let mut visitor_rule_line = Vec::new();
 
     for rule_name in rules.keys() {
@@ -534,6 +560,10 @@ fn generate_visitor(group: &str, rules: &BTreeMap<&'static str, RuleMetadata>) -
                 match name_text {
                     "recommended" => {
                         self.recommended = Some(self.map_to_boolean(&value, name_text, diagnostics)?);
+                    }
+
+                    "all" => {
+                        self.all = Some(self.map_to_boolean(&value, name_text, diagnostics)?);
                     }
 
                     #( #visitor_rule_line ),*,
