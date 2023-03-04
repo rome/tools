@@ -20,3 +20,26 @@ interface D extends B<string, symbol>, F<string, symbol>, G<string, number, symb
 interface D extends B<string, symbol>, F<string, symbol> {
 
 }
+
+interface Wrong {
+	aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa;
+	ppppppp: ppppppp
+}
+
+f(() => {
+	interface Wrong {
+		aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa;
+		ppppppp: ppppppp
+	}
+});
+
+x.y(() => {
+	interface Wrong {
+		a: {
+			b: string;
+		};
+		p: {
+			q: string;
+		};
+	}
+});
