@@ -1,7 +1,7 @@
 use crate::utils::should_hug_type;
 use crate::{prelude::*, utils::is_object_like_type};
-use rome_formatter::write;
 use rome_formatter::FormatError::SyntaxError;
+use rome_formatter::{format_args, write};
 use rome_js_syntax::{
     AnyJsExpression, AnyTsType, JsSyntaxKind, JsVariableDeclarator, TsTypeArguments,
     TsTypeArgumentsFields,
@@ -75,17 +75,24 @@ impl FormatNodeRule<TsTypeArguments> for FormatTsTypeArguments {
         let should_inline = !is_arrow_function_variables
             && (ts_type_argument_list.len() == 0 || first_argument_can_be_hugged_or_is_null_type);
 
-        write!(f, [l_angle_token.format(),])?;
-
         if should_inline {
-            write!(f, [ts_type_argument_list.format()])?;
+            write!(
+                f,
+                [
+                    l_angle_token.format(),
+                    ts_type_argument_list.format(),
+                    r_angle_token.format()
+                ]
+            )
         } else {
             write!(
                 f,
-                [group(&soft_block_indent(&ts_type_argument_list.format()))]
-            )?;
+                [group(&format_args![
+                    l_angle_token.format(),
+                    soft_block_indent(&ts_type_argument_list.format()),
+                    r_angle_token.format()
+                ])]
+            )
         }
-
-        write!(f, [r_angle_token.format()])
     }
 }

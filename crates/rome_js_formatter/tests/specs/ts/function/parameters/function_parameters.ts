@@ -17,3 +17,17 @@ export function formatNumber2(
 		useGrouping?: boolean;
 	}
 ): string {}
+
+
+export const findByDatefindByDatefindByDatefindByDate =
+	(_, { date }, { req } ) => findByDatefindByDatefindByDatefindByDate;
+
+export const queryAuditLog = async ({
+		startDate,
+		endDate,
+		jobId,
+		src,
+		type,
+	}: Filter): Promise<DBAuditLog[]> => {
+
+};
