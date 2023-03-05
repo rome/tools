@@ -166,6 +166,7 @@ fn handle_dir<'scope>(
     scope: &Scope<'scope>,
     ctx: &'scope dyn TraversalContext,
     path: &Path,
+    // The unresolved origin path in case the directory is behind a symbolic link
     origin_path: Option<PathBuf>,
 ) {
     if let Some(file_name) = path.file_name().and_then(OsStr::to_str) {
@@ -201,6 +202,7 @@ fn handle_dir_entry<'scope>(
     scope: &Scope<'scope>,
     ctx: &'scope dyn TraversalContext,
     entry: DirEntry,
+    // The unresolved origin path in case the directory is behind a symbolic link
     mut origin_path: Option<PathBuf>,
 ) {
     let mut path = entry.path();
@@ -246,6 +248,7 @@ fn handle_dir_entry<'scope>(
         };
 
         if file_type.is_dir() {
+            // Override the origin path of the symbolic link
             origin_path = Some(path);
         }
 
@@ -279,6 +282,9 @@ fn handle_dir_entry<'scope>(
             return;
         }
 
+        // In case the file is inside a directory that is behind a symbolic link,
+        // the unresolved origin path is used to construct a new path.
+        // This is required to support ignore patterns to symbolic links.
         let rome_path = if let Some(origin_path) = origin_path {
             if let Some(file_name) = path.file_name() {
                 RomePath::new(origin_path.join(file_name))
@@ -296,7 +302,8 @@ fn handle_dir_entry<'scope>(
         // Performing this check here let's us skip skip unsupported
         // files entirely, as well as silently ignore unsupported files when
         // doing a directory traversal, but printing an error message if the
-        // user explicitly requests an unsupported file to be handled
+        // user explicitly requests an unsupported file to be handled.
+        // This check also works for symbolic links.
         if !ctx.can_handle(&rome_path) {
             return;
         }
