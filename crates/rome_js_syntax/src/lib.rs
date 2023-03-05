@@ -16,6 +16,7 @@ pub mod source_type;
 pub mod stmt_ext;
 pub mod suppression;
 mod syntax_node;
+pub mod type_ext;
 mod union_ext;
 
 pub use self::generated::*;
@@ -28,6 +29,7 @@ pub use rome_rowan::{
 pub use source_type::*;
 pub use stmt_ext::*;
 pub use syntax_node::*;
+pub use type_ext::*;
 
 use crate::JsSyntaxKind::*;
 use rome_rowan::{AstNode, RawSyntaxKind};

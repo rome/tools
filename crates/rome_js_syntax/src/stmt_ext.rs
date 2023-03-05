@@ -1,10 +1,34 @@
 //! Extended AST node definitions for statements which are unique and special enough to generate code for manually
 
 use crate::{
-    AnyJsArrayAssignmentPatternElement, AnyJsAssignmentPattern, JsForVariableDeclaration,
-    JsVariableDeclaration, T,
+    AnyJsArrayAssignmentPatternElement, AnyJsAssignmentPattern, AnyJsSwitchClause,
+    JsForVariableDeclaration, JsStatementList, JsSyntaxToken as SyntaxToken, JsVariableDeclaration,
+    T,
 };
 use rome_rowan::SyntaxResult;
+
+impl AnyJsSwitchClause {
+    pub fn clause_token(&self) -> SyntaxResult<SyntaxToken> {
+        match &self {
+            AnyJsSwitchClause::JsCaseClause(item) => item.case_token(),
+            AnyJsSwitchClause::JsDefaultClause(item) => item.default_token(),
+        }
+    }
+
+    pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
+        match &self {
+            AnyJsSwitchClause::JsCaseClause(item) => item.colon_token(),
+            AnyJsSwitchClause::JsDefaultClause(item) => item.colon_token(),
+        }
+    }
+
+    pub fn consequent(&self) -> JsStatementList {
+        match &self {
+            AnyJsSwitchClause::JsCaseClause(item) => item.consequent(),
+            AnyJsSwitchClause::JsDefaultClause(item) => item.consequent(),
+        }
+    }
+}
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
 pub enum JsVariableKind {

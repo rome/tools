@@ -9,7 +9,7 @@ use rome_parser::event::Event;
 use rome_parser::token_source::Trivia;
 use rome_parser::AnyParse;
 
-use rome_rowan::AstNode;
+use rome_rowan::{AstNode, NodeCache};
 use std::marker::PhantomData;
 
 /// A utility struct for managing the result of a parser job
@@ -193,15 +193,24 @@ pub fn parse_module(text: &str) -> Parse<JsModule> {
 
 /// Parses the provided string as a EcmaScript program using the provided syntax features.
 pub fn parse(text: &str, source_type: SourceType) -> Parse<AnyJsRoot> {
+    let mut cache = NodeCache::default();
+    parse_js_with_cache(text, source_type, &mut cache)
+}
+
+/// Parses the provided string as a EcmaScript program using the provided syntax features and node cache.
+pub fn parse_js_with_cache(
+    text: &str,
+    source_type: SourceType,
+    cache: &mut NodeCache,
+) -> Parse<AnyJsRoot> {
     tracing::debug_span!("parse").in_scope(move || {
         let (events, errors, tokens) = parse_common(text, source_type);
-        let mut tree_sink = JsLosslessTreeSink::new(text, &tokens);
+        let mut tree_sink = JsLosslessTreeSink::with_cache(text, &tokens, cache);
         rome_parser::event::process(&mut tree_sink, events, errors);
         let (green, parse_errors) = tree_sink.finish();
         Parse::new(green, parse_errors)
     })
 }
-
 /// Losslessly Parse text into an expression [`Parse`](Parse) which can then be turned into an untyped root [`JsSyntaxNode`](JsSyntaxNode).
 /// Or turned into a typed [`JsExpressionSnipped`](JsExpressionSnipped) with [`tree`](Parse::tree).
 pub fn parse_expression(text: &str) -> Parse<JsExpressionSnipped> {

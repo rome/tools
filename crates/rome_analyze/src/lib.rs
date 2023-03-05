@@ -3,6 +3,7 @@
 
 use std::cmp::Ordering;
 use std::collections::{BTreeMap, BinaryHeap};
+use std::fmt::{Debug, Display, Formatter};
 use std::ops;
 
 mod categories;
@@ -38,8 +39,7 @@ pub use crate::rule::{
     RuleMeta, RuleMetadata, SuppressAction,
 };
 pub use crate::services::{FromServices, MissingServicesDiagnostic, ServiceBag};
-use crate::signals::DiagnosticSignal;
-pub use crate::signals::{AnalyzerAction, AnalyzerSignal};
+pub use crate::signals::{AnalyzerAction, AnalyzerSignal, DiagnosticSignal};
 pub use crate::syntax::{Ast, SyntaxVisitor};
 pub use crate::visitor::{NodeVisitor, Visitor, VisitorContext, VisitorFinishContext};
 pub use rule::DeserializableRuleOptions;
@@ -686,7 +686,7 @@ type SuppressionCommentEmitter<L> = fn(SuppressionCommentEmitterPayload<L>);
 type SignalHandler<'a, L, Break> = &'a mut dyn FnMut(&dyn AnalyzerSignal<L>) -> ControlFlow<Break>;
 
 /// Allow filtering a single rule or group of rules by their names
-#[derive(Debug, Clone, Copy, Eq, PartialEq, Hash)]
+#[derive(Clone, Copy, Eq, PartialEq, Hash)]
 pub enum RuleFilter<'a> {
     Group(&'a str),
     Rule(&'a str, &'a str),
@@ -710,6 +710,25 @@ impl RuleFilter<'_> {
             RuleFilter::Group(group) => group == <R::Group as RuleGroup>::NAME,
             RuleFilter::Rule(group, rule) => {
                 group == <R::Group as RuleGroup>::NAME && rule == R::METADATA.name
+            }
+        }
+    }
+}
+
+impl<'a> Debug for RuleFilter<'a> {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        Display::fmt(self, f)
+    }
+}
+
+impl<'a> Display for RuleFilter<'a> {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        match self {
+            RuleFilter::Group(group) => {
+                write!(f, "{group}")
+            }
+            RuleFilter::Rule(group, rule) => {
+                write!(f, "{group}/{rule}")
             }
         }
     }

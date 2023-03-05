@@ -10,7 +10,6 @@ expression: content
     "enabled": false
   }
 }
-
 ```
 
 ## `file.js`
@@ -33,23 +32,7 @@ internalError/io ━━━━━━━━━━━━━━━━━━━━━
 # Emitted Messages
 
 ```block
-file.js:1:9 lint/complexity/useSimplifiedLogicExpression  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × Logical expression contains unnecessary complexity.
-  
-  > 1 │ let a = !b || !c
-      │         ^^^^^^^^
-  
-  i Suggested fix: Reduce the complexity of the logical expression.
-  
-  - let·a·=·!b·||·!c
-  + let·a·=·!(b·&&·c)
-  
-
-```
-
-```block
-file.js:1:1 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+file.js:1:1 lint/style/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × This 'let' declares a variable which is never re-assigned.
   

@@ -56,7 +56,7 @@ where
     /// use rome_analyze::{declare_rule, Rule, RuleCategory, RuleMeta, RuleMetadata};
     /// use rome_analyze::context::RuleContext;
     /// use serde::Deserialize;
-    /// declare_rule! {    
+    /// declare_rule! {
     ///     /// Some doc
     ///     pub(crate) Name {
     ///         version: "0.0.0",

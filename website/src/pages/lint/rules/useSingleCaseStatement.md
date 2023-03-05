@@ -5,8 +5,8 @@ parent: lint/rules/index
 
 # useSingleCaseStatement (since v0.7.0)
 
-Enforces case clauses have a single statement, emits a quick fix wrapping
-the statements in a block
+Enforces switch clauses have a single statement, emits a quick fix wrapping
+the statements in a block.
 
 ## Examples
 
@@ -23,7 +23,7 @@ switch (foo) {
 
 <pre class="language-text"><code class="language-text">style/useSingleCaseStatement.js:4:9 <a href="https://docs.rome.tools/lint/rules/useSingleCaseStatement">lint/style/useSingleCaseStatement</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">A switch case should only have a single statement. If you want more, then wrap it in a block.</span>
+<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">A </span><span style="color: Orange;"><strong>switch clause</strong></span><span style="color: Orange;"> should only have a single statement.</span>
   
     <strong>2 │ </strong>    case true:
     <strong>3 │ </strong>    case false:
@@ -34,7 +34,7 @@ switch (foo) {
     <strong>6 │ </strong>}
     <strong>7 │ </strong>
   
-<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Wrap the statements in a block</span>
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Wrap the statements in a block.</span>
   
     <strong>1</strong> <strong>1</strong><strong> │ </strong>  switch (foo) {
     <strong>2</strong> <strong>2</strong><strong> │ </strong>      case true:

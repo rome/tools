@@ -4,7 +4,7 @@ expression: formatter_extraneous_field.json
 ---
 formatter_extraneous_field.json:3:3 configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Found an extraneous key foo
+  × Found an unknown key `foo`
   
     1 │ {
     2 │ 	"formatter": {

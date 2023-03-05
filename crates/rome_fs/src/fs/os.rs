@@ -9,9 +9,10 @@ use rayon::{scope, Scope};
 use rome_diagnostics::{adapters::IoError, DiagnosticExt, Error};
 use std::fs::DirEntry;
 use std::{
+    env,
     ffi::OsStr,
     fs,
-    io::{self, ErrorKind as IoErrorKind, Read, Seek, SeekFrom, Write},
+    io::{self, ErrorKind as IoErrorKind, Read, Seek, Write},
     mem,
     path::{Path, PathBuf},
 };
@@ -35,6 +36,10 @@ impl FileSystem for OsFileSystem {
             func(scope);
         })
     }
+
+    fn working_directory(&self) -> Option<PathBuf> {
+        env::current_dir().ok()
+    }
 }
 
 struct OsFile {
@@ -45,7 +50,7 @@ impl File for OsFile {
     fn read_to_string(&mut self, buffer: &mut String) -> io::Result<()> {
         tracing::debug_span!("OsFile::read_to_string").in_scope(move || {
             // Reset the cursor to the starting position
-            self.inner.seek(SeekFrom::Start(0))?;
+            self.inner.rewind()?;
             // Read the file content
             self.inner.read_to_string(buffer)?;
             Ok(())
@@ -57,7 +62,7 @@ impl File for OsFile {
             // Truncate the file
             self.inner.set_len(0)?;
             // Reset the cursor to the starting position
-            self.inner.seek(SeekFrom::Start(0))?;
+            self.inner.rewind()?;
             // Write the byte slice
             self.inner.write_all(content)?;
             Ok(())

@@ -1,23 +1,29 @@
 use super::{ExtensionHandler, Mime};
-use crate::file_handlers::{Capabilities, FormatterCapabilities, ParserCapabilities};
+use crate::file_handlers::{
+    AnalyzerCapabilities, Capabilities, FormatterCapabilities, LintParams, LintResults,
+    ParserCapabilities,
+};
 use crate::file_handlers::{DebugCapabilities, Language as LanguageId};
 use crate::settings::{
     FormatSettings, Language, LanguageSettings, LanguagesSettings, SettingsHandle,
 };
-use crate::workspace::GetSyntaxTreeResult;
-use crate::WorkspaceError;
+use crate::workspace::{GetSyntaxTreeResult, PullActionsResult};
+use crate::{Rules, WorkspaceError};
+use rome_diagnostics::{Diagnostic, Severity};
 use rome_formatter::{FormatError, Printed};
 use rome_fs::RomePath;
 use rome_json_formatter::context::JsonFormatOptions;
 use rome_json_formatter::format_node;
 use rome_json_syntax::{JsonLanguage, JsonRoot, JsonSyntaxNode};
 use rome_parser::AnyParse;
+use rome_rowan::NodeCache;
 use rome_rowan::{TextRange, TextSize, TokenAtOffset};
 
 impl Language for JsonLanguage {
     type FormatterSettings = ();
     type LinterSettings = ();
     type FormatOptions = JsonFormatOptions;
+    type OrganizeImportsSettings = ();
 
     fn lookup_settings(language: &LanguagesSettings) -> &LanguageSettings<Self> {
         &language.json
@@ -58,7 +64,12 @@ impl ExtensionHandler for JsonFileHandler {
                 debug_control_flow: None,
                 debug_formatter_ir: Some(debug_formatter_ir),
             },
-            analyzer: Default::default(),
+            analyzer: AnalyzerCapabilities {
+                lint: Some(lint),
+                code_actions: Some(code_actions),
+                rename: None,
+                fix_all: None,
+            },
             formatter: FormatterCapabilities {
                 format: Some(format),
                 format_range: Some(format_range),
@@ -68,8 +79,8 @@ impl ExtensionHandler for JsonFileHandler {
     }
 }
 
-fn parse(_: &RomePath, _: LanguageId, text: &str) -> AnyParse {
-    let parse = rome_json_parser::parse_json(text);
+fn parse(_: &RomePath, _: LanguageId, text: &str, cache: &mut NodeCache) -> AnyParse {
+    let parse = rome_json_parser::parse_json_with_cache(text, cache);
     AnyParse::from(parse)
 }
 
@@ -162,4 +173,33 @@ fn format_on_type(
 
     let printed = rome_json_formatter::format_sub_tree(options, &root_node)?;
     Ok(printed)
+}
+
+fn lint(params: LintParams) -> LintResults {
+    let diagnostics = params.parse.into_diagnostics();
+
+    let diagnostic_count = diagnostics.len() as u64;
+    let errors = diagnostics
+        .iter()
+        .filter(|diag| diag.severity() <= Severity::Error)
+        .count();
+
+    let skipped_diagnostics = diagnostic_count - diagnostics.len() as u64;
+
+    LintResults {
+        diagnostics,
+        errors,
+        skipped_diagnostics,
+    }
+}
+
+fn code_actions(
+    _parse: AnyParse,
+    _range: TextRange,
+    _rules: Option<&Rules>,
+    _settings: SettingsHandle,
+) -> PullActionsResult {
+    PullActionsResult {
+        actions: Vec::new(),
+    }
 }

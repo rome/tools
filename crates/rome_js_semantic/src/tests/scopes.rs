@@ -63,7 +63,7 @@ assert_semantics! {
     ",
 }
 
-// modules
+// Modules
 assert_semantics! {
     ok_scope_module, "module/*START M*/ M {}/*END M*/;",
 }

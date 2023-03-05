@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 91
 expression: noDuplicateParameters.js
 ---
 # Input
@@ -45,7 +46,7 @@ export function f2(a, b, c = (a, b, b) => {}) {}
 ```
 noDuplicateParameters.js:9:18 lint/suspicious/noDuplicateParameters ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Duplicate argument name
+  ! Duplicate parameter name.
   
      7 │ function test(a = function (a) {}) {}
      8 │ // invalid
@@ -54,13 +55,15 @@ noDuplicateParameters.js:9:18 lint/suspicious/noDuplicateParameters ━━━━
     10 │ 
     11 │ function c(a, a, a) {}
   
+  i The parameter overrides a preceding parameter by using the same name.
+  
 
 ```
 
 ```
 noDuplicateParameters.js:11:15 lint/suspicious/noDuplicateParameters ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Duplicate argument name
+  ! Duplicate parameter name.
   
      9 │ function b(a, b, b) {}
     10 │ 
@@ -69,13 +72,15 @@ noDuplicateParameters.js:11:15 lint/suspicious/noDuplicateParameters ━━━�
     12 │ 
     13 │ const d = (a, b, a) => {};
   
+  i The parameter overrides a preceding parameter by using the same name.
+  
 
 ```
 
 ```
 noDuplicateParameters.js:13:18 lint/suspicious/noDuplicateParameters ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Duplicate argument name
+  ! Duplicate parameter name.
   
     11 │ function c(a, a, a) {}
     12 │ 
@@ -84,13 +89,15 @@ noDuplicateParameters.js:13:18 lint/suspicious/noDuplicateParameters ━━━�
     14 │ 
     15 │ function e(a, b, a, b) {}
   
+  i The parameter overrides a preceding parameter by using the same name.
+  
 
 ```
 
 ```
 noDuplicateParameters.js:15:18 lint/suspicious/noDuplicateParameters ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Duplicate argument name
+  ! Duplicate parameter name.
   
     13 │ const d = (a, b, a) => {};
     14 │ 
@@ -99,13 +106,15 @@ noDuplicateParameters.js:15:18 lint/suspicious/noDuplicateParameters ━━━�
     16 │ 
     17 │ var f = function (a, b, b) {};
   
+  i The parameter overrides a preceding parameter by using the same name.
+  
 
 ```
 
 ```
 noDuplicateParameters.js:17:25 lint/suspicious/noDuplicateParameters ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Duplicate argument name
+  ! Duplicate parameter name.
   
     15 │ function e(a, b, a, b) {}
     16 │ 
@@ -114,13 +123,15 @@ noDuplicateParameters.js:17:25 lint/suspicious/noDuplicateParameters ━━━�
     18 │ 
     19 │ class G {
   
+  i The parameter overrides a preceding parameter by using the same name.
+  
 
 ```
 
 ```
 noDuplicateParameters.js:20:9 lint/suspicious/noDuplicateParameters ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Duplicate argument name
+  ! Duplicate parameter name.
   
     19 │ class G {
   > 20 │ 	ggg(a, a, a) {}
@@ -128,13 +139,15 @@ noDuplicateParameters.js:20:9 lint/suspicious/noDuplicateParameters ━━━━
     21 │ }
     22 │ 
   
+  i The parameter overrides a preceding parameter by using the same name.
+  
 
 ```
 
 ```
 noDuplicateParameters.js:24:18 lint/suspicious/noDuplicateParameters ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Duplicate argument name
+  ! Duplicate parameter name.
   
     23 │ let objectMethods = {
   > 24 │ 	method(a, b, c, c) {
@@ -142,13 +155,15 @@ noDuplicateParameters.js:24:18 lint/suspicious/noDuplicateParameters ━━━�
     25 │ 
     26 │ 	}
   
+  i The parameter overrides a preceding parameter by using the same name.
+  
 
 ```
 
 ```
 noDuplicateParameters.js:29:25 lint/suspicious/noDuplicateParameters ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Duplicate argument name
+  ! Duplicate parameter name.
   
     27 │ }
     28 │ 
@@ -157,13 +172,15 @@ noDuplicateParameters.js:29:25 lint/suspicious/noDuplicateParameters ━━━�
     30 │ 
     31 │ export default function (a, b, a, a) {}
   
+  i The parameter overrides a preceding parameter by using the same name.
+  
 
 ```
 
 ```
 noDuplicateParameters.js:31:32 lint/suspicious/noDuplicateParameters ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Duplicate argument name
+  ! Duplicate parameter name.
   
     29 │ var h = function (a, b, a) {};
     30 │ 
@@ -172,13 +189,15 @@ noDuplicateParameters.js:31:32 lint/suspicious/noDuplicateParameters ━━━�
     32 │ function f({ test: res = 3 }, res) {}
     33 │ 
   
+  i The parameter overrides a preceding parameter by using the same name.
+  
 
 ```
 
 ```
 noDuplicateParameters.js:32:31 lint/suspicious/noDuplicateParameters ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Duplicate argument name
+  ! Duplicate parameter name.
   
     31 │ export default function (a, b, a, a) {}
   > 32 │ function f({ test: res = 3 }, res) {}
@@ -186,19 +205,23 @@ noDuplicateParameters.js:32:31 lint/suspicious/noDuplicateParameters ━━━�
     33 │ 
     34 │ export function f2(a, b, c = (a, b, b) => {}) {}
   
+  i The parameter overrides a preceding parameter by using the same name.
+  
 
 ```
 
 ```
 noDuplicateParameters.js:34:37 lint/suspicious/noDuplicateParameters ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Duplicate argument name
+  ! Duplicate parameter name.
   
     32 │ function f({ test: res = 3 }, res) {}
     33 │ 
   > 34 │ export function f2(a, b, c = (a, b, b) => {}) {}
        │                                     ^
     35 │ 
+  
+  i The parameter overrides a preceding parameter by using the same name.
   
 
 ```

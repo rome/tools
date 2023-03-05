@@ -1,27 +1,17 @@
 //! The `error` module contains the implementation of [Error], a dynamic
 //! container struct for any type implementing [Diagnostic].
 //!
-//! The `Error` struct is essentially a manual implementation of
-//! `Box<dyn Diagnostic>` that is only a single word in size (thin pointer)
-//! instead of two for Rust's `dyn` types (wide pointer). This is done by
-//! manually managing how the "vtable" (the function pointer table used for
-//! dynamic dispatch) for the type is laid out and accessed in memory, at the
-//! cost of requiring the use of unsafe code.
+//! We reduce the size of `Error` by using `Box<Box<dyn Diagnostic>>` (a thin
+//! pointer to a fat pointer) rather than `Box<dyn Diagnostic>` (a fat
+//! pointer), in order to make returning a `Result<T, Error>` more efficient.
 //!
-//! While reducing the size of `Error` is the main reason this type is using
-//! unsafe code (as it makes returning a `Result<T, Error>` more efficient),
-//! manually managing the vtable for `Error` opens additional possibilities for
-//! future extensions to the type like requiring disjoint trait bounds or
-//! implementing dynamic dispatch to traits that require handling owned
-//! instances of an object (the main use case for this would be implementing
-//! `Clone` for `Error` since `dyn Clone` is not allowed in Rust)
+//! When [`ThinBox`](https://doc.rust-lang.org/std/boxed/struct.ThinBox.html)
+//! becomes available in stable Rust, we can switch to that.
 
 use std::ops::Deref;
 use std::{
     fmt::{Debug, Formatter},
     io,
-    marker::PhantomData,
-    ptr::NonNull,
 };
 
 use rome_console::fmt;
@@ -34,7 +24,7 @@ use crate::{
 /// The `Error` struct wraps any type implementing [Diagnostic] into a single
 /// dynamic type.
 pub struct Error {
-    inner: NonNull<ErrorImpl>,
+    inner: Box<Box<dyn Diagnostic + Send + Sync + 'static>>,
 }
 
 /// Implement the [Diagnostic] trait as inherent methods on the [Error] type.
@@ -85,27 +75,6 @@ impl Error {
     }
 }
 
-impl Error {
-    /// Returns the vtable for an error instance.
-    fn vtable(&self) -> &'static ErrorVTable {
-        // SAFETY: This assumes `inner` is a valid pointer to an `ErrorImpl`
-        unsafe { self.inner.as_ref().vtable }
-    }
-
-    /// Returns a [Ref] to the wrapped error.
-    fn inner(&'_ self) -> Ref<'_, ErrorImpl> {
-        Ref {
-            ptr: self.inner,
-            _lt: PhantomData,
-        }
-    }
-}
-
-// SAFETY: `ErrorImpl::new` requires `Send + Sync`, and `inner` cannot be
-// cloned or moved out of `Error`
-unsafe impl Send for Error {}
-unsafe impl Sync for Error {}
-
 /// Implement [From] for all types implementing [Diagnostic], [Send], [Sync]
 /// and outlives the `'static` lifetime.
 impl<T> From<T> for Error
@@ -114,7 +83,7 @@ where
 {
     fn from(diag: T) -> Self {
         Self {
-            inner: ErrorImpl::new(diag),
+            inner: Box::new(Box::new(diag)),
         }
     }
 }
@@ -123,7 +92,7 @@ impl AsDiagnostic for Error {
     type Diagnostic = dyn Diagnostic;
 
     fn as_diagnostic(&self) -> &Self::Diagnostic {
-        (self.vtable().as_diagnostic)(self.inner())
+        &**self.inner
     }
 
     fn as_dyn(&self) -> &dyn Diagnostic {
@@ -149,90 +118,6 @@ impl Deref for Error {
 impl Debug for Error {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         Debug::fmt(self.as_diagnostic(), f)
-    }
-}
-
-impl Drop for Error {
-    fn drop(&mut self) {
-        (self.vtable().drop)(self.inner);
-    }
-}
-
-/// VTable struct for the [Error] type, contains function pointers used to
-/// manually implement dynamic dispatch.
-struct ErrorVTable {
-    as_diagnostic: for<'a> fn(Ref<'a, ErrorImpl>) -> &'a (dyn Diagnostic + 'static),
-    drop: fn(NonNull<ErrorImpl>),
-}
-
-/// Internal storage struct used to pack a vtable instance along with a
-/// diagnostic object.
-struct ErrorImpl<D = ()> {
-    vtable: &'static ErrorVTable,
-    diag: D,
-}
-
-impl<D> ErrorImpl<D>
-where
-    D: Diagnostic + Send + Sync + 'static,
-{
-    /// Create a new instance of [ErrorImpl] containing the provided diagnostic
-    /// and a reference to the corresponding vtable, allocate it on the heap
-    /// using [Box] and returns the corresponding raw pointer.
-    fn new(diag: D) -> NonNull<ErrorImpl> {
-        let vtable = &ErrorVTable {
-            as_diagnostic: as_diagnostic::<D>,
-            drop: drop_error::<D>,
-        };
-
-        let inner = Box::new(Self { vtable, diag });
-        // SAFETY: The pointer returned by `Box::into_raw` is guaranteed to be
-        // valid, so calling `NonNull::new_unchecked` on it is safe
-        unsafe { NonNull::new_unchecked(Box::into_raw(inner)).cast() }
-    }
-}
-
-/// This type is used to manually represent a reference as a raw pointer + an
-/// associated lifetime, in order to decouple the underlying type of the
-/// reference and allow it to be cast while retaining lifetime informations.
-#[derive(Copy, Clone)]
-struct Ref<'a, T> {
-    ptr: NonNull<T>,
-    _lt: PhantomData<&'a T>,
-}
-
-impl<'a, T> Ref<'a, T> {
-    // Cast this reference to a different type
-    fn downcast<R>(self) -> Ref<'a, R> {
-        Ref {
-            ptr: self.ptr.cast(),
-            _lt: PhantomData,
-        }
-    }
-
-    // Returns a reference to the value pointed to by this reference
-    fn into_ref(self) -> &'a T {
-        // SAFETY: This assumes `ptr` is a valid pointer to `T`
-        unsafe { self.ptr.as_ref() }
-    }
-}
-
-/// Generic implementation of `as_diagnostic` for the `Error` type.
-fn as_diagnostic<D: Diagnostic + 'static>(
-    this: Ref<'_, ErrorImpl>,
-) -> &'_ (dyn Diagnostic + 'static) {
-    let this = this.downcast::<ErrorImpl<D>>();
-    let this = this.into_ref();
-    &this.diag
-}
-
-/// Generic implementation of `drop` for the `Error` type.
-fn drop_error<D: Diagnostic>(this: NonNull<ErrorImpl>) {
-    let this = this.cast::<ErrorImpl<D>>();
-    // SAFETY: This assumes `this` is a valid pointer to an `ErrorImpl<D>` that
-    // was allocated with `Box::new`
-    unsafe {
-        drop(Box::from_raw(this.as_ptr()));
     }
 }
 

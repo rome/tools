@@ -1,15 +1,29 @@
+use crate::parse_arguments::{apply_files_settings_from_cli, apply_format_settings_from_cli};
 use crate::{
     configuration::load_configuration, execute_mode, CliDiagnostic, CliSession, Execution,
     TraversalMode,
 };
+use rome_console::{markup, ConsoleExt};
+use rome_diagnostics::PrintDiagnostic;
+use rome_service::configuration::organize_imports::OrganizeImports;
 use rome_service::configuration::{FormatterConfiguration, LinterConfiguration};
 use rome_service::workspace::UpdateSettingsParams;
 
-use super::format::apply_format_settings_from_cli;
-
 /// Handler for the "ci" command of the Rome CLI
 pub(crate) fn ci(mut session: CliSession) -> Result<(), CliDiagnostic> {
-    let mut configuration = load_configuration(&mut session)?;
+    let (mut configuration, diagnostics) = load_configuration(&mut session)?.consume();
+
+    if !diagnostics.is_empty() {
+        let console = &mut session.app.console;
+        for diagnostic in diagnostics {
+            console.error(markup! {
+                {PrintDiagnostic::verbose(&diagnostic)}
+            })
+        }
+        return Err(CliDiagnostic::incompatible_end_configuration(
+            "The deserialization of the configuration resulted into an error.",
+        ));
+    }
 
     let formatter_enabled = session
         .args
@@ -20,6 +34,11 @@ pub(crate) fn ci(mut session: CliSession) -> Result<(), CliDiagnostic> {
         .args
         .opt_value_from_str("--linter-enabled")
         .map_err(|source| CliDiagnostic::parse_error("--linter-enabled", source))?;
+
+    let organize_imports_enabled = session
+        .args
+        .opt_value_from_str("--organize-imports-enabled")
+        .map_err(|source| CliDiagnostic::parse_error("--organize-imports-enabled", source))?;
 
     let formatter = configuration
         .formatter
@@ -37,11 +56,23 @@ pub(crate) fn ci(mut session: CliSession) -> Result<(), CliDiagnostic> {
         linter.enabled = linter_enabled;
     }
 
-    // no point in doing the traversal if all the checks have been disabled
-    if configuration.is_formatter_disabled() && configuration.is_linter_disabled() {
-        return Err(CliDiagnostic::incompatible_end_configuration("Formatter and Linter are both disabled, can't perform the command. This is probably and error."));
+    let organize_imports = configuration
+        .organize_imports
+        .get_or_insert_with(OrganizeImports::default);
+
+    if let Some(organize_imports_enabled) = organize_imports_enabled {
+        organize_imports.enabled = organize_imports_enabled;
     }
 
+    // no point in doing the traversal if all the checks have been disabled
+    if configuration.is_formatter_disabled()
+        && configuration.is_linter_disabled()
+        && configuration.is_organize_imports_disabled()
+    {
+        return Err(CliDiagnostic::incompatible_end_configuration("Formatter, linter and organize imports are disabled, can't perform the command. This is probably and error."));
+    }
+
+    apply_files_settings_from_cli(&mut session, &mut configuration)?;
     if !configuration.is_formatter_disabled() {
         apply_format_settings_from_cli(&mut session, &mut configuration)?;
     }

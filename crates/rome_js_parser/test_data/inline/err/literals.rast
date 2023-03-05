@@ -35,8 +35,8 @@ JsModule {
         JsExpressionStatement {
             expression: JsSequenceExpression {
                 left: JsSequenceExpression {
-                    left: JsBigIntLiteralExpression {
-                        value_token: JS_BIG_INT_LITERAL@39..43 "01n" [Newline("\n")] [],
+                    left: JsBigintLiteralExpression {
+                        value_token: JS_BIGINT_LITERAL@39..43 "01n" [Newline("\n")] [],
                     },
                     comma_token: COMMA@43..45 "," [] [Whitespace(" ")],
                     right: JsNumberLiteralExpression {
@@ -88,8 +88,8 @@ JsModule {
     1: JS_EXPRESSION_STATEMENT@39..70
       0: JS_SEQUENCE_EXPRESSION@39..70
         0: JS_SEQUENCE_EXPRESSION@39..48
-          0: JS_BIG_INT_LITERAL_EXPRESSION@39..43
-            0: JS_BIG_INT_LITERAL@39..43 "01n" [Newline("\n")] []
+          0: JS_BIGINT_LITERAL_EXPRESSION@39..43
+            0: JS_BIGINT_LITERAL@39..43 "01n" [Newline("\n")] []
           1: COMMA@43..45 "," [] [Whitespace(" ")]
           2: JS_NUMBER_LITERAL_EXPRESSION@45..48
             0: JS_NUMBER_LITERAL@45..48 "0_0" [] []

@@ -8,10 +8,10 @@ expression: content
 {
   "linter": {
     "rules": {
-        "recommended": true,
-        "correctness": {
-            "recommended": false
-        }
+      "recommended": true,
+      "correctness": {
+        "recommended": false
+      }
     }
   }
 }
@@ -29,12 +29,6 @@ try {
 ```
 
 # Emitted Messages
-
-```block
-Skipped 1 suggested fixes.
-If you wish to apply the suggested (unsafe) fixes, use the command rome check --apply-unsafe
-
-```
 
 ```block
 Fixed 1 file(s) in <TIME>

@@ -9,12 +9,12 @@ expression: content
   "linter": {
     "enabled": true,
     "rules": {
-        "correctness": {
-            "foo_rule": "off"
-        },
-        "style": {
-            "what_the_hell": "off"
-        }
+      "correctness": {
+        "foo_rule": "off"
+      },
+      "style": {
+        "what_the_hell": "off"
+      }
     }
   }
 }
@@ -23,12 +23,59 @@ expression: content
 # Termination Message
 
 ```block
-configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × invalid rule name foo_rule at line 7 column 9
+  × No files were processed in the specified paths.
   
 
 
+```
+
+# Emitted Messages
+
+```block
+Found errors in the configuration file, Rome will use its defaults for the sections that are incorrect.
+```
+
+```block
+rome.json:6:13 configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Found an unknown key `foo_rule`
+  
+    4 │     "rules": {
+    5 │         "correctness": {
+  > 6 │             "foo_rule": "off"
+      │             ^^^^^^^^^^
+    7 │         },
+    8 │         "style": {
+  
+  i Accepted keys
+  
+  - recommended
+  - all
+  - noChildrenProp
+  - noConstAssign
+  - noConstructorReturn
+  - noEmptyPattern
+  - noNewSymbol
+  - noPrecisionLoss
+  - noRenderReturnValue
+  - noSetterReturn
+  - noStringCaseMismatch
+  - noUndeclaredVariables
+  - noUnnecessaryContinue
+  - noUnreachable
+  - noUnsafeFinally
+  - noUnusedVariables
+  - noVoidElementsWithChildren
+  - noVoidTypeReturn
+  - useValidForDirection
+  
+
+```
+
+```block
+Checked 0 file(s) in <TIME>
 ```
 
 

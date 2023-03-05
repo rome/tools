@@ -4,7 +4,7 @@ expression: javascript_formatter_quote_properties.json
 ---
 javascript_formatter_quote_properties.json:4:23 configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Found an extraneous variant "wrong"
+  × Found an unknown value `wrong`
   
     2 │ 	"javascript": {
     3 │ 		"formatter": {

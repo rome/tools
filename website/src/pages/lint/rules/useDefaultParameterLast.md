@@ -5,6 +5,8 @@ parent: lint/rules/index
 
 # useDefaultParameterLast (since v11.0.0)
 
+> This rule is recommended by Rome.
+
 Enforce default function parameters and optional parameters to be last.
 
 Default and optional parameters that precede a required parameter cannot be omitted at call site.
@@ -17,7 +19,7 @@ Default and optional parameters that precede a required parameter cannot be omit
 function f(a = 0, b) {}
 ```
 
-<pre class="language-text"><code class="language-text">nursery/useDefaultParameterLast.js:1:12 <a href="https://docs.rome.tools/lint/rules/useDefaultParameterLast">lint/nursery/useDefaultParameterLast</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">style/useDefaultParameterLast.js:1:12 <a href="https://docs.rome.tools/lint/rules/useDefaultParameterLast">lint/style/useDefaultParameterLast</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The </span><span style="color: Tomato;"><strong>default parameter</strong></span><span style="color: Tomato;"> should follow the </span><span style="color: Tomato;"><strong>required parameter</strong></span><span style="color: Tomato;"> or should be a </span><span style="color: Tomato;"><strong>required parameter</strong></span><span style="color: Tomato;">.</span>
   
@@ -43,7 +45,7 @@ function f(a = 0, b) {}
 function f(a, b = 0, c) {}
 ```
 
-<pre class="language-text"><code class="language-text">nursery/useDefaultParameterLast.js:1:15 <a href="https://docs.rome.tools/lint/rules/useDefaultParameterLast">lint/nursery/useDefaultParameterLast</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">style/useDefaultParameterLast.js:1:15 <a href="https://docs.rome.tools/lint/rules/useDefaultParameterLast">lint/style/useDefaultParameterLast</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The </span><span style="color: Tomato;"><strong>default parameter</strong></span><span style="color: Tomato;"> should follow the </span><span style="color: Tomato;"><strong>required parameter</strong></span><span style="color: Tomato;"> or should be a </span><span style="color: Tomato;"><strong>required parameter</strong></span><span style="color: Tomato;">.</span>
   
@@ -69,7 +71,7 @@ function f(a, b = 0, c) {}
 function f(a: number, b?: number, c: number) {}
 ```
 
-<pre class="language-text"><code class="language-text">nursery/useDefaultParameterLast.js:1:23 <a href="https://docs.rome.tools/lint/rules/useDefaultParameterLast">lint/nursery/useDefaultParameterLast</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">style/useDefaultParameterLast.js:1:23 <a href="https://docs.rome.tools/lint/rules/useDefaultParameterLast">lint/style/useDefaultParameterLast</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The </span><span style="color: Tomato;"><strong>optional parameter</strong></span><span style="color: Tomato;"> should follow the </span><span style="color: Tomato;"><strong>required parameter</strong></span><span style="color: Tomato;"> or should be a </span><span style="color: Tomato;"><strong>required parameter</strong></span><span style="color: Tomato;">.</span>
   
@@ -97,7 +99,7 @@ class Foo {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/useDefaultParameterLast.js:2:17 <a href="https://docs.rome.tools/lint/rules/useDefaultParameterLast">lint/nursery/useDefaultParameterLast</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">style/useDefaultParameterLast.js:2:17 <a href="https://docs.rome.tools/lint/rules/useDefaultParameterLast">lint/style/useDefaultParameterLast</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The </span><span style="color: Tomato;"><strong>default parameter</strong></span><span style="color: Tomato;"> should follow the </span><span style="color: Tomato;"><strong>required parameter</strong></span><span style="color: Tomato;"> or should be a </span><span style="color: Tomato;"><strong>required parameter</strong></span><span style="color: Tomato;">.</span>
   

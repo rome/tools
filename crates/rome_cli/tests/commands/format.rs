@@ -44,6 +44,15 @@ const APPLY_TRAILING_COMMA_AFTER: &str = r#"const a = [
 ];
 "#;
 
+const DEFAULT_CONFIGURATION_BEFORE: &str = r#"function f() {
+    return { a, b }
+  }"#;
+
+const DEFAULT_CONFIGURATION_AFTER: &str = "function f() {
+      return { a, b };
+}
+";
+
 const CUSTOM_CONFIGURATION_BEFORE: &str = r#"function f() {
   return { a, b }
 }"#;
@@ -230,6 +239,91 @@ fn lint_warning() {
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
         "formatter_lint_warning",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+// FIXME: redact snapshot for custom paths in configuration
+#[cfg(not(windows))]
+fn custom_config_file_path() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let config_path = Path::new("/test/rome.json");
+    fs.insert(config_path.into(), CONFIG_FORMAT.as_bytes());
+
+    let file_path = Path::new("file.js");
+    fs.insert(file_path.into(), DEFAULT_CONFIGURATION_BEFORE.as_bytes());
+
+    let mut config_path = PathBuf::from(config_path);
+    config_path.pop();
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Arguments::from_vec(vec![
+            OsString::from("format"),
+            OsString::from("--config-path"),
+            OsString::from(config_path),
+            OsString::from("--write"),
+            file_path.as_os_str().into(),
+        ]),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    let mut file = fs
+        .open(file_path)
+        .expect("formatting target file was removed by the CLI");
+
+    let mut content = String::new();
+    file.read_to_string(&mut content)
+        .expect("failed to read file from memory FS");
+
+    assert_eq!(content, DEFAULT_CONFIGURATION_AFTER);
+
+    drop(file);
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "custom_config_file_path",
+        fs,
+        console,
+        result,
+    ));
+}
+
+// Should throw an error when an invalid configuration path is specified
+#[test]
+// FIXME: redact snapshot for custom paths in configuration
+#[cfg(not(windows))]
+fn invalid_config_file_path() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let config_path = Path::new("test");
+    let file_path = Path::new("file.js");
+    fs.insert(file_path.into(), *b"content");
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Arguments::from_vec(vec![
+            OsString::from("format"),
+            OsString::from("--config-path"),
+            OsString::from(config_path),
+            OsString::from("--write"),
+            file_path.as_os_str().into(),
+        ]),
+    );
+
+    assert!(result.is_err(), "run_cli returned {result:?}");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "invalid_config_file_path",
         fs,
         console,
         result,

@@ -8,7 +8,7 @@ use rome_js_syntax::{
     JsCallExpression, JsForVariableDeclaration, JsIdentifierAssignment, JsIdentifierBinding,
     JsLanguage, JsParenthesizedExpression, JsReferenceIdentifier, JsSyntaxKind, JsSyntaxNode,
     JsSyntaxToken, JsVariableDeclaration, JsVariableDeclarator, JsVariableDeclaratorList,
-    JsxReferenceIdentifier, TextRange, TextSize, TsIdentifierBinding, TsTypeParameter,
+    JsxReferenceIdentifier, TextRange, TextSize, TsIdentifierBinding, TsTypeParameterName,
 };
 use rome_rowan::{syntax::Preorder, AstNode, SyntaxNodeCast, SyntaxNodeOptionExt, SyntaxTokenText};
 
@@ -248,7 +248,7 @@ impl SemanticEventExtractor {
         use rome_js_syntax::JsSyntaxKind::*;
 
         match node.kind() {
-            JS_IDENTIFIER_BINDING | TS_IDENTIFIER_BINDING | TS_TYPE_PARAMETER => {
+            JS_IDENTIFIER_BINDING | TS_IDENTIFIER_BINDING | TS_TYPE_PARAMETER_NAME => {
                 self.enter_identifier_binding(node);
             }
             JS_REFERENCE_IDENTIFIER | JSX_REFERENCE_IDENTIFIER => {
@@ -342,7 +342,7 @@ impl SemanticEventExtractor {
         use JsSyntaxKind::*;
         debug_assert!(matches!(
             node.kind(),
-            JS_IDENTIFIER_BINDING | TS_IDENTIFIER_BINDING | TS_TYPE_PARAMETER
+            JS_IDENTIFIER_BINDING | TS_IDENTIFIER_BINDING | TS_TYPE_PARAMETER_NAME
         ), "specified node is not a identifier binding (JS_IDENTIFIER_BINDING, TS_IDENTIFIER_BINDING, TS_TYPE_PARAMETER)");
 
         let (name_token, is_var) = match node.kind() {
@@ -358,10 +358,10 @@ impl SemanticEventExtractor {
                 let is_var = Self::is_var(&binding);
                 (name_token, is_var)
             }
-            TS_TYPE_PARAMETER => {
-                let binding = node.clone().cast::<TsTypeParameter>()?;
-                let name_token = binding.name().ok()?.ident_token().ok()?;
-                let is_var = Self::is_var(&binding);
+            TS_TYPE_PARAMETER_NAME => {
+                let token = node.clone().cast::<TsTypeParameterName>()?;
+                let name_token = token.ident_token().ok()?;
+                let is_var = Some(false);
                 (name_token, is_var)
             }
             _ => return None,
@@ -437,6 +437,11 @@ impl SemanticEventExtractor {
                 self.export_declaration(node, &parent);
             }
             TS_INTERFACE_DECLARATION => {
+                let hoisted_scope_id = self.scope_index_to_hoist_declarations(1);
+                self.push_binding_into_scope(hoisted_scope_id, &name_token);
+                self.export_declaration(node, &parent);
+            }
+            TS_MODULE_DECLARATION => {
                 let hoisted_scope_id = self.scope_index_to_hoist_declarations(1);
                 self.push_binding_into_scope(hoisted_scope_id, &name_token);
                 self.export_declaration(node, &parent);
@@ -791,12 +796,6 @@ impl SemanticEventExtractor {
             function_declaration.kind(),
             JS_FUNCTION_DECLARATION | JS_FUNCTION_EXPORT_DEFAULT_DECLARATION
         ));
-
-        // scope[0] = global, scope[1] = the function itself
-        if self.scopes.len() != 2 {
-            return;
-        }
-
         let is_exported = matches!(
             function_declaration.parent().kind(),
             Some(JS_EXPORT | JS_EXPORT_DEFAULT_DECLARATION_CLAUSE)
@@ -816,12 +815,6 @@ impl SemanticEventExtractor {
     ) {
         use JsSyntaxKind::*;
         debug_assert!(matches!(function_expression.kind(), JS_FUNCTION_EXPRESSION));
-
-        // scope[0] = global, scope[1] = the function itself
-        if self.scopes.len() != 2 {
-            return;
-        }
-
         let is_module_exports = function_expression
             .parent()
             .map(|x| self.is_assignment_left_side_module_exports(&x))
@@ -837,12 +830,6 @@ impl SemanticEventExtractor {
     fn export_class_expression(&mut self, binding: &JsSyntaxNode, class_expression: &JsSyntaxNode) {
         use JsSyntaxKind::*;
         debug_assert!(matches!(class_expression.kind(), JS_CLASS_EXPRESSION));
-
-        // scope[0] = global, scope[1] = the class expression itself
-        if self.scopes.len() != 2 {
-            return;
-        }
-
         let is_module_exports = class_expression
             .parent()
             .map(|x| self.is_assignment_left_side_module_exports(&x))
@@ -854,7 +841,7 @@ impl SemanticEventExtractor {
         }
     }
 
-    // Check if a class, type alias is exported and raise the [Exported] event.
+    // Check if a class, type alias, enum, interface, module is exported and raise the [Exported] event.
     fn export_declaration(&mut self, binding: &JsSyntaxNode, declaration: &JsSyntaxNode) {
         use JsSyntaxKind::*;
         debug_assert!(matches!(
@@ -864,13 +851,8 @@ impl SemanticEventExtractor {
                 | TS_TYPE_ALIAS_DECLARATION
                 | TS_ENUM_DECLARATION
                 | TS_INTERFACE_DECLARATION
+                | TS_MODULE_DECLARATION
         ));
-
-        // scope[0] = global, scope[1] = what is being exported
-        if self.scopes.len() != 2 {
-            return;
-        }
-
         let is_exported = matches!(
             declaration.parent().kind(),
             Some(JS_EXPORT | JS_EXPORT_DEFAULT_DECLARATION_CLAUSE)
@@ -891,12 +873,6 @@ impl SemanticEventExtractor {
     ) {
         use JsSyntaxKind::*;
         debug_assert!(matches!(variable_declarator.kind(), JS_VARIABLE_DECLARATOR));
-
-        // export can only exist in the global scope
-        if self.scopes.len() > 1 {
-            return;
-        }
-
         let is_exported = matches!(
             variable_declarator
                 .parent()
@@ -918,12 +894,6 @@ impl SemanticEventExtractor {
     fn is_js_reference_identifier_exported(&mut self, reference: &JsSyntaxNode) -> bool {
         use JsSyntaxKind::*;
         debug_assert!(matches!(reference.kind(), JS_REFERENCE_IDENTIFIER));
-
-        // export can only exist in the global scope
-        if self.scopes.len() > 1 {
-            return false;
-        }
-
         let reference_parent = reference.parent();
         let reference_greatparent = reference_parent.as_ref().and_then(|p| p.parent());
 

@@ -5,6 +5,8 @@ parent: lint/rules/index
 
 # noNonNullAssertion (since v11.0.0)
 
+> This rule is recommended by Rome.
+
 Disallow non-null assertions using the `!` postfix operator.
 
 TypeScript's `!` non-null assertion operator asserts to the type system that an expression is non-nullable, as
@@ -24,9 +26,9 @@ declare const example: Example;
 const includesBaz = foo.property!.includes('baz');
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noNonNullAssertion.js:5:21 <a href="https://docs.rome.tools/lint/rules/noNonNullAssertion">lint/nursery/noNonNullAssertion</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">style/noNonNullAssertion.js:5:21 <a href="https://docs.rome.tools/lint/rules/noNonNullAssertion">lint/style/noNonNullAssertion</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Forbidden non-null assertion.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Forbidden non-null assertion.</span>
   
     <strong>3 │ </strong>}
     <strong>4 │ </strong>declare const example: Example;
@@ -48,9 +50,9 @@ const includesBaz = foo.property!.includes('baz');
 (b!! as number) = "test";
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noNonNullAssertion.js:1:2 <a href="https://docs.rome.tools/lint/rules/noNonNullAssertion">lint/nursery/noNonNullAssertion</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">style/noNonNullAssertion.js:1:2 <a href="https://docs.rome.tools/lint/rules/noNonNullAssertion">lint/style/noNonNullAssertion</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Forbidden non-null assertion.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Forbidden non-null assertion.</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>(b!! as number) = &quot;test&quot;;
    <strong>   │ </strong> <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>

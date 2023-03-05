@@ -10,7 +10,7 @@ use rome_console::markup;
 use rome_fs::{FileSystem, OsFileSystem, RomePath};
 use rome_service::workspace::{FeatureName, PullDiagnosticsParams, SupportsFeatureParams};
 use rome_service::workspace::{RageEntry, RageParams, RageResult, UpdateSettingsParams};
-use rome_service::{load_config, Workspace};
+use rome_service::{load_config, ConfigurationBasePath, Workspace};
 use rome_service::{DynRef, WorkspaceError};
 use serde_json::Value;
 use std::collections::HashMap;
@@ -25,7 +25,7 @@ use tower_lsp::lsp_types;
 use tower_lsp::lsp_types::Registration;
 use tower_lsp::lsp_types::Unregistration;
 use tower_lsp::lsp_types::Url;
-use tracing::{error, info};
+use tracing::{error, info, warn};
 
 pub(crate) struct ClientInformation {
     /// The name of the client
@@ -364,10 +364,18 @@ impl Session {
     /// the root URI and update the workspace settings accordingly
     #[tracing::instrument(level = "debug", skip(self))]
     pub(crate) async fn load_workspace_settings(&self) {
-        let base_path = self.base_path();
+        let base_path = match self.base_path() {
+            None => ConfigurationBasePath::default(),
+            Some(path) => ConfigurationBasePath::Lsp(path),
+        };
 
         let status = match load_config(&self.fs, base_path) {
-            Ok(Some(configuration)) => {
+            Ok(Some(deserialized)) => {
+                let (configuration, diagnostics) = deserialized.consume();
+                if diagnostics.is_empty() {
+                    warn!("The deserialization of the configuration resulted in errors. Rome will its defaults where possible.");
+                }
+
                 info!("Loaded workspace settings: {configuration:#?}");
 
                 let result = self

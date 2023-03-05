@@ -1,0 +1,10 @@
+{
+	"linter": {
+		"rules": {
+			"a11y": {
+				"all": true,
+				"recommended": true
+			}
+		}
+	}
+}

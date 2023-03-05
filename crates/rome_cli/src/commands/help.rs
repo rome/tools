@@ -37,6 +37,7 @@ const CHECK: Markup = markup! {
     "<Dim>"--apply"</Dim>"                       Apply safe fixes
     "<Dim>"--apply-unsafe"</Dim>"                Apply safe and unsafe fixes
     "<Dim>"--max-diagnostics"</Dim>"             Cap the amount of diagnostics displayed (default: 20)
+    "<Dim>"--config-path"</Dim>"                 Set the filesystem path to the directory of the rome.json configuration file
     "<Dim>"--verbose"</Dim>"                     Print additional verbose advices on diagnostics
 "
 };
@@ -64,7 +65,9 @@ const CI: Markup = markup! {
 "<Emphasis>"OPTIONS:"</Emphasis>"
     "<Dim>"--formatter-enabled"</Dim>"                      Allow to enable or disable the formatter check. (default: true)
     "<Dim>"--linter-enabled"</Dim>"                         Allow to enable or disable the linter check. (default: true)
+    "<Dim>"--organize-imports-enabled"</Dim>"               Allow to enable or disable the organize imports. (default: true)
     "<Dim>"--max-diagnostics"</Dim>"                        Cap the amount of diagnostics displayed (default: 50)
+    "<Dim>"--config-path"</Dim>"                            Set the filesystem path to the directory of the rome.json configuration file
     "<Dim>"--verbose"</Dim>"                                Print additional verbose advices on diagnostics"
     {FORMAT_OPTIONS}
 };
@@ -81,6 +84,7 @@ const FORMAT: Markup = markup! {
     "<Dim>"--write"</Dim>"                                  Edit the files in place (beware!) instead of printing the diff to the console
     "<Dim>"--skip-errors"</Dim>"                            Skip over files containing syntax errors instead of emitting an error diagnostic.
     "<Dim>"--max-diagnostics"</Dim>"                        Cap the amount of diagnostics displayed (default: 50)
+    "<Dim>"--config-path"</Dim>"                            Set the filesystem path to the directory of the rome.json configuration file
     "<Dim>"--verbose"</Dim>"                                Print additional verbose advices on diagnostics"
     {FORMAT_OPTIONS}
    ""<Dim>"--stdin-file-path <string>"</Dim>"               A file name with its extension to pass when reading from standard in, e.g. echo 'let a;' | rome format --stdin-file-path file.js

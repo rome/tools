@@ -299,6 +299,17 @@ impl Rule for UseOptionalChain {
     }
 }
 
+/// Normalize optional chain like.
+/// E.g. `foo != null` is normalized to `foo`
+fn normalized_optional_chain_like(expression: AnyJsExpression) -> SyntaxResult<AnyJsExpression> {
+    if let AnyJsExpression::JsBinaryExpression(expression) = &expression {
+        if expression.is_optional_chain_like()? {
+            return expression.left();
+        }
+    }
+    Ok(expression)
+}
+
 /// `LogicalAndChainOrdering` is the result of a comparison between two logical and chain.
 enum LogicalAndChainOrdering {
     /// An ordering where a chain is a sub-chain of another.
@@ -368,25 +379,6 @@ impl LogicalAndChain {
             let mut current_expression = Some(expression);
 
             while let Some(expression) = current_expression.take() {
-                let expression = match expression {
-                    // Extract a left `JsAnyExpression` from `JsBinaryExpression` if it's optional chain like
-                    // ```js
-                    // (foo === undefined) && foo.bar;
-                    // ```
-                    // is roughly equivalent to
-                    // ```js
-                    // foo && foo.bar;
-                    // ```
-                    AnyJsExpression::JsBinaryExpression(expression) => {
-                        if expression.is_optional_chain_like()? {
-                            expression.left()?
-                        } else {
-                            return Ok(buf);
-                        }
-                    }
-                    expression => expression,
-                };
-
                 current_expression = match &expression {
                     AnyJsExpression::JsStaticMemberExpression(member_expression) => {
                         let object = member_expression.object()?;
@@ -444,8 +436,9 @@ impl LogicalAndChain {
                 // Here we check that we came from the left side of the logical expression.
                 // Because only the left-hand parts can be sub-chains.
                 if grand_parent_logical_left.as_js_logical_expression() == Some(&parent) {
-                    let grand_parent_right_chain =
-                        LogicalAndChain::from_expression(grand_parent.right()?)?;
+                    let grand_parent_right_chain = LogicalAndChain::from_expression(
+                        normalized_optional_chain_like(grand_parent.right()?)?,
+                    )?;
 
                     let result = grand_parent_right_chain.cmp_chain(self)?;
 
@@ -579,7 +572,9 @@ impl LogicalAndChain {
                 _ => return None,
             };
 
-            let branch = LogicalAndChain::from_expression(head).ok()?;
+            let branch =
+                LogicalAndChain::from_expression(normalized_optional_chain_like(head).ok()?)
+                    .ok()?;
 
             match self.cmp_chain(&branch).ok()? {
                 LogicalAndChainOrdering::SubChain => {

@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 92
 expression: useSingleCaseStatement.js
 ---
 # Input
@@ -11,15 +12,17 @@ switch (foo) {
         foo;
 }
 
+switch (foo) { case false: let foo = ''; foo; }
+
 switch (foo) {
     // comment
-    case false :
+    case false:
         let foo = '';
         foo;
 }
 
 switch (foo) {
-    case false : // comment
+    case false: // comment
         let foo = '';
         foo;
 }
@@ -47,13 +50,56 @@ switch (foo) {
     case true:
 }
 
+switch (foo) {
+    case true:
+    default:
+        let foo = '';
+        foo;
+}
+
+switch (foo) {
+    // comment
+    default:
+        let foo = '';
+        foo;
+}
+
+switch (foo) {
+    default: // comment
+        let foo = '';
+        foo;
+}
+
+switch (foo) {
+    default
+    /* comment */ :
+        let foo = '';
+        foo;
+}
+
+switch (foo) {
+    case true:
+    default:
+        'yes';
+}
+
+switch (foo) {
+    default: {
+        // empty
+    }
+}
+
+switch (foo) {
+    default:
+}
+
 ```
 
 # Diagnostics
 ```
 useSingleCaseStatement.js:4:9 lint/style/useSingleCaseStatement  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! A switch case should only have a single statement. If you want more, then wrap it in a block.
+  ! A switch clause should only have a single statement.
   
     2 │     case true:
     3 │     case false:
@@ -64,7 +110,7 @@ useSingleCaseStatement.js:4:9 lint/style/useSingleCaseStatement  FIXABLE  ━━
     6 │ }
     7 │ 
   
-  i Suggested fix: Wrap the statements in a block
+  i Suggested fix: Wrap the statements in a block.
   
      1  1 │   switch (foo) {
      2  2 │       case true:
@@ -80,88 +126,223 @@ useSingleCaseStatement.js:4:9 lint/style/useSingleCaseStatement  FIXABLE  ━━
 ```
 
 ```
-useSingleCaseStatement.js:11:9 lint/style/useSingleCaseStatement  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━
+useSingleCaseStatement.js:8:28 lint/style/useSingleCaseStatement  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! A switch case should only have a single statement. If you want more, then wrap it in a block.
+  ! A switch clause should only have a single statement.
   
-     9 │     // comment
-    10 │     case false :
-  > 11 │         let foo = '';
+     6 │ }
+     7 │ 
+   > 8 │ switch (foo) { case false: let foo = ''; foo; }
+       │                            ^^^^^^^^^^^^^^^^^^
+     9 │ 
+    10 │ switch (foo) {
+  
+  i Suggested fix: Wrap the statements in a block.
+  
+    8 │ switch·(foo)·{·case·false:·{·let·foo·=·'';·foo;·}}
+      │                            ++                    +
+
+```
+
+```
+useSingleCaseStatement.js:13:9 lint/style/useSingleCaseStatement  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! A switch clause should only have a single statement.
+  
+    11 │     // comment
+    12 │     case false:
+  > 13 │         let foo = '';
        │         ^^^^^^^^^^^^^
-  > 12 │         foo;
+  > 14 │         foo;
        │         ^^^^
-    13 │ }
-    14 │ 
+    15 │ }
+    16 │ 
   
-  i Suggested fix: Wrap the statements in a block
+  i Suggested fix: Wrap the statements in a block.
   
-     8  8 │   switch (foo) {
-     9  9 │       // comment
-    10    │ - ····case·false·:
-       10 │ + ····case·false·:·{
-    11 11 │           let foo = '';
-    12 12 │           foo;
-       13 │ + ····}
-    13 14 │   }
-    14 15 │   
+    10 10 │   switch (foo) {
+    11 11 │       // comment
+    12    │ - ····case·false:
+       12 │ + ····case·false:·{
+    13 13 │           let foo = '';
+    14 14 │           foo;
+       15 │ + ····}
+    15 16 │   }
+    16 17 │   
   
 
 ```
 
 ```
-useSingleCaseStatement.js:17:9 lint/style/useSingleCaseStatement  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━
+useSingleCaseStatement.js:19:9 lint/style/useSingleCaseStatement  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! A switch case should only have a single statement. If you want more, then wrap it in a block.
+  ! A switch clause should only have a single statement.
   
-    15 │ switch (foo) {
-    16 │     case false : // comment
-  > 17 │         let foo = '';
+    17 │ switch (foo) {
+    18 │     case false: // comment
+  > 19 │         let foo = '';
        │         ^^^^^^^^^^^^^
-  > 18 │         foo;
+  > 20 │         foo;
        │         ^^^^
-    19 │ }
-    20 │ 
+    21 │ }
+    22 │ 
   
-  i Suggested fix: Wrap the statements in a block
+  i Suggested fix: Wrap the statements in a block.
   
-    14 14 │   
-    15 15 │   switch (foo) {
-    16    │ - ····case·false·:·//·comment
-       16 │ + ····case·false·:·{·//·comment
-    17 17 │           let foo = '';
-    18 18 │           foo;
-       19 │ + ····}
-    19 20 │   }
-    20 21 │   
+    16 16 │   
+    17 17 │   switch (foo) {
+    18    │ - ····case·false:·//·comment
+       18 │ + ····case·false:·{·//·comment
+    19 19 │           let foo = '';
+    20 20 │           foo;
+       21 │ + ····}
+    21 22 │   }
+    22 23 │   
   
 
 ```
 
 ```
-useSingleCaseStatement.js:24:9 lint/style/useSingleCaseStatement  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━
+useSingleCaseStatement.js:26:9 lint/style/useSingleCaseStatement  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! A switch case should only have a single statement. If you want more, then wrap it in a block.
+  ! A switch clause should only have a single statement.
   
-    22 │     case false
-    23 │     /* comment */ :
-  > 24 │         let foo = '';
+    24 │     case false
+    25 │     /* comment */ :
+  > 26 │         let foo = '';
        │         ^^^^^^^^^^^^^
-  > 25 │         foo;
+  > 27 │         foo;
        │         ^^^^
-    26 │ }
-    27 │ 
+    28 │ }
+    29 │ 
   
-  i Suggested fix: Wrap the statements in a block
+  i Suggested fix: Wrap the statements in a block.
   
-    21 21 │   switch (foo) {
-    22 22 │       case false
-    23    │ - ····/*·comment·*/·:
-       23 │ + ····/*·comment·*/·:·{
-    24 24 │           let foo = '';
-    25 25 │           foo;
-       26 │ + ····}
-    26 27 │   }
-    27 28 │   
+    23 23 │   switch (foo) {
+    24 24 │       case false
+    25    │ - ····/*·comment·*/·:
+       25 │ + ····/*·comment·*/·:·{
+    26 26 │           let foo = '';
+    27 27 │           foo;
+       28 │ + ····}
+    28 29 │   }
+    29 30 │   
+  
+
+```
+
+```
+useSingleCaseStatement.js:49:9 lint/style/useSingleCaseStatement  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! A switch clause should only have a single statement.
+  
+    47 │     case true:
+    48 │     default:
+  > 49 │         let foo = '';
+       │         ^^^^^^^^^^^^^
+  > 50 │         foo;
+       │         ^^^^
+    51 │ }
+    52 │ 
+  
+  i Suggested fix: Wrap the statements in a block.
+  
+    46 46 │   switch (foo) {
+    47 47 │       case true:
+    48    │ - ····default:
+       48 │ + ····default:·{
+    49 49 │           let foo = '';
+    50 50 │           foo;
+       51 │ + ····}
+    51 52 │   }
+    52 53 │   
+  
+
+```
+
+```
+useSingleCaseStatement.js:56:9 lint/style/useSingleCaseStatement  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! A switch clause should only have a single statement.
+  
+    54 │     // comment
+    55 │     default:
+  > 56 │         let foo = '';
+       │         ^^^^^^^^^^^^^
+  > 57 │         foo;
+       │         ^^^^
+    58 │ }
+    59 │ 
+  
+  i Suggested fix: Wrap the statements in a block.
+  
+    53 53 │   switch (foo) {
+    54 54 │       // comment
+    55    │ - ····default:
+       55 │ + ····default:·{
+    56 56 │           let foo = '';
+    57 57 │           foo;
+       58 │ + ····}
+    58 59 │   }
+    59 60 │   
+  
+
+```
+
+```
+useSingleCaseStatement.js:62:9 lint/style/useSingleCaseStatement  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! A switch clause should only have a single statement.
+  
+    60 │ switch (foo) {
+    61 │     default: // comment
+  > 62 │         let foo = '';
+       │         ^^^^^^^^^^^^^
+  > 63 │         foo;
+       │         ^^^^
+    64 │ }
+    65 │ 
+  
+  i Suggested fix: Wrap the statements in a block.
+  
+    59 59 │   
+    60 60 │   switch (foo) {
+    61    │ - ····default:·//·comment
+       61 │ + ····default:·{·//·comment
+    62 62 │           let foo = '';
+    63 63 │           foo;
+       64 │ + ····}
+    64 65 │   }
+    65 66 │   
+  
+
+```
+
+```
+useSingleCaseStatement.js:69:9 lint/style/useSingleCaseStatement  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! A switch clause should only have a single statement.
+  
+    67 │     default
+    68 │     /* comment */ :
+  > 69 │         let foo = '';
+       │         ^^^^^^^^^^^^^
+  > 70 │         foo;
+       │         ^^^^
+    71 │ }
+    72 │ 
+  
+  i Suggested fix: Wrap the statements in a block.
+  
+    66 66 │   switch (foo) {
+    67 67 │       default
+    68    │ - ····/*·comment·*/·:
+       68 │ + ····/*·comment·*/·:·{
+    69 69 │           let foo = '';
+    70 70 │           foo;
+       71 │ + ····}
+    71 72 │   }
+    72 73 │   
   
 
 ```

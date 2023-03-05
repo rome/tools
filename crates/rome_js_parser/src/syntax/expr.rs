@@ -192,8 +192,8 @@ pub(crate) fn parse_big_int_literal_expression(p: &mut JsParser) -> ParsedSyntax
     }
 
     let m = p.start();
-    p.bump_remap(JsSyntaxKind::JS_BIG_INT_LITERAL);
-    Present(m.complete(p, JS_BIG_INT_LITERAL_EXPRESSION))
+    p.bump_remap(JsSyntaxKind::JS_BIGINT_LITERAL);
+    Present(m.complete(p, JS_BIGINT_LITERAL_EXPRESSION))
 }
 
 pub(crate) fn parse_number_literal_expression(p: &mut JsParser) -> ParsedSyntax {
@@ -1260,7 +1260,7 @@ pub(crate) fn is_nth_at_expression(p: &mut JsParser, n: usize) -> bool {
         | TRUE_KW
         | FALSE_KW
         | JS_NUMBER_LITERAL
-        | JS_BIG_INT_LITERAL
+        | JS_BIGINT_LITERAL
         | JS_STRING_LITERAL
         | NULL_KW => true,
         t => t.is_contextual_keyword() || t.is_future_reserved_keyword(),

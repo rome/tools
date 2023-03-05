@@ -19,6 +19,7 @@ use rome_diagnostics::{serde::Diagnostic as SerdeDiagnostic, Diagnostic, Diagnos
 use rome_formatter::Printed;
 use rome_fs::RomePath;
 use rome_parser::AnyParse;
+use rome_rowan::NodeCache;
 use std::ffi::OsStr;
 use std::{panic::RefUnwindSafe, sync::RwLock};
 
@@ -41,11 +42,12 @@ pub(super) struct WorkspaceServer {
 /// could lead to hard to debug issues)
 impl RefUnwindSafe for WorkspaceServer {}
 
-#[derive(Clone, Debug)]
+#[derive(Debug)]
 pub(crate) struct Document {
     pub(crate) content: String,
     pub(crate) version: i32,
     pub(crate) language_hint: Language,
+    node_cache: NodeCache,
 }
 
 impl WorkspaceServer {
@@ -137,12 +139,13 @@ impl WorkspaceServer {
             Entry::Occupied(entry) => Ok(entry.get().clone()),
             Entry::Vacant(entry) => {
                 let rome_path = entry.key();
-                let document = self
+                let capabilities = self.get_capabilities(rome_path);
+
+                let mut document = self
                     .documents
-                    .get(rome_path)
+                    .get_mut(rome_path)
                     .ok_or_else(WorkspaceError::not_found)?;
 
-                let capabilities = self.get_capabilities(rome_path);
                 let parse = capabilities
                     .parser
                     .parse
@@ -155,6 +158,7 @@ impl WorkspaceServer {
                     usize::try_from(limit).unwrap_or(usize::MAX)
                 };
 
+                let document = &mut *document;
                 let size = document.content.as_bytes().len();
                 if size >= size_limit {
                     return Err(WorkspaceError::file_too_large(
@@ -164,7 +168,12 @@ impl WorkspaceServer {
                     ));
                 }
 
-                let parsed = parse(rome_path, document.language_hint, &document.content);
+                let parsed = parse(
+                    rome_path,
+                    document.language_hint,
+                    document.content.as_str(),
+                    &mut document.node_cache,
+                );
 
                 Ok(entry.insert(parsed).clone())
             }
@@ -259,6 +268,7 @@ impl Workspace for WorkspaceServer {
                 content: params.content,
                 version: params.version,
                 language_hint: params.language_hint,
+                node_cache: NodeCache::default(),
             },
         );
         Ok(())

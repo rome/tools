@@ -3,7 +3,7 @@ title: Lint Rule useYield
 parent: lint/rules/index
 ---
 
-# useYield (since vnext)
+# useYield (since v12.0.0)
 
 Require generator functions to contain `yield`.
 

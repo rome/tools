@@ -18,7 +18,7 @@ function foo() {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noRedundantUseStrict.js:3:3 <a href="https://docs.rome.tools/lint/rules/noRedundantUseStrict">lint/nursery/noRedundantUseStrict</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">suspicious/noRedundantUseStrict.js:3:3 <a href="https://docs.rome.tools/lint/rules/noRedundantUseStrict">lint/suspicious/noRedundantUseStrict</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Redundant </span><span style="color: Orange;"><strong>use strict</strong></span><span style="color: Orange;"> directive.</span>
   
@@ -55,7 +55,7 @@ function foo() {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noRedundantUseStrict.js:2:1 <a href="https://docs.rome.tools/lint/rules/noRedundantUseStrict">lint/nursery/noRedundantUseStrict</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">suspicious/noRedundantUseStrict.js:2:1 <a href="https://docs.rome.tools/lint/rules/noRedundantUseStrict">lint/suspicious/noRedundantUseStrict</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Redundant </span><span style="color: Orange;"><strong>use strict</strong></span><span style="color: Orange;"> directive.</span>
   
@@ -88,7 +88,7 @@ function foo() {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noRedundantUseStrict.js:3:1 <a href="https://docs.rome.tools/lint/rules/noRedundantUseStrict">lint/nursery/noRedundantUseStrict</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">suspicious/noRedundantUseStrict.js:3:1 <a href="https://docs.rome.tools/lint/rules/noRedundantUseStrict">lint/suspicious/noRedundantUseStrict</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Redundant </span><span style="color: Orange;"><strong>use strict</strong></span><span style="color: Orange;"> directive.</span>
   
@@ -125,7 +125,7 @@ class C1 {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noRedundantUseStrict.js:3:3 <a href="https://docs.rome.tools/lint/rules/noRedundantUseStrict">lint/nursery/noRedundantUseStrict</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">suspicious/noRedundantUseStrict.js:3:3 <a href="https://docs.rome.tools/lint/rules/noRedundantUseStrict">lint/suspicious/noRedundantUseStrict</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Redundant </span><span style="color: Orange;"><strong>use strict</strong></span><span style="color: Orange;"> directive.</span>
   
@@ -168,7 +168,7 @@ const C2 = class {
 
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noRedundantUseStrict.js:3:3 <a href="https://docs.rome.tools/lint/rules/noRedundantUseStrict">lint/nursery/noRedundantUseStrict</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">suspicious/noRedundantUseStrict.js:3:3 <a href="https://docs.rome.tools/lint/rules/noRedundantUseStrict">lint/suspicious/noRedundantUseStrict</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Redundant </span><span style="color: Orange;"><strong>use strict</strong></span><span style="color: Orange;"> directive.</span>
   

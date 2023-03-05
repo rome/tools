@@ -471,10 +471,10 @@ pub struct JsAwaitExpressionFields {
     pub argument: SyntaxResult<AnyJsExpression>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct JsBigIntLiteralExpression {
+pub struct JsBigintLiteralExpression {
     pub(crate) syntax: SyntaxNode,
 }
-impl JsBigIntLiteralExpression {
+impl JsBigintLiteralExpression {
     #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
     #[doc = r""]
     #[doc = r" # Safety"]
@@ -482,8 +482,8 @@ impl JsBigIntLiteralExpression {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
-    pub fn as_fields(&self) -> JsBigIntLiteralExpressionFields {
-        JsBigIntLiteralExpressionFields {
+    pub fn as_fields(&self) -> JsBigintLiteralExpressionFields {
+        JsBigintLiteralExpressionFields {
             value_token: self.value_token(),
         }
     }
@@ -492,7 +492,7 @@ impl JsBigIntLiteralExpression {
     }
 }
 #[cfg(feature = "serde")]
-impl Serialize for JsBigIntLiteralExpression {
+impl Serialize for JsBigintLiteralExpression {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -501,7 +501,7 @@ impl Serialize for JsBigIntLiteralExpression {
     }
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub struct JsBigIntLiteralExpressionFields {
+pub struct JsBigintLiteralExpressionFields {
     pub value_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -1960,6 +1960,7 @@ impl JsExportFromClause {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> JsExportFromClauseFields {
         JsExportFromClauseFields {
+            type_token: self.type_token(),
             star_token: self.star_token(),
             export_as: self.export_as(),
             from_token: self.from_token(),
@@ -1968,18 +1969,19 @@ impl JsExportFromClause {
             semicolon_token: self.semicolon_token(),
         }
     }
+    pub fn type_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn star_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 0usize)
+        support::required_token(&self.syntax, 1usize)
     }
-    pub fn export_as(&self) -> Option<JsExportAsClause> { support::node(&self.syntax, 1usize) }
+    pub fn export_as(&self) -> Option<JsExportAsClause> { support::node(&self.syntax, 2usize) }
     pub fn from_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 2usize)
+        support::required_token(&self.syntax, 3usize)
     }
     pub fn source(&self) -> SyntaxResult<JsModuleSource> {
-        support::required_node(&self.syntax, 3usize)
+        support::required_node(&self.syntax, 4usize)
     }
-    pub fn assertion(&self) -> Option<JsImportAssertion> { support::node(&self.syntax, 4usize) }
-    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
+    pub fn assertion(&self) -> Option<JsImportAssertion> { support::node(&self.syntax, 5usize) }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 6usize) }
 }
 #[cfg(feature = "serde")]
 impl Serialize for JsExportFromClause {
@@ -1992,6 +1994,7 @@ impl Serialize for JsExportFromClause {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsExportFromClauseFields {
+    pub type_token: Option<SyntaxToken>,
     pub star_token: SyntaxResult<SyntaxToken>,
     pub export_as: Option<JsExportAsClause>,
     pub from_token: SyntaxResult<SyntaxToken>,
@@ -7737,10 +7740,10 @@ pub struct TsAssertsReturnTypeFields {
     pub predicate: Option<TsAssertsCondition>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct TsBigIntLiteralType {
+pub struct TsBigintLiteralType {
     pub(crate) syntax: SyntaxNode,
 }
-impl TsBigIntLiteralType {
+impl TsBigintLiteralType {
     #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
     #[doc = r""]
     #[doc = r" # Safety"]
@@ -7748,8 +7751,8 @@ impl TsBigIntLiteralType {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
-    pub fn as_fields(&self) -> TsBigIntLiteralTypeFields {
-        TsBigIntLiteralTypeFields {
+    pub fn as_fields(&self) -> TsBigintLiteralTypeFields {
+        TsBigintLiteralTypeFields {
             minus_token: self.minus_token(),
             literal_token: self.literal_token(),
         }
@@ -7760,7 +7763,7 @@ impl TsBigIntLiteralType {
     }
 }
 #[cfg(feature = "serde")]
-impl Serialize for TsBigIntLiteralType {
+impl Serialize for TsBigintLiteralType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -7769,7 +7772,7 @@ impl Serialize for TsBigIntLiteralType {
     }
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub struct TsBigIntLiteralTypeFields {
+pub struct TsBigintLiteralTypeFields {
     pub minus_token: Option<SyntaxToken>,
     pub literal_token: SyntaxResult<SyntaxToken>,
 }
@@ -9489,6 +9492,58 @@ pub struct TsInferTypeFields {
     pub infer_token: SyntaxResult<SyntaxToken>,
     pub name: SyntaxResult<TsTypeParameterName>,
     pub constraint: Option<TsTypeConstraintClause>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsInitializedPropertySignatureClassMember {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsInitializedPropertySignatureClassMember {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsInitializedPropertySignatureClassMemberFields {
+        TsInitializedPropertySignatureClassMemberFields {
+            modifiers: self.modifiers(),
+            name: self.name(),
+            question_mark_token: self.question_mark_token(),
+            value: self.value(),
+            semicolon_token: self.semicolon_token(),
+        }
+    }
+    pub fn modifiers(&self) -> TsPropertySignatureModifierList {
+        support::list(&self.syntax, 0usize)
+    }
+    pub fn name(&self) -> SyntaxResult<AnyJsClassMemberName> {
+        support::required_node(&self.syntax, 1usize)
+    }
+    pub fn question_mark_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 2usize)
+    }
+    pub fn value(&self) -> SyntaxResult<JsInitializerClause> {
+        support::required_node(&self.syntax, 3usize)
+    }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 4usize) }
+}
+#[cfg(feature = "serde")]
+impl Serialize for TsInitializedPropertySignatureClassMember {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize))]
+pub struct TsInitializedPropertySignatureClassMemberFields {
+    pub modifiers: TsPropertySignatureModifierList,
+    pub name: SyntaxResult<AnyJsClassMemberName>,
+    pub question_mark_token: Option<SyntaxToken>,
+    pub value: SyntaxResult<JsInitializerClause>,
+    pub semicolon_token: Option<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsInstantiationExpression {
@@ -12421,6 +12476,7 @@ pub enum AnyJsClassMember {
     TsConstructorSignatureClassMember(TsConstructorSignatureClassMember),
     TsGetterSignatureClassMember(TsGetterSignatureClassMember),
     TsIndexSignatureClassMember(TsIndexSignatureClassMember),
+    TsInitializedPropertySignatureClassMember(TsInitializedPropertySignatureClassMember),
     TsMethodSignatureClassMember(TsMethodSignatureClassMember),
     TsPropertySignatureClassMember(TsPropertySignatureClassMember),
     TsSetterSignatureClassMember(TsSetterSignatureClassMember),
@@ -12493,6 +12549,14 @@ impl AnyJsClassMember {
     pub fn as_ts_index_signature_class_member(&self) -> Option<&TsIndexSignatureClassMember> {
         match &self {
             AnyJsClassMember::TsIndexSignatureClassMember(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_initialized_property_signature_class_member(
+        &self,
+    ) -> Option<&TsInitializedPropertySignatureClassMember> {
+        match &self {
+            AnyJsClassMember::TsInitializedPropertySignatureClassMember(item) => Some(item),
             _ => None,
         }
     }
@@ -13330,7 +13394,7 @@ impl AnyJsInProperty {
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub enum AnyJsLiteralExpression {
-    JsBigIntLiteralExpression(JsBigIntLiteralExpression),
+    JsBigintLiteralExpression(JsBigintLiteralExpression),
     JsBooleanLiteralExpression(JsBooleanLiteralExpression),
     JsNullLiteralExpression(JsNullLiteralExpression),
     JsNumberLiteralExpression(JsNumberLiteralExpression),
@@ -13338,9 +13402,9 @@ pub enum AnyJsLiteralExpression {
     JsStringLiteralExpression(JsStringLiteralExpression),
 }
 impl AnyJsLiteralExpression {
-    pub fn as_js_big_int_literal_expression(&self) -> Option<&JsBigIntLiteralExpression> {
+    pub fn as_js_bigint_literal_expression(&self) -> Option<&JsBigintLiteralExpression> {
         match &self {
-            AnyJsLiteralExpression::JsBigIntLiteralExpression(item) => Some(item),
+            AnyJsLiteralExpression::JsBigintLiteralExpression(item) => Some(item),
             _ => None,
         }
     }
@@ -14596,7 +14660,7 @@ impl AnyTsTupleTypeElement {
 pub enum AnyTsType {
     TsAnyType(TsAnyType),
     TsArrayType(TsArrayType),
-    TsBigIntLiteralType(TsBigIntLiteralType),
+    TsBigintLiteralType(TsBigintLiteralType),
     TsBigintType(TsBigintType),
     TsBogusType(TsBogusType),
     TsBooleanLiteralType(TsBooleanLiteralType),
@@ -14643,9 +14707,9 @@ impl AnyTsType {
             _ => None,
         }
     }
-    pub fn as_ts_big_int_literal_type(&self) -> Option<&TsBigIntLiteralType> {
+    pub fn as_ts_bigint_literal_type(&self) -> Option<&TsBigintLiteralType> {
         match &self {
-            AnyTsType::TsBigIntLiteralType(item) => Some(item),
+            AnyTsType::TsBigintLiteralType(item) => Some(item),
             _ => None,
         }
     }
@@ -15314,11 +15378,11 @@ impl From<JsAwaitExpression> for SyntaxNode {
 impl From<JsAwaitExpression> for SyntaxElement {
     fn from(n: JsAwaitExpression) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode for JsBigIntLiteralExpression {
+impl AstNode for JsBigintLiteralExpression {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
-        SyntaxKindSet::from_raw(RawSyntaxKind(JS_BIG_INT_LITERAL_EXPRESSION as u16));
-    fn can_cast(kind: SyntaxKind) -> bool { kind == JS_BIG_INT_LITERAL_EXPRESSION }
+        SyntaxKindSet::from_raw(RawSyntaxKind(JS_BIGINT_LITERAL_EXPRESSION as u16));
+    fn can_cast(kind: SyntaxKind) -> bool { kind == JS_BIGINT_LITERAL_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -15329,9 +15393,9 @@ impl AstNode for JsBigIntLiteralExpression {
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
     fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
-impl std::fmt::Debug for JsBigIntLiteralExpression {
+impl std::fmt::Debug for JsBigintLiteralExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("JsBigIntLiteralExpression")
+        f.debug_struct("JsBigintLiteralExpression")
             .field(
                 "value_token",
                 &support::DebugSyntaxResult(self.value_token()),
@@ -15339,11 +15403,11 @@ impl std::fmt::Debug for JsBigIntLiteralExpression {
             .finish()
     }
 }
-impl From<JsBigIntLiteralExpression> for SyntaxNode {
-    fn from(n: JsBigIntLiteralExpression) -> SyntaxNode { n.syntax }
+impl From<JsBigintLiteralExpression> for SyntaxNode {
+    fn from(n: JsBigintLiteralExpression) -> SyntaxNode { n.syntax }
 }
-impl From<JsBigIntLiteralExpression> for SyntaxElement {
-    fn from(n: JsBigIntLiteralExpression) -> SyntaxElement { n.syntax.into() }
+impl From<JsBigintLiteralExpression> for SyntaxElement {
+    fn from(n: JsBigintLiteralExpression) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for JsBinaryExpression {
     type Language = Language;
@@ -16557,6 +16621,10 @@ impl AstNode for JsExportFromClause {
 impl std::fmt::Debug for JsExportFromClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("JsExportFromClause")
+            .field(
+                "type_token",
+                &support::DebugOptionalElement(self.type_token()),
+            )
             .field("star_token", &support::DebugSyntaxResult(self.star_token()))
             .field(
                 "export_as",
@@ -21239,11 +21307,11 @@ impl From<TsAssertsReturnType> for SyntaxNode {
 impl From<TsAssertsReturnType> for SyntaxElement {
     fn from(n: TsAssertsReturnType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode for TsBigIntLiteralType {
+impl AstNode for TsBigintLiteralType {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
-        SyntaxKindSet::from_raw(RawSyntaxKind(TS_BIG_INT_LITERAL_TYPE as u16));
-    fn can_cast(kind: SyntaxKind) -> bool { kind == TS_BIG_INT_LITERAL_TYPE }
+        SyntaxKindSet::from_raw(RawSyntaxKind(TS_BIGINT_LITERAL_TYPE as u16));
+    fn can_cast(kind: SyntaxKind) -> bool { kind == TS_BIGINT_LITERAL_TYPE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -21254,9 +21322,9 @@ impl AstNode for TsBigIntLiteralType {
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
     fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
-impl std::fmt::Debug for TsBigIntLiteralType {
+impl std::fmt::Debug for TsBigintLiteralType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("TsBigIntLiteralType")
+        f.debug_struct("TsBigintLiteralType")
             .field(
                 "minus_token",
                 &support::DebugOptionalElement(self.minus_token()),
@@ -21268,11 +21336,11 @@ impl std::fmt::Debug for TsBigIntLiteralType {
             .finish()
     }
 }
-impl From<TsBigIntLiteralType> for SyntaxNode {
-    fn from(n: TsBigIntLiteralType) -> SyntaxNode { n.syntax }
+impl From<TsBigintLiteralType> for SyntaxNode {
+    fn from(n: TsBigintLiteralType) -> SyntaxNode { n.syntax }
 }
-impl From<TsBigIntLiteralType> for SyntaxElement {
-    fn from(n: TsBigIntLiteralType) -> SyntaxElement { n.syntax.into() }
+impl From<TsBigintLiteralType> for SyntaxElement {
+    fn from(n: TsBigintLiteralType) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for TsBigintType {
     type Language = Language;
@@ -22696,6 +22764,45 @@ impl From<TsInferType> for SyntaxNode {
 }
 impl From<TsInferType> for SyntaxElement {
     fn from(n: TsInferType) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for TsInitializedPropertySignatureClassMember {
+    type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> = SyntaxKindSet::from_raw(RawSyntaxKind(
+        TS_INITIALIZED_PROPERTY_SIGNATURE_CLASS_MEMBER as u16,
+    ));
+    fn can_cast(kind: SyntaxKind) -> bool { kind == TS_INITIALIZED_PROPERTY_SIGNATURE_CLASS_MEMBER }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
+}
+impl std::fmt::Debug for TsInitializedPropertySignatureClassMember {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsInitializedPropertySignatureClassMember")
+            .field("modifiers", &self.modifiers())
+            .field("name", &support::DebugSyntaxResult(self.name()))
+            .field(
+                "question_mark_token",
+                &support::DebugOptionalElement(self.question_mark_token()),
+            )
+            .field("value", &support::DebugSyntaxResult(self.value()))
+            .field(
+                "semicolon_token",
+                &support::DebugOptionalElement(self.semicolon_token()),
+            )
+            .finish()
+    }
+}
+impl From<TsInitializedPropertySignatureClassMember> for SyntaxNode {
+    fn from(n: TsInitializedPropertySignatureClassMember) -> SyntaxNode { n.syntax }
+}
+impl From<TsInitializedPropertySignatureClassMember> for SyntaxElement {
+    fn from(n: TsInitializedPropertySignatureClassMember) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for TsInstantiationExpression {
     type Language = Language;
@@ -25795,6 +25902,11 @@ impl From<TsIndexSignatureClassMember> for AnyJsClassMember {
         AnyJsClassMember::TsIndexSignatureClassMember(node)
     }
 }
+impl From<TsInitializedPropertySignatureClassMember> for AnyJsClassMember {
+    fn from(node: TsInitializedPropertySignatureClassMember) -> AnyJsClassMember {
+        AnyJsClassMember::TsInitializedPropertySignatureClassMember(node)
+    }
+}
 impl From<TsMethodSignatureClassMember> for AnyJsClassMember {
     fn from(node: TsMethodSignatureClassMember) -> AnyJsClassMember {
         AnyJsClassMember::TsMethodSignatureClassMember(node)
@@ -25823,6 +25935,7 @@ impl AstNode for AnyJsClassMember {
         .union(TsConstructorSignatureClassMember::KIND_SET)
         .union(TsGetterSignatureClassMember::KIND_SET)
         .union(TsIndexSignatureClassMember::KIND_SET)
+        .union(TsInitializedPropertySignatureClassMember::KIND_SET)
         .union(TsMethodSignatureClassMember::KIND_SET)
         .union(TsPropertySignatureClassMember::KIND_SET)
         .union(TsSetterSignatureClassMember::KIND_SET);
@@ -25840,6 +25953,7 @@ impl AstNode for AnyJsClassMember {
                 | TS_CONSTRUCTOR_SIGNATURE_CLASS_MEMBER
                 | TS_GETTER_SIGNATURE_CLASS_MEMBER
                 | TS_INDEX_SIGNATURE_CLASS_MEMBER
+                | TS_INITIALIZED_PROPERTY_SIGNATURE_CLASS_MEMBER
                 | TS_METHOD_SIGNATURE_CLASS_MEMBER
                 | TS_PROPERTY_SIGNATURE_CLASS_MEMBER
                 | TS_SETTER_SIGNATURE_CLASS_MEMBER
@@ -25886,6 +26000,11 @@ impl AstNode for AnyJsClassMember {
                     syntax,
                 })
             }
+            TS_INITIALIZED_PROPERTY_SIGNATURE_CLASS_MEMBER => {
+                AnyJsClassMember::TsInitializedPropertySignatureClassMember(
+                    TsInitializedPropertySignatureClassMember { syntax },
+                )
+            }
             TS_METHOD_SIGNATURE_CLASS_MEMBER => {
                 AnyJsClassMember::TsMethodSignatureClassMember(TsMethodSignatureClassMember {
                     syntax,
@@ -25918,6 +26037,7 @@ impl AstNode for AnyJsClassMember {
             AnyJsClassMember::TsConstructorSignatureClassMember(it) => &it.syntax,
             AnyJsClassMember::TsGetterSignatureClassMember(it) => &it.syntax,
             AnyJsClassMember::TsIndexSignatureClassMember(it) => &it.syntax,
+            AnyJsClassMember::TsInitializedPropertySignatureClassMember(it) => &it.syntax,
             AnyJsClassMember::TsMethodSignatureClassMember(it) => &it.syntax,
             AnyJsClassMember::TsPropertySignatureClassMember(it) => &it.syntax,
             AnyJsClassMember::TsSetterSignatureClassMember(it) => &it.syntax,
@@ -25936,6 +26056,7 @@ impl AstNode for AnyJsClassMember {
             AnyJsClassMember::TsConstructorSignatureClassMember(it) => it.syntax,
             AnyJsClassMember::TsGetterSignatureClassMember(it) => it.syntax,
             AnyJsClassMember::TsIndexSignatureClassMember(it) => it.syntax,
+            AnyJsClassMember::TsInitializedPropertySignatureClassMember(it) => it.syntax,
             AnyJsClassMember::TsMethodSignatureClassMember(it) => it.syntax,
             AnyJsClassMember::TsPropertySignatureClassMember(it) => it.syntax,
             AnyJsClassMember::TsSetterSignatureClassMember(it) => it.syntax,
@@ -25958,6 +26079,9 @@ impl std::fmt::Debug for AnyJsClassMember {
             AnyJsClassMember::TsConstructorSignatureClassMember(it) => std::fmt::Debug::fmt(it, f),
             AnyJsClassMember::TsGetterSignatureClassMember(it) => std::fmt::Debug::fmt(it, f),
             AnyJsClassMember::TsIndexSignatureClassMember(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsClassMember::TsInitializedPropertySignatureClassMember(it) => {
+                std::fmt::Debug::fmt(it, f)
+            }
             AnyJsClassMember::TsMethodSignatureClassMember(it) => std::fmt::Debug::fmt(it, f),
             AnyJsClassMember::TsPropertySignatureClassMember(it) => std::fmt::Debug::fmt(it, f),
             AnyJsClassMember::TsSetterSignatureClassMember(it) => std::fmt::Debug::fmt(it, f),
@@ -25978,6 +26102,7 @@ impl From<AnyJsClassMember> for SyntaxNode {
             AnyJsClassMember::TsConstructorSignatureClassMember(it) => it.into(),
             AnyJsClassMember::TsGetterSignatureClassMember(it) => it.into(),
             AnyJsClassMember::TsIndexSignatureClassMember(it) => it.into(),
+            AnyJsClassMember::TsInitializedPropertySignatureClassMember(it) => it.into(),
             AnyJsClassMember::TsMethodSignatureClassMember(it) => it.into(),
             AnyJsClassMember::TsPropertySignatureClassMember(it) => it.into(),
             AnyJsClassMember::TsSetterSignatureClassMember(it) => it.into(),
@@ -28000,9 +28125,9 @@ impl From<AnyJsInProperty> for SyntaxElement {
         node.into()
     }
 }
-impl From<JsBigIntLiteralExpression> for AnyJsLiteralExpression {
-    fn from(node: JsBigIntLiteralExpression) -> AnyJsLiteralExpression {
-        AnyJsLiteralExpression::JsBigIntLiteralExpression(node)
+impl From<JsBigintLiteralExpression> for AnyJsLiteralExpression {
+    fn from(node: JsBigintLiteralExpression) -> AnyJsLiteralExpression {
+        AnyJsLiteralExpression::JsBigintLiteralExpression(node)
     }
 }
 impl From<JsBooleanLiteralExpression> for AnyJsLiteralExpression {
@@ -28032,7 +28157,7 @@ impl From<JsStringLiteralExpression> for AnyJsLiteralExpression {
 }
 impl AstNode for AnyJsLiteralExpression {
     type Language = Language;
-    const KIND_SET: SyntaxKindSet<Language> = JsBigIntLiteralExpression::KIND_SET
+    const KIND_SET: SyntaxKindSet<Language> = JsBigintLiteralExpression::KIND_SET
         .union(JsBooleanLiteralExpression::KIND_SET)
         .union(JsNullLiteralExpression::KIND_SET)
         .union(JsNumberLiteralExpression::KIND_SET)
@@ -28041,7 +28166,7 @@ impl AstNode for AnyJsLiteralExpression {
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
-            JS_BIG_INT_LITERAL_EXPRESSION
+            JS_BIGINT_LITERAL_EXPRESSION
                 | JS_BOOLEAN_LITERAL_EXPRESSION
                 | JS_NULL_LITERAL_EXPRESSION
                 | JS_NUMBER_LITERAL_EXPRESSION
@@ -28051,8 +28176,8 @@ impl AstNode for AnyJsLiteralExpression {
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
-            JS_BIG_INT_LITERAL_EXPRESSION => {
-                AnyJsLiteralExpression::JsBigIntLiteralExpression(JsBigIntLiteralExpression {
+            JS_BIGINT_LITERAL_EXPRESSION => {
+                AnyJsLiteralExpression::JsBigintLiteralExpression(JsBigintLiteralExpression {
                     syntax,
                 })
             }
@@ -28085,7 +28210,7 @@ impl AstNode for AnyJsLiteralExpression {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            AnyJsLiteralExpression::JsBigIntLiteralExpression(it) => &it.syntax,
+            AnyJsLiteralExpression::JsBigintLiteralExpression(it) => &it.syntax,
             AnyJsLiteralExpression::JsBooleanLiteralExpression(it) => &it.syntax,
             AnyJsLiteralExpression::JsNullLiteralExpression(it) => &it.syntax,
             AnyJsLiteralExpression::JsNumberLiteralExpression(it) => &it.syntax,
@@ -28095,7 +28220,7 @@ impl AstNode for AnyJsLiteralExpression {
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            AnyJsLiteralExpression::JsBigIntLiteralExpression(it) => it.syntax,
+            AnyJsLiteralExpression::JsBigintLiteralExpression(it) => it.syntax,
             AnyJsLiteralExpression::JsBooleanLiteralExpression(it) => it.syntax,
             AnyJsLiteralExpression::JsNullLiteralExpression(it) => it.syntax,
             AnyJsLiteralExpression::JsNumberLiteralExpression(it) => it.syntax,
@@ -28107,7 +28232,7 @@ impl AstNode for AnyJsLiteralExpression {
 impl std::fmt::Debug for AnyJsLiteralExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            AnyJsLiteralExpression::JsBigIntLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsLiteralExpression::JsBigintLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
             AnyJsLiteralExpression::JsBooleanLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
             AnyJsLiteralExpression::JsNullLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
             AnyJsLiteralExpression::JsNumberLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
@@ -28119,7 +28244,7 @@ impl std::fmt::Debug for AnyJsLiteralExpression {
 impl From<AnyJsLiteralExpression> for SyntaxNode {
     fn from(n: AnyJsLiteralExpression) -> SyntaxNode {
         match n {
-            AnyJsLiteralExpression::JsBigIntLiteralExpression(it) => it.into(),
+            AnyJsLiteralExpression::JsBigintLiteralExpression(it) => it.into(),
             AnyJsLiteralExpression::JsBooleanLiteralExpression(it) => it.into(),
             AnyJsLiteralExpression::JsNullLiteralExpression(it) => it.into(),
             AnyJsLiteralExpression::JsNumberLiteralExpression(it) => it.into(),
@@ -31332,8 +31457,8 @@ impl From<TsAnyType> for AnyTsType {
 impl From<TsArrayType> for AnyTsType {
     fn from(node: TsArrayType) -> AnyTsType { AnyTsType::TsArrayType(node) }
 }
-impl From<TsBigIntLiteralType> for AnyTsType {
-    fn from(node: TsBigIntLiteralType) -> AnyTsType { AnyTsType::TsBigIntLiteralType(node) }
+impl From<TsBigintLiteralType> for AnyTsType {
+    fn from(node: TsBigintLiteralType) -> AnyTsType { AnyTsType::TsBigintLiteralType(node) }
 }
 impl From<TsBigintType> for AnyTsType {
     fn from(node: TsBigintType) -> AnyTsType { AnyTsType::TsBigintType(node) }
@@ -31435,7 +31560,7 @@ impl AstNode for AnyTsType {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> = TsAnyType::KIND_SET
         .union(TsArrayType::KIND_SET)
-        .union(TsBigIntLiteralType::KIND_SET)
+        .union(TsBigintLiteralType::KIND_SET)
         .union(TsBigintType::KIND_SET)
         .union(TsBogusType::KIND_SET)
         .union(TsBooleanLiteralType::KIND_SET)
@@ -31473,7 +31598,7 @@ impl AstNode for AnyTsType {
             kind,
             TS_ANY_TYPE
                 | TS_ARRAY_TYPE
-                | TS_BIG_INT_LITERAL_TYPE
+                | TS_BIGINT_LITERAL_TYPE
                 | TS_BIGINT_TYPE
                 | TS_BOGUS_TYPE
                 | TS_BOOLEAN_LITERAL_TYPE
@@ -31512,8 +31637,8 @@ impl AstNode for AnyTsType {
         let res = match syntax.kind() {
             TS_ANY_TYPE => AnyTsType::TsAnyType(TsAnyType { syntax }),
             TS_ARRAY_TYPE => AnyTsType::TsArrayType(TsArrayType { syntax }),
-            TS_BIG_INT_LITERAL_TYPE => {
-                AnyTsType::TsBigIntLiteralType(TsBigIntLiteralType { syntax })
+            TS_BIGINT_LITERAL_TYPE => {
+                AnyTsType::TsBigintLiteralType(TsBigintLiteralType { syntax })
             }
             TS_BIGINT_TYPE => AnyTsType::TsBigintType(TsBigintType { syntax }),
             TS_BOGUS_TYPE => AnyTsType::TsBogusType(TsBogusType { syntax }),
@@ -31565,7 +31690,7 @@ impl AstNode for AnyTsType {
         match self {
             AnyTsType::TsAnyType(it) => &it.syntax,
             AnyTsType::TsArrayType(it) => &it.syntax,
-            AnyTsType::TsBigIntLiteralType(it) => &it.syntax,
+            AnyTsType::TsBigintLiteralType(it) => &it.syntax,
             AnyTsType::TsBigintType(it) => &it.syntax,
             AnyTsType::TsBogusType(it) => &it.syntax,
             AnyTsType::TsBooleanLiteralType(it) => &it.syntax,
@@ -31604,7 +31729,7 @@ impl AstNode for AnyTsType {
         match self {
             AnyTsType::TsAnyType(it) => it.syntax,
             AnyTsType::TsArrayType(it) => it.syntax,
-            AnyTsType::TsBigIntLiteralType(it) => it.syntax,
+            AnyTsType::TsBigintLiteralType(it) => it.syntax,
             AnyTsType::TsBigintType(it) => it.syntax,
             AnyTsType::TsBogusType(it) => it.syntax,
             AnyTsType::TsBooleanLiteralType(it) => it.syntax,
@@ -31645,7 +31770,7 @@ impl std::fmt::Debug for AnyTsType {
         match self {
             AnyTsType::TsAnyType(it) => std::fmt::Debug::fmt(it, f),
             AnyTsType::TsArrayType(it) => std::fmt::Debug::fmt(it, f),
-            AnyTsType::TsBigIntLiteralType(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsType::TsBigintLiteralType(it) => std::fmt::Debug::fmt(it, f),
             AnyTsType::TsBigintType(it) => std::fmt::Debug::fmt(it, f),
             AnyTsType::TsBogusType(it) => std::fmt::Debug::fmt(it, f),
             AnyTsType::TsBooleanLiteralType(it) => std::fmt::Debug::fmt(it, f),
@@ -31686,7 +31811,7 @@ impl From<AnyTsType> for SyntaxNode {
         match n {
             AnyTsType::TsAnyType(it) => it.into(),
             AnyTsType::TsArrayType(it) => it.into(),
-            AnyTsType::TsBigIntLiteralType(it) => it.into(),
+            AnyTsType::TsBigintLiteralType(it) => it.into(),
             AnyTsType::TsBigintType(it) => it.into(),
             AnyTsType::TsBogusType(it) => it.into(),
             AnyTsType::TsBooleanLiteralType(it) => it.into(),
@@ -32407,7 +32532,7 @@ impl std::fmt::Display for JsAwaitExpression {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsBigIntLiteralExpression {
+impl std::fmt::Display for JsBigintLiteralExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -33237,7 +33362,7 @@ impl std::fmt::Display for TsAssertsReturnType {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for TsBigIntLiteralType {
+impl std::fmt::Display for TsBigintLiteralType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -33428,6 +33553,11 @@ impl std::fmt::Display for TsIndexedAccessType {
     }
 }
 impl std::fmt::Display for TsInferType {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for TsInitializedPropertySignatureClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }

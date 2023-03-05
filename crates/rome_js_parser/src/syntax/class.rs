@@ -901,7 +901,7 @@ fn parse_property_class_member_body(
     member_marker: Marker,
     modifiers: &ClassMemberModifiers,
 ) -> CompletedMarker {
-    parse_ts_property_annotation(p, modifiers).ok();
+    let annotation = parse_ts_property_annotation(p, modifiers).ok();
 
     // test class_await_property_initializer
     // // SCRIPT
@@ -926,10 +926,12 @@ fn parse_property_class_member_body(
     expect_member_semi(p, &member_marker, "class property");
 
     let is_signature = modifiers.is_signature() || p.state().in_ambient_context();
-    let kind = if is_signature {
-        TS_PROPERTY_SIGNATURE_CLASS_MEMBER
-    } else {
+    let kind = if !is_signature {
         JS_PROPERTY_CLASS_MEMBER
+    } else if initializer_syntax.is_present() {
+        TS_INITIALIZED_PROPERTY_SIGNATURE_CLASS_MEMBER
+    } else {
+        TS_PROPERTY_SIGNATURE_CLASS_MEMBER
     };
 
     let member = member_marker.complete(p, kind);
@@ -945,13 +947,33 @@ fn parse_property_class_member_body(
                 initializer.range(p),
             ));
         } else if modifiers.has(ModifierKind::Declare) || p.state().in_ambient_context() {
-            // test_err ts ts_property_initializer_ambient_context
-            // declare class A { prop = "test" }
-            // class B { declare prop = "test" }
-            p.error(p.err_builder(
-                "Initializers are not allowed in ambient contexts.",
-                initializer.range(p),
-            ));
+            // test ts ts_readonly_property_initializer_ambient_context
+            // declare class A { readonly prop = "test"; }
+            // class B { declare readonly prop = "test"; }
+            // declare class A { private readonly prop = "test"; }
+            // class B { declare private readonly prop = "test"; }
+            // declare class A { static readonly prop = "test"; }
+            // class B { declare static readonly prop = "test"; }
+
+            if !modifiers.has(ModifierKind::Readonly) {
+                // test_err ts ts_property_initializer_ambient_context
+                // declare class A { prop = "test"; }
+                // class B { declare prop = "test"; }
+
+                p.error(p.err_builder(
+                    "In ambient contexts, properties with initializers need to be readonly.",
+                    initializer.range(p),
+                ));
+            } else if let Some(annotation) = annotation {
+                // test_err ts ts_annotated_property_initializer_ambient_context
+                // declare class T { readonly b: string = "test"; }
+                // class T { declare readonly b: string = "test"; }
+
+                p.error(p.err_builder(
+                    "In ambient contexts, properties cannot have both a type annotation and an initializer.",
+                    initializer.range(p),
+                ).detail(annotation.range(p), "The type annotation is here:"));
+            }
         }
     }
 
@@ -1860,7 +1882,9 @@ impl ClassMemberModifiers {
 
         let list_kind = match member_kind {
             JS_PROPERTY_CLASS_MEMBER => JS_PROPERTY_MODIFIER_LIST,
-            TS_PROPERTY_SIGNATURE_CLASS_MEMBER => TS_PROPERTY_SIGNATURE_MODIFIER_LIST,
+            TS_PROPERTY_SIGNATURE_CLASS_MEMBER | TS_INITIALIZED_PROPERTY_SIGNATURE_CLASS_MEMBER => {
+                TS_PROPERTY_SIGNATURE_MODIFIER_LIST
+            }
             JS_GETTER_CLASS_MEMBER | JS_SETTER_CLASS_MEMBER | JS_METHOD_CLASS_MEMBER => {
                 JS_METHOD_MODIFIER_LIST
             }
@@ -2075,6 +2099,7 @@ impl ClassMemberModifiers {
                     member_kind,
                     JS_PROPERTY_CLASS_MEMBER
                         | TS_PROPERTY_SIGNATURE_CLASS_MEMBER
+                        | TS_INITIALIZED_PROPERTY_SIGNATURE_CLASS_MEMBER
                         | TS_INDEX_SIGNATURE_CLASS_MEMBER
                         | JS_BOGUS_MEMBER
                         | TS_PROPERTY_PARAMETER
@@ -2122,7 +2147,9 @@ impl ClassMemberModifiers {
                     ));
                 } else if !matches!(
                     member_kind,
-                    JS_PROPERTY_CLASS_MEMBER | TS_PROPERTY_SIGNATURE_CLASS_MEMBER
+                    JS_PROPERTY_CLASS_MEMBER
+                        | TS_PROPERTY_SIGNATURE_CLASS_MEMBER
+                        | TS_INITIALIZED_PROPERTY_SIGNATURE_CLASS_MEMBER
                 ) {
                     return Some(p.err_builder(
                         "'declare' modifier is only allowed on properties.",
@@ -2150,6 +2177,7 @@ impl ClassMemberModifiers {
                         | TS_METHOD_SIGNATURE_CLASS_MEMBER
                         | JS_PROPERTY_CLASS_MEMBER
                         | TS_PROPERTY_SIGNATURE_CLASS_MEMBER
+                        | TS_INITIALIZED_PROPERTY_SIGNATURE_CLASS_MEMBER
                         | JS_SETTER_CLASS_MEMBER
                         | TS_SETTER_SIGNATURE_CLASS_MEMBER
                         | JS_GETTER_CLASS_MEMBER

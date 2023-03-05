@@ -8,7 +8,7 @@ expression: content
 {
   "javascript": {
     "formatter": {
-        "quoteStyle": "single"
+      "quoteStyle": "single"
     }
   }
 }
@@ -24,6 +24,20 @@ function f() {
 ```
 
 # Emitted Messages
+
+```block
+file.js format ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Formatter would have printed the following content:
+  
+    1 1 │   function f() {
+    2   │ - ··return·'hey';
+      2 │ + ··return·"hey";
+    3 3 │   }
+    4 4 │   
+  
+
+```
 
 ```block
 Compared 1 file(s) in <TIME>

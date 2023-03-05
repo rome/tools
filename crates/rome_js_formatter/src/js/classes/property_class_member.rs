@@ -4,7 +4,7 @@ use crate::utils::{AnyJsAssignmentLike, FormatSemicolon};
 use rome_formatter::write;
 use rome_js_syntax::{
     AnyJsClassMember, AnyJsClassMemberName, JsInitializerClause, JsPropertyClassMember,
-    JsSyntaxToken, TsPropertySignatureClassMember,
+    JsSyntaxToken, TsInitializedPropertySignatureClassMember, TsPropertySignatureClassMember,
 };
 use rome_rowan::{declare_node_union, SyntaxResult};
 
@@ -28,7 +28,7 @@ impl FormatNodeRule<JsPropertyClassMember> for FormatJsPropertyClassMember {
 }
 
 declare_node_union! {
-    pub(crate) AnyJsPropertyClassMember = JsPropertyClassMember | TsPropertySignatureClassMember
+    pub(crate) AnyJsPropertyClassMember = JsPropertyClassMember | TsPropertySignatureClassMember | TsInitializedPropertySignatureClassMember
 }
 
 impl AnyJsPropertyClassMember {
@@ -36,6 +36,9 @@ impl AnyJsPropertyClassMember {
         match self {
             AnyJsPropertyClassMember::JsPropertyClassMember(property) => property.name(),
             AnyJsPropertyClassMember::TsPropertySignatureClassMember(property) => property.name(),
+            AnyJsPropertyClassMember::TsInitializedPropertySignatureClassMember(property) => {
+                property.name()
+            }
         }
     }
 
@@ -43,6 +46,9 @@ impl AnyJsPropertyClassMember {
         match self {
             AnyJsPropertyClassMember::JsPropertyClassMember(property) => property.value(),
             AnyJsPropertyClassMember::TsPropertySignatureClassMember(_) => None,
+            AnyJsPropertyClassMember::TsInitializedPropertySignatureClassMember(property) => {
+                property.value().ok()
+            }
         }
     }
 
@@ -54,6 +60,7 @@ impl AnyJsPropertyClassMember {
             AnyJsPropertyClassMember::TsPropertySignatureClassMember(property) => {
                 property.property_annotation().is_some()
             }
+            AnyJsPropertyClassMember::TsInitializedPropertySignatureClassMember(_) => false,
         }
     }
 }
@@ -130,7 +137,8 @@ fn needs_semicolon(property: &AnyJsPropertyClassMember) -> SyntaxResult<bool> {
 
         // Computed members may be misinterpreted as array accessors/array types
         member @ AnyJsClassMember::JsPropertyClassMember(_)
-        | member @ AnyJsClassMember::TsPropertySignatureClassMember(_) => match member.name()? {
+        | member @ AnyJsClassMember::TsPropertySignatureClassMember(_)
+        | member @ AnyJsClassMember::TsInitializedPropertySignatureClassMember(_) => match member.name()? {
             Some(name) => name.is_computed(),
             None => false,
         },
@@ -173,6 +181,9 @@ fn has_modifiers(member: &AnyJsClassMember) -> bool {
         AnyJsClassMember::TsIndexSignatureClassMember(index) => index.modifiers().is_empty(),
         AnyJsClassMember::TsMethodSignatureClassMember(method) => method.modifiers().is_empty(),
         AnyJsClassMember::TsPropertySignatureClassMember(property) => {
+            property.modifiers().is_empty()
+        }
+        AnyJsClassMember::TsInitializedPropertySignatureClassMember(property) => {
             property.modifiers().is_empty()
         }
         AnyJsClassMember::TsSetterSignatureClassMember(setter) => setter.modifiers().is_empty(),

@@ -28,9 +28,14 @@ impl FormatNodeRule<TsMappedType> for FormatTsMappedType {
 
         let property_name = property_name?;
 
+        // Check if the user introduced a new line inside the node.
         let should_expand = node
             .syntax()
             .tokens()
+            // Skip the first token to avoid formatter instability. See #4165.
+            // This also makes sense since leading trivia of the first token
+            // are not part of the interior of the node.
+            .skip(1)
             .flat_map(|token| {
                 token
                     .leading_trivia()
@@ -47,8 +52,6 @@ impl FormatNodeRule<TsMappedType> for FormatTsMappedType {
             });
 
         let format_inner = format_with(|f| {
-            write!(f, [soft_line_break_or_space()])?;
-
             if let Some(readonly_modifier) = &readonly_modifier {
                 write!(f, [readonly_modifier.format(), space()])?;
             }
@@ -81,8 +84,7 @@ impl FormatNodeRule<TsMappedType> for FormatTsMappedType {
             f,
             [
                 &l_curly_token.format(),
-                group(&indent(&format_inner)).should_expand(should_expand),
-                soft_line_break_or_space(),
+                group(&soft_space_or_block_indent(&format_inner)).should_expand(should_expand),
                 r_curly_token.format(),
             ]
         )

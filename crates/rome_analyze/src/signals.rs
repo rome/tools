@@ -25,7 +25,7 @@ pub trait AnalyzerSignal<L: Language> {
 /// from a provided factory function. Optionally, this signal can be configured
 /// to also emit a code action, by calling `.with_action` with a secondary
 /// factory function for said action.
-pub(crate) struct DiagnosticSignal<D, A, L, T> {
+pub struct DiagnosticSignal<D, A, L, T> {
     diagnostic: D,
     action: A,
     _diag: PhantomData<(L, T)>,
@@ -36,7 +36,7 @@ where
     D: Fn() -> T,
     Error: From<T>,
 {
-    pub(crate) fn new(factory: D) -> Self {
+    pub fn new(factory: D) -> Self {
         Self {
             diagnostic: factory,
             action: || None,
@@ -46,7 +46,7 @@ where
 }
 
 impl<L: Language, D, A, T> DiagnosticSignal<D, A, L, T> {
-    pub(crate) fn with_action<B>(self, factory: B) -> DiagnosticSignal<D, B, L, T>
+    pub fn with_action<B>(self, factory: B) -> DiagnosticSignal<D, B, L, T>
     where
         B: Fn() -> Option<AnalyzerAction<L>>,
     {

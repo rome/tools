@@ -156,6 +156,10 @@ impl FileSystem for MemoryFileSystem {
     fn traversal<'scope>(&'scope self, func: BoxedTraversal<'_, 'scope>) {
         func(&MemoryTraversalScope { fs: self })
     }
+
+    fn working_directory(&self) -> Option<PathBuf> {
+        None
+    }
 }
 
 struct MemoryFile {

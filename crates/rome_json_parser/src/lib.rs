@@ -7,7 +7,7 @@ use rome_json_syntax::{JsonLanguage, JsonRoot, JsonSyntaxNode};
 pub use rome_parser::prelude::*;
 use rome_parser::tree_sink::LosslessTreeSink;
 use rome_parser::AnyParse;
-use rome_rowan::AstNode;
+use rome_rowan::{AstNode, NodeCache};
 
 mod lexer;
 mod parser;
@@ -19,6 +19,12 @@ pub(crate) type JsonLosslessTreeSink<'source> =
     LosslessTreeSink<'source, JsonLanguage, JsonSyntaxFactory>;
 
 pub fn parse_json(source: &str) -> JsonParse {
+    let mut cache = NodeCache::default();
+    parse_json_with_cache(source, &mut cache)
+}
+
+/// Parses the provided string as JSON program using the provided node cache.
+pub fn parse_json_with_cache(source: &str, cache: &mut NodeCache) -> JsonParse {
     tracing::debug_span!("parse").in_scope(move || {
         let mut parser = JsonParser::new(source);
 
@@ -26,7 +32,7 @@ pub fn parse_json(source: &str) -> JsonParse {
 
         let (events, diagnostics, trivia) = parser.finish();
 
-        let mut tree_sink = JsonLosslessTreeSink::new(source, &trivia);
+        let mut tree_sink = JsonLosslessTreeSink::with_cache(source, &trivia, cache);
         rome_parser::event::process(&mut tree_sink, events, diagnostics);
         let (green, diagnostics) = tree_sink.finish();
 

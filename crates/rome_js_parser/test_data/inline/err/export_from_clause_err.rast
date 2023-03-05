@@ -5,6 +5,7 @@ JsModule {
         JsExport {
             export_token: EXPORT_KW@0..7 "export" [] [Whitespace(" ")],
             export_clause: JsExportFromClause {
+                type_token: missing (optional),
                 star_token: STAR@7..8 "*" [] [],
                 export_as: missing (optional),
                 from_token: missing (required),
@@ -16,6 +17,7 @@ JsModule {
         JsExport {
             export_token: EXPORT_KW@9..17 "export" [Newline("\n")] [Whitespace(" ")],
             export_clause: JsExportFromClause {
+                type_token: missing (optional),
                 star_token: STAR@17..19 "*" [] [Whitespace(" ")],
                 export_as: missing (optional),
                 from_token: FROM_KW@19..24 "from" [] [Whitespace(" ")],
@@ -33,6 +35,7 @@ JsModule {
         JsExport {
             export_token: EXPORT_KW@26..34 "export" [Newline("\n")] [Whitespace(" ")],
             export_clause: JsExportFromClause {
+                type_token: missing (optional),
                 star_token: missing (required),
                 export_as: JsExportAsClause {
                     as_token: AS_KW@34..37 "as" [] [Whitespace(" ")],
@@ -51,6 +54,7 @@ JsModule {
         JsExport {
             export_token: EXPORT_KW@49..57 "export" [Newline("\n")] [Whitespace(" ")],
             export_clause: JsExportFromClause {
+                type_token: missing (optional),
                 star_token: missing (required),
                 export_as: missing (optional),
                 from_token: FROM_KW@57..62 "from" [] [Whitespace(" ")],
@@ -61,32 +65,92 @@ JsModule {
                 semicolon_token: SEMICOLON@68..69 ";" [] [],
             },
         },
+        JsExport {
+            export_token: EXPORT_KW@69..77 "export" [Newline("\n")] [Whitespace(" ")],
+            export_clause: JsExportFromClause {
+                type_token: TYPE_KW@77..82 "type" [] [Whitespace(" ")],
+                star_token: STAR@82..83 "*" [] [],
+                export_as: missing (optional),
+                from_token: missing (required),
+                source: missing (required),
+                assertion: missing (optional),
+                semicolon_token: SEMICOLON@83..84 ";" [] [],
+            },
+        },
+        JsExport {
+            export_token: EXPORT_KW@84..92 "export" [Newline("\n")] [Whitespace(" ")],
+            export_clause: JsExportFromClause {
+                type_token: TYPE_KW@92..97 "type" [] [Whitespace(" ")],
+                star_token: STAR@97..99 "*" [] [Whitespace(" ")],
+                export_as: missing (optional),
+                from_token: FROM_KW@99..103 "from" [] [],
+                source: missing (required),
+                assertion: missing (optional),
+                semicolon_token: SEMICOLON@103..104 ";" [] [],
+            },
+        },
+        JsExport {
+            export_token: EXPORT_KW@104..112 "export" [Newline("\n")] [Whitespace(" ")],
+            export_clause: JsExportFromClause {
+                type_token: TYPE_KW@112..117 "type" [] [Whitespace(" ")],
+                star_token: STAR@117..119 "*" [] [Whitespace(" ")],
+                export_as: JsExportAsClause {
+                    as_token: AS_KW@119..122 "as" [] [Whitespace(" ")],
+                    exported_name: JsLiteralExportName {
+                        value: IDENT@122..126 "from" [] [],
+                    },
+                },
+                from_token: missing (required),
+                source: missing (required),
+                assertion: missing (optional),
+                semicolon_token: SEMICOLON@126..127 ";" [] [],
+            },
+        },
+        JsExport {
+            export_token: EXPORT_KW@127..135 "export" [Newline("\n")] [Whitespace(" ")],
+            export_clause: JsExportFromClause {
+                type_token: TYPE_KW@135..140 "type" [] [Whitespace(" ")],
+                star_token: STAR@140..142 "*" [] [Whitespace(" ")],
+                export_as: JsExportAsClause {
+                    as_token: AS_KW@142..145 "as" [] [Whitespace(" ")],
+                    exported_name: JsLiteralExportName {
+                        value: IDENT@145..148 "ns" [] [Whitespace(" ")],
+                    },
+                },
+                from_token: FROM_KW@148..152 "from" [] [],
+                source: missing (required),
+                assertion: missing (optional),
+                semicolon_token: SEMICOLON@152..153 ";" [] [],
+            },
+        },
     ],
-    eof_token: EOF@69..70 "" [Newline("\n")] [],
+    eof_token: EOF@153..154 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..70
+0: JS_MODULE@0..154
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..69
+  2: JS_MODULE_ITEM_LIST@0..153
     0: JS_EXPORT@0..9
       0: EXPORT_KW@0..7 "export" [] [Whitespace(" ")]
       1: JS_EXPORT_FROM_CLAUSE@7..9
-        0: STAR@7..8 "*" [] []
-        1: (empty)
+        0: (empty)
+        1: STAR@7..8 "*" [] []
         2: (empty)
         3: (empty)
         4: (empty)
-        5: SEMICOLON@8..9 ";" [] []
+        5: (empty)
+        6: SEMICOLON@8..9 ";" [] []
     1: JS_EXPORT@9..24
       0: EXPORT_KW@9..17 "export" [Newline("\n")] [Whitespace(" ")]
       1: JS_EXPORT_FROM_CLAUSE@17..24
-        0: STAR@17..19 "*" [] [Whitespace(" ")]
-        1: (empty)
-        2: FROM_KW@19..24 "from" [] [Whitespace(" ")]
-        3: (empty)
+        0: (empty)
+        1: STAR@17..19 "*" [] [Whitespace(" ")]
+        2: (empty)
+        3: FROM_KW@19..24 "from" [] [Whitespace(" ")]
         4: (empty)
         5: (empty)
+        6: (empty)
     2: JS_EXPRESSION_STATEMENT@24..26
       0: JS_NUMBER_LITERAL_EXPRESSION@24..25
         0: JS_NUMBER_LITERAL@24..25 "5" [] []
@@ -95,26 +159,74 @@ JsModule {
       0: EXPORT_KW@26..34 "export" [Newline("\n")] [Whitespace(" ")]
       1: JS_EXPORT_FROM_CLAUSE@34..49
         0: (empty)
-        1: JS_EXPORT_AS_CLAUSE@34..42
+        1: (empty)
+        2: JS_EXPORT_AS_CLAUSE@34..42
           0: AS_KW@34..37 "as" [] [Whitespace(" ")]
           1: JS_LITERAL_EXPORT_NAME@37..42
             0: IDENT@37..42 "from" [] [Whitespace(" ")]
-        2: (empty)
-        3: JS_MODULE_SOURCE@42..48
+        3: (empty)
+        4: JS_MODULE_SOURCE@42..48
           0: JS_STRING_LITERAL@42..48 "\"test\"" [] []
-        4: (empty)
-        5: SEMICOLON@48..49 ";" [] []
+        5: (empty)
+        6: SEMICOLON@48..49 ";" [] []
     4: JS_EXPORT@49..69
       0: EXPORT_KW@49..57 "export" [Newline("\n")] [Whitespace(" ")]
       1: JS_EXPORT_FROM_CLAUSE@57..69
         0: (empty)
         1: (empty)
-        2: FROM_KW@57..62 "from" [] [Whitespace(" ")]
-        3: JS_MODULE_SOURCE@62..68
+        2: (empty)
+        3: FROM_KW@57..62 "from" [] [Whitespace(" ")]
+        4: JS_MODULE_SOURCE@62..68
           0: JS_STRING_LITERAL@62..68 "\"test\"" [] []
+        5: (empty)
+        6: SEMICOLON@68..69 ";" [] []
+    5: JS_EXPORT@69..84
+      0: EXPORT_KW@69..77 "export" [Newline("\n")] [Whitespace(" ")]
+      1: JS_EXPORT_FROM_CLAUSE@77..84
+        0: TYPE_KW@77..82 "type" [] [Whitespace(" ")]
+        1: STAR@82..83 "*" [] []
+        2: (empty)
+        3: (empty)
         4: (empty)
-        5: SEMICOLON@68..69 ";" [] []
-  3: EOF@69..70 "" [Newline("\n")] []
+        5: (empty)
+        6: SEMICOLON@83..84 ";" [] []
+    6: JS_EXPORT@84..104
+      0: EXPORT_KW@84..92 "export" [Newline("\n")] [Whitespace(" ")]
+      1: JS_EXPORT_FROM_CLAUSE@92..104
+        0: TYPE_KW@92..97 "type" [] [Whitespace(" ")]
+        1: STAR@97..99 "*" [] [Whitespace(" ")]
+        2: (empty)
+        3: FROM_KW@99..103 "from" [] []
+        4: (empty)
+        5: (empty)
+        6: SEMICOLON@103..104 ";" [] []
+    7: JS_EXPORT@104..127
+      0: EXPORT_KW@104..112 "export" [Newline("\n")] [Whitespace(" ")]
+      1: JS_EXPORT_FROM_CLAUSE@112..127
+        0: TYPE_KW@112..117 "type" [] [Whitespace(" ")]
+        1: STAR@117..119 "*" [] [Whitespace(" ")]
+        2: JS_EXPORT_AS_CLAUSE@119..126
+          0: AS_KW@119..122 "as" [] [Whitespace(" ")]
+          1: JS_LITERAL_EXPORT_NAME@122..126
+            0: IDENT@122..126 "from" [] []
+        3: (empty)
+        4: (empty)
+        5: (empty)
+        6: SEMICOLON@126..127 ";" [] []
+    8: JS_EXPORT@127..153
+      0: EXPORT_KW@127..135 "export" [Newline("\n")] [Whitespace(" ")]
+      1: JS_EXPORT_FROM_CLAUSE@135..153
+        0: TYPE_KW@135..140 "type" [] [Whitespace(" ")]
+        1: STAR@140..142 "*" [] [Whitespace(" ")]
+        2: JS_EXPORT_AS_CLAUSE@142..148
+          0: AS_KW@142..145 "as" [] [Whitespace(" ")]
+          1: JS_LITERAL_EXPORT_NAME@145..148
+            0: IDENT@145..148 "ns" [] [Whitespace(" ")]
+        3: FROM_KW@148..152 "from" [] []
+        4: (empty)
+        5: (empty)
+        6: SEMICOLON@152..153 ";" [] []
+  3: EOF@153..154 "" [Newline("\n")] []
 --
 export_from_clause_err.js:1:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -156,7 +268,7 @@ export_from_clause_err.js:3:8 parse ━━━━━━━━━━━━━━�
   > 3 │ export as from "test";
       │        ^^
     4 │ export from "test";
-    5 │ 
+    5 │ export type *;
   
   i Remove as
   
@@ -170,7 +282,7 @@ export_from_clause_err.js:3:16 parse ━━━━━━━━━━━━━━�
   > 3 │ export as from "test";
       │                ^^^^^^
     4 │ export from "test";
-    5 │ 
+    5 │ export type *;
   
   i Remove "test"
   
@@ -183,12 +295,85 @@ export_from_clause_err.js:4:8 parse ━━━━━━━━━━━━━━�
     3 │ export as from "test";
   > 4 │ export from "test";
       │        ^^^^
-    5 │ 
+    5 │ export type *;
+    6 │ export type * from;
   
   i Remove from
+  
+--
+export_from_clause_err.js:5:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `from` but instead found `;`
+  
+    3 │ export as from "test";
+    4 │ export from "test";
+  > 5 │ export type *;
+      │              ^
+    6 │ export type * from;
+    7 │ export type * as from;
+  
+  i Remove ;
+  
+--
+export_from_clause_err.js:6:19 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected a string literal but instead found ';'
+  
+    4 │ export from "test";
+    5 │ export type *;
+  > 6 │ export type * from;
+      │                   ^
+    7 │ export type * as from;
+    8 │ export type * as ns from;
+  
+  i Expected a string literal here
+  
+    4 │ export from "test";
+    5 │ export type *;
+  > 6 │ export type * from;
+      │                   ^
+    7 │ export type * as from;
+    8 │ export type * as ns from;
+  
+--
+export_from_clause_err.js:7:22 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `from` but instead found `;`
+  
+    5 │ export type *;
+    6 │ export type * from;
+  > 7 │ export type * as from;
+      │                      ^
+    8 │ export type * as ns from;
+    9 │ 
+  
+  i Remove ;
+  
+--
+export_from_clause_err.js:8:25 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected a string literal but instead found ';'
+  
+    6 │ export type * from;
+    7 │ export type * as from;
+  > 8 │ export type * as ns from;
+      │                         ^
+    9 │ 
+  
+  i Expected a string literal here
+  
+    6 │ export type * from;
+    7 │ export type * as from;
+  > 8 │ export type * as ns from;
+      │                         ^
+    9 │ 
   
 --
 export *;
 export * from 5;
 export as from "test";
 export from "test";
+export type *;
+export type * from;
+export type * as from;
+export type * as ns from;

@@ -145,20 +145,15 @@ impl AnyTemplateElementList {
     }
 }
 
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, Default)]
 pub enum TemplateElementLayout {
     /// Applied when all expressions are identifiers, `this`, static member expressions, or computed member expressions with number or string literals.
     /// Formats the expressions on a single line, even if their width otherwise would exceed the print width.
     SingleLine,
 
     /// Tries to format the expression on a single line but may break the expression if the line otherwise exceeds the print width.
+    #[default]
     Fit,
-}
-
-impl Default for TemplateElementLayout {
-    fn default() -> Self {
-        TemplateElementLayout::Fit
-    }
 }
 
 declare_node_union! {

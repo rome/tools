@@ -18,6 +18,7 @@ rome_formatter = { path = "../../crates/rome_formatter"}
 rome_js_formatter = { path = "../../crates/rome_js_formatter"}
 rome_analyze = { path = "../../crates/rome_analyze"}
 rome_js_analyze = { path = "../../crates/rome_js_analyze"}
+rome_rowan = { path = "../../crates/rome_rowan"}
 
 
 pico-args = { version = "0.5.0", features=["eq-separator"] }
@@ -33,7 +34,7 @@ countme = { workspace = true }
 
 # dhat-on
 dhat = { version = "0.3.0", optional = true }
-humansize = {version = "1.1.1", optional = true }
+humansize = {version = "2.1.2", optional = true }
 
 [target.'cfg(target_os = "windows")'.dependencies]
 mimalloc = "0.1.29"

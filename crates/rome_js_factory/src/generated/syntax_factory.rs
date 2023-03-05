@@ -368,12 +368,12 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.into_node(JS_AWAIT_EXPRESSION, children)
             }
-            JS_BIG_INT_LITERAL_EXPRESSION => {
+            JS_BIGINT_LITERAL_EXPRESSION => {
                 let mut elements = (&children).into_iter();
                 let mut slots: RawNodeSlots<1usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if element.kind() == JS_BIG_INT_LITERAL {
+                    if element.kind() == JS_BIGINT_LITERAL {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -381,11 +381,11 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_BIG_INT_LITERAL_EXPRESSION.to_bogus(),
+                        JS_BIGINT_LITERAL_EXPRESSION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
-                slots.into_node(JS_BIG_INT_LITERAL_EXPRESSION, children)
+                slots.into_node(JS_BIGINT_LITERAL_EXPRESSION, children)
             }
             JS_BINARY_EXPRESSION => {
                 let mut elements = (&children).into_iter();
@@ -1593,8 +1593,15 @@ impl SyntaxFactory for JsSyntaxFactory {
             }
             JS_EXPORT_FROM_CLAUSE => {
                 let mut elements = (&children).into_iter();
-                let mut slots: RawNodeSlots<6usize> = RawNodeSlots::default();
+                let mut slots: RawNodeSlots<7usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
+                if let Some(element) = &current_element {
+                    if element.kind() == T![type] {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
                 if let Some(element) = &current_element {
                     if element.kind() == T ! [*] {
                         slots.mark_present();
@@ -6187,7 +6194,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.into_node(TS_ASSERTS_RETURN_TYPE, children)
             }
-            TS_BIG_INT_LITERAL_TYPE => {
+            TS_BIGINT_LITERAL_TYPE => {
                 let mut elements = (&children).into_iter();
                 let mut slots: RawNodeSlots<2usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
@@ -6199,7 +6206,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if element.kind() == JS_BIG_INT_LITERAL {
+                    if element.kind() == JS_BIGINT_LITERAL {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -6207,11 +6214,11 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_BIG_INT_LITERAL_TYPE.to_bogus(),
+                        TS_BIGINT_LITERAL_TYPE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
-                slots.into_node(TS_BIG_INT_LITERAL_TYPE, children)
+                slots.into_node(TS_BIGINT_LITERAL_TYPE, children)
             }
             TS_BIGINT_TYPE => {
                 let mut elements = (&children).into_iter();
@@ -7627,6 +7634,53 @@ impl SyntaxFactory for JsSyntaxFactory {
                     );
                 }
                 slots.into_node(TS_INFER_TYPE, children)
+            }
+            TS_INITIALIZED_PROPERTY_SIGNATURE_CLASS_MEMBER => {
+                let mut elements = (&children).into_iter();
+                let mut slots: RawNodeSlots<5usize> = RawNodeSlots::default();
+                let mut current_element = elements.next();
+                if let Some(element) = &current_element {
+                    if TsPropertySignatureModifierList::can_cast(element.kind()) {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
+                if let Some(element) = &current_element {
+                    if AnyJsClassMemberName::can_cast(element.kind()) {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
+                if let Some(element) = &current_element {
+                    if element.kind() == T ! [?] {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
+                if let Some(element) = &current_element {
+                    if JsInitializerClause::can_cast(element.kind()) {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
+                if let Some(element) = &current_element {
+                    if element.kind() == T ! [;] {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
+                if current_element.is_some() {
+                    return RawSyntaxNode::new(
+                        TS_INITIALIZED_PROPERTY_SIGNATURE_CLASS_MEMBER.to_bogus(),
+                        children.into_iter().map(Some),
+                    );
+                }
+                slots.into_node(TS_INITIALIZED_PROPERTY_SIGNATURE_CLASS_MEMBER, children)
             }
             TS_INSTANTIATION_EXPRESSION => {
                 let mut elements = (&children).into_iter();

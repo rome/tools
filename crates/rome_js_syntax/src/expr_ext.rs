@@ -238,6 +238,14 @@ impl JsBinaryExpression {
         Ok(kind)
     }
 
+    /// Whether this is a binary operation, such as `<<`, `>>`, `>>>`, `&`, `|`, `^`.
+    pub fn is_binary_operator(&self) -> bool {
+        matches!(
+            self.operator_token().map(|t| t.kind()),
+            Ok(T![<<] | T![>>] | T![>>>] | T![&] | T![|] | T![^])
+        )
+    }
+
     /// Whether this is a comparison operation, such as `>`, `<`, `==`, `!=`, `===`, etc.
     pub fn is_comparison_operator(&self) -> bool {
         matches!(
@@ -248,10 +256,10 @@ impl JsBinaryExpression {
 
     /// Whether this is a comparison operation similar to the optional chain
     /// ```js
-    /// foo === undefined;
-    /// foo == undefined;
-    /// foo === null;
-    /// foo == null;
+    /// foo !== undefined;
+    /// foo != undefined;
+    /// foo !== null;
+    /// foo != null;
     ///```
     pub fn is_optional_chain_like(&self) -> SyntaxResult<bool> {
         if matches!(
@@ -445,6 +453,7 @@ pub enum JsAssignmentOperator {
     AddAssign,
     SubtractAssign,
     TimesAssign,
+    SlashAssign,
     RemainderAssign,
     ExponentAssign,
     LeftShiftAssign,
@@ -465,6 +474,7 @@ impl JsAssignmentExpression {
             T![+=] => JsAssignmentOperator::AddAssign,
             T![-=] => JsAssignmentOperator::SubtractAssign,
             T![*=] => JsAssignmentOperator::TimesAssign,
+            T![/=] => JsAssignmentOperator::SlashAssign,
             T![%=] => JsAssignmentOperator::RemainderAssign,
             T![**=] => JsAssignmentOperator::ExponentAssign,
             T![>>=] => JsAssignmentOperator::LeftShiftAssign,
@@ -707,7 +717,7 @@ impl JsIdentifierExpression {
 impl AnyJsLiteralExpression {
     pub fn value_token(&self) -> SyntaxResult<JsSyntaxToken> {
         match self {
-            AnyJsLiteralExpression::JsBigIntLiteralExpression(expression) => {
+            AnyJsLiteralExpression::JsBigintLiteralExpression(expression) => {
                 expression.value_token()
             }
             AnyJsLiteralExpression::JsBooleanLiteralExpression(expression) => {
@@ -842,7 +852,7 @@ impl JsCallExpression {
     ///
     /// Supports maximum of 16 indices to avoid stack overflow. Eeach argument will consume:
     ///
-    /// - 8 bytes for the [Option<AnyJsCallArgument>] result;
+    /// - 8 bytes for the `Option<AnyJsCallArgument>` result;
     /// - 8 bytes for the [usize] argument.
     pub fn get_arguments_by_index<const N: usize>(
         &self,

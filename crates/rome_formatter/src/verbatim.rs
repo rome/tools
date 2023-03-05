@@ -104,7 +104,10 @@ where
         let original_source = f.context().source_map().map_or_else(
             || self.node.text_trimmed().to_string(),
             |source_map| {
-                source_map.text()[trimmed_source_range.cover_offset(start_source)].to_string()
+                source_map
+                    .source()
+                    .text_slice(trimmed_source_range.cover_offset(start_source))
+                    .to_string()
             },
         );
 

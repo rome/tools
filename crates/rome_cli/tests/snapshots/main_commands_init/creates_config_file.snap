@@ -6,14 +6,16 @@ expression: content
 
 ```json
 {
-	"linter": {
-		"enabled": true,
-		"rules": {
-			"recommended": true
-		}
-	}
+  "organizeImports": {
+    "enabled": true
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true
+    }
+  }
 }
-
 ```
 
 # Emitted Messages

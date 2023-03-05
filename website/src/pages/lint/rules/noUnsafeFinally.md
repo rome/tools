@@ -5,6 +5,8 @@ parent: lint/rules/index
 
 # noUnsafeFinally (since v11.0.0)
 
+> This rule is recommended by Rome.
+
 Disallow control flow statements in finally blocks.
 
 JavaScript suspends the control flow statements of `try` and `catch` blocks until
@@ -28,7 +30,7 @@ which is considered as unexpected behavior.
 })();
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noUnsafeFinally.js:7:9 <a href="https://docs.rome.tools/lint/rules/noUnsafeFinally">lint/nursery/noUnsafeFinally</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">correctness/noUnsafeFinally.js:7:9 <a href="https://docs.rome.tools/lint/rules/noUnsafeFinally">lint/correctness/noUnsafeFinally</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Unsafe usage of 'return'.</span>
   
@@ -53,7 +55,7 @@ which is considered as unexpected behavior.
 })();
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noUnsafeFinally.js:5:9 <a href="https://docs.rome.tools/lint/rules/noUnsafeFinally">lint/nursery/noUnsafeFinally</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">correctness/noUnsafeFinally.js:5:9 <a href="https://docs.rome.tools/lint/rules/noUnsafeFinally">lint/correctness/noUnsafeFinally</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Unsafe usage of 'return'.</span>
   
@@ -80,7 +82,7 @@ which is considered as unexpected behavior.
 })();
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noUnsafeFinally.js:7:9 <a href="https://docs.rome.tools/lint/rules/noUnsafeFinally">lint/nursery/noUnsafeFinally</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">correctness/noUnsafeFinally.js:7:9 <a href="https://docs.rome.tools/lint/rules/noUnsafeFinally">lint/correctness/noUnsafeFinally</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Unsafe usage of 'throw'.</span>
   
@@ -106,7 +108,7 @@ which is considered as unexpected behavior.
 })();
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noUnsafeFinally.js:5:7 <a href="https://docs.rome.tools/lint/rules/noUnsafeFinally">lint/nursery/noUnsafeFinally</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">correctness/noUnsafeFinally.js:5:7 <a href="https://docs.rome.tools/lint/rules/noUnsafeFinally">lint/correctness/noUnsafeFinally</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Unsafe usage of 'break'.</span>
   
@@ -139,7 +141,7 @@ function a() {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noUnsafeFinally.js:8:9 <a href="https://docs.rome.tools/lint/rules/noUnsafeFinally">lint/nursery/noUnsafeFinally</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">correctness/noUnsafeFinally.js:8:9 <a href="https://docs.rome.tools/lint/rules/noUnsafeFinally">lint/correctness/noUnsafeFinally</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Unsafe usage of 'break'.</span>
   

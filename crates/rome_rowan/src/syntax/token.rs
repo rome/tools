@@ -188,6 +188,18 @@ impl<L: Language> SyntaxToken<L> {
         }
     }
 
+    /// Return whitespace and newlines that juxtapose the token until the first non-whitespace item.
+    pub fn indentation_trivia(&self) -> impl ExactSizeIterator<Item = SyntaxTriviaPiece<L>> {
+        let leading_trivia = self.leading_trivia().pieces();
+        let skip_count = leading_trivia.len()
+            - leading_trivia
+                .rev()
+                .position(|x| !x.is_whitespace())
+                .map(|pos| pos + 1)
+                .unwrap_or(0);
+        self.leading_trivia().pieces().skip(skip_count)
+    }
+
     /// Return a new version of this token with its leading trivia replaced with `trivia`
     #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
     pub fn with_leading_trivia<'a, I>(&self, trivia: I) -> Self
