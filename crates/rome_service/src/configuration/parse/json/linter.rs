@@ -1,10 +1,11 @@
 use crate::configuration::linter::{RulePlainConfiguration, RuleWithOptions};
 use crate::configuration::LinterConfiguration;
 use crate::{RuleConfiguration, Rules};
+use rome_console::markup;
 use rome_deserialize::json::{has_only_known_keys, with_only_known_variants, VisitJsonNode};
 use rome_deserialize::{DeserializationDiagnostic, VisitNode};
-use rome_json_syntax::{JsonLanguage, JsonSyntaxNode};
-use rome_rowan::{AstNode, SyntaxNode};
+use rome_json_syntax::{AnyJsonValue, JsonLanguage, JsonObjectValue, JsonSyntaxNode};
+use rome_rowan::{AstNode, AstSeparatedList, SyntaxNode};
 
 impl VisitJsonNode for LinterConfiguration {}
 
@@ -34,8 +35,10 @@ impl VisitNode<JsonLanguage> for LinterConfiguration {
             }
             "rules" => {
                 let mut rules = Rules::default();
-                self.map_to_object(&value, name_text, &mut rules, diagnostics)?;
-                self.rules = Some(rules);
+                if are_recommended_and_all_correct(&value, name_text, diagnostics)? {
+                    self.map_to_object(&value, name_text, &mut rules, diagnostics)?;
+                    self.rules = Some(rules);
+                }
             }
             _ => {}
         }
@@ -175,4 +178,52 @@ impl VisitNode<JsonLanguage> for RuleWithOptions {
         }
         Some(())
     }
+}
+
+pub(crate) fn are_recommended_and_all_correct(
+    current_node: &AnyJsonValue,
+    name: &str,
+    diagnostics: &mut Vec<DeserializationDiagnostic>,
+) -> Option<bool> {
+    let value = JsonObjectValue::cast_ref(current_node.syntax()).or_else(|| {
+        diagnostics.push(DeserializationDiagnostic::new_incorrect_type_for_value(
+            name,
+            "object",
+            current_node.range(),
+        ));
+        None
+    })?;
+
+    let recommended = value.json_member_list().iter().find_map(|member| {
+        let member = member.ok()?;
+        if member.name().ok()?.inner_string_text().ok()?.text() == "recommended" {
+            member.value().ok()?.as_json_boolean_value().cloned()
+        } else {
+            None
+        }
+    });
+
+    let all = value.json_member_list().iter().find_map(|member| {
+        let member = member.ok()?;
+        if member.name().ok()?.inner_string_text().ok()?.text() == "all" {
+            member.value().ok()?.as_json_boolean_value().cloned()
+        } else {
+            None
+        }
+    });
+
+    if let (Some(recommended), Some(all)) = (recommended, all) {
+        if recommended.value_token().ok()?.text() == "true"
+            && all.value_token().ok()?.text() == "true"
+        {
+            diagnostics
+                .push(DeserializationDiagnostic::new(markup!(
+                    <Emphasis>"'recommended'"</Emphasis>" and "<Emphasis>"'all'"</Emphasis>" can't be both "<Emphasis>"'true'"</Emphasis>". You should choose only one of them."
+                ))
+                    .with_range(current_node.range())
+                    .with_note(markup!("Rome will fallback to its defaults for this section.")));
+            return Some(false);
+        }
+    }
+    Some(true)
 }

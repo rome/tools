@@ -1300,3 +1300,133 @@ import { bar, foom, lorem } from "foo";
         result,
     ));
 }
+
+#[test]
+fn all_rules() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let rome_json = r#"{
+        "linter": {
+            "rules": { "all": true }
+        }
+    }"#;
+
+    let file_path = Path::new("fix.js");
+    fs.insert(file_path.into(), FIX_BEFORE.as_bytes());
+
+    let config_path = Path::new("rome.json");
+    fs.insert(config_path.into(), rome_json.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+    );
+
+    assert!(result.is_err(), "run_cli returned {result:?}");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "all_rules",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn top_level_all_down_level_not_all() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let rome_json = r#"{
+        "linter": {
+            "rules": {
+                "all": true,
+                "style": {
+                    "all": false
+                }
+            }
+        }
+    }"#;
+
+    // style/noArguments
+    // style/noShoutyConstants
+    // style/useSingleVarDeclarator
+    let code = r#"
+    function f() {arguments;}
+    const FOO = "FOO";
+    var x, y;
+    "#;
+
+    let file_path = Path::new("fix.js");
+    fs.insert(file_path.into(), code.as_bytes());
+
+    let config_path = Path::new("rome.json");
+    fs.insert(config_path.into(), rome_json.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "top_level_all_down_level_not_all",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn top_level_not_all_down_level_all() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let rome_json = r#"{
+        "linter": {
+            "rules": {
+                "all": false,
+                "style": {
+                    "all": true
+                }
+            }
+        }
+    }"#;
+
+    // style/noArguments
+    // style/noShoutyConstants
+    // style/useSingleVarDeclarator
+    let code = r#"
+    function f() {arguments;}
+    const FOO = "FOO";
+    var x, y;
+    "#;
+
+    let file_path = Path::new("fix.js");
+    fs.insert(file_path.into(), code.as_bytes());
+
+    let config_path = Path::new("rome.json");
+    fs.insert(config_path.into(), rome_json.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+    );
+
+    assert!(result.is_err(), "run_cli returned {result:?}");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "top_level_not_all_down_level_all",
+        fs,
+        console,
+        result,
+    ));
+}

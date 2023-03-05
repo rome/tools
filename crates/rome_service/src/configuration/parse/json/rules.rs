@@ -1,6 +1,7 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
 use crate::configuration::linter::*;
+use crate::configuration::parse::json::linter::are_recommended_and_all_correct;
 use crate::Rules;
 use rome_deserialize::json::{has_only_known_keys, VisitJsonNode};
 use rome_deserialize::{DeserializationDiagnostic, VisitNode};
@@ -17,6 +18,7 @@ impl VisitNode<JsonLanguage> for Rules {
             node,
             &[
                 "recommended",
+                "all",
                 "a11y",
                 "complexity",
                 "correctness",
@@ -38,45 +40,67 @@ impl VisitNode<JsonLanguage> for Rules {
         let (name, value) = self.get_key_and_value(key, value, diagnostics)?;
         let name_text = name.text();
         match name_text {
+            "recommended" => {
+                self.recommended = Some(self.map_to_boolean(&value, name_text, diagnostics)?);
+            }
+            "all" => {
+                self.all = Some(self.map_to_boolean(&value, name_text, diagnostics)?);
+            }
             "a11y" => {
                 let mut visitor = A11y::default();
-                self.map_to_object(&value, name_text, &mut visitor, diagnostics)?;
-                self.a11y = Some(visitor);
+                if are_recommended_and_all_correct(&value, name_text, diagnostics)? {
+                    self.map_to_object(&value, name_text, &mut visitor, diagnostics)?;
+                    self.a11y = Some(visitor);
+                }
             }
             "complexity" => {
                 let mut visitor = Complexity::default();
-                self.map_to_object(&value, name_text, &mut visitor, diagnostics)?;
-                self.complexity = Some(visitor);
+                if are_recommended_and_all_correct(&value, name_text, diagnostics)? {
+                    self.map_to_object(&value, name_text, &mut visitor, diagnostics)?;
+                    self.complexity = Some(visitor);
+                }
             }
             "correctness" => {
                 let mut visitor = Correctness::default();
-                self.map_to_object(&value, name_text, &mut visitor, diagnostics)?;
-                self.correctness = Some(visitor);
+                if are_recommended_and_all_correct(&value, name_text, diagnostics)? {
+                    self.map_to_object(&value, name_text, &mut visitor, diagnostics)?;
+                    self.correctness = Some(visitor);
+                }
             }
             "nursery" => {
                 let mut visitor = Nursery::default();
-                self.map_to_object(&value, name_text, &mut visitor, diagnostics)?;
-                self.nursery = Some(visitor);
+                if are_recommended_and_all_correct(&value, name_text, diagnostics)? {
+                    self.map_to_object(&value, name_text, &mut visitor, diagnostics)?;
+                    self.nursery = Some(visitor);
+                }
             }
             "performance" => {
                 let mut visitor = Performance::default();
-                self.map_to_object(&value, name_text, &mut visitor, diagnostics)?;
-                self.performance = Some(visitor);
+                if are_recommended_and_all_correct(&value, name_text, diagnostics)? {
+                    self.map_to_object(&value, name_text, &mut visitor, diagnostics)?;
+                    self.performance = Some(visitor);
+                }
             }
             "security" => {
                 let mut visitor = Security::default();
-                self.map_to_object(&value, name_text, &mut visitor, diagnostics)?;
-                self.security = Some(visitor);
+                if are_recommended_and_all_correct(&value, name_text, diagnostics)? {
+                    self.map_to_object(&value, name_text, &mut visitor, diagnostics)?;
+                    self.security = Some(visitor);
+                }
             }
             "style" => {
                 let mut visitor = Style::default();
-                self.map_to_object(&value, name_text, &mut visitor, diagnostics)?;
-                self.style = Some(visitor);
+                if are_recommended_and_all_correct(&value, name_text, diagnostics)? {
+                    self.map_to_object(&value, name_text, &mut visitor, diagnostics)?;
+                    self.style = Some(visitor);
+                }
             }
             "suspicious" => {
                 let mut visitor = Suspicious::default();
-                self.map_to_object(&value, name_text, &mut visitor, diagnostics)?;
-                self.suspicious = Some(visitor);
+                if are_recommended_and_all_correct(&value, name_text, diagnostics)? {
+                    self.map_to_object(&value, name_text, &mut visitor, diagnostics)?;
+                    self.suspicious = Some(visitor);
+                }
             }
             _ => {}
         }
@@ -94,6 +118,7 @@ impl VisitNode<JsonLanguage> for A11y {
             node,
             &[
                 "recommended",
+                "all",
                 "noAccessKey",
                 "noAutofocus",
                 "noBlankTarget",
@@ -122,6 +147,9 @@ impl VisitNode<JsonLanguage> for A11y {
         match name_text {
             "recommended" => {
                 self.recommended = Some(self.map_to_boolean(&value, name_text, diagnostics)?);
+            }
+            "all" => {
+                self.all = Some(self.map_to_boolean(&value, name_text, diagnostics)?);
             }
             "noAccessKey" => match value {
                 AnyJsonValue::JsonStringValue(_) => {
@@ -373,6 +401,7 @@ impl VisitNode<JsonLanguage> for Complexity {
             node,
             &[
                 "recommended",
+                "all",
                 "noExtraBooleanCast",
                 "noMultipleSpacesInRegularExpressionLiterals",
                 "noUselessFragments",
@@ -394,6 +423,9 @@ impl VisitNode<JsonLanguage> for Complexity {
         match name_text {
             "recommended" => {
                 self.recommended = Some(self.map_to_boolean(&value, name_text, diagnostics)?);
+            }
+            "all" => {
+                self.all = Some(self.map_to_boolean(&value, name_text, diagnostics)?);
             }
             "noExtraBooleanCast" => match value {
                 AnyJsonValue::JsonStringValue(_) => {
@@ -519,6 +551,7 @@ impl VisitNode<JsonLanguage> for Correctness {
             node,
             &[
                 "recommended",
+                "all",
                 "noChildrenProp",
                 "noConstAssign",
                 "noConstructorReturn",
@@ -551,6 +584,9 @@ impl VisitNode<JsonLanguage> for Correctness {
         match name_text {
             "recommended" => {
                 self.recommended = Some(self.map_to_boolean(&value, name_text, diagnostics)?);
+            }
+            "all" => {
+                self.all = Some(self.map_to_boolean(&value, name_text, diagnostics)?);
             }
             "noChildrenProp" => match value {
                 AnyJsonValue::JsonStringValue(_) => {
@@ -874,6 +910,7 @@ impl VisitNode<JsonLanguage> for Nursery {
             node,
             &[
                 "recommended",
+                "all",
                 "noAssignInExpressions",
                 "noBannedTypes",
                 "noClassAssign",
@@ -931,6 +968,9 @@ impl VisitNode<JsonLanguage> for Nursery {
         match name_text {
             "recommended" => {
                 self.recommended = Some(self.map_to_boolean(&value, name_text, diagnostics)?);
+            }
+            "all" => {
+                self.all = Some(self.map_to_boolean(&value, name_text, diagnostics)?);
             }
             "noAssignInExpressions" => match value {
                 AnyJsonValue::JsonStringValue(_) => {
@@ -1700,7 +1740,7 @@ impl VisitNode<JsonLanguage> for Performance {
         node: &SyntaxNode<JsonLanguage>,
         diagnostics: &mut Vec<DeserializationDiagnostic>,
     ) -> Option<()> {
-        has_only_known_keys(node, &["recommended", "noDelete"], diagnostics)
+        has_only_known_keys(node, &["recommended", "all", "noDelete"], diagnostics)
     }
     fn visit_map(
         &mut self,
@@ -1713,6 +1753,9 @@ impl VisitNode<JsonLanguage> for Performance {
         match name_text {
             "recommended" => {
                 self.recommended = Some(self.map_to_boolean(&value, name_text, diagnostics)?);
+            }
+            "all" => {
+                self.all = Some(self.map_to_boolean(&value, name_text, diagnostics)?);
             }
             "noDelete" => match value {
                 AnyJsonValue::JsonStringValue(_) => {
@@ -1748,6 +1791,7 @@ impl VisitNode<JsonLanguage> for Security {
             node,
             &[
                 "recommended",
+                "all",
                 "noDangerouslySetInnerHtml",
                 "noDangerouslySetInnerHtmlWithChildren",
             ],
@@ -1765,6 +1809,9 @@ impl VisitNode<JsonLanguage> for Security {
         match name_text {
             "recommended" => {
                 self.recommended = Some(self.map_to_boolean(&value, name_text, diagnostics)?);
+            }
+            "all" => {
+                self.all = Some(self.map_to_boolean(&value, name_text, diagnostics)?);
             }
             "noDangerouslySetInnerHtml" => match value {
                 AnyJsonValue::JsonStringValue(_) => {
@@ -1818,6 +1865,7 @@ impl VisitNode<JsonLanguage> for Style {
             node,
             &[
                 "recommended",
+                "all",
                 "noArguments",
                 "noImplicitBoolean",
                 "noNegationElse",
@@ -1853,6 +1901,9 @@ impl VisitNode<JsonLanguage> for Style {
         match name_text {
             "recommended" => {
                 self.recommended = Some(self.map_to_boolean(&value, name_text, diagnostics)?);
+            }
+            "all" => {
+                self.all = Some(self.map_to_boolean(&value, name_text, diagnostics)?);
             }
             "noArguments" => match value {
                 AnyJsonValue::JsonStringValue(_) => {
@@ -2230,6 +2281,7 @@ impl VisitNode<JsonLanguage> for Suspicious {
             node,
             &[
                 "recommended",
+                "all",
                 "noArrayIndexKey",
                 "noAsyncPromiseExecutor",
                 "noCatchAssign",
@@ -2267,6 +2319,9 @@ impl VisitNode<JsonLanguage> for Suspicious {
         match name_text {
             "recommended" => {
                 self.recommended = Some(self.map_to_boolean(&value, name_text, diagnostics)?);
+            }
+            "all" => {
+                self.all = Some(self.map_to_boolean(&value, name_text, diagnostics)?);
             }
             "noArrayIndexKey" => match value {
                 AnyJsonValue::JsonStringValue(_) => {
