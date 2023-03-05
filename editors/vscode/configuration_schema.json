@@ -1080,7 +1080,7 @@
 					]
 				},
 				"noCatchAssign": {
-					"description": "Disallow reassigning exceptions in catch clauses",
+					"description": "Disallow reassigning exceptions in catch clauses.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }

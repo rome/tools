@@ -1,4 +1,4 @@
-use crate::{semantic_services::Semantic, JsRuleAction};
+use crate::semantic_services::Semantic;
 use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_semantic::ReferencesExtensions;
@@ -6,7 +6,12 @@ use rome_js_syntax::{JsCatchClause, JsSyntaxNode};
 use rome_rowan::AstNode;
 
 declare_rule! {
-    /// Disallow reassigning exceptions in catch clauses
+    /// Disallow reassigning exceptions in catch clauses.
+    ///
+    /// Assignment to a `catch` parameter can be misleading and confusing.
+    /// It is often unintended and indicative of a programmer error.
+    ///
+    /// Source: https://eslint.org/docs/latest/rules/no-ex-assign
     ///
     /// ## Examples
     ///
@@ -39,10 +44,13 @@ declare_rule! {
 }
 
 impl Rule for NoCatchAssign {
-    /// Why use [JsCatchClause] instead of [JsIdentifierAssignment] ? Because this could reduce search range.
-    /// We only compare the declaration of [JsCatchClause] with all descent [JsIdentifierAssignment] of its body.
+    // Why use [JsCatchClause] instead of [JsIdentifierAssignment] ?
+    // Because this could reduce search range.
+    // We only compare the declaration of [JsCatchClause] with all descent
+    // [JsIdentifierAssignment] of its body.
     type Query = Semantic<JsCatchClause>;
-    /// The first element of `State` is the reassignment of catch parameter, the second element of `State` is the declaration of catch clause.
+    // The first element of `State` is the reassignment of catch parameter,
+    // the second element of `State` is the declaration of catch clause.
     type State = (JsSyntaxNode, JsSyntaxNode);
     type Signals = Vec<Self::State>;
     type Options = ();
@@ -54,16 +62,9 @@ impl Rule for NoCatchAssign {
         catch_clause
             .declaration()
             .and_then(|decl| {
-                // catch_binding
-                // ## Example
-                // try {
-
-                // } catch (catch_binding) {
-                //          ^^^^^^^^^^^^^
-                // }
                 let catch_binding = decl.binding().ok()?;
-                // Only [JsIdentifierBinding] is allowed to use `model.all_references` now, so I need to make sure this is
-                // a [JsIdentifierBinding].
+                // Only [JsIdentifierBinding] is allowed to use `model.all_references` now,
+                // so there's need to make sure this is a [JsIdentifierBinding].
                 let identifier_binding = catch_binding
                     .as_any_js_binding()?
                     .as_js_identifier_binding()?;
@@ -81,24 +82,21 @@ impl Rule for NoCatchAssign {
 
     fn diagnostic(_ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
         let (assignment, catch_binding_syntax) = state;
-        let diagnostic = RuleDiagnostic::new(
-            rule_category!(),
-            assignment.text_trimmed_range(),
-            markup! {
-                " Do not "<Emphasis>"reassign catch parameters."</Emphasis>""
-            },
+        Some(
+            RuleDiagnostic::new(
+                rule_category!(),
+                assignment.text_trimmed_range(),
+                markup! {
+                    "Reassigning a "<Emphasis>"catch parameter"</Emphasis>" is confusing."
+                },
+            )
+            .detail(
+                catch_binding_syntax.text_trimmed_range(),
+                markup! {
+                    "The "<Emphasis>"catch parameter"</Emphasis>" is declared here:"
+                },
+            )
+            .note("Use a local variable instead."),
         )
-        .detail(
-            catch_binding_syntax.text_trimmed_range(),
-            markup! {
-                "The catch parameter is declared here"
-            },
-        );
-
-        Some(diagnostic.note("Use a local variable instead."))
-    }
-
-    fn action(_: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
-        None
     }
 }
