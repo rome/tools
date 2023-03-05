@@ -860,6 +860,7 @@ fn fs_error_unknown() {
 //
 // Verifies, that ignore patterns to symbolic links are allowed.
 //
+// ├── rome.json
 // ├── hidden_nested
 // │   └── test
 // │       └── symlink_testcase1_2 -> hidden_testcase1
@@ -870,8 +871,7 @@ fn fs_error_unknown() {
 // │   ├── test1.ts // ignored
 // │   ├── test2.ts // ignored
 // │   └── test.js  // ok
-// └── project
-//     ├── rome.json
+// └── src
 //     ├── symlink_testcase1_1 -> hidden_nested
 //     └── symlink_testcase2 -> hidden_testcase2
 #[test]
@@ -880,7 +880,7 @@ fn fs_files_ignore_symlink() {
     let mut console = BufferConsole::default();
 
     let root_path = temp_dir().join("rome_test_files_ignore_symlink");
-    let project_path = root_path.join("project");
+    let src_path = root_path.join("src");
 
     let testcase1_path = root_path.join("hidden_testcase1");
     let testcase1_sub_path = testcase1_path.join("test");
@@ -894,25 +894,25 @@ fn fs_files_ignore_symlink() {
         remove_dir_all(root_path.clone());
     }
     create_dir(root_path.clone()).unwrap();
-    create_dir(project_path.clone()).unwrap();
+    create_dir(src_path.clone()).unwrap();
     create_dir_all(testcase1_sub_path.clone()).unwrap();
     create_dir(testcase2_path.clone()).unwrap();
     create_dir_all(nested_sub_path.clone()).unwrap();
 
-    // project/symlink_testcase1_1
-    let symlink_testcase1_1_path = project_path.join("symlink_testcase1_1");
+    // src/symlink_testcase1_1
+    let symlink_testcase1_1_path = src_path.join("symlink_testcase1_1");
     // hidden_nested/test/symlink_testcase1_2
     let symlink_testcase1_2_path = nested_sub_path.join("symlink_testcase1_2");
-    // project/symlink_testcase2
-    let symlink_testcase2_path = project_path.join("symlink_testcase2");
+    // src/symlink_testcase2
+    let symlink_testcase2_path = src_path.join("symlink_testcase2");
 
     #[cfg(target_family = "unix")]
     {
-        // project/test/symlink_testcase1_1 -> hidden_nested
+        // src/test/symlink_testcase1_1 -> hidden_nested
         symlink(nested_path, symlink_testcase1_1_path).unwrap();
         // hidden_nested/test/symlink_testcase1_2 -> hidden_testcase1
         symlink(testcase1_path, symlink_testcase1_2_path).unwrap();
-        // project/symlink_testcase2 -> hidden_testcase2
+        // src/symlink_testcase2 -> hidden_testcase2
         symlink(testcase2_path.clone(), symlink_testcase2_path).unwrap();
     }
 
@@ -926,7 +926,7 @@ fn fs_files_ignore_symlink() {
         check_windows_symlink!(symlink_dir(testcase2_path.clone(), symlink_testcase2_path));
     }
 
-    let config_path = project_path.join("rome.json");
+    let config_path = root_path.join("rome.json");
     let mut config_file = File::create(config_path).unwrap();
     config_file
         .write_all(CONFIG_IGNORE_SYMLINK.as_bytes())
@@ -950,9 +950,9 @@ fn fs_files_ignore_symlink() {
         Arguments::from_vec(vec![
             OsString::from("check"),
             OsString::from("--config-path"),
-            OsString::from(project_path.clone()),
+            OsString::from(root_path.clone()),
             OsString::from("--apply"),
-            OsString::from(project_path),
+            OsString::from(src_path),
         ]),
     );
 

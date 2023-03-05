@@ -6,25 +6,13 @@ expression: content
 # Emitted Messages
 
 ```block
-<TEMP_DIR>/rome_test_files_ignore_symlink/project/rome.json lint ━━━━━━━━━━━━━━━━━━━━
-
-  no diagnostic message provided
-  
-
-```
-
-```block
 Skipped 4 suggested fixes.
 If you wish to apply the suggested (unsafe) fixes, use the command rome check --apply-unsafe
 
 ```
 
 ```block
-Fixed 3 file(s) in <TIME>
-```
-
-```block
-Skipped 1 file(s)
+Fixed 2 file(s) in <TIME>
 ```
 
 
