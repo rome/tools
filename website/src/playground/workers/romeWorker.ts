@@ -110,7 +110,7 @@ self.addEventListener("message", async (e) => {
 				}
 				case LintRules.All: {
 					configuration.linter!.rules = {
-						all: true
+						all: true,
 					};
 					break;
 				}
