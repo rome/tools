@@ -2574,7 +2574,7 @@ pub struct Suspicious {
     #[doc = "Disallows using an async function as a Promise executor."]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub no_async_promise_executor: Option<RuleConfiguration>,
-    #[doc = "Disallow reassigning exceptions in catch clauses"]
+    #[doc = "Disallow reassigning exceptions in catch clauses."]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub no_catch_assign: Option<RuleConfiguration>,
     #[doc = "Prevent comments from being inserted as text nodes"]

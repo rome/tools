@@ -673,7 +673,7 @@ export interface Suspicious {
 	 */
 	noAsyncPromiseExecutor?: RuleConfiguration;
 	/**
-	 * Disallow reassigning exceptions in catch clauses
+	 * Disallow reassigning exceptions in catch clauses.
 	 */
 	noCatchAssign?: RuleConfiguration;
 	/**
