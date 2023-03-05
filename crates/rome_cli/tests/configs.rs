@@ -251,3 +251,11 @@ pub const CONFIG_FILE_SIZE_LIMIT: &str = r#"{
     "maxSize": 16
   }
 }"#;
+
+pub const CONFIG_IGNORE_SYMLINK: &str = r#"{
+  "files": {
+    "ignore": [
+      "symlink_testcase2/**/*.ts"
+    ]
+  }
+}"#;
