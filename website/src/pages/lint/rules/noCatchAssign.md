@@ -7,7 +7,12 @@ parent: lint/rules/index
 
 > This rule is recommended by Rome.
 
-Disallow reassigning exceptions in catch clauses
+Disallow reassigning exceptions in catch clauses.
+
+Assignment to a `catch` parameter can be misleading and confusing.
+It is often unintended and indicative of a programmer error.
+
+Source: https://eslint.org/docs/latest/rules/no-ex-assign
 
 ## Examples
 
@@ -24,7 +29,7 @@ try {
 
 <pre class="language-text"><code class="language-text">suspicious/noCatchAssign.js:5:3 <a href="https://docs.rome.tools/lint/rules/noCatchAssign">lint/suspicious/noCatchAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;"> Do not </span><span style="color: Tomato;"><strong>reassign catch parameters.</strong></span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Reassigning a </span><span style="color: Tomato;"><strong>catch parameter</strong></span><span style="color: Tomato;"> is confusing.</span>
   
     <strong>3 │ </strong>} catch (e) {
     <strong>4 │ </strong>  e;
@@ -33,7 +38,7 @@ try {
     <strong>6 │ </strong>}
     <strong>7 │ </strong>
   
-<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">The catch parameter is declared here</span>
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">The </span><span style="color: rgb(38, 148, 255);"><strong>catch parameter</strong></span><span style="color: rgb(38, 148, 255);"> is declared here:</span>
   
     <strong>1 │ </strong>try {
     <strong>2 │ </strong>

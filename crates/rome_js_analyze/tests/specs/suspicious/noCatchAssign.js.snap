@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 91
 expression: noCatchAssign.js
 ---
 # Input
@@ -20,7 +21,7 @@ try {
 ```
 noCatchAssign.js:2:24 lint/suspicious/noCatchAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  !  Do not reassign catch parameters.
+  ! Reassigning a catch parameter is confusing.
   
     1 │ // invalid
   > 2 │ try { } catch (e) { e; e = 10; }
@@ -28,7 +29,7 @@ noCatchAssign.js:2:24 lint/suspicious/noCatchAssign ━━━━━━━━━�
     3 │ try {
     4 │ 
   
-  i The catch parameter is declared here
+  i The catch parameter is declared here:
   
     1 │ // invalid
   > 2 │ try { } catch (e) { e; e = 10; }
@@ -44,7 +45,7 @@ noCatchAssign.js:2:24 lint/suspicious/noCatchAssign ━━━━━━━━━�
 ```
 noCatchAssign.js:6:3 lint/suspicious/noCatchAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  !  Do not reassign catch parameters.
+  ! Reassigning a catch parameter is confusing.
   
     5 │ } catch (error) {
   > 6 │   error = 100;
@@ -52,7 +53,7 @@ noCatchAssign.js:6:3 lint/suspicious/noCatchAssign ━━━━━━━━━�
     7 │   {
     8 │     error = 10;
   
-  i The catch parameter is declared here
+  i The catch parameter is declared here:
   
     3 │ try {
     4 │ 
@@ -69,7 +70,7 @@ noCatchAssign.js:6:3 lint/suspicious/noCatchAssign ━━━━━━━━━�
 ```
 noCatchAssign.js:8:5 lint/suspicious/noCatchAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  !  Do not reassign catch parameters.
+  ! Reassigning a catch parameter is confusing.
   
      6 │   error = 100;
      7 │   {
@@ -78,7 +79,7 @@ noCatchAssign.js:8:5 lint/suspicious/noCatchAssign ━━━━━━━━━�
      9 │   }
     10 │ }
   
-  i The catch parameter is declared here
+  i The catch parameter is declared here:
   
     3 │ try {
     4 │ 
