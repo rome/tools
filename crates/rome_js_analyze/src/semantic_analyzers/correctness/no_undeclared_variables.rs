@@ -45,6 +45,10 @@ impl Rule for NoUndeclaredVariables {
                 let token = identifier.value_token().ok()?;
                 let text = token.text_trimmed();
 
+                if ctx.is_global(text) {
+                    return None;
+                }
+
                 // Typescript Const Assertion
                 if text == "const" && under_as_expression {
                     return None;

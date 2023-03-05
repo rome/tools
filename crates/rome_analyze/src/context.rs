@@ -16,6 +16,7 @@ where
     root: &'a RuleRoot<R>,
     bag: &'a ServiceBag,
     services: RuleServiceBag<R>,
+    globals: &'a [&'a str],
 }
 
 impl<'a, R> RuleContext<'a, R>
@@ -26,6 +27,7 @@ where
         query_result: &'a RuleQueryResult<R>,
         root: &'a RuleRoot<R>,
         services: &'a ServiceBag,
+        globals: &'a [&'a str],
     ) -> Result<Self, Error> {
         let rule_key = RuleKey::rule::<R>();
         Ok(Self {
@@ -33,6 +35,7 @@ where
             root,
             bag: services,
             services: FromServices::from_services(&rule_key, services)?,
+            globals,
         })
     }
 
@@ -88,6 +91,11 @@ where
             .get_service::<ServiceBagRuleOptionsWrapper<R>>()
             .unwrap();
         options
+    }
+
+    /// Checks whether the provided text belongs to globals
+    pub fn is_global(&self, text: &str) -> bool {
+        self.globals.contains(&text)
     }
 }
 

@@ -100,9 +100,8 @@ mod tests {
     use std::convert::Infallible;
 
     use crate::{
-        matcher::MatchQueryParams, registry::Phases, Analyzer, AnalyzerContext, AnalyzerOptions,
-        AnalyzerSignal, ControlFlow, MetadataRegistry, Never, QueryMatcher, ServiceBag,
-        SyntaxVisitor,
+        matcher::MatchQueryParams, registry::Phases, Analyzer, AnalyzerContext, AnalyzerSignal,
+        ControlFlow, MetadataRegistry, Never, QueryMatcher, ServiceBag, SyntaxVisitor,
     };
 
     #[derive(Default)]
@@ -165,7 +164,7 @@ mod tests {
             root,
             range: None,
             services: ServiceBag::default(),
-            options: &AnalyzerOptions::default(),
+            globals: &[],
         };
 
         let result: Option<Never> = analyzer.run(ctx);

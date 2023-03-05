@@ -1430,3 +1430,40 @@ fn top_level_not_all_down_level_all() {
         result,
     ));
 }
+
+#[test]
+fn ignore_configured_globals() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let rome_json = r#"{
+        "javascript": {
+            "globals": ["foo", "bar"]
+        }
+    }"#;
+
+    // style/useSingleVarDeclarator
+    let code = r#"foo.call(); bar.call();"#;
+
+    let file_path = Path::new("fix.js");
+    fs.insert(file_path.into(), code.as_bytes());
+
+    let config_path = Path::new("rome.json");
+    fs.insert(config_path.into(), rome_json.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "ignore_configured_globals",
+        fs,
+        console,
+        result,
+    ));
+}
