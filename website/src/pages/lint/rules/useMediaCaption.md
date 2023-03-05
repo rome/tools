@@ -3,7 +3,7 @@ title: Lint Rule useMediaCaption
 parent: lint/rules/index
 ---
 
-# useMediaCaption (since vnext)
+# useMediaCaption (since v12.0.0)
 
 Enforces that `audio` and `video` elements must have a `track` for captions.
 

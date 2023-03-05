@@ -3,7 +3,7 @@ title: Lint Rule noUselessRename
 parent: lint/rules/index
 ---
 
-# noUselessRename (since vnext)
+# noUselessRename (since v12.0.0)
 
 Disallow renaming import, export, and destructured assignments to the same name.
 

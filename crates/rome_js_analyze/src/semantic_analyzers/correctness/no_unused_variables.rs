@@ -241,6 +241,7 @@ impl Rule for NoUnusedVariables {
         let name = match binding {
             AnyJsIdentifierBinding::JsIdentifierBinding(binding) => binding.name_token().ok()?,
             AnyJsIdentifierBinding::TsIdentifierBinding(binding) => binding.name_token().ok()?,
+            AnyJsIdentifierBinding::TsTypeParameterName(binding) => binding.ident_token().ok()?,
         };
 
         let name = name.token_text_trimmed();
@@ -354,6 +355,9 @@ impl Rule for NoUnusedVariables {
                     }
                     AnyJsIdentifierBinding::TsIdentifierBinding(binding) => {
                         binding.name_token().ok()?
+                    }
+                    AnyJsIdentifierBinding::TsTypeParameterName(binding) => {
+                        binding.ident_token().ok()?
                     }
                 };
                 let name_trimmed = name.text_trimmed();

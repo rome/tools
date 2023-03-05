@@ -141,6 +141,10 @@ export interface JavascriptFormatter {
 export interface JavascriptOrganizeImports {}
 export interface Rules {
 	a11y?: A11y;
+	/**
+	 * It enables ALL rules. The rules that belong to `nursery` won't be enabled.
+	 */
+	all?: boolean;
 	complexity?: Complexity;
 	correctness?: Correctness;
 	nursery?: Nursery;
@@ -162,6 +166,14 @@ export type TrailingComma = "all" | "es5" | "none";
  */
 export interface A11y {
 	/**
+	 * It enables ALL rules for this group.
+	 */
+	all?: boolean;
+	/**
+	 * Enforce that the accessKey attribute is not used on any HTML element.
+	 */
+	noAccessKey?: RuleConfiguration;
+	/**
 	 * Avoid the autoFocus attribute
 	 */
 	noAutofocus?: RuleConfiguration;
@@ -169,6 +181,14 @@ export interface A11y {
 	 * Disallow target="_blank" attribute without rel="noreferrer"
 	 */
 	noBlankTarget?: RuleConfiguration;
+	/**
+	 * Enforces that no distracting elements are used.
+	 */
+	noDistractingElements?: RuleConfiguration;
+	/**
+	 * Check that the scope attribute is only used on th elements.
+	 */
+	noHeaderScope?: RuleConfiguration;
 	/**
 	 * Prevent the usage of positive integers on tabIndex property
 	 */
@@ -211,6 +231,10 @@ export interface A11y {
  */
 export interface Complexity {
 	/**
+	 * It enables ALL rules for this group.
+	 */
+	all?: boolean;
+	/**
 	 * Disallow unnecessary boolean casts
 	 */
 	noExtraBooleanCast?: RuleConfiguration;
@@ -244,6 +268,10 @@ export interface Complexity {
  */
 export interface Correctness {
 	/**
+	 * It enables ALL rules for this group.
+	 */
+	all?: boolean;
+	/**
 	 * Prevent passing of children as props.
 	 */
 	noChildrenProp?: RuleConfiguration;
@@ -251,6 +279,10 @@ export interface Correctness {
 	 * Prevents from having const variables being re-assigned.
 	 */
 	noConstAssign?: RuleConfiguration;
+	/**
+	 * Disallow returning a value from a constructor.
+	 */
+	noConstructorReturn?: RuleConfiguration;
 	/**
 	 * Disallows empty destructuring patterns.
 	 */
@@ -260,9 +292,21 @@ export interface Correctness {
 	 */
 	noNewSymbol?: RuleConfiguration;
 	/**
+	 * Disallow literal numbers that lose precision
+	 */
+	noPrecisionLoss?: RuleConfiguration;
+	/**
 	 * Prevent the usage of the return value of React.render.
 	 */
 	noRenderReturnValue?: RuleConfiguration;
+	/**
+	 * Disallow returning a value from a setter
+	 */
+	noSetterReturn?: RuleConfiguration;
+	/**
+	 * Disallow comparison of expressions modifying the string case with non-compliant value.
+	 */
+	noStringCaseMismatch?: RuleConfiguration;
 	/**
 	 * Prevents the usage of variables that haven't been declared inside the document
 	 */
@@ -276,6 +320,10 @@ export interface Correctness {
 	 */
 	noUnreachable?: RuleConfiguration;
 	/**
+	 * Disallow control flow statements in finally blocks.
+	 */
+	noUnsafeFinally?: RuleConfiguration;
+	/**
 	 * Disallow unused variables.
 	 */
 	noUnusedVariables?: RuleConfiguration;
@@ -283,6 +331,10 @@ export interface Correctness {
 	 * This rules prevents void elements (AKA self-closing elements) from having children.
 	 */
 	noVoidElementsWithChildren?: RuleConfiguration;
+	/**
+	 * Disallow returning a value from a function with the return type 'void'
+	 */
+	noVoidTypeReturn?: RuleConfiguration;
 	/**
 	 * It enables the recommended rules for this group
 	 */
@@ -297,9 +349,9 @@ export interface Correctness {
  */
 export interface Nursery {
 	/**
-	 * Enforce that the accessKey attribute is not used on any HTML element.
+	 * It enables ALL rules for this group.
 	 */
-	noAccessKey?: RuleConfiguration;
+	all?: boolean;
 	/**
 	 * Disallow assignments in expressions.
 	 */
@@ -321,18 +373,6 @@ export interface Nursery {
 	 */
 	noConfusingLabels?: RuleConfiguration;
 	/**
-	 * Disallow TypeScript const enum
-	 */
-	noConstEnum?: RuleConfiguration;
-	/**
-	 * Disallow returning a value from a constructor.
-	 */
-	noConstructorReturn?: RuleConfiguration;
-	/**
-	 * Enforces that no distracting elements are used.
-	 */
-	noDistractingElements?: RuleConfiguration;
-	/**
 	 * Disallow duplicate case labels. If a switch statement has duplicate test expressions in case clauses, it is likely that a programmer copied a case clause but forgot to change the test expression.
 	 */
 	noDuplicateCase?: RuleConfiguration;
@@ -345,21 +385,9 @@ export interface Nursery {
 	 */
 	noDuplicateJsxProps?: RuleConfiguration;
 	/**
-	 * Prevents object literals having more than one property declaration for the same name. If an object property with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored, which is likely a mistake.
-	 */
-	noDuplicateObjectKeys?: RuleConfiguration;
-	/**
-	 * Disallow the declaration of empty interfaces.
-	 */
-	noEmptyInterface?: RuleConfiguration;
-	/**
 	 * Disallow unnecessary labels.
 	 */
 	noExtraLabels?: RuleConfiguration;
-	/**
-	 * Prevents the wrong usage of the non-null assertion operator (!) in TypeScript files.
-	 */
-	noExtraNonNullAssertion?: RuleConfiguration;
 	/**
 	 * Typing mistakes and misunderstandings about where semicolons are required can lead to semicolons that are unnecessary. While not technically an error, extra semicolons can cause confusion when reading code.
 	 */
@@ -368,10 +396,6 @@ export interface Nursery {
 	 * Disallow calling global object properties as functions
 	 */
 	noGlobalObjectCalls?: RuleConfiguration;
-	/**
-	 * Check that the scope attribute is only used on th elements.
-	 */
-	noHeaderScope?: RuleConfiguration;
 	/**
 	 * Disallow type annotations for variables, parameters, and class properties initialized with a literal expression.
 	 */
@@ -385,10 +409,6 @@ export interface Nursery {
 	 */
 	noInvalidConstructorSuper?: RuleConfiguration;
 	/**
-	 * Disallow non-null assertions using the ! postfix operator.
-	 */
-	noNonNullAssertion?: RuleConfiguration;
-	/**
 	 * Enforce that interactive ARIA roles are not assigned to non-interactive HTML elements.
 	 */
 	noNoninteractiveElementToInteractiveRole?: RuleConfiguration;
@@ -396,10 +416,6 @@ export interface Nursery {
 	 * Disallow the use of parameter properties in class constructors.
 	 */
 	noParameterProperties?: RuleConfiguration;
-	/**
-	 * Disallow literal numbers that lose precision
-	 */
-	noPrecisionLoss?: RuleConfiguration;
 	/**
 	 * Disallow direct use of Object.prototype builtins.
 	 */
@@ -413,10 +429,6 @@ export interface Nursery {
 	 */
 	noRedundantAlt?: RuleConfiguration;
 	/**
-	 * Prevents from having redundant "use strict".
-	 */
-	noRedundantUseStrict?: RuleConfiguration;
-	/**
 	 * This rule allows you to specify global variable names that you don’t want to use in your application.
 	 */
 	noRestrictedGlobals?: RuleConfiguration;
@@ -429,14 +441,6 @@ export interface Nursery {
 	 */
 	noSelfCompare?: RuleConfiguration;
 	/**
-	 * Disallow returning a value from a setter
-	 */
-	noSetterReturn?: RuleConfiguration;
-	/**
-	 * Disallow comparison of expressions modifying the string case with non-compliant value.
-	 */
-	noStringCaseMismatch?: RuleConfiguration;
-	/**
 	 * Enforces the usage of the title element for the svg element.
 	 */
 	noSvgWithoutTitle?: RuleConfiguration;
@@ -448,10 +452,6 @@ export interface Nursery {
 	 * Ensures the super() constructor is called exactly once on every code path in a class constructor before this is accessed if the class has a superclass
 	 */
 	noUnreachableSuper?: RuleConfiguration;
-	/**
-	 * Disallow control flow statements in finally blocks.
-	 */
-	noUnsafeFinally?: RuleConfiguration;
 	/**
 	 * Disallow the use of optional chaining in contexts where the undefined value is not allowed.
 	 */
@@ -473,14 +473,6 @@ export interface Nursery {
 	 */
 	noUselessSwitchCase?: RuleConfiguration;
 	/**
-	 * Disallow the use of var
-	 */
-	noVar?: RuleConfiguration;
-	/**
-	 * Disallow returning a value from a function with the return type 'void'
-	 */
-	noVoidTypeReturn?: RuleConfiguration;
-	/**
 	 * Disallow with statements in non-strict contexts.
 	 */
 	noWith?: RuleConfiguration;
@@ -501,29 +493,9 @@ export interface Nursery {
 	 */
 	useCamelCase?: RuleConfiguration;
 	/**
-	 * Require const declarations for variables that are never reassigned after declared.
-	 */
-	useConst?: RuleConfiguration;
-	/**
-	 * Enforce default function parameters and optional parameters to be last.
-	 */
-	useDefaultParameterLast?: RuleConfiguration;
-	/**
-	 * Enforce default clauses in switch statements to be last
-	 */
-	useDefaultSwitchClauseLast?: RuleConfiguration;
-	/**
-	 * Require that each enum member value be explicitly initialized.
-	 */
-	useEnumInitializers?: RuleConfiguration;
-	/**
 	 * Enforce all dependencies are correctly specified.
 	 */
 	useExhaustiveDependencies?: RuleConfiguration;
-	/**
-	 * Disallow the use of Math.pow in favor of the ** operator.
-	 */
-	useExponentiationOperator?: RuleConfiguration;
 	/**
 	 * Enforce that all React hooks are being called from the Top Level component functions.
 	 */
@@ -540,10 +512,6 @@ export interface Nursery {
 	 * Enforces that audio and video elements must have a track for captions.
 	 */
 	useMediaCaption?: RuleConfiguration;
-	/**
-	 * Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals
-	 */
-	useNumericLiterals?: RuleConfiguration;
 	/**
 	 * Ensures that ARIA properties aria-* are all valid.
 	 */
@@ -562,6 +530,10 @@ export interface Nursery {
  */
 export interface Performance {
 	/**
+	 * It enables ALL rules for this group.
+	 */
+	all?: boolean;
+	/**
 	 * Disallow the use of the delete operator
 	 */
 	noDelete?: RuleConfiguration;
@@ -574,6 +546,10 @@ export interface Performance {
  * A list of rules that belong to this group
  */
 export interface Security {
+	/**
+	 * It enables ALL rules for this group.
+	 */
+	all?: boolean;
 	/**
 	 * Prevent the usage of dangerous JSX props
 	 */
@@ -592,6 +568,10 @@ export interface Security {
  */
 export interface Style {
 	/**
+	 * It enables ALL rules for this group.
+	 */
+	all?: boolean;
+	/**
 	 * Disallow the use of arguments
 	 */
 	noArguments?: RuleConfiguration;
@@ -604,6 +584,10 @@ export interface Style {
 	 */
 	noNegationElse?: RuleConfiguration;
 	/**
+	 * Disallow non-null assertions using the ! postfix operator.
+	 */
+	noNonNullAssertion?: RuleConfiguration;
+	/**
 	 * Disallow the use of constants which its value is the upper-case version of its name.
 	 */
 	noShoutyConstants?: RuleConfiguration;
@@ -611,6 +595,10 @@ export interface Style {
 	 * Disallow template literals if interpolation and special-character handling are not needed
 	 */
 	noUnusedTemplateLiteral?: RuleConfiguration;
+	/**
+	 * Disallow the use of var
+	 */
+	noVar?: RuleConfiguration;
 	/**
 	 * It enables the recommended rules for this group
 	 */
@@ -620,9 +608,29 @@ export interface Style {
 	 */
 	useBlockStatements?: RuleConfiguration;
 	/**
+	 * Require const declarations for variables that are never reassigned after declared.
+	 */
+	useConst?: RuleConfiguration;
+	/**
+	 * Enforce default function parameters and optional parameters to be last.
+	 */
+	useDefaultParameterLast?: RuleConfiguration;
+	/**
+	 * Require that each enum member value be explicitly initialized.
+	 */
+	useEnumInitializers?: RuleConfiguration;
+	/**
+	 * Disallow the use of Math.pow in favor of the ** operator.
+	 */
+	useExponentiationOperator?: RuleConfiguration;
+	/**
 	 * This rule enforces the use of <>...</> over <Fragment>...</Fragment>.
 	 */
 	useFragmentSyntax?: RuleConfiguration;
+	/**
+	 * Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals
+	 */
+	useNumericLiterals?: RuleConfiguration;
 	/**
 	 * Prevent extra closing tags for components without children
 	 */
@@ -653,6 +661,10 @@ export interface Style {
  */
 export interface Suspicious {
 	/**
+	 * It enables ALL rules for this group.
+	 */
+	all?: boolean;
+	/**
 	 * Discourage the usage of Array index in keys.
 	 */
 	noArrayIndexKey?: RuleConfiguration;
@@ -661,7 +673,7 @@ export interface Suspicious {
 	 */
 	noAsyncPromiseExecutor?: RuleConfiguration;
 	/**
-	 * Disallow reassigning exceptions in catch clauses
+	 * Disallow reassigning exceptions in catch clauses.
 	 */
 	noCatchAssign?: RuleConfiguration;
 	/**
@@ -673,6 +685,10 @@ export interface Suspicious {
 	 */
 	noCompareNegZero?: RuleConfiguration;
 	/**
+	 * Disallow TypeScript const enum
+	 */
+	noConstEnum?: RuleConfiguration;
+	/**
 	 * Disallow the use of debugger
 	 */
 	noDebugger?: RuleConfiguration;
@@ -681,13 +697,25 @@ export interface Suspicious {
 	 */
 	noDoubleEquals?: RuleConfiguration;
 	/**
-	 * Disallow duplicate function arguments name.
+	 * Prevents object literals having more than one property declaration for the same name. If an object property with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored, which is likely a mistake.
+	 */
+	noDuplicateObjectKeys?: RuleConfiguration;
+	/**
+	 * Disallow duplicate function parameter name.
 	 */
 	noDuplicateParameters?: RuleConfiguration;
+	/**
+	 * Disallow the declaration of empty interfaces.
+	 */
+	noEmptyInterface?: RuleConfiguration;
 	/**
 	 * Disallow the any type usage.
 	 */
 	noExplicitAny?: RuleConfiguration;
+	/**
+	 * Prevents the wrong usage of the non-null assertion operator (!) in TypeScript files.
+	 */
+	noExtraNonNullAssertion?: RuleConfiguration;
 	/**
 	 * Disallow reassigning function declarations.
 	 */
@@ -700,6 +728,10 @@ export interface Suspicious {
 	 * Disallow labels that share a name with a variable
 	 */
 	noLabelVar?: RuleConfiguration;
+	/**
+	 * Prevents from having redundant "use strict".
+	 */
+	noRedundantUseStrict?: RuleConfiguration;
 	/**
 	 * Disallow identifiers from shadowing restricted names.
 	 */
@@ -716,6 +748,10 @@ export interface Suspicious {
 	 * It enables the recommended rules for this group
 	 */
 	recommended?: boolean;
+	/**
+	 * Enforce default clauses in switch statements to be last
+	 */
+	useDefaultSwitchClauseLast?: RuleConfiguration;
 	/**
 	 * This rule verifies the result of typeof $expr unary expressions is being compared to valid values, either string literals containing valid type names or other typeof expressions
 	 */
@@ -809,6 +845,9 @@ export type Category =
 	| "lint/a11y/useKeyWithMouseEvents"
 	| "lint/a11y/useValidAnchor"
 	| "lint/a11y/useHtmlLang"
+	| "lint/a11y/noDistractingElements"
+	| "lint/a11y/noHeaderScope"
+	| "lint/a11y/noAccessKey"
 	| "lint/complexity/noExtraBooleanCast"
 	| "lint/complexity/noMultipleSpacesInRegularExpressionLiterals"
 	| "lint/complexity/noUselessFragments"
@@ -826,31 +865,26 @@ export type Category =
 	| "lint/correctness/noUnusedVariables"
 	| "lint/correctness/noVoidElementsWithChildren"
 	| "lint/correctness/useValidForDirection"
-	| "lint/nursery/noAccessKey"
+	| "lint/correctness/noUnsafeFinally"
+	| "lint/correctness/noConstructorReturn"
+	| "lint/correctness/noPrecisionLoss"
+	| "lint/correctness/noVoidTypeReturn"
+	| "lint/correctness/noStringCaseMismatch"
+	| "lint/correctness/noSetterReturn"
 	| "lint/nursery/noAssignInExpressions"
 	| "lint/nursery/noWith"
 	| "lint/nursery/noExtraSemicolons"
 	| "lint/nursery/noBannedTypes"
 	| "lint/nursery/noClassAssign"
 	| "lint/nursery/noCommaOperator"
-	| "lint/nursery/noConstEnum"
-	| "lint/nursery/noConstructorReturn"
-	| "lint/nursery/noDistractingElements"
 	| "lint/nursery/noDuplicateCase"
-	| "lint/nursery/noDuplicateObjectKeys"
-	| "lint/nursery/noEmptyInterface"
 	| "lint/nursery/noExtraLabels"
-	| "lint/nursery/noExtraNonNullAssertion"
-	| "lint/nursery/noHeaderScope"
 	| "lint/nursery/noInferrableTypes"
 	| "lint/nursery/noInnerDeclarations"
 	| "lint/nursery/noInvalidConstructorSuper"
 	| "lint/nursery/noConfusingLabels"
-	| "lint/nursery/noNonNullAssertion"
 	| "lint/nursery/noParameterProperties"
-	| "lint/nursery/noPrecisionLoss"
 	| "lint/nursery/noRedundantAlt"
-	| "lint/nursery/noRedundantUseStrict"
 	| "lint/nursery/noRestrictedGlobals"
 	| "lint/nursery/noSelfCompare"
 	| "lint/nursery/noSelfAssignment"
@@ -858,26 +892,17 @@ export type Category =
 	| "lint/nursery/noStringCaseMismatch"
 	| "lint/nursery/noSwitchDeclarations"
 	| "lint/nursery/noUnreachableSuper"
-	| "lint/nursery/noUnsafeFinally"
 	| "lint/nursery/noUnusedLabels"
 	| "lint/nursery/noUselessSwitchCase"
-	| "lint/nursery/noVar"
-	| "lint/nursery/noVoidTypeReturn"
 	| "lint/nursery/useAriaPropsForRole"
 	| "lint/nursery/useAriaPropTypes"
 	| "lint/nursery/useCamelCase"
-	| "lint/nursery/useConst"
 	| "lint/nursery/useValidLang"
-	| "lint/nursery/useDefaultParameterLast"
-	| "lint/nursery/useDefaultSwitchClauseLast"
-	| "lint/nursery/useEnumInitializers"
 	| "lint/nursery/useValidAriaProps"
 	| "lint/nursery/useExhaustiveDependencies"
-	| "lint/nursery/useExponentiationOperator"
 	| "lint/nursery/useIsNan"
 	| "lint/nursery/useMediaCaption"
 	| "lint/nursery/useIframeTitle"
-	| "lint/nursery/useNumericLiterals"
 	| "lint/nursery/noNoninteractiveElementToInteractiveRole"
 	| "lint/nursery/noUselessRename"
 	| "lint/nursery/useValidForDirection"
@@ -907,6 +932,13 @@ export type Category =
 	| "lint/style/useSingleVarDeclarator"
 	| "lint/style/useTemplate"
 	| "lint/style/useWhile"
+	| "lint/style/useExponentiationOperator"
+	| "lint/style/useNumericLiterals"
+	| "lint/style/useDefaultParameterLast"
+	| "lint/style/useConst"
+	| "lint/style/noVar"
+	| "lint/style/noNonNullAssertion"
+	| "lint/style/useEnumInitializers"
 	| "lint/suspicious/noArrayIndexKey"
 	| "lint/suspicious/noAsyncPromiseExecutor"
 	| "lint/suspicious/noCatchAssign"
@@ -923,6 +955,12 @@ export type Category =
 	| "lint/suspicious/noSparseArray"
 	| "lint/suspicious/noUnsafeNegation"
 	| "lint/suspicious/useValidTypeof"
+	| "lint/suspicious/noEmptyInterface"
+	| "lint/suspicious/noExtraNonNullAssertion"
+	| "lint/suspicious/noRedundantUseStrict"
+	| "lint/suspicious/noConstEnum"
+	| "lint/suspicious/useDefaultSwitchClauseLast"
+	| "lint/suspicious/noDuplicateObjectKeys"
 	| "files/missingHandler"
 	| "format"
 	| "internalError/io"

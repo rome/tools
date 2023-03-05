@@ -5,6 +5,8 @@ parent: lint/rules/index
 
 # noStringCaseMismatch (since v11.0.0)
 
+> This rule is recommended by Rome.
+
 Disallow comparison of expressions modifying the string case with non-compliant value.
 
 ## Examples
@@ -15,7 +17,7 @@ Disallow comparison of expressions modifying the string case with non-compliant 
 if (s.toUpperCase() === "Abc") {}
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noStringCaseMismatch.js:1:5 <a href="https://docs.rome.tools/lint/rules/noStringCaseMismatch">lint/nursery/noStringCaseMismatch</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">correctness/noStringCaseMismatch.js:1:5 <a href="https://docs.rome.tools/lint/rules/noStringCaseMismatch">lint/correctness/noStringCaseMismatch</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This expression always returns false.</span>
   
@@ -47,7 +49,7 @@ if (s.toUpperCase() === "Abc") {}
 while (s.toLowerCase() === "Abc") {}
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noStringCaseMismatch.js:1:8 <a href="https://docs.rome.tools/lint/rules/noStringCaseMismatch">lint/nursery/noStringCaseMismatch</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">correctness/noStringCaseMismatch.js:1:8 <a href="https://docs.rome.tools/lint/rules/noStringCaseMismatch">lint/correctness/noStringCaseMismatch</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This expression always returns false.</span>
   

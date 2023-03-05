@@ -5,11 +5,13 @@ parent: lint/rules/index
 
 # noConstEnum (since v11.0.0)
 
+> This rule is recommended by Rome.
+
 Disallow TypeScript `const enum`
 
 Const enums are enums that should be inlined at use sites.
 Const enums are not supported by bundlers and are incompatible with the `isolatedModules` mode.
-Their use can lead to import inexistent values (because const enums are erased).
+Their use can lead to import nonexistent values (because const enums are erased).
 
 Thus, library authors and bundler users should not use const enums.
 
@@ -24,7 +26,7 @@ const enum Status {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noConstEnum.js:1:1 <a href="https://docs.rome.tools/lint/rules/noConstEnum">lint/nursery/noConstEnum</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">suspicious/noConstEnum.js:1:1 <a href="https://docs.rome.tools/lint/rules/noConstEnum">lint/suspicious/noConstEnum</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The </span><span style="color: Tomato;"><strong>enum declaration</strong></span><span style="color: Tomato;"> should not be </span><span style="color: Tomato;"><strong>const</strong></span>
   

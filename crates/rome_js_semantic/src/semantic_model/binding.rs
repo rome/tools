@@ -1,5 +1,7 @@
 use super::*;
-use rome_js_syntax::{binding_ext::AnyJsIdentifierBinding, AnyJsBinding, TextRange};
+use rome_js_syntax::{
+    binding_ext::AnyJsIdentifierBinding, AnyJsBinding, TextRange, TsTypeParameterName,
+};
 
 /// Internal type with all the semantic data of a specific binding
 #[derive(Debug)]
@@ -134,6 +136,7 @@ impl IsBindingAstNode for JsIdentifierBinding {}
 impl IsBindingAstNode for TsIdentifierBinding {}
 impl IsBindingAstNode for AnyJsIdentifierBinding {}
 impl IsBindingAstNode for AnyJsBinding {}
+impl IsBindingAstNode for TsTypeParameterName {}
 
 /// Extension method to allow nodes that have declaration to easily
 /// get its binding.

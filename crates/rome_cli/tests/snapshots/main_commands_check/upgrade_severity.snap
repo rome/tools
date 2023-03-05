@@ -8,10 +8,10 @@ expression: content
 {
   "linter": {
     "rules": {
-        "recommended": true,
-        "style": {
-            "noNegationElse": "error"
-        }
+      "recommended": true,
+      "style": {
+        "noNegationElse": "error"
+      }
     }
   }
 }
