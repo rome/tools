@@ -275,7 +275,15 @@ fn handle_dir_entry<'scope>(
         }
 
         let rome_path = if let Some(origin_path) = origin_path {
-            RomePath::new(origin_path.join(path.file_name().unwrap()))
+            if let Some(file_name) = path.file_name() {
+                RomePath::new(origin_path.join(file_name))
+            } else {
+                ctx.push_diagnostic(Error::from(FileSystemDiagnostic {
+                    path: path.to_string_lossy().to_string(),
+                    error_kind: ErrorKind::UnknownFileType,
+                }));
+                return;
+            }
         } else {
             RomePath::new(&path)
         };
