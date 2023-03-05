@@ -141,6 +141,10 @@ export interface JavascriptFormatter {
 export interface JavascriptOrganizeImports {}
 export interface Rules {
 	a11y?: A11y;
+	/**
+	 * It enables ALL rules. The rules that belong to `nursery` won't be enabled.
+	 */
+	all?: boolean;
 	complexity?: Complexity;
 	correctness?: Correctness;
 	nursery?: Nursery;
@@ -161,6 +165,10 @@ export type TrailingComma = "all" | "es5" | "none";
  * A list of rules that belong to this group
  */
 export interface A11y {
+	/**
+	 * It enables ALL rules for this group.
+	 */
+	all?: boolean;
 	/**
 	 * Enforce that the accessKey attribute is not used on any HTML element.
 	 */
@@ -223,6 +231,10 @@ export interface A11y {
  */
 export interface Complexity {
 	/**
+	 * It enables ALL rules for this group.
+	 */
+	all?: boolean;
+	/**
 	 * Disallow unnecessary boolean casts
 	 */
 	noExtraBooleanCast?: RuleConfiguration;
@@ -255,6 +267,10 @@ export interface Complexity {
  * A list of rules that belong to this group
  */
 export interface Correctness {
+	/**
+	 * It enables ALL rules for this group.
+	 */
+	all?: boolean;
 	/**
 	 * Prevent passing of children as props.
 	 */
@@ -332,6 +348,10 @@ export interface Correctness {
  * A list of rules that belong to this group
  */
 export interface Nursery {
+	/**
+	 * It enables ALL rules for this group.
+	 */
+	all?: boolean;
 	/**
 	 * Disallow assignments in expressions.
 	 */
@@ -510,6 +530,10 @@ export interface Nursery {
  */
 export interface Performance {
 	/**
+	 * It enables ALL rules for this group.
+	 */
+	all?: boolean;
+	/**
 	 * Disallow the use of the delete operator
 	 */
 	noDelete?: RuleConfiguration;
@@ -522,6 +546,10 @@ export interface Performance {
  * A list of rules that belong to this group
  */
 export interface Security {
+	/**
+	 * It enables ALL rules for this group.
+	 */
+	all?: boolean;
 	/**
 	 * Prevent the usage of dangerous JSX props
 	 */
@@ -539,6 +567,10 @@ export interface Security {
  * A list of rules that belong to this group
  */
 export interface Style {
+	/**
+	 * It enables ALL rules for this group.
+	 */
+	all?: boolean;
 	/**
 	 * Disallow the use of arguments
 	 */
@@ -628,6 +660,10 @@ export interface Style {
  * A list of rules that belong to this group
  */
 export interface Suspicious {
+	/**
+	 * It enables ALL rules for this group.
+	 */
+	all?: boolean;
 	/**
 	 * Discourage the usage of Array index in keys.
 	 */

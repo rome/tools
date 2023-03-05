@@ -16,23 +16,23 @@ expression: content
   "linter": {
     "enabled": true,
     "rules": {
-        "complexity": {
-            "useSimplifiedLogicExpression": "warn"
-        },
-        "style": {
-            "useTemplate": {
-                "level": "error"
-            }
-        },
-        "correctness": {
-            "noUnreachable": "off"
-        },
-        "suspicious": {
-            "noCatchAssign": "error",
-            "noLabelVar": {
-                "level": "warn"
-            }
+      "complexity": {
+        "useSimplifiedLogicExpression": "warn"
+      },
+      "style": {
+        "useTemplate": {
+          "level": "error"
         }
+      },
+      "correctness": {
+        "noUnreachable": "off"
+      },
+      "suspicious": {
+        "noCatchAssign": "error",
+        "noLabelVar": {
+          "level": "warn"
+        }
+      }
     }
   },
   "javascript": {

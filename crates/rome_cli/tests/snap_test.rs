@@ -3,7 +3,11 @@ use rome_console::fmt::{Formatter, Termcolor};
 use rome_console::{markup, BufferConsole, Markup};
 use rome_diagnostics::termcolor::NoColor;
 use rome_diagnostics::{print_diagnostic_to_string, Error};
+use rome_formatter::IndentStyle;
 use rome_fs::{FileSystemExt, MemoryFileSystem};
+use rome_json_formatter::context::JsonFormatOptions;
+use rome_json_formatter::format_node;
+use rome_json_parser::parse_json;
 use std::borrow::Cow;
 use std::collections::BTreeMap;
 use std::env::{current_exe, temp_dir};
@@ -45,11 +49,19 @@ impl CliSnapshot {
         let mut content = String::new();
 
         if let Some(configuration) = &self.configuration {
+            let parsed = parse_json(&redact_snapshot(configuration));
+            let formatted = format_node(
+                JsonFormatOptions::default().with_indent_style(IndentStyle::Space(2)),
+                &parsed.syntax(),
+            )
+            .expect("formatted JSON")
+            .print()
+            .expect("printed JSON");
+
             content.push_str("## `rome.json`\n\n");
             content.push_str("```json");
             content.push('\n');
-            content.push_str(&redact_snapshot(configuration));
-            content.push('\n');
+            content.push_str(formatted.as_code());
             content.push_str("```");
             content.push_str("\n\n")
         }
