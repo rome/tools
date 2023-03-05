@@ -1,9 +1,17 @@
 ---
 source: crates/rome_cli/tests/snap_test.rs
-assertion_line: 335
+assertion_line: 346
 expression: content
 ---
 # Emitted Messages
+
+```block
+<TEMP_DIR>/rome_test_files_ignore_symlink/project/rome.json lint ━━━━━━━━━━━━━━━━━━━━
+
+  no diagnostic message provided
+  
+
+```
 
 ```block
 Skipped 4 suggested fixes.
@@ -12,7 +20,11 @@ If you wish to apply the suggested (unsafe) fixes, use the command rome check --
 ```
 
 ```block
-Fixed 2 file(s) in <TIME>
+Fixed 3 file(s) in <TIME>
+```
+
+```block
+Skipped 1 file(s)
 ```
 
 

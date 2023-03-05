@@ -1,5 +1,4 @@
 use pico_args::Arguments;
-use std::env;
 use std::env::temp_dir;
 use std::ffi::OsString;
 use std::fs::{create_dir, create_dir_all, remove_dir_all, File};
@@ -857,6 +856,24 @@ fn fs_error_unknown() {
     ));
 }
 
+// Symbolic link ignore pattern test
+// 
+// Verifies, that ignore patterns to symbolic links are allowed.
+//
+// ├── hidden_nested
+// │   └── test
+// │       └── symlink_testcase1_2 -> hidden_testcase1
+// ├── hidden_testcase1
+// │   └── test
+// │       └── test.js // ok
+// ├── hidden_testcase2
+// │   ├── test1.ts // ignored
+// │   ├── test2.ts // ignored
+// │   └── test.js  // ok
+// └── project
+//     ├── rome.json
+//     ├── symlink_testcase1_1 -> hidden_nested
+//     └── symlink_testcase2 -> hidden_testcase2
 #[test]
 fn fs_files_ignore_symlink() {
     let fs = MemoryFileSystem::default();
@@ -927,15 +944,13 @@ fn fs_files_ignore_symlink() {
         file.write_all(APPLY_SUGGESTED_BEFORE.as_bytes()).unwrap();
     }
 
-    // Change the current working directory
-    // TODO: Remove this once PR #4158 was merged
-    assert!(env::set_current_dir(&project_path).is_ok());
-
     let result = run_cli(
         DynRef::Owned(Box::new(OsFileSystem)),
         &mut console,
         Arguments::from_vec(vec![
             OsString::from("check"),
+            OsString::from("--config-path"),
+            OsString::from(project_path.clone()),
             OsString::from("--apply"),
             OsString::from(project_path),
         ]),
