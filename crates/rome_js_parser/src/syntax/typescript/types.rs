@@ -249,7 +249,7 @@ impl ParseSeparatedList for TsTypeParameterList {
 
 // test_err ts type_parameter_modifier
 // type Foo<i\\u006E T> = {}
-// type Foo<ou\\u0074 T> =
+// type Foo<ou\\u0074 T> = {}
 // type Foo<in in> = {}
 // type Foo<out in> = {}
 // type Foo<out in T> = {}
@@ -313,11 +313,11 @@ fn parse_ts_type_parameter(
 
 fn parse_ts_type_parameter_modifiers(p: &mut JsParser) {
     if p.at(T![in]) {
-        p.eat(T![in]);
+        p.bump(T![in]);
     }
 
     if p.at(T![out]) && !p.nth_at(1, T![,]) && !p.nth_at(1, T![>]) {
-        p.eat(T![out]);
+        p.bump(T![out]);
     }
 }
 
