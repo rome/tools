@@ -857,7 +857,7 @@ fn fs_error_unknown() {
 }
 
 // Symbolic link ignore pattern test
-// 
+//
 // Verifies, that ignore patterns to symbolic links are allowed.
 //
 // ├── hidden_nested
