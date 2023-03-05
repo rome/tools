@@ -41,7 +41,7 @@ assert_semantics! {
     a = 2;
     let b = a/*READ A*/ + 1;
     console.log(a, b);
-    
+
     var a/*#A*/;
 }
 f();",
@@ -49,8 +49,8 @@ f();",
     a = 1;
     let b = a/*READ A*/ + 1;
     console.log(a, b);
-    if (true) {  
-        var a/*#A*/;      
+    if (true) {
+        var a/*#A*/;
     }
 }
 f();"#,
@@ -201,7 +201,7 @@ assert_semantics! {
     ok_unresolved_reference_arguments,
         r#"function f() {
             console.log(arguments/*?*/);
-        
+
             for(let i = 0;i < arguments/*?*/.length; ++i) {
                 console.log(arguments/*?*/[i]);
             }
@@ -231,16 +231,16 @@ assert_semantics! {
 assert_semantics! {
     ok_reference_static_initialization_block,
         "const a/*#A1*/ = 1;
-        console.log(a/*READ A1*/); 
-        
-        class A { 
+        console.log(a/*READ A1*/);
+
+        class A {
             static {
-                console.log(a/*READ A2*/);  
-                const a/*#A2*/ = 2; 
-                console.log(a/*READ A2*/); 
-            }  
+                console.log(a/*READ A2*/);
+                const a/*#A2*/ = 2;
+                console.log(a/*READ A2*/);
+            }
         };
-        
+
         console.log(a/*READ A1*/);",
 }
 
@@ -248,4 +248,6 @@ assert_semantics! {
 assert_semantics! {
     ok_typescript_function_type,
         "function f (a/*#A1*/, b: (a/*#A2*/) => any) { return b(a/*READ A1*/); };",
+    ok_typescript_type_parameter_name,
+        "type A = { [key/*#A1*/ in P]: key/*READ A1*/ }",
 }

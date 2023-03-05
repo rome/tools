@@ -14,6 +14,7 @@ use crate::{
     TsIndexSignatureParameter, TsInterfaceDeclaration, TsMethodSignatureClassMember,
     TsMethodSignatureTypeMember, TsModuleDeclaration, TsPropertyParameter,
     TsSetterSignatureClassMember, TsSetterSignatureTypeMember, TsTypeAliasDeclaration,
+    TsTypeParameterName,
 };
 use rome_rowan::{declare_node_union, AstNode, SyntaxResult};
 
@@ -43,7 +44,7 @@ declare_node_union! {
 }
 
 declare_node_union! {
-    pub AnyJsIdentifierBinding = JsIdentifierBinding | TsIdentifierBinding
+    pub AnyJsIdentifierBinding = JsIdentifierBinding | TsIdentifierBinding | TsTypeParameterName
 }
 
 fn declaration(node: &JsSyntaxNode) -> Option<AnyJsBindingDeclaration> {
@@ -122,6 +123,7 @@ impl AnyJsIdentifierBinding {
         match self {
             AnyJsIdentifierBinding::JsIdentifierBinding(binding) => binding.name_token(),
             AnyJsIdentifierBinding::TsIdentifierBinding(binding) => binding.name_token(),
+            AnyJsIdentifierBinding::TsTypeParameterName(binding) => binding.ident_token(),
         }
     }
 
@@ -129,6 +131,7 @@ impl AnyJsIdentifierBinding {
         let node = match self {
             AnyJsIdentifierBinding::JsIdentifierBinding(binding) => &binding.syntax,
             AnyJsIdentifierBinding::TsIdentifierBinding(binding) => &binding.syntax,
+            AnyJsIdentifierBinding::TsTypeParameterName(binding) => &binding.syntax,
         };
         declaration(node)
     }
@@ -152,6 +155,9 @@ impl AnyJsIdentifierBinding {
             }
             AnyJsIdentifierBinding::TsIdentifierBinding(binding) => {
                 AnyJsIdentifierBinding::TsIdentifierBinding(binding.with_name_token(name_token))
+            }
+            AnyJsIdentifierBinding::TsTypeParameterName(binding) => {
+                AnyJsIdentifierBinding::TsTypeParameterName(binding.with_ident_token(name_token))
             }
         }
     }
