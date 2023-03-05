@@ -701,7 +701,7 @@ export interface Suspicious {
 	 */
 	noDuplicateObjectKeys?: RuleConfiguration;
 	/**
-	 * Disallow duplicate function arguments name.
+	 * Disallow duplicate function parameter name.
 	 */
 	noDuplicateParameters?: RuleConfiguration;
 	/**

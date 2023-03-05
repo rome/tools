@@ -2595,7 +2595,7 @@ pub struct Suspicious {
     #[doc = "Prevents object literals having more than one property declaration for the same name. If an object property with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored, which is likely a mistake."]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub no_duplicate_object_keys: Option<RuleConfiguration>,
-    #[doc = "Disallow duplicate function arguments name."]
+    #[doc = "Disallow duplicate function parameter name."]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub no_duplicate_parameters: Option<RuleConfiguration>,
     #[doc = "Disallow the declaration of empty interfaces."]

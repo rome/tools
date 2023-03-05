@@ -10,7 +10,13 @@ use rome_rowan::{declare_node_union, AstNode};
 use rustc_hash::FxHashSet;
 
 declare_rule! {
-    ///  Disallow duplicate function arguments name.
+    ///  Disallow duplicate function parameter name.
+    ///
+    /// If more than one parameter has the same name in a function definition,
+    /// the last occurrence overrides the preceding occurrences.
+    /// A duplicated name might be a typing error.
+    ///
+    /// Source: https://eslint.org/docs/latest/rules/no-dupe-args
     ///
     /// ## Examples
     ///
@@ -70,13 +76,16 @@ impl Rule for NoDuplicateParameters {
 
     fn diagnostic(_: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
         let binding_syntax_node = state;
-        Some(RuleDiagnostic::new(
-            rule_category!(),
-            binding_syntax_node.syntax().text_trimmed_range(),
-            markup! {
-                "Duplicate argument name"
-            },
-        ))
+        Some(
+            RuleDiagnostic::new(
+                rule_category!(),
+                binding_syntax_node.syntax().text_trimmed_range(),
+                markup! {
+                    "Duplicate parameter name."
+                },
+            )
+            .note("The parameter overrides a preceding parameter by using the same name."),
+        )
     }
 }
 

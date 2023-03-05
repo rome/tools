@@ -1129,7 +1129,7 @@
 					]
 				},
 				"noDuplicateParameters": {
-					"description": "Disallow duplicate function arguments name.",
+					"description": "Disallow duplicate function parameter name.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }
