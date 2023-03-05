@@ -25,7 +25,7 @@ use xtask::{glue::fs2, *};
 
 fn main() -> Result<()> {
     let root = project_root().join("website/src/pages/lint/rules");
-    let reference_groups = project_root().join("website/src/components/reference/Groups.md");
+    let reference_groups = project_root().join("website/src/components/reference/Groups.astro");
 
     // Clear the rules directory ignoring "not found" errors
     if let Err(err) = fs2::remove_dir_all(&root) {
@@ -97,8 +97,9 @@ fn main() -> Result<()> {
 
     writeln!(
         reference_buffer,
-        "{{/** this file is auto generated, use `cargo lintdoc` to update it */}}"
+        "<!-- this file is auto generated, use `cargo lintdoc` to update it -->"
     )?;
+    write!(reference_buffer, "<ul>")?;
     for (group, rules) in groups {
         generate_group(group, rules, &root, &mut index, &mut errors)?;
         generate_reference(group, &mut reference_buffer)?;
@@ -106,7 +107,7 @@ fn main() -> Result<()> {
 
     generate_group("nursery", nursery_rules, &root, &mut index, &mut errors)?;
     generate_reference("nursery", &mut reference_buffer)?;
-
+    write!(reference_buffer, "</ul>")?;
     if !errors.is_empty() {
         bail!(
             "failed to generate documentation pages for the following rules:\n{}",
@@ -589,7 +590,12 @@ fn generate_reference(group: &'static str, buffer: &mut dyn io::Write) -> io::Re
     let (group_name, description) = extract_group_metadata(group);
     let description = markup_to_string(&description.to_owned());
     let description = description.replace('\n', " ");
-    writeln!(buffer, "- `{}`: {}", group_name, description)
+    writeln!(
+        buffer,
+        "<li><code>{}</code>: {}</li>",
+        group_name.to_lowercase(),
+        description
+    )
 }
 
 fn extract_group_metadata(group: &str) -> (&str, Markup) {

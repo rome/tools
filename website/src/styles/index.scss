@@ -33,6 +33,7 @@
 	--inline-code-background-color: rgba(0, 0, 0, 0.08);
 	--label-font-color: #{$gray-4};
 	--playground-border: rgba(39, 39, 42, 0.15);
+	--caution: #{$color-5}
 }
 
 @include dark-mode {
