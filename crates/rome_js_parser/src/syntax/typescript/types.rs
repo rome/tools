@@ -12,7 +12,7 @@ use crate::syntax::function::{
 };
 use crate::syntax::js_parse_error::{
     expected_identifier, expected_object_member_name, expected_parameter, expected_parameters,
-    expected_property_or_signature,
+    expected_property_or_signature, modifier_already_seen, modifier_must_precede_modifier,
 };
 use crate::syntax::object::{
     is_at_object_member_name, is_nth_at_type_member_name, parse_object_member_name,
@@ -22,6 +22,7 @@ use crate::syntax::typescript::try_parse;
 use crate::syntax::typescript::ts_parse_error::{expected_ts_type, expected_ts_type_parameter};
 use bitflags::bitflags;
 use rome_parser::parse_lists::{ParseNodeList, ParseSeparatedList};
+use smallvec::SmallVec;
 
 use crate::lexer::{LexContext, ReLexContext};
 use crate::span::Span;
@@ -295,9 +296,7 @@ fn parse_ts_type_parameter(
     allow_in_out_modifier: bool,
 ) -> ParsedSyntax {
     let m = p.start();
-    if allow_in_out_modifier {
-        parse_ts_type_parameter_modifiers(p);
-    }
+    parse_ts_type_parameter_modifiers(p, allow_in_out_modifier);
 
     let name = parse_ts_type_parameter_name(p);
     parse_ts_type_constraint_clause(p, context).ok();
@@ -311,13 +310,89 @@ fn parse_ts_type_parameter(
     }
 }
 
-fn parse_ts_type_parameter_modifiers(p: &mut JsParser) {
-    if p.at(T![in]) {
-        p.bump(T![in]);
+#[derive(Eq, PartialEq, Clone, Copy, Debug)]
+enum TypeParameterModifierKind {
+    In,
+    Out,
+}
+
+/// Stores the range of a parsed modifier with its kind
+#[derive(Eq, PartialEq, Clone, Copy, Debug)]
+struct TypeParameterModifier {
+    kind: TypeParameterModifierKind,
+    range: TextRange,
+}
+
+#[derive(Debug, Default)]
+struct ClassMemberModifierList(SmallVec<[TypeParameterModifier; 2]>);
+
+impl ClassMemberModifierList {
+    /// Sets the range of a parsed modifier
+    fn add_modifier(&mut self, modifier: TypeParameterModifier) {
+        self.0.push(modifier);
     }
 
-    if p.at(T![out]) && !p.nth_at(1, T![,]) && !p.nth_at(1, T![>]) {
-        p.bump(T![out]);
+    fn find(&self, modifier_kind: &TypeParameterModifierKind) -> Option<&TypeParameterModifier> {
+        self.0
+            .iter()
+            .find(|predicate| predicate.kind == *modifier_kind)
+    }
+}
+
+fn parse_ts_type_parameter_modifiers(p: &mut JsParser, allow_in_out_modifier: bool) {
+    let mut modifiers = ClassMemberModifierList::default();
+    while p.at_ts(token_set!(T![in], T![out])) && !p.nth_at(1, T![,]) && !p.nth_at(1, T![>]) {
+        if !allow_in_out_modifier {
+            let text_range = p.cur_range();
+            p.error(p.err_builder(
+                format!(
+                    "'{}' modifier can only appear on a type parameter of a class, interface or type alias.",
+                    p.text(text_range)
+                ),
+                text_range,
+            ));
+            p.bump_any();
+            continue;
+        }
+
+        let modifier = match p.cur() {
+            T![in] => TypeParameterModifier {
+                kind: TypeParameterModifierKind::In,
+                range: p.cur_range(),
+            },
+            T![out] => TypeParameterModifier {
+                kind: TypeParameterModifierKind::Out,
+                range: p.cur_range(),
+            },
+            _ => unreachable!(),
+        };
+
+        // check for duplicate modifiers
+        if let Some(existing_modifier) = modifiers.find(&modifier.kind) {
+            p.error(modifier_already_seen(
+                p,
+                modifier.range,
+                existing_modifier.range,
+            ));
+            p.bump_any();
+            continue;
+        }
+
+        // check for modifier precedence
+        if let Some(out_modifier) = modifiers.find(&TypeParameterModifierKind::Out) {
+            if modifier.kind == TypeParameterModifierKind::In {
+                p.error(modifier_must_precede_modifier(
+                    p,
+                    modifier.range,
+                    out_modifier.range,
+                ));
+                p.bump_any();
+                continue;
+            }
+        }
+
+        modifiers.add_modifier(modifier);
+        p.bump_any();
     }
 }
 
