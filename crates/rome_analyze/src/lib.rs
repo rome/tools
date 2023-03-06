@@ -76,7 +76,7 @@ pub struct AnalyzerContext<'a, L: Language> {
     pub root: LanguageRoot<L>,
     pub services: ServiceBag,
     pub range: Option<TextRange>,
-    pub options: &'a AnalyzerOptions,
+    pub globals: &'a [&'a str],
 }
 
 impl<'analyzer, L, Matcher, Break, Diag> Analyzer<'analyzer, L, Matcher, Break, Diag>
@@ -140,6 +140,7 @@ where
                 root: &ctx.root,
                 services: &ctx.services,
                 range: ctx.range,
+                globals: ctx.globals,
                 apply_suppression_comment,
             };
 
@@ -217,6 +218,8 @@ struct PhaseRunner<'analyzer, 'phase, L: Language, Matcher, Break, Diag> {
     services: &'phase ServiceBag,
     /// Optional text range to restrict the analysis to
     range: Option<TextRange>,
+    /// Options passed to the analyzer
+    globals: &'phase [&'phase str],
 }
 
 /// Single entry for a suppression comment in the `line_suppressions` buffer
@@ -275,6 +278,7 @@ where
                     query_matcher: self.query_matcher,
                     signal_queue: &mut self.signal_queue,
                     apply_suppression_comment: self.apply_suppression_comment,
+                    globals: self.globals,
                 };
 
                 visitor.visit(&node_event, ctx);
@@ -299,6 +303,7 @@ where
                     query_matcher: self.query_matcher,
                     signal_queue: &mut self.signal_queue,
                     apply_suppression_comment: self.apply_suppression_comment,
+                    globals: self.globals,
                 };
 
                 visitor.visit(&event, ctx);

@@ -17,6 +17,7 @@ pub struct VisitorContext<'phase, 'query, L: Language> {
     pub(crate) query_matcher: &'query mut dyn QueryMatcher<L>,
     pub(crate) signal_queue: &'query mut BinaryHeap<SignalEntry<'phase, L>>,
     pub apply_suppression_comment: SuppressionCommentEmitter<L>,
+    pub globals: &'phase [&'phase str],
 }
 
 impl<'phase, 'query, L: Language> VisitorContext<'phase, 'query, L> {
@@ -28,6 +29,7 @@ impl<'phase, 'query, L: Language> VisitorContext<'phase, 'query, L> {
             services: self.services,
             signal_queue: self.signal_queue,
             apply_suppression_comment: self.apply_suppression_comment,
+            globals: self.globals,
         })
     }
 }

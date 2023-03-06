@@ -223,6 +223,7 @@ impl<L: Language + Default + 'static> RegistryVisitor<L> for RuleRegistryBuilder
         phase.rule_states.push(RuleState::default());
 
         let rule_key = RuleKey::rule::<R>();
+
         let deserialized =
             if let Some(options) = self.options.configuration.rules.get_rule(&rule_key) {
                 let value = options.value();
@@ -425,11 +426,12 @@ impl<L: Language + Default> RegistryRule<L> {
             // if the query doesn't match
             let query_result = params.query.downcast_ref().unwrap();
             let query_result = <R::Query as Queryable>::unwrap_match(params.services, query_result);
-
-            let ctx = match RuleContext::new(&query_result, params.root, params.services) {
-                Ok(ctx) => ctx,
-                Err(error) => return Err(error),
-            };
+            let ctx =
+                match RuleContext::new(&query_result, params.root, params.services, params.globals)
+                {
+                    Ok(ctx) => ctx,
+                    Err(error) => return Err(error),
+                };
 
             for result in R::run(&ctx) {
                 let text_range =
@@ -443,6 +445,7 @@ impl<L: Language + Default> RegistryRule<L> {
                     result,
                     params.services,
                     params.apply_suppression_comment,
+                    params.globals,
                 ));
 
                 params.signal_queue.push(SignalEntry {
