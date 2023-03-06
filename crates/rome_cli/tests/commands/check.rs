@@ -1257,6 +1257,10 @@ fn organize_imports() {
     let mut fs = MemoryFileSystem::default();
     let mut console = BufferConsole::default();
 
+    let config = r#"{ "organizeImports": { "enabled": true } }"#;
+    let file_path = Path::new("rome.json");
+    fs.insert(file_path.into(), config.as_bytes());
+
     let file_path = Path::new("check.js");
     let content = r#"
 import { lorem, foom, bar } from "foo";
