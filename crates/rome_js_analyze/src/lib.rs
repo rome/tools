@@ -120,12 +120,18 @@ where
 
     services.insert_service(Arc::new(AriaRoles::default()));
     services.insert_service(Arc::new(AriaProperties::default()));
+    let globals: Vec<_> = options
+        .configuration
+        .globals
+        .iter()
+        .map(|global| global.as_str())
+        .collect();
     (
         analyzer.run(AnalyzerContext {
             root: root.clone(),
             range: filter.range,
             services,
-            options,
+            globals: globals.as_slice(),
         }),
         diagnostics,
     )

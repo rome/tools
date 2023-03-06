@@ -243,6 +243,8 @@ pub(crate) struct RuleSignal<'phase, R: Rule> {
     services: &'phase ServiceBag,
     /// An optional action to suppress the rule.
     apply_suppression_comment: SuppressionCommentEmitter<RuleLanguage<R>>,
+    /// A list of strings that are considered "globals" inside the analyzer
+    globals: &'phase [&'phase str],
 }
 
 impl<'phase, R> RuleSignal<'phase, R>
@@ -257,6 +259,7 @@ where
         apply_suppression_comment: SuppressionCommentEmitter<
             <<R as Rule>::Query as Queryable>::Language,
         >,
+        globals: &'phase [&'phase str],
     ) -> Self {
         Self {
             root,
@@ -264,6 +267,7 @@ where
             state,
             services,
             apply_suppression_comment,
+            globals,
         }
     }
 }
@@ -273,13 +277,14 @@ where
     R: Rule + 'static,
 {
     fn diagnostic(&self) -> Option<AnalyzerDiagnostic> {
-        let ctx = RuleContext::new(&self.query_result, self.root, self.services).ok()?;
+        let ctx =
+            RuleContext::new(&self.query_result, self.root, self.services, self.globals).ok()?;
 
         R::diagnostic(&ctx, &self.state).map(AnalyzerDiagnostic::from)
     }
 
     fn actions(&self) -> AnalyzerActionIter<RuleLanguage<R>> {
-        let ctx = RuleContext::new(&self.query_result, self.root, self.services).ok();
+        let ctx = RuleContext::new(&self.query_result, self.root, self.services, self.globals).ok();
         if let Some(ctx) = ctx {
             let mut actions = Vec::new();
             if let Some(action) = R::action(&ctx, &self.state) {

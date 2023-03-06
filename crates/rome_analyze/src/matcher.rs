@@ -26,6 +26,7 @@ pub struct MatchQueryParams<'phase, 'query, L: Language> {
     pub services: &'phase ServiceBag,
     pub signal_queue: &'query mut BinaryHeap<SignalEntry<'phase, L>>,
     pub apply_suppression_comment: SuppressionCommentEmitter<L>,
+    pub globals: &'phase [&'phase str],
 }
 
 /// Wrapper type for a [QueryMatch]
@@ -206,9 +207,9 @@ mod tests {
 
     use crate::SuppressionKind;
     use crate::{
-        signals::DiagnosticSignal, Analyzer, AnalyzerContext, AnalyzerOptions, AnalyzerSignal,
-        ControlFlow, MetadataRegistry, Never, Phases, QueryMatcher, RuleKey, ServiceBag,
-        SignalEntry, SyntaxVisitor,
+        signals::DiagnosticSignal, Analyzer, AnalyzerContext, AnalyzerSignal, ControlFlow,
+        MetadataRegistry, Never, Phases, QueryMatcher, RuleKey, ServiceBag, SignalEntry,
+        SyntaxVisitor,
     };
 
     use super::MatchQueryParams;
@@ -379,7 +380,7 @@ mod tests {
             root,
             range: None,
             services: ServiceBag::default(),
-            options: &AnalyzerOptions::default(),
+            globals: &[],
         };
 
         let result: Option<Never> = analyzer.run(ctx);
