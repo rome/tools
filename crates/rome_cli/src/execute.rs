@@ -174,11 +174,11 @@ pub(crate) fn execute_mode(
                 })?;
                 let printed = workspace.format_file(FormatFileParams { path: rome_path })?;
 
-                console.log(markup! {
+                console.append(markup! {
                     {printed.as_code()}
                 });
             } else {
-                console.log(markup! {
+                console.append(markup! {
                     {content}
                 });
                 console.error(markup!{

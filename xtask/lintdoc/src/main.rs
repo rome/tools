@@ -482,7 +482,7 @@ fn assert_lint(
             if all_diagnostics.len() > 1 {
                 let mut console = rome_console::EnvConsole::default();
                 for diag in all_diagnostics.iter() {
-                    console.print(
+                    console.println(
                         rome_console::LogLevel::Error,
                         markup! {
                             {PrintDiagnostic::verbose(diag)}
@@ -500,7 +500,7 @@ fn assert_lint(
             // Print all diagnostics to help the user
             let mut console = rome_console::EnvConsole::default();
             for diag in all_diagnostics.iter() {
-                console.print(
+                console.println(
                     rome_console::LogLevel::Error,
                     markup! {
                         {PrintDiagnostic::verbose(diag)}
