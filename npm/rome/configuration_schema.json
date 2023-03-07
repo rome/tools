@@ -587,6 +587,13 @@
 						{ "type": "null" }
 					]
 				},
+				"noParameterAssign": {
+					"description": "Disallow reassigning function parameters.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"noParameterProperties": {
 					"description": "Disallow the use of parameter properties in class constructors.",
 					"anyOf": [
