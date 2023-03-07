@@ -13,6 +13,14 @@ if(a != 0) {}
 # Emitted Messages
 
 ```block
+internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Fixes applied, but there are still diagnostics to be addressed
+  
+
+```
+
+```block
 Skipped 1 suggested fixes.
 If you wish to apply the suggested (unsafe) fixes, use the command rome check --apply-unsafe
 

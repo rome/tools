@@ -3,7 +3,7 @@ use super::{
     LintResults, Mime, ParserCapabilities,
 };
 use crate::configuration::to_analyzer_configuration;
-use crate::file_handlers::{FixAllParams, Language as LanguageId};
+use crate::file_handlers::{is_diagnostic_error, FixAllParams, Language as LanguageId};
 use crate::{
     settings::{FormatSettings, Language, LanguageSettings, LanguagesSettings, SettingsHandle},
     workspace::{
@@ -391,20 +391,32 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, WorkspaceError> {
     };
 
     let mut skipped_suggested_fixes = 0;
+    let mut errors = 0;
     let analyzer_options = compute_analyzer_options(&settings);
     loop {
         let (action, _) = analyze(&tree, filter, &analyzer_options, |signal| {
+            let current_diagnostic = signal.diagnostic();
+
+            // all rules have at least an action, which is he suppression
+            if let Some(diagnostic) = current_diagnostic.as_ref() {
+                if is_diagnostic_error(diagnostic, params.rules) {
+                    errors += 1;
+                }
+            }
+
             for action in signal.actions() {
                 // suppression actions should not be part of the fixes (safe or suggested)
                 if action.is_suppression() {
                     continue;
                 }
+
                 match fix_file_mode {
                     FixFileMode::SafeFixes => {
                         if action.applicability == Applicability::MaybeIncorrect {
                             skipped_suggested_fixes += 1;
                         }
                         if action.applicability == Applicability::Always {
+                            errors -= 1;
                             return ControlFlow::Break(action);
                         }
                     }
@@ -413,6 +425,7 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, WorkspaceError> {
                             action.applicability,
                             Applicability::Always | Applicability::MaybeIncorrect
                         ) {
+                            errors -= 1;
                             return ControlFlow::Break(action);
                         }
                     }
@@ -450,6 +463,7 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, WorkspaceError> {
                     code: tree.syntax().to_string(),
                     skipped_suggested_fixes,
                     actions,
+                    errors,
                 });
             }
         }

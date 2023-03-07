@@ -254,6 +254,9 @@ pub struct FixFileResult {
     /// List of all the code actions applied to the file
     pub actions: Vec<FixAction>,
 
+    /// List of errors
+    pub errors: usize,
+
     /// number of skipped suggested fixes
     pub skipped_suggested_fixes: u32,
 }

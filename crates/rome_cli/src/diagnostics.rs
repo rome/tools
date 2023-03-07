@@ -1,4 +1,4 @@
-use rome_console::fmt::Formatter;
+use rome_console::fmt::{Display, Formatter};
 use rome_console::markup;
 use rome_diagnostics::adapters::{IoError, PicoArgsError};
 use rome_diagnostics::{
@@ -147,9 +147,49 @@ pub struct IncompatibleArguments {
 #[diagnostic(
     category = "internalError/io",
     severity = Error,
-    message = "Some errors were emitted while running checks"
+    message(
+        description = "{action_kind}",
+        message({{self.action_kind}})
+    )
 )]
-pub struct CheckError;
+pub struct CheckError {
+    action_kind: CheckActionKind,
+}
+
+#[derive(Debug, Clone, Copy)]
+pub enum CheckActionKind {
+    Check,
+    Apply,
+}
+
+impl Display for CheckActionKind {
+    fn fmt(&self, fmt: &mut Formatter) -> std::io::Result<()> {
+        match self {
+            CheckActionKind::Check => fmt.write_markup(markup! {
+                "Some errors were emitted while "<Emphasis>"running checks"</Emphasis>
+            }),
+            CheckActionKind::Apply => fmt.write_markup(markup! {
+                <Emphasis>"Fixes applied"</Emphasis>", but there are still diagnostics to be addressed"
+            }),
+        }
+    }
+}
+
+impl std::fmt::Display for CheckActionKind {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CheckActionKind::Check => {
+                write!(f, "Some errors were emitted while running checks")
+            }
+            CheckActionKind::Apply => {
+                write!(
+                    f,
+                    "Fixes applied but there are still diagnostics to be addressed"
+                )
+            }
+        }
+    }
+}
 
 #[derive(Debug, Diagnostic)]
 #[diagnostic(
@@ -300,9 +340,18 @@ impl CliDiagnostic {
         })
     }
 
-    /// Emitted when errors were emitted while traversing the file system
+    /// Emitted when errors were emitted while running `check` command
     pub fn check_error() -> Self {
-        Self::CheckError(CheckError)
+        Self::CheckError(CheckError {
+            action_kind: CheckActionKind::Check,
+        })
+    }
+
+    /// Emitted when errors were emitted while apply code fixes
+    pub fn apply_error() -> Self {
+        Self::CheckError(CheckError {
+            action_kind: CheckActionKind::Apply,
+        })
     }
 
     /// Emitted when the server is not running

@@ -825,7 +825,13 @@ fn process_file(ctx: &TraversalOptions, path: &Path) -> FileResult {
                     .with_file_path(path.display().to_string())?;
             }
 
-            return Ok(FileStatus::Success);
+            return if fixed.errors == 0 {
+                Ok(FileStatus::Success)
+            } else {
+                Ok(FileStatus::Message(Message::Error(
+                    CliDiagnostic::apply_error().into(),
+                )))
+            };
         }
 
         let categories = if ctx.execution.is_format() || supported_lint.reason.is_some() {

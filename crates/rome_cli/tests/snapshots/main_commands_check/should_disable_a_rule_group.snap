@@ -31,6 +31,14 @@ try {
 # Emitted Messages
 
 ```block
+internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Fixes applied, but there are still diagnostics to be addressed
+  
+
+```
+
+```block
 Fixed 1 file(s) in <TIME>
 ```
 
