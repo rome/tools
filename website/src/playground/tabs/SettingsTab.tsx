@@ -129,20 +129,25 @@ export default function SettingsTab({
 	}
 
 	function createFile(filename: string) {
-		filename = normalizeFilename(filename);
+		const normalizedFilename = normalizeFilename(filename);
 
 		setPlaygroundState((state) => ({
 			...state,
-			currentFile: filename,
+			currentFile: normalizedFilename,
 			files: {
 				...state.files,
-				[filename]: getFileState({ files: {} }, filename),
+				[normalizedFilename]: getFileState(
+					{
+						files: {},
+					},
+					normalizedFilename,
+				),
 			},
 		}));
 	}
 
 	function renameFile(oldFilename: string, newFilename: string) {
-		newFilename = normalizeFilename(newFilename);
+		const normalizedNewFilename = normalizeFilename(newFilename);
 
 		setPlaygroundState((state) => {
 			const { [oldFilename]: oldFile, ...files } = state.files;
@@ -150,10 +155,12 @@ export default function SettingsTab({
 			return {
 				...state,
 				currentFile:
-					state.currentFile === oldFilename ? newFilename : state.currentFile,
+					state.currentFile === oldFilename
+						? normalizedNewFilename
+						: state.currentFile,
 				files: {
 					...files,
-					[newFilename]: oldFile,
+					[normalizedNewFilename]: oldFile,
 				},
 			};
 		});

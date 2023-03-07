@@ -413,6 +413,10 @@ export interface Nursery {
 	 */
 	noNoninteractiveElementToInteractiveRole?: RuleConfiguration;
 	/**
+	 * Disallow reassigning function parameters.
+	 */
+	noParameterAssign?: RuleConfiguration;
+	/**
 	 * Disallow the use of parameter properties in class constructors.
 	 */
 	noParameterProperties?: RuleConfiguration;
@@ -915,6 +919,7 @@ export type Category =
 	| "lint/nursery/noPrototypeBuiltins"
 	| "lint/nursery/noSvgWithoutTitle"
 	| "lint/nursery/noUselessCatch"
+	| "lint/nursery/noParameterAssign"
 	| "lint/nursery/noRedeclaration"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
