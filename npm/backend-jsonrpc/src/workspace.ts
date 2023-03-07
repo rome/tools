@@ -1186,6 +1186,10 @@ export interface FixFileResult {
 	 */
 	code: string;
 	/**
+	 * Number of errors
+	 */
+	errors: number;
+	/**
 	 * number of skipped suggested fixes
 	 */
 	skipped_suggested_fixes: number;

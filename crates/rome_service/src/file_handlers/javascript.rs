@@ -391,7 +391,7 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, WorkspaceError> {
     };
 
     let mut skipped_suggested_fixes = 0;
-    let mut errors = 0;
+    let mut errors: u16 = 0;
     let analyzer_options = compute_analyzer_options(&settings);
     loop {
         let (action, _) = analyze(&tree, filter, &analyzer_options, |signal| {
@@ -416,7 +416,7 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, WorkspaceError> {
                             skipped_suggested_fixes += 1;
                         }
                         if action.applicability == Applicability::Always {
-                            errors -= 1;
+                            errors = errors.saturating_sub(1);
                             return ControlFlow::Break(action);
                         }
                     }
@@ -425,7 +425,7 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, WorkspaceError> {
                             action.applicability,
                             Applicability::Always | Applicability::MaybeIncorrect
                         ) {
-                            errors -= 1;
+                            errors = errors.saturating_sub(1);
                             return ControlFlow::Break(action);
                         }
                     }
@@ -463,7 +463,7 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, WorkspaceError> {
                     code: tree.syntax().to_string(),
                     skipped_suggested_fixes,
                     actions,
-                    errors,
+                    errors: errors.into(),
                 });
             }
         }
