@@ -538,7 +538,7 @@ export interface Performance {
 	 */
 	all?: boolean;
 	/**
-	 * Disallow the use of the delete operator
+	 * Disallow the use of the delete operator.
 	 */
 	noDelete?: RuleConfiguration;
 	/**
