@@ -517,6 +517,10 @@ export interface Nursery {
 	 */
 	useMediaCaption?: RuleConfiguration;
 	/**
+	 * Require using the namespace keyword over the module keyword to declare TypeScript namespaces.
+	 */
+	useNamespaceKeyword?: RuleConfiguration;
+	/**
 	 * Ensures that ARIA properties aria-* are all valid.
 	 */
 	useValidAriaProps?: RuleConfiguration;
@@ -921,6 +925,7 @@ export type Category =
 	| "lint/nursery/noUselessCatch"
 	| "lint/nursery/noParameterAssign"
 	| "lint/nursery/noRedeclaration"
+	| "lint/nursery/useNamespaceKeyword"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"
