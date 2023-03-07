@@ -154,21 +154,13 @@ pub(crate) fn parse_ts_type_parameters(p: &mut JsParser, context: TypeContext) -
     if p.at(T![>]) {
         p.error(expected_ts_type_parameter(p, p.cur_range()));
     }
-    TsTypeParameterList::new(context).parse_list(p);
+    TsTypeParameterList(context).parse_list(p);
     p.expect(T![>]);
 
     Present(m.complete(p, TS_TYPE_PARAMETERS))
 }
 
-struct TsTypeParameterList {
-    context: TypeContext,
-}
-
-impl TsTypeParameterList {
-    pub fn new(context: TypeContext) -> Self {
-        Self { context }
-    }
-}
+struct TsTypeParameterList(TypeContext);
 
 impl ParseSeparatedList for TsTypeParameterList {
     type Kind = JsSyntaxKind;
@@ -177,7 +169,7 @@ impl ParseSeparatedList for TsTypeParameterList {
     const LIST_KIND: Self::Kind = TS_TYPE_PARAMETER_LIST;
 
     fn parse_element(&mut self, p: &mut JsParser) -> ParsedSyntax {
-        parse_ts_type_parameter(p, self.context)
+        parse_ts_type_parameter(p, self.0)
     }
 
     fn is_at_list_end(&self, p: &mut JsParser) -> bool {
@@ -1878,5 +1870,3 @@ fn parse_ts_type_member_semi(p: &mut JsParser) {
         p.error(err);
     }
 }
-
-// TODO: finish all this testing
