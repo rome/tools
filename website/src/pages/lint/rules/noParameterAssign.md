@@ -3,7 +3,7 @@ title: Lint Rule noParameterAssign
 parent: lint/rules/index
 ---
 
-# noParameterAssign (since vnext)
+# noParameterAssign (since v12.0.0)
 
 Disallow reassigning `function` parameters.
 

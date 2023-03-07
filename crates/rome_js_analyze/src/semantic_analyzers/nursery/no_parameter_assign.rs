@@ -56,7 +56,7 @@ declare_rule! {
     /// ```
     ///
     pub(crate) NoParameterAssign {
-        version: "next",
+        version: "12.0.0",
         name: "noParameterAssign",
         recommended: true,
     }
