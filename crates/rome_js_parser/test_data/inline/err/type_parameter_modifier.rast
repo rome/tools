@@ -249,152 +249,190 @@ JsModule {
                 },
             ],
         },
-        JsBogusStatement {
-            items: [
-                TYPE_KW@143..149 "type" [Newline("\n")] [Whitespace(" ")],
-                TsIdentifierBinding {
-                    name_token: IDENT@149..152 "Foo" [] [],
-                },
-                JsBogus {
-                    items: [
-                        L_ANGLE@152..153 "<" [] [],
-                        JsBogus {
-                            items: [
-                                JsBogus {
-                                    items: [
-                                        IN_KW@153..156 "in" [] [Whitespace(" ")],
-                                        OUT_KW@156..160 "out" [] [Whitespace(" ")],
-                                        IN_KW@160..163 "in" [] [Whitespace(" ")],
-                                        TsTypeParameterName {
-                                            ident_token: IDENT@163..164 "T" [] [],
-                                        },
-                                    ],
-                                },
-                            ],
-                        },
-                        R_ANGLE@164..166 ">" [] [Whitespace(" ")],
-                    ],
-                },
-                EQ@166..168 "=" [] [Whitespace(" ")],
-                TsObjectType {
-                    l_curly_token: L_CURLY@168..169 "{" [] [],
-                    members: TsTypeMemberList [],
-                    r_curly_token: R_CURLY@169..170 "}" [] [],
-                },
-            ],
-        },
-        JsBogusStatement {
-            items: [
-                TYPE_KW@170..176 "type" [Newline("\n")] [Whitespace(" ")],
-                TsIdentifierBinding {
-                    name_token: IDENT@176..179 "Foo" [] [],
-                },
-                JsBogus {
-                    items: [
-                        L_ANGLE@179..180 "<" [] [],
-                        JsBogus {
-                            items: [
-                                JsBogus {
-                                    items: [
-                                        IN_KW@180..183 "in" [] [Whitespace(" ")],
-                                        OUT_KW@183..187 "out" [] [Whitespace(" ")],
-                                        OUT_KW@187..191 "out" [] [Whitespace(" ")],
-                                        TsTypeParameterName {
-                                            ident_token: IDENT@191..192 "T" [] [],
-                                        },
-                                    ],
-                                },
-                            ],
-                        },
-                        R_ANGLE@192..194 ">" [] [Whitespace(" ")],
-                    ],
-                },
-                EQ@194..196 "=" [] [Whitespace(" ")],
-                TsObjectType {
-                    l_curly_token: L_CURLY@196..197 "{" [] [],
-                    members: TsTypeMemberList [],
-                    r_curly_token: R_CURLY@197..198 "}" [] [],
-                },
-            ],
-        },
-        JsFunctionDeclaration {
-            async_token: missing (optional),
-            function_token: FUNCTION_KW@198..208 "function" [Newline("\n")] [Whitespace(" ")],
-            star_token: missing (optional),
-            id: JsIdentifierBinding {
-                name_token: IDENT@208..211 "foo" [] [],
+        TsTypeAliasDeclaration {
+            type_token: TYPE_KW@143..149 "type" [Newline("\n")] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@149..152 "Foo" [] [],
             },
             type_parameters: TsTypeParameters {
-                l_angle_token: L_ANGLE@211..212 "<" [] [],
-                items: TsTypeParameterList [
-                    TsTypeParameter {
-                        in_modifier_token: IN_KW@212..215 "in" [] [Whitespace(" ")],
-                        out_modifier_token: missing (optional),
-                        name: TsTypeParameterName {
-                            ident_token: IDENT@215..216 "T" [] [],
-                        },
-                        constraint: missing (optional),
-                        default: missing (optional),
-                    },
-                ],
-                r_angle_token: R_ANGLE@216..217 ">" [] [],
-            },
-            parameters: JsParameters {
-                l_paren_token: L_PAREN@217..218 "(" [] [],
-                items: JsParameterList [],
-                r_paren_token: R_PAREN@218..220 ")" [] [Whitespace(" ")],
-            },
-            return_type_annotation: missing (optional),
-            body: JsFunctionBody {
-                l_curly_token: L_CURLY@220..221 "{" [] [],
-                directives: JsDirectiveList [],
-                statements: JsStatementList [],
-                r_curly_token: R_CURLY@221..222 "}" [] [],
-            },
-        },
-        JsFunctionDeclaration {
-            async_token: missing (optional),
-            function_token: FUNCTION_KW@222..232 "function" [Newline("\n")] [Whitespace(" ")],
-            star_token: missing (optional),
-            id: JsIdentifierBinding {
-                name_token: IDENT@232..235 "foo" [] [],
-            },
-            type_parameters: TsTypeParameters {
-                l_angle_token: L_ANGLE@235..236 "<" [] [],
+                l_angle_token: L_ANGLE@152..153 "<" [] [],
                 items: TsTypeParameterList [
                     TsTypeParameter {
                         in_modifier_token: missing (optional),
-                        out_modifier_token: OUT_KW@236..240 "out" [] [Whitespace(" ")],
+                        out_modifier_token: missing (optional),
                         name: TsTypeParameterName {
-                            ident_token: IDENT@240..241 "T" [] [],
+                            ident_token: IDENT@153..158 "innn" [] [Whitespace(" ")],
+                        },
+                        constraint: missing (optional),
+                        default: missing (optional),
+                    },
+                    missing separator,
+                    TsTypeParameter {
+                        in_modifier_token: missing (optional),
+                        out_modifier_token: missing (optional),
+                        name: TsTypeParameterName {
+                            ident_token: IDENT@158..159 "T" [] [],
                         },
                         constraint: missing (optional),
                         default: missing (optional),
                     },
                 ],
-                r_angle_token: R_ANGLE@241..242 ">" [] [],
+                r_angle_token: R_ANGLE@159..161 ">" [] [Whitespace(" ")],
+            },
+            eq_token: EQ@161..163 "=" [] [Whitespace(" ")],
+            ty: TsObjectType {
+                l_curly_token: L_CURLY@163..164 "{" [] [],
+                members: TsTypeMemberList [],
+                r_curly_token: R_CURLY@164..165 "}" [] [],
+            },
+            semicolon_token: missing (optional),
+        },
+        JsBogusStatement {
+            items: [
+                TYPE_KW@165..171 "type" [Newline("\n")] [Whitespace(" ")],
+                TsIdentifierBinding {
+                    name_token: IDENT@171..174 "Foo" [] [],
+                },
+                JsBogus {
+                    items: [
+                        L_ANGLE@174..175 "<" [] [],
+                        JsBogus {
+                            items: [
+                                JsBogus {
+                                    items: [
+                                        IN_KW@175..178 "in" [] [Whitespace(" ")],
+                                        OUT_KW@178..182 "out" [] [Whitespace(" ")],
+                                        IN_KW@182..185 "in" [] [Whitespace(" ")],
+                                        TsTypeParameterName {
+                                            ident_token: IDENT@185..186 "T" [] [],
+                                        },
+                                    ],
+                                },
+                            ],
+                        },
+                        R_ANGLE@186..188 ">" [] [Whitespace(" ")],
+                    ],
+                },
+                EQ@188..190 "=" [] [Whitespace(" ")],
+                TsObjectType {
+                    l_curly_token: L_CURLY@190..191 "{" [] [],
+                    members: TsTypeMemberList [],
+                    r_curly_token: R_CURLY@191..192 "}" [] [],
+                },
+            ],
+        },
+        JsBogusStatement {
+            items: [
+                TYPE_KW@192..198 "type" [Newline("\n")] [Whitespace(" ")],
+                TsIdentifierBinding {
+                    name_token: IDENT@198..201 "Foo" [] [],
+                },
+                JsBogus {
+                    items: [
+                        L_ANGLE@201..202 "<" [] [],
+                        JsBogus {
+                            items: [
+                                JsBogus {
+                                    items: [
+                                        IN_KW@202..205 "in" [] [Whitespace(" ")],
+                                        OUT_KW@205..209 "out" [] [Whitespace(" ")],
+                                        OUT_KW@209..213 "out" [] [Whitespace(" ")],
+                                        TsTypeParameterName {
+                                            ident_token: IDENT@213..214 "T" [] [],
+                                        },
+                                    ],
+                                },
+                            ],
+                        },
+                        R_ANGLE@214..216 ">" [] [Whitespace(" ")],
+                    ],
+                },
+                EQ@216..218 "=" [] [Whitespace(" ")],
+                TsObjectType {
+                    l_curly_token: L_CURLY@218..219 "{" [] [],
+                    members: TsTypeMemberList [],
+                    r_curly_token: R_CURLY@219..220 "}" [] [],
+                },
+            ],
+        },
+        JsFunctionDeclaration {
+            async_token: missing (optional),
+            function_token: FUNCTION_KW@220..230 "function" [Newline("\n")] [Whitespace(" ")],
+            star_token: missing (optional),
+            id: JsIdentifierBinding {
+                name_token: IDENT@230..233 "foo" [] [],
+            },
+            type_parameters: TsTypeParameters {
+                l_angle_token: L_ANGLE@233..234 "<" [] [],
+                items: TsTypeParameterList [
+                    TsTypeParameter {
+                        in_modifier_token: IN_KW@234..237 "in" [] [Whitespace(" ")],
+                        out_modifier_token: missing (optional),
+                        name: TsTypeParameterName {
+                            ident_token: IDENT@237..238 "T" [] [],
+                        },
+                        constraint: missing (optional),
+                        default: missing (optional),
+                    },
+                ],
+                r_angle_token: R_ANGLE@238..239 ">" [] [],
             },
             parameters: JsParameters {
-                l_paren_token: L_PAREN@242..243 "(" [] [],
+                l_paren_token: L_PAREN@239..240 "(" [] [],
                 items: JsParameterList [],
-                r_paren_token: R_PAREN@243..245 ")" [] [Whitespace(" ")],
+                r_paren_token: R_PAREN@240..242 ")" [] [Whitespace(" ")],
             },
             return_type_annotation: missing (optional),
             body: JsFunctionBody {
-                l_curly_token: L_CURLY@245..246 "{" [] [],
+                l_curly_token: L_CURLY@242..243 "{" [] [],
                 directives: JsDirectiveList [],
                 statements: JsStatementList [],
-                r_curly_token: R_CURLY@246..247 "}" [] [],
+                r_curly_token: R_CURLY@243..244 "}" [] [],
+            },
+        },
+        JsFunctionDeclaration {
+            async_token: missing (optional),
+            function_token: FUNCTION_KW@244..254 "function" [Newline("\n")] [Whitespace(" ")],
+            star_token: missing (optional),
+            id: JsIdentifierBinding {
+                name_token: IDENT@254..257 "foo" [] [],
+            },
+            type_parameters: TsTypeParameters {
+                l_angle_token: L_ANGLE@257..258 "<" [] [],
+                items: TsTypeParameterList [
+                    TsTypeParameter {
+                        in_modifier_token: missing (optional),
+                        out_modifier_token: OUT_KW@258..262 "out" [] [Whitespace(" ")],
+                        name: TsTypeParameterName {
+                            ident_token: IDENT@262..263 "T" [] [],
+                        },
+                        constraint: missing (optional),
+                        default: missing (optional),
+                    },
+                ],
+                r_angle_token: R_ANGLE@263..264 ">" [] [],
+            },
+            parameters: JsParameters {
+                l_paren_token: L_PAREN@264..265 "(" [] [],
+                items: JsParameterList [],
+                r_paren_token: R_PAREN@265..267 ")" [] [Whitespace(" ")],
+            },
+            return_type_annotation: missing (optional),
+            body: JsFunctionBody {
+                l_curly_token: L_CURLY@267..268 "{" [] [],
+                directives: JsDirectiveList [],
+                statements: JsStatementList [],
+                r_curly_token: R_CURLY@268..269 "}" [] [],
             },
         },
     ],
-    eof_token: EOF@247..248 "" [Newline("\n")] [],
+    eof_token: EOF@269..270 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..248
+0: JS_MODULE@0..270
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..247
+  2: JS_MODULE_ITEM_LIST@0..269
     0: JS_BOGUS_STATEMENT@0..25
       0: TYPE_KW@0..5 "type" [] [Whitespace(" ")]
       1: TS_IDENTIFIER_BINDING@5..8
@@ -540,99 +578,128 @@ JsModule {
         0: L_CURLY@141..142 "{" [] []
         1: TS_TYPE_MEMBER_LIST@142..142
         2: R_CURLY@142..143 "}" [] []
-    6: JS_BOGUS_STATEMENT@143..170
+    6: TS_TYPE_ALIAS_DECLARATION@143..165
       0: TYPE_KW@143..149 "type" [Newline("\n")] [Whitespace(" ")]
       1: TS_IDENTIFIER_BINDING@149..152
         0: IDENT@149..152 "Foo" [] []
-      2: JS_BOGUS@152..166
+      2: TS_TYPE_PARAMETERS@152..161
         0: L_ANGLE@152..153 "<" [] []
-        1: JS_BOGUS@153..164
-          0: JS_BOGUS@153..164
-            0: IN_KW@153..156 "in" [] [Whitespace(" ")]
-            1: OUT_KW@156..160 "out" [] [Whitespace(" ")]
-            2: IN_KW@160..163 "in" [] [Whitespace(" ")]
-            3: TS_TYPE_PARAMETER_NAME@163..164
-              0: IDENT@163..164 "T" [] []
-        2: R_ANGLE@164..166 ">" [] [Whitespace(" ")]
-      3: EQ@166..168 "=" [] [Whitespace(" ")]
-      4: TS_OBJECT_TYPE@168..170
-        0: L_CURLY@168..169 "{" [] []
-        1: TS_TYPE_MEMBER_LIST@169..169
-        2: R_CURLY@169..170 "}" [] []
-    7: JS_BOGUS_STATEMENT@170..198
-      0: TYPE_KW@170..176 "type" [Newline("\n")] [Whitespace(" ")]
-      1: TS_IDENTIFIER_BINDING@176..179
-        0: IDENT@176..179 "Foo" [] []
-      2: JS_BOGUS@179..194
-        0: L_ANGLE@179..180 "<" [] []
-        1: JS_BOGUS@180..192
-          0: JS_BOGUS@180..192
-            0: IN_KW@180..183 "in" [] [Whitespace(" ")]
-            1: OUT_KW@183..187 "out" [] [Whitespace(" ")]
-            2: OUT_KW@187..191 "out" [] [Whitespace(" ")]
-            3: TS_TYPE_PARAMETER_NAME@191..192
-              0: IDENT@191..192 "T" [] []
-        2: R_ANGLE@192..194 ">" [] [Whitespace(" ")]
-      3: EQ@194..196 "=" [] [Whitespace(" ")]
-      4: TS_OBJECT_TYPE@196..198
-        0: L_CURLY@196..197 "{" [] []
-        1: TS_TYPE_MEMBER_LIST@197..197
-        2: R_CURLY@197..198 "}" [] []
-    8: JS_FUNCTION_DECLARATION@198..222
-      0: (empty)
-      1: FUNCTION_KW@198..208 "function" [Newline("\n")] [Whitespace(" ")]
-      2: (empty)
-      3: JS_IDENTIFIER_BINDING@208..211
-        0: IDENT@208..211 "foo" [] []
-      4: TS_TYPE_PARAMETERS@211..217
-        0: L_ANGLE@211..212 "<" [] []
-        1: TS_TYPE_PARAMETER_LIST@212..216
-          0: TS_TYPE_PARAMETER@212..216
-            0: IN_KW@212..215 "in" [] [Whitespace(" ")]
-            1: (empty)
-            2: TS_TYPE_PARAMETER_NAME@215..216
-              0: IDENT@215..216 "T" [] []
-            3: (empty)
-            4: (empty)
-        2: R_ANGLE@216..217 ">" [] []
-      5: JS_PARAMETERS@217..220
-        0: L_PAREN@217..218 "(" [] []
-        1: JS_PARAMETER_LIST@218..218
-        2: R_PAREN@218..220 ")" [] [Whitespace(" ")]
-      6: (empty)
-      7: JS_FUNCTION_BODY@220..222
-        0: L_CURLY@220..221 "{" [] []
-        1: JS_DIRECTIVE_LIST@221..221
-        2: JS_STATEMENT_LIST@221..221
-        3: R_CURLY@221..222 "}" [] []
-    9: JS_FUNCTION_DECLARATION@222..247
-      0: (empty)
-      1: FUNCTION_KW@222..232 "function" [Newline("\n")] [Whitespace(" ")]
-      2: (empty)
-      3: JS_IDENTIFIER_BINDING@232..235
-        0: IDENT@232..235 "foo" [] []
-      4: TS_TYPE_PARAMETERS@235..242
-        0: L_ANGLE@235..236 "<" [] []
-        1: TS_TYPE_PARAMETER_LIST@236..241
-          0: TS_TYPE_PARAMETER@236..241
+        1: TS_TYPE_PARAMETER_LIST@153..159
+          0: TS_TYPE_PARAMETER@153..158
             0: (empty)
-            1: OUT_KW@236..240 "out" [] [Whitespace(" ")]
-            2: TS_TYPE_PARAMETER_NAME@240..241
-              0: IDENT@240..241 "T" [] []
+            1: (empty)
+            2: TS_TYPE_PARAMETER_NAME@153..158
+              0: IDENT@153..158 "innn" [] [Whitespace(" ")]
             3: (empty)
             4: (empty)
-        2: R_ANGLE@241..242 ">" [] []
-      5: JS_PARAMETERS@242..245
-        0: L_PAREN@242..243 "(" [] []
-        1: JS_PARAMETER_LIST@243..243
-        2: R_PAREN@243..245 ")" [] [Whitespace(" ")]
+          1: (empty)
+          2: TS_TYPE_PARAMETER@158..159
+            0: (empty)
+            1: (empty)
+            2: TS_TYPE_PARAMETER_NAME@158..159
+              0: IDENT@158..159 "T" [] []
+            3: (empty)
+            4: (empty)
+        2: R_ANGLE@159..161 ">" [] [Whitespace(" ")]
+      3: EQ@161..163 "=" [] [Whitespace(" ")]
+      4: TS_OBJECT_TYPE@163..165
+        0: L_CURLY@163..164 "{" [] []
+        1: TS_TYPE_MEMBER_LIST@164..164
+        2: R_CURLY@164..165 "}" [] []
+      5: (empty)
+    7: JS_BOGUS_STATEMENT@165..192
+      0: TYPE_KW@165..171 "type" [Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@171..174
+        0: IDENT@171..174 "Foo" [] []
+      2: JS_BOGUS@174..188
+        0: L_ANGLE@174..175 "<" [] []
+        1: JS_BOGUS@175..186
+          0: JS_BOGUS@175..186
+            0: IN_KW@175..178 "in" [] [Whitespace(" ")]
+            1: OUT_KW@178..182 "out" [] [Whitespace(" ")]
+            2: IN_KW@182..185 "in" [] [Whitespace(" ")]
+            3: TS_TYPE_PARAMETER_NAME@185..186
+              0: IDENT@185..186 "T" [] []
+        2: R_ANGLE@186..188 ">" [] [Whitespace(" ")]
+      3: EQ@188..190 "=" [] [Whitespace(" ")]
+      4: TS_OBJECT_TYPE@190..192
+        0: L_CURLY@190..191 "{" [] []
+        1: TS_TYPE_MEMBER_LIST@191..191
+        2: R_CURLY@191..192 "}" [] []
+    8: JS_BOGUS_STATEMENT@192..220
+      0: TYPE_KW@192..198 "type" [Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@198..201
+        0: IDENT@198..201 "Foo" [] []
+      2: JS_BOGUS@201..216
+        0: L_ANGLE@201..202 "<" [] []
+        1: JS_BOGUS@202..214
+          0: JS_BOGUS@202..214
+            0: IN_KW@202..205 "in" [] [Whitespace(" ")]
+            1: OUT_KW@205..209 "out" [] [Whitespace(" ")]
+            2: OUT_KW@209..213 "out" [] [Whitespace(" ")]
+            3: TS_TYPE_PARAMETER_NAME@213..214
+              0: IDENT@213..214 "T" [] []
+        2: R_ANGLE@214..216 ">" [] [Whitespace(" ")]
+      3: EQ@216..218 "=" [] [Whitespace(" ")]
+      4: TS_OBJECT_TYPE@218..220
+        0: L_CURLY@218..219 "{" [] []
+        1: TS_TYPE_MEMBER_LIST@219..219
+        2: R_CURLY@219..220 "}" [] []
+    9: JS_FUNCTION_DECLARATION@220..244
+      0: (empty)
+      1: FUNCTION_KW@220..230 "function" [Newline("\n")] [Whitespace(" ")]
+      2: (empty)
+      3: JS_IDENTIFIER_BINDING@230..233
+        0: IDENT@230..233 "foo" [] []
+      4: TS_TYPE_PARAMETERS@233..239
+        0: L_ANGLE@233..234 "<" [] []
+        1: TS_TYPE_PARAMETER_LIST@234..238
+          0: TS_TYPE_PARAMETER@234..238
+            0: IN_KW@234..237 "in" [] [Whitespace(" ")]
+            1: (empty)
+            2: TS_TYPE_PARAMETER_NAME@237..238
+              0: IDENT@237..238 "T" [] []
+            3: (empty)
+            4: (empty)
+        2: R_ANGLE@238..239 ">" [] []
+      5: JS_PARAMETERS@239..242
+        0: L_PAREN@239..240 "(" [] []
+        1: JS_PARAMETER_LIST@240..240
+        2: R_PAREN@240..242 ")" [] [Whitespace(" ")]
       6: (empty)
-      7: JS_FUNCTION_BODY@245..247
-        0: L_CURLY@245..246 "{" [] []
-        1: JS_DIRECTIVE_LIST@246..246
-        2: JS_STATEMENT_LIST@246..246
-        3: R_CURLY@246..247 "}" [] []
-  3: EOF@247..248 "" [Newline("\n")] []
+      7: JS_FUNCTION_BODY@242..244
+        0: L_CURLY@242..243 "{" [] []
+        1: JS_DIRECTIVE_LIST@243..243
+        2: JS_STATEMENT_LIST@243..243
+        3: R_CURLY@243..244 "}" [] []
+    10: JS_FUNCTION_DECLARATION@244..269
+      0: (empty)
+      1: FUNCTION_KW@244..254 "function" [Newline("\n")] [Whitespace(" ")]
+      2: (empty)
+      3: JS_IDENTIFIER_BINDING@254..257
+        0: IDENT@254..257 "foo" [] []
+      4: TS_TYPE_PARAMETERS@257..264
+        0: L_ANGLE@257..258 "<" [] []
+        1: TS_TYPE_PARAMETER_LIST@258..263
+          0: TS_TYPE_PARAMETER@258..263
+            0: (empty)
+            1: OUT_KW@258..262 "out" [] [Whitespace(" ")]
+            2: TS_TYPE_PARAMETER_NAME@262..263
+              0: IDENT@262..263 "T" [] []
+            3: (empty)
+            4: (empty)
+        2: R_ANGLE@263..264 ">" [] []
+      5: JS_PARAMETERS@264..267
+        0: L_PAREN@264..265 "(" [] []
+        1: JS_PARAMETER_LIST@265..265
+        2: R_PAREN@265..267 ")" [] [Whitespace(" ")]
+      6: (empty)
+      7: JS_FUNCTION_BODY@267..269
+        0: L_CURLY@267..268 "{" [] []
+        1: JS_DIRECTIVE_LIST@268..268
+        2: JS_STATEMENT_LIST@268..268
+        3: R_CURLY@268..269 "}" [] []
+  3: EOF@269..270 "" [Newline("\n")] []
 --
 type_parameter_modifier.ts:1:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -756,7 +823,7 @@ type_parameter_modifier.ts:5:14 parse ━━━━━━━━━━━━━━
   > 5 │ type Foo<out in T> = {}
       │              ^^
     6 │ type Foo<public T> = {}
-    7 │ type Foo<in out in T> = {}
+    7 │ type Foo<innn T> = {}
   
   i move this modifier
   
@@ -765,7 +832,7 @@ type_parameter_modifier.ts:5:14 parse ━━━━━━━━━━━━━━
   > 5 │ type Foo<out in T> = {}
       │              ^^
     6 │ type Foo<public T> = {}
-    7 │ type Foo<in out in T> = {}
+    7 │ type Foo<innn T> = {}
   
   i before this modifier
   
@@ -774,7 +841,7 @@ type_parameter_modifier.ts:5:14 parse ━━━━━━━━━━━━━━
   > 5 │ type Foo<out in T> = {}
       │          ^^^
     6 │ type Foo<public T> = {}
-    7 │ type Foo<in out in T> = {}
+    7 │ type Foo<innn T> = {}
   
 --
 type_parameter_modifier.ts:6:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -785,8 +852,8 @@ type_parameter_modifier.ts:6:10 parse ━━━━━━━━━━━━━━
     5 │ type Foo<out in T> = {}
   > 6 │ type Foo<public T> = {}
       │          ^^^^^^
-    7 │ type Foo<in out in T> = {}
-    8 │ type Foo<in out out T> = {}
+    7 │ type Foo<innn T> = {}
+    8 │ type Foo<in out in T> = {}
   
 --
 type_parameter_modifier.ts:6:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -797,93 +864,107 @@ type_parameter_modifier.ts:6:17 parse ━━━━━━━━━━━━━━
     5 │ type Foo<out in T> = {}
   > 6 │ type Foo<public T> = {}
       │                 ^
-    7 │ type Foo<in out in T> = {}
-    8 │ type Foo<in out out T> = {}
+    7 │ type Foo<innn T> = {}
+    8 │ type Foo<in out in T> = {}
   
   i Remove T
   
 --
-type_parameter_modifier.ts:7:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+type_parameter_modifier.ts:7:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × 'in' already seen
+  × expected `,` but instead found `T`
   
     5 │ type Foo<out in T> = {}
     6 │ type Foo<public T> = {}
-  > 7 │ type Foo<in out in T> = {}
-      │                 ^^
-    8 │ type Foo<in out out T> = {}
-    9 │ function foo<in T>() {}
+  > 7 │ type Foo<innn T> = {}
+      │               ^
+    8 │ type Foo<in out in T> = {}
+    9 │ type Foo<in out out T> = {}
   
-  i duplicate modifier
-  
-    5 │ type Foo<out in T> = {}
-    6 │ type Foo<public T> = {}
-  > 7 │ type Foo<in out in T> = {}
-      │                 ^^
-    8 │ type Foo<in out out T> = {}
-    9 │ function foo<in T>() {}
-  
-  i first seen here
-  
-    5 │ type Foo<out in T> = {}
-    6 │ type Foo<public T> = {}
-  > 7 │ type Foo<in out in T> = {}
-      │          ^^
-    8 │ type Foo<in out out T> = {}
-    9 │ function foo<in T>() {}
+  i Remove T
   
 --
 type_parameter_modifier.ts:8:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × 'out' already seen
+  × 'in' already seen
   
      6 │ type Foo<public T> = {}
-     7 │ type Foo<in out in T> = {}
-   > 8 │ type Foo<in out out T> = {}
-       │                 ^^^
-     9 │ function foo<in T>() {}
-    10 │ function foo<out T>() {}
+     7 │ type Foo<innn T> = {}
+   > 8 │ type Foo<in out in T> = {}
+       │                 ^^
+     9 │ type Foo<in out out T> = {}
+    10 │ function foo<in T>() {}
   
   i duplicate modifier
   
      6 │ type Foo<public T> = {}
-     7 │ type Foo<in out in T> = {}
-   > 8 │ type Foo<in out out T> = {}
-       │                 ^^^
-     9 │ function foo<in T>() {}
-    10 │ function foo<out T>() {}
+     7 │ type Foo<innn T> = {}
+   > 8 │ type Foo<in out in T> = {}
+       │                 ^^
+     9 │ type Foo<in out out T> = {}
+    10 │ function foo<in T>() {}
   
   i first seen here
   
      6 │ type Foo<public T> = {}
-     7 │ type Foo<in out in T> = {}
-   > 8 │ type Foo<in out out T> = {}
-       │             ^^^
-     9 │ function foo<in T>() {}
-    10 │ function foo<out T>() {}
+     7 │ type Foo<innn T> = {}
+   > 8 │ type Foo<in out in T> = {}
+       │          ^^
+     9 │ type Foo<in out out T> = {}
+    10 │ function foo<in T>() {}
   
 --
-type_parameter_modifier.ts:9:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+type_parameter_modifier.ts:9:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × 'in' modifier can only appear on a type parameter of a class, interface or type alias.
+  × 'out' already seen
   
-     7 │ type Foo<in out in T> = {}
-     8 │ type Foo<in out out T> = {}
-   > 9 │ function foo<in T>() {}
-       │              ^^
-    10 │ function foo<out T>() {}
-    11 │ 
+     7 │ type Foo<innn T> = {}
+     8 │ type Foo<in out in T> = {}
+   > 9 │ type Foo<in out out T> = {}
+       │                 ^^^
+    10 │ function foo<in T>() {}
+    11 │ function foo<out T>() {}
+  
+  i duplicate modifier
+  
+     7 │ type Foo<innn T> = {}
+     8 │ type Foo<in out in T> = {}
+   > 9 │ type Foo<in out out T> = {}
+       │                 ^^^
+    10 │ function foo<in T>() {}
+    11 │ function foo<out T>() {}
+  
+  i first seen here
+  
+     7 │ type Foo<innn T> = {}
+     8 │ type Foo<in out in T> = {}
+   > 9 │ type Foo<in out out T> = {}
+       │             ^^^
+    10 │ function foo<in T>() {}
+    11 │ function foo<out T>() {}
   
 --
 type_parameter_modifier.ts:10:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'in' modifier can only appear on a type parameter of a class, interface or type alias.
+  
+     8 │ type Foo<in out in T> = {}
+     9 │ type Foo<in out out T> = {}
+  > 10 │ function foo<in T>() {}
+       │              ^^
+    11 │ function foo<out T>() {}
+    12 │ 
+  
+--
+type_parameter_modifier.ts:11:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
   × 'out' modifier can only appear on a type parameter of a class, interface or type alias.
   
-     8 │ type Foo<in out out T> = {}
-     9 │ function foo<in T>() {}
-  > 10 │ function foo<out T>() {}
+     9 │ type Foo<in out out T> = {}
+    10 │ function foo<in T>() {}
+  > 11 │ function foo<out T>() {}
        │              ^^^
-    11 │ 
+    12 │ 
   
 --
 type Foo<i\\u006E T> = {}
@@ -892,6 +973,7 @@ type Foo<in in> = {}
 type Foo<out in> = {}
 type Foo<out in T> = {}
 type Foo<public T> = {}
+type Foo<innn T> = {}
 type Foo<in out in T> = {}
 type Foo<in out out T> = {}
 function foo<in T>() {}

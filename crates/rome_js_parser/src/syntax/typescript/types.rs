@@ -42,6 +42,11 @@ bitflags! {
         ///
         /// By default, conditional types are allowed.
         const DISALLOW_CONDITIONAL_TYPES = 1 << 0;
+
+        /// Whether 'in' and 'out' modifiers are allowed in the current context.
+        ///
+        /// By default, 'in' and 'out' modifiers are not allowed.
+        const ALLOW_IN_OUT_MODIFIER = 1 << 1;
     }
 }
 
@@ -50,8 +55,16 @@ impl TypeContext {
         self.and(TypeContext::DISALLOW_CONDITIONAL_TYPES, !allow)
     }
 
+    pub(crate) fn and_allow_in_out_modifier(self, allow: bool) -> Self {
+        self.and(TypeContext::ALLOW_IN_OUT_MODIFIER, allow)
+    }
+
     pub(crate) const fn is_conditional_type_allowed(&self) -> bool {
         !self.contains(TypeContext::DISALLOW_CONDITIONAL_TYPES)
+    }
+
+    pub(crate) const fn is_in_out_modifier_allowed(&self) -> bool {
+        self.contains(TypeContext::ALLOW_IN_OUT_MODIFIER)
     }
 
     /// Adds the `flag` if `set` is `true`, otherwise removes the `flag`
@@ -141,27 +154,7 @@ pub(crate) fn parse_ts_type_parameters(p: &mut JsParser, context: TypeContext) -
     if p.at(T![>]) {
         p.error(expected_ts_type_parameter(p, p.cur_range()));
     }
-    TsTypeParameterList::new(context, false).parse_list(p);
-    p.expect(T![>]);
-
-    Present(m.complete(p, TS_TYPE_PARAMETERS))
-}
-
-pub(crate) fn parse_ts_type_parameters_with_modifiers(
-    p: &mut JsParser,
-    context: TypeContext,
-    allow_in_out_modifier: bool,
-) -> ParsedSyntax {
-    if !is_nth_at_ts_type_parameters(p, 0) {
-        return Absent;
-    }
-
-    let m = p.start();
-    p.bump(T![<]);
-    if p.at(T![>]) {
-        p.error(expected_ts_type_parameter(p, p.cur_range()));
-    }
-    TsTypeParameterList::new(context, allow_in_out_modifier).parse_list(p);
+    TsTypeParameterList::new(context).parse_list(p);
     p.expect(T![>]);
 
     Present(m.complete(p, TS_TYPE_PARAMETERS))
@@ -169,15 +162,11 @@ pub(crate) fn parse_ts_type_parameters_with_modifiers(
 
 struct TsTypeParameterList {
     context: TypeContext,
-    allow_in_out_modifier: bool,
 }
 
 impl TsTypeParameterList {
-    pub fn new(context: TypeContext, allow_in_out_modifier: bool) -> Self {
-        Self {
-            context,
-            allow_in_out_modifier,
-        }
+    pub fn new(context: TypeContext) -> Self {
+        Self { context }
     }
 }
 
@@ -188,7 +177,7 @@ impl ParseSeparatedList for TsTypeParameterList {
     const LIST_KIND: Self::Kind = TS_TYPE_PARAMETER_LIST;
 
     fn parse_element(&mut self, p: &mut JsParser) -> ParsedSyntax {
-        parse_ts_type_parameter(p, self.context, self.allow_in_out_modifier)
+        parse_ts_type_parameter(p, self.context)
     }
 
     fn is_at_list_end(&self, p: &mut JsParser) -> bool {
@@ -253,6 +242,7 @@ impl ParseSeparatedList for TsTypeParameterList {
 // type Foo<out in> = {}
 // type Foo<out in T> = {}
 // type Foo<public T> = {}
+// type Foo<innn T> = {}
 // type Foo<in out in T> = {}
 // type Foo<in out out T> = {}
 // function foo<in T>() {}
@@ -288,13 +278,9 @@ impl ParseSeparatedList for TsTypeParameterList {
 // declare interface Foo<in T> {}
 // declare interface Foo<out T> {}
 
-fn parse_ts_type_parameter(
-    p: &mut JsParser,
-    context: TypeContext,
-    allow_in_out_modifier: bool,
-) -> ParsedSyntax {
+fn parse_ts_type_parameter(p: &mut JsParser, context: TypeContext) -> ParsedSyntax {
     let m = p.start();
-    parse_ts_type_parameter_modifiers(p, allow_in_out_modifier);
+    parse_ts_type_parameter_modifiers(p, context);
 
     let name = parse_ts_type_parameter_name(p);
     parse_ts_type_constraint_clause(p, context).ok();
@@ -337,10 +323,10 @@ impl ClassMemberModifierList {
     }
 }
 
-fn parse_ts_type_parameter_modifiers(p: &mut JsParser, allow_in_out_modifier: bool) {
+fn parse_ts_type_parameter_modifiers(p: &mut JsParser, context: TypeContext) {
     let mut modifiers = ClassMemberModifierList::default();
     while p.at_ts(token_set!(T![in], T![out])) && !p.nth_at(1, T![,]) && !p.nth_at(1, T![>]) {
-        if !allow_in_out_modifier {
+        if !context.is_in_out_modifier_allowed() {
             let text_range = p.cur_range();
             p.error(p.err_builder(
                 format!(
@@ -362,7 +348,7 @@ fn parse_ts_type_parameter_modifiers(p: &mut JsParser, allow_in_out_modifier: bo
                 kind: TypeParameterModifierKind::Out,
                 range: p.cur_range(),
             },
-            _ => unreachable!(),
+            _ => unreachable!("keywords that are not 'in' and 'out' are checked earlier"),
         };
 
         // check for duplicate modifiers
@@ -1105,7 +1091,7 @@ fn parse_ts_construct_signature_type_member(
 
     let m = p.start();
     p.expect(T![new]);
-    parse_ts_type_parameters_with_modifiers(p, context, true).ok();
+    parse_ts_type_parameters(p, context.and_allow_in_out_modifier(true)).ok();
     parse_parameter_list(p, ParameterContext::Declaration, SignatureFlags::empty())
         .or_add_diagnostic(p, expected_parameters);
     parse_ts_type_annotation(p).ok();

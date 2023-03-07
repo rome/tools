@@ -54,8 +54,7 @@ use super::function::LineBreak;
 use super::js_parse_error::unexpected_body_inside_ambient_context;
 use super::typescript::ts_parse_error::{self, unexpected_abstract_member_with_body};
 use super::typescript::{
-    expect_ts_index_signature_member, is_at_ts_index_signature_member,
-    parse_ts_type_parameters_with_modifiers, MemberParent,
+    expect_ts_index_signature_member, is_at_ts_index_signature_member, MemberParent,
 };
 
 pub(crate) fn is_at_ts_abstract_class_declaration(
@@ -256,7 +255,7 @@ fn parse_class(p: &mut JsParser, kind: ClassKind) -> CompletedMarker {
     TypeScript
         .parse_exclusive_syntax(
             p,
-            |p| parse_ts_type_parameters_with_modifiers(p, TypeContext::default(), true),
+            |p| parse_ts_type_parameters(p, TypeContext::default().and_allow_in_out_modifier(true)),
             |p, type_parameters| {
                 ts_only_syntax_error(p, "class type parameters", type_parameters.range(p))
             },

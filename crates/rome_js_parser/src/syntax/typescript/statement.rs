@@ -15,7 +15,7 @@ use crate::syntax::stmt::{semi, STMT_RECOVERY_SET};
 use crate::syntax::typescript::ts_parse_error::expected_ts_type;
 use crate::syntax::typescript::{
     expect_ts_type_list, parse_ts_identifier_binding, parse_ts_implements_clause, parse_ts_name,
-    parse_ts_type, parse_ts_type_parameters_with_modifiers, TypeContext, TypeMembers,
+    parse_ts_type, parse_ts_type_parameters, TypeContext, TypeMembers,
 };
 use crate::{syntax, Absent, JsParser, ParseRecovery, ParsedSyntax, Present};
 use rome_js_syntax::{JsSyntaxKind::*, *};
@@ -207,7 +207,7 @@ pub(crate) fn parse_ts_type_alias_declaration(p: &mut JsParser) -> ParsedSyntax 
     p.expect(T![type]);
     parse_ts_identifier_binding(p, super::TsIdentifierContext::Type)
         .or_add_diagnostic(p, expected_identifier);
-    parse_ts_type_parameters_with_modifiers(p, TypeContext::default(), true).ok();
+    parse_ts_type_parameters(p, TypeContext::default().and_allow_in_out_modifier(true)).ok();
     p.expect(T![=]);
     parse_ts_type(p, TypeContext::default()).or_add_diagnostic(p, expected_ts_type);
 
@@ -298,7 +298,7 @@ pub(crate) fn parse_ts_interface_declaration(p: &mut JsParser) -> ParsedSyntax {
     p.expect(T![interface]);
     parse_ts_identifier_binding(p, super::TsIdentifierContext::Type)
         .or_add_diagnostic(p, expected_identifier);
-    parse_ts_type_parameters_with_modifiers(p, TypeContext::default(), true).ok();
+    parse_ts_type_parameters(p, TypeContext::default().and_allow_in_out_modifier(true)).ok();
     eat_interface_heritage_clause(p);
     p.expect(T!['{']);
     TypeMembers.parse_list(p);
