@@ -69,7 +69,7 @@ define_categories! {
     "lint/nursery/noRedundantAlt": "https://docs.rome.tools/lint/rules/noRedundantAlt",
     "lint/nursery/noRestrictedGlobals": "https://docs.rome.tools/lint/rules/noRestrictedGlobals",
     "lint/nursery/noSelfCompare": "https://docs.rome.tools/lint/rules/noSelfCompare",
-    "lint/nursery/noSelfAssignment": "https://docs.rome.tools/lint/rules/noSelfAssignment",
+    "lint/nursery/noSelfAssign": "https://docs.rome.tools/lint/rules/noSelfAssign",
     "lint/nursery/noSetterReturn": "https://docs.rome.tools/lint/rules/noSetterReturn",
     "lint/nursery/noStringCaseMismatch": "https://docs.rome.tools/lint/rules/noStringCaseMismatch",
     "lint/nursery/noSwitchDeclarations": "https://docs.rome.tools/lint/rules/noSwitchDeclarations",

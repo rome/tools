@@ -1235,9 +1235,9 @@ pub struct Nursery {
     #[doc = "This rule allows you to specify global variable names that you don’t want to use in your application."]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub no_restricted_globals: Option<RuleConfiguration>,
-    #[doc = "Put your description here"]
+    #[doc = "Disallow assignments where both sides are exactly the same."]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub no_self_assignment: Option<RuleConfiguration>,
+    pub no_self_assign: Option<RuleConfiguration>,
     #[doc = "Disallow comparisons where both sides are exactly the same."]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub no_self_compare: Option<RuleConfiguration>,
@@ -1329,7 +1329,7 @@ impl Nursery {
         "noRedeclaration",
         "noRedundantAlt",
         "noRestrictedGlobals",
-        "noSelfAssignment",
+        "noSelfAssign",
         "noSelfCompare",
         "noSvgWithoutTitle",
         "noSwitchDeclarations",
@@ -1372,7 +1372,7 @@ impl Nursery {
         "noParameterAssign",
         "noRedeclaration",
         "noRedundantAlt",
-        "noSelfAssignment",
+        "noSelfAssign",
         "noSelfCompare",
         "noSvgWithoutTitle",
         "noSwitchDeclarations",
@@ -1587,7 +1587,7 @@ impl Nursery {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[20]));
             }
         }
-        if let Some(rule) = self.no_self_assignment.as_ref() {
+        if let Some(rule) = self.no_self_assign.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[21]));
             }
@@ -1811,7 +1811,7 @@ impl Nursery {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[20]));
             }
         }
-        if let Some(rule) = self.no_self_assignment.as_ref() {
+        if let Some(rule) = self.no_self_assign.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[21]));
             }
@@ -1978,7 +1978,7 @@ impl Nursery {
             "noRedeclaration" => self.no_redeclaration.as_ref(),
             "noRedundantAlt" => self.no_redundant_alt.as_ref(),
             "noRestrictedGlobals" => self.no_restricted_globals.as_ref(),
-            "noSelfAssignment" => self.no_self_assignment.as_ref(),
+            "noSelfAssign" => self.no_self_assign.as_ref(),
             "noSelfCompare" => self.no_self_compare.as_ref(),
             "noSvgWithoutTitle" => self.no_svg_without_title.as_ref(),
             "noSwitchDeclarations" => self.no_switch_declarations.as_ref(),

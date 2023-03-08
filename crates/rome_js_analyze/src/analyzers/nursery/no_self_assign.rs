@@ -16,7 +16,11 @@ use std::collections::VecDeque;
 use std::iter::FusedIterator;
 
 declare_rule! {
-    /// Put your description here
+    /// Disallow assignments where both sides are exactly the same.
+    ///
+    /// Self assignments have no effect, so probably those are an error due to incomplete refactoring.
+    ///
+    /// Source: https://eslint.org/docs/latest/rules/no-self-assign
     ///
     /// ## Examples
     ///
@@ -52,14 +56,14 @@ declare_rule! {
     /// [a, b] = [b, a];
     /// ```
     ///
-    pub(crate) NoSelfAssignment {
+    pub(crate) NoSelfAssign {
         version: "12.0.0",
-        name: "noSelfAssignment",
+        name: "noSelfAssign",
         recommended: true,
     }
 }
 
-impl Rule for NoSelfAssignment {
+impl Rule for NoSelfAssign {
     type Query = Ast<JsAssignmentExpression>;
     type State = IdentifiersLike;
     type Signals = Vec<Self::State>;

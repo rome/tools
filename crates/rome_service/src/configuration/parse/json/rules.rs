@@ -932,7 +932,7 @@ impl VisitNode<JsonLanguage> for Nursery {
                 "noRedeclaration",
                 "noRedundantAlt",
                 "noRestrictedGlobals",
-                "noSelfAssignment",
+                "noSelfAssign",
                 "noSelfCompare",
                 "noSvgWithoutTitle",
                 "noSwitchDeclarations",
@@ -1352,16 +1352,16 @@ impl VisitNode<JsonLanguage> for Nursery {
                     ));
                 }
             },
-            "noSelfAssignment" => match value {
+            "noSelfAssign" => match value {
                 AnyJsonValue::JsonStringValue(_) => {
                     let mut configuration = RuleConfiguration::default();
                     self.map_to_known_string(&value, name_text, &mut configuration, diagnostics)?;
-                    self.no_self_assignment = Some(configuration);
+                    self.no_self_assign = Some(configuration);
                 }
                 AnyJsonValue::JsonObjectValue(_) => {
                     let mut configuration = RuleConfiguration::default();
                     self.map_to_object(&value, name_text, &mut configuration, diagnostics)?;
-                    self.no_self_assignment = Some(configuration);
+                    self.no_self_assign = Some(configuration);
                 }
                 _ => {
                     diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
