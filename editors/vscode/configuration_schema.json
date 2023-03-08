@@ -766,6 +766,13 @@
 						{ "type": "null" }
 					]
 				},
+				"useNamespaceKeyword": {
+					"description": "Require using the namespace keyword over the module keyword to declare TypeScript namespaces.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"useValidAriaProps": {
 					"description": "Ensures that ARIA properties aria-* are all valid.",
 					"anyOf": [
