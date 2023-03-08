@@ -12,10 +12,18 @@ impl FormatNodeRule<TsTypeParameter> for FormatTsTypeParameter {
             name,
             constraint,
             default,
+            in_modifier_token,
+            out_modifier_token,
         } = node.as_fields();
 
-        write!(f, [name.format()])?;
+        if let Some(in_modifier_token) = in_modifier_token {
+            write!(f, [in_modifier_token.format(), space()])?;
+        }
 
+        if let Some(out_modifier_token) = out_modifier_token {
+            write!(f, [out_modifier_token.format(), space()])?;
+        }
+        write!(f, [name.format()])?;
         if let Some(constraint) = constraint {
             write!(f, [space(), constraint.format()])?;
         }

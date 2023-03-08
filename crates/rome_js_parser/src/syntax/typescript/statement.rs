@@ -207,7 +207,7 @@ pub(crate) fn parse_ts_type_alias_declaration(p: &mut JsParser) -> ParsedSyntax 
     p.expect(T![type]);
     parse_ts_identifier_binding(p, super::TsIdentifierContext::Type)
         .or_add_diagnostic(p, expected_identifier);
-    parse_ts_type_parameters(p, TypeContext::default()).ok();
+    parse_ts_type_parameters(p, TypeContext::default().and_allow_in_out_modifier(true)).ok();
     p.expect(T![=]);
     parse_ts_type(p, TypeContext::default()).or_add_diagnostic(p, expected_ts_type);
 
@@ -298,7 +298,7 @@ pub(crate) fn parse_ts_interface_declaration(p: &mut JsParser) -> ParsedSyntax {
     p.expect(T![interface]);
     parse_ts_identifier_binding(p, super::TsIdentifierContext::Type)
         .or_add_diagnostic(p, expected_identifier);
-    parse_ts_type_parameters(p, TypeContext::default()).ok();
+    parse_ts_type_parameters(p, TypeContext::default().and_allow_in_out_modifier(true)).ok();
     eat_interface_heritage_clause(p);
     p.expect(T!['{']);
     TypeMembers.parse_list(p);
