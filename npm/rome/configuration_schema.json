@@ -821,7 +821,12 @@
 				}
 			}
 		},
-		"PlainIndentStyle": { "type": "string", "enum": ["tab", "space"] },
+		"PlainIndentStyle": {
+			"oneOf": [
+				{ "description": "Tab", "type": "string", "enum": ["tab"] },
+				{ "description": "Space", "type": "string", "enum": ["space"] }
+			]
+		},
 		"QuoteProperties": { "type": "string", "enum": ["asNeeded", "preserve"] },
 		"QuoteStyle": { "type": "string", "enum": ["double", "single"] },
 		"RuleConfiguration": {
