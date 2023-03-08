@@ -649,7 +649,7 @@ impl<'ctx, 'app> TraversalContext for TraversalOptions<'ctx, 'app> {
 
     fn can_handle(&self, rome_path: &RomePath) -> bool {
         if rome_path.is_dir() {
-            if self
+            let can_handle = !self
                 .workspace
                 .is_path_ignored(IsPathIgnoredParams {
                     rome_path: rome_path.clone(),
@@ -658,12 +658,8 @@ impl<'ctx, 'app> TraversalContext for TraversalOptions<'ctx, 'app> {
                 .unwrap_or_else(|err| {
                     self.push_diagnostic(err.into());
                     false
-                })
-            {
-                return false;
-            } else {
-                return true;
-            }
+                });
+            return can_handle;
         }
 
         let can_lint = self.can_lint(rome_path);
