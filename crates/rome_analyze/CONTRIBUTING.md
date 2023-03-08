@@ -31,18 +31,22 @@ New rules should always be considered unstable/not exhaustive.
 In addition to selecting a group, rules may be flagged as `recommended`.
 The **recommended rules** are enabled in the default configuration of the _Rome_ linter.
 As a general principle, a recommended rule should catch actual programming errors.
-For instance detecting a coding pattern that will throw an exception at runtime.
-Pedantic rules that check for certain unwanted patterns but may have high false positive rates,
+For instance, detecting a coding pattern that will throw an exception at runtime.
+Pedantic rules that check for specific unwanted patterns but may have high false positive rates,
 should be left off from the recommended set.
 Rules intended to be recommended should be flagged as such even if they are still part of the `nursery` group,
 as unstable rules are only enabled by default on unstable builds.
-This gives to the project time to test the rule, find edge cases, etc.
+This gives the project time to test the rule, find edge cases, etc.
 
 ## Lint rules
 
 When creating or updating a lint rule, you need to be aware that there's a lot of generated code inside our toolchain.
-Our CI makes sure that this code is not out of sync and fails otherwise.
+Our CI ensures that this code is not out of sync and fails otherwise.
 See the [code generation section](#code-generation) for more details.
+
+To create a new rule, you have to create and update several files.
+Because it is a bit tedious, _Rome_ provides an easy way to create and test your rule using [Just](https://just.systems/man/en/).
+_Just_ is not part of the rust toolchain, you have to install it with [a package manager](https://just.systems/man/en/chapter_4.html).
 
 ### Choose a name
 
@@ -68,12 +72,12 @@ _Rome_ follows a naming convention according to what the rule do:
 
 ### Create and implement the rule
 
-Let's say we want to create a new rule called `useAwesomeTricks`, which uses the semantic model.
+Let's say we want to create a new rule called `myRuleName`, which uses the semantic model.
 
 1. Run the command
 
    ```shell
-   > just new-lintrule crates/rome_js_analyze/src/analyzers/nursery myRuleName
+   > just new-lintrule crates/rome_js_analyze/src/semantic_analyzers/nursery myRuleName
    ```
 
    Rules go in different folders, and the folder depend on the type of query system your rule
@@ -94,11 +98,12 @@ Let's say we want to create a new rule called `useAwesomeTricks`, which uses the
 3. The `State` type doesn't have to be used, so it can be considered optional.
    However, it has to be defined as `type State = ()`.
 
-4. The `run` function must be implemented.
+4. Implement the `run` function:
+
    This function is called every time the analyzer finds a match for the query specified by the rule,
    and may return zero or more "signals".
 
-5. Implement the optional `diagnostic` function, to tell the user where's the error and why:
+5. Implement the `diagnostic` function, to tell the user where's the error and why:
 
    ```rust,ignore
    impl Rule for UseAwesomeTricks {
@@ -108,7 +113,7 @@ Let's say we want to create a new rule called `useAwesomeTricks`, which uses the
    ```
 
    While implementing the diagnostic, please keep [Rome's technical principals](https://rome.tools/#technical) in mind.
-   This function is called of every signal emitted by the `run` function, and it may return
+   This function is called for every signal emitted by the `run` function, and it may return
    zero or one diagnostic.
 
 6. Implement the optional `action` function, if we are able to provide automatic code fix to the rule:
@@ -120,12 +125,16 @@ Let's say we want to create a new rule called `useAwesomeTricks`, which uses the
    }
    ```
 
-   This function is called of every signal emitted by the `run` function.
+   This function is called for every signal emitted by the `run` function.
    It may return zero or one code action.
-   When returning a code action, you will need to pass `category` and `applicability` fields.
-   `category` must be `ActionCategory::QuickFix`, while `applicability` must be `Applicability:MaybeIncorrect`.
+   When returning a code action, you must pass the `category` and the `applicability` fields.
+   `category` must be `ActionCategory::QuickFix`.
+   `applicability` is either `Applicability:MaybeIncorrect` or `Applicability:Always`.
+   `Applicability:Always` must only be used when the code transformation is safe.
+   In other words, the code transformation should always result in code that does no change the behavior of the code.
+   In the case of `noVar`, it is not always safe to turn `var` to `const` or `let`.
 
-Don't forget to format your code with `cargo fmt` and lint with `cargo clippy`.
+Don't forget to format your code with `cargo format` and lint with `cargo lint`.
 
 That's it! Now, let's test the rule.
 
@@ -136,24 +145,23 @@ The test infrastructure is rigid around the association of the pair "group/rule 
 _**your test cases are placed inside the wrong group, you won't see any diagnostics**_.
 
 Since each new rule will start from `nursery`, that's where we start.
-
 If you used `just new-lintrule`, a folder that use the name of the rule should exist.
 
 Otherwise, you have two options:
 
-- Create a single file called like the rule name, e.g. `useAwesomeTricks.js`, `useAwesomeTricks.tsx`, etc.
+- Create a single file called like the rule name, e.g. `myRuleName.js`, `myRuleName.tsx`, etc.
   The extension of the file matters based on which kind of file you need to test;
 
-- Create a folder called `useAwesomeTricks/`, and then create various files where you want to create different cases.
+- Create a folder called `myRuleName/`, and then create various files where you want to create different cases.
   These options are useful if your rules target different super languages, or you want to split your cases among different files.
 
 If you chose to create a folder, a common pattern is to create files prefixed by `invalid` or `valid`.
 The files prefixed by `invalid` contain code that are reported by the rule.
 The files prefixed by `valid` contain code that are not reported by the rule.
 
-Files ending with the extension `.jsonc` are handled in a different way.
+Files ending with the extension `.jsonc` are differently handled.
 These files should contain an array of strings where each string is a code snippet.
-For instance for the rule `noVar`, the file `invalidScript.jsonc` contains:
+For instance, for the rule `noVar`, the file `invalidScript.jsonc` contains:
 
 ```jsonc
 [
@@ -163,9 +171,9 @@ For instance for the rule `noVar`, the file `invalidScript.jsonc` contains:
 ```
 
 Note that code in a file ending with the extension `.jsonc` are in a _script environment_.
-That's mean that you cannot use syntax that belongs to ECMAScript modules such as `import` and `export`.
+This means that you cannot use syntax that belongs to _ECMAScript modules_ such as `import` and `export`.
 
-Run the command `just test-lintrule useAwesomeTricks` and if you've done everything correctly,
+Run the command `just test-lintrule myRuleName` and if you've done everything correctly,
 you should see some snapshots emitted with diagnostics and code actions.
 
 Check our main [contribution document](https://github.com/rome/tools/blob/main/CONTRIBUTING.md#snapshot-tests)
@@ -177,7 +185,7 @@ The doc-comment for the rule is mandatory and is used to generate the
 documentation page for the rule on the website.
 Importantly, the tool used to generate those pages also runs tests on the
 code blocks included in the documentation written in languages supported by
-the Rome toolchain (JavaScript, JSX, TypeScript, ...) similar to how
+the _Rome_ toolchain (JavaScript, JSX, TypeScript, ...) similar to how
 `rustdoc` generates tests from code blocks written in Rust. Because code
 blocks in Rust doc-comments are assumed to be written in Rust by default
 the language of the test must be explicitly specified, for instance:
@@ -269,7 +277,7 @@ Stage and commit your changes:
 
 ```shell
 > git add -A
-> git commit -m 'feat(rome_js_analyze): noVar'
+> git commit -m 'feat(rome_js_analyze): myRuleName'
 ```
 
 To test if everything is ready, run the following command:
@@ -278,11 +286,10 @@ To test if everything is ready, run the following command:
 > just check-ready
 ```
 
-For more details on the available automations, look at our `justfile` at the root of the repository.
-
 ### Rule configuration
 
-Some rules may allow customization using configuration. The first step is to setup a struct to represent the rule configuration.
+Some rules may allow customization using configuration.
+The first step is to setup a struct to represent the rule configuration.
 
 ```rust,ignore
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -501,7 +508,7 @@ impl Rule for UseYield {
 
 ### `declare_rule`
 
-This macro is used to declare an analyzer rule type, and implement the [RuleMeta] trait for it
+This macro is used to declare an analyzer rule type, and implement the [RuleMeta] trait for it.
 
 The macro itself expect the following syntax:
 
@@ -511,14 +518,14 @@ use rome_analyze::declare_rule;
 declare_rule! {
     /// Documentation
     pub(crate) ExampleRule {
-        version: "0.7.0",
-        name: "ruleName",
+        version: "next",
+        name: "myRuleName",
         recommended: false,
     }
 }
 ```
 
-#### Category Macro
+### Category Macro
 
 Declaring a rule using `declare_rule!` will cause a new `rule_category!`
 macro to be declared in the surrounding module. This macro can be used to
@@ -533,7 +540,8 @@ declare_rule! {
     /// Documentation
     pub(crate) ExampleRule {
         version: "next",
-        name: "ruleName",
+        name: "myRuleName",
+        recommended: false,
     }
 }
 
