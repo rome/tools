@@ -12,7 +12,7 @@ use crate::syntax::function::{
 };
 use crate::syntax::js_parse_error::{
     expected_identifier, expected_object_member_name, expected_parameter, expected_parameters,
-    expected_property_or_signature,
+    expected_property_or_signature, modifier_already_seen, modifier_must_precede_modifier,
 };
 use crate::syntax::object::{
     is_at_object_member_name, is_nth_at_type_member_name, parse_object_member_name,
@@ -22,6 +22,7 @@ use crate::syntax::typescript::try_parse;
 use crate::syntax::typescript::ts_parse_error::{expected_ts_type, expected_ts_type_parameter};
 use bitflags::bitflags;
 use rome_parser::parse_lists::{ParseNodeList, ParseSeparatedList};
+use smallvec::SmallVec;
 
 use crate::lexer::{LexContext, ReLexContext};
 use crate::span::Span;
@@ -41,6 +42,11 @@ bitflags! {
         ///
         /// By default, conditional types are allowed.
         const DISALLOW_CONDITIONAL_TYPES = 1 << 0;
+
+        /// Whether 'in' and 'out' modifiers are allowed in the current context.
+        ///
+        /// By default, 'in' and 'out' modifiers are not allowed.
+        const ALLOW_IN_OUT_MODIFIER = 1 << 1;
     }
 }
 
@@ -49,8 +55,16 @@ impl TypeContext {
         self.and(TypeContext::DISALLOW_CONDITIONAL_TYPES, !allow)
     }
 
+    pub(crate) fn and_allow_in_out_modifier(self, allow: bool) -> Self {
+        self.and(TypeContext::ALLOW_IN_OUT_MODIFIER, allow)
+    }
+
     pub(crate) const fn is_conditional_type_allowed(&self) -> bool {
         !self.contains(TypeContext::DISALLOW_CONDITIONAL_TYPES)
+    }
+
+    pub(crate) const fn is_in_out_modifier_allowed(&self) -> bool {
+        self.contains(TypeContext::ALLOW_IN_OUT_MODIFIER)
     }
 
     /// Adds the `flag` if `set` is `true`, otherwise removes the `flag`
@@ -183,13 +197,179 @@ impl ParseSeparatedList for TsTypeParameterList {
     }
 }
 
+// test_err ts type_parameter_modifier1
+// export default function foo<in T>() {}
+// export function foo<out T>() {}
+// export function foo1<in T>() {}
+// export function foo2<out T>() {}
+// let foo: Foo<in T>
+// let foo: Foo<out T>
+// declare function foo<in T>()
+// declare function foo<out T>()
+// declare let foo: Foo<in T>
+// declare let foo: Foo<out T>
+// foo = function <in T>() {}
+// foo = function <out T>() {}
+// class Foo { foo<in T>(): T {} }
+// class Foo { foo<out T>(): T {} }
+// foo = { foo<in T>(): T {} };
+// foo = { foo<out T>(): T {} };
+// <in T>() => {};
+// <out T>() => {};
+// <in T, out T>() => {};
+// let x: <in T>() => {};
+// let x: <out T>() => {};
+// let x: <in T, out T>() => {};
+// let x: new <in T>() => {};
+// let x: new <out T>() => {};
+// let x: new <in T, out T>() => {};
+// let x: { y<in T>(): any };
+// let x: { y<out T>(): any };
+// let x: { y<in T, out T>(): any };
+
+// test_err ts type_parameter_modifier
+// type Foo<i\\u006E T> = {}
+// type Foo<ou\\u0074 T> = {}
+// type Foo<in in> = {}
+// type Foo<out in> = {}
+// type Foo<out in T> = {}
+// type Foo<public T> = {}
+// type Foo<innn T> = {}
+// type Foo<in out in T> = {}
+// type Foo<in out out T> = {}
+// function foo<in T>() {}
+// function foo<out T>() {}
+
+// test tsx type_parameter_modifier_tsx
+// <in T></in>;
+// <out T></out>;
+// <in out T></in>;
+// <out in T></out>;
+// <in T extends={true}></in>;
+// <out T extends={true}></out>;
+// <in out T extends={true}></in>;
+
+// test ts type_parameter_modifier
+// type Foo<in T> = {}
+// type Foo<out> = {}
+// type Foo<out T> = {}
+// type Foo<in out> = {}
+// type Foo<out out> = {}
+// type Foo<in out out> = {}
+// type Foo<in X, out Y> = {}
+// type Foo<out X, in Y> = {}
+// type Foo<out X, out Y extends keyof X> = {}
+// class Foo<in T> {}
+// class Foo<out T> {}
+// export default class Foo<in T> {}
+// class Foo<out T> {}
+// interface Foo<in T> {}
+// interface Foo<out T> {}
+// declare class Foo<in T> {}
+// declare class Foo<out T> {}
+// declare interface Foo<in T> {}
+// declare interface Foo<out T> {}
+
 fn parse_ts_type_parameter(p: &mut JsParser, context: TypeContext) -> ParsedSyntax {
-    parse_ts_type_parameter_name(p).map(|name| {
-        let m = name.precede(p);
-        parse_ts_type_constraint_clause(p, context).ok();
-        parse_ts_default_type_clause(p).ok();
-        m.complete(p, TS_TYPE_PARAMETER)
-    })
+    let m = p.start();
+    parse_ts_type_parameter_modifiers(p, context);
+
+    let name = parse_ts_type_parameter_name(p);
+    parse_ts_type_constraint_clause(p, context).ok();
+    parse_ts_default_type_clause(p).ok();
+
+    if name.is_absent() {
+        m.abandon(p);
+        Absent
+    } else {
+        Present(m.complete(p, TS_TYPE_PARAMETER))
+    }
+}
+
+#[derive(Eq, PartialEq, Clone, Copy, Debug)]
+enum TypeParameterModifierKind {
+    In,
+    Out,
+}
+
+/// Stores the range of a parsed modifier with its kind
+#[derive(Eq, PartialEq, Clone, Copy, Debug)]
+struct TypeParameterModifier {
+    kind: TypeParameterModifierKind,
+    range: TextRange,
+}
+
+#[derive(Debug, Default)]
+struct ClassMemberModifierList(SmallVec<[TypeParameterModifier; 2]>);
+
+impl ClassMemberModifierList {
+    /// Sets the range of a parsed modifier
+    fn add_modifier(&mut self, modifier: TypeParameterModifier) {
+        self.0.push(modifier);
+    }
+
+    fn find(&self, modifier_kind: &TypeParameterModifierKind) -> Option<&TypeParameterModifier> {
+        self.0
+            .iter()
+            .find(|predicate| predicate.kind == *modifier_kind)
+    }
+}
+
+fn parse_ts_type_parameter_modifiers(p: &mut JsParser, context: TypeContext) {
+    let mut modifiers = ClassMemberModifierList::default();
+    while p.at_ts(token_set!(T![in], T![out])) && !p.nth_at(1, T![,]) && !p.nth_at(1, T![>]) {
+        if !context.is_in_out_modifier_allowed() {
+            let text_range = p.cur_range();
+            p.error(p.err_builder(
+                format!(
+                    "'{}' modifier can only appear on a type parameter of a class, interface or type alias.",
+                    p.text(text_range)
+                ),
+                text_range,
+            ));
+            p.bump_any();
+            continue;
+        }
+
+        let modifier = match p.cur() {
+            T![in] => TypeParameterModifier {
+                kind: TypeParameterModifierKind::In,
+                range: p.cur_range(),
+            },
+            T![out] => TypeParameterModifier {
+                kind: TypeParameterModifierKind::Out,
+                range: p.cur_range(),
+            },
+            _ => unreachable!("keywords that are not 'in' and 'out' are checked earlier"),
+        };
+
+        // check for duplicate modifiers
+        if let Some(existing_modifier) = modifiers.find(&modifier.kind) {
+            p.error(modifier_already_seen(
+                p,
+                modifier.range,
+                existing_modifier.range,
+            ));
+            p.bump_any();
+            continue;
+        }
+
+        // check for modifier precedence
+        if let Some(out_modifier) = modifiers.find(&TypeParameterModifierKind::Out) {
+            if modifier.kind == TypeParameterModifierKind::In {
+                p.error(modifier_must_precede_modifier(
+                    p,
+                    modifier.range,
+                    out_modifier.range,
+                ));
+                p.bump_any();
+                continue;
+            }
+        }
+
+        modifiers.add_modifier(modifier);
+        p.bump_any();
+    }
 }
 
 // test ts ts_type_constraint_clause
@@ -903,7 +1083,7 @@ fn parse_ts_construct_signature_type_member(
 
     let m = p.start();
     p.expect(T![new]);
-    parse_ts_type_parameters(p, context).ok();
+    parse_ts_type_parameters(p, context.and_allow_in_out_modifier(true)).ok();
     parse_parameter_list(p, ParameterContext::Declaration, SignatureFlags::empty())
         .or_add_diagnostic(p, expected_parameters);
     parse_ts_type_annotation(p).ok();

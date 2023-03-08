@@ -25,6 +25,8 @@ JsModule {
                         l_angle_token: L_ANGLE@19..20 "<" [] [],
                         items: TsTypeParameterList [
                             TsTypeParameter {
+                                in_modifier_token: missing (optional),
+                                out_modifier_token: missing (optional),
                                 name: TsTypeParameterName {
                                     ident_token: IDENT@20..21 "A" [] [],
                                 },
@@ -33,6 +35,8 @@ JsModule {
                             },
                             COMMA@21..23 "," [] [Whitespace(" ")],
                             TsTypeParameter {
+                                in_modifier_token: missing (optional),
+                                out_modifier_token: missing (optional),
                                 name: TsTypeParameterName {
                                     ident_token: IDENT@23..25 "B" [] [Whitespace(" ")],
                                 },
@@ -49,6 +53,8 @@ JsModule {
                             },
                             COMMA@34..36 "," [] [Whitespace(" ")],
                             TsTypeParameter {
+                                in_modifier_token: missing (optional),
+                                out_modifier_token: missing (optional),
                                 name: TsTypeParameterName {
                                     ident_token: IDENT@36..37 "R" [] [],
                                 },
@@ -145,27 +151,33 @@ JsModule {
             0: L_ANGLE@19..20 "<" [] []
             1: TS_TYPE_PARAMETER_LIST@20..37
               0: TS_TYPE_PARAMETER@20..21
-                0: TS_TYPE_PARAMETER_NAME@20..21
-                  0: IDENT@20..21 "A" [] []
+                0: (empty)
                 1: (empty)
-                2: (empty)
+                2: TS_TYPE_PARAMETER_NAME@20..21
+                  0: IDENT@20..21 "A" [] []
+                3: (empty)
+                4: (empty)
               1: COMMA@21..23 "," [] [Whitespace(" ")]
               2: TS_TYPE_PARAMETER@23..34
-                0: TS_TYPE_PARAMETER_NAME@23..25
+                0: (empty)
+                1: (empty)
+                2: TS_TYPE_PARAMETER_NAME@23..25
                   0: IDENT@23..25 "B" [] [Whitespace(" ")]
-                1: TS_TYPE_CONSTRAINT_CLAUSE@25..34
+                3: TS_TYPE_CONSTRAINT_CLAUSE@25..34
                   0: EXTENDS_KW@25..33 "extends" [] [Whitespace(" ")]
                   1: TS_REFERENCE_TYPE@33..34
                     0: JS_REFERENCE_IDENTIFIER@33..34
                       0: IDENT@33..34 "A" [] []
                     1: (empty)
-                2: (empty)
+                4: (empty)
               3: COMMA@34..36 "," [] [Whitespace(" ")]
               4: TS_TYPE_PARAMETER@36..37
-                0: TS_TYPE_PARAMETER_NAME@36..37
-                  0: IDENT@36..37 "R" [] []
+                0: (empty)
                 1: (empty)
-                2: (empty)
+                2: TS_TYPE_PARAMETER_NAME@36..37
+                  0: IDENT@36..37 "R" [] []
+                3: (empty)
+                4: (empty)
             2: R_ANGLE@37..38 ">" [] []
           6: JS_PARAMETERS@38..50
             0: L_PAREN@38..39 "(" [] []

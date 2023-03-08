@@ -12,6 +12,8 @@ JsModule {
                 l_angle_token: L_ANGLE@10..11 "<" [] [],
                 items: TsTypeParameterList [
                     TsTypeParameter {
+                        in_modifier_token: missing (optional),
+                        out_modifier_token: missing (optional),
                         name: TsTypeParameterName {
                             ident_token: IDENT@11..12 "A" [] [],
                         },
@@ -20,6 +22,8 @@ JsModule {
                     },
                     COMMA@12..14 "," [] [Whitespace(" ")],
                     TsTypeParameter {
+                        in_modifier_token: missing (optional),
+                        out_modifier_token: missing (optional),
                         name: TsTypeParameterName {
                             ident_token: IDENT@14..15 "B" [] [],
                         },
@@ -28,6 +32,8 @@ JsModule {
                     },
                     COMMA@15..17 "," [] [Whitespace(" ")],
                     TsTypeParameter {
+                        in_modifier_token: missing (optional),
+                        out_modifier_token: missing (optional),
                         name: TsTypeParameterName {
                             ident_token: IDENT@17..18 "C" [] [],
                         },
@@ -102,22 +108,28 @@ JsModule {
         0: L_ANGLE@10..11 "<" [] []
         1: TS_TYPE_PARAMETER_LIST@11..18
           0: TS_TYPE_PARAMETER@11..12
-            0: TS_TYPE_PARAMETER_NAME@11..12
-              0: IDENT@11..12 "A" [] []
+            0: (empty)
             1: (empty)
-            2: (empty)
+            2: TS_TYPE_PARAMETER_NAME@11..12
+              0: IDENT@11..12 "A" [] []
+            3: (empty)
+            4: (empty)
           1: COMMA@12..14 "," [] [Whitespace(" ")]
           2: TS_TYPE_PARAMETER@14..15
-            0: TS_TYPE_PARAMETER_NAME@14..15
-              0: IDENT@14..15 "B" [] []
+            0: (empty)
             1: (empty)
-            2: (empty)
+            2: TS_TYPE_PARAMETER_NAME@14..15
+              0: IDENT@14..15 "B" [] []
+            3: (empty)
+            4: (empty)
           3: COMMA@15..17 "," [] [Whitespace(" ")]
           4: TS_TYPE_PARAMETER@17..18
-            0: TS_TYPE_PARAMETER_NAME@17..18
-              0: IDENT@17..18 "C" [] []
+            0: (empty)
             1: (empty)
-            2: (empty)
+            2: TS_TYPE_PARAMETER_NAME@17..18
+              0: IDENT@17..18 "C" [] []
+            3: (empty)
+            4: (empty)
         2: R_ANGLE@18..20 ">" [] [Whitespace(" ")]
       4: (empty)
       5: (empty)
