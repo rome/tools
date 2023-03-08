@@ -255,7 +255,14 @@ fn parse_class(p: &mut JsParser, kind: ClassKind) -> CompletedMarker {
     TypeScript
         .parse_exclusive_syntax(
             p,
-            |p| parse_ts_type_parameters(p, TypeContext::default().and_allow_in_out_modifier(true)),
+            |p| {
+                parse_ts_type_parameters(
+                    p,
+                    TypeContext::default()
+                        .and_allow_in_out_modifier(true)
+                        .and_allow_const_modifier(true),
+                )
+            },
             |p, type_parameters| {
                 ts_only_syntax_error(p, "class type parameters", type_parameters.range(p))
             },

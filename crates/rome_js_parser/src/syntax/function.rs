@@ -231,7 +231,7 @@ fn parse_function(p: &mut JsParser, m: Marker, kind: FunctionKind) -> CompletedM
     TypeScript
         .parse_exclusive_syntax(
             p,
-            |p| parse_ts_type_parameters(p, TypeContext::default()),
+            |p| parse_ts_type_parameters(p, TypeContext::default().and_allow_const_modifier(true)),
             |p, marker| {
                 p.err_builder(
                     "type parameters can only be used in TypeScript files",
