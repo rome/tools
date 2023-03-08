@@ -3,7 +3,7 @@
 use crate::{
     AnyJsArrayAssignmentPatternElement, AnyJsAssignmentPattern, AnyJsSwitchClause,
     JsForVariableDeclaration, JsStatementList, JsSyntaxToken as SyntaxToken, JsVariableDeclaration,
-    T,
+    TsModuleDeclaration, T,
 };
 use rome_rowan::SyntaxResult;
 
@@ -101,6 +101,16 @@ impl AnyJsArrayAssignmentPatternElement {
             Self::JsAssignmentWithDefault(p) => p.pattern().ok(),
             Self::JsArrayHole(_) => None,
         }
+    }
+}
+
+impl TsModuleDeclaration {
+    pub fn is_module(&self) -> SyntaxResult<bool> {
+        Ok(self.module_or_namespace()?.kind() == T![module])
+    }
+
+    pub fn is_namespace(&self) -> SyntaxResult<bool> {
+        Ok(self.module_or_namespace()?.kind() == T![namespace])
     }
 }
 

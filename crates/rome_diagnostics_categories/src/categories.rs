@@ -100,6 +100,7 @@ define_categories! {
 "lint/nursery/noParameterAssign": "https://docs.rome.tools/lint/rules/noParameterAssign",
     // Insert new nursery rule here
     "lint/nursery/noRedeclaration": "https://docs.rome.tools/lint/rules/noRedeclaration",
+    "lint/nursery/useNamespaceKeyword": "https://docs.rome.tools/lint/rules/useNamespaceKeyword",
 
     // performance
     "lint/performance/noDelete": "https://docs.rome.tools/lint/rules/noDelete",
