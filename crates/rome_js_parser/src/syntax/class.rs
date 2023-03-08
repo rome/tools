@@ -1183,7 +1183,7 @@ fn parse_method_class_member_rest(
     TypeScript
         .parse_exclusive_syntax(
             p,
-            |p| parse_ts_type_parameters(p, TypeContext::default()),
+            |p| parse_ts_type_parameters(p, TypeContext::default().and_allow_const_modifier(true)),
             |p, marker| ts_only_syntax_error(p, "type parameters", marker.range(p)),
         )
         .ok();

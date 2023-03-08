@@ -109,6 +109,7 @@ JsModule {
                                     TsTypeParameter {
                                         in_modifier_token: missing (optional),
                                         out_modifier_token: missing (optional),
+                                        const_modifier_token: missing (optional),
                                         name: TsTypeParameterName {
                                             ident_token: IDENT@116..117 "f" [] [],
                                         },
@@ -127,6 +128,7 @@ JsModule {
                                         TsTypeParameter {
                                             in_modifier_token: missing (optional),
                                             out_modifier_token: missing (optional),
+                                            const_modifier_token: missing (optional),
                                             name: TsTypeParameterName {
                                                 ident_token: IDENT@118..119 "T" [] [],
                                             },
@@ -568,6 +570,7 @@ JsModule {
                                     TsTypeParameter {
                                         in_modifier_token: missing (optional),
                                         out_modifier_token: missing (optional),
+                                        const_modifier_token: missing (optional),
                                         name: TsTypeParameterName {
                                             ident_token: IDENT@268..269 "f" [] [],
                                         },
@@ -586,6 +589,7 @@ JsModule {
                                         TsTypeParameter {
                                             in_modifier_token: missing (optional),
                                             out_modifier_token: missing (optional),
+                                            const_modifier_token: missing (optional),
                                             name: TsTypeParameterName {
                                                 ident_token: IDENT@270..271 "T" [] [],
                                             },
@@ -901,10 +905,11 @@ JsModule {
                   0: TS_TYPE_PARAMETER@116..117
                     0: (empty)
                     1: (empty)
-                    2: TS_TYPE_PARAMETER_NAME@116..117
+                    2: (empty)
+                    3: TS_TYPE_PARAMETER_NAME@116..117
                       0: IDENT@116..117 "f" [] []
-                    3: (empty)
                     4: (empty)
+                    5: (empty)
                 2: (empty)
               1: (empty)
               2: (empty)
@@ -915,10 +920,11 @@ JsModule {
                     0: TS_TYPE_PARAMETER@118..119
                       0: (empty)
                       1: (empty)
-                      2: TS_TYPE_PARAMETER_NAME@118..119
+                      2: (empty)
+                      3: TS_TYPE_PARAMETER_NAME@118..119
                         0: IDENT@118..119 "T" [] []
-                      3: (empty)
                       4: (empty)
+                      5: (empty)
                   2: R_ANGLE@119..120 ">" [] []
                 1: (empty)
                 2: (empty)
@@ -1198,10 +1204,11 @@ JsModule {
                   0: TS_TYPE_PARAMETER@268..269
                     0: (empty)
                     1: (empty)
-                    2: TS_TYPE_PARAMETER_NAME@268..269
+                    2: (empty)
+                    3: TS_TYPE_PARAMETER_NAME@268..269
                       0: IDENT@268..269 "f" [] []
-                    3: (empty)
                     4: (empty)
+                    5: (empty)
                 2: (empty)
               1: (empty)
               2: (empty)
@@ -1212,10 +1219,11 @@ JsModule {
                     0: TS_TYPE_PARAMETER@270..271
                       0: (empty)
                       1: (empty)
-                      2: TS_TYPE_PARAMETER_NAME@270..271
+                      2: (empty)
+                      3: TS_TYPE_PARAMETER_NAME@270..271
                         0: IDENT@270..271 "T" [] []
-                      3: (empty)
                       4: (empty)
+                      5: (empty)
                   2: R_ANGLE@271..272 ">" [] []
                 1: (empty)
                 2: (empty)

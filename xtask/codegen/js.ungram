@@ -1921,6 +1921,7 @@ TsTypeParameterList = (TsTypeParameter (',' TsTypeParameter)* ','?)
 TsTypeParameter =
 	in_modifier: 'in' ?
 	out_modifier: 'out'?
+	const_modifier: 'const'?
 	name: TsTypeParameterName
 	constraint: TsTypeConstraintClause?
 	default: TsDefaultTypeClause?

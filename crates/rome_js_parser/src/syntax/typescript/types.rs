@@ -214,7 +214,7 @@ impl ParseSeparatedList for TsTypeParameterList {
     }
 }
 
-// test_err ts type_parameter_modifier1
+// test_err ts type_parameter_modifier
 // export default function foo<in T>() {}
 // export function foo<out T>() {}
 // export function foo1<in T>() {}
@@ -243,8 +243,6 @@ impl ParseSeparatedList for TsTypeParameterList {
 // let x: { y<in T>(): any };
 // let x: { y<out T>(): any };
 // let x: { y<in T, out T>(): any };
-
-// test_err ts type_parameter_modifier
 // type Foo<i\\u006E T> = {}
 // type Foo<ou\\u0074 T> = {}
 // type Foo<in in> = {}
@@ -256,10 +254,12 @@ impl ParseSeparatedList for TsTypeParameterList {
 // type Foo<in out out T> = {}
 // function foo<in T>() {}
 // function foo<out T>() {}
+// type Foo<const U> = {};
 
 // test tsx type_parameter_modifier_tsx
 // <in T></in>;
 // <out T></out>;
+// <const T></const>;
 // <in out T></in>;
 // <out in T></out>;
 // <in T extends={true}></in>;
@@ -286,6 +286,30 @@ impl ParseSeparatedList for TsTypeParameterList {
 // declare class Foo<out T> {}
 // declare interface Foo<in T> {}
 // declare interface Foo<out T> {}
+// function a<const T>() {}
+// function b<const T extends U>() {}
+// function c<T, const U>() {}
+// declare function d<const T>();
+// (function <const T>() {});
+// (function <const T extends U>() {});
+// (function <T, const U>() {});
+// class A<const T> {}
+// class B<const T extends U> {}
+// class C<T, const U> {}
+// (class <const T> {});
+// (class <const T extends U> {});
+// (class <T, const U> {});
+// class _ {
+//   method<const T>() {}
+//   method<const T extends U>() {}
+//   method<T, const U>() {}
+// }
+// declare module a {
+//   function test<const T>(): T;
+// }
+// const obj = {
+//   a<const T>(b: any): b is T { return true; }
+// }
 
 fn parse_ts_type_parameter(p: &mut JsParser, context: TypeContext) -> ParsedSyntax {
     let m = p.start();
@@ -321,7 +345,6 @@ struct TypeParameterModifier {
 struct ClassMemberModifierList(SmallVec<[TypeParameterModifier; 2]>);
 
 impl ClassMemberModifierList {
-    /// Sets the range of a parsed modifier
     fn add_modifier(&mut self, modifier: TypeParameterModifier) {
         self.0.push(modifier);
     }
@@ -1446,7 +1469,7 @@ fn parse_ts_function_type(p: &mut JsParser, context: TypeContext) -> ParsedSynta
     }
 
     let m = p.start();
-    parse_ts_type_parameters(p, context).ok();
+    parse_ts_type_parameters(p, context.and_allow_const_modifier(true)).ok();
     parse_parameter_list(p, ParameterContext::Declaration, SignatureFlags::empty())
         .or_add_diagnostic(p, expected_parameters);
     p.expect(T![=>]);

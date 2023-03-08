@@ -78,6 +78,7 @@ JsModule {
                     TsTypeParameter {
                         in_modifier_token: missing (optional),
                         out_modifier_token: missing (optional),
+                        const_modifier_token: missing (optional),
                         name: TsTypeParameterName {
                             ident_token: IDENT@68..69 "A" [] [],
                         },
@@ -88,6 +89,7 @@ JsModule {
                     TsTypeParameter {
                         in_modifier_token: missing (optional),
                         out_modifier_token: missing (optional),
+                        const_modifier_token: missing (optional),
                         name: TsTypeParameterName {
                             ident_token: IDENT@71..73 "B" [] [Whitespace(" ")],
                         },
@@ -106,6 +108,7 @@ JsModule {
                     TsTypeParameter {
                         in_modifier_token: missing (optional),
                         out_modifier_token: missing (optional),
+                        const_modifier_token: missing (optional),
                         name: TsTypeParameterName {
                             ident_token: IDENT@84..86 "C" [] [Whitespace(" ")],
                         },
@@ -253,31 +256,34 @@ JsModule {
           0: TS_TYPE_PARAMETER@68..69
             0: (empty)
             1: (empty)
-            2: TS_TYPE_PARAMETER_NAME@68..69
+            2: (empty)
+            3: TS_TYPE_PARAMETER_NAME@68..69
               0: IDENT@68..69 "A" [] []
-            3: (empty)
             4: (empty)
+            5: (empty)
           1: COMMA@69..71 "," [] [Whitespace(" ")]
           2: TS_TYPE_PARAMETER@71..82
             0: (empty)
             1: (empty)
-            2: TS_TYPE_PARAMETER_NAME@71..73
+            2: (empty)
+            3: TS_TYPE_PARAMETER_NAME@71..73
               0: IDENT@71..73 "B" [] [Whitespace(" ")]
-            3: TS_TYPE_CONSTRAINT_CLAUSE@73..82
+            4: TS_TYPE_CONSTRAINT_CLAUSE@73..82
               0: EXTENDS_KW@73..81 "extends" [] [Whitespace(" ")]
               1: TS_REFERENCE_TYPE@81..82
                 0: JS_REFERENCE_IDENTIFIER@81..82
                   0: IDENT@81..82 "A" [] []
                 1: (empty)
-            4: (empty)
+            5: (empty)
           3: COMMA@82..84 "," [] [Whitespace(" ")]
           4: TS_TYPE_PARAMETER@84..89
             0: (empty)
             1: (empty)
-            2: TS_TYPE_PARAMETER_NAME@84..86
+            2: (empty)
+            3: TS_TYPE_PARAMETER_NAME@84..86
               0: IDENT@84..86 "C" [] [Whitespace(" ")]
-            3: (empty)
-            4: TS_DEFAULT_TYPE_CLAUSE@86..89
+            4: (empty)
+            5: TS_DEFAULT_TYPE_CLAUSE@86..89
               0: EQ@86..88 "=" [] [Whitespace(" ")]
               1: TS_REFERENCE_TYPE@88..89
                 0: JS_REFERENCE_IDENTIFIER@88..89

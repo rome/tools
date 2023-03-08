@@ -20,6 +20,7 @@ JsModule {
                                         TsTypeParameter {
                                             in_modifier_token: missing (optional),
                                             out_modifier_token: missing (optional),
+                                            const_modifier_token: missing (optional),
                                             name: TsTypeParameterName {
                                                 ident_token: IDENT@9..10 "A" [] [],
                                             },
@@ -86,10 +87,11 @@ JsModule {
                   0: TS_TYPE_PARAMETER@9..10
                     0: (empty)
                     1: (empty)
-                    2: TS_TYPE_PARAMETER_NAME@9..10
+                    2: (empty)
+                    3: TS_TYPE_PARAMETER_NAME@9..10
                       0: IDENT@9..10 "A" [] []
-                    3: (empty)
                     4: (empty)
+                    5: (empty)
                 2: R_ANGLE@10..11 ">" [] []
               3: L_PAREN@11..12 "(" [] []
               4: JS_FORMAL_PARAMETER@12..20

@@ -16,6 +16,7 @@ JsModule {
                         TsTypeParameter {
                             in_modifier_token: missing (optional),
                             out_modifier_token: missing (optional),
+                            const_modifier_token: missing (optional),
                             name: TsTypeParameterName {
                                 ident_token: IDENT@22..23 "A" [] [],
                             },
@@ -26,6 +27,7 @@ JsModule {
                         TsTypeParameter {
                             in_modifier_token: missing (optional),
                             out_modifier_token: missing (optional),
+                            const_modifier_token: missing (optional),
                             name: TsTypeParameterName {
                                 ident_token: IDENT@25..26 "B" [] [],
                             },
@@ -36,6 +38,7 @@ JsModule {
                         TsTypeParameter {
                             in_modifier_token: missing (optional),
                             out_modifier_token: missing (optional),
+                            const_modifier_token: missing (optional),
                             name: TsTypeParameterName {
                                 ident_token: IDENT@28..29 "R" [] [],
                             },
@@ -204,26 +207,29 @@ JsModule {
             0: TS_TYPE_PARAMETER@22..23
               0: (empty)
               1: (empty)
-              2: TS_TYPE_PARAMETER_NAME@22..23
+              2: (empty)
+              3: TS_TYPE_PARAMETER_NAME@22..23
                 0: IDENT@22..23 "A" [] []
-              3: (empty)
               4: (empty)
+              5: (empty)
             1: COMMA@23..25 "," [] [Whitespace(" ")]
             2: TS_TYPE_PARAMETER@25..26
               0: (empty)
               1: (empty)
-              2: TS_TYPE_PARAMETER_NAME@25..26
+              2: (empty)
+              3: TS_TYPE_PARAMETER_NAME@25..26
                 0: IDENT@25..26 "B" [] []
-              3: (empty)
               4: (empty)
+              5: (empty)
             3: COMMA@26..28 "," [] [Whitespace(" ")]
             4: TS_TYPE_PARAMETER@28..29
               0: (empty)
               1: (empty)
-              2: TS_TYPE_PARAMETER_NAME@28..29
+              2: (empty)
+              3: TS_TYPE_PARAMETER_NAME@28..29
                 0: IDENT@28..29 "R" [] []
-              3: (empty)
               4: (empty)
+              5: (empty)
           2: R_ANGLE@29..30 ">" [] []
         4: JS_PARAMETERS@30..42
           0: L_PAREN@30..31 "(" [] []
