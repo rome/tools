@@ -437,9 +437,9 @@ export interface Nursery {
 	 */
 	noRestrictedGlobals?: RuleConfiguration;
 	/**
-	 * Put your description here
+	 * Disallow assignments where both sides are exactly the same.
 	 */
-	noSelfAssignment?: RuleConfiguration;
+	noSelfAssign?: RuleConfiguration;
 	/**
 	 * Disallow comparisons where both sides are exactly the same.
 	 */
@@ -895,7 +895,7 @@ export type Category =
 	| "lint/nursery/noRedundantAlt"
 	| "lint/nursery/noRestrictedGlobals"
 	| "lint/nursery/noSelfCompare"
-	| "lint/nursery/noSelfAssignment"
+	| "lint/nursery/noSelfAssign"
 	| "lint/nursery/noSetterReturn"
 	| "lint/nursery/noStringCaseMismatch"
 	| "lint/nursery/noSwitchDeclarations"
