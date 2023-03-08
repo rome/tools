@@ -629,8 +629,8 @@
 						{ "type": "null" }
 					]
 				},
-				"noSelfAssignment": {
-					"description": "Put your description here",
+				"noSelfAssign": {
+					"description": "Disallow assignments where both sides are exactly the same.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }

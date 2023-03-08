@@ -1,11 +1,15 @@
 ---
-title: Lint Rule noSelfAssignment
+title: Lint Rule noSelfAssign
 parent: lint/rules/index
 ---
 
-# noSelfAssignment (since v12.0.0)
+# noSelfAssign (since v12.0.0)
 
-Put your description here
+Disallow assignments where both sides are exactly the same.
+
+Self assignments have no effect, so probably those are an error due to incomplete refactoring.
+
+Source: https://eslint.org/docs/latest/rules/no-self-assign
 
 ## Examples
 
@@ -15,7 +19,7 @@ Put your description here
 a = a;
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noSelfAssignment.js:1:5 <a href="https://docs.rome.tools/lint/rules/noSelfAssignment">lint/nursery/noSelfAssignment</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">nursery/noSelfAssign.js:1:5 <a href="https://docs.rome.tools/lint/rules/noSelfAssign">lint/nursery/noSelfAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">a is assigned to itself.</span>
   
@@ -35,7 +39,7 @@ a = a;
 [a] = [a];
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noSelfAssignment.js:1:8 <a href="https://docs.rome.tools/lint/rules/noSelfAssignment">lint/nursery/noSelfAssignment</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">nursery/noSelfAssign.js:1:8 <a href="https://docs.rome.tools/lint/rules/noSelfAssign">lint/nursery/noSelfAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">a is assigned to itself.</span>
   
@@ -55,7 +59,7 @@ a = a;
 ({a: b} = {a: b});
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noSelfAssignment.js:1:15 <a href="https://docs.rome.tools/lint/rules/noSelfAssignment">lint/nursery/noSelfAssignment</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">nursery/noSelfAssign.js:1:15 <a href="https://docs.rome.tools/lint/rules/noSelfAssign">lint/nursery/noSelfAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">b is assigned to itself.</span>
   
@@ -75,7 +79,7 @@ a = a;
 a.b = a.b;
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noSelfAssignment.js:1:9 <a href="https://docs.rome.tools/lint/rules/noSelfAssignment">lint/nursery/noSelfAssignment</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">nursery/noSelfAssign.js:1:9 <a href="https://docs.rome.tools/lint/rules/noSelfAssign">lint/nursery/noSelfAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">b is assigned to itself.</span>
   
@@ -95,7 +99,7 @@ a.b = a.b;
 a[b] = a[b];
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noSelfAssignment.js:1:10 <a href="https://docs.rome.tools/lint/rules/noSelfAssignment">lint/nursery/noSelfAssignment</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">nursery/noSelfAssign.js:1:10 <a href="https://docs.rome.tools/lint/rules/noSelfAssign">lint/nursery/noSelfAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">b is assigned to itself.</span>
   
