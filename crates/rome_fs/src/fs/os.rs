@@ -158,7 +158,6 @@ impl<'scope> TraversalScope<'scope> for OsTraversalScope<'scope> {
 
 /// Default list of ignored directories, in the future will be supplanted by
 /// detecting and parsing .ignore files
-/// TODO: add support for ignore files in Rome
 const DEFAULT_IGNORE: &[&str; 5] = &[".git", ".svn", ".hg", ".yarn", "node_modules"];
 
 /// Traverse a single directory
@@ -268,9 +267,11 @@ fn handle_dir_entry<'scope>(
     }
 
     if file_type.is_dir() {
-        scope.spawn(move |scope| {
-            handle_dir(scope, ctx, &path, origin_path);
-        });
+        if ctx.can_handle(&RomePath::new(path.clone())) {
+            scope.spawn(move |scope| {
+                handle_dir(scope, ctx, &path, origin_path);
+            });
+        }
         return;
     }
 
