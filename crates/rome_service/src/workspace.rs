@@ -109,7 +109,7 @@ pub enum UnsupportedReason {
     FileNotSupported,
 }
 
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub enum FeatureName {
     Format,
@@ -334,6 +334,13 @@ impl RageEntry {
     }
 }
 
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+pub struct IsPathIgnoredParams {
+    pub rome_path: RomePath,
+    pub feature: FeatureName,
+}
+
 pub trait Workspace: Send + Sync + RefUnwindSafe {
     /// Checks whether a certain feature is supported. There are different conditions:
     /// - Rome doesn't recognize a file, so it can't provide the feature;
@@ -343,6 +350,14 @@ pub trait Workspace: Send + Sync + RefUnwindSafe {
         &self,
         params: SupportsFeatureParams,
     ) -> Result<SupportsFeatureResult, WorkspaceError>;
+
+    /// Checks if the current path is ignored by the workspace, against a particular feature.
+    ///
+    /// Takes as input the path of the file that workspace is currently processing and
+    /// a list of paths to match against.
+    ///
+    /// If the file path matches, than `true` is returned and it should be considered ignored.
+    fn is_path_ignored(&self, params: IsPathIgnoredParams) -> Result<bool, WorkspaceError>;
 
     /// Update the global settings for this workspace
     fn update_settings(&self, params: UpdateSettingsParams) -> Result<(), WorkspaceError>;

@@ -6,7 +6,9 @@ use super::{
     UpdateSettingsParams,
 };
 use crate::file_handlers::{Capabilities, FixAllParams, Language, LintParams};
-use crate::workspace::{RageEntry, RageParams, RageResult, ServerInfo, SupportsFeatureResult};
+use crate::workspace::{
+    IsPathIgnoredParams, RageEntry, RageParams, RageResult, ServerInfo, SupportsFeatureResult,
+};
 use crate::{
     file_handlers::Features,
     settings::{SettingsHandle, WorkspaceSettings},
@@ -123,7 +125,10 @@ impl WorkspaceServer {
         feature: Option<FeatureName>,
     ) -> Result<AnyParse, WorkspaceError> {
         let ignored = if let Some(feature) = feature {
-            self.is_file_ignored(&rome_path, &feature)
+            self.is_path_ignored(IsPathIgnoredParams {
+                rome_path: rome_path.clone(),
+                feature,
+            })?
         } else {
             false
         };
@@ -179,37 +184,6 @@ impl WorkspaceServer {
             }
         }
     }
-
-    /// Takes as input the path of the file that workspace is currently processing and
-    /// a list of paths to match against.
-    ///
-    /// If the file path matches, than `true` is returned and it should be considered ignored.
-    fn is_file_ignored(&self, rome_path: &RomePath, feature: &FeatureName) -> bool {
-        let settings = self.settings();
-        let is_ignored_by_file_config = settings
-            .as_ref()
-            .files
-            .ignored_files
-            .matches_path(rome_path.as_path());
-        match feature {
-            FeatureName::Format => {
-                settings
-                    .as_ref()
-                    .formatter
-                    .ignored_files
-                    .matches_path(rome_path.as_path())
-                    || is_ignored_by_file_config
-            }
-            FeatureName::Lint => {
-                settings
-                    .as_ref()
-                    .linter
-                    .ignored_files
-                    .matches_path(rome_path.as_path())
-                    || is_ignored_by_file_config
-            }
-        }
-    }
 }
 
 impl Workspace for WorkspaceServer {
@@ -219,7 +193,10 @@ impl Workspace for WorkspaceServer {
     ) -> Result<SupportsFeatureResult, WorkspaceError> {
         let capabilities = self.get_capabilities(&params.path);
         let settings = self.settings.read().unwrap();
-        let is_ignored = self.is_file_ignored(&params.path, &params.feature);
+        let is_ignored = self.is_path_ignored(IsPathIgnoredParams {
+            rome_path: params.path,
+            feature: params.feature.clone(),
+        })?;
         let result = match params.feature {
             FeatureName::Format => {
                 if is_ignored {
@@ -245,6 +222,34 @@ impl Workspace for WorkspaceServer {
             }
         };
         Ok(result)
+    }
+
+    fn is_path_ignored(&self, params: IsPathIgnoredParams) -> Result<bool, WorkspaceError> {
+        let settings = self.settings();
+        let is_ignored_by_file_config = settings
+            .as_ref()
+            .files
+            .ignored_files
+            .matches_path(params.rome_path.as_path());
+
+        Ok(match params.feature {
+            FeatureName::Format => {
+                settings
+                    .as_ref()
+                    .formatter
+                    .ignored_files
+                    .matches_path(params.rome_path.as_path())
+                    || is_ignored_by_file_config
+            }
+            FeatureName::Lint => {
+                settings
+                    .as_ref()
+                    .linter
+                    .ignored_files
+                    .matches_path(params.rome_path.as_path())
+                    || is_ignored_by_file_config
+            }
+        })
     }
 
     /// Update the global settings for this workspace

@@ -5,7 +5,7 @@
 				"start": "astro dev",
 				"format": "cargo rome-cli-dev format --write .",
 				"tsc": "tsc --skipLibCheck",
-				"check": "cargo rome-cli-dev check ./src",
+				"check": "cargo rome-cli-dev check ./",
 				"start:playground": "pnpm build:wasm-dev && pnpm start",
 				"build": "pnpm build:wasm && pnpm build:js",
 				"build:js": "astro build",

@@ -20,6 +20,15 @@ pub(crate) struct Execution {
     max_diagnostics: u16,
 }
 
+impl Execution {
+    pub(crate) fn as_feature_name(&self) -> FeatureName {
+        match self.traversal_mode {
+            TraversalMode::Format { .. } => FeatureName::Format,
+            _ => FeatureName::Lint,
+        }
+    }
+}
+
 pub(crate) enum TraversalMode {
     /// This mode is enabled when running the command `rome check`
     Check {

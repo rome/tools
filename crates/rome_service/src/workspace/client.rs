@@ -1,14 +1,14 @@
+use crate::workspace::{
+    IsPathIgnoredParams, RageParams, RageResult, ServerInfo, SupportsFeatureResult,
+};
+use crate::{TransportError, Workspace, WorkspaceError};
+use rome_formatter::Printed;
+use serde::{de::DeserializeOwned, Deserialize, Serialize};
+use serde_json::json;
 use std::{
     panic::RefUnwindSafe,
     sync::atomic::{AtomicU64, Ordering},
 };
-
-use rome_formatter::Printed;
-use serde::{de::DeserializeOwned, Deserialize, Serialize};
-use serde_json::json;
-
-use crate::workspace::{RageParams, RageResult, ServerInfo, SupportsFeatureResult};
-use crate::{TransportError, Workspace, WorkspaceError};
 
 use super::{
     ChangeFileParams, CloseFileParams, FixFileParams, FixFileResult, FormatFileParams,
@@ -104,6 +104,10 @@ where
         params: SupportsFeatureParams,
     ) -> Result<SupportsFeatureResult, WorkspaceError> {
         self.request("rome/supports_feature", params)
+    }
+
+    fn is_path_ignored(&self, params: IsPathIgnoredParams) -> Result<bool, WorkspaceError> {
+        self.request("rome/is_path_ignored", params)
     }
 
     fn update_settings(&self, params: UpdateSettingsParams) -> Result<(), WorkspaceError> {

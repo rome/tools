@@ -2,7 +2,7 @@
 	"$schema": "./npm/rome/configuration_schema.json",
 	"files": {
 		"ignore": [
-			"website/build",
+			"build",
 			"dist",
 			"target"
 		]

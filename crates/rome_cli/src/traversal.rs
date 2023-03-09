@@ -14,7 +14,7 @@ use rome_diagnostics::{
 };
 use rome_fs::{FileSystem, OpenOptions, PathInterner, RomePath};
 use rome_fs::{TraversalContext, TraversalScope};
-use rome_service::workspace::{SupportsFeatureResult, UnsupportedReason};
+use rome_service::workspace::{IsPathIgnoredParams, SupportsFeatureResult, UnsupportedReason};
 use rome_service::{
     workspace::{
         FeatureName, FileGuard, Language, OpenFileParams, RuleCategories, SupportsFeatureParams,
@@ -648,6 +648,20 @@ impl<'ctx, 'app> TraversalContext for TraversalOptions<'ctx, 'app> {
     }
 
     fn can_handle(&self, rome_path: &RomePath) -> bool {
+        if rome_path.is_dir() {
+            let can_handle = !self
+                .workspace
+                .is_path_ignored(IsPathIgnoredParams {
+                    rome_path: rome_path.clone(),
+                    feature: self.execution.as_feature_name(),
+                })
+                .unwrap_or_else(|err| {
+                    self.push_diagnostic(err.into());
+                    false
+                });
+            return can_handle;
+        }
+
         let can_lint = self.can_lint(rome_path);
         let can_format = self.can_format(rome_path);
 
