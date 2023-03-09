@@ -397,7 +397,6 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, WorkspaceError> {
         let (action, _) = analyze(&tree, filter, &analyzer_options, |signal| {
             let current_diagnostic = signal.diagnostic();
 
-            // all rules have at least an action, which is he suppression
             if let Some(diagnostic) = current_diagnostic.as_ref() {
                 if is_diagnostic_error(diagnostic, params.rules) {
                     errors += 1;

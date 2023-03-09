@@ -862,15 +862,15 @@ fn fs_error_unknown() {
 //
 // ├── rome.json
 // ├── hidden_nested
-// │   └── test
-// │       └── symlink_testcase1_2 -> hidden_testcase1
+// │   └── test
+// │       └── symlink_testcase1_2 -> hidden_testcase1
 // ├── hidden_testcase1
-// │   └── test
-// │       └── test.js // ok
+// │   └── test
+// │       └── test.js // ok
 // ├── hidden_testcase2
-// │   ├── test1.ts // ignored
-// │   ├── test2.ts // ignored
-// │   └── test.js  // ok
+// │   ├── test1.ts // ignored
+// │   ├── test2.ts // ignored
+// │   └── test.js  // ok
 // └── src
 //     ├── symlink_testcase1_1 -> hidden_nested
 //     └── symlink_testcase2 -> hidden_testcase2
@@ -951,7 +951,7 @@ fn fs_files_ignore_symlink() {
             OsString::from("check"),
             OsString::from("--config-path"),
             OsString::from(root_path.clone()),
-            OsString::from("--apply"),
+            OsString::from("--apply-unsafe"),
             OsString::from(src_path),
         ]),
     );
