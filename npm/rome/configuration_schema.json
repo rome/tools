@@ -580,6 +580,13 @@
 						{ "type": "null" }
 					]
 				},
+				"noNamespace": {
+					"description": "Disallow the use of TypeScript's namespaces.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"noNoninteractiveElementToInteractiveRole": {
 					"description": "Enforce that interactive ARIA roles are not assigned to non-interactive HTML elements.",
 					"anyOf": [

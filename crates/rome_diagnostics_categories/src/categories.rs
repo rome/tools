@@ -98,6 +98,7 @@ define_categories! {
     "lint/nursery/noSvgWithoutTitle": "https://docs.rome.tools/lint/rules/noSvgWithoutTitle",
     "lint/nursery/noUselessCatch": "https://docs.rome.tools/lint/rules/noUselessCatch",
 "lint/nursery/noParameterAssign": "https://docs.rome.tools/lint/rules/noParameterAssign",
+"lint/nursery/noNamespace": "https://docs.rome.tools/lint/rules/noNamespace",
     // Insert new nursery rule here
     "lint/nursery/noRedeclaration": "https://docs.rome.tools/lint/rules/noRedeclaration",
     "lint/nursery/useNamespaceKeyword": "https://docs.rome.tools/lint/rules/useNamespaceKeyword",
