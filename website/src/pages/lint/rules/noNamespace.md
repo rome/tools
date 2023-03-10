@@ -11,8 +11,6 @@ Namespaces are an old way to organize your code in TypeScript.
 They are not recommended anymore and should be replaced by ES6 modules
 (the `import`/`export` syntax).
 
-Add a link to the corresponding ESLint rule (if any):
-
 Source: https://typescript-eslint.io/rules/no-namespace
 
 ## Examples
