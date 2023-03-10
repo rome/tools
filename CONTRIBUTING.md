@@ -24,6 +24,46 @@ cargo run --bin rome -- --help
 
 Rome can be used as a language server by following the instructions below.
 
+## Testing
+
+To run the tests, just run
+
+```shell
+cargo test
+```
+
+Or
+
+```shell
+cargo t
+```
+
+If you want to test run tests for a single crates, just change path inside the root of the crate you want to test.
+For example, if you want to run the tests of the `rome_cli` crate, you would run:
+
+```shell
+cd ./crates/rome_cli
+cargo t
+```
+
+If you to run only the doctests, you would need to pass an argument to the command:
+```shell
+cargo test --doc
+```
+
+In some crates, we use snapshot testing. The majority of snapshot testing is done using [`insta`](https://insta.rs).
+
+Make sure to install it globally via `cargo`:
+
+```shell
+cargo install cargo-insta
+```
+
+When a snapshot test fails, you can run:
+- `cargo insta accept` to accept all the changes and update all the snapshots;
+- `cargo insta reject` to reject all the changes;
+- `cargo insta review` to review snapshots singularly;
+
 ## Language Server and VS Code Extension Development
 
 The Rome language server is the binary crate `rome` which can be built using the command:
