@@ -409,6 +409,10 @@ export interface Nursery {
 	 */
 	noInvalidConstructorSuper?: RuleConfiguration;
 	/**
+	 * Disallow the use of TypeScript's namespaces.
+	 */
+	noNamespace?: RuleConfiguration;
+	/**
 	 * Enforce that interactive ARIA roles are not assigned to non-interactive HTML elements.
 	 */
 	noNoninteractiveElementToInteractiveRole?: RuleConfiguration;
@@ -924,6 +928,7 @@ export type Category =
 	| "lint/nursery/noSvgWithoutTitle"
 	| "lint/nursery/noUselessCatch"
 	| "lint/nursery/noParameterAssign"
+	| "lint/nursery/noNamespace"
 	| "lint/nursery/noRedeclaration"
 	| "lint/nursery/useNamespaceKeyword"
 	| "lint/performance/noDelete"
