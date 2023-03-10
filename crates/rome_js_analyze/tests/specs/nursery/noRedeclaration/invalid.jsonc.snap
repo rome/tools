@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 91
 expression: invalid.jsonc
 ---
 # Input
@@ -525,6 +526,11 @@ invalid.jsonc:1:18 lint/nursery/noRedeclaration ━━━━━━━━━━�
       │               ^
   
 
+```
+
+# Input
+```js
+function f(x) { var x = 5; }
 ```
 
 

@@ -43,6 +43,119 @@ declare_node_union! {
             | JsCatchDeclaration
 }
 
+impl AnyJsBindingDeclaration {
+    /// Returns `true` if `self` and `other` are mergeable declarations.
+    ///
+    /// See also: https://www.typescriptlang.org/docs/handbook/declaration-merging.html
+    ///
+    /// ## Examples
+    ///
+    /// A namespace can merge with a class, an enum.
+    /// However, an enum cannot merge with a class.
+    ///
+    /// ```
+    /// use rome_js_factory::make;
+    /// use rome_js_syntax::{binding_ext::AnyJsBindingDeclaration, T};
+    ///
+    /// let enum_id = make::js_identifier_binding(make::ident("Order"));
+    /// let enum_decl: AnyJsBindingDeclaration = make::ts_enum_declaration(
+    ///     make::token(T![enum]),
+    ///     enum_id.into(),
+    ///     make::token(T!['{']),
+    ///     make::ts_enum_member_list(
+    ///         std::iter::empty(),
+    ///         Some(make::token(T![;])),
+    ///     ),
+    ///     make::token(T!['}']),
+    /// ).build().into();
+    ///
+    /// let namespace_id = make::ts_identifier_binding(make::ident("Order"));
+    /// let namespace_decl: AnyJsBindingDeclaration = make::ts_module_declaration(
+    ///     make::token(T![namespace]),
+    ///     namespace_id.into(),
+    ///     make::ts_module_block(
+    ///         make::token(T!['{']),
+    ///         make::js_module_item_list(std::iter::empty()),
+    ///         make::token(T!['}']),
+    ///     ),
+    /// ).into();
+    ///
+    /// let class_id = make::js_identifier_binding(make::ident("Order"));
+    /// let class_decl: AnyJsBindingDeclaration = make::js_class_declaration(
+    ///     make::token(T![class]),
+    ///     class_id.into(),
+    ///     make::token(T!['{']),
+    ///     make::js_class_member_list(std::iter::empty()),
+    ///     make::token(T!['}']),
+    /// ).build().into();
+    ///
+    /// assert!(enum_decl.is_mergeable(&namespace_decl));
+    /// assert!(namespace_decl.is_mergeable(&enum_decl));
+    ///
+    /// assert!(class_decl.is_mergeable(&namespace_decl));
+    /// assert!(namespace_decl.is_mergeable(&class_decl));
+    ///
+    /// assert!(!class_decl.is_mergeable(&enum_decl));
+    /// assert!(!enum_decl.is_mergeable(&class_decl));
+    /// ```
+    pub const fn is_mergeable(&self, other: &AnyJsBindingDeclaration) -> bool {
+        Self::can_merge(self, other) || Self::can_merge(other, self)
+    }
+
+    /// Please use `is_mergeable`.
+    /// `can_merge` is sensible to the order of arguments.
+    const fn can_merge(a: &AnyJsBindingDeclaration, b: &AnyJsBindingDeclaration) -> bool {
+        match (a, b) {
+            (
+                AnyJsBindingDeclaration::TsDeclareFunctionDeclaration(_),
+                AnyJsBindingDeclaration::JsFunctionDeclaration(_)
+                | AnyJsBindingDeclaration::TsDeclareFunctionDeclaration(_),
+            ) => true,
+            (
+                AnyJsBindingDeclaration::TsEnumDeclaration(_),
+                AnyJsBindingDeclaration::TsEnumDeclaration(_),
+            ) => true,
+            (
+                AnyJsBindingDeclaration::TsTypeAliasDeclaration(_),
+                AnyJsBindingDeclaration::JsFunctionDeclaration(_)
+                | AnyJsBindingDeclaration::JsVariableDeclarator(_)
+                | AnyJsBindingDeclaration::TsModuleDeclaration(_),
+            ) => true,
+            (
+                AnyJsBindingDeclaration::TsInterfaceDeclaration(_),
+                AnyJsBindingDeclaration::JsClassDeclaration(_)
+                | AnyJsBindingDeclaration::JsFunctionDeclaration(_)
+                | AnyJsBindingDeclaration::JsVariableDeclarator(_)
+                | AnyJsBindingDeclaration::TsDeclareFunctionDeclaration(_)
+                | AnyJsBindingDeclaration::TsInterfaceDeclaration(_)
+                | AnyJsBindingDeclaration::TsModuleDeclaration(_),
+            ) => true,
+            (
+                AnyJsBindingDeclaration::TsModuleDeclaration(_),
+                AnyJsBindingDeclaration::JsClassDeclaration(_)
+                | AnyJsBindingDeclaration::JsFunctionDeclaration(_)
+                | AnyJsBindingDeclaration::TsDeclareFunctionDeclaration(_)
+                | AnyJsBindingDeclaration::TsEnumDeclaration(_)
+                | AnyJsBindingDeclaration::TsInterfaceDeclaration(_)
+                | AnyJsBindingDeclaration::TsModuleDeclaration(_),
+            ) => true,
+            (_, _) => false,
+        }
+    }
+
+    /// Returns `true` if `self` is a formal parameter, a rest parameter,
+    /// a property parameter, or a bogus parameter.
+    pub const fn is_parameter_like(&self) -> bool {
+        matches!(
+            self,
+            AnyJsBindingDeclaration::JsFormalParameter(_)
+                | AnyJsBindingDeclaration::JsRestParameter(_)
+                | AnyJsBindingDeclaration::JsBogusParameter(_)
+                | AnyJsBindingDeclaration::TsPropertyParameter(_)
+        )
+    }
+}
+
 declare_node_union! {
     pub AnyJsIdentifierBinding = JsIdentifierBinding | TsIdentifierBinding | TsTypeParameterName
 }
