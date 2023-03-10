@@ -40,7 +40,7 @@ declare_rule! {
     /// ```
     ///
     pub(crate) NoNamespace {
-        version: "next",
+        version: "12.0.0",
         name: "noNamespace",
         recommended: true,
     }
