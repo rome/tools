@@ -16,7 +16,7 @@ expression: content
 
 ```js
 
-if(a != -0) {}
+(1 >= -0)
 
 ```
 
@@ -34,54 +34,18 @@ internalError/io ━━━━━━━━━━━━━━━━━━━━━
 # Emitted Messages
 
 ```block
-fix.js:2:4 lint/suspicious/noCompareNegZero  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fix.js:2:2 lint/suspicious/noCompareNegZero  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Do not use the != operator to compare against -0.
+  × Do not use the >= operator to compare against -0.
   
-  > 2 │ if(a != -0) {}
-      │    ^^^^^^^
+  > 2 │ (1 >= -0)
+      │  ^^^^^^^
     3 │ 
   
   i Safe fix: Replace -0 with 0
   
-    2 │ if(a·!=·-0)·{}
-      │         -     
-
-```
-
-```block
-fix.js:2:6 lint/suspicious/noDoubleEquals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × Use !== instead of !=
-  
-  > 2 │ if(a != -0) {}
-      │      ^^
-    3 │ 
-  
-  i != is only allowed when comparing against null
-  
-  > 2 │ if(a != -0) {}
-      │      ^^
-    3 │ 
-  
-  i Using !== may be unsafe if you are relying on type coercion
-  
-  i Suggested fix: Use !==
-  
-    2 │ if(a·!==·-0)·{}
-      │        +       
-
-```
-
-```block
-fix.js:2:4 lint/correctness/noUndeclaredVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! The a variable is undeclared
-  
-  > 2 │ if(a != -0) {}
-      │    ^
-    3 │ 
-  
+    2 │ (1·>=·-0)
+      │       -  
 
 ```
 

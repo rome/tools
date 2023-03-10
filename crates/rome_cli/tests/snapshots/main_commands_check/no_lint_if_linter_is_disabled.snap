@@ -16,7 +16,7 @@ expression: content
 
 ```js
 
-if(a != -0) {}
+(1 >= -0)
 
 ```
 

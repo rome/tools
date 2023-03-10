@@ -208,7 +208,11 @@ pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<
     if count.saturating_sub(skipped) == 0 {
         Err(CliDiagnostic::no_files_processed())
     } else if errors > 0 {
-        Err(CliDiagnostic::check_error())
+        if execution.is_check_apply() {
+            Err(CliDiagnostic::apply_error())
+        } else {
+            Err(CliDiagnostic::check_error())
+        }
     } else {
         Ok(())
     }
@@ -369,6 +373,25 @@ fn process_messages(options: ProcessMessagesOptions) {
                 skipped_suggested_fixes,
             } => {
                 total_skipped_suggested_fixes += skipped_suggested_fixes;
+            }
+
+            Message::ApplyError(error) => {
+                *errors += 1;
+                let should_print = printed_diagnostics < max_diagnostics;
+                if should_print {
+                    printed_diagnostics += 1;
+                    remaining_diagnostics.store(
+                        max_diagnostics.saturating_sub(printed_diagnostics),
+                        Ordering::Relaxed,
+                    );
+                } else {
+                    not_printed_diagnostics += 1;
+                }
+                if mode.should_report_to_terminal() && should_print {
+                    console.error(markup! {
+                        {if verbose { PrintDiagnostic::verbose(&error) } else { PrintDiagnostic::simple(&error) }}
+                    });
+                }
             }
 
             Message::Error(mut err) => {
@@ -828,8 +851,8 @@ fn process_file(ctx: &TraversalOptions, path: &Path) -> FileResult {
             return if fixed.errors == 0 {
                 Ok(FileStatus::Success)
             } else {
-                Ok(FileStatus::Message(Message::Error(
-                    CliDiagnostic::apply_error().into(),
+                Ok(FileStatus::Message(Message::ApplyError(
+                    CliDiagnostic::file_apply_error(path.display().to_string()),
                 )))
             };
         }
@@ -948,6 +971,7 @@ enum Message {
         /// Suggested fixes skipped during the lint traversal
         skipped_suggested_fixes: u32,
     },
+    ApplyError(CliDiagnostic),
     Error(Error),
     Diagnostics {
         name: String,

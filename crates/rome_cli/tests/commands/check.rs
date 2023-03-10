@@ -36,10 +36,10 @@ const NO_DEBUGGER: &str = "debugger;";
 const NEW_SYMBOL: &str = "new Symbol(\"\");";
 
 const FIX_BEFORE: &str = "
-if(a != -0) {}
+(1 >= -0)
 ";
 const FIX_AFTER: &str = "
-if(a != 0) {}
+(1 >= 0)
 ";
 
 const APPLY_SUGGESTED_BEFORE: &str = "let a = 4;
@@ -51,19 +51,6 @@ const APPLY_SUGGESTED_AFTER: &str = "const a = 4;\nconsole.log(a);\n";
 
 const NO_DEBUGGER_BEFORE: &str = "debugger;";
 const NO_DEBUGGER_AFTER: &str = "debugger;";
-
-const JS_ERRORS_BEFORE: &str = r#"try {
-    !a && !b;
-} catch (err) {
-    err = 24;
-}
-"#;
-const JS_ERRORS_AFTER: &str = "try {
-    !a && !b;
-} catch (err) {
-    err = 24;
-}
-";
 
 const UPGRADE_SEVERITY_CODE: &str = r#"if(!cond) { exprA(); } else { exprB() }"#;
 
@@ -253,8 +240,6 @@ fn apply_noop() {
         ]),
     );
 
-    println!("{console:#?}");
-
     assert!(result.is_ok(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
@@ -327,6 +312,73 @@ fn apply_suggested() {
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
         "apply_suggested",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn apply_suggested_with_error() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    // last line doesn't have code fix
+    let source = "let a = 4;
+debugger;
+console.log(a);
+function f() { arguments; }
+";
+
+    let expected = "const a = 4;
+console.log(a);
+function f() { arguments; }
+";
+
+    let test1 = Path::new("test1.js");
+    fs.insert(test1.into(), source.as_bytes());
+
+    let test2 = Path::new("test2.js");
+    fs.insert(test2.into(), source.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Arguments::from_vec(vec![
+            OsString::from("check"),
+            OsString::from("--apply-unsafe"),
+            test1.as_os_str().into(),
+            test2.as_os_str().into(),
+        ]),
+    );
+
+    assert!(result.is_err(), "run_cli returned {result:?}");
+
+    let mut file = fs
+        .open(test1)
+        .expect("formatting target file was removed by the CLI");
+
+    let mut content = String::new();
+    file.read_to_string(&mut content)
+        .expect("failed to read file from memory FS");
+
+    assert_eq!(content, expected);
+    drop(file);
+
+    content.clear();
+
+    let mut file = fs
+        .open(test2)
+        .expect("formatting target file was removed by the CLI");
+
+    file.read_to_string(&mut content)
+        .expect("failed to read file from memory FS");
+
+    drop(file);
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "apply_suggested_with_error",
         fs,
         console,
         result,
@@ -455,7 +507,7 @@ fn should_disable_a_rule_group() {
     let mut console = BufferConsole::default();
 
     let file_path = Path::new("fix.js");
-    fs.insert(file_path.into(), JS_ERRORS_BEFORE.as_bytes());
+    fs.insert(file_path.into(), FIX_BEFORE.as_bytes());
 
     let config_path = Path::new("rome.json");
     fs.insert(
@@ -481,7 +533,7 @@ fn should_disable_a_rule_group() {
         .read_to_string(&mut buffer)
         .unwrap();
 
-    assert_eq!(buffer, JS_ERRORS_AFTER);
+    assert_eq!(buffer, FIX_BEFORE);
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),

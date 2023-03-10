@@ -9,7 +9,7 @@ expression: content
   "linter": {
     "rules": {
       "recommended": true,
-      "correctness": {
+      "suspicious": {
         "recommended": false
       }
     }
@@ -20,23 +20,12 @@ expression: content
 ## `fix.js`
 
 ```js
-try {
-    !a && !b;
-} catch (err) {
-    err = 24;
-}
+
+(1 >= -0)
 
 ```
 
 # Emitted Messages
-
-```block
-internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × Fixes applied, but there are still diagnostics to be addressed
-  
-
-```
 
 ```block
 Fixed 1 file(s) in <TIME>

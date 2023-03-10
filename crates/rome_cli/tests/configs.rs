@@ -131,7 +131,7 @@ pub const CONFIG_LINTER_SUPPRESSED_GROUP: &str = r#"{
   "linter": {
     "rules": {
         "recommended": true,
-        "correctness": {
+        "suspicious": {
             "recommended": false
         }
     }
