@@ -65,7 +65,7 @@ impl Rule for NoNamespace {
                 rule_category!(),
                 node.syntax().text_trimmed_range(),
                 markup! {
-                    "Do not use TypeScript's namespaces."
+                    "TypeScript's namespaces are an oudated way to organize code."
                 },
             )
             .note(markup! {
