@@ -482,6 +482,10 @@ fn generate_struct(group: &str, rules: &BTreeMap<&'static str, RuleMetadata>) ->
                 !matches!(self.recommended, Some(false))
             }
 
+            pub(crate) const fn is_not_recommended(&self) -> bool {
+                matches!(self.recommended, Some(false))
+            }
+
             pub(crate) fn is_all(&self) -> bool {
                 matches!(self.all, Some(true))
             }
@@ -531,8 +535,10 @@ fn generate_struct(group: &str, rules: &BTreeMap<&'static str, RuleMetadata>) ->
                     enabled_rules.extend(Self::all_rules_as_filters());
                 } else if self.is_not_all() {
                     disabled_rules.extend(Self::all_rules_as_filters());
-                } else if is_recommended || self.is_recommended() {
+                } else if (is_recommended && !self.is_not_recommended()) || self.is_recommended() {
                     enabled_rules.extend(Self::recommended_rules_as_filters());
+                } else if self.is_not_recommended() {
+                    disabled_rules.extend(Self::recommended_rules_as_filters());
                 }
             }
 

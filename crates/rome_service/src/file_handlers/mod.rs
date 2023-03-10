@@ -6,9 +6,10 @@ use crate::{
     Rules, WorkspaceError,
 };
 pub use javascript::JsFormatterSettings;
-use rome_analyze::AnalysisFilter;
+use rome_analyze::{AnalysisFilter, AnalyzerDiagnostic};
 use rome_console::fmt::Formatter;
 use rome_console::markup;
+use rome_diagnostics::{Diagnostic, Severity};
 use rome_formatter::Printed;
 use rome_fs::RomePath;
 use rome_js_syntax::{TextRange, TextSize};
@@ -291,4 +292,24 @@ impl Features {
             Language::Unknown => self.unknown.capabilities(),
         }
     }
+}
+
+/// Checks whether a diagnostic coming from the analyzer is an [error](Severity::Error)
+///
+/// The function checks the diagnostic against the current configured rules.
+pub(crate) fn is_diagnostic_error(
+    diagnostic: &'_ AnalyzerDiagnostic,
+    rules: Option<&'_ Rules>,
+) -> bool {
+    let severity = diagnostic
+        .category()
+        .filter(|category| category.name().starts_with("lint/"))
+        .map(|category| {
+            rules
+                .and_then(|rules| rules.get_severity_from_code(category))
+                .unwrap_or(Severity::Warning)
+        })
+        .unwrap_or_else(|| diagnostic.severity());
+
+    severity >= Severity::Error
 }
