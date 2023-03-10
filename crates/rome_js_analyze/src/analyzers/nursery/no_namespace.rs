@@ -1,5 +1,4 @@
-use crate::{semantic_services::Semantic, JsRuleAction};
-use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleDiagnostic};
+use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::TsModuleDeclaration;
 use rome_rowan::AstNode;
@@ -48,7 +47,7 @@ declare_rule! {
 }
 
 impl Rule for NoNamespace {
-    type Query = Semantic<TsModuleDeclaration>;
+    type Query = Ast<TsModuleDeclaration>;
     type State = ();
     type Signals = Option<Self::State>;
     type Options = ();
@@ -72,9 +71,5 @@ impl Rule for NoNamespace {
                 "Prefer the ES6 modules (import/export) over namespaces."
             }),
         )
-    }
-
-    fn action(_: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
-        None
     }
 }

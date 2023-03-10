@@ -16,7 +16,7 @@ declare namespace foo {}
 ```
 invalid.ts:1:1 lint/nursery/noNamespace ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Do not use TypeScript's namespaces.
+  ! TypeScript's namespaces are an oudated way to organize code.
   
   > 1 │ module foo {}
       │ ^^^^^^^^^^^^^
@@ -31,7 +31,7 @@ invalid.ts:1:1 lint/nursery/noNamespace ━━━━━━━━━━━━━�
 ```
 invalid.ts:2:9 lint/nursery/noNamespace ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Do not use TypeScript's namespaces.
+  ! TypeScript's namespaces are an oudated way to organize code.
   
     1 │ module foo {}
   > 2 │ declare module foo {}
@@ -47,7 +47,7 @@ invalid.ts:2:9 lint/nursery/noNamespace ━━━━━━━━━━━━━�
 ```
 invalid.ts:4:1 lint/nursery/noNamespace ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Do not use TypeScript's namespaces.
+  ! TypeScript's namespaces are an oudated way to organize code.
   
     2 │ declare module foo {}
     3 │ 
@@ -64,7 +64,7 @@ invalid.ts:4:1 lint/nursery/noNamespace ━━━━━━━━━━━━━�
 ```
 invalid.ts:5:9 lint/nursery/noNamespace ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Do not use TypeScript's namespaces.
+  ! TypeScript's namespaces are an oudated way to organize code.
   
     4 │ namespace foo {}
   > 5 │ declare namespace foo {}
