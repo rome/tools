@@ -1,0 +1,47 @@
+# See https://github.com/actions/labeler
+
+A-Cli:
+  - crates/rome_cli/**
+  - crates/rome_fs/**
+
+A-Core:
+  - crates/rome_deserializer/**
+  - crates/rome_fs/**
+  - crates/rome_rowan/**
+  - crates/rome_text_edit/**
+  - crates/rome_text_size/**
+
+A-Project:
+- crates/rome_service/**
+
+A-Linter:
+  - crates/rome_analyze/**
+  - crates/rome_js_analyze/**
+
+A-Parser:
+  - crates/rome_parser/**
+  - crates/rome_js_parser/**
+  - crates/rome_js_syntax/**
+  - crates/rome_json_parser/**
+  - crates/rome_json_syntax/**
+
+A-Formatter:
+  - crates/rome_formatter/**
+  - crates/rome_formatter_test/**
+  - crates/rome_js_formatter/**
+  - crates/rome_json_formatter/**
+
+A-Editors:
+  - crates/editors/**
+
+A-Diagnostic:
+  - crates/rome_diagnostics/**
+  - crates/rome_diagnostics_categories/**
+  - crates/rome_diagnostics_macros/**
+
+A-Tooling:
+  - xtask/**
+
+A-LSP:
+  - crates/rome_lsp/**
+
