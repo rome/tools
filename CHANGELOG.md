@@ -1,5 +1,64 @@
 # Rome changelog
 
+## [Unreleased]
+
+
+### CLI
+### Configuration
+### Editors
+### Formatter
+### Linter
+### Parser
+### VSCode
+### JavaScript APIs
+
+
+## 12.0.0
+
+### CLI
+
+##### Breaking changes
+
+- Review how the traversal of the file system works. Now Rome won't navigate folders that are ignored.
+	While this change is a bug fix, this could affect how the `ignore` entries. We suggest to review them
+	and make sure they still work.
+
+##### Other changes
+
+- `rome check` now sorts import statements. This is an experimental feature that needs to be
+	enabled via configuration.
+
+
+### Configuration
+
+#### Other changes
+
+- Rome now uses the internal JSON parser to validate the configuration file. This means Rome won't
+	exit anymore if there are issues with the `rome.json` file, instead it will apply its defaults
+	to the sections that are incorrect.
+- Add `javascript.organizeImports`. This is an experimental feature and users need to opt-in.
+
+```json
+{
+	"javascript": {
+		"organizeImports": {
+			"enabled": true
+		}
+	}
+}
+```
+
+### Editors
+
+##### Other changes
+
+### Formatter
+### Linter
+### Parser
+### VSCode
+### JavaScript APIs
+
+
 ## 11.0.0
 
 ### CLI
