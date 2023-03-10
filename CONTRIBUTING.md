@@ -217,6 +217,36 @@ When creating a new pull request, it's preferable to use a conventional commit-f
 
 Please use the template provided.
 
+#### Changelog
+
+If the PR you're about to open is a bugfix/feature around Rome, you should add a new line to the `CHANGELOG.md`.
+
+At the top of the file you will see a `[Unreleased]` section. The headings divide the sections by "feature", make sure
+to add a new bullet point.
+
+Here's a sample of the headings:
+
+```markdown
+## [Unreleased]
+
+### CLI
+### Configuration
+### Editors
+### Formatter
+### Linter
+### Parser
+### VSCode
+### JavaScript APIs
+```
+
+
+If you're editing a blank section:
+- If your PR is adding a **breaking change**, create a new heading called `#### BREAKING CHANGES` and add
+bullet point that explains the breaking changes; provide a migration path if possible.
+- If your PR is adding a new feature of a fix, create a new heading called `#### Other changes` and
+add a bullet point that explains the fix or the new feature. Make sure that this new heading
+appears after the `#### BREAKING CHANGES` heading.
+
 #### Documentation
 
 If your PR requires some update on the website (new features, breaking changes, etc.), you should create a new PR once the previous PR is successfully merged.
@@ -231,10 +261,7 @@ The template should help to give all the information to the team.
 
 Here are some other scripts that you might find useful.
 
-#### If you are a core contributor
-
-If you are a core contributor, and you have access to create new branches
-from the main repository (not a fork), use these comments to run specific workflows:
+#### Magic comments
 
 - `!bench_parser` benchmarks the parser's runtime performance and writes a comment with the results;
 - `!bench_formatter` benchmarks the formatter runtime performance and writes a comment with the results;

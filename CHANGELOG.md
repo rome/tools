@@ -2,7 +2,6 @@
 
 ## [Unreleased]
 
-
 ### CLI
 ### Configuration
 ### Editors
@@ -22,11 +21,24 @@
 - Review how the traversal of the file system works. Now Rome won't navigate folders that are ignored.
 	While this change is a bug fix, this could affect how the `ignore` entries. We suggest to review them
 	and make sure they still work.
+- `--apply-suggested` is now called `--apply-unsafe`
 
 ##### Other changes
 
 - `rome check` now sorts import statements. This is an experimental feature that needs to be
 	enabled via configuration.
+- Rome now is able to auto discover the configuration file. If Rome doesn't fine a configuration in the
+working directory, it will try to find one in the parent directories.
+- Add a new global options called `--config-path`. It tells Rome to try and discover a `rome.json` file
+in the given path. When this option is passed, the **auto discover** is disabled. Additionally, if no
+configuration file is found, Rome will abort the operation and exit with an error code.
+	```shell
+	rome format --config-path=../../other/path/
+	rome check --config-path=../../other/path/
+	```
+ - `rome check --apply` and `rome check --apply-unsafe` exit with an error code if some file
+still has error diagnostics. This will happen for rules that don't have code fixes.
+ -
 
 
 ### Configuration
@@ -47,6 +59,24 @@
 	}
 }
 ```
+- Add `linter.rules.all` and `linter.rules.[group].all`. These options allow to enable or disable **all**
+rules, or all rules for a **given group**. `all` and `recommended` can't be both `true`.
+
+
+```json
+{
+	"linter": {
+		"rules": {
+			"all": true,
+			"style" : {
+				"all": false
+			}
+		}
+	}
+}
+```
+
+The previous example will enable all rules and disable all rules that belong to the `style` group.
 
 ### Editors
 
@@ -55,7 +85,17 @@
 ### Formatter
 ### Linter
 ### Parser
+
+- Support for TypeScript 4.7
+
 ### VSCode
+
+##### Other changes
+- Add a new option called `requireConfiguration`. Enabling this option will force Rome to require
+a configuration file in your workspace/project. If Rome doesn't find a `rome.json` file, it won't
+emit diagnostics.
+-
+
 ### JavaScript APIs
 
 
