@@ -73,10 +73,11 @@ The maximum allowed size for source code files in bytes.
 
 ### `--config-path`
 
-Tell Rome in which path to find the configuration file `rome.json`.
+Set a directory where to read the `rome.json` configuration file from.
+Rome will try to read a `rome.json` configuration file from the specified directory.
+This is optional. Rome will automatically try to discover a the `rome.json` configuration file by default.
 
-> **Warning**: when passing `--config-path`, the auto discovery of the `rome.json` file is disabled.
-
+> **Important**: when passing `--config-path`, the auto discovery of the `rome.json` configuration file is disabled.
 
 ## Global Options
 
