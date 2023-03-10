@@ -20,11 +20,17 @@ declare_rule! {
     ///
     /// ```ts,expect_diagnostic
     /// module foo {}
+    /// ```
+    ///
+    /// ```ts,expect_diagnostic
     /// declare module foo {}
     /// ```
     ///
     /// ```ts,expect_diagnostic
     /// namespace foo {}
+    /// ```
+    ///
+    /// ```ts,expect_diagnostic
     /// declare namespace foo {}
     /// ```
     ///
@@ -33,9 +39,13 @@ declare_rule! {
     /// ```ts
     /// import foo from 'foo';
     /// export { bar };
+    /// ```
     ///
+    /// ```ts
     /// declare global {}
+    /// ```
     ///
+    /// ```ts
     /// declare module 'foo' {}
     /// ```
     ///

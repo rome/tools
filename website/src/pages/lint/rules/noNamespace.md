@@ -3,7 +3,7 @@ title: Lint Rule noNamespace
 parent: lint/rules/index
 ---
 
-# noNamespace (since vnext)
+# noNamespace (since v12.0.0)
 
 Disallow the use of TypeScript's `namespace`s.
 
@@ -21,7 +21,6 @@ Source: https://typescript-eslint.io/rules/no-namespace
 
 ```ts
 module foo {}
-declare module foo {}
 ```
 
 <pre class="language-text"><code class="language-text">nursery/noNamespace.js:1:1 <a href="https://docs.rome.tools/lint/rules/noNamespace">lint/nursery/noNamespace</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -30,19 +29,23 @@ declare module foo {}
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>module foo {}
    <strong>   │ </strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
-    <strong>2 │ </strong>declare module foo {}
-    <strong>3 │ </strong>
+    <strong>2 │ </strong>
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Prefer the ES6 modules (import/export) over namespaces.</span>
   
-nursery/noNamespace.js:2:9 <a href="https://docs.rome.tools/lint/rules/noNamespace">lint/nursery/noNamespace</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+</code></pre>
+
+```ts
+declare module foo {}
+```
+
+<pre class="language-text"><code class="language-text">nursery/noNamespace.js:1:9 <a href="https://docs.rome.tools/lint/rules/noNamespace">lint/nursery/noNamespace</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">TypeScript's namespaces are an oudated way to organize code.</span>
   
-    <strong>1 │ </strong>module foo {}
-<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>declare module foo {}
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>declare module foo {}
    <strong>   │ </strong>        <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
-    <strong>3 │ </strong>
+    <strong>2 │ </strong>
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Prefer the ES6 modules (import/export) over namespaces.</span>
   
@@ -50,7 +53,6 @@ nursery/noNamespace.js:2:9 <a href="https://docs.rome.tools/lint/rules/noNamespa
 
 ```ts
 namespace foo {}
-declare namespace foo {}
 ```
 
 <pre class="language-text"><code class="language-text">nursery/noNamespace.js:1:1 <a href="https://docs.rome.tools/lint/rules/noNamespace">lint/nursery/noNamespace</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -59,19 +61,23 @@ declare namespace foo {}
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>namespace foo {}
    <strong>   │ </strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
-    <strong>2 │ </strong>declare namespace foo {}
-    <strong>3 │ </strong>
+    <strong>2 │ </strong>
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Prefer the ES6 modules (import/export) over namespaces.</span>
   
-nursery/noNamespace.js:2:9 <a href="https://docs.rome.tools/lint/rules/noNamespace">lint/nursery/noNamespace</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+</code></pre>
+
+```ts
+declare namespace foo {}
+```
+
+<pre class="language-text"><code class="language-text">nursery/noNamespace.js:1:9 <a href="https://docs.rome.tools/lint/rules/noNamespace">lint/nursery/noNamespace</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">TypeScript's namespaces are an oudated way to organize code.</span>
   
-    <strong>1 │ </strong>namespace foo {}
-<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>declare namespace foo {}
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>declare namespace foo {}
    <strong>   │ </strong>        <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
-    <strong>3 │ </strong>
+    <strong>2 │ </strong>
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Prefer the ES6 modules (import/export) over namespaces.</span>
   
@@ -82,9 +88,13 @@ nursery/noNamespace.js:2:9 <a href="https://docs.rome.tools/lint/rules/noNamespa
 ```ts
 import foo from 'foo';
 export { bar };
+```
 
+```ts
 declare global {}
+```
 
+```ts
 declare module 'foo' {}
 ```
 
