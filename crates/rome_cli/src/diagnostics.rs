@@ -1,4 +1,4 @@
-use rome_console::fmt::Formatter;
+use rome_console::fmt::{Display, Formatter};
 use rome_console::markup;
 use rome_diagnostics::adapters::{IoError, PicoArgsError};
 use rome_diagnostics::{
@@ -36,6 +36,10 @@ pub enum CliDiagnostic {
     IncompatibleArguments(IncompatibleArguments),
     /// Returned by a traversal command when error diagnostics were emitted
     CheckError(CheckError),
+    /// Emitted when a file is fixed, but it still contains diagnostics.
+    ///
+    /// This happens when these diagnostics come from rules that don't have a code action.
+    FileCheckApply(FileCheckApply),
     /// When an argument is higher than the expected maximum
     OverflowNumberArgument(OverflowNumberArgument),
     /// Wrapper for an underlying `rome_service` error
@@ -147,9 +151,57 @@ pub struct IncompatibleArguments {
 #[diagnostic(
     category = "internalError/io",
     severity = Error,
-    message = "Some errors were emitted while running checks"
+    message(
+        description = "{action_kind}",
+        message({{self.action_kind}})
+    )
 )]
-pub struct CheckError;
+pub struct CheckError {
+    action_kind: CheckActionKind,
+}
+
+#[derive(Debug, Clone, Copy)]
+pub enum CheckActionKind {
+    Check,
+    Apply,
+}
+
+impl Display for CheckActionKind {
+    fn fmt(&self, fmt: &mut Formatter) -> std::io::Result<()> {
+        match self {
+            CheckActionKind::Check => fmt.write_markup(markup! {
+                "Some errors were emitted while "<Emphasis>"running checks"</Emphasis>
+            }),
+            CheckActionKind::Apply => fmt.write_markup(markup! {
+                "Some errors were emitted while "<Emphasis>"applying fixes"</Emphasis>
+            }),
+        }
+    }
+}
+
+impl std::fmt::Display for CheckActionKind {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CheckActionKind::Check => {
+                write!(f, "Some errors were emitted while running checks")
+            }
+            CheckActionKind::Apply => {
+                write!(f, "Some errors were emitted while applying fixes")
+            }
+        }
+    }
+}
+
+#[derive(Debug, Diagnostic)]
+#[diagnostic(
+    category = "internalError/io",
+    severity = Error,
+    message = "Fixes applied to the file, but there a still diagnostics to address."
+)]
+pub struct FileCheckApply {
+    #[location(resource)]
+    pub file_path: String,
+}
 
 #[derive(Debug, Diagnostic)]
 #[diagnostic(
@@ -300,9 +352,25 @@ impl CliDiagnostic {
         })
     }
 
-    /// Emitted when errors were emitted while traversing the file system
+    /// Emitted when errors were emitted while running `check` command
     pub fn check_error() -> Self {
-        Self::CheckError(CheckError)
+        Self::CheckError(CheckError {
+            action_kind: CheckActionKind::Check,
+        })
+    }
+
+    /// Emitted when errors were emitted while apply code fixes
+    pub fn apply_error() -> Self {
+        Self::CheckError(CheckError {
+            action_kind: CheckActionKind::Apply,
+        })
+    }
+
+    /// Emitted for a file that has code fixes, but still has diagnostics to address
+    pub fn file_apply_error(file_path: impl Into<String>) -> Self {
+        Self::FileCheckApply(FileCheckApply {
+            file_path: file_path.into(),
+        })
     }
 
     /// Emitted when the server is not running
@@ -353,6 +421,7 @@ impl Diagnostic for CliDiagnostic {
             CliDiagnostic::ServerNotRunning(diagnostic) => diagnostic.category(),
             CliDiagnostic::IncompatibleEndConfiguration(diagnostic) => diagnostic.category(),
             CliDiagnostic::NoFilesWereProcessed(diagnostic) => diagnostic.category(),
+            CliDiagnostic::FileCheckApply(diagnostic) => diagnostic.category(),
         }
     }
 
@@ -372,6 +441,7 @@ impl Diagnostic for CliDiagnostic {
             CliDiagnostic::ServerNotRunning(diagnostic) => diagnostic.tags(),
             CliDiagnostic::IncompatibleEndConfiguration(diagnostic) => diagnostic.tags(),
             CliDiagnostic::NoFilesWereProcessed(diagnostic) => diagnostic.tags(),
+            CliDiagnostic::FileCheckApply(diagnostic) => diagnostic.tags(),
         }
     }
 
@@ -391,6 +461,7 @@ impl Diagnostic for CliDiagnostic {
             CliDiagnostic::ServerNotRunning(diagnostic) => diagnostic.severity(),
             CliDiagnostic::IncompatibleEndConfiguration(diagnostic) => diagnostic.severity(),
             CliDiagnostic::NoFilesWereProcessed(diagnostic) => diagnostic.severity(),
+            CliDiagnostic::FileCheckApply(diagnostic) => diagnostic.severity(),
         }
     }
 
@@ -410,6 +481,7 @@ impl Diagnostic for CliDiagnostic {
             CliDiagnostic::ServerNotRunning(diagnostic) => diagnostic.location(),
             CliDiagnostic::IncompatibleEndConfiguration(diagnostic) => diagnostic.location(),
             CliDiagnostic::NoFilesWereProcessed(diagnostic) => diagnostic.location(),
+            CliDiagnostic::FileCheckApply(diagnostic) => diagnostic.location(),
         }
     }
 
@@ -429,6 +501,7 @@ impl Diagnostic for CliDiagnostic {
             CliDiagnostic::ServerNotRunning(diagnostic) => diagnostic.message(fmt),
             CliDiagnostic::IncompatibleEndConfiguration(diagnostic) => diagnostic.message(fmt),
             CliDiagnostic::NoFilesWereProcessed(diagnostic) => diagnostic.message(fmt),
+            CliDiagnostic::FileCheckApply(diagnostic) => diagnostic.message(fmt),
         }
     }
 
@@ -448,6 +521,7 @@ impl Diagnostic for CliDiagnostic {
             CliDiagnostic::ServerNotRunning(diagnostic) => diagnostic.description(fmt),
             CliDiagnostic::IncompatibleEndConfiguration(diagnostic) => diagnostic.description(fmt),
             CliDiagnostic::NoFilesWereProcessed(diagnostic) => diagnostic.description(fmt),
+            CliDiagnostic::FileCheckApply(diagnostic) => diagnostic.description(fmt),
         }
     }
 
@@ -467,6 +541,7 @@ impl Diagnostic for CliDiagnostic {
             CliDiagnostic::ServerNotRunning(diagnostic) => diagnostic.advices(visitor),
             CliDiagnostic::IncompatibleEndConfiguration(diagnostic) => diagnostic.advices(visitor),
             CliDiagnostic::NoFilesWereProcessed(diagnostic) => diagnostic.advices(visitor),
+            CliDiagnostic::FileCheckApply(diagnostic) => diagnostic.advices(visitor),
         }
     }
 
@@ -490,6 +565,7 @@ impl Diagnostic for CliDiagnostic {
                 diagnostic.verbose_advices(visitor)
             }
             CliDiagnostic::NoFilesWereProcessed(diagnostic) => diagnostic.verbose_advices(visitor),
+            CliDiagnostic::FileCheckApply(diagnostic) => diagnostic.verbose_advices(visitor),
         }
     }
 
@@ -509,6 +585,7 @@ impl Diagnostic for CliDiagnostic {
             CliDiagnostic::ServerNotRunning(diagnostic) => diagnostic.source(),
             CliDiagnostic::IncompatibleEndConfiguration(diagnostic) => diagnostic.source(),
             CliDiagnostic::NoFilesWereProcessed(diagnostic) => diagnostic.source(),
+            CliDiagnostic::FileCheckApply(diagnostic) => diagnostic.source(),
         }
     }
 }

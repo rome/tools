@@ -435,6 +435,9 @@ impl A11y {
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[12]),
     ];
     pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
+    pub(crate) const fn is_not_recommended(&self) -> bool {
+        matches!(self.recommended, Some(false))
+    }
     pub(crate) fn is_all(&self) -> bool { matches!(self.all, Some(true)) }
     pub(crate) fn is_not_all(&self) -> bool { matches!(self.all, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
@@ -596,8 +599,10 @@ impl A11y {
             enabled_rules.extend(Self::all_rules_as_filters());
         } else if self.is_not_all() {
             disabled_rules.extend(Self::all_rules_as_filters());
-        } else if is_recommended || self.is_recommended() {
+        } else if (is_recommended && !self.is_not_recommended()) || self.is_recommended() {
             enabled_rules.extend(Self::recommended_rules_as_filters());
+        } else if self.is_not_recommended() {
+            disabled_rules.extend(Self::recommended_rules_as_filters());
         }
     }
     pub(crate) fn get_rule_configuration(&self, rule_name: &str) -> Option<&RuleConfiguration> {
@@ -680,6 +685,9 @@ impl Complexity {
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[5]),
     ];
     pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
+    pub(crate) const fn is_not_recommended(&self) -> bool {
+        matches!(self.recommended, Some(false))
+    }
     pub(crate) fn is_all(&self) -> bool { matches!(self.all, Some(true)) }
     pub(crate) fn is_not_all(&self) -> bool { matches!(self.all, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
@@ -777,8 +785,10 @@ impl Complexity {
             enabled_rules.extend(Self::all_rules_as_filters());
         } else if self.is_not_all() {
             disabled_rules.extend(Self::all_rules_as_filters());
-        } else if is_recommended || self.is_recommended() {
+        } else if (is_recommended && !self.is_not_recommended()) || self.is_recommended() {
             enabled_rules.extend(Self::recommended_rules_as_filters());
+        } else if self.is_not_recommended() {
+            disabled_rules.extend(Self::recommended_rules_as_filters());
         }
     }
     pub(crate) fn get_rule_configuration(&self, rule_name: &str) -> Option<&RuleConfiguration> {
@@ -933,6 +943,9 @@ impl Correctness {
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[16]),
     ];
     pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
+    pub(crate) const fn is_not_recommended(&self) -> bool {
+        matches!(self.recommended, Some(false))
+    }
     pub(crate) fn is_all(&self) -> bool { matches!(self.all, Some(true)) }
     pub(crate) fn is_not_all(&self) -> bool { matches!(self.all, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
@@ -1134,8 +1147,10 @@ impl Correctness {
             enabled_rules.extend(Self::all_rules_as_filters());
         } else if self.is_not_all() {
             disabled_rules.extend(Self::all_rules_as_filters());
-        } else if is_recommended || self.is_recommended() {
+        } else if (is_recommended && !self.is_not_recommended()) || self.is_recommended() {
             enabled_rules.extend(Self::recommended_rules_as_filters());
+        } else if self.is_not_recommended() {
+            disabled_rules.extend(Self::recommended_rules_as_filters());
         }
     }
     pub(crate) fn get_rule_configuration(&self, rule_name: &str) -> Option<&RuleConfiguration> {
@@ -1478,6 +1493,9 @@ impl Nursery {
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[43]),
     ];
     pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
+    pub(crate) const fn is_not_recommended(&self) -> bool {
+        matches!(self.recommended, Some(false))
+    }
     pub(crate) fn is_all(&self) -> bool { matches!(self.all, Some(true)) }
     pub(crate) fn is_not_all(&self) -> bool { matches!(self.all, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
@@ -1949,8 +1967,10 @@ impl Nursery {
             enabled_rules.extend(Self::all_rules_as_filters());
         } else if self.is_not_all() {
             disabled_rules.extend(Self::all_rules_as_filters());
-        } else if is_recommended || self.is_recommended() {
+        } else if (is_recommended && !self.is_not_recommended()) || self.is_recommended() {
             enabled_rules.extend(Self::recommended_rules_as_filters());
+        } else if self.is_not_recommended() {
+            disabled_rules.extend(Self::recommended_rules_as_filters());
         }
     }
     pub(crate) fn get_rule_configuration(&self, rule_name: &str) -> Option<&RuleConfiguration> {
@@ -2029,6 +2049,9 @@ impl Performance {
     const ALL_RULES_AS_FILTERS: [RuleFilter<'static>; 1] =
         [RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[0])];
     pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
+    pub(crate) const fn is_not_recommended(&self) -> bool {
+        matches!(self.recommended, Some(false))
+    }
     pub(crate) fn is_all(&self) -> bool { matches!(self.all, Some(true)) }
     pub(crate) fn is_not_all(&self) -> bool { matches!(self.all, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
@@ -2070,8 +2093,10 @@ impl Performance {
             enabled_rules.extend(Self::all_rules_as_filters());
         } else if self.is_not_all() {
             disabled_rules.extend(Self::all_rules_as_filters());
-        } else if is_recommended || self.is_recommended() {
+        } else if (is_recommended && !self.is_not_recommended()) || self.is_recommended() {
             enabled_rules.extend(Self::recommended_rules_as_filters());
+        } else if self.is_not_recommended() {
+            disabled_rules.extend(Self::recommended_rules_as_filters());
         }
     }
     pub(crate) fn get_rule_configuration(&self, rule_name: &str) -> Option<&RuleConfiguration> {
@@ -2118,6 +2143,9 @@ impl Security {
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[1]),
     ];
     pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
+    pub(crate) const fn is_not_recommended(&self) -> bool {
+        matches!(self.recommended, Some(false))
+    }
     pub(crate) fn is_all(&self) -> bool { matches!(self.all, Some(true)) }
     pub(crate) fn is_not_all(&self) -> bool { matches!(self.all, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
@@ -2169,8 +2197,10 @@ impl Security {
             enabled_rules.extend(Self::all_rules_as_filters());
         } else if self.is_not_all() {
             disabled_rules.extend(Self::all_rules_as_filters());
-        } else if is_recommended || self.is_recommended() {
+        } else if (is_recommended && !self.is_not_recommended()) || self.is_recommended() {
             enabled_rules.extend(Self::recommended_rules_as_filters());
+        } else if self.is_not_recommended() {
+            disabled_rules.extend(Self::recommended_rules_as_filters());
         }
     }
     pub(crate) fn get_rule_configuration(&self, rule_name: &str) -> Option<&RuleConfiguration> {
@@ -2330,6 +2360,9 @@ impl Style {
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[19]),
     ];
     pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
+    pub(crate) const fn is_not_recommended(&self) -> bool {
+        matches!(self.recommended, Some(false))
+    }
     pub(crate) fn is_all(&self) -> bool { matches!(self.all, Some(true)) }
     pub(crate) fn is_not_all(&self) -> bool { matches!(self.all, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
@@ -2561,8 +2594,10 @@ impl Style {
             enabled_rules.extend(Self::all_rules_as_filters());
         } else if self.is_not_all() {
             disabled_rules.extend(Self::all_rules_as_filters());
-        } else if is_recommended || self.is_recommended() {
+        } else if (is_recommended && !self.is_not_recommended()) || self.is_recommended() {
             enabled_rules.extend(Self::recommended_rules_as_filters());
+        } else if self.is_not_recommended() {
+            disabled_rules.extend(Self::recommended_rules_as_filters());
         }
     }
     pub(crate) fn get_rule_configuration(&self, rule_name: &str) -> Option<&RuleConfiguration> {
@@ -2766,6 +2801,9 @@ impl Suspicious {
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[21]),
     ];
     pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
+    pub(crate) const fn is_not_recommended(&self) -> bool {
+        matches!(self.recommended, Some(false))
+    }
     pub(crate) fn is_all(&self) -> bool { matches!(self.all, Some(true)) }
     pub(crate) fn is_not_all(&self) -> bool { matches!(self.all, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
@@ -3017,8 +3055,10 @@ impl Suspicious {
             enabled_rules.extend(Self::all_rules_as_filters());
         } else if self.is_not_all() {
             disabled_rules.extend(Self::all_rules_as_filters());
-        } else if is_recommended || self.is_recommended() {
+        } else if (is_recommended && !self.is_not_recommended()) || self.is_recommended() {
             enabled_rules.extend(Self::recommended_rules_as_filters());
+        } else if self.is_not_recommended() {
+            disabled_rules.extend(Self::recommended_rules_as_filters());
         }
     }
     pub(crate) fn get_rule_configuration(&self, rule_name: &str) -> Option<&RuleConfiguration> {
