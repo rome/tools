@@ -107,7 +107,7 @@ impl VisitNode<JsonLanguage> for PlainQuoteStyle {
         diagnostics: &mut Vec<DeserializationDiagnostic>,
     ) -> Option<()> {
         let node = with_only_known_variants(node, PlainQuoteStyle::KNOWN_VALUES, diagnostics)?;
-        if node.value_token().ok()?.text() == "single" {
+        if node.inner_string_text().ok()?.text() == "single" {
             *self = PlainQuoteStyle::Single;
         } else {
             *self = PlainQuoteStyle::Double;
@@ -123,7 +123,7 @@ impl VisitNode<JsonLanguage> for PlainQuoteProperties {
         diagnostics: &mut Vec<DeserializationDiagnostic>,
     ) -> Option<()> {
         let node = with_only_known_variants(node, PlainQuoteProperties::KNOWN_VALUES, diagnostics)?;
-        if node.value_token().ok()?.text() == "asNeeded" {
+        if node.inner_string_text().ok()?.text() == "asNeeded" {
             *self = PlainQuoteProperties::AsNeeded;
         } else {
             *self = PlainQuoteProperties::Preserve;
@@ -139,7 +139,7 @@ impl VisitNode<JsonLanguage> for PlainTrailingComma {
         diagnostics: &mut Vec<DeserializationDiagnostic>,
     ) -> Option<()> {
         let node = with_only_known_variants(node, PlainTrailingComma::KNOWN_VALUES, diagnostics)?;
-        match node.value_token().ok()?.text() {
+        match node.inner_string_text().ok()?.text() {
             "all" => {
                 *self = PlainTrailingComma::All;
             }
@@ -162,7 +162,7 @@ impl VisitNode<JsonLanguage> for PlainSemicolons {
         diagnostics: &mut Vec<DeserializationDiagnostic>,
     ) -> Option<()> {
         let node = with_only_known_variants(node, PlainSemicolons::KNOWN_VALUES, diagnostics)?;
-        if node.value_token().ok()?.text() == "asNeeded" {
+        if node.inner_string_text().ok()?.text() == "asNeeded" {
             *self = PlainSemicolons::AsNeeded;
         } else {
             *self = PlainSemicolons::Always;
