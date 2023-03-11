@@ -1,0 +1,54 @@
+---
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info: js/module/no-semi/semicolons_range.js
+---
+
+# Input
+
+```js
+statement_1()
+statement_2()
+statement_3()
+
+```
+
+
+=============================
+
+# Outputs
+
+## Output 1
+
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+Quote properties: As needed
+Trailing comma: All
+Semicolons: Always
+-----
+
+```js
+statement_1()
+statement_2();
+statement_3()
+```
+
+## Output 2
+
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+Quote properties: As needed
+Trailing comma: All
+Semicolons: As needed
+-----
+
+```js
+statement_1()
+statement_2()
+statement_3()
+```
+
+

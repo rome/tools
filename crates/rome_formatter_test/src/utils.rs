@@ -4,53 +4,100 @@ use std::ffi::OsStr;
 use std::fs::{read_to_string, remove_file};
 use std::path::Path;
 
+struct StripPlaceholders {
+    cursor: String,
+    range_start_placeholder: String,
+    range_end_placeholder: String,
+}
+
 /// Find and replace the cursor, range start and range end placeholders in a
-/// Prettier snapshot tests and return their indices in the resulting string
-pub fn strip_prettier_placeholders(
+/// snapshot tests and return their indices in the resulting string
+impl StripPlaceholders {
+    pub fn new(
+        cursor: String,
+        range_start_placeholder: String,
+        range_end_placeholder: String,
+    ) -> Self {
+        StripPlaceholders {
+            cursor,
+            range_start_placeholder,
+            range_end_placeholder,
+        }
+    }
+
+    pub fn transform(
+        &self,
+        input_code: &mut String,
+    ) -> (Option<usize>, Option<usize>, Option<usize>) {
+        let mut cursor_index = None;
+        let mut range_start_index = None;
+        let mut range_end_index = None;
+
+        if let Some(index) = input_code.find(&self.cursor) {
+            input_code.replace_range(index..index + self.cursor.len(), "");
+            cursor_index = Some(index);
+        }
+
+        if let Some(index) = input_code.find(&self.range_start_placeholder) {
+            input_code.replace_range(index..index + self.range_start_placeholder.len(), "");
+            range_start_index = Some(index);
+
+            if let Some(cursor) = &mut cursor_index {
+                if *cursor > index {
+                    *cursor -= self.range_start_placeholder.len();
+                }
+            }
+        }
+
+        if let Some(index) = input_code.find(&self.range_end_placeholder) {
+            input_code.replace_range(index..index + self.range_end_placeholder.len(), "");
+            range_end_index = Some(index);
+
+            if let Some(cursor) = &mut cursor_index {
+                if *cursor > index {
+                    *cursor -= self.range_end_placeholder.len();
+                }
+            }
+            if let Some(cursor) = &mut range_start_index {
+                // Prettier has tests for reversed ranges
+                if *cursor > index {
+                    *cursor -= self.range_end_placeholder.len();
+                }
+            }
+        }
+
+        (cursor_index, range_start_index, range_end_index)
+    }
+}
+
+const PRETTIER_CURSOR_PLACEHOLDER: &str = "<|>";
+const PRETTIER_RANGE_START_PLACEHOLDER: &str = "<<<PRETTIER_RANGE_START>>>";
+const PRETTIER_RANGE_END_PLACEHOLDER: &str = "<<<PRETTIER_RANGE_END>>>";
+
+pub(crate) fn strip_prettier_placeholders(
     input_code: &mut String,
 ) -> (Option<usize>, Option<usize>, Option<usize>) {
-    const CURSOR_PLACEHOLDER: &str = "<|>";
-    const RANGE_START_PLACEHOLDER: &str = "<<<PRETTIER_RANGE_START>>>";
-    const RANGE_END_PLACEHOLDER: &str = "<<<PRETTIER_RANGE_END>>>";
+    StripPlaceholders::new(
+        PRETTIER_CURSOR_PLACEHOLDER.to_string(),
+        PRETTIER_RANGE_START_PLACEHOLDER.to_string(),
+        PRETTIER_RANGE_END_PLACEHOLDER.to_string(),
+    )
+    .transform(input_code)
+}
 
-    let mut cursor_index = None;
-    let mut range_start_index = None;
-    let mut range_end_index = None;
+const ROME_CURSOR_PLACEHOLDER: &str = "<|>";
+const ROME_RANGE_START_PLACEHOLDER: &str = "<<<ROME_RANGE_START>>>";
+const ROME_RANGE_END_PLACEHOLDER: &str = "<<<ROME_RANGE_END>>>";
 
-    if let Some(index) = input_code.find(CURSOR_PLACEHOLDER) {
-        input_code.replace_range(index..index + CURSOR_PLACEHOLDER.len(), "");
-        cursor_index = Some(index);
-    }
-
-    if let Some(index) = input_code.find(RANGE_START_PLACEHOLDER) {
-        input_code.replace_range(index..index + RANGE_START_PLACEHOLDER.len(), "");
-        range_start_index = Some(index);
-
-        if let Some(cursor) = &mut cursor_index {
-            if *cursor > index {
-                *cursor -= RANGE_START_PLACEHOLDER.len();
-            }
-        }
-    }
-
-    if let Some(index) = input_code.find(RANGE_END_PLACEHOLDER) {
-        input_code.replace_range(index..index + RANGE_END_PLACEHOLDER.len(), "");
-        range_end_index = Some(index);
-
-        if let Some(cursor) = &mut cursor_index {
-            if *cursor > index {
-                *cursor -= RANGE_END_PLACEHOLDER.len();
-            }
-        }
-        if let Some(cursor) = &mut range_start_index {
-            // Prettier has tests for reversed ranges
-            if *cursor > index {
-                *cursor -= RANGE_END_PLACEHOLDER.len();
-            }
-        }
-    }
-
-    (cursor_index, range_start_index, range_end_index)
+pub(crate) fn strip_rome_placeholders(
+    input_code: &mut String,
+) -> (Option<usize>, Option<usize>, Option<usize>) {
+    StripPlaceholders::new(
+        ROME_CURSOR_PLACEHOLDER.to_string(),
+        ROME_RANGE_START_PLACEHOLDER.to_string(),
+        ROME_RANGE_END_PLACEHOLDER.to_string(),
+    )
+    .transform(input_code)
 }
 
 pub enum PrettierDiff {
