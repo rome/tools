@@ -241,9 +241,9 @@ Here's a sample of the headings:
 
 
 If you're editing a blank section:
-- If your PR is adding a **breaking change**, create a new heading called `#### BREAKING CHANGES` and add
+- If your PR adds a **breaking change**, create a new heading called `#### BREAKING CHANGES` and add
 bullet point that explains the breaking changes; provide a migration path if possible.
-- If your PR is adding a new feature of a fix, create a new heading called `#### Other changes` and
+- If your PR adds a new feature of a fix, create a new heading called `#### Other changes` and
 add a bullet point that explains the fix or the new feature. Make sure that this new heading
 appears after the `#### BREAKING CHANGES` heading.
 

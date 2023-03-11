@@ -82,8 +82,15 @@ The previous example will enable all rules and disable all rules that belong to 
 
 ##### Other changes
 
+- Add support to display diagnostics for JSON files
+- Add support to format JSON files
+
 ### Formatter
+
+- Add support to format JSON files
+
 ### Linter
+
 ### Parser
 
 - Support for TypeScript 4.7
@@ -94,9 +101,6 @@ The previous example will enable all rules and disable all rules that belong to 
 - Add a new option called `requireConfiguration`. Enabling this option will force Rome to require
 a configuration file in your workspace/project. If Rome doesn't find a `rome.json` file, it won't
 emit diagnostics.
--
-
-### JavaScript APIs
 
 
 ## 11.0.0
