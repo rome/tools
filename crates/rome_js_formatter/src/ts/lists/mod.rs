@@ -12,4 +12,5 @@ pub(crate) mod type_argument_list;
 pub(crate) mod type_list;
 pub(crate) mod type_member_list;
 pub(crate) mod type_parameter_list;
+pub(crate) mod type_parameter_modifier_list;
 pub(crate) mod union_type_variant_list;

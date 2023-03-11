@@ -11,9 +11,7 @@ JsModule {
                 l_angle_token: L_ANGLE@6..7 "<" [] [],
                 items: TsTypeParameterList [
                     TsTypeParameter {
-                        in_modifier_token: missing (optional),
-                        out_modifier_token: missing (optional),
-                        const_modifier_token: missing (optional),
+                        modifiers: TsTypeParameterModifierList [],
                         name: TsTypeParameterName {
                             ident_token: IDENT@7..9 "X" [] [Whitespace(" ")],
                         },
@@ -27,9 +25,7 @@ JsModule {
                     },
                     COMMA@23..25 "," [] [Whitespace(" ")],
                     TsTypeParameter {
-                        in_modifier_token: missing (optional),
-                        out_modifier_token: missing (optional),
-                        const_modifier_token: missing (optional),
+                        modifiers: TsTypeParameterModifierList [],
                         name: TsTypeParameterName {
                             ident_token: IDENT@25..27 "Y" [] [Whitespace(" ")],
                         },
@@ -43,9 +39,7 @@ JsModule {
                     },
                     COMMA@35..37 "," [] [Whitespace(" ")],
                     TsTypeParameter {
-                        in_modifier_token: missing (optional),
-                        out_modifier_token: missing (optional),
-                        const_modifier_token: missing (optional),
+                        modifiers: TsTypeParameterModifierList [],
                         name: TsTypeParameterName {
                             ident_token: IDENT@37..39 "Z" [] [Whitespace(" ")],
                         },
@@ -150,36 +144,30 @@ JsModule {
         0: L_ANGLE@6..7 "<" [] []
         1: TS_TYPE_PARAMETER_LIST@7..71
           0: TS_TYPE_PARAMETER@7..23
-            0: (empty)
-            1: (empty)
-            2: (empty)
-            3: TS_TYPE_PARAMETER_NAME@7..9
+            0: TS_TYPE_PARAMETER_MODIFIER_LIST@7..7
+            1: TS_TYPE_PARAMETER_NAME@7..9
               0: IDENT@7..9 "X" [] [Whitespace(" ")]
-            4: TS_TYPE_CONSTRAINT_CLAUSE@9..23
+            2: TS_TYPE_CONSTRAINT_CLAUSE@9..23
               0: EXTENDS_KW@9..17 "extends" [] [Whitespace(" ")]
               1: TS_STRING_TYPE@17..23
                 0: STRING_KW@17..23 "string" [] []
-            5: (empty)
+            3: (empty)
           1: COMMA@23..25 "," [] [Whitespace(" ")]
           2: TS_TYPE_PARAMETER@25..35
-            0: (empty)
-            1: (empty)
-            2: (empty)
-            3: TS_TYPE_PARAMETER_NAME@25..27
+            0: TS_TYPE_PARAMETER_MODIFIER_LIST@25..25
+            1: TS_TYPE_PARAMETER_NAME@25..27
               0: IDENT@25..27 "Y" [] [Whitespace(" ")]
-            4: (empty)
-            5: TS_DEFAULT_TYPE_CLAUSE@27..35
+            2: (empty)
+            3: TS_DEFAULT_TYPE_CLAUSE@27..35
               0: EQ@27..29 "=" [] [Whitespace(" ")]
               1: TS_NUMBER_TYPE@29..35
                 0: NUMBER_KW@29..35 "number" [] []
           3: COMMA@35..37 "," [] [Whitespace(" ")]
           4: TS_TYPE_PARAMETER@37..71
-            0: (empty)
-            1: (empty)
-            2: (empty)
-            3: TS_TYPE_PARAMETER_NAME@37..39
+            0: TS_TYPE_PARAMETER_MODIFIER_LIST@37..37
+            1: TS_TYPE_PARAMETER_NAME@37..39
               0: IDENT@37..39 "Z" [] [Whitespace(" ")]
-            4: TS_TYPE_CONSTRAINT_CLAUSE@39..63
+            2: TS_TYPE_CONSTRAINT_CLAUSE@39..63
               0: EXTENDS_KW@39..47 "extends" [] [Whitespace(" ")]
               1: TS_UNION_TYPE@47..63
                 0: (empty)
@@ -189,7 +177,7 @@ JsModule {
                   1: PIPE@54..56 "|" [] [Whitespace(" ")]
                   2: TS_NUMBER_TYPE@56..63
                     0: NUMBER_KW@56..63 "number" [] [Whitespace(" ")]
-            5: TS_DEFAULT_TYPE_CLAUSE@63..71
+            3: TS_DEFAULT_TYPE_CLAUSE@63..71
               0: EQ@63..65 "=" [] [Whitespace(" ")]
               1: TS_NUMBER_TYPE@65..71
                 0: NUMBER_KW@65..71 "number" [] []

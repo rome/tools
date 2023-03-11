@@ -4067,6 +4067,12 @@ pub fn ts_conditional_type(
         ],
     ))
 }
+pub fn ts_const_modifier(modifier_token: SyntaxToken) -> TsConstModifier {
+    TsConstModifier::unwrap_cast(SyntaxNode::new_detached(
+        JsSyntaxKind::TS_CONST_MODIFIER,
+        [Some(SyntaxElement::Token(modifier_token))],
+    ))
+}
 pub fn ts_construct_signature_type_member(
     new_token: SyntaxToken,
     parameters: JsParameters,
@@ -4868,6 +4874,12 @@ pub fn ts_import_type_qualifier(dot_token: SyntaxToken, right: AnyTsName) -> TsI
         ],
     ))
 }
+pub fn ts_in_modifier(modifier_token: SyntaxToken) -> TsInModifier {
+    TsInModifier::unwrap_cast(SyntaxNode::new_detached(
+        JsSyntaxKind::TS_IN_MODIFIER,
+        [Some(SyntaxElement::Token(modifier_token))],
+    ))
+}
 pub fn ts_index_signature_class_member(
     modifiers: TsIndexSignatureModifierList,
     l_brack_token: SyntaxToken,
@@ -5658,6 +5670,12 @@ pub fn ts_optional_tuple_type_element(
         ],
     ))
 }
+pub fn ts_out_modifier(modifier_token: SyntaxToken) -> TsOutModifier {
+    TsOutModifier::unwrap_cast(SyntaxNode::new_detached(
+        JsSyntaxKind::TS_OUT_MODIFIER,
+        [Some(SyntaxElement::Token(modifier_token))],
+    ))
+}
 pub fn ts_override_modifier(modifier_token: SyntaxToken) -> TsOverrideModifier {
     TsOverrideModifier::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::TS_OVERRIDE_MODIFIER,
@@ -6226,37 +6244,24 @@ pub fn ts_type_operator_type(
         ],
     ))
 }
-pub fn ts_type_parameter(name: TsTypeParameterName) -> TsTypeParameterBuilder {
+pub fn ts_type_parameter(
+    modifiers: TsTypeParameterModifierList,
+    name: TsTypeParameterName,
+) -> TsTypeParameterBuilder {
     TsTypeParameterBuilder {
+        modifiers,
         name,
-        in_modifier_token: None,
-        out_modifier_token: None,
-        const_modifier_token: None,
         constraint: None,
         default: None,
     }
 }
 pub struct TsTypeParameterBuilder {
+    modifiers: TsTypeParameterModifierList,
     name: TsTypeParameterName,
-    in_modifier_token: Option<SyntaxToken>,
-    out_modifier_token: Option<SyntaxToken>,
-    const_modifier_token: Option<SyntaxToken>,
     constraint: Option<TsTypeConstraintClause>,
     default: Option<TsDefaultTypeClause>,
 }
 impl TsTypeParameterBuilder {
-    pub fn with_in_modifier_token(mut self, in_modifier_token: SyntaxToken) -> Self {
-        self.in_modifier_token = Some(in_modifier_token);
-        self
-    }
-    pub fn with_out_modifier_token(mut self, out_modifier_token: SyntaxToken) -> Self {
-        self.out_modifier_token = Some(out_modifier_token);
-        self
-    }
-    pub fn with_const_modifier_token(mut self, const_modifier_token: SyntaxToken) -> Self {
-        self.const_modifier_token = Some(const_modifier_token);
-        self
-    }
     pub fn with_constraint(mut self, constraint: TsTypeConstraintClause) -> Self {
         self.constraint = Some(constraint);
         self
@@ -6269,12 +6274,7 @@ impl TsTypeParameterBuilder {
         TsTypeParameter::unwrap_cast(SyntaxNode::new_detached(
             JsSyntaxKind::TS_TYPE_PARAMETER,
             [
-                self.in_modifier_token
-                    .map(|token| SyntaxElement::Token(token)),
-                self.out_modifier_token
-                    .map(|token| SyntaxElement::Token(token)),
-                self.const_modifier_token
-                    .map(|token| SyntaxElement::Token(token)),
+                Some(SyntaxElement::Node(self.modifiers.into_syntax())),
                 Some(SyntaxElement::Node(self.name.into_syntax())),
                 self.constraint
                     .map(|token| SyntaxElement::Node(token.into_syntax())),
@@ -7020,6 +7020,18 @@ where
                 Some(separators.next()?.into())
             }
         }),
+    ))
+}
+pub fn ts_type_parameter_modifier_list<I>(items: I) -> TsTypeParameterModifierList
+where
+    I: IntoIterator<Item = AnyTsTypeParameterModifier>,
+    I::IntoIter: ExactSizeIterator,
+{
+    TsTypeParameterModifierList::unwrap_cast(SyntaxNode::new_detached(
+        JsSyntaxKind::TS_TYPE_PARAMETER_MODIFIER_LIST,
+        items
+            .into_iter()
+            .map(|item| Some(item.into_syntax().into())),
     ))
 }
 pub fn ts_union_type_variant_list<I, S>(items: I, separators: S) -> TsUnionTypeVariantList

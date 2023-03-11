@@ -296,9 +296,13 @@ impl ParseSeparatedList for TsTypeParameterList {
 // class A<const T> {}
 // class B<const T extends U> {}
 // class C<T, const U> {}
+// class D<in const T> {}
+// class E<const in T> {}
 // (class <const T> {});
 // (class <const T extends U> {});
 // (class <T, const U> {});
+// (class <in const T> {});
+// (class <const in T> {});
 // class _ {
 //   method<const T>() {}
 //   method<const T extends U>() {}
@@ -313,7 +317,7 @@ impl ParseSeparatedList for TsTypeParameterList {
 
 fn parse_ts_type_parameter(p: &mut JsParser, context: TypeContext) -> ParsedSyntax {
     let m = p.start();
-    parse_ts_type_parameter_modifiers(p, context);
+    parse_ts_type_parameter_modifiers(p, context).ok();
 
     let name = parse_ts_type_parameter_name(p);
     parse_ts_type_constraint_clause(p, context).ok();
@@ -341,8 +345,18 @@ struct TypeParameterModifier {
     range: TextRange,
 }
 
+impl TypeParameterModifier {
+    const fn as_syntax_kind(&self) -> JsSyntaxKind {
+        match self.kind {
+            TypeParameterModifierKind::In => TS_IN_MODIFIER,
+            TypeParameterModifierKind::Out => TS_OUT_MODIFIER,
+            TypeParameterModifierKind::Const => TS_CONST_MODIFIER,
+        }
+    }
+}
+
 #[derive(Debug, Default)]
-struct ClassMemberModifierList(SmallVec<[TypeParameterModifier; 2]>);
+struct ClassMemberModifierList(SmallVec<[TypeParameterModifier; 3]>);
 
 impl ClassMemberModifierList {
     fn add_modifier(&mut self, modifier: TypeParameterModifier) {
@@ -356,74 +370,80 @@ impl ClassMemberModifierList {
     }
 }
 
-fn parse_ts_type_parameter_modifiers(p: &mut JsParser, context: TypeContext) {
+fn is_at_type_parameter_modifier(p: &mut JsParser) -> bool {
+    p.at_ts(token_set!(T![in], T![out], T![const])) && !p.nth_at(1, T![,]) && !p.nth_at(1, T![>])
+}
+
+fn parse_ts_type_parameter_modifiers(p: &mut JsParser, context: TypeContext) -> ParsedSyntax {
+    let list = p.start();
     let mut modifiers = ClassMemberModifierList::default();
-    while p.at_ts(token_set!(T![in], T![out], T![const]))
-        && !p.nth_at(1, T![,])
-        && !p.nth_at(1, T![>])
-    {
-        let text_range = p.cur_range();
-        let modifier = match p.cur() {
-            T![in] => TypeParameterModifier {
-                kind: TypeParameterModifierKind::In,
-                range: text_range,
-            },
-            T![out] => TypeParameterModifier {
-                kind: TypeParameterModifierKind::Out,
-                range: text_range,
-            },
-            T![const] => TypeParameterModifier {
-                kind: TypeParameterModifierKind::Const,
-                range: text_range,
-            },
+
+    while is_at_type_parameter_modifier(p) {
+        let modifier_kind = match p.cur() {
+            T![in] => TypeParameterModifierKind::In,
+            T![out] => TypeParameterModifierKind::Out,
+            T![const] => TypeParameterModifierKind::Const,
             _ => unreachable!("keywords that are not 'in', 'out' and 'const' are checked earlier"),
         };
+        let m = p.start();
+        let text_range = p.cur_range();
         p.bump_any();
 
         if matches!(
-            modifier.kind,
+            modifier_kind,
             TypeParameterModifierKind::In | TypeParameterModifierKind::Out,
         ) && !context.is_in_out_modifier_allowed()
         {
             p.error(ts_in_out_modifier_cannot_appear_on_a_type_parameter(
                 p, text_range,
             ));
+            m.abandon(p);
             continue;
         }
 
-        if matches!(modifier.kind, TypeParameterModifierKind::Const)
+        if matches!(modifier_kind, TypeParameterModifierKind::Const)
             && !context.is_const_modifier_allowed()
         {
             p.error(ts_const_modifier_cannot_appear_on_a_type_parameter(
                 p, text_range,
             ));
+            m.abandon(p);
             continue;
         }
 
         // check for duplicate modifiers
-        if let Some(existing_modifier) = modifiers.find(&modifier.kind) {
+        if let Some(existing_modifier) = modifiers.find(&modifier_kind) {
             p.error(modifier_already_seen(
                 p,
-                modifier.range,
+                text_range,
                 existing_modifier.range,
             ));
+            m.abandon(p);
             continue;
         }
 
         // check for modifier precedence
-        if let Some(out_modifier) = modifiers.find(&TypeParameterModifierKind::Out) {
-            if modifier.kind == TypeParameterModifierKind::In {
+        if let Some(ts_out_modifier) = modifiers.find(&TypeParameterModifierKind::Out) {
+            if modifier_kind == TypeParameterModifierKind::In {
                 p.error(modifier_must_precede_modifier(
                     p,
-                    modifier.range,
-                    out_modifier.range,
+                    text_range,
+                    ts_out_modifier.range,
                 ));
+                m.abandon(p);
                 continue;
             }
         }
 
+        let modifier = TypeParameterModifier {
+            kind: modifier_kind,
+            range: text_range,
+        };
         modifiers.add_modifier(modifier);
+        m.complete(p, modifier.as_syntax_kind());
     }
+
+    Present(list.complete(p, TS_TYPE_PARAMETER_MODIFIER_LIST))
 }
 
 // test ts ts_type_constraint_clause

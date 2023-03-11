@@ -4450,6 +4450,108 @@ impl IntoFormat<JsFormatContext> for rome_js_syntax::TsAccessibilityModifier {
         )
     }
 }
+impl FormatRule<rome_js_syntax::TsConstModifier>
+    for crate::ts::auxiliary::const_modifier::FormatTsConstModifier
+{
+    type Context = JsFormatContext;
+    #[inline(always)]
+    fn fmt(&self, node: &rome_js_syntax::TsConstModifier, f: &mut JsFormatter) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::TsConstModifier>::fmt(self, node, f)
+    }
+}
+impl AsFormat<JsFormatContext> for rome_js_syntax::TsConstModifier {
+    type Format<'a> = FormatRefWithRule<
+        'a,
+        rome_js_syntax::TsConstModifier,
+        crate::ts::auxiliary::const_modifier::FormatTsConstModifier,
+    >;
+    fn format(&self) -> Self::Format<'_> {
+        FormatRefWithRule::new(
+            self,
+            crate::ts::auxiliary::const_modifier::FormatTsConstModifier::default(),
+        )
+    }
+}
+impl IntoFormat<JsFormatContext> for rome_js_syntax::TsConstModifier {
+    type Format = FormatOwnedWithRule<
+        rome_js_syntax::TsConstModifier,
+        crate::ts::auxiliary::const_modifier::FormatTsConstModifier,
+    >;
+    fn into_format(self) -> Self::Format {
+        FormatOwnedWithRule::new(
+            self,
+            crate::ts::auxiliary::const_modifier::FormatTsConstModifier::default(),
+        )
+    }
+}
+impl FormatRule<rome_js_syntax::TsInModifier>
+    for crate::ts::auxiliary::in_modifier::FormatTsInModifier
+{
+    type Context = JsFormatContext;
+    #[inline(always)]
+    fn fmt(&self, node: &rome_js_syntax::TsInModifier, f: &mut JsFormatter) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::TsInModifier>::fmt(self, node, f)
+    }
+}
+impl AsFormat<JsFormatContext> for rome_js_syntax::TsInModifier {
+    type Format<'a> = FormatRefWithRule<
+        'a,
+        rome_js_syntax::TsInModifier,
+        crate::ts::auxiliary::in_modifier::FormatTsInModifier,
+    >;
+    fn format(&self) -> Self::Format<'_> {
+        FormatRefWithRule::new(
+            self,
+            crate::ts::auxiliary::in_modifier::FormatTsInModifier::default(),
+        )
+    }
+}
+impl IntoFormat<JsFormatContext> for rome_js_syntax::TsInModifier {
+    type Format = FormatOwnedWithRule<
+        rome_js_syntax::TsInModifier,
+        crate::ts::auxiliary::in_modifier::FormatTsInModifier,
+    >;
+    fn into_format(self) -> Self::Format {
+        FormatOwnedWithRule::new(
+            self,
+            crate::ts::auxiliary::in_modifier::FormatTsInModifier::default(),
+        )
+    }
+}
+impl FormatRule<rome_js_syntax::TsOutModifier>
+    for crate::ts::auxiliary::out_modifier::FormatTsOutModifier
+{
+    type Context = JsFormatContext;
+    #[inline(always)]
+    fn fmt(&self, node: &rome_js_syntax::TsOutModifier, f: &mut JsFormatter) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::TsOutModifier>::fmt(self, node, f)
+    }
+}
+impl AsFormat<JsFormatContext> for rome_js_syntax::TsOutModifier {
+    type Format<'a> = FormatRefWithRule<
+        'a,
+        rome_js_syntax::TsOutModifier,
+        crate::ts::auxiliary::out_modifier::FormatTsOutModifier,
+    >;
+    fn format(&self) -> Self::Format<'_> {
+        FormatRefWithRule::new(
+            self,
+            crate::ts::auxiliary::out_modifier::FormatTsOutModifier::default(),
+        )
+    }
+}
+impl IntoFormat<JsFormatContext> for rome_js_syntax::TsOutModifier {
+    type Format = FormatOwnedWithRule<
+        rome_js_syntax::TsOutModifier,
+        crate::ts::auxiliary::out_modifier::FormatTsOutModifier,
+    >;
+    fn into_format(self) -> Self::Format {
+        FormatOwnedWithRule::new(
+            self,
+            crate::ts::auxiliary::out_modifier::FormatTsOutModifier::default(),
+        )
+    }
+}
 impl FormatRule<rome_js_syntax::JsConstructorParameters>
     for crate::js::bindings::constructor_parameters::FormatJsConstructorParameters
 {
@@ -10411,6 +10513,25 @@ impl IntoFormat<JsFormatContext> for rome_js_syntax::TsTypeParameterList {
         )
     }
 }
+impl AsFormat<JsFormatContext> for rome_js_syntax::TsTypeParameterModifierList {
+    type Format<'a> = FormatRefWithRule<
+        'a,
+        rome_js_syntax::TsTypeParameterModifierList,
+        crate::ts::lists::type_parameter_modifier_list::FormatTsTypeParameterModifierList,
+    >;
+    fn format(&self) -> Self::Format<'_> {
+        FormatRefWithRule :: new (self , crate :: ts :: lists :: type_parameter_modifier_list :: FormatTsTypeParameterModifierList :: default ())
+    }
+}
+impl IntoFormat<JsFormatContext> for rome_js_syntax::TsTypeParameterModifierList {
+    type Format = FormatOwnedWithRule<
+        rome_js_syntax::TsTypeParameterModifierList,
+        crate::ts::lists::type_parameter_modifier_list::FormatTsTypeParameterModifierList,
+    >;
+    fn into_format(self) -> Self::Format {
+        FormatOwnedWithRule :: new (self , crate :: ts :: lists :: type_parameter_modifier_list :: FormatTsTypeParameterModifierList :: default ())
+    }
+}
 impl AsFormat<JsFormatContext> for rome_js_syntax::TsUnionTypeVariantList {
     type Format<'a> = FormatRefWithRule<
         'a,
@@ -12079,6 +12200,31 @@ impl IntoFormat<JsFormatContext> for rome_js_syntax::AnyTsTypePredicateParameter
     >;
     fn into_format(self) -> Self::Format {
         FormatOwnedWithRule :: new (self , crate :: ts :: any :: type_predicate_parameter_name :: FormatAnyTsTypePredicateParameterName :: default ())
+    }
+}
+impl AsFormat<JsFormatContext> for rome_js_syntax::AnyTsTypeParameterModifier {
+    type Format<'a> = FormatRefWithRule<
+        'a,
+        rome_js_syntax::AnyTsTypeParameterModifier,
+        crate::ts::any::type_parameter_modifier::FormatAnyTsTypeParameterModifier,
+    >;
+    fn format(&self) -> Self::Format<'_> {
+        FormatRefWithRule::new(
+            self,
+            crate::ts::any::type_parameter_modifier::FormatAnyTsTypeParameterModifier::default(),
+        )
+    }
+}
+impl IntoFormat<JsFormatContext> for rome_js_syntax::AnyTsTypeParameterModifier {
+    type Format = FormatOwnedWithRule<
+        rome_js_syntax::AnyTsTypeParameterModifier,
+        crate::ts::any::type_parameter_modifier::FormatAnyTsTypeParameterModifier,
+    >;
+    fn into_format(self) -> Self::Format {
+        FormatOwnedWithRule::new(
+            self,
+            crate::ts::any::type_parameter_modifier::FormatAnyTsTypeParameterModifier::default(),
+        )
     }
 }
 impl AsFormat<JsFormatContext> for rome_js_syntax::AnyTsTypeMember {

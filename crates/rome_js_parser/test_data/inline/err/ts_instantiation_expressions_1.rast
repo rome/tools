@@ -102,46 +102,46 @@ JsModule {
                 arguments: TsTypeArguments {
                     l_angle_token: L_ANGLE@113..114 "<" [] [],
                     ts_type_argument_list: TsTypeArgumentList [
-                        TsFunctionType {
-                            type_parameters: TsTypeParameters {
-                                l_angle_token: L_ANGLE@114..116 "<" [] [Whitespace(" ")],
-                                items: TsTypeParameterList [
-                                    TsTypeParameter {
-                                        in_modifier_token: missing (optional),
-                                        out_modifier_token: missing (optional),
-                                        const_modifier_token: missing (optional),
-                                        name: TsTypeParameterName {
-                                            ident_token: IDENT@116..117 "f" [] [],
-                                        },
-                                        constraint: missing (optional),
-                                        default: missing (optional),
-                                    },
-                                ],
-                                r_angle_token: missing (required),
-                            },
-                            parameters: missing (required),
-                            fat_arrow_token: missing (required),
-                            return_type: TsFunctionType {
-                                type_parameters: TsTypeParameters {
-                                    l_angle_token: L_ANGLE@117..118 "<" [] [],
-                                    items: TsTypeParameterList [
-                                        TsTypeParameter {
-                                            in_modifier_token: missing (optional),
-                                            out_modifier_token: missing (optional),
-                                            const_modifier_token: missing (optional),
-                                            name: TsTypeParameterName {
-                                                ident_token: IDENT@118..119 "T" [] [],
-                                            },
-                                            constraint: missing (optional),
-                                            default: missing (optional),
+                        TsBogusType {
+                            items: [
+                                JsBogus {
+                                    items: [
+                                        L_ANGLE@114..116 "<" [] [Whitespace(" ")],
+                                        JsBogus {
+                                            items: [
+                                                TsTypeParameter {
+                                                    modifiers: TsTypeParameterModifierList [],
+                                                    name: TsTypeParameterName {
+                                                        ident_token: IDENT@116..117 "f" [] [],
+                                                    },
+                                                    constraint: missing (optional),
+                                                    default: missing (optional),
+                                                },
+                                                TsTypeParameterModifierList [],
+                                            ],
                                         },
                                     ],
-                                    r_angle_token: R_ANGLE@119..120 ">" [] [],
                                 },
-                                parameters: missing (required),
-                                fat_arrow_token: missing (required),
-                                return_type: missing (required),
-                            },
+                                TsFunctionType {
+                                    type_parameters: TsTypeParameters {
+                                        l_angle_token: L_ANGLE@117..118 "<" [] [],
+                                        items: TsTypeParameterList [
+                                            TsTypeParameter {
+                                                modifiers: TsTypeParameterModifierList [],
+                                                name: TsTypeParameterName {
+                                                    ident_token: IDENT@118..119 "T" [] [],
+                                                },
+                                                constraint: missing (optional),
+                                                default: missing (optional),
+                                            },
+                                        ],
+                                        r_angle_token: R_ANGLE@119..120 ">" [] [],
+                                    },
+                                    parameters: missing (required),
+                                    fat_arrow_token: missing (required),
+                                    return_type: missing (required),
+                                },
+                            ],
                         },
                     ],
                     r_angle_token: missing (required),
@@ -563,46 +563,46 @@ JsModule {
                 arguments: TsTypeArguments {
                     l_angle_token: L_ANGLE@265..266 "<" [] [],
                     ts_type_argument_list: TsTypeArgumentList [
-                        TsFunctionType {
-                            type_parameters: TsTypeParameters {
-                                l_angle_token: L_ANGLE@266..268 "<" [] [Whitespace(" ")],
-                                items: TsTypeParameterList [
-                                    TsTypeParameter {
-                                        in_modifier_token: missing (optional),
-                                        out_modifier_token: missing (optional),
-                                        const_modifier_token: missing (optional),
-                                        name: TsTypeParameterName {
-                                            ident_token: IDENT@268..269 "f" [] [],
-                                        },
-                                        constraint: missing (optional),
-                                        default: missing (optional),
-                                    },
-                                ],
-                                r_angle_token: missing (required),
-                            },
-                            parameters: missing (required),
-                            fat_arrow_token: missing (required),
-                            return_type: TsFunctionType {
-                                type_parameters: TsTypeParameters {
-                                    l_angle_token: L_ANGLE@269..270 "<" [] [],
-                                    items: TsTypeParameterList [
-                                        TsTypeParameter {
-                                            in_modifier_token: missing (optional),
-                                            out_modifier_token: missing (optional),
-                                            const_modifier_token: missing (optional),
-                                            name: TsTypeParameterName {
-                                                ident_token: IDENT@270..271 "T" [] [],
-                                            },
-                                            constraint: missing (optional),
-                                            default: missing (optional),
+                        TsBogusType {
+                            items: [
+                                JsBogus {
+                                    items: [
+                                        L_ANGLE@266..268 "<" [] [Whitespace(" ")],
+                                        JsBogus {
+                                            items: [
+                                                TsTypeParameter {
+                                                    modifiers: TsTypeParameterModifierList [],
+                                                    name: TsTypeParameterName {
+                                                        ident_token: IDENT@268..269 "f" [] [],
+                                                    },
+                                                    constraint: missing (optional),
+                                                    default: missing (optional),
+                                                },
+                                                TsTypeParameterModifierList [],
+                                            ],
                                         },
                                     ],
-                                    r_angle_token: R_ANGLE@271..272 ">" [] [],
                                 },
-                                parameters: missing (required),
-                                fat_arrow_token: missing (required),
-                                return_type: missing (required),
-                            },
+                                TsFunctionType {
+                                    type_parameters: TsTypeParameters {
+                                        l_angle_token: L_ANGLE@269..270 "<" [] [],
+                                        items: TsTypeParameterList [
+                                            TsTypeParameter {
+                                                modifiers: TsTypeParameterModifierList [],
+                                                name: TsTypeParameterName {
+                                                    ident_token: IDENT@270..271 "T" [] [],
+                                                },
+                                                constraint: missing (optional),
+                                                default: missing (optional),
+                                            },
+                                        ],
+                                        r_angle_token: R_ANGLE@271..272 ">" [] [],
+                                    },
+                                    parameters: missing (required),
+                                    fat_arrow_token: missing (required),
+                                    return_type: missing (required),
+                                },
+                            ],
                         },
                     ],
                     r_angle_token: missing (required),
@@ -898,33 +898,27 @@ JsModule {
         1: TS_TYPE_ARGUMENTS@113..120
           0: L_ANGLE@113..114 "<" [] []
           1: TS_TYPE_ARGUMENT_LIST@114..120
-            0: TS_FUNCTION_TYPE@114..120
-              0: TS_TYPE_PARAMETERS@114..117
+            0: TS_BOGUS_TYPE@114..120
+              0: JS_BOGUS@114..117
                 0: L_ANGLE@114..116 "<" [] [Whitespace(" ")]
-                1: TS_TYPE_PARAMETER_LIST@116..117
+                1: JS_BOGUS@116..117
                   0: TS_TYPE_PARAMETER@116..117
-                    0: (empty)
-                    1: (empty)
-                    2: (empty)
-                    3: TS_TYPE_PARAMETER_NAME@116..117
+                    0: TS_TYPE_PARAMETER_MODIFIER_LIST@116..116
+                    1: TS_TYPE_PARAMETER_NAME@116..117
                       0: IDENT@116..117 "f" [] []
-                    4: (empty)
-                    5: (empty)
-                2: (empty)
-              1: (empty)
-              2: (empty)
-              3: TS_FUNCTION_TYPE@117..120
+                    2: (empty)
+                    3: (empty)
+                  1: TS_TYPE_PARAMETER_MODIFIER_LIST@117..117
+              1: TS_FUNCTION_TYPE@117..120
                 0: TS_TYPE_PARAMETERS@117..120
                   0: L_ANGLE@117..118 "<" [] []
                   1: TS_TYPE_PARAMETER_LIST@118..119
                     0: TS_TYPE_PARAMETER@118..119
-                      0: (empty)
-                      1: (empty)
-                      2: (empty)
-                      3: TS_TYPE_PARAMETER_NAME@118..119
+                      0: TS_TYPE_PARAMETER_MODIFIER_LIST@118..118
+                      1: TS_TYPE_PARAMETER_NAME@118..119
                         0: IDENT@118..119 "T" [] []
-                      4: (empty)
-                      5: (empty)
+                      2: (empty)
+                      3: (empty)
                   2: R_ANGLE@119..120 ">" [] []
                 1: (empty)
                 2: (empty)
@@ -1197,33 +1191,27 @@ JsModule {
         1: TS_TYPE_ARGUMENTS@265..272
           0: L_ANGLE@265..266 "<" [] []
           1: TS_TYPE_ARGUMENT_LIST@266..272
-            0: TS_FUNCTION_TYPE@266..272
-              0: TS_TYPE_PARAMETERS@266..269
+            0: TS_BOGUS_TYPE@266..272
+              0: JS_BOGUS@266..269
                 0: L_ANGLE@266..268 "<" [] [Whitespace(" ")]
-                1: TS_TYPE_PARAMETER_LIST@268..269
+                1: JS_BOGUS@268..269
                   0: TS_TYPE_PARAMETER@268..269
-                    0: (empty)
-                    1: (empty)
-                    2: (empty)
-                    3: TS_TYPE_PARAMETER_NAME@268..269
+                    0: TS_TYPE_PARAMETER_MODIFIER_LIST@268..268
+                    1: TS_TYPE_PARAMETER_NAME@268..269
                       0: IDENT@268..269 "f" [] []
-                    4: (empty)
-                    5: (empty)
-                2: (empty)
-              1: (empty)
-              2: (empty)
-              3: TS_FUNCTION_TYPE@269..272
+                    2: (empty)
+                    3: (empty)
+                  1: TS_TYPE_PARAMETER_MODIFIER_LIST@269..269
+              1: TS_FUNCTION_TYPE@269..272
                 0: TS_TYPE_PARAMETERS@269..272
                   0: L_ANGLE@269..270 "<" [] []
                   1: TS_TYPE_PARAMETER_LIST@270..271
                     0: TS_TYPE_PARAMETER@270..271
-                      0: (empty)
-                      1: (empty)
-                      2: (empty)
-                      3: TS_TYPE_PARAMETER_NAME@270..271
+                      0: TS_TYPE_PARAMETER_MODIFIER_LIST@270..270
+                      1: TS_TYPE_PARAMETER_NAME@270..271
                         0: IDENT@270..271 "T" [] []
-                      4: (empty)
-                      5: (empty)
+                      2: (empty)
+                      3: (empty)
                   2: R_ANGLE@271..272 ">" [] []
                 1: (empty)
                 2: (empty)

@@ -71,9 +71,7 @@ JsModule {
                 l_angle_token: L_ANGLE@74..75 "<" [] [],
                 items: TsTypeParameterList [
                     TsTypeParameter {
-                        in_modifier_token: missing (optional),
-                        out_modifier_token: missing (optional),
-                        const_modifier_token: missing (optional),
+                        modifiers: TsTypeParameterModifierList [],
                         name: TsTypeParameterName {
                             ident_token: IDENT@75..76 "U" [] [],
                         },
@@ -173,13 +171,11 @@ JsModule {
         0: L_ANGLE@74..75 "<" [] []
         1: TS_TYPE_PARAMETER_LIST@75..76
           0: TS_TYPE_PARAMETER@75..76
-            0: (empty)
-            1: (empty)
-            2: (empty)
-            3: TS_TYPE_PARAMETER_NAME@75..76
+            0: TS_TYPE_PARAMETER_MODIFIER_LIST@75..75
+            1: TS_TYPE_PARAMETER_NAME@75..76
               0: IDENT@75..76 "U" [] []
-            4: (empty)
-            5: (empty)
+            2: (empty)
+            3: (empty)
         2: R_ANGLE@76..78 ">" [] [Whitespace(" ")]
       3: EQ@78..80 "=" [] [Whitespace(" ")]
       4: TS_REFERENCE_TYPE@80..109

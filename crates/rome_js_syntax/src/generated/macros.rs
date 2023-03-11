@@ -784,6 +784,10 @@ macro_rules! map_syntax_node {
                     let $pattern = unsafe { $crate::TsConditionalType::new_unchecked(node) };
                     $body
                 }
+                $crate::JsSyntaxKind::TS_CONST_MODIFIER => {
+                    let $pattern = unsafe { $crate::TsConstModifier::new_unchecked(node) };
+                    $body
+                }
                 $crate::JsSyntaxKind::TS_CONSTRUCT_SIGNATURE_TYPE_MEMBER => {
                     let $pattern =
                         unsafe { $crate::TsConstructSignatureTypeMember::new_unchecked(node) };
@@ -909,6 +913,10 @@ macro_rules! map_syntax_node {
                 }
                 $crate::JsSyntaxKind::TS_IMPORT_TYPE_QUALIFIER => {
                     let $pattern = unsafe { $crate::TsImportTypeQualifier::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::TS_IN_MODIFIER => {
+                    let $pattern = unsafe { $crate::TsInModifier::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::TS_INDEX_SIGNATURE_CLASS_MEMBER => {
@@ -1039,6 +1047,10 @@ macro_rules! map_syntax_node {
                 $crate::JsSyntaxKind::TS_OPTIONAL_TUPLE_TYPE_ELEMENT => {
                     let $pattern =
                         unsafe { $crate::TsOptionalTupleTypeElement::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::TS_OUT_MODIFIER => {
+                    let $pattern = unsafe { $crate::TsOutModifier::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::TS_OVERRIDE_MODIFIER => {
@@ -1411,6 +1423,11 @@ macro_rules! map_syntax_node {
                 }
                 $crate::JsSyntaxKind::TS_TYPE_PARAMETER_LIST => {
                     let $pattern = unsafe { $crate::TsTypeParameterList::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::TS_TYPE_PARAMETER_MODIFIER_LIST => {
+                    let $pattern =
+                        unsafe { $crate::TsTypeParameterModifierList::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::TS_UNION_TYPE_VARIANT_LIST => {

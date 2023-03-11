@@ -781,9 +781,7 @@ JsModule {
                                     l_angle_token: L_ANGLE@516..517 "<" [] [],
                                     items: TsTypeParameterList [
                                         TsTypeParameter {
-                                            in_modifier_token: missing (optional),
-                                            out_modifier_token: missing (optional),
-                                            const_modifier_token: missing (optional),
+                                            modifiers: TsTypeParameterModifierList [],
                                             name: TsTypeParameterName {
                                                 ident_token: IDENT@517..518 "T" [] [],
                                             },
@@ -836,9 +834,7 @@ JsModule {
                                 l_angle_token: L_ANGLE@537..538 "<" [] [],
                                 items: TsTypeParameterList [
                                     TsTypeParameter {
-                                        in_modifier_token: missing (optional),
-                                        out_modifier_token: missing (optional),
-                                        const_modifier_token: missing (optional),
+                                        modifiers: TsTypeParameterModifierList [],
                                         name: TsTypeParameterName {
                                             ident_token: IDENT@538..539 "T" [] [],
                                         },
@@ -1516,13 +1512,11 @@ JsModule {
                   0: L_ANGLE@516..517 "<" [] []
                   1: TS_TYPE_PARAMETER_LIST@517..518
                     0: TS_TYPE_PARAMETER@517..518
-                      0: (empty)
-                      1: (empty)
-                      2: (empty)
-                      3: TS_TYPE_PARAMETER_NAME@517..518
+                      0: TS_TYPE_PARAMETER_MODIFIER_LIST@517..517
+                      1: TS_TYPE_PARAMETER_NAME@517..518
                         0: IDENT@517..518 "T" [] []
-                      4: (empty)
-                      5: (empty)
+                      2: (empty)
+                      3: (empty)
                   2: R_ANGLE@518..519 ">" [] []
                 1: JS_PARAMETERS@519..522
                   0: L_PAREN@519..520 "(" [] []
@@ -1555,13 +1549,11 @@ JsModule {
                 0: L_ANGLE@537..538 "<" [] []
                 1: TS_TYPE_PARAMETER_LIST@538..539
                   0: TS_TYPE_PARAMETER@538..539
-                    0: (empty)
-                    1: (empty)
-                    2: (empty)
-                    3: TS_TYPE_PARAMETER_NAME@538..539
+                    0: TS_TYPE_PARAMETER_MODIFIER_LIST@538..538
+                    1: TS_TYPE_PARAMETER_NAME@538..539
                       0: IDENT@538..539 "T" [] []
-                    4: (empty)
-                    5: (empty)
+                    2: (empty)
+                    3: (empty)
                 2: R_ANGLE@539..540 ">" [] []
               1: JS_PARAMETERS@540..543
                 0: L_PAREN@540..541 "(" [] []

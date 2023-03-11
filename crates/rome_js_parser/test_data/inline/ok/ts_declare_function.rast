@@ -14,9 +14,7 @@ JsModule {
                     l_angle_token: L_ANGLE@21..22 "<" [] [],
                     items: TsTypeParameterList [
                         TsTypeParameter {
-                            in_modifier_token: missing (optional),
-                            out_modifier_token: missing (optional),
-                            const_modifier_token: missing (optional),
+                            modifiers: TsTypeParameterModifierList [],
                             name: TsTypeParameterName {
                                 ident_token: IDENT@22..23 "A" [] [],
                             },
@@ -25,9 +23,7 @@ JsModule {
                         },
                         COMMA@23..25 "," [] [Whitespace(" ")],
                         TsTypeParameter {
-                            in_modifier_token: missing (optional),
-                            out_modifier_token: missing (optional),
-                            const_modifier_token: missing (optional),
+                            modifiers: TsTypeParameterModifierList [],
                             name: TsTypeParameterName {
                                 ident_token: IDENT@25..26 "B" [] [],
                             },
@@ -36,9 +32,7 @@ JsModule {
                         },
                         COMMA@26..28 "," [] [Whitespace(" ")],
                         TsTypeParameter {
-                            in_modifier_token: missing (optional),
-                            out_modifier_token: missing (optional),
-                            const_modifier_token: missing (optional),
+                            modifiers: TsTypeParameterModifierList [],
                             name: TsTypeParameterName {
                                 ident_token: IDENT@28..29 "R" [] [],
                             },
@@ -205,31 +199,25 @@ JsModule {
           0: L_ANGLE@21..22 "<" [] []
           1: TS_TYPE_PARAMETER_LIST@22..29
             0: TS_TYPE_PARAMETER@22..23
-              0: (empty)
-              1: (empty)
-              2: (empty)
-              3: TS_TYPE_PARAMETER_NAME@22..23
+              0: TS_TYPE_PARAMETER_MODIFIER_LIST@22..22
+              1: TS_TYPE_PARAMETER_NAME@22..23
                 0: IDENT@22..23 "A" [] []
-              4: (empty)
-              5: (empty)
+              2: (empty)
+              3: (empty)
             1: COMMA@23..25 "," [] [Whitespace(" ")]
             2: TS_TYPE_PARAMETER@25..26
-              0: (empty)
-              1: (empty)
-              2: (empty)
-              3: TS_TYPE_PARAMETER_NAME@25..26
+              0: TS_TYPE_PARAMETER_MODIFIER_LIST@25..25
+              1: TS_TYPE_PARAMETER_NAME@25..26
                 0: IDENT@25..26 "B" [] []
-              4: (empty)
-              5: (empty)
+              2: (empty)
+              3: (empty)
             3: COMMA@26..28 "," [] [Whitespace(" ")]
             4: TS_TYPE_PARAMETER@28..29
-              0: (empty)
-              1: (empty)
-              2: (empty)
-              3: TS_TYPE_PARAMETER_NAME@28..29
+              0: TS_TYPE_PARAMETER_MODIFIER_LIST@28..28
+              1: TS_TYPE_PARAMETER_NAME@28..29
                 0: IDENT@28..29 "R" [] []
-              4: (empty)
-              5: (empty)
+              2: (empty)
+              3: (empty)
           2: R_ANGLE@29..30 ">" [] []
         4: JS_PARAMETERS@30..42
           0: L_PAREN@30..31 "(" [] []
