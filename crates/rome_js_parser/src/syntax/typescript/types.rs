@@ -375,7 +375,7 @@ impl ClassMemberModifierList {
 
 pub(crate) fn is_nth_at_type_parameter_modifier(p: &mut JsParser, n: usize) -> bool {
     match p.nth(n) {
-        T![in] | T![out] | T![const] => return !p.nth_at(n + 1, T![,]) && !p.nth_at(n + 1, T![>]),
+        T![in] | T![out] | T![const] => !p.nth_at(n + 1, T![,]) && !p.nth_at(n + 1, T![>]),
         _ => false,
     }
 }
