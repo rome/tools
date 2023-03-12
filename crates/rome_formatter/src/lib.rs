@@ -1192,12 +1192,12 @@ pub fn format_range<Language: FormatLanguage>(
                             // e.g
                             // ...
                             // SourceMarker {
-                            //     source: 94,
-                            //     dest: 99, <----- both markers have the same dest.
+                            //     source: 94, <----- but we need to use this source position to get correct substring in the source
+                            //     dest: 99,
                             // },
                             // SourceMarker {
-                            //     source: 96, <----- but we need to use this source position to get correct substring in the source
-                            //     dest: 99,
+                            //     source: 96,
+                            //     dest: 99, <----- both markers have the same dest.
                             // },
                             // ...
                             Some(prev_marker)
