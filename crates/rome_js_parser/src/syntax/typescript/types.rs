@@ -1792,7 +1792,6 @@ fn parse_ts_type_predicate(p: &mut JsParser, context: TypeContext) -> ParsedSynt
 // f<T> --;
 // f<T> /= 1;
 // f<T> <= f<T>;
-// f<T> << f<T>;
 // f <T>
 // [];
 // f<T>
