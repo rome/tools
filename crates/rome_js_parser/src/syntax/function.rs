@@ -13,8 +13,8 @@ use crate::syntax::js_parse_error::{expected_binding, expected_parameter, expect
 use crate::syntax::stmt::{is_semi, parse_block_impl, semi, StatementContext};
 use crate::syntax::typescript::ts_parse_error::ts_only_syntax_error;
 use crate::syntax::typescript::{
-    parse_ts_return_type_annotation, parse_ts_type_annotation, parse_ts_type_parameters,
-    skip_ts_decorators, try_parse, TypeContext,
+    is_nth_at_type_parameter_modifier, parse_ts_return_type_annotation, parse_ts_type_annotation,
+    parse_ts_type_parameters, skip_ts_decorators, try_parse, TypeContext,
 };
 
 use crate::JsSyntaxFeature::TypeScript;
@@ -728,7 +728,11 @@ fn is_parenthesized_arrow_function_expression_impl(
         }
         // potential start of type parameters
         T![<] => {
-            if !is_nth_at_identifier(p, n + 1) {
+            if is_nth_at_type_parameter_modifier(p, n + 1) && !JsSyntaxFeature::Jsx.is_supported(p)
+            {
+                // <const T>...
+                IsParenthesizedArrowFunctionExpression::True
+            } else if !is_nth_at_identifier(p, n + 1) {
                 // <5...
                 IsParenthesizedArrowFunctionExpression::False
             }

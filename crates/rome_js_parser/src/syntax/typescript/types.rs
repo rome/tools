@@ -290,6 +290,8 @@ impl ParseSeparatedList for TsTypeParameterList {
 // function b<const T extends U>() {}
 // function c<T, const U>() {}
 // declare function d<const T>();
+// <T>() => {};
+// <const T>() => {};
 // (function <const T>() {});
 // (function <const T extends U>() {});
 // (function <T, const U>() {});
@@ -298,6 +300,7 @@ impl ParseSeparatedList for TsTypeParameterList {
 // class C<T, const U> {}
 // class D<in const T> {}
 // class E<const in T> {}
+// class F<in const out T> {}
 // (class <const T> {});
 // (class <const T extends U> {});
 // (class <T, const U> {});
@@ -370,15 +373,18 @@ impl ClassMemberModifierList {
     }
 }
 
-fn is_at_type_parameter_modifier(p: &mut JsParser) -> bool {
-    p.at_ts(token_set!(T![in], T![out], T![const])) && !p.nth_at(1, T![,]) && !p.nth_at(1, T![>])
+pub(crate) fn is_nth_at_type_parameter_modifier(p: &mut JsParser, n: usize) -> bool {
+    match p.nth(n) {
+        T![in] | T![out] | T![const] => return !p.nth_at(n + 1, T![,]) && !p.nth_at(n + 1, T![>]),
+        _ => false,
+    }
 }
 
 fn parse_ts_type_parameter_modifiers(p: &mut JsParser, context: TypeContext) -> ParsedSyntax {
     let list = p.start();
     let mut modifiers = ClassMemberModifierList::default();
 
-    while is_at_type_parameter_modifier(p) {
+    while is_nth_at_type_parameter_modifier(p, 0) {
         let modifier_kind = match p.cur() {
             T![in] => TypeParameterModifierKind::In,
             T![out] => TypeParameterModifierKind::Out,

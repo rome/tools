@@ -792,42 +792,44 @@ JsModule {
             semicolon_token: SEMICOLON@466..467 ";" [] [],
         },
         JsExpressionStatement {
-            expression: JsBinaryExpression {
-                left: TsTypeAssertionExpression {
-                    l_angle_token: L_ANGLE@467..469 "<" [Newline("\n")] [],
-                    ty: TsReferenceType {
-                        name: JsReferenceIdentifier {
-                            value_token: IDENT@469..472 "in" [] [Whitespace(" ")],
-                        },
-                        type_arguments: missing (optional),
+            expression: JsBogusExpression {
+                items: [
+                    JsBogus {
+                        items: [
+                            L_ANGLE@467..469 "<" [Newline("\n")] [],
+                            JsBogus {
+                                items: [
+                                    JsBogus {
+                                        items: [
+                                            JsBogus {
+                                                items: [
+                                                    IN_KW@469..472 "in" [] [Whitespace(" ")],
+                                                ],
+                                            },
+                                            TsTypeParameterName {
+                                                ident_token: IDENT@472..473 "T" [] [],
+                                            },
+                                        ],
+                                    },
+                                ],
+                            },
+                            R_ANGLE@473..474 ">" [] [],
+                        ],
                     },
-                    r_angle_token: missing (required),
-                    expression: JsIdentifierExpression {
-                        name: JsReferenceIdentifier {
-                            value_token: IDENT@472..473 "T" [] [],
-                        },
+                    JsParameters {
+                        l_paren_token: L_PAREN@474..475 "(" [] [],
+                        items: JsParameterList [],
+                        r_paren_token: R_PAREN@475..477 ")" [] [Whitespace(" ")],
                     },
-                },
-                operator_token: R_ANGLE@473..474 ">" [] [],
-                right: JsParenthesizedExpression {
-                    l_paren_token: L_PAREN@474..475 "(" [] [],
-                    expression: missing (required),
-                    r_paren_token: R_PAREN@475..477 ")" [] [Whitespace(" ")],
-                },
+                    FAT_ARROW@477..480 "=>" [] [Whitespace(" ")],
+                    JsFunctionBody {
+                        l_curly_token: L_CURLY@480..481 "{" [] [],
+                        directives: JsDirectiveList [],
+                        statements: JsStatementList [],
+                        r_curly_token: R_CURLY@481..482 "}" [] [],
+                    },
+                ],
             },
-            semicolon_token: missing (optional),
-        },
-        JsBogusStatement {
-            items: [
-                FAT_ARROW@477..480 "=>" [] [Whitespace(" ")],
-            ],
-        },
-        JsBlockStatement {
-            l_curly_token: L_CURLY@480..481 "{" [] [],
-            statements: JsStatementList [],
-            r_curly_token: R_CURLY@481..482 "}" [] [],
-        },
-        JsEmptyStatement {
             semicolon_token: SEMICOLON@482..483 ";" [] [],
         },
         JsExpressionStatement {
@@ -872,58 +874,57 @@ JsModule {
             semicolon_token: SEMICOLON@499..500 ";" [] [],
         },
         JsExpressionStatement {
-            expression: JsSequenceExpression {
-                left: TsTypeAssertionExpression {
-                    l_angle_token: L_ANGLE@500..502 "<" [Newline("\n")] [],
-                    ty: TsReferenceType {
-                        name: JsReferenceIdentifier {
-                            value_token: IDENT@502..505 "in" [] [Whitespace(" ")],
-                        },
-                        type_arguments: missing (optional),
+            expression: JsBogusExpression {
+                items: [
+                    JsBogus {
+                        items: [
+                            L_ANGLE@500..502 "<" [Newline("\n")] [],
+                            JsBogus {
+                                items: [
+                                    JsBogus {
+                                        items: [
+                                            JsBogus {
+                                                items: [
+                                                    IN_KW@502..505 "in" [] [Whitespace(" ")],
+                                                ],
+                                            },
+                                            TsTypeParameterName {
+                                                ident_token: IDENT@505..506 "T" [] [],
+                                            },
+                                        ],
+                                    },
+                                    COMMA@506..508 "," [] [Whitespace(" ")],
+                                    JsBogus {
+                                        items: [
+                                            JsBogus {
+                                                items: [
+                                                    OUT_KW@508..512 "out" [] [Whitespace(" ")],
+                                                ],
+                                            },
+                                            TsTypeParameterName {
+                                                ident_token: IDENT@512..513 "T" [] [],
+                                            },
+                                        ],
+                                    },
+                                ],
+                            },
+                            R_ANGLE@513..514 ">" [] [],
+                        ],
                     },
-                    r_angle_token: missing (required),
-                    expression: JsIdentifierExpression {
-                        name: JsReferenceIdentifier {
-                            value_token: IDENT@505..506 "T" [] [],
-                        },
+                    JsParameters {
+                        l_paren_token: L_PAREN@514..515 "(" [] [],
+                        items: JsParameterList [],
+                        r_paren_token: R_PAREN@515..517 ")" [] [Whitespace(" ")],
                     },
-                },
-                comma_token: COMMA@506..508 "," [] [Whitespace(" ")],
-                right: JsIdentifierExpression {
-                    name: JsReferenceIdentifier {
-                        value_token: IDENT@508..512 "out" [] [Whitespace(" ")],
+                    FAT_ARROW@517..520 "=>" [] [Whitespace(" ")],
+                    JsFunctionBody {
+                        l_curly_token: L_CURLY@520..521 "{" [] [],
+                        directives: JsDirectiveList [],
+                        statements: JsStatementList [],
+                        r_curly_token: R_CURLY@521..522 "}" [] [],
                     },
-                },
+                ],
             },
-            semicolon_token: missing (optional),
-        },
-        JsExpressionStatement {
-            expression: JsBinaryExpression {
-                left: JsIdentifierExpression {
-                    name: JsReferenceIdentifier {
-                        value_token: IDENT@512..513 "T" [] [],
-                    },
-                },
-                operator_token: R_ANGLE@513..514 ">" [] [],
-                right: JsParenthesizedExpression {
-                    l_paren_token: L_PAREN@514..515 "(" [] [],
-                    expression: missing (required),
-                    r_paren_token: R_PAREN@515..517 ")" [] [Whitespace(" ")],
-                },
-            },
-            semicolon_token: missing (optional),
-        },
-        JsBogusStatement {
-            items: [
-                FAT_ARROW@517..520 "=>" [] [Whitespace(" ")],
-            ],
-        },
-        JsBlockStatement {
-            l_curly_token: L_CURLY@520..521 "{" [] [],
-            statements: JsStatementList [],
-            r_curly_token: R_CURLY@521..522 "}" [] [],
-        },
-        JsEmptyStatement {
             semicolon_token: SEMICOLON@522..523 ";" [] [],
         },
         JsVariableStatement {
@@ -2449,33 +2450,29 @@ JsModule {
                 3: R_CURLY@463..465 "}" [] [Whitespace(" ")]
           2: R_CURLY@465..466 "}" [] []
       1: SEMICOLON@466..467 ";" [] []
-    16: JS_EXPRESSION_STATEMENT@467..477
-      0: JS_BINARY_EXPRESSION@467..477
-        0: TS_TYPE_ASSERTION_EXPRESSION@467..473
+    16: JS_EXPRESSION_STATEMENT@467..483
+      0: JS_BOGUS_EXPRESSION@467..482
+        0: JS_BOGUS@467..474
           0: L_ANGLE@467..469 "<" [Newline("\n")] []
-          1: TS_REFERENCE_TYPE@469..472
-            0: JS_REFERENCE_IDENTIFIER@469..472
-              0: IDENT@469..472 "in" [] [Whitespace(" ")]
-            1: (empty)
-          2: (empty)
-          3: JS_IDENTIFIER_EXPRESSION@472..473
-            0: JS_REFERENCE_IDENTIFIER@472..473
-              0: IDENT@472..473 "T" [] []
-        1: R_ANGLE@473..474 ">" [] []
-        2: JS_PARENTHESIZED_EXPRESSION@474..477
+          1: JS_BOGUS@469..473
+            0: JS_BOGUS@469..473
+              0: JS_BOGUS@469..472
+                0: IN_KW@469..472 "in" [] [Whitespace(" ")]
+              1: TS_TYPE_PARAMETER_NAME@472..473
+                0: IDENT@472..473 "T" [] []
+          2: R_ANGLE@473..474 ">" [] []
+        1: JS_PARAMETERS@474..477
           0: L_PAREN@474..475 "(" [] []
-          1: (empty)
+          1: JS_PARAMETER_LIST@475..475
           2: R_PAREN@475..477 ")" [] [Whitespace(" ")]
-      1: (empty)
-    17: JS_BOGUS_STATEMENT@477..480
-      0: FAT_ARROW@477..480 "=>" [] [Whitespace(" ")]
-    18: JS_BLOCK_STATEMENT@480..482
-      0: L_CURLY@480..481 "{" [] []
-      1: JS_STATEMENT_LIST@481..481
-      2: R_CURLY@481..482 "}" [] []
-    19: JS_EMPTY_STATEMENT@482..483
-      0: SEMICOLON@482..483 ";" [] []
-    20: JS_EXPRESSION_STATEMENT@483..500
+        2: FAT_ARROW@477..480 "=>" [] [Whitespace(" ")]
+        3: JS_FUNCTION_BODY@480..482
+          0: L_CURLY@480..481 "{" [] []
+          1: JS_DIRECTIVE_LIST@481..481
+          2: JS_STATEMENT_LIST@481..481
+          3: R_CURLY@481..482 "}" [] []
+      1: SEMICOLON@482..483 ";" [] []
+    17: JS_EXPRESSION_STATEMENT@483..500
       0: JS_BOGUS_EXPRESSION@483..499
         0: JS_BOGUS@483..491
           0: L_ANGLE@483..485 "<" [Newline("\n")] []
@@ -2497,43 +2494,35 @@ JsModule {
           2: JS_STATEMENT_LIST@498..498
           3: R_CURLY@498..499 "}" [] []
       1: SEMICOLON@499..500 ";" [] []
-    21: JS_EXPRESSION_STATEMENT@500..512
-      0: JS_SEQUENCE_EXPRESSION@500..512
-        0: TS_TYPE_ASSERTION_EXPRESSION@500..506
+    18: JS_EXPRESSION_STATEMENT@500..523
+      0: JS_BOGUS_EXPRESSION@500..522
+        0: JS_BOGUS@500..514
           0: L_ANGLE@500..502 "<" [Newline("\n")] []
-          1: TS_REFERENCE_TYPE@502..505
-            0: JS_REFERENCE_IDENTIFIER@502..505
-              0: IDENT@502..505 "in" [] [Whitespace(" ")]
-            1: (empty)
-          2: (empty)
-          3: JS_IDENTIFIER_EXPRESSION@505..506
-            0: JS_REFERENCE_IDENTIFIER@505..506
-              0: IDENT@505..506 "T" [] []
-        1: COMMA@506..508 "," [] [Whitespace(" ")]
-        2: JS_IDENTIFIER_EXPRESSION@508..512
-          0: JS_REFERENCE_IDENTIFIER@508..512
-            0: IDENT@508..512 "out" [] [Whitespace(" ")]
-      1: (empty)
-    22: JS_EXPRESSION_STATEMENT@512..517
-      0: JS_BINARY_EXPRESSION@512..517
-        0: JS_IDENTIFIER_EXPRESSION@512..513
-          0: JS_REFERENCE_IDENTIFIER@512..513
-            0: IDENT@512..513 "T" [] []
-        1: R_ANGLE@513..514 ">" [] []
-        2: JS_PARENTHESIZED_EXPRESSION@514..517
+          1: JS_BOGUS@502..513
+            0: JS_BOGUS@502..506
+              0: JS_BOGUS@502..505
+                0: IN_KW@502..505 "in" [] [Whitespace(" ")]
+              1: TS_TYPE_PARAMETER_NAME@505..506
+                0: IDENT@505..506 "T" [] []
+            1: COMMA@506..508 "," [] [Whitespace(" ")]
+            2: JS_BOGUS@508..513
+              0: JS_BOGUS@508..512
+                0: OUT_KW@508..512 "out" [] [Whitespace(" ")]
+              1: TS_TYPE_PARAMETER_NAME@512..513
+                0: IDENT@512..513 "T" [] []
+          2: R_ANGLE@513..514 ">" [] []
+        1: JS_PARAMETERS@514..517
           0: L_PAREN@514..515 "(" [] []
-          1: (empty)
+          1: JS_PARAMETER_LIST@515..515
           2: R_PAREN@515..517 ")" [] [Whitespace(" ")]
-      1: (empty)
-    23: JS_BOGUS_STATEMENT@517..520
-      0: FAT_ARROW@517..520 "=>" [] [Whitespace(" ")]
-    24: JS_BLOCK_STATEMENT@520..522
-      0: L_CURLY@520..521 "{" [] []
-      1: JS_STATEMENT_LIST@521..521
-      2: R_CURLY@521..522 "}" [] []
-    25: JS_EMPTY_STATEMENT@522..523
-      0: SEMICOLON@522..523 ";" [] []
-    26: JS_VARIABLE_STATEMENT@523..546
+        2: FAT_ARROW@517..520 "=>" [] [Whitespace(" ")]
+        3: JS_FUNCTION_BODY@520..522
+          0: L_CURLY@520..521 "{" [] []
+          1: JS_DIRECTIVE_LIST@521..521
+          2: JS_STATEMENT_LIST@521..521
+          3: R_CURLY@521..522 "}" [] []
+      1: SEMICOLON@522..523 ";" [] []
+    19: JS_VARIABLE_STATEMENT@523..546
       0: JS_VARIABLE_DECLARATION@523..545
         0: LET_KW@523..528 "let" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATOR_LIST@528..545
@@ -2563,7 +2552,7 @@ JsModule {
                   2: R_CURLY@544..545 "}" [] []
             2: (empty)
       1: SEMICOLON@545..546 ";" [] []
-    27: JS_VARIABLE_STATEMENT@546..570
+    20: JS_VARIABLE_STATEMENT@546..570
       0: JS_VARIABLE_DECLARATION@546..569
         0: LET_KW@546..551 "let" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATOR_LIST@551..569
@@ -2593,7 +2582,7 @@ JsModule {
                   2: R_CURLY@568..569 "}" [] []
             2: (empty)
       1: SEMICOLON@569..570 ";" [] []
-    28: JS_VARIABLE_STATEMENT@570..600
+    21: JS_VARIABLE_STATEMENT@570..600
       0: JS_VARIABLE_DECLARATION@570..599
         0: LET_KW@570..575 "let" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATOR_LIST@575..599
@@ -2629,7 +2618,7 @@ JsModule {
                   2: R_CURLY@598..599 "}" [] []
             2: (empty)
       1: SEMICOLON@599..600 ";" [] []
-    29: JS_VARIABLE_STATEMENT@600..627
+    22: JS_VARIABLE_STATEMENT@600..627
       0: JS_VARIABLE_DECLARATION@600..626
         0: LET_KW@600..605 "let" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATOR_LIST@605..626
@@ -2660,7 +2649,7 @@ JsModule {
                   2: R_CURLY@625..626 "}" [] []
             2: (empty)
       1: SEMICOLON@626..627 ";" [] []
-    30: JS_VARIABLE_STATEMENT@627..655
+    23: JS_VARIABLE_STATEMENT@627..655
       0: JS_VARIABLE_DECLARATION@627..654
         0: LET_KW@627..632 "let" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATOR_LIST@632..654
@@ -2691,7 +2680,7 @@ JsModule {
                   2: R_CURLY@653..654 "}" [] []
             2: (empty)
       1: SEMICOLON@654..655 ";" [] []
-    31: JS_VARIABLE_STATEMENT@655..689
+    24: JS_VARIABLE_STATEMENT@655..689
       0: JS_VARIABLE_DECLARATION@655..688
         0: LET_KW@655..660 "let" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATOR_LIST@660..688
@@ -2728,7 +2717,7 @@ JsModule {
                   2: R_CURLY@687..688 "}" [] []
             2: (empty)
       1: SEMICOLON@688..689 ";" [] []
-    32: JS_VARIABLE_STATEMENT@689..716
+    25: JS_VARIABLE_STATEMENT@689..716
       0: JS_VARIABLE_DECLARATION@689..715
         0: LET_KW@689..694 "let" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATOR_LIST@694..715
@@ -2763,7 +2752,7 @@ JsModule {
                 2: R_CURLY@714..715 "}" [] []
             2: (empty)
       1: SEMICOLON@715..716 ";" [] []
-    33: JS_VARIABLE_STATEMENT@716..744
+    26: JS_VARIABLE_STATEMENT@716..744
       0: JS_VARIABLE_DECLARATION@716..743
         0: LET_KW@716..721 "let" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATOR_LIST@721..743
@@ -2798,7 +2787,7 @@ JsModule {
                 2: R_CURLY@742..743 "}" [] []
             2: (empty)
       1: SEMICOLON@743..744 ";" [] []
-    34: JS_VARIABLE_STATEMENT@744..778
+    27: JS_VARIABLE_STATEMENT@744..778
       0: JS_VARIABLE_DECLARATION@744..777
         0: LET_KW@744..749 "let" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATOR_LIST@749..777
@@ -2839,7 +2828,7 @@ JsModule {
                 2: R_CURLY@776..777 "}" [] []
             2: (empty)
       1: SEMICOLON@777..778 ";" [] []
-    35: JS_BOGUS_STATEMENT@778..804
+    28: JS_BOGUS_STATEMENT@778..804
       0: TYPE_KW@778..784 "type" [Newline("\n")] [Whitespace(" ")]
       1: TS_IDENTIFIER_BINDING@784..787
         0: IDENT@784..787 "Foo" [] []
@@ -2873,7 +2862,7 @@ JsModule {
         0: L_CURLY@802..803 "{" [] []
         1: TS_TYPE_MEMBER_LIST@803..803
         2: R_CURLY@803..804 "}" [] []
-    36: JS_BOGUS_STATEMENT@804..831
+    29: JS_BOGUS_STATEMENT@804..831
       0: TYPE_KW@804..810 "type" [Newline("\n")] [Whitespace(" ")]
       1: TS_IDENTIFIER_BINDING@810..813
         0: IDENT@810..813 "Foo" [] []
@@ -2907,7 +2896,7 @@ JsModule {
         0: L_CURLY@829..830 "{" [] []
         1: TS_TYPE_MEMBER_LIST@830..830
         2: R_CURLY@830..831 "}" [] []
-    37: JS_BOGUS_STATEMENT@831..852
+    30: JS_BOGUS_STATEMENT@831..852
       0: TYPE_KW@831..837 "type" [Newline("\n")] [Whitespace(" ")]
       1: TS_IDENTIFIER_BINDING@837..840
         0: IDENT@837..840 "Foo" [] []
@@ -2925,7 +2914,7 @@ JsModule {
         0: L_CURLY@850..851 "{" [] []
         1: TS_TYPE_MEMBER_LIST@851..851
         2: R_CURLY@851..852 "}" [] []
-    38: JS_BOGUS_STATEMENT@852..874
+    31: JS_BOGUS_STATEMENT@852..874
       0: TYPE_KW@852..858 "type" [Newline("\n")] [Whitespace(" ")]
       1: TS_IDENTIFIER_BINDING@858..861
         0: IDENT@858..861 "Foo" [] []
@@ -2943,7 +2932,7 @@ JsModule {
         0: L_CURLY@872..873 "{" [] []
         1: TS_TYPE_MEMBER_LIST@873..873
         2: R_CURLY@873..874 "}" [] []
-    39: JS_BOGUS_STATEMENT@874..898
+    32: JS_BOGUS_STATEMENT@874..898
       0: TYPE_KW@874..880 "type" [Newline("\n")] [Whitespace(" ")]
       1: TS_IDENTIFIER_BINDING@880..883
         0: IDENT@880..883 "Foo" [] []
@@ -2963,7 +2952,7 @@ JsModule {
         0: L_CURLY@896..897 "{" [] []
         1: TS_TYPE_MEMBER_LIST@897..897
         2: R_CURLY@897..898 "}" [] []
-    40: JS_BOGUS_STATEMENT@898..922
+    33: JS_BOGUS_STATEMENT@898..922
       0: TYPE_KW@898..904 "type" [Newline("\n")] [Whitespace(" ")]
       1: TS_IDENTIFIER_BINDING@904..907
         0: IDENT@904..907 "Foo" [] []
@@ -2986,7 +2975,7 @@ JsModule {
         0: L_CURLY@920..921 "{" [] []
         1: TS_TYPE_MEMBER_LIST@921..921
         2: R_CURLY@921..922 "}" [] []
-    41: TS_TYPE_ALIAS_DECLARATION@922..944
+    34: TS_TYPE_ALIAS_DECLARATION@922..944
       0: TYPE_KW@922..928 "type" [Newline("\n")] [Whitespace(" ")]
       1: TS_IDENTIFIER_BINDING@928..931
         0: IDENT@928..931 "Foo" [] []
@@ -3013,7 +3002,7 @@ JsModule {
         1: TS_TYPE_MEMBER_LIST@943..943
         2: R_CURLY@943..944 "}" [] []
       5: (empty)
-    42: JS_BOGUS_STATEMENT@944..971
+    35: JS_BOGUS_STATEMENT@944..971
       0: TYPE_KW@944..950 "type" [Newline("\n")] [Whitespace(" ")]
       1: TS_IDENTIFIER_BINDING@950..953
         0: IDENT@950..953 "Foo" [] []
@@ -3035,7 +3024,7 @@ JsModule {
         0: L_CURLY@969..970 "{" [] []
         1: TS_TYPE_MEMBER_LIST@970..970
         2: R_CURLY@970..971 "}" [] []
-    43: JS_BOGUS_STATEMENT@971..999
+    36: JS_BOGUS_STATEMENT@971..999
       0: TYPE_KW@971..977 "type" [Newline("\n")] [Whitespace(" ")]
       1: TS_IDENTIFIER_BINDING@977..980
         0: IDENT@977..980 "Foo" [] []
@@ -3057,7 +3046,7 @@ JsModule {
         0: L_CURLY@997..998 "{" [] []
         1: TS_TYPE_MEMBER_LIST@998..998
         2: R_CURLY@998..999 "}" [] []
-    44: JS_BOGUS_STATEMENT@999..1023
+    37: JS_BOGUS_STATEMENT@999..1023
       0: FUNCTION_KW@999..1009 "function" [Newline("\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@1009..1012
         0: IDENT@1009..1012 "foo" [] []
@@ -3079,7 +3068,7 @@ JsModule {
         1: JS_DIRECTIVE_LIST@1022..1022
         2: JS_STATEMENT_LIST@1022..1022
         3: R_CURLY@1022..1023 "}" [] []
-    45: JS_BOGUS_STATEMENT@1023..1048
+    38: JS_BOGUS_STATEMENT@1023..1048
       0: FUNCTION_KW@1023..1033 "function" [Newline("\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@1033..1036
         0: IDENT@1033..1036 "foo" [] []
@@ -3101,7 +3090,7 @@ JsModule {
         1: JS_DIRECTIVE_LIST@1047..1047
         2: JS_STATEMENT_LIST@1047..1047
         3: R_CURLY@1047..1048 "}" [] []
-    46: JS_BOGUS_STATEMENT@1048..1072
+    39: JS_BOGUS_STATEMENT@1048..1072
       0: TYPE_KW@1048..1054 "type" [Newline("\n")] [Whitespace(" ")]
       1: TS_IDENTIFIER_BINDING@1054..1057
         0: IDENT@1054..1057 "Foo" [] []
@@ -3319,60 +3308,14 @@ type_parameter_modifier.ts:16:13 parse ━━━━━━━━━━━━━�
     18 │ <out T>() => {};
   
 --
-type_parameter_modifier.ts:17:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+type_parameter_modifier.ts:17:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × expected `>` but instead found `T`
+  × 'in' modifier can only appear on a type parameter of a class, interface or type alias.
   
     15 │ foo = { foo<in T>(): T {} };
     16 │ foo = { foo<out T>(): T {} };
   > 17 │ <in T>() => {};
-       │     ^
-    18 │ <out T>() => {};
-    19 │ <in T, out T>() => {};
-  
-  i Remove T
-  
---
-type_parameter_modifier.ts:17:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × Parenthesized expression didnt contain anything
-  
-    15 │ foo = { foo<in T>(): T {} };
-    16 │ foo = { foo<out T>(): T {} };
-  > 17 │ <in T>() => {};
-       │        ^
-    18 │ <out T>() => {};
-    19 │ <in T, out T>() => {};
-  
-  i Expected an expression here
-  
---
-type_parameter_modifier.ts:17:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × Expected a semicolon or an implicit semicolon after a statement, but found none
-  
-    15 │ foo = { foo<in T>(): T {} };
-    16 │ foo = { foo<out T>(): T {} };
-  > 17 │ <in T>() => {};
-       │          ^^
-    18 │ <out T>() => {};
-    19 │ <in T, out T>() => {};
-  
-  i An explicit or implicit semicolon is expected here...
-  
-    15 │ foo = { foo<in T>(): T {} };
-    16 │ foo = { foo<out T>(): T {} };
-  > 17 │ <in T>() => {};
-       │          ^^
-    18 │ <out T>() => {};
-    19 │ <in T, out T>() => {};
-  
-  i ...Which is required to end this statement
-  
-    15 │ foo = { foo<in T>(): T {} };
-    16 │ foo = { foo<out T>(): T {} };
-  > 17 │ <in T>() => {};
-       │ ^^^^^^^^^^^
+       │  ^^
     18 │ <out T>() => {};
     19 │ <in T, out T>() => {};
   
@@ -3389,90 +3332,26 @@ type_parameter_modifier.ts:18:2 parse ━━━━━━━━━━━━━━
     20 │ let x: <in T>() => {};
   
 --
-type_parameter_modifier.ts:19:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+type_parameter_modifier.ts:19:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × expected `>` but instead found `T`
+  × 'in' modifier can only appear on a type parameter of a class, interface or type alias.
   
     17 │ <in T>() => {};
     18 │ <out T>() => {};
   > 19 │ <in T, out T>() => {};
-       │     ^
-    20 │ let x: <in T>() => {};
-    21 │ let x: <out T>() => {};
-  
-  i Remove T
-  
---
-type_parameter_modifier.ts:19:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × Expected a semicolon or an implicit semicolon after a statement, but found none
-  
-    17 │ <in T>() => {};
-    18 │ <out T>() => {};
-  > 19 │ <in T, out T>() => {};
-       │            ^
-    20 │ let x: <in T>() => {};
-    21 │ let x: <out T>() => {};
-  
-  i An explicit or implicit semicolon is expected here...
-  
-    17 │ <in T>() => {};
-    18 │ <out T>() => {};
-  > 19 │ <in T, out T>() => {};
-       │            ^
-    20 │ let x: <in T>() => {};
-    21 │ let x: <out T>() => {};
-  
-  i ...Which is required to end this statement
-  
-    17 │ <in T>() => {};
-    18 │ <out T>() => {};
-  > 19 │ <in T, out T>() => {};
-       │ ^^^^^^^^^^^^
+       │  ^^
     20 │ let x: <in T>() => {};
     21 │ let x: <out T>() => {};
   
 --
-type_parameter_modifier.ts:19:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+type_parameter_modifier.ts:19:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Parenthesized expression didnt contain anything
+  × 'out' modifier can only appear on a type parameter of a class, interface or type alias.
   
     17 │ <in T>() => {};
     18 │ <out T>() => {};
   > 19 │ <in T, out T>() => {};
-       │               ^
-    20 │ let x: <in T>() => {};
-    21 │ let x: <out T>() => {};
-  
-  i Expected an expression here
-  
---
-type_parameter_modifier.ts:19:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × Expected a semicolon or an implicit semicolon after a statement, but found none
-  
-    17 │ <in T>() => {};
-    18 │ <out T>() => {};
-  > 19 │ <in T, out T>() => {};
-       │                 ^^
-    20 │ let x: <in T>() => {};
-    21 │ let x: <out T>() => {};
-  
-  i An explicit or implicit semicolon is expected here...
-  
-    17 │ <in T>() => {};
-    18 │ <out T>() => {};
-  > 19 │ <in T, out T>() => {};
-       │                 ^^
-    20 │ let x: <in T>() => {};
-    21 │ let x: <out T>() => {};
-  
-  i ...Which is required to end this statement
-  
-    17 │ <in T>() => {};
-    18 │ <out T>() => {};
-  > 19 │ <in T, out T>() => {};
-       │            ^^^^^^^
+       │        ^^^
     20 │ let x: <in T>() => {};
     21 │ let x: <out T>() => {};
   
