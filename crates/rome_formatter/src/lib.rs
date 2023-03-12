@@ -1177,16 +1177,15 @@ pub fn format_range<Language: FormatLanguage>(
     // starting before or at said starting point, and the closest
     // marker to the end of the source range starting after or at
     // said ending point respectively
-    let mut range_start: Option<(&SourceMarker, TextSize)> = None;
-    let mut range_end: Option<(&SourceMarker, TextSize)> = None;
+    let mut range_start: Option<&SourceMarker> = None;
+    let mut range_end: Option<&SourceMarker> = None;
 
     let sourcemap = printed.sourcemap();
     for marker in sourcemap {
-        // marker.source <= range.start()
-        if let Some(start_dist) = range.start().checked_sub(marker.source) {
+        if marker.source <= range.start() {
             range_start = match range_start {
-                Some((prev_marker, prev_dist)) => {
-                    if start_dist < prev_dist {
+                Some(prev_marker) => {
+                    if marker.source > prev_marker.source {
                         if prev_marker.dest == marker.dest {
                             // we found a marker that is closer to the start range than we have
                             // but we need to check if the marker has the same dest, otherwise we can get an incorrect substring in the source text
@@ -1201,23 +1200,22 @@ pub fn format_range<Language: FormatLanguage>(
                             //     dest: 99,
                             // },
                             // ...
-                            Some((prev_marker, prev_dist))
+                            Some(prev_marker)
                         } else {
-                            Some((marker, start_dist))
+                            Some(marker)
                         }
                     } else {
-                        Some((prev_marker, prev_dist))
+                        Some(prev_marker)
                     }
                 }
-                None => Some((marker, start_dist)),
+                None => Some(marker),
             }
         }
 
-        // marker.source >= range.end()
-        if let Some(end_dist) = marker.source.checked_sub(range.end()) {
+        if marker.source >= range.end() {
             range_end = match range_end {
-                Some((prev_marker, prev_dist)) => {
-                    if end_dist <= prev_dist || prev_marker.dest == marker.dest {
+                Some(prev_marker) => {
+                    if marker.source <= prev_marker.source || marker.dest == prev_marker.dest {
                         // 1. if we found a marker that is closer to the end we take it.
                         // 2. if we found a marker that is farther to the end range than we have
                         // but we need to check if the marker has the same dest, otherwise we can get an incorrect substring in the source text
@@ -1232,12 +1230,12 @@ pub fn format_range<Language: FormatLanguage>(
                         //     dest: 99,
                         // },
                         // ...
-                        Some((marker, end_dist))
+                        Some(marker)
                     } else {
-                        Some((prev_marker, prev_dist))
+                        Some(prev_marker)
                     }
                 }
-                None => Some((marker, end_dist)),
+                None => Some(marker),
             }
         }
     }
@@ -1247,11 +1245,11 @@ pub fn format_range<Language: FormatLanguage>(
     // the start (or after the end) of the formatting range: in this case
     // the start/end marker default to the start/end of the input
     let (start_source, start_dest) = match range_start {
-        Some((start_marker, _)) => (start_marker.source, start_marker.dest),
+        Some(start_marker) => (start_marker.source, start_marker.dest),
         None => (common_root.text_range().start(), TextSize::from(0)),
     };
     let (end_source, end_dest) = match range_end {
-        Some((end_marker, _)) => (end_marker.source, end_marker.dest),
+        Some(end_marker) => (end_marker.source, end_marker.dest),
         None => (
             common_root.text_range().end(),
             TextSize::try_from(printed.as_code().len()).expect("code length out of bounds"),
