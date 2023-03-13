@@ -5,7 +5,7 @@ use rome_analyze::{
 };
 use rome_console::markup;
 use rome_deserialize::json::{
-    deserialize_from_json, has_only_known_keys, JsonDeserialize, VisitJsonNode,
+    deserialize_from_json_str, has_only_known_keys, JsonDeserialize, VisitJsonNode,
 };
 use rome_deserialize::{DeserializationDiagnostic, Deserialized, VisitNode};
 use rome_js_semantic::{Capture, SemanticModel};
@@ -253,7 +253,7 @@ impl JsonDeserialize for HooksOptions {
 
 impl DeserializableRuleOptions for HooksOptions {
     fn from(value: String) -> Deserialized<Self> {
-        deserialize_from_json(&value)
+        deserialize_from_json_str(&value)
     }
 }
 

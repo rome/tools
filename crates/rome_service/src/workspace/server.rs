@@ -381,6 +381,7 @@ impl Workspace for WorkspaceServer {
                 rules,
                 settings: self.settings(),
                 max_diagnostics: params.max_diagnostics,
+                path: &params.path,
             });
 
             (

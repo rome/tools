@@ -407,7 +407,8 @@ pub fn with_only_known_variants(
     })
 }
 
-/// It attempts to parse and deserialize a source file in JSON.
+/// It attempts to parse and deserialize a source file in JSON. Diagnostics from the parse phase
+/// are consumed and joined with the diagnostics emitted during the deserialization.
 ///
 /// The data structure that needs to be deserialized needs to implement three important traits:
 /// - [Default], to create a first instance of the data structure;
@@ -420,7 +421,7 @@ pub fn with_only_known_variants(
 ///
 /// ```
 /// use rome_deserialize::{DeserializationDiagnostic,  VisitNode, Deserialized};
-/// use rome_deserialize::json::deserialize_from_json;
+/// use rome_deserialize::json::deserialize_from_json_str;
 /// use rome_deserialize::json::{with_only_known_variants, has_only_known_keys, JsonDeserialize, VisitJsonNode};
 /// use rome_json_syntax::{JsonLanguage, JsonSyntaxNode};
 /// use rome_json_syntax::JsonRoot;
@@ -476,7 +477,7 @@ pub fn with_only_known_variants(
 ///
 /// # fn main() -> Result<(), DeserializationDiagnostic> {
 /// let source = r#"{ "lorem": true }"#;
-///  let deserialized = deserialize_from_json::<NewConfiguration>(&source);
+///  let deserialized = deserialize_from_json_str::<NewConfiguration>(&source);
 ///  assert!(!deserialized.has_errors());
 ///  assert_eq!(deserialized.into_deserialized(), NewConfiguration { lorem: true });
 /// # Ok(())
@@ -484,7 +485,7 @@ pub fn with_only_known_variants(
 ///
 ///
 /// ```
-pub fn deserialize_from_json<Output>(source: &str) -> Deserialized<Output>
+pub fn deserialize_from_json_str<Output>(source: &str) -> Deserialized<Output>
 where
     Output: Default + VisitJsonNode + JsonDeserialize,
 {
@@ -505,6 +506,20 @@ where
     );
     Deserialized {
         diagnostics: errors,
+        deserialized: output,
+    }
+}
+
+/// Attempts to deserialize a JSON AST, given the `Output`.
+pub fn deserialize_from_json_ast<Output>(parse: JsonRoot) -> Deserialized<Output>
+where
+    Output: Default + VisitJsonNode + JsonDeserialize,
+{
+    let mut output = Output::default();
+    let mut diagnostics = vec![];
+    Output::deserialize_from_ast(parse, &mut output, &mut diagnostics);
+    Deserialized {
+        diagnostics: diagnostics.into_iter().map(Error::from).collect::<Vec<_>>(),
         deserialized: output,
     }
 }

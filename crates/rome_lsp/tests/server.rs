@@ -204,6 +204,27 @@ impl Server {
         .await
     }
 
+    /// Opens a document with given contents and given name. The name must contain the extension too
+    async fn open_named_document(
+        &mut self,
+        text: impl Display,
+        document_name: Url,
+        language: impl Display,
+    ) -> Result<()> {
+        self.notify(
+            "textDocument/didOpen",
+            DidOpenTextDocumentParams {
+                text_document: TextDocumentItem {
+                    uri: document_name,
+                    language_id: language.to_string(),
+                    version: 0,
+                    text: text.to_string(),
+                },
+            },
+        )
+        .await
+    }
+
     async fn change_document(
         &mut self,
         version: i32,
@@ -745,6 +766,73 @@ async fn pull_quick_fixes() -> Result<()> {
     });
 
     assert_eq!(res, vec![expected_code_action, expected_suppression_action]);
+
+    server.close_document().await?;
+
+    server.shutdown().await?;
+    reader.abort();
+
+    Ok(())
+}
+
+#[tokio::test]
+async fn pull_diagnostics_for_rome_json() -> Result<()> {
+    let factory = ServerFactory::default();
+    let (service, client) = factory.create().into_inner();
+    let (stream, sink) = client.split();
+    let mut server = Server::new(service);
+
+    let (sender, mut receiver) = channel(CHANNEL_BUFFER_SIZE);
+    let reader = tokio::spawn(client_handler(stream, sink, sender));
+
+    server.initialize().await?;
+    server.initialized().await?;
+
+    let incorrect_config = r#"{
+        "formatter": {
+            "indentStyle": "magic"
+        }
+    }"#;
+    server
+        .open_named_document(incorrect_config, url!("rome.json"), "json")
+        .await?;
+
+    let notification = tokio::select! {
+        msg = receiver.next() => msg,
+        _ = sleep(Duration::from_secs(1)) => {
+            panic!("timed out waiting for the server to send diagnostics")
+        }
+    };
+
+    assert_eq!(
+        notification,
+        Some(ServerNotification::PublishDiagnostics(
+            PublishDiagnosticsParams {
+                uri: url!("rome.json"),
+                version: Some(0),
+                diagnostics: vec![lsp::Diagnostic {
+                    range: lsp::Range {
+                        start: lsp::Position {
+                            line: 2,
+                            character: 27,
+                        },
+                        end: lsp::Position {
+                            line: 2,
+                            character: 34,
+                        },
+                    },
+                    severity: Some(lsp::DiagnosticSeverity::ERROR),
+                    code: Some(lsp::NumberOrString::String(String::from("configuration",))),
+                    code_description: None,
+                    source: Some(String::from("rome")),
+                    message: String::from("Found an unknown value `magic`",),
+                    related_information: None,
+                    tags: None,
+                    data: None,
+                }],
+            }
+        ))
+    );
 
     server.close_document().await?;
 
