@@ -184,6 +184,7 @@ pub(crate) struct LintParams<'a> {
     pub(crate) rules: Option<&'a Rules>,
     pub(crate) settings: SettingsHandle<'a>,
     pub(crate) max_diagnostics: u64,
+    pub(crate) path: &'a RomePath,
 }
 
 pub(crate) struct LintResults {
