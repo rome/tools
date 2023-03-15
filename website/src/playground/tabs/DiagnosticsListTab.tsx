@@ -1,9 +1,9 @@
-import type { ReactCodeMirrorRef } from "@uiw/react-codemirror";
-import type { Diagnostic } from "@rometools/wasm-web";
-import { EditorSelection } from "@codemirror/state";
-import infoIcon from "../../svg/info.svg";
 import errorIcon from "../../svg/error.svg";
+import infoIcon from "../../svg/info.svg";
 import warningIcon from "../../svg/warning.svg";
+import { EditorSelection } from "@codemirror/state";
+import type { Diagnostic } from "@rometools/wasm-web";
+import type { ReactCodeMirrorRef } from "@uiw/react-codemirror";
 
 interface Props {
 	editorRef: React.RefObject<ReactCodeMirrorRef>;

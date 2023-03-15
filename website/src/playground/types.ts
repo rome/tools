@@ -1,6 +1,6 @@
 import type { Diagnostic } from "@rometools/wasm-web";
-import type { Dispatch, SetStateAction } from "react";
 import type { parser } from "codemirror-lang-rome-ast";
+import type { Dispatch, SetStateAction } from "react";
 
 export enum IndentStyle {
 	Tab = "tab",

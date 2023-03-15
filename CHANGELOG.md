@@ -19,7 +19,7 @@
 ##### Breaking changes
 
 - Review how the traversal of the file system works. Now Rome won't navigate folders that are ignored.
-	While this change is a bug fix, this could affect how the `ignore` entries. We suggest to review them
+	While this change is a bug fix, this could affect how the `ignore` entries are defined inside a project. We suggest to review them
 	and make sure they still work.
 - `--apply-suggested` is now called `--apply-unsafe`
 
@@ -30,8 +30,7 @@
 - Rome now is able to auto discover the configuration file. If Rome doesn't fine a configuration in the
 working directory, it will try to find one in the parent directories.
 - Add a new global options called `--config-path`. It tells Rome to try and discover a `rome.json` file
-in the given path. When this option is passed, the **auto discover** is disabled. Additionally, if no
-configuration file is found, Rome will abort the operation and exit with an error code.
+in the given path.
 	```shell
 	rome format --config-path=../../other/path/
 	rome check --config-path=../../other/path/
@@ -84,12 +83,17 @@ The previous example will enable all rules and disable all rules that belong to 
 
 - Add support to display diagnostics for JSON files
 - Add support to format JSON files
+- Pull diagnostics when parsing a `rome.json` file
 
 ### Formatter
 
-- Add support to format JSON files
+- Add support for JSON files
+- Add support for TS 4.7
+- 
 
 ### Linter
+
+
 
 ### Parser
 

@@ -835,9 +835,7 @@ fn process_file(ctx: &TraversalOptions, path: &Path) -> FileResult {
         .with_file_path_and_code(path.display().to_string(), category!("internalError/fs"))?;
 
         if let Some(fix_mode) = ctx.execution.as_fix_file_mode() {
-            let fixed = file_guard
-                .fix_file(*fix_mode)
-                .with_file_path_and_code(path.display().to_string(), category!("lint"))?;
+            let fixed = file_guard.fix_file(*fix_mode)?;
 
             ctx.push_message(Message::SkippedFixes {
                 skipped_suggested_fixes: fixed.skipped_suggested_fixes,

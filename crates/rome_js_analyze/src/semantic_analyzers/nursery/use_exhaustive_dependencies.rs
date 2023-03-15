@@ -91,6 +91,36 @@ declare_rule! {
     /// }
     /// ```
     ///
+    /// ## Options
+    ///
+    /// Allows to specify custom hooks - from libraries or internal projects - that can be considered stable.
+    ///
+    /// ```json
+    /// {
+    ///     "//": "...",
+    ///     "options": {
+    ///         "hooks": [
+    ///             ["useLocation", 0, 1]
+    ///             ["useQuery", 1, 0]
+    ///         ]
+    ///     }
+    /// }
+    /// ```
+    ///
+    /// The following items mean:
+    /// 1. the name of the hook
+    /// 2. the index where the closure
+    /// 3. the index of the array of dependencies
+    ///
+    /// Given the previous example, your hooks be used like this:
+    ///
+    /// ```js
+    /// function Foo() {
+    ///     const location = useLocation(() => {}, []);
+    ///     const query = useQuery([], () => {});
+    /// }
+    /// ```
+    ///
     pub(crate) UseExhaustiveDependencies {
         version: "10.0.0",
         name: "useExhaustiveDependencies",

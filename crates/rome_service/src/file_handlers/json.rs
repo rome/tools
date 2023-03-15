@@ -1,13 +1,13 @@
 use super::{ExtensionHandler, Mime};
 use crate::file_handlers::{
-    AnalyzerCapabilities, Capabilities, FormatterCapabilities, LintParams, LintResults,
-    ParserCapabilities,
+    AnalyzerCapabilities, Capabilities, FixAllParams, FormatterCapabilities, LintParams,
+    LintResults, ParserCapabilities,
 };
 use crate::file_handlers::{DebugCapabilities, Language as LanguageId};
 use crate::settings::{
     FormatSettings, Language, LanguageSettings, LanguagesSettings, SettingsHandle,
 };
-use crate::workspace::{GetSyntaxTreeResult, PullActionsResult};
+use crate::workspace::{FixFileResult, GetSyntaxTreeResult, PullActionsResult};
 use crate::{Rules, WorkspaceError};
 use rome_diagnostics::{Diagnostic, Severity};
 use rome_formatter::{FormatError, Printed};
@@ -16,7 +16,7 @@ use rome_json_formatter::context::JsonFormatOptions;
 use rome_json_formatter::format_node;
 use rome_json_syntax::{JsonLanguage, JsonRoot, JsonSyntaxNode};
 use rome_parser::AnyParse;
-use rome_rowan::NodeCache;
+use rome_rowan::{AstNode, NodeCache};
 use rome_rowan::{TextRange, TextSize, TokenAtOffset};
 
 impl Language for JsonLanguage {
@@ -68,7 +68,7 @@ impl ExtensionHandler for JsonFileHandler {
                 lint: Some(lint),
                 code_actions: Some(code_actions),
                 rename: None,
-                fix_all: None,
+                fix_all: Some(fix_all),
             },
             formatter: FormatterCapabilities {
                 format: Some(format),
@@ -202,4 +202,14 @@ fn code_actions(
     PullActionsResult {
         actions: Vec::new(),
     }
+}
+
+fn fix_all(params: FixAllParams) -> Result<FixFileResult, WorkspaceError> {
+    let tree: JsonRoot = params.parse.tree();
+    Ok(FixFileResult {
+        actions: vec![],
+        errors: 0,
+        skipped_suggested_fixes: 0,
+        code: tree.syntax().to_string(),
+    })
 }

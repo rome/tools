@@ -371,6 +371,10 @@ impl Diagnostic for SourceFileNotSupported {
         Severity::Error
     }
 
+    fn location(&self) -> Location<'_> {
+        Location::builder().resource(&self.path).build()
+    }
+
     fn message(&self, fmt: &mut rome_console::fmt::Formatter<'_>) -> std::io::Result<()> {
         if self.language != Language::Unknown {
             fmt.write_markup(markup! {

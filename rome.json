@@ -20,5 +20,8 @@
 				"noNonNullAssertion": "off"
 			}
 		}
+	},
+	"organizeImports": {
+		"enabled": true
 	}
 }
