@@ -97,12 +97,12 @@ The tests are run against the compiled files, which means that you need to run t
 
 ## Website
 
-The [Rome website](https://rome.tools/) is built with [Eleventy](https://www.11ty.dev/). To start a development server you can run the following commands:
+The [Rome website](https://rome.tools/) is built with [Astro](https://astro.build). To start a development server you can run the following commands:
 
 ```bash
 cd website
-npm install
-npm start
+pnpm install
+pnpm start
 ```
 
 ## Checks
