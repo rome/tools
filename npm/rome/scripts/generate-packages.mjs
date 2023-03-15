@@ -24,11 +24,12 @@ function generateNativePackage(platform, arch) {
 	fs.mkdirSync(packageRoot);
 
 	// Generate the package.json manifest
-	const { version } = rootManifest;
+	const { version, license } = rootManifest;
 
 	const manifest = JSON.stringify({
 		name: packageName,
 		version,
+		license,
 		os: [platform],
 		cpu: [arch],
 	});
