@@ -15,7 +15,7 @@ impl FormatNodeRule<TsTypeParameter> for FormatTsTypeParameter {
             modifiers,
         } = node.as_fields();
 
-        if modifiers.len() > 0 {
+        if !modifiers.is_empty() {
             write!(f, [modifiers.format(), space()])?;
         }
 
