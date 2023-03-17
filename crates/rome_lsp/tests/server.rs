@@ -11,8 +11,8 @@ use rome_fs::RomePath;
 use rome_lsp::LSPServer;
 use rome_lsp::ServerFactory;
 use rome_lsp::WorkspaceSettings;
-use rome_service::workspace::GetSyntaxTreeParams;
 use rome_service::workspace::GetSyntaxTreeResult;
+use rome_service::workspace::{GetFileContentParams, GetSyntaxTreeParams};
 use serde::de::DeserializeOwned;
 use serde::Serialize;
 use serde_json::{from_value, to_value};
@@ -681,6 +681,7 @@ async fn pull_quick_fixes() -> Result<()> {
                 context: lsp::CodeActionContext {
                     diagnostics: vec![fixable_diagnostic(0)?],
                     only: Some(vec![lsp::CodeActionKind::QUICKFIX]),
+                    ..Default::default()
                 },
                 work_done_progress_params: lsp::WorkDoneProgressParams {
                     work_done_token: None,
@@ -880,6 +881,7 @@ async fn pull_refactors() -> Result<()> {
                 context: lsp::CodeActionContext {
                     diagnostics: vec![],
                     only: Some(vec![lsp::CodeActionKind::REFACTOR]),
+                    ..Default::default()
                 },
                 work_done_progress_params: lsp::WorkDoneProgressParams {
                     work_done_token: None,
@@ -995,6 +997,7 @@ async fn pull_fix_all() -> Result<()> {
                         fixable_diagnostic(2)?,
                     ],
                     only: Some(vec![lsp::CodeActionKind::new("source.fixAll")]),
+                    ..Default::default()
                 },
                 work_done_progress_params: lsp::WorkDoneProgressParams {
                     work_done_token: None,
@@ -1046,6 +1049,73 @@ async fn pull_fix_all() -> Result<()> {
     });
 
     assert_eq!(res, vec![expected_action]);
+
+    server.close_document().await?;
+
+    server.shutdown().await?;
+    reader.abort();
+
+    Ok(())
+}
+
+#[tokio::test]
+async fn change_document_remove_line() -> Result<()> {
+    let factory = ServerFactory::default();
+    let (service, client) = factory.create().into_inner();
+    let (stream, sink) = client.split();
+    let mut server = Server::new(service);
+
+    let (sender, _) = channel(CHANNEL_BUFFER_SIZE);
+    let reader = tokio::spawn(client_handler(stream, sink, sender));
+
+    server.initialize().await?;
+    server.initialized().await?;
+
+    server
+        .open_document(
+            r#"("Jan 1, 2018 – Jan 1, 2019");
+("Jan 1, 2018 – Jan 1, 2019");
+isSpreadAssignment;
+"#,
+        )
+        .await?;
+
+    server
+        .change_document(
+            1,
+            vec![TextDocumentContentChangeEvent {
+                range: Some(Range {
+                    start: Position {
+                        line: 0,
+                        character: 30,
+                    },
+                    end: Position {
+                        line: 1,
+                        character: 0,
+                    },
+                }),
+                range_length: None,
+                text: String::from(""),
+            }],
+        )
+        .await?;
+
+    let actual: String = server
+        .request(
+            "rome/get_file_content",
+            "get_file_content",
+            GetFileContentParams {
+                path: RomePath::new("document.js"),
+            },
+        )
+        .await?
+        .context("get file content error")?;
+
+    let expected = r#"("Jan 1, 2018 – Jan 1, 2019");("Jan 1, 2018 – Jan 1, 2019");
+isSpreadAssignment;
+"#;
+
+    assert_eq!(&actual, expected);
 
     server.close_document().await?;
 

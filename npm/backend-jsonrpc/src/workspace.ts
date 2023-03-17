@@ -810,6 +810,9 @@ export interface GetSyntaxTreeResult {
 	ast: string;
 	cst: string;
 }
+export interface GetFileContentParams {
+	path: RomePath;
+}
 export interface GetControlFlowGraphParams {
 	cursor: TextSize;
 	path: RomePath;
@@ -1238,6 +1241,7 @@ export interface Workspace {
 	changeFile(params: ChangeFileParams): Promise<void>;
 	closeFile(params: CloseFileParams): Promise<void>;
 	getSyntaxTree(params: GetSyntaxTreeParams): Promise<GetSyntaxTreeResult>;
+	getFileContent(params: GetFileContentParams): Promise<string>;
 	getControlFlowGraph(params: GetControlFlowGraphParams): Promise<string>;
 	getFormatterIr(params: GetFormatterIRParams): Promise<string>;
 	pullDiagnostics(
@@ -1270,6 +1274,9 @@ export function createWorkspace(transport: Transport): Workspace {
 		},
 		getSyntaxTree(params) {
 			return transport.request("rome/get_syntax_tree", params);
+		},
+		getFileContent(params) {
+			return transport.request("rome/get_file_content", params);
 		},
 		getControlFlowGraph(params) {
 			return transport.request("rome/get_control_flow_graph", params);
