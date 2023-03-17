@@ -64,8 +64,8 @@ use crate::trivia::{format_skipped_token_trivia, format_trimmed_token};
 pub use format_element::{normalize_newlines, FormatElement, LINE_TERMINATORS};
 pub use group_id::GroupId;
 use rome_rowan::{
-    Language, SyntaxElement, SyntaxNode, SyntaxResult, SyntaxToken, SyntaxTriviaPiece, TextLen,
-    TextRange, TextSize, TokenAtOffset,
+    Language, NodeOrToken, SyntaxElement, SyntaxNode, SyntaxResult, SyntaxToken, SyntaxTriviaPiece,
+    TextLen, TextRange, TextSize, TokenAtOffset,
 };
 pub use source_map::{TransformSourceMap, TransformSourceMapBuilder};
 use std::marker::PhantomData;
@@ -922,20 +922,24 @@ pub fn format_node<L: FormatLanguage>(
                             let transformed_range = transformed.text_range();
                             let root_range = root.text_range();
 
-                            let transformed = top_root
+                            let transformed_root = top_root
                                 .replace_child(root.clone().into(), transformed.into())
                                 // SAFETY: Calling `unwrap` is safe because we know that `root` is part of the `top_root` subtree.
-                                .unwrap()
-                                // get replaced node
-                                .covering_element(TextRange::new(
-                                    root_range.start(),
-                                    root_range.start() + transformed_range.len(),
-                                ))
-                                .into_node()
-                                // SAFETY: Calling `unwrap` is safe because we know that `transformed` is a node.
                                 .unwrap();
+                            let transformed = transformed_root.covering_element(TextRange::new(
+                                root_range.start(),
+                                root_range.start() + transformed_range.len(),
+                            ));
 
-                            (transformed, Some(source_map))
+                            let node = match transformed {
+                                NodeOrToken::Node(node) => node,
+                                NodeOrToken::Token(token) => {
+                                    // if we get a token we need to get the parent node
+                                    token.parent().unwrap_or(transformed_root)
+                                }
+                            };
+
+                            (node, Some(source_map))
                         }
                     }
                 }
@@ -1173,36 +1177,65 @@ pub fn format_range<Language: FormatLanguage>(
     // starting before or at said starting point, and the closest
     // marker to the end of the source range starting after or at
     // said ending point respectively
-    let mut range_start = None;
-    let mut range_end = None;
+    let mut range_start: Option<&SourceMarker> = None;
+    let mut range_end: Option<&SourceMarker> = None;
 
     let sourcemap = printed.sourcemap();
     for marker in sourcemap {
-        // marker.source <= range.start()
-        if let Some(start_dist) = range.start().checked_sub(marker.source) {
+        if marker.source <= range.start() {
             range_start = match range_start {
-                Some((prev_marker, prev_dist)) => {
-                    if start_dist < prev_dist {
-                        Some((marker, start_dist))
+                Some(prev_marker) => {
+                    if marker.source > prev_marker.source {
+                        if prev_marker.dest == marker.dest {
+                            // we found a marker that is closer to the start range than we have
+                            // but we need to check if the marker has the same dest, otherwise we can get an incorrect substring in the source text
+                            // e.g
+                            // ...
+                            // SourceMarker {
+                            //     source: 94, <----- but we need to use this source position to get correct substring in the source
+                            //     dest: 99,
+                            // },
+                            // SourceMarker {
+                            //     source: 96,
+                            //     dest: 99, <----- both markers have the same dest.
+                            // },
+                            // ...
+                            Some(prev_marker)
+                        } else {
+                            Some(marker)
+                        }
                     } else {
-                        Some((prev_marker, prev_dist))
+                        Some(prev_marker)
                     }
                 }
-                None => Some((marker, start_dist)),
+                None => Some(marker),
             }
         }
 
-        // marker.source >= range.end()
-        if let Some(end_dist) = marker.source.checked_sub(range.end()) {
+        if marker.source >= range.end() {
             range_end = match range_end {
-                Some((prev_marker, prev_dist)) => {
-                    if end_dist <= prev_dist {
-                        Some((marker, end_dist))
+                Some(prev_marker) => {
+                    if marker.source <= prev_marker.source || marker.dest == prev_marker.dest {
+                        // 1. if we found a marker that is closer to the end we take it.
+                        // 2. if we found a marker that is farther to the end range than we have
+                        // but we need to check if the marker has the same dest, otherwise we can get an incorrect substring in the source text
+                        // e.g
+                        // ...
+                        // SourceMarker {
+                        //     source: 94,
+                        //     dest: 99, <----- both markers have the same dest.
+                        // },
+                        // SourceMarker {
+                        //     source: 96, <----- but we need to use this source position to get correct substring in the source
+                        //     dest: 99,
+                        // },
+                        // ...
+                        Some(marker)
                     } else {
-                        Some((prev_marker, prev_dist))
+                        Some(prev_marker)
                     }
                 }
-                None => Some((marker, end_dist)),
+                None => Some(marker),
             }
         }
     }
@@ -1212,11 +1245,11 @@ pub fn format_range<Language: FormatLanguage>(
     // the start (or after the end) of the formatting range: in this case
     // the start/end marker default to the start/end of the input
     let (start_source, start_dest) = match range_start {
-        Some((start_marker, _)) => (start_marker.source, start_marker.dest),
+        Some(start_marker) => (start_marker.source, start_marker.dest),
         None => (common_root.text_range().start(), TextSize::from(0)),
     };
     let (end_source, end_dest) = match range_end {
-        Some((end_marker, _)) => (end_marker.source, end_marker.dest),
+        Some(end_marker) => (end_marker.source, end_marker.dest),
         None => (
             common_root.text_range().end(),
             TextSize::try_from(printed.as_code().len()).expect("code length out of bounds"),

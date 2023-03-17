@@ -1,18 +1,26 @@
 use crate::check_reformat::CheckReformat;
 use crate::snapshot_builder::{SnapshotBuilder, SnapshotOutput};
+use crate::utils::strip_rome_placeholders;
 use crate::TestFormatLanguage;
 use rome_console::EnvConsole;
-use rome_formatter::FormatOptions;
+use rome_formatter::{FormatOptions, Printed};
 use rome_fs::RomePath;
+use rome_parser::AnyParse;
+use rome_rowan::{TextRange, TextSize};
 use rome_service::workspace::{FeatureName, SupportsFeatureParams};
 use rome_service::App;
+use std::ops::Range;
 use std::path::{Path, PathBuf};
 
+#[derive(Debug)]
 pub struct SpecTestFile<'a> {
     input_file: RomePath,
     root_path: &'a Path,
 
     input_code: String,
+
+    range_start_index: Option<usize>,
+    range_end_index: Option<usize>,
 }
 
 impl<'a> SpecTestFile<'a> {
@@ -39,13 +47,19 @@ impl<'a> SpecTestFile<'a> {
 
         match can_format.reason {
             None => {
-                let input_code = input_file.get_buffer_from_file();
+                let mut input_code = input_file.get_buffer_from_file();
+
+                let (_, range_start_index, range_end_index) =
+                    strip_rome_placeholders(&mut input_code);
 
                 Some(SpecTestFile {
                     input_file,
                     root_path,
 
                     input_code,
+
+                    range_start_index,
+                    range_end_index,
                 })
             }
             Some(_) => None,
@@ -75,6 +89,10 @@ impl<'a> SpecTestFile<'a> {
             })
             .to_str()
             .expect("failed to get relative file name")
+    }
+
+    fn range(&self) -> (Option<usize>, Option<usize>) {
+        (self.range_start_index, self.range_end_index)
     }
 }
 
@@ -108,6 +126,70 @@ where
         }
     }
 
+    fn formatted(&self, parsed: &AnyParse, options: L::Options) -> (String, Printed) {
+        let has_errors = parsed.has_errors();
+        let syntax = parsed.syntax();
+
+        let range = self.test_file.range();
+
+        let result = match range {
+            (Some(start), Some(end)) => self.language.format_range(
+                options.clone(),
+                &syntax,
+                TextRange::new(
+                    TextSize::try_from(start).unwrap(),
+                    TextSize::try_from(end).unwrap(),
+                ),
+            ),
+            _ => self
+                .language
+                .format_node(options.clone(), &syntax)
+                .map(|formatted| formatted.print().unwrap()),
+        };
+        let formatted = result.expect("formatting failed");
+
+        let output_code = match range {
+            (Some(_), Some(_)) => {
+                let range = formatted
+                    .range()
+                    .expect("the result of format_range should have a range");
+
+                let mut output_code = self.test_file.input_code.clone();
+                output_code.replace_range(Range::<usize>::from(range), formatted.as_code());
+
+                // Check if output code is a valid syntax
+                let parsed = self.language.parse(&output_code);
+
+                if parsed.has_errors() {
+                    panic!(
+                        "{:?} format range produced an invalid syntax tree: {:?}",
+                        self.test_file.input_file, output_code
+                    )
+                }
+
+                output_code
+            }
+            _ => {
+                let output_code = formatted.as_code();
+
+                if !has_errors {
+                    let check_reformat = CheckReformat::new(
+                        &syntax,
+                        output_code,
+                        self.test_file.file_name(),
+                        &self.language,
+                        options,
+                    );
+                    check_reformat.check_reformat();
+                }
+
+                output_code.to_string()
+            }
+        };
+
+        (output_code, formatted)
+    }
+
     pub fn test(self) {
         let input_file = self.test_file().input_file().as_path();
 
@@ -118,35 +200,17 @@ where
 
         let parsed = self.language.parse(self.test_file.input_code());
 
-        let has_errors = parsed.has_errors();
-        let root = parsed.syntax();
-
-        let formatted = self
-            .language
-            .format_node(self.options.clone(), &root)
-            .unwrap();
-        let printed = formatted.print().unwrap();
-
-        if !has_errors {
-            let check_reformat = CheckReformat::new(
-                &root,
-                printed.as_code(),
-                self.test_file.file_name(),
-                &self.language,
-                self.options.clone(),
-            );
-            check_reformat.check_reformat();
-        }
+        let (output_code, printed) = self.formatted(&parsed, self.options.clone());
 
         let max_width = self.options.line_width().value() as usize;
 
         snapshot_builder = snapshot_builder
             .with_output_and_options(
-                SnapshotOutput::new(printed.as_code()).with_index(1),
+                SnapshotOutput::new(&output_code).with_index(1),
                 self.options.clone(),
             )
             .with_unimplemented(&printed)
-            .with_lines_exceeding_max_width(printed.as_code(), max_width);
+            .with_lines_exceeding_max_width(&output_code, max_width);
 
         let options_path = self.test_directory.join("options.json");
         if options_path.exists() {
@@ -158,29 +222,17 @@ where
                 .deserialize_format_options(options_path.get_buffer_from_file().as_str());
 
             for (index, options) in test_options.into_iter().enumerate() {
-                let formatted = self.language.format_node(options.clone(), &root).unwrap();
-                let printed = formatted.print().unwrap();
-
-                if !has_errors {
-                    let check_reformat = CheckReformat::new(
-                        &root,
-                        printed.as_code(),
-                        self.test_file.file_name(),
-                        &self.language,
-                        options.clone(),
-                    );
-                    check_reformat.check_reformat();
-                }
+                let (output_code, printed) = self.formatted(&parsed, options.clone());
 
                 let max_width = options.line_width().value() as usize;
 
                 snapshot_builder = snapshot_builder
                     .with_output_and_options(
-                        SnapshotOutput::new(printed.as_code()).with_index(index + 2),
+                        SnapshotOutput::new(&output_code).with_index(index + 2),
                         options,
                     )
                     .with_unimplemented(&printed)
-                    .with_lines_exceeding_max_width(printed.as_code(), max_width);
+                    .with_lines_exceeding_max_width(&output_code, max_width);
             }
         }
 
