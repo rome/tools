@@ -45,7 +45,7 @@ pub(crate) fn code_actions(
             feature: FeatureName::OrganizeImports,
         })?;
 
-    if unsupported_lint.is_not_supported() || unsupported_organize_imports.is_not_supported() {
+    if unsupported_lint.is_not_supported() && unsupported_organize_imports.is_not_supported() {
         return Ok(Some(Vec::new()));
     }
 
