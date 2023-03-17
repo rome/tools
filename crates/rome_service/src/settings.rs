@@ -25,7 +25,7 @@ pub struct WorkspaceSettings {
     /// Filesystem settings for the workspace
     pub files: FilesSettings,
     /// Analyzer settings
-    pub analyzer: AnalyzerSettings,
+    pub organize_imports: OrganizeImportsSettings,
 }
 
 impl WorkspaceSettings {
@@ -37,6 +37,11 @@ impl WorkspaceSettings {
     /// Retrieves the settings of the linter
     pub fn linter(&self) -> &LinterSettings {
         &self.linter
+    }
+
+    /// Retrieves the settings of the organize imports
+    pub fn organize_imports(&self) -> &OrganizeImportsSettings {
+        &self.organize_imports
     }
 
     /// The (configuration)[Configuration] is merged into the workspace
@@ -61,7 +66,7 @@ impl WorkspaceSettings {
         }
 
         if let Some(organize_imports) = configuration.organize_imports {
-            self.analyzer = AnalyzerSettings::try_from(organize_imports)?;
+            self.organize_imports = OrganizeImportsSettings::try_from(organize_imports)?;
         }
 
         // javascript settings
@@ -159,6 +164,30 @@ impl Default for LinterSettings {
     }
 }
 
+/// Linter settings for the entire workspace
+#[derive(Debug)]
+pub struct OrganizeImportsSettings {
+    /// Enabled by default
+    pub enabled: bool,
+
+    /// List of paths/files to matcher
+    pub ignored_files: Matcher,
+}
+
+impl Default for OrganizeImportsSettings {
+    fn default() -> Self {
+        Self {
+            // currently experimental
+            enabled: false,
+            ignored_files: Matcher::new(MatchOptions {
+                case_sensitive: true,
+                require_literal_leading_dot: false,
+                require_literal_separator: false,
+            }),
+        }
+    }
+}
+
 /// Static map of language names to language-specific settings
 #[derive(Debug, Default)]
 pub struct LanguagesSettings {
@@ -213,11 +242,6 @@ pub struct FilesSettings {
 
     /// List of paths/files to matcher
     pub ignored_files: Matcher,
-}
-
-#[derive(Default, Debug)]
-pub struct AnalyzerSettings {
-    pub organize_imports_enabled: bool,
 }
 
 /// Limit the size of files to 1.0 MiB by default

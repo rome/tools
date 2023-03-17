@@ -41,7 +41,7 @@ pub(crate) fn check(mut session: CliSession) -> Result<(), CliDiagnostic> {
     } else if apply && !apply_suggested {
         Some(FixFileMode::SafeFixes)
     } else {
-        Some(FixFileMode::SafeAndSuggestedFixes)
+        Some(FixFileMode::SafeAndUnsafeFixes)
     };
 
     execute_mode(

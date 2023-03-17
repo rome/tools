@@ -1,3 +1,6 @@
+mod process_file;
+
+use crate::traversal::process_file::DiffKind;
 use crate::{
     CliDiagnostic, CliSession, Execution, FormatterReportFileDetail, FormatterReportSummary,
     Report, ReportDiagnostic, ReportDiff, ReportErrorKind, ReportKind, TraversalMode,
@@ -6,19 +9,18 @@ use crossbeam::{
     channel::{unbounded, Receiver, Sender},
     select,
 };
+use process_file::{process_file, FileStatus, Message};
 use rome_console::{fmt, markup, Console, ConsoleExt};
 use rome_diagnostics::{
     adapters::{IoError, StdError},
     category, Advices, Category, Diagnostic, DiagnosticExt, Error, PrintDescription,
     PrintDiagnostic, Resource, Severity, Visit,
 };
-use rome_fs::{FileSystem, OpenOptions, PathInterner, RomePath};
+use rome_fs::{FileSystem, PathInterner, RomePath};
 use rome_fs::{TraversalContext, TraversalScope};
-use rome_service::workspace::{IsPathIgnoredParams, SupportsFeatureResult, UnsupportedReason};
+use rome_service::workspace::{IsPathIgnoredParams, SupportsFeatureResult};
 use rome_service::{
-    workspace::{
-        FeatureName, FileGuard, Language, OpenFileParams, RuleCategories, SupportsFeatureParams,
-    },
+    workspace::{FeatureName, SupportsFeatureParams},
     Workspace, WorkspaceError,
 };
 use rome_text_edit::TextEdit;
@@ -276,7 +278,7 @@ struct ProcessMessagesOptions<'ctx> {
     category = "format",
     message = "File content differs from formatting output"
 )]
-struct CIDiffDiagnostic<'a> {
+struct CIFormatDiffDiagnostic<'a> {
     #[location(resource)]
     file_name: &'a str,
     #[advice]
@@ -285,11 +287,36 @@ struct CIDiffDiagnostic<'a> {
 
 #[derive(Debug, Diagnostic)]
 #[diagnostic(
-    severity = Information,
+    category = "organizeImports",
+    message = "Import statements differs from the output"
+)]
+struct CIOrganizeImportsDiffDiagnostic<'a> {
+    #[location(resource)]
+    file_name: &'a str,
+    #[advice]
+    diff: FormatDiffAdvice<'a>,
+}
+
+#[derive(Debug, Diagnostic)]
+#[diagnostic(
     category = "format",
+    severity = Information,
     message = "Formatter would have printed the following content:"
 )]
 struct FormatDiffDiagnostic<'a> {
+    #[location(resource)]
+    file_name: &'a str,
+    #[advice]
+    diff: FormatDiffAdvice<'a>,
+}
+
+#[derive(Debug, Diagnostic)]
+#[diagnostic(
+    category = "organizeImports",
+    severity = Information,
+    message = "Import statements could be sorted:"
+)]
+struct OrganizeImportsDiffDiagnostic<'a> {
     #[location(resource)]
     file_name: &'a str,
     #[advice]
@@ -520,11 +547,11 @@ fn process_messages(options: ProcessMessagesOptions) {
                     }
                 }
             }
-
             Message::Diff {
                 file_name,
                 old,
                 new,
+                diff_kind,
             } => {
                 if mode.is_ci() {
                     // A diff is an error in CI mode
@@ -545,29 +572,59 @@ fn process_messages(options: ProcessMessagesOptions) {
                 if mode.should_report_to_terminal() {
                     if should_print {
                         if mode.is_ci() {
-                            let diag = CIDiffDiagnostic {
-                                file_name: &file_name,
-                                diff: FormatDiffAdvice {
-                                    old: &old,
-                                    new: &new,
-                                },
+                            match diff_kind {
+                                DiffKind::Format => {
+                                    let diag = CIFormatDiffDiagnostic {
+                                        file_name: &file_name,
+                                        diff: FormatDiffAdvice {
+                                            old: &old,
+                                            new: &new,
+                                        },
+                                    };
+                                    console.error(markup! {
+                                        {if verbose { PrintDiagnostic::verbose(&diag) } else { PrintDiagnostic::simple(&diag) }}
+                                    });
+                                }
+                                DiffKind::OrganizeImports => {
+                                    let diag = CIOrganizeImportsDiffDiagnostic {
+                                        file_name: &file_name,
+                                        diff: FormatDiffAdvice {
+                                            old: &old,
+                                            new: &new,
+                                        },
+                                    };
+                                    console.error(markup! {
+                                        {if verbose { PrintDiagnostic::verbose(&diag) } else { PrintDiagnostic::simple(&diag) }}
+                                    });
+                                }
                             };
-
-                            console.error(markup! {
-                                {if verbose { PrintDiagnostic::verbose(&diag) } else { PrintDiagnostic::simple(&diag) }}
-                            });
                         } else {
-                            let diag = FormatDiffDiagnostic {
-                                file_name: &file_name,
-                                diff: FormatDiffAdvice {
-                                    old: &old,
-                                    new: &new,
-                                },
+                            match diff_kind {
+                                DiffKind::Format => {
+                                    let diag = FormatDiffDiagnostic {
+                                        file_name: &file_name,
+                                        diff: FormatDiffAdvice {
+                                            old: &old,
+                                            new: &new,
+                                        },
+                                    };
+                                    console.error(markup! {
+                                        {if verbose { PrintDiagnostic::verbose(&diag) } else { PrintDiagnostic::simple(&diag) }}
+                                    });
+                                }
+                                DiffKind::OrganizeImports => {
+                                    let diag = OrganizeImportsDiffDiagnostic {
+                                        file_name: &file_name,
+                                        diff: FormatDiffAdvice {
+                                            old: &old,
+                                            new: &new,
+                                        },
+                                    };
+                                    console.error(markup! {
+                                        {if verbose { PrintDiagnostic::verbose(&diag) } else { PrintDiagnostic::simple(&diag) }}
+                                    });
+                                }
                             };
-
-                            console.error(markup! {
-                                {if verbose { PrintDiagnostic::verbose(&diag) } else { PrintDiagnostic::simple(&diag) }}
-                            });
                         }
                     }
                 } else {
@@ -600,7 +657,7 @@ fn process_messages(options: ProcessMessagesOptions) {
 }
 
 /// Context object shared between directory traversal tasks
-struct TraversalOptions<'ctx, 'app> {
+pub(crate) struct TraversalOptions<'ctx, 'app> {
     /// Shared instance of [FileSystem]
     fs: &'app dyn FileSystem,
     /// Instance of [Workspace] used by this instance of the CLI
@@ -652,6 +709,16 @@ impl<'ctx, 'app> TraversalOptions<'ctx, 'app> {
         })
     }
 
+    fn can_organize_imports(
+        &self,
+        rome_path: &RomePath,
+    ) -> Result<SupportsFeatureResult, WorkspaceError> {
+        self.workspace.supports_feature(SupportsFeatureParams {
+            path: rome_path.clone(),
+            feature: FeatureName::OrganizeImports,
+        })
+    }
+
     fn miss_handler_err(&self, err: WorkspaceError, rome_path: &RomePath) {
         self.push_diagnostic(
             StdError::from(err)
@@ -687,6 +754,7 @@ impl<'ctx, 'app> TraversalContext for TraversalOptions<'ctx, 'app> {
 
         let can_lint = self.can_lint(rome_path);
         let can_format = self.can_format(rome_path);
+        let can_organize_imports = self.can_organize_imports(rome_path);
 
         match self.execution.traversal_mode() {
             TraversalMode::Check { .. } => can_lint
@@ -695,14 +763,16 @@ impl<'ctx, 'app> TraversalContext for TraversalOptions<'ctx, 'app> {
                     self.miss_handler_err(err, rome_path);
                     false
                 }),
-            TraversalMode::CI { .. } => match (can_format, can_lint) {
+            TraversalMode::CI { .. } => match (can_format, can_lint, can_organize_imports) {
                 // the result of the error is the same, rome can't handle the file
-                (Err(err), _) | (_, Err(err)) => {
+                (Err(err), _, _) | (_, Err(err), _) | (_, _, Err(err)) => {
                     self.miss_handler_err(err, rome_path);
                     false
                 }
-                (Ok(can_format), Ok(can_lint)) => {
-                    can_lint.reason.is_none() || can_format.reason.is_none()
+                (Ok(can_format), Ok(can_lint), Ok(can_organize_imports)) => {
+                    can_lint.reason.is_none()
+                        || can_format.reason.is_none()
+                        || can_organize_imports.reason.is_none()
                 }
             },
             TraversalMode::Format { .. } => can_format
@@ -746,252 +816,6 @@ fn handle_file(ctx: &TraversalOptions, path: &Path) {
                 PanicDiagnostic { message }.with_file_path(path.display().to_string()),
             );
         }
-    }
-}
-
-enum FileStatus {
-    Success,
-    Message(Message),
-    Ignored,
-}
-
-/// The return type for [process_file], with the following semantics:
-/// - `Ok(Success)` means the operation was successful (the file is added to
-///   the `processed` counter)
-/// - `Ok(Message(_))` means the operation was successful but a message still
-///   needs to be printed (eg. the diff when not in CI or write mode)
-/// - `Ok(Ignored)` means the file was ignored (the file is not added to the
-///   `processed` or `skipped` counters)
-/// - `Err(_)` means the operation failed and the file should be added to the
-///   `skipped` counter
-type FileResult = Result<FileStatus, Message>;
-
-/// This function performs the actual processing: it reads the file from disk
-/// and parse it; analyze and / or format it; then it either fails if error
-/// diagnostics were emitted, or compare the formatted code with the original
-/// content of the file and emit a diff or write the new content to the disk if
-/// write mode is enabled
-fn process_file(ctx: &TraversalOptions, path: &Path) -> FileResult {
-    tracing::trace_span!("process_file", path = ?path).in_scope(move || {
-        let rome_path = RomePath::new(path);
-
-        let supported_format = ctx.can_format(&rome_path).with_file_path_and_code(
-            path.display().to_string(),
-            category!("files/missingHandler"),
-        )?;
-
-        let supported_lint = ctx.can_lint(&rome_path).with_file_path_and_code(
-            path.display().to_string(),
-            category!("files/missingHandler"),
-        )?;
-
-        let unsupported_reason = match ctx.execution.traversal_mode() {
-            TraversalMode::Check { .. } => supported_lint.reason.as_ref(),
-            TraversalMode::CI { .. } => supported_lint
-                .reason
-                .as_ref()
-                .and(supported_format.reason.as_ref()),
-            TraversalMode::Format { .. } => supported_format.reason.as_ref(),
-        };
-
-        if let Some(reason) = unsupported_reason {
-            return match reason {
-                UnsupportedReason::FileNotSupported => Err(Message::from(
-                    UnhandledDiagnostic.with_file_path(path.display().to_string()),
-                )),
-                UnsupportedReason::FeatureNotEnabled | UnsupportedReason::Ignored => {
-                    Ok(FileStatus::Ignored)
-                }
-            };
-        }
-
-        let write_access = matches!(
-            ctx.execution.traversal_mode(),
-            TraversalMode::Check {
-                fix_file_mode: Some(_),
-            } | TraversalMode::Format { write: true, .. }
-        );
-
-        let open_options = OpenOptions::default().read(true).write(write_access);
-        let mut file = ctx
-            .fs
-            .open_with_options(path, open_options)
-            .with_file_path(path.display().to_string())?;
-
-        let mut input = String::new();
-        file.read_to_string(&mut input)
-            .with_file_path(path.display().to_string())?;
-        ctx.increment_processed();
-
-        let file_guard = FileGuard::open(
-            ctx.workspace,
-            OpenFileParams {
-                path: rome_path,
-                version: 0,
-                content: input.clone(),
-                language_hint: Language::default(),
-            },
-        )
-        .with_file_path_and_code(path.display().to_string(), category!("internalError/fs"))?;
-
-        if let Some(fix_mode) = ctx.execution.as_fix_file_mode() {
-            let fixed = file_guard
-                .fix_file(*fix_mode)
-                .with_file_path_and_code(path.display().to_string(), category!("lint"))?;
-
-            ctx.push_message(Message::SkippedFixes {
-                skipped_suggested_fixes: fixed.skipped_suggested_fixes,
-            });
-
-            if fixed.code != input {
-                file.set_content(fixed.code.as_bytes())
-                    .with_file_path(path.display().to_string())?;
-            }
-
-            return if fixed.errors == 0 {
-                Ok(FileStatus::Success)
-            } else {
-                Ok(FileStatus::Message(Message::ApplyError(
-                    CliDiagnostic::file_apply_error(path.display().to_string()),
-                )))
-            };
-        }
-
-        let categories = if ctx.execution.is_format() || supported_lint.reason.is_some() {
-            RuleCategories::SYNTAX
-        } else {
-            RuleCategories::SYNTAX | RuleCategories::LINT
-        };
-
-        let max_diagnostics = ctx.remaining_diagnostics.load(Ordering::Relaxed);
-        let result = file_guard
-            .pull_diagnostics(categories, max_diagnostics.into())
-            .with_file_path_and_code(path.display().to_string(), category!("lint"))?;
-
-        // In formatting mode, abort immediately if the file has errors
-        let errors = result.errors;
-        match ctx.execution.traversal_mode() {
-            TraversalMode::Format { ignore_errors, .. } if errors > 0 => {
-                return Err(if *ignore_errors {
-                    Message::from(SkippedDiagnostic.with_file_path(path.display().to_string()))
-                } else {
-                    Message::Diagnostics {
-                        name: path.display().to_string(),
-                        content: input,
-                        diagnostics: result.diagnostics.into_iter().map(Error::from).collect(),
-                        skipped_diagnostics: result.skipped_diagnostics,
-                    }
-                });
-            }
-
-            _ => {}
-        }
-
-        // In format mode the diagnostics have already been checked for errors
-        // at this point, so they can just be dropped now since we don't want
-        // to print syntax warnings for the format command
-        let no_diagnostics = result.diagnostics.is_empty() && result.skipped_diagnostics == 0;
-        let result = if no_diagnostics || ctx.execution.is_format() {
-            FileStatus::Success
-        } else {
-            FileStatus::Message(Message::Diagnostics {
-                name: path.display().to_string(),
-                content: input.clone(),
-                diagnostics: result.diagnostics.into_iter().map(Error::from).collect(),
-                skipped_diagnostics: result.skipped_diagnostics,
-            })
-        };
-
-        if errors > 0 {
-            // Having errors is considered a "success" at this point because
-            // this is only reachable on the check / CI path (the parser result
-            // is checked for errors earlier on the format path, and that mode
-            // doesn't run the analyzer so no new diagnostics could have been
-            // added), and having errors on these paths still means the file
-            // was processed (added to the checked files counter)
-            return Ok(result);
-        }
-
-        if supported_format.reason.is_none() {
-            let write = match ctx.execution.traversal_mode() {
-                // In check mode do not run the formatter and return the result immediately,
-                // but only if the argument `--apply` is not passed.
-                TraversalMode::Check { .. } => {
-                    if ctx.execution.as_fix_file_mode().is_some() {
-                        true
-                    } else {
-                        return Ok(result);
-                    }
-                }
-                TraversalMode::CI { .. } => false,
-                TraversalMode::Format { write, .. } => *write,
-            };
-
-            let printed = file_guard
-                .format_file()
-                .with_file_path_and_code(path.display().to_string(), category!("format"))?;
-
-            let output = printed.into_code();
-            if output != input {
-                if write {
-                    file.set_content(output.as_bytes())
-                        .with_file_path(path.display().to_string())?;
-                } else {
-                    if !ctx.execution.should_report_to_terminal() {
-                        ctx.push_format_stat(
-                            path.display().to_string(),
-                            FormatterReportFileDetail {
-                                formatted_content: Some(output.clone()),
-                            },
-                        )
-                    }
-                    // Returning the diff message will discard the content of
-                    // diagnostics, meaning those would not be printed so they
-                    // have to be manually sent through the console channel
-                    if let FileStatus::Message(msg) = result {
-                        ctx.messages.send(msg).ok();
-                    }
-
-                    return Ok(FileStatus::Message(Message::Diff {
-                        file_name: path.display().to_string(),
-                        old: input,
-                        new: output,
-                    }));
-                }
-            }
-        }
-
-        Ok(result)
-    })
-}
-
-/// Wrapper type for messages that can be printed during the traversal process
-enum Message {
-    SkippedFixes {
-        /// Suggested fixes skipped during the lint traversal
-        skipped_suggested_fixes: u32,
-    },
-    ApplyError(CliDiagnostic),
-    Error(Error),
-    Diagnostics {
-        name: String,
-        content: String,
-        diagnostics: Vec<Error>,
-        skipped_diagnostics: u64,
-    },
-    Diff {
-        file_name: String,
-        old: String,
-        new: String,
-    },
-}
-
-impl<D> From<D> for Message
-where
-    Error: From<D>,
-{
-    fn from(err: D) -> Self {
-        Self::Error(Error::from(err))
     }
 }
 

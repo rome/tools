@@ -7,7 +7,7 @@ use crate::file_handlers::{DebugCapabilities, Language as LanguageId};
 use crate::settings::{
     FormatSettings, Language, LanguageSettings, LanguagesSettings, SettingsHandle,
 };
-use crate::workspace::{GetSyntaxTreeResult, PullActionsResult};
+use crate::workspace::{GetSyntaxTreeResult, OrganizeImportsResult, PullActionsResult};
 use crate::{Configuration, Rules, WorkspaceError};
 use rome_deserialize::json::deserialize_from_json_ast;
 use rome_diagnostics::{Diagnostic, Severity};
@@ -70,6 +70,7 @@ impl ExtensionHandler for JsonFileHandler {
                 code_actions: Some(code_actions),
                 rename: None,
                 fix_all: None,
+                organize_imports: Some(organize_imports),
             },
             formatter: FormatterCapabilities {
                 format: Some(format),
@@ -217,4 +218,8 @@ fn code_actions(
     PullActionsResult {
         actions: Vec::new(),
     }
+}
+
+fn organize_imports(_: AnyParse) -> Result<OrganizeImportsResult, WorkspaceError> {
+    Ok(OrganizeImportsResult { code: None })
 }

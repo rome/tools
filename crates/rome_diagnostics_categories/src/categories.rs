@@ -193,6 +193,7 @@ define_categories! {
     "suppressions/deprecatedSyntax",
 
     "configuration",
+    "organizeImports",
 
     // Used in tests and examples
     "args/fileNotFound",

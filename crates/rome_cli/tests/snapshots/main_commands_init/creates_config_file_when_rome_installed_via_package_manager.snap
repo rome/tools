@@ -8,7 +8,7 @@ expression: content
 {
   "$schema": "./node_modules/rome/configuration_schema.json",
   "organizeImports": {
-    "enabled": true
+    "enabled": false
   },
   "linter": {
     "enabled": true,

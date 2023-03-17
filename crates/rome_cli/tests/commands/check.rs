@@ -319,7 +319,7 @@ fn apply_suggested() {
 }
 
 #[test]
-fn apply_suggested_with_error() {
+fn apply_unsafe_with_error() {
     let mut fs = MemoryFileSystem::default();
     let mut console = BufferConsole::default();
 
@@ -378,7 +378,7 @@ function f() { arguments; }
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
-        "apply_suggested_with_error",
+        "apply_unsafe_with_error",
         fs,
         console,
         result,
@@ -1419,19 +1419,22 @@ fn nursery_unstable() {
 }
 
 #[test]
-fn organize_imports() {
+fn applies_organize_imports() {
     let mut fs = MemoryFileSystem::default();
     let mut console = BufferConsole::default();
 
+    let rome_json = r#"{ "organizeImports": { "enabled": true } }"#;
+
+    let config_path = Path::new("rome.json");
+    fs.insert(config_path.into(), rome_json.as_bytes());
+
     let file_path = Path::new("check.js");
-    let content = r#"
-import { lorem, foom, bar } from "foo";
+    let content = r#"import { lorem, foom, bar } from "foo";
 import * as something from "../something";
-    "#;
-    let expected = r#"
-import * as something from "../something";
+"#;
+    let expected = r#"import * as something from "../something";
 import { bar, foom, lorem } from "foo";
-    "#;
+"#;
     fs.insert(file_path.into(), content.as_bytes());
 
     let result = run_cli(
@@ -1460,7 +1463,150 @@ import { bar, foom, lorem } from "foo";
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
-        "organize_imports",
+        "applies_organize_imports",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn shows_organize_imports_diff_on_check() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let rome_json = r#"{ "organizeImports": { "enabled": true } }"#;
+
+    let config_path = Path::new("rome.json");
+    fs.insert(config_path.into(), rome_json.as_bytes());
+
+    let file_path = Path::new("check.js");
+    let content = r#"import { lorem, foom, bar } from "foo";
+import * as something from "../something";
+"#;
+    fs.insert(file_path.into(), content.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+    );
+
+    assert!(result.is_err(), "run_cli returned {result:?}");
+
+    let mut file = fs
+        .open(file_path)
+        .expect("formatting target file was removed by the CLI");
+
+    let mut content = String::new();
+    file.read_to_string(&mut content)
+        .expect("failed to read file from memory FS");
+
+    assert_eq!(content, content);
+
+    drop(file);
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "shows_organize_imports_diff_on_check",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn shows_organize_imports_diff_on_check_apply() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let rome_json = r#"{ "organizeImports": { "enabled": true } }"#;
+
+    let config_path = Path::new("rome.json");
+    fs.insert(config_path.into(), rome_json.as_bytes());
+
+    let file_path = Path::new("check.js");
+    let content = r#"import { lorem, foom, bar } from "foo";
+import * as something from "../something";
+"#;
+    fs.insert(file_path.into(), content.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Arguments::from_vec(vec![
+            OsString::from("check"),
+            OsString::from("--apply"),
+            file_path.as_os_str().into(),
+        ]),
+    );
+
+    assert!(result.is_err(), "run_cli returned {result:?}");
+
+    let mut file = fs
+        .open(file_path)
+        .expect("formatting target file was removed by the CLI");
+
+    let mut content = String::new();
+    file.read_to_string(&mut content)
+        .expect("failed to read file from memory FS");
+
+    assert_eq!(content, content);
+
+    drop(file);
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "shows_organize_imports_diff_on_check_apply",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn dont_applies_organize_imports_for_ignored_file() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let rome_json = r#"{ "organizeImports": { "enabled": true, "ignore": ["check.js"] } }"#;
+
+    let config_path = Path::new("rome.json");
+    fs.insert(config_path.into(), rome_json.as_bytes());
+
+    let file_path = Path::new("check.js");
+    let content = r#"import { lorem, foom, bar } from "foo";
+import * as something from "../something";
+"#;
+    fs.insert(file_path.into(), content.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Arguments::from_vec(vec![
+            OsString::from("check"),
+            OsString::from("--apply-unsafe"),
+            file_path.as_os_str().into(),
+        ]),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    let mut file = fs
+        .open(file_path)
+        .expect("formatting target file was removed by the CLI");
+
+    let mut content = String::new();
+    file.read_to_string(&mut content)
+        .expect("failed to read file from memory FS");
+
+    assert_eq!(content, content);
+
+    drop(file);
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "dont_applies_organize_imports_for_ignored_file",
         fs,
         console,
         result,

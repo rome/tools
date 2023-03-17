@@ -12,7 +12,7 @@ impl VisitNode<JsonLanguage> for OrganizeImports {
         node: &JsonSyntaxNode,
         diagnostics: &mut Vec<DeserializationDiagnostic>,
     ) -> Option<()> {
-        has_only_known_keys(node, &["enabled"], diagnostics)
+        has_only_known_keys(node, &["enabled", "ignore"], diagnostics)
     }
 
     fn visit_map(
@@ -23,8 +23,14 @@ impl VisitNode<JsonLanguage> for OrganizeImports {
     ) -> Option<()> {
         let (name, value) = self.get_key_and_value(key, value, diagnostics)?;
         let name_text = name.text();
-        if name_text == "enabled" {
-            self.enabled = self.map_to_boolean(&value, name_text, diagnostics)?;
+        match name_text {
+            "enabled" => {
+                self.enabled = self.map_to_boolean(&value, name_text, diagnostics)?;
+            }
+            "ignore" => {
+                self.ignore = self.map_to_index_set_string(&value, name_text, diagnostics);
+            }
+            _ => {}
         }
 
         Some(())

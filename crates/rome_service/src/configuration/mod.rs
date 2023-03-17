@@ -55,7 +55,7 @@ pub struct Configuration {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub formatter: Option<FormatterConfiguration>,
 
-    /// The configuration of the formatter
+    /// The configuration of the import sorting
     #[serde(skip_serializing_if = "Option::is_none")]
     pub organize_imports: Option<OrganizeImports>,
 
@@ -76,7 +76,7 @@ impl Default for Configuration {
                 enabled: true,
                 ..LinterConfiguration::default()
             }),
-            organize_imports: Some(OrganizeImports { enabled: true }),
+            organize_imports: Some(OrganizeImports::default()),
             formatter: None,
             javascript: None,
             schema: None,

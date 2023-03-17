@@ -1,5 +1,5 @@
 use self::{javascript::JsFileHandler, json::JsonFileHandler, unknown::UnknownFileHandler};
-use crate::workspace::FixFileMode;
+use crate::workspace::{FixFileMode, OrganizeImportsResult};
 use crate::{
     settings::SettingsHandle,
     workspace::{FixFileResult, GetSyntaxTreeResult, PullActionsResult, RenameResult},
@@ -197,6 +197,7 @@ type Lint = fn(LintParams) -> LintResults;
 type CodeActions = fn(AnyParse, TextRange, Option<&Rules>, SettingsHandle) -> PullActionsResult;
 type FixAll = fn(FixAllParams) -> Result<FixFileResult, WorkspaceError>;
 type Rename = fn(&RomePath, AnyParse, TextSize, String) -> Result<RenameResult, WorkspaceError>;
+type OrganizeImports = fn(AnyParse) -> Result<OrganizeImportsResult, WorkspaceError>;
 
 #[derive(Default)]
 pub(crate) struct AnalyzerCapabilities {
@@ -208,6 +209,8 @@ pub(crate) struct AnalyzerCapabilities {
     pub(crate) fix_all: Option<FixAll>,
     /// It renames a binding inside a file
     pub(crate) rename: Option<Rename>,
+    /// It organize imports
+    pub(crate) organize_imports: Option<OrganizeImports>,
 }
 
 type Format = fn(&RomePath, AnyParse, SettingsHandle) -> Result<Printed, WorkspaceError>;
