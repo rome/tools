@@ -157,19 +157,17 @@ pub(crate) fn process_file(ctx: &TraversalOptions, path: &Path) -> FileResult {
             errors = fixed.errors;
         }
 
-        if supported_organize_imports.is_supported() {
-            if ctx.execution.is_check_apply_unsafe() {
-                let sorted = file_guard.organize_imports().with_file_path_and_code(
-                    path.display().to_string(),
-                    category!("organizeImports"),
-                )?;
+        if supported_organize_imports.is_supported() && ctx.execution.is_check_apply_unsafe() {
+            let sorted = file_guard.organize_imports().with_file_path_and_code(
+                path.display().to_string(),
+                category!("organizeImports"),
+            )?;
 
-                if let Some(output) = sorted.code {
-                    if output != input {
-                        file.set_content(output.as_bytes())
-                            .with_file_path(path.display().to_string())?;
-                        file_guard.change_file(file.file_version(), output)?;
-                    }
+            if let Some(output) = sorted.code {
+                if output != input {
+                    file.set_content(output.as_bytes())
+                        .with_file_path(path.display().to_string())?;
+                    file_guard.change_file(file.file_version(), output)?;
                 }
             }
         }

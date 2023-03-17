@@ -74,7 +74,6 @@ impl File for OsFile {
     }
 
     fn file_version(&self) -> i32 {
-        dbg!(self.version);
         self.version
     }
 }

@@ -200,7 +200,7 @@ impl File for MemoryFile {
         // Copy the new content into the memory buffer
         self.inner.copy_from_slice(content);
         // we increase its version
-        self.version = self.version + 1;
+        self.version += 1;
         Ok(())
     }
 

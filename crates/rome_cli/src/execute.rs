@@ -119,12 +119,12 @@ impl Execution {
     }
 
     pub(crate) const fn is_check_apply_unsafe(&self) -> bool {
-        match self.traversal_mode {
-            TraversalMode::Check { fix_file_mode } => {
-                matches!(fix_file_mode, Some(FixFileMode::SafeAndSuggestedFixes))
+        matches!(
+            self.traversal_mode,
+            TraversalMode::Check {
+                fix_file_mode: Some(FixFileMode::SafeAndSuggestedFixes)
             }
-            _ => false,
-        }
+        )
     }
 
     pub(crate) const fn is_format(&self) -> bool {
