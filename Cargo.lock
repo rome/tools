@@ -2128,6 +2128,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "rome_project"
+version = "0.1.0"
+dependencies = [
+ "rome_deserialize",
+ "rome_json_syntax",
+ "rome_rowan",
+ "rome_text_size",
+ "rustc-hash",
+]
+
+[[package]]
 name = "rome_rowan"
 version = "0.0.1"
 dependencies = [
