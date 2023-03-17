@@ -157,7 +157,7 @@ pub(crate) fn process_file(ctx: &TraversalOptions, path: &Path) -> FileResult {
             errors = fixed.errors;
         }
 
-        if supported_organize_imports.is_supported() && ctx.execution.is_check_apply_unsafe() {
+        if supported_organize_imports.is_supported() && ctx.execution.is_check() {
             let sorted = file_guard.organize_imports().with_file_path_and_code(
                 path.display().to_string(),
                 category!("organizeImports"),
@@ -165,9 +165,21 @@ pub(crate) fn process_file(ctx: &TraversalOptions, path: &Path) -> FileResult {
 
             if let Some(output) = sorted.code {
                 if output != input {
-                    file.set_content(output.as_bytes())
-                        .with_file_path(path.display().to_string())?;
-                    file_guard.change_file(file.file_version(), output)?;
+                    if ctx.execution.is_check_apply_unsafe() {
+                        file.set_content(output.as_bytes())
+                            .with_file_path(path.display().to_string())?;
+                        file_guard.change_file(file.file_version(), output)?;
+                    } else {
+                        errors += 1;
+                        ctx.messages
+                            .send(Message::Diff {
+                                file_name: path.display().to_string(),
+                                old: input.clone(),
+                                new: output,
+                                diff_kind: DiffKind::OrganizeImports,
+                            })
+                            .ok();
+                    }
                 }
             }
         }
@@ -236,7 +248,11 @@ pub(crate) fn process_file(ctx: &TraversalOptions, path: &Path) -> FileResult {
             return Ok(result);
         }
 
-        if supported_organize_imports.is_supported() && ctx.execution.is_ci() {
+        if supported_organize_imports.is_supported()
+            // we want to print a diff only if we are in CI
+            // or we are running "check" or "check --apply"
+            && (ctx.execution.is_ci() || !ctx.execution.is_check_apply_unsafe())
+        {
             let sorted = file_guard.organize_imports().with_file_path_and_code(
                 path.display().to_string(),
                 category!("organizeImports"),

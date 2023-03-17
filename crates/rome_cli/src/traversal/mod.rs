@@ -314,7 +314,7 @@ struct FormatDiffDiagnostic<'a> {
 #[diagnostic(
     category = "organizeImports",
     severity = Information,
-    message = "Analyzer would have printed the following content:"
+    message = "Import statements could be sorted:"
 )]
 struct OrganizeImportsDiffDiagnostic<'a> {
     #[location(resource)]

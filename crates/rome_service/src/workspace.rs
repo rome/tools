@@ -253,7 +253,7 @@ pub enum FixFileMode {
     /// Applies [safe](rome_diagnostics::Applicability::Always) fixes
     SafeFixes,
     /// Applies [safe](rome_diagnostics::Applicability::Always) and suggested [safe](rome_diagnostics::Applicability::MaybeIncorrect)
-    SafeAndSuggestedFixes,
+    SafeAndUnsafeFixes,
 }
 
 #[derive(Debug, serde::Serialize, serde::Deserialize)]

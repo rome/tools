@@ -112,17 +112,19 @@ impl Execution {
     }
 
     pub(crate) const fn is_check_apply(&self) -> bool {
-        match self.traversal_mode {
-            TraversalMode::Check { fix_file_mode } => fix_file_mode.is_some(),
-            _ => false,
-        }
+        matches!(
+            self.traversal_mode,
+            TraversalMode::Check {
+                fix_file_mode: Some(FixFileMode::SafeFixes)
+            }
+        )
     }
 
     pub(crate) const fn is_check_apply_unsafe(&self) -> bool {
         matches!(
             self.traversal_mode,
             TraversalMode::Check {
-                fix_file_mode: Some(FixFileMode::SafeAndSuggestedFixes)
+                fix_file_mode: Some(FixFileMode::SafeAndUnsafeFixes)
             }
         )
     }

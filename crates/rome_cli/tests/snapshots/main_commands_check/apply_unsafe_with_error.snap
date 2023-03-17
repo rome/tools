@@ -25,7 +25,7 @@ function f() { arguments; }
 ```block
 internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Some errors were emitted while applying fixes
+  × Some errors were emitted while running checks
   
 
 

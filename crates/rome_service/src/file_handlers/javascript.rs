@@ -412,7 +412,7 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, WorkspaceError> {
                             return ControlFlow::Break(action);
                         }
                     }
-                    FixFileMode::SafeAndSuggestedFixes => {
+                    FixFileMode::SafeAndUnsafeFixes => {
                         if matches!(
                             action.applicability,
                             Applicability::Always | Applicability::MaybeIncorrect
