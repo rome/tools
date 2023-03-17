@@ -2,7 +2,7 @@
 source: crates/rome_service/tests/spec_tests.rs
 expression: organize_imports.json
 ---
-organize_imports.json:3:14 configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+organize_imports.json:3:14 deserialize ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × The value of key enabled is incorrect. Expected boolean
   

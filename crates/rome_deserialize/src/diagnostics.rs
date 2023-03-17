@@ -8,7 +8,7 @@ use serde::{Deserialize, Serialize};
 /// Diagnostic emitted during the deserialization
 #[derive(Debug, Serialize, Clone, Deserialize, Diagnostic)]
 #[diagnostic(
-    category = "configuration",
+    category = "deserialize",
     severity = Error
 )]
 pub struct DeserializationDiagnostic {

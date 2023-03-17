@@ -30,7 +30,7 @@ Found errors in the configuration file, Rome will use its defaults for the secti
 ```
 
 ```block
-rome.json:3:18 configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+rome.json:3:18 deserialize ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The line width exceeds the maximum value (320)
   

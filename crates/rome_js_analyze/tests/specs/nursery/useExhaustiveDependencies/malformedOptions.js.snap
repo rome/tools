@@ -9,7 +9,7 @@ expression: malformedOptions.js
 
 # Diagnostics
 ```
-malformedOptions.js:2:5 configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+malformedOptions.js:2:5 deserialize ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Found an unknown key `hook`
   

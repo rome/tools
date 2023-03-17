@@ -33,7 +33,7 @@ Found errors in the configuration file, Rome will use its defaults for the secti
 ```
 
 ```block
-rome.json:6:17 configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+rome.json:6:17 deserialize ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Incorrect type, expected a string
   
