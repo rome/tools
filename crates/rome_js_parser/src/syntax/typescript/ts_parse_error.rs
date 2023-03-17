@@ -51,6 +51,27 @@ pub(crate) fn ts_modifier_cannot_appear_on_a_parameter(
     )
 }
 
+pub(crate) fn ts_in_out_modifier_cannot_appear_on_a_type_parameter(
+    p: &JsParser,
+    modifier_range: TextRange,
+) -> ParseDiagnostic {
+    let modifier = p.text(modifier_range);
+    p.err_builder(
+        format!("'{modifier}' modifier can only appear on a type parameter of a class, interface or type alias.",),
+        modifier_range,
+    )
+}
+
+pub(crate) fn ts_const_modifier_cannot_appear_on_a_type_parameter(
+    p: &JsParser,
+    modifier_range: TextRange,
+) -> ParseDiagnostic {
+    p.err_builder(
+        "'const' modifier can only appear on a type parameter of a function, method or class.",
+        modifier_range,
+    )
+}
+
 pub(crate) fn ts_accessibility_modifier_already_seen(
     p: &JsParser,
     second_range: TextRange,

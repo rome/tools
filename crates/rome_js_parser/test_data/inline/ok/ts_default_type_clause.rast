@@ -11,8 +11,7 @@ JsModule {
                 l_angle_token: L_ANGLE@6..7 "<" [] [],
                 items: TsTypeParameterList [
                     TsTypeParameter {
-                        in_modifier_token: missing (optional),
-                        out_modifier_token: missing (optional),
+                        modifiers: TsTypeParameterModifierList [],
                         name: TsTypeParameterName {
                             ident_token: IDENT@7..8 "X" [] [],
                         },
@@ -45,8 +44,7 @@ JsModule {
                 l_angle_token: L_ANGLE@28..29 "<" [] [],
                 items: TsTypeParameterList [
                     TsTypeParameter {
-                        in_modifier_token: missing (optional),
-                        out_modifier_token: missing (optional),
+                        modifiers: TsTypeParameterModifierList [],
                         name: TsTypeParameterName {
                             ident_token: IDENT@29..31 "X" [] [Whitespace(" ")],
                         },
@@ -117,12 +115,11 @@ JsModule {
         0: L_ANGLE@6..7 "<" [] []
         1: TS_TYPE_PARAMETER_LIST@7..15
           0: TS_TYPE_PARAMETER@7..15
-            0: (empty)
-            1: (empty)
-            2: TS_TYPE_PARAMETER_NAME@7..8
+            0: TS_TYPE_PARAMETER_MODIFIER_LIST@7..7
+            1: TS_TYPE_PARAMETER_NAME@7..8
               0: IDENT@7..8 "X" [] []
-            3: (empty)
-            4: TS_DEFAULT_TYPE_CLAUSE@8..15
+            2: (empty)
+            3: TS_DEFAULT_TYPE_CLAUSE@8..15
               0: EQ@8..9 "=" [] []
               1: TS_STRING_TYPE@9..15
                 0: STRING_KW@9..15 "string" [] []
@@ -141,11 +138,10 @@ JsModule {
         0: L_ANGLE@28..29 "<" [] []
         1: TS_TYPE_PARAMETER_LIST@29..63
           0: TS_TYPE_PARAMETER@29..63
-            0: (empty)
-            1: (empty)
-            2: TS_TYPE_PARAMETER_NAME@29..31
+            0: TS_TYPE_PARAMETER_MODIFIER_LIST@29..29
+            1: TS_TYPE_PARAMETER_NAME@29..31
               0: IDENT@29..31 "X" [] [Whitespace(" ")]
-            3: TS_TYPE_CONSTRAINT_CLAUSE@31..55
+            2: TS_TYPE_CONSTRAINT_CLAUSE@31..55
               0: EXTENDS_KW@31..39 "extends" [] [Whitespace(" ")]
               1: TS_UNION_TYPE@39..55
                 0: (empty)
@@ -155,7 +151,7 @@ JsModule {
                   1: PIPE@46..48 "|" [] [Whitespace(" ")]
                   2: TS_STRING_TYPE@48..55
                     0: STRING_KW@48..55 "string" [] [Whitespace(" ")]
-            4: TS_DEFAULT_TYPE_CLAUSE@55..63
+            3: TS_DEFAULT_TYPE_CLAUSE@55..63
               0: EQ@55..57 "=" [] [Whitespace(" ")]
               1: TS_STRING_TYPE@57..63
                 0: STRING_KW@57..63 "string" [] []

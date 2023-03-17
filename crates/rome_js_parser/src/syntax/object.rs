@@ -435,7 +435,7 @@ fn parse_method_object_member_body(p: &mut JsParser, flags: SignatureFlags) {
     TypeScript
         .parse_exclusive_syntax(
             p,
-            |p| parse_ts_type_parameters(p, TypeContext::default()),
+            |p| parse_ts_type_parameters(p, TypeContext::default().and_allow_const_modifier(true)),
             |p, type_parameters| {
                 ts_only_syntax_error(p, "type parameters", type_parameters.range(p))
             },

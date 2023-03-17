@@ -72,231 +72,263 @@ JsModule {
                     opening_element: JsxOpeningElement {
                         l_angle_token: L_ANGLE@27..29 "<" [Newline("\n")] [],
                         name: JsxName {
-                            value_token: JSX_IDENT@29..32 "in" [] [Whitespace(" ")],
+                            value_token: JSX_IDENT@29..35 "const" [] [Whitespace(" ")],
                         },
                         type_arguments: missing (optional),
                         attributes: JsxAttributeList [
                             JsxAttribute {
                                 name: JsxName {
-                                    value_token: JSX_IDENT@32..36 "out" [] [Whitespace(" ")],
-                                },
-                                initializer: missing (optional),
-                            },
-                            JsxAttribute {
-                                name: JsxName {
-                                    value_token: JSX_IDENT@36..37 "T" [] [],
+                                    value_token: JSX_IDENT@35..36 "T" [] [],
                                 },
                                 initializer: missing (optional),
                             },
                         ],
-                        r_angle_token: R_ANGLE@37..38 ">" [] [],
+                        r_angle_token: R_ANGLE@36..37 ">" [] [],
                     },
                     children: JsxChildList [],
                     closing_element: JsxClosingElement {
-                        l_angle_token: L_ANGLE@38..39 "<" [] [],
-                        slash_token: SLASH@39..40 "/" [] [],
+                        l_angle_token: L_ANGLE@37..38 "<" [] [],
+                        slash_token: SLASH@38..39 "/" [] [],
                         name: JsxName {
-                            value_token: JSX_IDENT@40..42 "in" [] [],
+                            value_token: JSX_IDENT@39..44 "const" [] [],
                         },
-                        r_angle_token: R_ANGLE@42..43 ">" [] [],
+                        r_angle_token: R_ANGLE@44..45 ">" [] [],
                     },
                 },
             },
-            semicolon_token: SEMICOLON@43..44 ";" [] [],
+            semicolon_token: SEMICOLON@45..46 ";" [] [],
         },
         JsExpressionStatement {
             expression: JsxTagExpression {
                 tag: JsxElement {
                     opening_element: JsxOpeningElement {
-                        l_angle_token: L_ANGLE@44..46 "<" [Newline("\n")] [],
+                        l_angle_token: L_ANGLE@46..48 "<" [Newline("\n")] [],
                         name: JsxName {
-                            value_token: JSX_IDENT@46..50 "out" [] [Whitespace(" ")],
+                            value_token: JSX_IDENT@48..51 "in" [] [Whitespace(" ")],
                         },
                         type_arguments: missing (optional),
                         attributes: JsxAttributeList [
                             JsxAttribute {
                                 name: JsxName {
-                                    value_token: JSX_IDENT@50..53 "in" [] [Whitespace(" ")],
+                                    value_token: JSX_IDENT@51..55 "out" [] [Whitespace(" ")],
                                 },
                                 initializer: missing (optional),
                             },
                             JsxAttribute {
                                 name: JsxName {
-                                    value_token: JSX_IDENT@53..54 "T" [] [],
+                                    value_token: JSX_IDENT@55..56 "T" [] [],
                                 },
                                 initializer: missing (optional),
                             },
                         ],
-                        r_angle_token: R_ANGLE@54..55 ">" [] [],
+                        r_angle_token: R_ANGLE@56..57 ">" [] [],
                     },
                     children: JsxChildList [],
                     closing_element: JsxClosingElement {
-                        l_angle_token: L_ANGLE@55..56 "<" [] [],
-                        slash_token: SLASH@56..57 "/" [] [],
+                        l_angle_token: L_ANGLE@57..58 "<" [] [],
+                        slash_token: SLASH@58..59 "/" [] [],
                         name: JsxName {
-                            value_token: JSX_IDENT@57..60 "out" [] [],
+                            value_token: JSX_IDENT@59..61 "in" [] [],
                         },
-                        r_angle_token: R_ANGLE@60..61 ">" [] [],
+                        r_angle_token: R_ANGLE@61..62 ">" [] [],
                     },
                 },
             },
-            semicolon_token: SEMICOLON@61..62 ";" [] [],
+            semicolon_token: SEMICOLON@62..63 ";" [] [],
         },
         JsExpressionStatement {
             expression: JsxTagExpression {
                 tag: JsxElement {
                     opening_element: JsxOpeningElement {
-                        l_angle_token: L_ANGLE@62..64 "<" [Newline("\n")] [],
+                        l_angle_token: L_ANGLE@63..65 "<" [Newline("\n")] [],
                         name: JsxName {
-                            value_token: JSX_IDENT@64..67 "in" [] [Whitespace(" ")],
+                            value_token: JSX_IDENT@65..69 "out" [] [Whitespace(" ")],
                         },
                         type_arguments: missing (optional),
                         attributes: JsxAttributeList [
                             JsxAttribute {
                                 name: JsxName {
-                                    value_token: JSX_IDENT@67..69 "T" [] [Whitespace(" ")],
+                                    value_token: JSX_IDENT@69..72 "in" [] [Whitespace(" ")],
                                 },
                                 initializer: missing (optional),
                             },
                             JsxAttribute {
                                 name: JsxName {
-                                    value_token: JSX_IDENT@69..76 "extends" [] [],
+                                    value_token: JSX_IDENT@72..73 "T" [] [],
+                                },
+                                initializer: missing (optional),
+                            },
+                        ],
+                        r_angle_token: R_ANGLE@73..74 ">" [] [],
+                    },
+                    children: JsxChildList [],
+                    closing_element: JsxClosingElement {
+                        l_angle_token: L_ANGLE@74..75 "<" [] [],
+                        slash_token: SLASH@75..76 "/" [] [],
+                        name: JsxName {
+                            value_token: JSX_IDENT@76..79 "out" [] [],
+                        },
+                        r_angle_token: R_ANGLE@79..80 ">" [] [],
+                    },
+                },
+            },
+            semicolon_token: SEMICOLON@80..81 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: JsxTagExpression {
+                tag: JsxElement {
+                    opening_element: JsxOpeningElement {
+                        l_angle_token: L_ANGLE@81..83 "<" [Newline("\n")] [],
+                        name: JsxName {
+                            value_token: JSX_IDENT@83..86 "in" [] [Whitespace(" ")],
+                        },
+                        type_arguments: missing (optional),
+                        attributes: JsxAttributeList [
+                            JsxAttribute {
+                                name: JsxName {
+                                    value_token: JSX_IDENT@86..88 "T" [] [Whitespace(" ")],
+                                },
+                                initializer: missing (optional),
+                            },
+                            JsxAttribute {
+                                name: JsxName {
+                                    value_token: JSX_IDENT@88..95 "extends" [] [],
                                 },
                                 initializer: JsxAttributeInitializerClause {
-                                    eq_token: EQ@76..77 "=" [] [],
+                                    eq_token: EQ@95..96 "=" [] [],
                                     value: JsxExpressionAttributeValue {
-                                        l_curly_token: L_CURLY@77..78 "{" [] [],
+                                        l_curly_token: L_CURLY@96..97 "{" [] [],
                                         expression: JsBooleanLiteralExpression {
-                                            value_token: TRUE_KW@78..82 "true" [] [],
+                                            value_token: TRUE_KW@97..101 "true" [] [],
                                         },
-                                        r_curly_token: R_CURLY@82..83 "}" [] [],
+                                        r_curly_token: R_CURLY@101..102 "}" [] [],
                                     },
                                 },
                             },
                         ],
-                        r_angle_token: R_ANGLE@83..84 ">" [] [],
+                        r_angle_token: R_ANGLE@102..103 ">" [] [],
                     },
                     children: JsxChildList [],
                     closing_element: JsxClosingElement {
-                        l_angle_token: L_ANGLE@84..85 "<" [] [],
-                        slash_token: SLASH@85..86 "/" [] [],
+                        l_angle_token: L_ANGLE@103..104 "<" [] [],
+                        slash_token: SLASH@104..105 "/" [] [],
                         name: JsxName {
-                            value_token: JSX_IDENT@86..88 "in" [] [],
+                            value_token: JSX_IDENT@105..107 "in" [] [],
                         },
-                        r_angle_token: R_ANGLE@88..89 ">" [] [],
+                        r_angle_token: R_ANGLE@107..108 ">" [] [],
                     },
                 },
             },
-            semicolon_token: SEMICOLON@89..90 ";" [] [],
+            semicolon_token: SEMICOLON@108..109 ";" [] [],
         },
         JsExpressionStatement {
             expression: JsxTagExpression {
                 tag: JsxElement {
                     opening_element: JsxOpeningElement {
-                        l_angle_token: L_ANGLE@90..92 "<" [Newline("\n")] [],
+                        l_angle_token: L_ANGLE@109..111 "<" [Newline("\n")] [],
                         name: JsxName {
-                            value_token: JSX_IDENT@92..96 "out" [] [Whitespace(" ")],
+                            value_token: JSX_IDENT@111..115 "out" [] [Whitespace(" ")],
                         },
                         type_arguments: missing (optional),
                         attributes: JsxAttributeList [
                             JsxAttribute {
                                 name: JsxName {
-                                    value_token: JSX_IDENT@96..98 "T" [] [Whitespace(" ")],
+                                    value_token: JSX_IDENT@115..117 "T" [] [Whitespace(" ")],
                                 },
                                 initializer: missing (optional),
                             },
                             JsxAttribute {
                                 name: JsxName {
-                                    value_token: JSX_IDENT@98..105 "extends" [] [],
+                                    value_token: JSX_IDENT@117..124 "extends" [] [],
                                 },
                                 initializer: JsxAttributeInitializerClause {
-                                    eq_token: EQ@105..106 "=" [] [],
+                                    eq_token: EQ@124..125 "=" [] [],
                                     value: JsxExpressionAttributeValue {
-                                        l_curly_token: L_CURLY@106..107 "{" [] [],
+                                        l_curly_token: L_CURLY@125..126 "{" [] [],
                                         expression: JsBooleanLiteralExpression {
-                                            value_token: TRUE_KW@107..111 "true" [] [],
+                                            value_token: TRUE_KW@126..130 "true" [] [],
                                         },
-                                        r_curly_token: R_CURLY@111..112 "}" [] [],
+                                        r_curly_token: R_CURLY@130..131 "}" [] [],
                                     },
                                 },
                             },
                         ],
-                        r_angle_token: R_ANGLE@112..113 ">" [] [],
+                        r_angle_token: R_ANGLE@131..132 ">" [] [],
                     },
                     children: JsxChildList [],
                     closing_element: JsxClosingElement {
-                        l_angle_token: L_ANGLE@113..114 "<" [] [],
-                        slash_token: SLASH@114..115 "/" [] [],
+                        l_angle_token: L_ANGLE@132..133 "<" [] [],
+                        slash_token: SLASH@133..134 "/" [] [],
                         name: JsxName {
-                            value_token: JSX_IDENT@115..118 "out" [] [],
+                            value_token: JSX_IDENT@134..137 "out" [] [],
                         },
-                        r_angle_token: R_ANGLE@118..119 ">" [] [],
+                        r_angle_token: R_ANGLE@137..138 ">" [] [],
                     },
                 },
             },
-            semicolon_token: SEMICOLON@119..120 ";" [] [],
+            semicolon_token: SEMICOLON@138..139 ";" [] [],
         },
         JsExpressionStatement {
             expression: JsxTagExpression {
                 tag: JsxElement {
                     opening_element: JsxOpeningElement {
-                        l_angle_token: L_ANGLE@120..122 "<" [Newline("\n")] [],
+                        l_angle_token: L_ANGLE@139..141 "<" [Newline("\n")] [],
                         name: JsxName {
-                            value_token: JSX_IDENT@122..125 "in" [] [Whitespace(" ")],
+                            value_token: JSX_IDENT@141..144 "in" [] [Whitespace(" ")],
                         },
                         type_arguments: missing (optional),
                         attributes: JsxAttributeList [
                             JsxAttribute {
                                 name: JsxName {
-                                    value_token: JSX_IDENT@125..129 "out" [] [Whitespace(" ")],
+                                    value_token: JSX_IDENT@144..148 "out" [] [Whitespace(" ")],
                                 },
                                 initializer: missing (optional),
                             },
                             JsxAttribute {
                                 name: JsxName {
-                                    value_token: JSX_IDENT@129..131 "T" [] [Whitespace(" ")],
+                                    value_token: JSX_IDENT@148..150 "T" [] [Whitespace(" ")],
                                 },
                                 initializer: missing (optional),
                             },
                             JsxAttribute {
                                 name: JsxName {
-                                    value_token: JSX_IDENT@131..138 "extends" [] [],
+                                    value_token: JSX_IDENT@150..157 "extends" [] [],
                                 },
                                 initializer: JsxAttributeInitializerClause {
-                                    eq_token: EQ@138..139 "=" [] [],
+                                    eq_token: EQ@157..158 "=" [] [],
                                     value: JsxExpressionAttributeValue {
-                                        l_curly_token: L_CURLY@139..140 "{" [] [],
+                                        l_curly_token: L_CURLY@158..159 "{" [] [],
                                         expression: JsBooleanLiteralExpression {
-                                            value_token: TRUE_KW@140..144 "true" [] [],
+                                            value_token: TRUE_KW@159..163 "true" [] [],
                                         },
-                                        r_curly_token: R_CURLY@144..145 "}" [] [],
+                                        r_curly_token: R_CURLY@163..164 "}" [] [],
                                     },
                                 },
                             },
                         ],
-                        r_angle_token: R_ANGLE@145..146 ">" [] [],
+                        r_angle_token: R_ANGLE@164..165 ">" [] [],
                     },
                     children: JsxChildList [],
                     closing_element: JsxClosingElement {
-                        l_angle_token: L_ANGLE@146..147 "<" [] [],
-                        slash_token: SLASH@147..148 "/" [] [],
+                        l_angle_token: L_ANGLE@165..166 "<" [] [],
+                        slash_token: SLASH@166..167 "/" [] [],
                         name: JsxName {
-                            value_token: JSX_IDENT@148..150 "in" [] [],
+                            value_token: JSX_IDENT@167..169 "in" [] [],
                         },
-                        r_angle_token: R_ANGLE@150..151 ">" [] [],
+                        r_angle_token: R_ANGLE@169..170 ">" [] [],
                     },
                 },
             },
-            semicolon_token: SEMICOLON@151..152 ";" [] [],
+            semicolon_token: SEMICOLON@170..171 ";" [] [],
         },
     ],
-    eof_token: EOF@152..153 "" [Newline("\n")] [],
+    eof_token: EOF@171..172 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..153
+0: JS_MODULE@0..172
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..152
+  2: JS_MODULE_ITEM_LIST@0..171
     0: JS_EXPRESSION_STATEMENT@0..12
       0: JSX_TAG_EXPRESSION@0..11
         0: JSX_ELEMENT@0..11
@@ -341,156 +373,178 @@ JsModule {
               0: JSX_IDENT@22..25 "out" [] []
             3: R_ANGLE@25..26 ">" [] []
       1: SEMICOLON@26..27 ";" [] []
-    2: JS_EXPRESSION_STATEMENT@27..44
-      0: JSX_TAG_EXPRESSION@27..43
-        0: JSX_ELEMENT@27..43
-          0: JSX_OPENING_ELEMENT@27..38
+    2: JS_EXPRESSION_STATEMENT@27..46
+      0: JSX_TAG_EXPRESSION@27..45
+        0: JSX_ELEMENT@27..45
+          0: JSX_OPENING_ELEMENT@27..37
             0: L_ANGLE@27..29 "<" [Newline("\n")] []
-            1: JSX_NAME@29..32
-              0: JSX_IDENT@29..32 "in" [] [Whitespace(" ")]
+            1: JSX_NAME@29..35
+              0: JSX_IDENT@29..35 "const" [] [Whitespace(" ")]
             2: (empty)
-            3: JSX_ATTRIBUTE_LIST@32..37
-              0: JSX_ATTRIBUTE@32..36
-                0: JSX_NAME@32..36
-                  0: JSX_IDENT@32..36 "out" [] [Whitespace(" ")]
+            3: JSX_ATTRIBUTE_LIST@35..36
+              0: JSX_ATTRIBUTE@35..36
+                0: JSX_NAME@35..36
+                  0: JSX_IDENT@35..36 "T" [] []
                 1: (empty)
-              1: JSX_ATTRIBUTE@36..37
-                0: JSX_NAME@36..37
-                  0: JSX_IDENT@36..37 "T" [] []
-                1: (empty)
-            4: R_ANGLE@37..38 ">" [] []
-          1: JSX_CHILD_LIST@38..38
-          2: JSX_CLOSING_ELEMENT@38..43
-            0: L_ANGLE@38..39 "<" [] []
-            1: SLASH@39..40 "/" [] []
-            2: JSX_NAME@40..42
-              0: JSX_IDENT@40..42 "in" [] []
-            3: R_ANGLE@42..43 ">" [] []
-      1: SEMICOLON@43..44 ";" [] []
-    3: JS_EXPRESSION_STATEMENT@44..62
-      0: JSX_TAG_EXPRESSION@44..61
-        0: JSX_ELEMENT@44..61
-          0: JSX_OPENING_ELEMENT@44..55
-            0: L_ANGLE@44..46 "<" [Newline("\n")] []
-            1: JSX_NAME@46..50
-              0: JSX_IDENT@46..50 "out" [] [Whitespace(" ")]
+            4: R_ANGLE@36..37 ">" [] []
+          1: JSX_CHILD_LIST@37..37
+          2: JSX_CLOSING_ELEMENT@37..45
+            0: L_ANGLE@37..38 "<" [] []
+            1: SLASH@38..39 "/" [] []
+            2: JSX_NAME@39..44
+              0: JSX_IDENT@39..44 "const" [] []
+            3: R_ANGLE@44..45 ">" [] []
+      1: SEMICOLON@45..46 ";" [] []
+    3: JS_EXPRESSION_STATEMENT@46..63
+      0: JSX_TAG_EXPRESSION@46..62
+        0: JSX_ELEMENT@46..62
+          0: JSX_OPENING_ELEMENT@46..57
+            0: L_ANGLE@46..48 "<" [Newline("\n")] []
+            1: JSX_NAME@48..51
+              0: JSX_IDENT@48..51 "in" [] [Whitespace(" ")]
             2: (empty)
-            3: JSX_ATTRIBUTE_LIST@50..54
-              0: JSX_ATTRIBUTE@50..53
-                0: JSX_NAME@50..53
-                  0: JSX_IDENT@50..53 "in" [] [Whitespace(" ")]
+            3: JSX_ATTRIBUTE_LIST@51..56
+              0: JSX_ATTRIBUTE@51..55
+                0: JSX_NAME@51..55
+                  0: JSX_IDENT@51..55 "out" [] [Whitespace(" ")]
                 1: (empty)
-              1: JSX_ATTRIBUTE@53..54
-                0: JSX_NAME@53..54
-                  0: JSX_IDENT@53..54 "T" [] []
+              1: JSX_ATTRIBUTE@55..56
+                0: JSX_NAME@55..56
+                  0: JSX_IDENT@55..56 "T" [] []
                 1: (empty)
-            4: R_ANGLE@54..55 ">" [] []
-          1: JSX_CHILD_LIST@55..55
-          2: JSX_CLOSING_ELEMENT@55..61
-            0: L_ANGLE@55..56 "<" [] []
-            1: SLASH@56..57 "/" [] []
-            2: JSX_NAME@57..60
-              0: JSX_IDENT@57..60 "out" [] []
-            3: R_ANGLE@60..61 ">" [] []
-      1: SEMICOLON@61..62 ";" [] []
-    4: JS_EXPRESSION_STATEMENT@62..90
-      0: JSX_TAG_EXPRESSION@62..89
-        0: JSX_ELEMENT@62..89
-          0: JSX_OPENING_ELEMENT@62..84
-            0: L_ANGLE@62..64 "<" [Newline("\n")] []
-            1: JSX_NAME@64..67
-              0: JSX_IDENT@64..67 "in" [] [Whitespace(" ")]
+            4: R_ANGLE@56..57 ">" [] []
+          1: JSX_CHILD_LIST@57..57
+          2: JSX_CLOSING_ELEMENT@57..62
+            0: L_ANGLE@57..58 "<" [] []
+            1: SLASH@58..59 "/" [] []
+            2: JSX_NAME@59..61
+              0: JSX_IDENT@59..61 "in" [] []
+            3: R_ANGLE@61..62 ">" [] []
+      1: SEMICOLON@62..63 ";" [] []
+    4: JS_EXPRESSION_STATEMENT@63..81
+      0: JSX_TAG_EXPRESSION@63..80
+        0: JSX_ELEMENT@63..80
+          0: JSX_OPENING_ELEMENT@63..74
+            0: L_ANGLE@63..65 "<" [Newline("\n")] []
+            1: JSX_NAME@65..69
+              0: JSX_IDENT@65..69 "out" [] [Whitespace(" ")]
             2: (empty)
-            3: JSX_ATTRIBUTE_LIST@67..83
-              0: JSX_ATTRIBUTE@67..69
-                0: JSX_NAME@67..69
-                  0: JSX_IDENT@67..69 "T" [] [Whitespace(" ")]
+            3: JSX_ATTRIBUTE_LIST@69..73
+              0: JSX_ATTRIBUTE@69..72
+                0: JSX_NAME@69..72
+                  0: JSX_IDENT@69..72 "in" [] [Whitespace(" ")]
                 1: (empty)
-              1: JSX_ATTRIBUTE@69..83
-                0: JSX_NAME@69..76
-                  0: JSX_IDENT@69..76 "extends" [] []
-                1: JSX_ATTRIBUTE_INITIALIZER_CLAUSE@76..83
-                  0: EQ@76..77 "=" [] []
-                  1: JSX_EXPRESSION_ATTRIBUTE_VALUE@77..83
-                    0: L_CURLY@77..78 "{" [] []
-                    1: JS_BOOLEAN_LITERAL_EXPRESSION@78..82
-                      0: TRUE_KW@78..82 "true" [] []
-                    2: R_CURLY@82..83 "}" [] []
-            4: R_ANGLE@83..84 ">" [] []
-          1: JSX_CHILD_LIST@84..84
-          2: JSX_CLOSING_ELEMENT@84..89
-            0: L_ANGLE@84..85 "<" [] []
-            1: SLASH@85..86 "/" [] []
-            2: JSX_NAME@86..88
-              0: JSX_IDENT@86..88 "in" [] []
-            3: R_ANGLE@88..89 ">" [] []
-      1: SEMICOLON@89..90 ";" [] []
-    5: JS_EXPRESSION_STATEMENT@90..120
-      0: JSX_TAG_EXPRESSION@90..119
-        0: JSX_ELEMENT@90..119
-          0: JSX_OPENING_ELEMENT@90..113
-            0: L_ANGLE@90..92 "<" [Newline("\n")] []
-            1: JSX_NAME@92..96
-              0: JSX_IDENT@92..96 "out" [] [Whitespace(" ")]
+              1: JSX_ATTRIBUTE@72..73
+                0: JSX_NAME@72..73
+                  0: JSX_IDENT@72..73 "T" [] []
+                1: (empty)
+            4: R_ANGLE@73..74 ">" [] []
+          1: JSX_CHILD_LIST@74..74
+          2: JSX_CLOSING_ELEMENT@74..80
+            0: L_ANGLE@74..75 "<" [] []
+            1: SLASH@75..76 "/" [] []
+            2: JSX_NAME@76..79
+              0: JSX_IDENT@76..79 "out" [] []
+            3: R_ANGLE@79..80 ">" [] []
+      1: SEMICOLON@80..81 ";" [] []
+    5: JS_EXPRESSION_STATEMENT@81..109
+      0: JSX_TAG_EXPRESSION@81..108
+        0: JSX_ELEMENT@81..108
+          0: JSX_OPENING_ELEMENT@81..103
+            0: L_ANGLE@81..83 "<" [Newline("\n")] []
+            1: JSX_NAME@83..86
+              0: JSX_IDENT@83..86 "in" [] [Whitespace(" ")]
             2: (empty)
-            3: JSX_ATTRIBUTE_LIST@96..112
-              0: JSX_ATTRIBUTE@96..98
-                0: JSX_NAME@96..98
-                  0: JSX_IDENT@96..98 "T" [] [Whitespace(" ")]
+            3: JSX_ATTRIBUTE_LIST@86..102
+              0: JSX_ATTRIBUTE@86..88
+                0: JSX_NAME@86..88
+                  0: JSX_IDENT@86..88 "T" [] [Whitespace(" ")]
                 1: (empty)
-              1: JSX_ATTRIBUTE@98..112
-                0: JSX_NAME@98..105
-                  0: JSX_IDENT@98..105 "extends" [] []
-                1: JSX_ATTRIBUTE_INITIALIZER_CLAUSE@105..112
-                  0: EQ@105..106 "=" [] []
-                  1: JSX_EXPRESSION_ATTRIBUTE_VALUE@106..112
-                    0: L_CURLY@106..107 "{" [] []
-                    1: JS_BOOLEAN_LITERAL_EXPRESSION@107..111
-                      0: TRUE_KW@107..111 "true" [] []
-                    2: R_CURLY@111..112 "}" [] []
-            4: R_ANGLE@112..113 ">" [] []
-          1: JSX_CHILD_LIST@113..113
-          2: JSX_CLOSING_ELEMENT@113..119
-            0: L_ANGLE@113..114 "<" [] []
-            1: SLASH@114..115 "/" [] []
-            2: JSX_NAME@115..118
-              0: JSX_IDENT@115..118 "out" [] []
-            3: R_ANGLE@118..119 ">" [] []
-      1: SEMICOLON@119..120 ";" [] []
-    6: JS_EXPRESSION_STATEMENT@120..152
-      0: JSX_TAG_EXPRESSION@120..151
-        0: JSX_ELEMENT@120..151
-          0: JSX_OPENING_ELEMENT@120..146
-            0: L_ANGLE@120..122 "<" [Newline("\n")] []
-            1: JSX_NAME@122..125
-              0: JSX_IDENT@122..125 "in" [] [Whitespace(" ")]
+              1: JSX_ATTRIBUTE@88..102
+                0: JSX_NAME@88..95
+                  0: JSX_IDENT@88..95 "extends" [] []
+                1: JSX_ATTRIBUTE_INITIALIZER_CLAUSE@95..102
+                  0: EQ@95..96 "=" [] []
+                  1: JSX_EXPRESSION_ATTRIBUTE_VALUE@96..102
+                    0: L_CURLY@96..97 "{" [] []
+                    1: JS_BOOLEAN_LITERAL_EXPRESSION@97..101
+                      0: TRUE_KW@97..101 "true" [] []
+                    2: R_CURLY@101..102 "}" [] []
+            4: R_ANGLE@102..103 ">" [] []
+          1: JSX_CHILD_LIST@103..103
+          2: JSX_CLOSING_ELEMENT@103..108
+            0: L_ANGLE@103..104 "<" [] []
+            1: SLASH@104..105 "/" [] []
+            2: JSX_NAME@105..107
+              0: JSX_IDENT@105..107 "in" [] []
+            3: R_ANGLE@107..108 ">" [] []
+      1: SEMICOLON@108..109 ";" [] []
+    6: JS_EXPRESSION_STATEMENT@109..139
+      0: JSX_TAG_EXPRESSION@109..138
+        0: JSX_ELEMENT@109..138
+          0: JSX_OPENING_ELEMENT@109..132
+            0: L_ANGLE@109..111 "<" [Newline("\n")] []
+            1: JSX_NAME@111..115
+              0: JSX_IDENT@111..115 "out" [] [Whitespace(" ")]
             2: (empty)
-            3: JSX_ATTRIBUTE_LIST@125..145
-              0: JSX_ATTRIBUTE@125..129
-                0: JSX_NAME@125..129
-                  0: JSX_IDENT@125..129 "out" [] [Whitespace(" ")]
+            3: JSX_ATTRIBUTE_LIST@115..131
+              0: JSX_ATTRIBUTE@115..117
+                0: JSX_NAME@115..117
+                  0: JSX_IDENT@115..117 "T" [] [Whitespace(" ")]
                 1: (empty)
-              1: JSX_ATTRIBUTE@129..131
-                0: JSX_NAME@129..131
-                  0: JSX_IDENT@129..131 "T" [] [Whitespace(" ")]
+              1: JSX_ATTRIBUTE@117..131
+                0: JSX_NAME@117..124
+                  0: JSX_IDENT@117..124 "extends" [] []
+                1: JSX_ATTRIBUTE_INITIALIZER_CLAUSE@124..131
+                  0: EQ@124..125 "=" [] []
+                  1: JSX_EXPRESSION_ATTRIBUTE_VALUE@125..131
+                    0: L_CURLY@125..126 "{" [] []
+                    1: JS_BOOLEAN_LITERAL_EXPRESSION@126..130
+                      0: TRUE_KW@126..130 "true" [] []
+                    2: R_CURLY@130..131 "}" [] []
+            4: R_ANGLE@131..132 ">" [] []
+          1: JSX_CHILD_LIST@132..132
+          2: JSX_CLOSING_ELEMENT@132..138
+            0: L_ANGLE@132..133 "<" [] []
+            1: SLASH@133..134 "/" [] []
+            2: JSX_NAME@134..137
+              0: JSX_IDENT@134..137 "out" [] []
+            3: R_ANGLE@137..138 ">" [] []
+      1: SEMICOLON@138..139 ";" [] []
+    7: JS_EXPRESSION_STATEMENT@139..171
+      0: JSX_TAG_EXPRESSION@139..170
+        0: JSX_ELEMENT@139..170
+          0: JSX_OPENING_ELEMENT@139..165
+            0: L_ANGLE@139..141 "<" [Newline("\n")] []
+            1: JSX_NAME@141..144
+              0: JSX_IDENT@141..144 "in" [] [Whitespace(" ")]
+            2: (empty)
+            3: JSX_ATTRIBUTE_LIST@144..164
+              0: JSX_ATTRIBUTE@144..148
+                0: JSX_NAME@144..148
+                  0: JSX_IDENT@144..148 "out" [] [Whitespace(" ")]
                 1: (empty)
-              2: JSX_ATTRIBUTE@131..145
-                0: JSX_NAME@131..138
-                  0: JSX_IDENT@131..138 "extends" [] []
-                1: JSX_ATTRIBUTE_INITIALIZER_CLAUSE@138..145
-                  0: EQ@138..139 "=" [] []
-                  1: JSX_EXPRESSION_ATTRIBUTE_VALUE@139..145
-                    0: L_CURLY@139..140 "{" [] []
-                    1: JS_BOOLEAN_LITERAL_EXPRESSION@140..144
-                      0: TRUE_KW@140..144 "true" [] []
-                    2: R_CURLY@144..145 "}" [] []
-            4: R_ANGLE@145..146 ">" [] []
-          1: JSX_CHILD_LIST@146..146
-          2: JSX_CLOSING_ELEMENT@146..151
-            0: L_ANGLE@146..147 "<" [] []
-            1: SLASH@147..148 "/" [] []
-            2: JSX_NAME@148..150
-              0: JSX_IDENT@148..150 "in" [] []
-            3: R_ANGLE@150..151 ">" [] []
-      1: SEMICOLON@151..152 ";" [] []
-  3: EOF@152..153 "" [Newline("\n")] []
+              1: JSX_ATTRIBUTE@148..150
+                0: JSX_NAME@148..150
+                  0: JSX_IDENT@148..150 "T" [] [Whitespace(" ")]
+                1: (empty)
+              2: JSX_ATTRIBUTE@150..164
+                0: JSX_NAME@150..157
+                  0: JSX_IDENT@150..157 "extends" [] []
+                1: JSX_ATTRIBUTE_INITIALIZER_CLAUSE@157..164
+                  0: EQ@157..158 "=" [] []
+                  1: JSX_EXPRESSION_ATTRIBUTE_VALUE@158..164
+                    0: L_CURLY@158..159 "{" [] []
+                    1: JS_BOOLEAN_LITERAL_EXPRESSION@159..163
+                      0: TRUE_KW@159..163 "true" [] []
+                    2: R_CURLY@163..164 "}" [] []
+            4: R_ANGLE@164..165 ">" [] []
+          1: JSX_CHILD_LIST@165..165
+          2: JSX_CLOSING_ELEMENT@165..170
+            0: L_ANGLE@165..166 "<" [] []
+            1: SLASH@166..167 "/" [] []
+            2: JSX_NAME@167..169
+              0: JSX_IDENT@167..169 "in" [] []
+            3: R_ANGLE@169..170 ">" [] []
+      1: SEMICOLON@170..171 ";" [] []
+  3: EOF@171..172 "" [Newline("\n")] []

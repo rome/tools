@@ -13,8 +13,8 @@ use crate::syntax::js_parse_error::{expected_binding, expected_parameter, expect
 use crate::syntax::stmt::{is_semi, parse_block_impl, semi, StatementContext};
 use crate::syntax::typescript::ts_parse_error::ts_only_syntax_error;
 use crate::syntax::typescript::{
-    parse_ts_return_type_annotation, parse_ts_type_annotation, parse_ts_type_parameters,
-    skip_ts_decorators, try_parse, TypeContext,
+    is_nth_at_type_parameter_modifier, parse_ts_return_type_annotation, parse_ts_type_annotation,
+    parse_ts_type_parameters, skip_ts_decorators, try_parse, TypeContext,
 };
 
 use crate::JsSyntaxFeature::TypeScript;
@@ -231,7 +231,7 @@ fn parse_function(p: &mut JsParser, m: Marker, kind: FunctionKind) -> CompletedM
     TypeScript
         .parse_exclusive_syntax(
             p,
-            |p| parse_ts_type_parameters(p, TypeContext::default()),
+            |p| parse_ts_type_parameters(p, TypeContext::default().and_allow_const_modifier(true)),
             |p, marker| {
                 p.err_builder(
                     "type parameters can only be used in TypeScript files",
@@ -411,7 +411,7 @@ fn parse_ambient_function(
     let binding = parse_binding(p);
     let binding_range = p.cur_range();
 
-    parse_ts_type_parameters(p, TypeContext::default()).ok();
+    parse_ts_type_parameters(p, TypeContext::default().and_allow_const_modifier(true)).ok();
     parse_parameter_list(p, ParameterContext::Declaration, SignatureFlags::empty())
         .or_add_diagnostic(p, expected_parameters);
     parse_ts_return_type_annotation(p).ok();
@@ -540,7 +540,7 @@ fn try_parse_parenthesized_arrow_function_head(
     };
 
     if p.at(T![<]) {
-        parse_ts_type_parameters(p, TypeContext::default()).ok();
+        parse_ts_type_parameters(p, TypeContext::default().and_allow_const_modifier(true)).ok();
 
         if ambiguity.is_disallowed() && p.last() != Some(T![>]) {
             return Err(m);
@@ -728,7 +728,11 @@ fn is_parenthesized_arrow_function_expression_impl(
         }
         // potential start of type parameters
         T![<] => {
-            if !is_nth_at_identifier(p, n + 1) {
+            if is_nth_at_type_parameter_modifier(p, n + 1) && !JsSyntaxFeature::Jsx.is_supported(p)
+            {
+                // <const T>...
+                IsParenthesizedArrowFunctionExpression::True
+            } else if !is_nth_at_identifier(p, n + 1) {
                 // <5...
                 IsParenthesizedArrowFunctionExpression::False
             }

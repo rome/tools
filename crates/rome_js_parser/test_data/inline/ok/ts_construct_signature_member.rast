@@ -103,8 +103,7 @@ JsModule {
                             l_angle_token: L_ANGLE@84..85 "<" [] [],
                             items: TsTypeParameterList [
                                 TsTypeParameter {
-                                    in_modifier_token: missing (optional),
-                                    out_modifier_token: missing (optional),
+                                    modifiers: TsTypeParameterModifierList [],
                                     name: TsTypeParameterName {
                                         ident_token: IDENT@85..86 "A" [] [],
                                     },
@@ -113,8 +112,7 @@ JsModule {
                                 },
                                 COMMA@86..88 "," [] [Whitespace(" ")],
                                 TsTypeParameter {
-                                    in_modifier_token: missing (optional),
-                                    out_modifier_token: missing (optional),
+                                    modifiers: TsTypeParameterModifierList [],
                                     name: TsTypeParameterName {
                                         ident_token: IDENT@88..89 "B" [] [],
                                     },
@@ -261,20 +259,18 @@ JsModule {
               0: L_ANGLE@84..85 "<" [] []
               1: TS_TYPE_PARAMETER_LIST@85..89
                 0: TS_TYPE_PARAMETER@85..86
-                  0: (empty)
-                  1: (empty)
-                  2: TS_TYPE_PARAMETER_NAME@85..86
+                  0: TS_TYPE_PARAMETER_MODIFIER_LIST@85..85
+                  1: TS_TYPE_PARAMETER_NAME@85..86
                     0: IDENT@85..86 "A" [] []
+                  2: (empty)
                   3: (empty)
-                  4: (empty)
                 1: COMMA@86..88 "," [] [Whitespace(" ")]
                 2: TS_TYPE_PARAMETER@88..89
-                  0: (empty)
-                  1: (empty)
-                  2: TS_TYPE_PARAMETER_NAME@88..89
+                  0: TS_TYPE_PARAMETER_MODIFIER_LIST@88..88
+                  1: TS_TYPE_PARAMETER_NAME@88..89
                     0: IDENT@88..89 "B" [] []
+                  2: (empty)
                   3: (empty)
-                  4: (empty)
               2: R_ANGLE@89..90 ">" [] []
             2: JS_PARAMETERS@90..102
               0: L_PAREN@90..91 "(" [] []

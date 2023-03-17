@@ -7990,6 +7990,40 @@ pub struct TsConditionalTypeFields {
     pub false_type: SyntaxResult<AnyTsType>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsConstModifier {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsConstModifier {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsConstModifierFields {
+        TsConstModifierFields {
+            modifier_token: self.modifier_token(),
+        }
+    }
+    pub fn modifier_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+}
+#[cfg(feature = "serde")]
+impl Serialize for TsConstModifier {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize))]
+pub struct TsConstModifierFields {
+    pub modifier_token: SyntaxResult<SyntaxToken>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsConstructSignatureTypeMember {
     pub(crate) syntax: SyntaxNode,
 }
@@ -9250,6 +9284,40 @@ impl Serialize for TsImportTypeQualifier {
 pub struct TsImportTypeQualifierFields {
     pub dot_token: SyntaxResult<SyntaxToken>,
     pub right: SyntaxResult<AnyTsName>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsInModifier {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsInModifier {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsInModifierFields {
+        TsInModifierFields {
+            modifier_token: self.modifier_token(),
+        }
+    }
+    pub fn modifier_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+}
+#[cfg(feature = "serde")]
+impl Serialize for TsInModifier {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize))]
+pub struct TsInModifierFields {
+    pub modifier_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsIndexSignatureClassMember {
@@ -10530,6 +10598,40 @@ impl Serialize for TsOptionalTupleTypeElement {
 pub struct TsOptionalTupleTypeElementFields {
     pub ty: SyntaxResult<AnyTsType>,
     pub question_mark_token: SyntaxResult<SyntaxToken>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsOutModifier {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsOutModifier {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsOutModifierFields {
+        TsOutModifierFields {
+            modifier_token: self.modifier_token(),
+        }
+    }
+    pub fn modifier_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+}
+#[cfg(feature = "serde")]
+impl Serialize for TsOutModifier {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize))]
+pub struct TsOutModifierFields {
+    pub modifier_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsOverrideModifier {
@@ -11864,22 +11966,20 @@ impl TsTypeParameter {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> TsTypeParameterFields {
         TsTypeParameterFields {
-            in_modifier_token: self.in_modifier_token(),
-            out_modifier_token: self.out_modifier_token(),
+            modifiers: self.modifiers(),
             name: self.name(),
             constraint: self.constraint(),
             default: self.default(),
         }
     }
-    pub fn in_modifier_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
-    pub fn out_modifier_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
+    pub fn modifiers(&self) -> TsTypeParameterModifierList { support::list(&self.syntax, 0usize) }
     pub fn name(&self) -> SyntaxResult<TsTypeParameterName> {
-        support::required_node(&self.syntax, 2usize)
+        support::required_node(&self.syntax, 1usize)
     }
     pub fn constraint(&self) -> Option<TsTypeConstraintClause> {
-        support::node(&self.syntax, 3usize)
+        support::node(&self.syntax, 2usize)
     }
-    pub fn default(&self) -> Option<TsDefaultTypeClause> { support::node(&self.syntax, 4usize) }
+    pub fn default(&self) -> Option<TsDefaultTypeClause> { support::node(&self.syntax, 3usize) }
 }
 #[cfg(feature = "serde")]
 impl Serialize for TsTypeParameter {
@@ -11892,8 +11992,7 @@ impl Serialize for TsTypeParameter {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsTypeParameterFields {
-    pub in_modifier_token: Option<SyntaxToken>,
-    pub out_modifier_token: Option<SyntaxToken>,
+    pub modifiers: TsTypeParameterModifierList,
     pub name: SyntaxResult<TsTypeParameterName>,
     pub constraint: Option<TsTypeConstraintClause>,
     pub default: Option<TsDefaultTypeClause>,
@@ -14970,6 +15069,33 @@ impl AnyTsTypeMember {
     pub fn as_ts_setter_signature_type_member(&self) -> Option<&TsSetterSignatureTypeMember> {
         match &self {
             AnyTsTypeMember::TsSetterSignatureTypeMember(item) => Some(item),
+            _ => None,
+        }
+    }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+pub enum AnyTsTypeParameterModifier {
+    TsConstModifier(TsConstModifier),
+    TsInModifier(TsInModifier),
+    TsOutModifier(TsOutModifier),
+}
+impl AnyTsTypeParameterModifier {
+    pub fn as_ts_const_modifier(&self) -> Option<&TsConstModifier> {
+        match &self {
+            AnyTsTypeParameterModifier::TsConstModifier(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_in_modifier(&self) -> Option<&TsInModifier> {
+        match &self {
+            AnyTsTypeParameterModifier::TsInModifier(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_out_modifier(&self) -> Option<&TsOutModifier> {
+        match &self {
+            AnyTsTypeParameterModifier::TsOutModifier(item) => Some(item),
             _ => None,
         }
     }
@@ -21524,6 +21650,37 @@ impl From<TsConditionalType> for SyntaxNode {
 impl From<TsConditionalType> for SyntaxElement {
     fn from(n: TsConditionalType) -> SyntaxElement { n.syntax.into() }
 }
+impl AstNode for TsConstModifier {
+    type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(TS_CONST_MODIFIER as u16));
+    fn can_cast(kind: SyntaxKind) -> bool { kind == TS_CONST_MODIFIER }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
+}
+impl std::fmt::Debug for TsConstModifier {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsConstModifier")
+            .field(
+                "modifier_token",
+                &support::DebugSyntaxResult(self.modifier_token()),
+            )
+            .finish()
+    }
+}
+impl From<TsConstModifier> for SyntaxNode {
+    fn from(n: TsConstModifier) -> SyntaxNode { n.syntax }
+}
+impl From<TsConstModifier> for SyntaxElement {
+    fn from(n: TsConstModifier) -> SyntaxElement { n.syntax.into() }
+}
 impl AstNode for TsConstructSignatureTypeMember {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
@@ -22569,6 +22726,37 @@ impl From<TsImportTypeQualifier> for SyntaxNode {
 }
 impl From<TsImportTypeQualifier> for SyntaxElement {
     fn from(n: TsImportTypeQualifier) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for TsInModifier {
+    type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(TS_IN_MODIFIER as u16));
+    fn can_cast(kind: SyntaxKind) -> bool { kind == TS_IN_MODIFIER }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
+}
+impl std::fmt::Debug for TsInModifier {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsInModifier")
+            .field(
+                "modifier_token",
+                &support::DebugSyntaxResult(self.modifier_token()),
+            )
+            .finish()
+    }
+}
+impl From<TsInModifier> for SyntaxNode {
+    fn from(n: TsInModifier) -> SyntaxNode { n.syntax }
+}
+impl From<TsInModifier> for SyntaxElement {
+    fn from(n: TsInModifier) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for TsIndexSignatureClassMember {
     type Language = Language;
@@ -23646,6 +23834,37 @@ impl From<TsOptionalTupleTypeElement> for SyntaxNode {
 }
 impl From<TsOptionalTupleTypeElement> for SyntaxElement {
     fn from(n: TsOptionalTupleTypeElement) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for TsOutModifier {
+    type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(TS_OUT_MODIFIER as u16));
+    fn can_cast(kind: SyntaxKind) -> bool { kind == TS_OUT_MODIFIER }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
+}
+impl std::fmt::Debug for TsOutModifier {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsOutModifier")
+            .field(
+                "modifier_token",
+                &support::DebugSyntaxResult(self.modifier_token()),
+            )
+            .finish()
+    }
+}
+impl From<TsOutModifier> for SyntaxNode {
+    fn from(n: TsOutModifier) -> SyntaxNode { n.syntax }
+}
+impl From<TsOutModifier> for SyntaxElement {
+    fn from(n: TsOutModifier) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for TsOverrideModifier {
     type Language = Language;
@@ -24756,14 +24975,7 @@ impl AstNode for TsTypeParameter {
 impl std::fmt::Debug for TsTypeParameter {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("TsTypeParameter")
-            .field(
-                "in_modifier_token",
-                &support::DebugOptionalElement(self.in_modifier_token()),
-            )
-            .field(
-                "out_modifier_token",
-                &support::DebugOptionalElement(self.out_modifier_token()),
-            )
+            .field("modifiers", &self.modifiers())
             .field("name", &support::DebugSyntaxResult(self.name()))
             .field(
                 "constraint",
@@ -32019,6 +32231,79 @@ impl From<AnyTsTypeMember> for SyntaxElement {
         node.into()
     }
 }
+impl From<TsConstModifier> for AnyTsTypeParameterModifier {
+    fn from(node: TsConstModifier) -> AnyTsTypeParameterModifier {
+        AnyTsTypeParameterModifier::TsConstModifier(node)
+    }
+}
+impl From<TsInModifier> for AnyTsTypeParameterModifier {
+    fn from(node: TsInModifier) -> AnyTsTypeParameterModifier {
+        AnyTsTypeParameterModifier::TsInModifier(node)
+    }
+}
+impl From<TsOutModifier> for AnyTsTypeParameterModifier {
+    fn from(node: TsOutModifier) -> AnyTsTypeParameterModifier {
+        AnyTsTypeParameterModifier::TsOutModifier(node)
+    }
+}
+impl AstNode for AnyTsTypeParameterModifier {
+    type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> = TsConstModifier::KIND_SET
+        .union(TsInModifier::KIND_SET)
+        .union(TsOutModifier::KIND_SET);
+    fn can_cast(kind: SyntaxKind) -> bool {
+        matches!(kind, TS_CONST_MODIFIER | TS_IN_MODIFIER | TS_OUT_MODIFIER)
+    }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        let res = match syntax.kind() {
+            TS_CONST_MODIFIER => {
+                AnyTsTypeParameterModifier::TsConstModifier(TsConstModifier { syntax })
+            }
+            TS_IN_MODIFIER => AnyTsTypeParameterModifier::TsInModifier(TsInModifier { syntax }),
+            TS_OUT_MODIFIER => AnyTsTypeParameterModifier::TsOutModifier(TsOutModifier { syntax }),
+            _ => return None,
+        };
+        Some(res)
+    }
+    fn syntax(&self) -> &SyntaxNode {
+        match self {
+            AnyTsTypeParameterModifier::TsConstModifier(it) => &it.syntax,
+            AnyTsTypeParameterModifier::TsInModifier(it) => &it.syntax,
+            AnyTsTypeParameterModifier::TsOutModifier(it) => &it.syntax,
+        }
+    }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            AnyTsTypeParameterModifier::TsConstModifier(it) => it.syntax,
+            AnyTsTypeParameterModifier::TsInModifier(it) => it.syntax,
+            AnyTsTypeParameterModifier::TsOutModifier(it) => it.syntax,
+        }
+    }
+}
+impl std::fmt::Debug for AnyTsTypeParameterModifier {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            AnyTsTypeParameterModifier::TsConstModifier(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsTypeParameterModifier::TsInModifier(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsTypeParameterModifier::TsOutModifier(it) => std::fmt::Debug::fmt(it, f),
+        }
+    }
+}
+impl From<AnyTsTypeParameterModifier> for SyntaxNode {
+    fn from(n: AnyTsTypeParameterModifier) -> SyntaxNode {
+        match n {
+            AnyTsTypeParameterModifier::TsConstModifier(it) => it.into(),
+            AnyTsTypeParameterModifier::TsInModifier(it) => it.into(),
+            AnyTsTypeParameterModifier::TsOutModifier(it) => it.into(),
+        }
+    }
+}
+impl From<AnyTsTypeParameterModifier> for SyntaxElement {
+    fn from(n: AnyTsTypeParameterModifier) -> SyntaxElement {
+        let node: SyntaxNode = n.into();
+        node.into()
+    }
+}
 impl From<JsReferenceIdentifier> for AnyTsTypePredicateParameterName {
     fn from(node: JsReferenceIdentifier) -> AnyTsTypePredicateParameterName {
         AnyTsTypePredicateParameterName::JsReferenceIdentifier(node)
@@ -32477,6 +32762,11 @@ impl std::fmt::Display for AnyTsType {
     }
 }
 impl std::fmt::Display for AnyTsTypeMember {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for AnyTsTypeParameterModifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -33406,6 +33696,11 @@ impl std::fmt::Display for TsConditionalType {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for TsConstModifier {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for TsConstructSignatureTypeMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -33542,6 +33837,11 @@ impl std::fmt::Display for TsImportType {
     }
 }
 impl std::fmt::Display for TsImportTypeQualifier {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for TsInModifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -33687,6 +33987,11 @@ impl std::fmt::Display for TsOptionalPropertyAnnotation {
     }
 }
 impl std::fmt::Display for TsOptionalTupleTypeElement {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for TsOutModifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -36875,6 +37180,75 @@ impl IntoIterator for TsTypeParameterList {
 impl IntoIterator for &TsTypeParameterList {
     type Item = SyntaxResult<TsTypeParameter>;
     type IntoIter = AstSeparatedListNodesIterator<Language, TsTypeParameter>;
+    fn into_iter(self) -> Self::IntoIter { self.iter() }
+}
+#[derive(Clone, Eq, PartialEq, Hash)]
+pub struct TsTypeParameterModifierList {
+    syntax_list: SyntaxList,
+}
+impl TsTypeParameterModifierList {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub unsafe fn new_unchecked(syntax: SyntaxNode) -> Self {
+        Self {
+            syntax_list: syntax.into_list(),
+        }
+    }
+}
+impl AstNode for TsTypeParameterModifierList {
+    type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(TS_TYPE_PARAMETER_MODIFIER_LIST as u16));
+    fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TYPE_PARAMETER_MODIFIER_LIST }
+    fn cast(syntax: SyntaxNode) -> Option<TsTypeParameterModifierList> {
+        if Self::can_cast(syntax.kind()) {
+            Some(TsTypeParameterModifierList {
+                syntax_list: syntax.into_list(),
+            })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
+}
+#[cfg(feature = "serde")]
+impl Serialize for TsTypeParameterModifierList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
+}
+impl AstNodeList for TsTypeParameterModifierList {
+    type Language = Language;
+    type Node = AnyTsTypeParameterModifier;
+    fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
+}
+impl Debug for TsTypeParameterModifierList {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        f.write_str("TsTypeParameterModifierList ")?;
+        f.debug_list().entries(self.iter()).finish()
+    }
+}
+impl IntoIterator for &TsTypeParameterModifierList {
+    type Item = AnyTsTypeParameterModifier;
+    type IntoIter = AstNodeListIterator<Language, AnyTsTypeParameterModifier>;
+    fn into_iter(self) -> Self::IntoIter { self.iter() }
+}
+impl IntoIterator for TsTypeParameterModifierList {
+    type Item = AnyTsTypeParameterModifier;
+    type IntoIter = AstNodeListIterator<Language, AnyTsTypeParameterModifier>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
