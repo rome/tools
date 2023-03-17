@@ -37,7 +37,7 @@
 			]
 		},
 		"organizeImports": {
-			"description": "The configuration of the formatter",
+			"description": "The configuration of the import sorting",
 			"anyOf": [{ "$ref": "#/definitions/OrganizeImports" }, { "type": "null" }]
 		}
 	},
@@ -805,11 +805,17 @@
 		},
 		"OrganizeImports": {
 			"type": "object",
-			"required": ["enabled"],
 			"properties": {
 				"enabled": {
 					"description": "Enables the organization of imports",
+					"default": false,
 					"type": "boolean"
+				},
+				"ignore": {
+					"description": "A list of Unix shell style patterns. The formatter will ignore files/folders that will match these patterns.",
+					"type": ["array", "null"],
+					"items": { "type": "string" },
+					"uniqueItems": true
 				}
 			},
 			"additionalProperties": false

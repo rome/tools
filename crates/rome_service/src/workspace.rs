@@ -109,6 +109,11 @@ impl SupportsFeatureResult {
     pub const fn is_supported(&self) -> bool {
         matches!(self.reason, None)
     }
+
+    /// Whether the feature is not supported, regardless of the reason
+    pub const fn is_not_supported(&self) -> bool {
+        matches!(self.reason, Some(_))
+    }
 }
 
 #[derive(Debug, serde::Serialize, serde::Deserialize, Eq, PartialEq)]

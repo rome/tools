@@ -12,7 +12,7 @@ impl VisitNode<JsonLanguage> for OrganizeImports {
         node: &JsonSyntaxNode,
         diagnostics: &mut Vec<DeserializationDiagnostic>,
     ) -> Option<()> {
-        has_only_known_keys(node, &["enabled"], diagnostics)
+        has_only_known_keys(node, &["enabled", "ignore"], diagnostics)
     }
 
     fn visit_map(
