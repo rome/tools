@@ -1,5 +1,6 @@
 use crate::workspace::{
-    IsPathIgnoredParams, RageParams, RageResult, ServerInfo, SupportsFeatureResult,
+    IsPathIgnoredParams, OrganizeImportsParams, OrganizeImportsResult, RageParams, RageResult,
+    ServerInfo, SupportsFeatureResult,
 };
 use crate::{TransportError, Workspace, WorkspaceError};
 use rome_formatter::Printed;
@@ -181,5 +182,12 @@ where
 
     fn server_info(&self) -> Option<&ServerInfo> {
         self.server_info.as_ref()
+    }
+
+    fn organize_imports(
+        &self,
+        params: OrganizeImportsParams,
+    ) -> Result<OrganizeImportsResult, WorkspaceError> {
+        self.request("rome/organize_imports", params)
     }
 }

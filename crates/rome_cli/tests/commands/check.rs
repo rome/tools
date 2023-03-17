@@ -319,7 +319,7 @@ fn apply_suggested() {
 }
 
 #[test]
-fn apply_suggested_with_error() {
+fn apply_unsafe_with_error() {
     let mut fs = MemoryFileSystem::default();
     let mut console = BufferConsole::default();
 
@@ -378,7 +378,7 @@ function f() { arguments; }
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
-        "apply_suggested_with_error",
+        "apply_unsafe_with_error",
         fs,
         console,
         result,
@@ -1423,15 +1423,18 @@ fn organize_imports() {
     let mut fs = MemoryFileSystem::default();
     let mut console = BufferConsole::default();
 
+    let rome_json = r#"{ "organizeImports": { "enabled": true } }"#;
+
+    let config_path = Path::new("rome.json");
+    fs.insert(config_path.into(), rome_json.as_bytes());
+
     let file_path = Path::new("check.js");
-    let content = r#"
-import { lorem, foom, bar } from "foo";
+    let content = r#"import { lorem, foom, bar } from "foo";
 import * as something from "../something";
-    "#;
-    let expected = r#"
-import * as something from "../something";
+"#;
+    let expected = r#"import * as something from "../something";
 import { bar, foom, lorem } from "foo";
-    "#;
+"#;
     fs.insert(file_path.into(), content.as_bytes());
 
     let result = run_cli(

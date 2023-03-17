@@ -99,6 +99,16 @@ impl SupportsFeatureResult {
             reason: Some(UnsupportedReason::FileNotSupported),
         }
     }
+
+    /// Whether the feature is intentionally disabled
+    pub const fn is_not_enabled(&self) -> bool {
+        matches!(self.reason, Some(UnsupportedReason::FeatureNotEnabled))
+    }
+
+    /// Whether the feature is supported
+    pub const fn is_supported(&self) -> bool {
+        matches!(self.reason, None)
+    }
 }
 
 #[derive(Debug, serde::Serialize, serde::Deserialize, Eq, PartialEq)]
@@ -109,11 +119,18 @@ pub enum UnsupportedReason {
     FileNotSupported,
 }
 
+impl UnsupportedReason {
+    pub const fn is_not_enabled(&self) -> bool {
+        matches!(self, UnsupportedReason::FeatureNotEnabled)
+    }
+}
+
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub enum FeatureName {
     Format,
     Lint,
+    OrganizeImports,
 }
 
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
@@ -316,6 +333,19 @@ pub enum RageEntry {
     Markup(MarkupBuf),
 }
 
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+pub struct OrganizeImportsParams {
+    pub path: RomePath,
+    // pub content: String,
+}
+
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+pub struct OrganizeImportsResult {
+    pub code: Option<String>,
+}
+
 impl RageEntry {
     pub fn section(name: &str) -> Self {
         Self::Section(name.to_string())
@@ -421,6 +451,12 @@ pub trait Workspace: Send + Sync + RefUnwindSafe {
 
     /// Returns information about the server this workspace is connected to or `None` if the workspace isn't connected to a server.
     fn server_info(&self) -> Option<&ServerInfo>;
+
+    /// Applies import sorting
+    fn organize_imports(
+        &self,
+        params: OrganizeImportsParams,
+    ) -> Result<OrganizeImportsResult, WorkspaceError>;
 }
 
 /// Convenience function for constructing a server instance of [Workspace]
@@ -521,6 +557,12 @@ impl<'app, W: Workspace + ?Sized> FileGuard<'app, W> {
         self.workspace.fix_file(FixFileParams {
             path: self.path.clone(),
             fix_file_mode,
+        })
+    }
+
+    pub fn organize_imports(&self) -> Result<OrganizeImportsResult, WorkspaceError> {
+        self.workspace.organize_imports(OrganizeImportsParams {
+            path: self.path.clone(),
         })
     }
 }

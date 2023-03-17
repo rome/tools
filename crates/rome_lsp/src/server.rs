@@ -400,33 +400,6 @@ impl Drop for LSPServer {
 /// Map of active sessions connected to a [ServerFactory].
 type Sessions = Arc<Mutex<HashMap<SessionKey, SessionHandle>>>;
 
-/// Factory data structure responsible for creating [ServerConnection] handles
-/// for each incoming connection accepted by the server
-#[derive(Default)]
-pub struct ServerFactory {
-    /// Synchronisation primitive used to broadcast a shutdown signal to all
-    /// active connections
-    cancellation: Arc<Notify>,
-    /// Optional [Workspace] instance shared between all clients. Currently
-    /// this field is always [None] (meaning each connection will get its own
-    /// workspace) until we figure out how to handle concurrent access to the
-    /// same workspace from multiple client
-    workspace: Option<Arc<dyn Workspace>>,
-
-    /// The sessions of the connected clients indexed by session key.
-    sessions: Sessions,
-
-    /// Session key generator. Stores the key of the next session.
-    next_session_key: AtomicU64,
-
-    /// If this is true the server will broadcast a shutdown signal once the
-    /// last client disconnected
-    stop_on_disconnect: bool,
-    /// This shared flag is set to true once at least one sessions has been
-    /// initialized on this server instance
-    is_initialized: Arc<AtomicBool>,
-}
-
 /// Helper method for wrapping a [Workspace] method in a `custom_method` for
 /// the [LSPServer]
 macro_rules! workspace_method {
@@ -459,6 +432,33 @@ macro_rules! workspace_method {
             },
         );
     };
+}
+
+/// Factory data structure responsible for creating [ServerConnection] handles
+/// for each incoming connection accepted by the server
+#[derive(Default)]
+pub struct ServerFactory {
+    /// Synchronisation primitive used to broadcast a shutdown signal to all
+    /// active connections
+    cancellation: Arc<Notify>,
+    /// Optional [Workspace] instance shared between all clients. Currently
+    /// this field is always [None] (meaning each connection will get its own
+    /// workspace) until we figure out how to handle concurrent access to the
+    /// same workspace from multiple client
+    workspace: Option<Arc<dyn Workspace>>,
+
+    /// The sessions of the connected clients indexed by session key.
+    sessions: Sessions,
+
+    /// Session key generator. Stores the key of the next session.
+    next_session_key: AtomicU64,
+
+    /// If this is true the server will broadcast a shutdown signal once the
+    /// last client disconnected
+    stop_on_disconnect: bool,
+    /// This shared flag is set to true once at least one sessions has been
+    /// initialized on this server instance
+    is_initialized: Arc<AtomicBool>,
 }
 
 impl ServerFactory {
@@ -524,6 +524,7 @@ impl ServerFactory {
         workspace_method!(builder, format_on_type);
         workspace_method!(builder, fix_file);
         workspace_method!(builder, rename);
+        workspace_method!(builder, organize_imports);
 
         let (service, socket) = builder.finish();
         ServerConnection { socket, service }

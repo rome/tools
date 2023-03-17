@@ -118,8 +118,26 @@ impl Execution {
         }
     }
 
+    pub(crate) const fn is_check_apply_unsafe(&self) -> bool {
+        match self.traversal_mode {
+            TraversalMode::Check { fix_file_mode } => {
+                matches!(fix_file_mode, Some(FixFileMode::SafeAndSuggestedFixes))
+            }
+            _ => false,
+        }
+    }
+
     pub(crate) const fn is_format(&self) -> bool {
         matches!(self.traversal_mode, TraversalMode::Format { .. })
+    }
+
+    /// Whether the traversal mode requires write access to files
+    pub(crate) const fn requires_write_access(&self) -> bool {
+        match self.traversal_mode {
+            TraversalMode::Check { fix_file_mode } => fix_file_mode.is_some(),
+            TraversalMode::CI => false,
+            TraversalMode::Format { write, .. } => write,
+        }
     }
 
     pub(crate) fn as_stdin_file(&self) -> Option<&(PathBuf, String)> {

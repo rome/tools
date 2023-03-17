@@ -23,8 +23,14 @@ impl VisitNode<JsonLanguage> for OrganizeImports {
     ) -> Option<()> {
         let (name, value) = self.get_key_and_value(key, value, diagnostics)?;
         let name_text = name.text();
-        if name_text == "enabled" {
-            self.enabled = self.map_to_boolean(&value, name_text, diagnostics)?;
+        match name_text {
+            "enabled" => {
+                self.enabled = self.map_to_boolean(&value, name_text, diagnostics)?;
+            }
+            "ignore" => {
+                self.ignore = self.map_to_index_set_string(&value, name_text, diagnostics);
+            }
+            _ => {}
         }
 
         Some(())
