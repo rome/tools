@@ -76,7 +76,7 @@ impl Default for Configuration {
                 enabled: true,
                 ..LinterConfiguration::default()
             }),
-            organize_imports: Some(OrganizeImports { enabled: false }),
+            organize_imports: Some(OrganizeImports::default()),
             formatter: None,
             javascript: None,
             schema: None,

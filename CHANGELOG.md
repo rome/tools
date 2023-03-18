@@ -22,12 +22,14 @@
 	While this change is a bug fix, this could affect how the `ignore` entries are defined inside a project. We suggest to review them
 	and make sure they still work.
 - `--apply-suggested` is now called `--apply-unsafe`
+- `rome check --apply` and `rome check --apply-unsafe` exits with non-zero code (error code)
+if there are still diagnostics to be addressed.
 
 ##### Other changes
 
-- `rome check` now sorts import statements. This is an experimental feature that needs to be
-	enabled via configuration.
-- Rome now is able to auto discover the configuration file. If Rome doesn't fine a configuration in the
+- `rome check` now checks import statements. This is an experimental feature that needs to be
+	enabled via configuration. Import can be sorted using `rome check --apply-unsafe`
+- Rome is able to auto discover the configuration file. If Rome doesn't fine a configuration in the
 working directory, it will try to find one in the parent directories.
 - Add a new global options called `--config-path`. It tells Rome to try and discover a `rome.json` file
 in the given path.
@@ -35,10 +37,6 @@ in the given path.
 	rome format --config-path=../../other/path/
 	rome check --config-path=../../other/path/
 	```
- - `rome check --apply` and `rome check --apply-unsafe` exit with an error code if some file
-still has error diagnostics. This will happen for rules that don't have code fixes.
- -
-
 
 ### Configuration
 
@@ -51,11 +49,10 @@ still has error diagnostics. This will happen for rules that don't have code fix
 
 ```json
 {
-	"javascript": {
-		"organizeImports": {
-			"enabled": true
-		}
-	}
+  "organizeImports": {
+    "enabled": true,
+    "ignore": ["trickyFile.js"]
+  }
 }
 ```
 - Add `linter.rules.all` and `linter.rules.[group].all`. These options allow to enable or disable **all**
@@ -64,14 +61,14 @@ rules, or all rules for a **given group**. `all` and `recommended` can't be both
 
 ```json
 {
-	"linter": {
-		"rules": {
-			"all": true,
-			"style" : {
-				"all": false
-			}
-		}
-	}
+  "linter": {
+    "rules": {
+      "all": true,
+      "style" : {
+        "all": false
+      }
+    }
+  }
 }
 ```
 
@@ -81,23 +78,27 @@ The previous example will enable all rules and disable all rules that belong to 
 
 ##### Other changes
 
-- Add support to display diagnostics for JSON files
-- Add support to format JSON files
-- Pull diagnostics when parsing a `rome.json` file
+- Add support to display diagnostics for JSON files.
+- Add support to format JSON files.
+- Pull diagnostics when parsing a `rome.json` file.
+- Import sorting is not applied for files that are not supported or ignored.
 
 ### Formatter
 
 - Add support for JSON files
-- Add support for TS 4.7
-- 
+- Add support for TypeScript 4.7
+- Add support for TypeScript 5.0
 
 ### Linter
 
-
+- New rules are promoted, please check [#4239](https://github.com/rome/tools/pull/4239) for more
+details.
+-
 
 ### Parser
 
 - Support for TypeScript 4.7
+- Support for TypeScript 5.0
 
 ### VSCode
 

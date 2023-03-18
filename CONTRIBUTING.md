@@ -76,7 +76,9 @@ If benchmarking the language server, be sure to build with the `--release` flag.
 The VS Code extension can be installed from the [Marketplace](https://marketplace.visualstudio.com/items?itemName=rome.rome) and can be used with a development build of the language server by setting the `"rome.lspBin"` VS Code setting to the path of the binary:
 
 ```json
-	"rome.lspBin": "/path/to/rome/target/debug/rome"
+{
+  "rome.lspBin": "/path/to/rome/target/debug/rome"
+}
 ```
 
 Please note that Windows disallows modifying an executable while it's running,
@@ -146,7 +148,6 @@ pnpm start
 ```
 
 ## Checks
-
 
 - `cargo lint` is a cargo alias that runs [`clippy`](https://github.com/rust-lang/rust-clippy) - rust official linter - under the hood;
 - `cargo format` is a cargo alias that runs [`rust-fmt`](https://github.com/rust-lang/rustfmt) - rust official formatter - under the hood;
@@ -229,23 +230,28 @@ Here's a sample of the headings:
 ```markdown
 ## [Unreleased]
 
-### CLI
-### Configuration
-### Editors
-### Formatter
-### Linter
-### Parser
-### VSCode
-### JavaScript APIs
+## CLI
+## Configuration
+## Editors
+## Formatter
+## Linter
+## Parser
+## VSCode
+## JavaScript APIs
 ```
 
+When you edit a blank section:
 
-If you're editing a blank section:
 - If your PR adds a **breaking change**, create a new heading called `#### BREAKING CHANGES` and add
 bullet point that explains the breaking changes; provide a migration path if possible.
 - If your PR adds a new feature of a fix, create a new heading called `#### Other changes` and
 add a bullet point that explains the fix or the new feature. Make sure that this new heading
 appears after the `#### BREAKING CHANGES` heading.
+
+##### Writing a changelog line
+
+- Use the present tense, e.g. "Add new feature", "Fix edge case"
+- If you fix a bug, please add the link to the issue, e.g. "Fix edge case [#4444]()"
 
 #### Documentation
 
