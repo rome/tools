@@ -264,6 +264,22 @@ How many characters can be written on a single line.
 
 Enables Rome's sort imports.
 
+### `organizeImports.ignore`
+
+
+A list of Unix shell style patterns. Rome ignores files and folders that
+match these patterns.
+
+<CodeBlockHeader filename="rome.json" />
+
+```json
+{
+  "organizeImports": {
+    "enable": true,
+    "ignore": ["scripts/*.js"]
+  }
+}
+```
 > Default: `false`
 
 ## `javascript`
@@ -309,6 +325,19 @@ Example:
     "formatter": {
       "semicolons": "asNeeded"
     }
+  }
+}
+```
+### `javascript.globals`
+
+A list of global names that Rome should ignore (analyzer, linter, etc.)
+
+<CodeBlockHeader filename="rome.json" />
+
+```json
+{
+  "javascript": {
+    "globals": ["$", "_", "externalVariable"]
   }
 }
 ```
