@@ -1,4 +1,4 @@
-import { Distribution, loadModule, WasmModule, wrapError } from "./wasm";
+import { Distribution, WasmModule, loadModule, wrapError } from "./wasm";
 import type {
 	Configuration,
 	Diagnostic,

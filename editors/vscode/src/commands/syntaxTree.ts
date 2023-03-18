@@ -1,24 +1,24 @@
+import { SyntaxTreeParams, syntaxTreeRequest } from "../lsp_requests";
 import { Command, Session } from "../session";
+import { isRomeEditor } from "../utils";
+import { SyntaxTreeDocument } from "./syntaxTreeDocument";
 import {
 	CancellationToken,
-	ProviderResult,
-	Uri,
-	window,
-	TextDocumentContentProvider,
-	workspace,
-	ViewColumn,
 	Disposable,
-	DocumentLinkProvider,
-	TextDocument,
 	DocumentLink,
+	DocumentLinkProvider,
 	EventEmitter,
-	TextEditor,
+	ProviderResult,
+	TextDocument,
 	TextDocumentChangeEvent,
+	TextDocumentContentProvider,
+	TextEditor,
+	Uri,
+	ViewColumn,
 	languages,
+	window,
+	workspace,
 } from "vscode";
-import { SyntaxTreeParams, syntaxTreeRequest } from "../lsp_requests";
-import { SyntaxTreeDocument } from "./syntaxTreeDocument";
-import { isRomeEditor } from "../utils";
 
 type FilePath = string;
 

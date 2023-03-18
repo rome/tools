@@ -1,4 +1,4 @@
-import { commands, TextDocument, TextEditor } from "vscode";
+import { TextDocument, TextEditor, commands } from "vscode";
 
 const SUPPORTED_LANGUAGES = new Set(["javascript", "typescript"]);
 
