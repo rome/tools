@@ -6,6 +6,7 @@
 				"format": "cargo rome-cli-dev format --write .",
 				"tsc": "tsc --skipLibCheck",
 				"check": "cargo rome-cli-dev check ./",
+				"check:apply": "cargo rome-cli-dev check ./ --apply-unsafe",
 				"start:playground": "pnpm build:wasm-dev && pnpm start",
 				"build": "pnpm build:wasm && pnpm build:js",
 				"build:js": "astro build",
