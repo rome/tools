@@ -425,6 +425,10 @@ export interface Nursery {
 	 */
 	noNoninteractiveElementToInteractiveRole?: RuleConfiguration;
 	/**
+	 * Enforce that tabIndex is not assigned to non-interactive HTML elements.
+	 */
+	noNoninteractiveTabindex?: RuleConfiguration;
+	/**
 	 * Disallow reassigning function parameters.
 	 */
 	noParameterAssign?: RuleConfiguration;
@@ -944,8 +948,13 @@ export type Category =
 	| "lint/nursery/noUselessCatch"
 	| "lint/nursery/noParameterAssign"
 	| "lint/nursery/noNamespace"
+<<<<<<< HEAD
 	| "lint/nursery/noConfusingArrow"
 	| "lint/nursery/noRedeclare"
+=======
+	| "lint/nursery/noNoninteractiveTabindex"
+	| "lint/nursery/noRedeclaration"
+>>>>>>> e910953dca (feat(rome_js_analyze): noNoninteractiveTabindex)
 	| "lint/nursery/useNamespaceKeyword"
 	| "lint/nursery/noRedundantRoles"
 	| "lint/performance/noDelete"

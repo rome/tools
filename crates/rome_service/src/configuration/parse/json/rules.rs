@@ -928,6 +928,7 @@ impl VisitNode<JsonLanguage> for Nursery {
                 "noInvalidConstructorSuper",
                 "noNamespace",
                 "noNoninteractiveElementToInteractiveRole",
+                "noNoninteractiveTabindex",
                 "noParameterAssign",
                 "noParameterProperties",
                 "noPrototypeBuiltins",
@@ -1275,6 +1276,24 @@ impl VisitNode<JsonLanguage> for Nursery {
                     let mut configuration = RuleConfiguration::default();
                     self.map_to_object(&value, name_text, &mut configuration, diagnostics)?;
                     self.no_noninteractive_element_to_interactive_role = Some(configuration);
+                }
+                _ => {
+                    diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
+                        "object or string",
+                        value.range(),
+                    ));
+                }
+            },
+            "noNoninteractiveTabindex" => match value {
+                AnyJsonValue::JsonStringValue(_) => {
+                    let mut configuration = RuleConfiguration::default();
+                    self.map_to_known_string(&value, name_text, &mut configuration, diagnostics)?;
+                    self.no_noninteractive_tabindex = Some(configuration);
+                }
+                AnyJsonValue::JsonObjectValue(_) => {
+                    let mut configuration = RuleConfiguration::default();
+                    self.map_to_object(&value, name_text, &mut configuration, diagnostics)?;
+                    self.no_noninteractive_tabindex = Some(configuration);
                 }
                 _ => {
                     diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
