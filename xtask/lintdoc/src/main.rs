@@ -243,13 +243,15 @@ fn parse_documentation(
                 // re-generating the language ID from the source type
                 write!(content, "```")?;
                 if !meta.is_empty() {
-                    match test.source_type.language() {
-                        Language::JavaScript => write!(content, "js")?,
-                        Language::TypeScript { .. } => write!(content, "ts")?,
-                    }
-                    match test.source_type.variant() {
-                        LanguageVariant::Standard => {}
-                        LanguageVariant::Jsx => write!(content, "x")?,
+                    if let BlockType::Js(source_type) = test.block_type {
+                        match source_type.language() {
+                            Language::JavaScript => write!(content, "js")?,
+                            Language::TypeScript { .. } => write!(content, "ts")?,
+                        }
+                        match source_type.variant() {
+                            LanguageVariant::Standard => {}
+                            LanguageVariant::Jsx => write!(content, "x")?,
+                        }
                     }
                 }
                 writeln!(content)?;
@@ -398,8 +400,13 @@ fn parse_documentation(
     Ok(summary)
 }
 
+enum BlockType {
+    Js(SourceType),
+    Json,
+}
+
 struct CodeBlockTest {
-    source_type: SourceType,
+    block_type: BlockType,
     expect_diagnostic: bool,
 }
 
@@ -415,7 +422,7 @@ impl FromStr for CodeBlockTest {
             .filter(|token| !token.is_empty());
 
         let mut test = CodeBlockTest {
-            source_type: SourceType::default(),
+            block_type: BlockType::Js(SourceType::default()),
             expect_diagnostic: false,
         };
 
@@ -423,24 +430,30 @@ impl FromStr for CodeBlockTest {
             match token {
                 // Determine the language, using the same list of extensions as `compute_source_type_from_path_or_extension`
                 "cjs" => {
-                    test.source_type = SourceType::js_module().with_module_kind(ModuleKind::Script);
+                    test.block_type =
+                        BlockType::Js(SourceType::js_module().with_module_kind(ModuleKind::Script));
                 }
                 "js" | "mjs" | "jsx" => {
-                    test.source_type = SourceType::jsx();
+                    test.block_type = BlockType::Js(SourceType::jsx());
                 }
                 "ts" | "mts" => {
-                    test.source_type = SourceType::ts();
+                    test.block_type = BlockType::Js(SourceType::ts());
                 }
                 "cts" => {
-                    test.source_type = SourceType::ts().with_module_kind(ModuleKind::Script);
+                    test.block_type =
+                        BlockType::Js(SourceType::ts().with_module_kind(ModuleKind::Script));
                 }
                 "tsx" => {
-                    test.source_type = SourceType::tsx();
+                    test.block_type = BlockType::Js(SourceType::tsx());
                 }
 
                 // Other attributes
                 "expect_diagnostic" => {
                     test.expect_diagnostic = true;
+                }
+
+                "json" => {
+                    test.block_type = BlockType::Json;
                 }
 
                 _ => {
@@ -519,68 +532,84 @@ fn assert_lint(
         Ok(())
     };
 
-    let parse = rome_js_parser::parse(code, test.source_type);
+    match test.block_type {
+        BlockType::Js(source_type) => {
+            let parse = rome_js_parser::parse(code, source_type);
 
-    if parse.has_errors() {
-        for diag in parse.into_diagnostics() {
-            let error = diag
-                .with_file_path(file.clone())
-                .with_file_source_code(code);
-            write_diagnostic(code, error)?;
-        }
-    } else {
-        let root = parse.tree();
-
-        let settings = WorkspaceSettings::default();
-
-        let rule_filter = RuleFilter::Rule(group, rule);
-        let filter = AnalysisFilter {
-            enabled_rules: Some(slice::from_ref(&rule_filter)),
-            ..AnalysisFilter::default()
-        };
-
-        let options = AnalyzerOptions::default();
-        let (_, diagnostics) = analyze(&root, filter, &options, |signal| {
-            if let Some(mut diag) = signal.diagnostic() {
-                let category = diag.category().expect("linter diagnostic has no code");
-                let severity = settings.get_severity_from_rule_code(category).expect(
-                    "If you see this error, it means you need to run cargo codegen-configuration",
-                );
-
-                for action in signal.actions() {
-                    if !action.is_suppression() {
-                        diag = diag.add_code_suggestion(action.into());
-                    }
+            if parse.has_errors() {
+                for diag in parse.into_diagnostics() {
+                    let error = diag
+                        .with_file_path(file.clone())
+                        .with_file_source_code(code);
+                    write_diagnostic(code, error)?;
                 }
+            } else {
+                let root = parse.tree();
 
-                let error = diag
-                    .with_severity(severity)
-                    .with_file_path(file.clone())
-                    .with_file_source_code(code);
-                let res = write_diagnostic(code, error);
+                let settings = WorkspaceSettings::default();
 
-                // Abort the analysis on error
-                if let Err(err) = res {
-                    return ControlFlow::Break(err);
+                let rule_filter = RuleFilter::Rule(group, rule);
+                let filter = AnalysisFilter {
+                    enabled_rules: Some(slice::from_ref(&rule_filter)),
+                    ..AnalysisFilter::default()
+                };
+
+                let options = AnalyzerOptions::default();
+                let (_, diagnostics) = analyze(&root, filter, &options, |signal| {
+                    if let Some(mut diag) = signal.diagnostic() {
+                        let category = diag.category().expect("linter diagnostic has no code");
+                        let severity = settings.get_severity_from_rule_code(category).expect(
+                            "If you see this error, it means you need to run cargo codegen-configuration",
+                        );
+
+                        for action in signal.actions() {
+                            if !action.is_suppression() {
+                                diag = diag.add_code_suggestion(action.into());
+                            }
+                        }
+
+                        let error = diag
+                            .with_severity(severity)
+                            .with_file_path(file.clone())
+                            .with_file_source_code(code);
+                        let res = write_diagnostic(code, error);
+
+                        // Abort the analysis on error
+                        if let Err(err) = res {
+                            return ControlFlow::Break(err);
+                        }
+                    }
+
+                    ControlFlow::Continue(())
+                });
+
+                // Result is Some(_) if analysis aborted with an error
+                for diagnostic in diagnostics {
+                    write_diagnostic(code, diagnostic)?;
                 }
             }
 
-            ControlFlow::Continue(())
-        });
-
-        // Result is Some(_) if analysis aborted with an error
-        for diagnostic in diagnostics {
-            write_diagnostic(code, diagnostic)?;
+            if test.expect_diagnostic {
+                // Fail the test if the analysis didn't emit any diagnostic
+                ensure!(
+                    diagnostic_count == 1,
+                    "analysis returned no diagnostics.\n code snippet:\n {}",
+                    code
+                );
+            }
         }
-    }
+        BlockType::Json => {
+            let parse = rome_json_parser::parse_json(code);
 
-    if test.expect_diagnostic {
-        // Fail the test if the analysis didn't emit any diagnostic
-        ensure!(
-            diagnostic_count == 1,
-            "analysis returned no diagnostics.\n code snippet:\n {}",
-            code
-        );
+            if parse.has_errors() {
+                for diag in parse.into_diagnostics() {
+                    let error = diag
+                        .with_file_path(file.clone())
+                        .with_file_source_code(code);
+                    write_diagnostic(code, error)?;
+                }
+            }
+        }
     }
 
     Ok(())
