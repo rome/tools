@@ -5,16 +5,15 @@ expression: content
 ## `rome.json`
 
 ```json
-{ "organizeImports": { "enabled": true } }
+{ "organizeImports": { "enabled": true, "ignore": ["check.js"] } }
 ```
 
 ## `check.js`
 
 ```js
-
+import { lorem, foom, bar } from "foo";
 import * as something from "../something";
-import { bar, foom, lorem } from "foo";
-    
+
 ```
 
 # Emitted Messages

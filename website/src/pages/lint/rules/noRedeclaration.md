@@ -35,6 +35,52 @@ var a = 10;
 </code></pre>
 
 ```jsx
+let a = 3;
+let a = 10;
+```
+
+<pre class="language-text"><code class="language-text">nursery/noRedeclaration.js:2:5 <a href="https://docs.rome.tools/lint/rules/noRedeclaration">lint/nursery/noRedeclaration</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Shouldn't redeclare 'a'. Consider to delete it or rename it</span>
+  
+    <strong>1 │ </strong>let a = 3;
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>let a = 10;
+   <strong>   │ </strong>    <strong><span style="color: Tomato;">^</span></strong>
+    <strong>3 │ </strong>
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">'a' is defined here.</span>
+  
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>let a = 3;
+   <strong>   │ </strong>    <strong><span style="color: Tomato;">^</span></strong>
+    <strong>2 │ </strong>let a = 10;
+    <strong>3 │ </strong>
+  
+</code></pre>
+
+```jsx
+function f() {}
+function f() {}
+```
+
+<pre class="language-text"><code class="language-text">nursery/noRedeclaration.js:2:10 <a href="https://docs.rome.tools/lint/rules/noRedeclaration">lint/nursery/noRedeclaration</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Shouldn't redeclare 'f'. Consider to delete it or rename it</span>
+  
+    <strong>1 │ </strong>function f() {}
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>function f() {}
+   <strong>   │ </strong>         <strong><span style="color: Tomato;">^</span></strong>
+    <strong>3 │ </strong>
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">'f' is defined here.</span>
+  
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>function f() {}
+   <strong>   │ </strong>         <strong><span style="color: Tomato;">^</span></strong>
+    <strong>2 │ </strong>function f() {}
+    <strong>3 │ </strong>
+  
+</code></pre>
+
+```jsx
 class C {
     static {
         var c = 3;
@@ -62,6 +108,29 @@ class C {
    <strong>   │ </strong>            <strong><span style="color: Tomato;">^</span></strong>
     <strong>4 │ </strong>        var c = 10;
     <strong>5 │ </strong>    }
+  
+</code></pre>
+
+```ts
+type Person = { name: string; }
+class Person { name: string; }
+```
+
+<pre class="language-text"><code class="language-text">nursery/noRedeclaration.js:2:7 <a href="https://docs.rome.tools/lint/rules/noRedeclaration">lint/nursery/noRedeclaration</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Shouldn't redeclare 'Person'. Consider to delete it or rename it</span>
+  
+    <strong>1 │ </strong>type Person = { name: string; }
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>class Person { name: string; }
+   <strong>   │ </strong>      <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
+    <strong>3 │ </strong>
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">'Person' is defined here.</span>
+  
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>type Person = { name: string; }
+   <strong>   │ </strong>     <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
+    <strong>2 │ </strong>class Person { name: string; }
+    <strong>3 │ </strong>
   
 </code></pre>
 

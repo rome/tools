@@ -27,6 +27,7 @@ impl FileSystem for OsFileSystem {
                 let mut fs_options = fs::File::options();
                 Ok(Box::new(OsFile {
                     inner: options.into_fs_options(&mut fs_options).open(path)?,
+                    version: 0,
                 }))
             })
     }
@@ -44,6 +45,7 @@ impl FileSystem for OsFileSystem {
 
 struct OsFile {
     inner: fs::File,
+    version: i32,
 }
 
 impl File for OsFile {
@@ -65,8 +67,14 @@ impl File for OsFile {
             self.inner.rewind()?;
             // Write the byte slice
             self.inner.write_all(content)?;
+            // new version stored
+            self.version += 1;
             Ok(())
         })
+    }
+
+    fn file_version(&self) -> i32 {
+        self.version
     }
 }
 

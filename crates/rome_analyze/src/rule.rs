@@ -6,7 +6,7 @@ use crate::{
 };
 use rome_console::fmt::Display;
 use rome_console::{markup, MarkupBuf};
-use rome_deserialize::json::{deserialize_from_json, JsonDeserialize, VisitJsonNode};
+use rome_deserialize::json::{deserialize_from_json_str, JsonDeserialize, VisitJsonNode};
 use rome_deserialize::Deserialized;
 use rome_diagnostics::advice::CodeSuggestionAdvice;
 use rome_diagnostics::location::AsSpan;
@@ -244,7 +244,7 @@ impl_group_language!(
 
 pub trait DeserializableRuleOptions: Default + Sized + JsonDeserialize + VisitJsonNode {
     fn from(value: String) -> Deserialized<Self> {
-        deserialize_from_json(&value)
+        deserialize_from_json_str(&value)
     }
 }
 

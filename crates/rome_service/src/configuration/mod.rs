@@ -32,7 +32,7 @@ pub use formatter::{FormatterConfiguration, PlainIndentStyle};
 pub use javascript::{JavascriptConfiguration, JavascriptFormatter};
 pub use linter::{LinterConfiguration, RuleConfiguration, Rules};
 use rome_analyze::{AnalyzerConfiguration, AnalyzerRules};
-use rome_deserialize::json::deserialize_from_json;
+use rome_deserialize::json::deserialize_from_json_str;
 use rome_deserialize::Deserialized;
 use rome_js_analyze::metadata;
 use rome_json_formatter::context::JsonFormatOptions;
@@ -55,7 +55,7 @@ pub struct Configuration {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub formatter: Option<FormatterConfiguration>,
 
-    /// The configuration of the formatter
+    /// The configuration of the import sorting
     #[serde(skip_serializing_if = "Option::is_none")]
     pub organize_imports: Option<OrganizeImports>,
 
@@ -208,7 +208,7 @@ pub fn load_config(
                     );
                 }
 
-                let deserialized = deserialize_from_json::<Configuration>(&buffer)
+                let deserialized = deserialize_from_json_str::<Configuration>(&buffer)
                     .with_file_path(&configuration_path.display().to_string());
                 Ok(Some(deserialized))
             }

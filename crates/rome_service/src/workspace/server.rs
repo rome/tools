@@ -7,7 +7,8 @@ use super::{
 };
 use crate::file_handlers::{Capabilities, FixAllParams, Language, LintParams};
 use crate::workspace::{
-    IsPathIgnoredParams, RageEntry, RageParams, RageResult, ServerInfo, SupportsFeatureResult,
+    IsPathIgnoredParams, OrganizeImportsParams, OrganizeImportsResult, RageEntry, RageParams,
+    RageResult, ServerInfo, SupportsFeatureResult,
 };
 use crate::{
     file_handlers::Features,
@@ -221,6 +222,17 @@ impl Workspace for WorkspaceServer {
                     SupportsFeatureResult { reason: None }
                 }
             }
+            FeatureName::OrganizeImports => {
+                if is_ignored {
+                    SupportsFeatureResult::ignored()
+                } else if capabilities.analyzer.organize_imports.is_none() {
+                    SupportsFeatureResult::file_not_supported()
+                } else if !settings.organize_imports().enabled {
+                    SupportsFeatureResult::disabled()
+                } else {
+                    SupportsFeatureResult { reason: None }
+                }
+            }
         };
         Ok(result)
     }
@@ -246,6 +258,14 @@ impl Workspace for WorkspaceServer {
                 settings
                     .as_ref()
                     .linter
+                    .ignored_files
+                    .matches_path(params.rome_path.as_path())
+                    || is_ignored_by_file_config
+            }
+            FeatureName::OrganizeImports => {
+                settings
+                    .as_ref()
+                    .organize_imports
                     .ignored_files
                     .matches_path(params.rome_path.as_path())
                     || is_ignored_by_file_config
@@ -382,6 +402,7 @@ impl Workspace for WorkspaceServer {
                 rules,
                 settings: self.settings(),
                 max_diagnostics: params.max_diagnostics,
+                path: &params.path,
             });
 
             (
@@ -519,5 +540,21 @@ impl Workspace for WorkspaceServer {
 
     fn server_info(&self) -> Option<&ServerInfo> {
         None
+    }
+
+    fn organize_imports(
+        &self,
+        params: OrganizeImportsParams,
+    ) -> Result<OrganizeImportsResult, WorkspaceError> {
+        let capabilities = self.get_capabilities(&params.path);
+        let organize_imports = capabilities
+            .analyzer
+            .organize_imports
+            .ok_or_else(self.build_capability_error(&params.path))?;
+
+        let parse = self.get_parse(params.path, None)?;
+        let result = organize_imports(parse)?;
+
+        Ok(result)
     }
 }

@@ -2,7 +2,7 @@
 source: crates/rome_service/tests/spec_tests.rs
 expression: javascript_formatter_quote_properties.json
 ---
-javascript_formatter_quote_properties.json:4:23 configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+javascript_formatter_quote_properties.json:4:23 deserialize ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Found an unknown value `wrong`
   

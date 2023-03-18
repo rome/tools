@@ -35,7 +35,7 @@ declare_rule! {{
     ///
     /// Add a link to the corresponding ESLint rule (if any):
     ///
-    /// Source: https://eslint.org/docs/latest/rules/<rule-name>
+    /// Source: https://eslint.org/docs/latest/rules/rule-name
     ///
     /// ## Examples
     ///

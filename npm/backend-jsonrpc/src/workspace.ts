@@ -4,7 +4,7 @@ export interface SupportsFeatureParams {
 	feature: FeatureName;
 	path: RomePath;
 }
-export type FeatureName = "Format" | "Lint";
+export type FeatureName = "Format" | "Lint" | "OrganizeImports";
 export interface RomePath {
 	path: string;
 }
@@ -43,7 +43,7 @@ export interface Configuration {
 	 */
 	linter?: LinterConfiguration;
 	/**
-	 * The configuration of the formatter
+	 * The configuration of the import sorting
 	 */
 	organizeImports?: OrganizeImports;
 }
@@ -111,7 +111,11 @@ export interface OrganizeImports {
 	/**
 	 * Enables the organization of imports
 	 */
-	enabled: boolean;
+	enabled?: boolean;
+	/**
+	 * A list of Unix shell style patterns. The formatter will ignore files/folders that will match these patterns.
+	 */
+	ignore?: string[];
 }
 export type PlainIndentStyle = "tab" | "space";
 /**
@@ -978,6 +982,9 @@ export type Category =
 	| "lint/suspicious/noDuplicateObjectKeys"
 	| "files/missingHandler"
 	| "format"
+	| "configuration"
+	| "organizeImports"
+	| "deserialize"
 	| "internalError/io"
 	| "internalError/fs"
 	| "internalError/panic"
@@ -993,13 +1000,11 @@ export type Category =
 	| "lint/security"
 	| "lint/style"
 	| "lint/suspicious"
-	| "lint/configuration"
 	| "suppressions/parse"
 	| "suppressions/unknownGroup"
 	| "suppressions/unknownRule"
 	| "suppressions/unused"
 	| "suppressions/deprecatedSyntax"
-	| "configuration"
 	| "args/fileNotFound"
 	| "flags/invalid"
 	| "semanticTests";
@@ -1180,7 +1185,7 @@ export interface FixFileParams {
 /**
  * Which fixes should be applied during the analyzing phase
  */
-export type FixFileMode = "SafeFixes" | "SafeAndSuggestedFixes";
+export type FixFileMode = "SafeFixes" | "SafeAndUnsafeFixes";
 export interface FixFileResult {
 	/**
 	 * List of all the code actions applied to the file

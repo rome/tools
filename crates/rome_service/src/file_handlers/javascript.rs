@@ -4,6 +4,7 @@ use super::{
 };
 use crate::configuration::to_analyzer_configuration;
 use crate::file_handlers::{is_diagnostic_error, FixAllParams, Language as LanguageId};
+use crate::workspace::OrganizeImportsResult;
 use crate::{
     settings::{FormatSettings, Language, LanguageSettings, LanguagesSettings, SettingsHandle},
     workspace::{
@@ -111,6 +112,7 @@ impl ExtensionHandler for JsFileHandler {
                 code_actions: Some(code_actions),
                 fix_all: Some(fix_all),
                 rename: Some(rename),
+                organize_imports: Some(organize_imports),
             },
             formatter: FormatterCapabilities {
                 format: Some(format),
@@ -367,28 +369,19 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, WorkspaceError> {
     let mut tree: AnyJsRoot = parse.tree();
     let mut actions = Vec::new();
 
-    let mut enabled_rules: Option<Vec<RuleFilter>> = if let Some(rules) = rules {
+    let enabled_rules: Option<Vec<RuleFilter>> = if let Some(rules) = rules {
         let enabled: IndexSet<RuleFilter> = rules.as_enabled_rules();
         Some(enabled.into_iter().collect())
     } else {
         None
     };
 
-    let mut filter = AnalysisFilter::default();
-    match &mut enabled_rules {
-        Some(rules) => {
-            if settings.as_ref().analyzer.organize_imports_enabled {
-                rules.push(RuleFilter::Rule("correctness", "organizeImports"));
-            }
-
-            filter.enabled_rules = Some(rules.as_slice());
-            filter.categories =
-                RuleCategories::SYNTAX | RuleCategories::LINT | RuleCategories::ACTION;
-        }
-        _ => {
-            filter.categories = RuleCategories::SYNTAX | RuleCategories::LINT;
-        }
+    let mut filter = match &enabled_rules {
+        Some(rules) => AnalysisFilter::from_enabled_rules(Some(rules.as_slice())),
+        _ => AnalysisFilter::default(),
     };
+
+    filter.categories = RuleCategories::SYNTAX | RuleCategories::LINT;
 
     let mut skipped_suggested_fixes = 0;
     let mut errors: u16 = 0;
@@ -419,7 +412,7 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, WorkspaceError> {
                             return ControlFlow::Break(action);
                         }
                     }
-                    FixFileMode::SafeAndSuggestedFixes => {
+                    FixFileMode::SafeAndUnsafeFixes => {
                         if matches!(
                             action.applicability,
                             Applicability::Always | Applicability::MaybeIncorrect
@@ -575,6 +568,48 @@ fn rename(
         Err(WorkspaceError::RenameError(
             RenameError::CannotFindDeclaration(new_name),
         ))
+    }
+}
+
+fn organize_imports(parse: AnyParse) -> Result<OrganizeImportsResult, WorkspaceError> {
+    let mut tree: AnyJsRoot = parse.tree();
+
+    let filter = AnalysisFilter {
+        enabled_rules: Some(&[RuleFilter::Rule("correctness", "organizeImports")]),
+        categories: RuleCategories::ACTION,
+        ..AnalysisFilter::default()
+    };
+
+    let (action, _) = analyze(&tree, filter, &AnalyzerOptions::default(), |signal| {
+        for action in signal.actions() {
+            if action.is_suppression() {
+                continue;
+            }
+
+            return ControlFlow::Break(action);
+        }
+        ControlFlow::Continue(())
+    });
+
+    if let Some(action) = action {
+        tree = match AnyJsRoot::cast(action.mutation.commit()) {
+            Some(tree) => tree,
+            None => {
+                return Err(WorkspaceError::RuleError(
+                    RuleError::ReplacedRootWithNonRootError {
+                        rule_name: action
+                            .rule_name
+                            .map(|(group, rule)| (Cow::Borrowed(group), Cow::Borrowed(rule))),
+                    },
+                ))
+            }
+        };
+
+        Ok(OrganizeImportsResult {
+            code: Some(tree.syntax().to_string()),
+        })
+    } else {
+        Ok(OrganizeImportsResult { code: None })
     }
 }
 

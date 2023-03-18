@@ -35,10 +35,17 @@ pub(crate) fn code_actions(
     let rome_path = session.file_path(&url)?;
 
     let unsupported_lint = &session.workspace.supports_feature(SupportsFeatureParams {
-        path: rome_path,
+        path: rome_path.clone(),
         feature: FeatureName::Lint,
     })?;
-    if unsupported_lint.reason.is_some() {
+
+    let unsupported_organize_imports =
+        &session.workspace.supports_feature(SupportsFeatureParams {
+            path: rome_path,
+            feature: FeatureName::OrganizeImports,
+        })?;
+
+    if unsupported_lint.is_not_supported() && unsupported_organize_imports.is_not_supported() {
         return Ok(Some(Vec::new()));
     }
 
@@ -87,6 +94,11 @@ pub(crate) fn code_actions(
         .actions
         .into_iter()
         .filter_map(|action| {
+            if action.category.matches("source.organizeImports.rome")
+                && unsupported_organize_imports.is_not_supported()
+            {
+                return None;
+            }
             // Remove actions that do not match the categories requested by the
             // language client
             let matches_filters = filters.iter().any(|filter| action.category.matches(filter));

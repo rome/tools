@@ -1,0 +1,58 @@
+---
+source: crates/rome_cli/tests/snap_test.rs
+expression: content
+---
+## `rome.json`
+
+```json
+{ "organizeImports": { "enabled": true } }
+```
+
+## `check.js`
+
+```js
+import { lorem, foom, bar } from "foo";
+import * as something from "../something";
+
+```
+
+# Termination Message
+
+```block
+internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Some errors were emitted while applying fixes
+  
+
+
+```
+
+# Emitted Messages
+
+```block
+check.js organizeImports ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Import statements could be sorted:
+  
+    1   │ - import·{·lorem,·foom,·bar·}·from·"foo";
+    2   │ - import·*·as·something·from·"../something";
+      1 │ + import·*·as·something·from·"../something";
+      2 │ + import·{·bar,·foom,·lorem·}·from·"foo";
+    3 3 │   
+  
+
+```
+
+```block
+check.js internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Fixes applied to the file, but there a still diagnostics to address.
+  
+
+```
+
+```block
+Fixed 1 file(s) in <TIME>
+```
+
+

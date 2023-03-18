@@ -2,7 +2,7 @@
 source: crates/rome_service/tests/spec_tests.rs
 expression: javascript_formatter_trailing_comma.json
 ---
-javascript_formatter_trailing_comma.json:4:21 configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+javascript_formatter_trailing_comma.json:4:21 deserialize ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Found an unknown value `wrong`
   

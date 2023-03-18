@@ -7,11 +7,14 @@ use crate::file_handlers::{DebugCapabilities, Language as LanguageId};
 use crate::settings::{
     FormatSettings, Language, LanguageSettings, LanguagesSettings, SettingsHandle,
 };
-use crate::workspace::{FixFileResult, GetSyntaxTreeResult, PullActionsResult};
-use crate::{Rules, WorkspaceError};
+use crate::workspace::{
+    FixFileResult, GetSyntaxTreeResult, OrganizeImportsResult, PullActionsResult,
+};
+use crate::{Configuration, Rules, WorkspaceError};
+use rome_deserialize::json::deserialize_from_json_ast;
 use rome_diagnostics::{Diagnostic, Severity};
 use rome_formatter::{FormatError, Printed};
-use rome_fs::RomePath;
+use rome_fs::{RomePath, CONFIG_NAME};
 use rome_json_formatter::context::JsonFormatOptions;
 use rome_json_formatter::format_node;
 use rome_json_syntax::{JsonLanguage, JsonRoot, JsonSyntaxNode};
@@ -69,6 +72,7 @@ impl ExtensionHandler for JsonFileHandler {
                 code_actions: Some(code_actions),
                 rename: None,
                 fix_all: Some(fix_all),
+                organize_imports: Some(organize_imports),
             },
             formatter: FormatterCapabilities {
                 format: Some(format),
@@ -176,7 +180,21 @@ fn format_on_type(
 }
 
 fn lint(params: LintParams) -> LintResults {
-    let diagnostics = params.parse.into_diagnostics();
+    let root: JsonRoot = params.parse.tree();
+    let mut diagnostics = params.parse.into_diagnostics();
+
+    // if we're parsing the `rome.json` file, we deserialize it, so we can emit diagnostics for
+    // malformed configuration
+    if params.path.ends_with(CONFIG_NAME) {
+        let deserialized = deserialize_from_json_ast::<Configuration>(root);
+        diagnostics.extend(
+            deserialized
+                .into_diagnostics()
+                .into_iter()
+                .map(rome_diagnostics::serde::Diagnostic::new)
+                .collect::<Vec<_>>(),
+        );
+    }
 
     let diagnostic_count = diagnostics.len() as u64;
     let errors = diagnostics
@@ -212,4 +230,8 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, WorkspaceError> {
         skipped_suggested_fixes: 0,
         code: tree.syntax().to_string(),
     })
+}
+
+fn organize_imports(_: AnyParse) -> Result<OrganizeImportsResult, WorkspaceError> {
+    Ok(OrganizeImportsResult { code: None })
 }

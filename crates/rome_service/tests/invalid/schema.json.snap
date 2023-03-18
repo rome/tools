@@ -2,7 +2,7 @@
 source: crates/rome_service/tests/spec_tests.rs
 expression: schema.json
 ---
-schema.json:2:13 configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+schema.json:2:13 deserialize ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × The value of key $schema is incorrect. Expected string
   

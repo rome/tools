@@ -150,6 +150,7 @@ impl FileSystem for MemoryFileSystem {
             inner,
             can_read: options.read,
             can_write: options.write,
+            version: 0,
         }))
     }
 
@@ -166,6 +167,7 @@ struct MemoryFile {
     inner: ArcMutexGuard<RawMutex, Vec<u8>>,
     can_read: bool,
     can_write: bool,
+    version: i32,
 }
 
 impl File for MemoryFile {
@@ -197,7 +199,13 @@ impl File for MemoryFile {
         self.inner.resize(content.len(), 0);
         // Copy the new content into the memory buffer
         self.inner.copy_from_slice(content);
+        // we increase its version
+        self.version += 1;
         Ok(())
+    }
+
+    fn file_version(&self) -> i32 {
+        self.version
     }
 }
 

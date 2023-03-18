@@ -2,7 +2,7 @@
 source: crates/rome_service/tests/spec_tests.rs
 expression: files_ignore_incorrect_value.json
 ---
-files_ignore_incorrect_value.json:3:25 configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+files_ignore_incorrect_value.json:3:25 deserialize ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Incorrect type, expected a string
   

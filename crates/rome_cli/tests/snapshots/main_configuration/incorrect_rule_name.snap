@@ -38,7 +38,7 @@ Found errors in the configuration file, Rome will use its defaults for the secti
 ```
 
 ```block
-rome.json:6:13 configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+rome.json:6:13 deserialize ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Found an unknown key `foo_rule`
   

@@ -2,7 +2,7 @@
 source: crates/rome_service/tests/spec_tests.rs
 expression: files_extraneous_field.json
 ---
-files_extraneous_field.json:3:3 configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+files_extraneous_field.json:3:3 deserialize ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Found an unknown key `foo`
   

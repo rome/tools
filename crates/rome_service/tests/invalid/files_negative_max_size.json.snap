@@ -2,7 +2,7 @@
 source: crates/rome_service/tests/spec_tests.rs
 expression: files_negative_max_size.json
 ---
-files_negative_max_size.json:3:14 configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+files_negative_max_size.json:3:14 deserialize ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × invalid digit found in string
   

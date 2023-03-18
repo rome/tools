@@ -42,6 +42,9 @@ pub trait File {
     /// This will write to the associated memory buffer, as well as flush the
     /// new content to the disk if this is a physical file
     fn set_content(&mut self, content: &[u8]) -> io::Result<()>;
+
+    /// Returns the version of the current file
+    fn file_version(&self) -> i32;
 }
 
 /// This struct is a "mirror" of [std::fs::FileOptions].

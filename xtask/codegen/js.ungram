@@ -649,6 +649,9 @@ TsReadonlyModifier = modifier: 'readonly'
 TsAbstractModifier = modifier: 'abstract'
 TsOverrideModifier = modifier: 'override'
 TsAccessibilityModifier = modifier_token: ('private' | 'protected' | 'public')
+TsConstModifier = modifier: 'const'
+TsInModifier = modifier: 'in'
+TsOutModifier = modifier: 'out'
 
 JsStaticInitializationBlockClassMember =
 	'static'
@@ -1919,11 +1922,17 @@ TsTypeParameterList = (TsTypeParameter (',' TsTypeParameter)* ','?)
 // type A<B extends string = "1"> = { b: B }
 //        ^^^^^^^^^^^^^^^^^^^^^^
 TsTypeParameter =
-	in_modifier: 'in' ?
-	out_modifier: 'out'?
+	modifiers: TsTypeParameterModifierList
 	name: TsTypeParameterName
 	constraint: TsTypeConstraintClause?
 	default: TsDefaultTypeClause?
+
+TsTypeParameterModifierList = AnyTsTypeParameterModifier*
+
+AnyTsTypeParameterModifier =
+	TsConstModifier
+	| TsInModifier
+	| TsOutModifier
 
 TsTypeParameterName = 'ident'
 

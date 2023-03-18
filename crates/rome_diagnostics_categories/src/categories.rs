@@ -165,6 +165,9 @@ define_categories! {
     // General categories
     "files/missingHandler",
     "format",
+    "configuration",
+    "organizeImports",
+    "deserialize",
     "internalError/io",
     "internalError/fs",
     "internalError/panic",
@@ -183,7 +186,6 @@ define_categories! {
     "lint/security",
     "lint/style",
     "lint/suspicious",
-    "lint/configuration",
 
     // Suppression comments
     "suppressions/parse",
@@ -192,7 +194,7 @@ define_categories! {
     "suppressions/unused",
     "suppressions/deprecatedSyntax",
 
-    "configuration",
+
 
     // Used in tests and examples
     "args/fileNotFound",

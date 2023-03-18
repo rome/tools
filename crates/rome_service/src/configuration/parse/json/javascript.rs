@@ -172,4 +172,13 @@ impl VisitNode<JsonLanguage> for PlainSemicolons {
 }
 
 impl VisitJsonNode for JavascriptOrganizeImports {}
-impl VisitNode<JsonLanguage> for JavascriptOrganizeImports {}
+impl VisitNode<JsonLanguage> for JavascriptOrganizeImports {
+    fn visit_map(
+        &mut self,
+        _key: &JsonSyntaxNode,
+        _value: &JsonSyntaxNode,
+        _diagnostics: &mut Vec<DeserializationDiagnostic>,
+    ) -> Option<()> {
+        Some(())
+    }
+}

@@ -3902,6 +3902,14 @@ impl TsConditionalType {
         )
     }
 }
+impl TsConstModifier {
+    pub fn with_modifier_token(self, element: SyntaxToken) -> Self {
+        Self::unwrap_cast(
+            self.syntax
+                .splice_slots(0usize..=0usize, once(Some(element.into()))),
+        )
+    }
+}
 impl TsConstructSignatureTypeMember {
     pub fn with_new_token(self, element: SyntaxToken) -> Self {
         Self::unwrap_cast(
@@ -4570,6 +4578,14 @@ impl TsImportTypeQualifier {
         )
     }
 }
+impl TsInModifier {
+    pub fn with_modifier_token(self, element: SyntaxToken) -> Self {
+        Self::unwrap_cast(
+            self.syntax
+                .splice_slots(0usize..=0usize, once(Some(element.into()))),
+        )
+    }
+}
 impl TsIndexSignatureClassMember {
     pub fn with_modifiers(self, element: TsIndexSignatureModifierList) -> Self {
         Self::unwrap_cast(
@@ -5228,6 +5244,14 @@ impl TsOptionalTupleTypeElement {
         )
     }
 }
+impl TsOutModifier {
+    pub fn with_modifier_token(self, element: SyntaxToken) -> Self {
+        Self::unwrap_cast(
+            self.syntax
+                .splice_slots(0usize..=0usize, once(Some(element.into()))),
+        )
+    }
+}
 impl TsOverrideModifier {
     pub fn with_modifier_token(self, element: SyntaxToken) -> Self {
         Self::unwrap_cast(
@@ -5830,33 +5854,27 @@ impl TsTypeOperatorType {
     }
 }
 impl TsTypeParameter {
-    pub fn with_in_modifier_token(self, element: Option<SyntaxToken>) -> Self {
+    pub fn with_modifiers(self, element: TsTypeParameterModifierList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(element.map(|element| element.into()))),
-        )
-    }
-    pub fn with_out_modifier_token(self, element: Option<SyntaxToken>) -> Self {
-        Self::unwrap_cast(
-            self.syntax
-                .splice_slots(1usize..=1usize, once(element.map(|element| element.into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_name(self, element: TsTypeParameterName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_constraint(self, element: Option<TsTypeConstraintClause>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
-            3usize..=3usize,
+            2usize..=2usize,
             once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_default(self, element: Option<TsDefaultTypeClause>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
-            4usize..=4usize,
+            3usize..=3usize,
             once(element.map(|element| element.into_syntax().into())),
         ))
     }
