@@ -3,8 +3,9 @@ use wasm_bindgen::prelude::*;
 
 use rome_service::workspace::{
     self, ChangeFileParams, CloseFileParams, FixFileParams, FormatFileParams, FormatOnTypeParams,
-    FormatRangeParams, GetControlFlowGraphParams, GetFormatterIRParams, GetSyntaxTreeParams,
-    PullActionsParams, PullDiagnosticsParams, RenameParams, UpdateSettingsParams,
+    FormatRangeParams, GetControlFlowGraphParams, GetFileContentParams, GetFormatterIRParams,
+    GetSyntaxTreeParams, PullActionsParams, PullDiagnosticsParams, RenameParams,
+    UpdateSettingsParams,
 };
 use rome_service::workspace::{OpenFileParams, SupportsFeatureParams};
 
@@ -60,6 +61,13 @@ impl Workspace {
         let params: OpenFileParams =
             serde_wasm_bindgen::from_value(params.into()).map_err(into_error)?;
         self.inner.open_file(params).map_err(into_error)
+    }
+
+    #[wasm_bindgen(js_name = getFileContent)]
+    pub fn get_file_content(&self, params: IGetFileContentParams) -> Result<String, Error> {
+        let params: GetFileContentParams =
+            serde_wasm_bindgen::from_value(params.into()).map_err(into_error)?;
+        self.inner.get_file_content(params).map_err(into_error)
     }
 
     #[wasm_bindgen(js_name = getSyntaxTree)]

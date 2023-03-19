@@ -1,8 +1,8 @@
 mod capabilities;
+mod converters;
 mod documents;
 mod extension_settings;
 mod handlers;
-mod line_index;
 mod requests;
 mod server;
 mod session;

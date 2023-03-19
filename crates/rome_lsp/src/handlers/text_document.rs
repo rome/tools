@@ -1,11 +1,12 @@
-use std::ops::Range;
-
 use anyhow::Result;
-use rome_service::workspace::{ChangeFileParams, CloseFileParams, Language, OpenFileParams};
+use rome_service::workspace::{
+    ChangeFileParams, CloseFileParams, GetFileContentParams, Language, OpenFileParams,
+};
 use tower_lsp::lsp_types;
 use tracing::{error, field};
 
-use crate::{documents::Document, session::Session, utils};
+use crate::utils::apply_document_changes;
+use crate::{documents::Document, session::Session};
 
 /// Handler for `textDocument/didOpen` LSP notification
 #[tracing::instrument(level = "debug", skip(session), err)]
@@ -47,35 +48,28 @@ pub(crate) async fn did_change(
     let version = params.text_document.version;
 
     let rome_path = session.file_path(&url)?;
-    let mut doc = session.document(&url)?;
 
-    tracing::trace!("old document: {:?}", doc.text());
+    let old_text = session.workspace.get_file_content(GetFileContentParams {
+        path: rome_path.clone(),
+    })?;
+    tracing::trace!("old document: {:?}", old_text);
+    tracing::trace!("content changes: {:?}", params.content_changes);
 
-    for change in params.content_changes {
-        match change.range {
-            Some(range) => {
-                let text_range = utils::text_range(&doc.line_index, range)?;
-                let range = Range::<usize>::from(text_range);
-                tracing::trace!("replace range {range:?} with {:?}", change.text);
-                doc.replace_range(text_range, &change.text)?;
-            }
-            None => {
-                tracing::trace!("replace content {:?}", change.text);
-                doc = Document::new(version, change.text);
-            }
-        }
-    }
+    let text = apply_document_changes(
+        session.position_encoding(),
+        old_text,
+        params.content_changes,
+    );
 
-    tracing::trace!("new document: {:?}", doc.text());
+    tracing::trace!("new document: {:?}", text);
+
+    session.insert_document(url.clone(), Document::new(version, &text));
 
     session.workspace.change_file(ChangeFileParams {
         path: rome_path,
         version,
-        content: doc.text().into(),
+        content: text,
     })?;
-
-    doc.version = version;
-    session.insert_document(url.clone(), doc);
 
     if let Err(err) = session.update_diagnostics(url).await {
         error!("Failed to update diagnostics: {}", err);
