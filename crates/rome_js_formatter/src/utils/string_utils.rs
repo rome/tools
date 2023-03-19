@@ -246,7 +246,7 @@ impl<'token> LiteralStringNormaliser<'token> {
 
         let mut has_seen_number = false;
         text_to_check.chars().enumerate().all(|(index, c)| {
-            if index == 0 && c.is_numeric() {
+            if index == 0 && c.is_ascii_digit() {
                 // We can't remove quotes if the member is octal literals.
                 if c == '0' && text_to_check.len() > 1 {
                     return false;

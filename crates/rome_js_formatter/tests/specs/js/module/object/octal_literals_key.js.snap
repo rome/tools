@@ -8,7 +8,8 @@ info: js/module/object/octal_literals_key.js
 ```js
 const x = {
   8: 'yay',
-  '0': 'yay',
+  01: 'one',
+  '0': 'zero',
   '010': 'oh no',
 };
 
@@ -33,7 +34,8 @@ Semicolons: Always
 ```js
 const x = {
 	8: "yay",
-	0: "yay",
+	01: "one",
+	0: "zero",
 	"010": "oh no",
 };
 ```
