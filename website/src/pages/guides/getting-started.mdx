@@ -24,12 +24,14 @@ The fastest way to download Rome is to use `npm` or your preferred package manag
 Run the following commands in a directory with a `package.json` file to install Rome.
 
 <PackageManagerCommand
-  npm="install --save-dev rome"
-  pnpm="add --save-dev rome"
-  yarn="add --dev rome"
+  npm="install --save-dev --save-exact rome"
+  pnpm="add --save-dev --save-exact rome"
+  yarn="add --dev --exact rome"
 />
 
 > **Note**: It is also possible to install Rome globally rather than locally. However, this is not recommended.
+
+It's **highly recommended** to not use range operators when installing Rome. Check the [versioning page](/internals/versioning/) for more info.
 
 You can now run Rome with:
 

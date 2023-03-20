@@ -81,7 +81,7 @@ The previous example will enable all rules and disable all rules that belong to 
 - Add support to display diagnostics for JSON files.
 - Add support to format JSON files.
 - Pull diagnostics when parsing a `rome.json` file.
-- Import sorting is not applied for files that are not supported or ignored.
+- Imports sorting is not applied for files that are not supported or ignored.
 
 ### Formatter
 
