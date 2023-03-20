@@ -263,9 +263,9 @@ impl<'token> LiteralStringNormaliser<'token> {
 
             let is_eligible_character = if has_seen_number {
                 // as we've seen a number, now eligible characters can only contain numbers
-                c.is_numeric()
+                c.is_ascii_digit()
             } else {
-                c.is_alphanumeric()
+                c.is_alphabetic() || c.is_ascii_digit()
             };
             is_eligible_character || matches!(c, '_' | '$')
         })

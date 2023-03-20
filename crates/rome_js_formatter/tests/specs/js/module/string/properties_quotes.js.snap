@@ -110,8 +110,8 @@ let { "_$_$_%": test } = value;
 let { "0197": test, "3n": test, "3p": test, p9: test } = value;
 
 const x = {
-	¾¾¾¾: "test1",
-	①: "test2",
+	"¾¾¾¾": "test1",
+	"①": "test2",
 };
 ```
 
@@ -168,8 +168,8 @@ let { '_$_$_%': test } = value;
 let { '0197': test, '3n': test, '3p': test, p9: test } = value;
 
 const x = {
-	¾¾¾¾: 'test1',
-	①: 'test2',
+	'¾¾¾¾': 'test1',
+	'①': 'test2',
 };
 ```
 
