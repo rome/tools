@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: js/module/string/properties_quotes.js
+info: js/module/string/properties_quotes.js
 ---
 
 # Input
@@ -45,6 +44,11 @@ let { "_$_ff$_morning_not_quotes": test, "_$_ff$_morning_yes_quotes_@": test } =
 let { "_$_$_%": test } = value;
 
 let { "0197": test, "3n": test, "3p": test, "p9": test } = value;
+
+const x = {
+    '¾¾¾¾': 'test1',
+    '①': 'test2',
+};
 
 ```
 
@@ -103,7 +107,12 @@ let { _$_ff$_morning_not_quotes: test, "_$_ff$_morning_yes_quotes_@": test } =
 
 let { "_$_$_%": test } = value;
 
-let { 0197: test, "3n": test, "3p": test, p9: test } = value;
+let { "0197": test, "3n": test, "3p": test, p9: test } = value;
+
+const x = {
+	"¾¾¾¾": "test1",
+	"①": "test2",
+};
 ```
 
 ## Output 2
@@ -156,7 +165,12 @@ let { _$_ff$_morning_not_quotes: test, '_$_ff$_morning_yes_quotes_@': test } =
 
 let { '_$_$_%': test } = value;
 
-let { 0197: test, '3n': test, '3p': test, p9: test } = value;
+let { '0197': test, '3n': test, '3p': test, p9: test } = value;
+
+const x = {
+	'¾¾¾¾': 'test1',
+	'①': 'test2',
+};
 ```
 
 ## Output 3
@@ -210,6 +224,11 @@ let { "_$_ff$_morning_not_quotes": test, "_$_ff$_morning_yes_quotes_@": test } =
 let { "_$_$_%": test } = value;
 
 let { "0197": test, "3n": test, "3p": test, "p9": test } = value;
+
+const x = {
+	"¾¾¾¾": "test1",
+	"①": "test2",
+};
 ```
 
 
