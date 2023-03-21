@@ -832,7 +832,7 @@ impl<'a> AriaRoles {
         &self,
         element: &str,
         // To generate `attributes`, you can use `rome_js_analyze::aria_services::AriaServices::extract_defined_attributes`
-        attributes: HashMap<String, Vec<String>>,
+        attributes: &HashMap<String, Vec<String>>,
     ) -> Option<&'static dyn AriaRoleDefinition> {
         let result = match element {
             "article" => &ArticleRole as &dyn AriaRoleDefinition,

@@ -40,8 +40,8 @@ impl AriaServices {
         languages()
     }
 
-    /// Extracts defined attributes as HashMap (key: attribute name, value: attribute values).
-    pub fn extract_defined_attributes(
+    /// Extracts attributes as HashMap (key: attribute name, value: attribute values).
+    pub fn extract_attributes(
         &self,
         attribute_list: &JsxAttributeList,
     ) -> Option<HashMap<String, Vec<String>>> {
