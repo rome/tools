@@ -52,7 +52,7 @@ impl AriaServices {
                 let name = name.to_string().to_lowercase();
                 // handle name only attribute e.g. `<img aria-hidden alt="photo" />`
                 let Some(initializer) = attr.initializer() else {
-                    defined_attributes.entry(name).or_insert(vec!["".to_string()]);
+                    defined_attributes.entry(name).or_insert(vec!["true".to_string()]);
                     continue
                 };
                 let initializer = initializer.value().ok()?;
