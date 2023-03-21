@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 99
+assertion_line: 91
 expression: noUnnecessaryContinue.js
 ---
 # Input
@@ -79,6 +79,15 @@ loop: for (let i = 0; i < 10; i++) {
 	}
 }
 
+for (const x of []) {
+	if (x) {
+		// before
+		continue; // statement
+		// after
+	} else {
+		doSomeStuff();
+	}
+}
 ```
 
 # Diagnostics
@@ -236,6 +245,32 @@ noUnnecessaryContinue.js:28:2 lint/correctness/noUnnecessaryContinue  FIXABLE  �
     28    │ - → continue·test2;
     29 28 │   } while (true);
     30 29 │   // valid
+  
+
+```
+
+```
+noUnnecessaryContinue.js:78:3 lint/correctness/noUnnecessaryContinue  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unnecessary continue statement
+  
+    76 │ 	if (x) {
+    77 │ 		// before
+  > 78 │ 		continue; // statement
+       │ 		^^^^^^^^^
+    79 │ 		// after
+    80 │ 	} else {
+  
+  i Suggested fix: Delete the unnecessary continue statement
+  
+    75 75 │   for (const x of []) {
+    76 76 │   	if (x) {
+    77    │ - → → //·before
+    78    │ - → → continue;·//·statement
+    79    │ - → → //·after
+       77 │ + → → //·after
+    80 78 │   	} else {
+    81 79 │   		doSomeStuff();
   
 
 ```
