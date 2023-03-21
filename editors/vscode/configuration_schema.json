@@ -766,6 +766,13 @@
 						{ "type": "null" }
 					]
 				},
+				"useAwait": {
+					"description": "Disallow async functions that have no await.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"useCamelCase": {
 					"description": "Enforce camel case naming convention.",
 					"anyOf": [

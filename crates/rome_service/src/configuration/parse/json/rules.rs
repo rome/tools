@@ -951,6 +951,7 @@ impl VisitNode<JsonLanguage> for Nursery {
                 "noWith",
                 "useAriaPropTypes",
                 "useAriaPropsForRole",
+                "useAwait",
                 "useCamelCase",
                 "useExhaustiveDependencies",
                 "useHookAtTopLevel",
@@ -1692,6 +1693,24 @@ impl VisitNode<JsonLanguage> for Nursery {
                     let mut configuration = RuleConfiguration::default();
                     self.map_to_object(&value, name_text, &mut configuration, diagnostics)?;
                     self.use_aria_props_for_role = Some(configuration);
+                }
+                _ => {
+                    diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
+                        "object or string",
+                        value.range(),
+                    ));
+                }
+            },
+            "useAwait" => match value {
+                AnyJsonValue::JsonStringValue(_) => {
+                    let mut configuration = RuleConfiguration::default();
+                    self.map_to_known_string(&value, name_text, &mut configuration, diagnostics)?;
+                    self.use_await = Some(configuration);
+                }
+                AnyJsonValue::JsonObjectValue(_) => {
+                    let mut configuration = RuleConfiguration::default();
+                    self.map_to_object(&value, name_text, &mut configuration, diagnostics)?;
+                    self.use_await = Some(configuration);
                 }
                 _ => {
                     diagnostics.push(DeserializationDiagnostic::new_incorrect_type(

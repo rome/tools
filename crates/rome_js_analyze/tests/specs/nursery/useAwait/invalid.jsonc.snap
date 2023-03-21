@@ -1,0 +1,196 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 91
+expression: invalid.jsonc
+---
+# Input
+```js
+async function foo() { doSomething() }
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:1 lint/nursery/useAwait ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This async function doesn't use await.
+  
+  > 1 │ async function foo() { doSomething() }
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  
+  i Remove the async modifier or use await.
+  
+
+```
+
+# Input
+```js
+(async function() { doSomething() })
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:2 lint/nursery/useAwait ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This async function doesn't use await.
+  
+  > 1 │ (async function() { doSomething() })
+      │  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  
+  i Remove the async modifier or use await.
+  
+
+```
+
+# Input
+```js
+async () => { doSomething() }
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:1 lint/nursery/useAwait ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This async function doesn't use await.
+  
+  > 1 │ async () => { doSomething() }
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  
+  i Remove the async modifier or use await.
+  
+
+```
+
+# Input
+```js
+async () => doSomething()
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:1 lint/nursery/useAwait ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This async function doesn't use await.
+  
+  > 1 │ async () => doSomething()
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^
+  
+  i Remove the async modifier or use await.
+  
+
+```
+
+# Input
+```js
+({ async foo() { doSomething() } })
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:4 lint/nursery/useAwait ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This async function doesn't use await.
+  
+  > 1 │ ({ async foo() { doSomething() } })
+      │    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  
+  i Remove the async modifier or use await.
+  
+
+```
+
+# Input
+```js
+class A { async foo() { doSomething() } }
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:11 lint/nursery/useAwait ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This async function doesn't use await.
+  
+  > 1 │ class A { async foo() { doSomething() } }
+      │           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  
+  i Remove the async modifier or use await.
+  
+
+```
+
+# Input
+```js
+(class { async foo() { doSomething() } })
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:10 lint/nursery/useAwait ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This async function doesn't use await.
+  
+  > 1 │ (class { async foo() { doSomething() } })
+      │          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  
+  i Remove the async modifier or use await.
+  
+
+```
+
+# Input
+```js
+(class { async ''() { doSomething() } })
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:10 lint/nursery/useAwait ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This async function doesn't use await.
+  
+  > 1 │ (class { async ''() { doSomething() } })
+      │          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  
+  i Remove the async modifier or use await.
+  
+
+```
+
+# Input
+```js
+async function foo() { async () => { await doSomething() } }
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:1 lint/nursery/useAwait ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This async function doesn't use await.
+  
+  > 1 │ async function foo() { async () => { await doSomething() } }
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  
+  i Remove the async modifier or use await.
+  
+
+```
+
+# Input
+```js
+async function foo() { await (async () => { doSomething() }) }
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:31 lint/nursery/useAwait ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This async function doesn't use await.
+  
+  > 1 │ async function foo() { await (async () => { doSomething() }) }
+      │                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  
+  i Remove the async modifier or use await.
+  
+
+```
+
+

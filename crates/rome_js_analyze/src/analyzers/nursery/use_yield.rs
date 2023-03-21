@@ -53,7 +53,7 @@ declare_node_union! {
 }
 
 impl AnyFunctionLike {
-    fn is_generator(&self) -> bool {
+    pub(crate) fn is_generator(&self) -> bool {
         match self {
             AnyFunctionLike::AnyJsFunction(any_js_function) => any_js_function.is_generator(),
             AnyFunctionLike::JsMethodClassMember(method_class_member) => {
@@ -65,7 +65,19 @@ impl AnyFunctionLike {
         }
     }
 
-    fn statements(&self) -> Option<JsStatementList> {
+    pub(crate) fn is_async(&self) -> bool {
+        match self {
+            AnyFunctionLike::AnyJsFunction(any_js_function) => any_js_function.is_async(),
+            AnyFunctionLike::JsMethodClassMember(method_class_member) => {
+                method_class_member.async_token().is_some()
+            }
+            AnyFunctionLike::JsMethodObjectMember(method_obj_member) => {
+                method_obj_member.async_token().is_some()
+            }
+        }
+    }
+
+    pub(crate) fn statements(&self) -> Option<JsStatementList> {
         Some(match self {
             AnyFunctionLike::AnyJsFunction(any_js_function) => any_js_function
                 .body()
