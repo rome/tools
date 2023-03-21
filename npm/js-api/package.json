@@ -1,6 +1,6 @@
 {
   "name": "@rometools/js-api",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "JavaScript APIs for the Rome package",
   "scripts": {
     "tsc": "tsc --noEmit",
