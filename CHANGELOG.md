@@ -91,9 +91,32 @@ The previous example will enable all rules and disable all rules that belong to 
 
 ### Linter
 
-- New rules are promoted, please check [#4239](https://github.com/rome/tools/pull/4239) for more
+New rules are promoted, please check [#4239](https://github.com/rome/tools/pull/4239) for more
 details.
--
+- [lint/correctness/noUnsafeFinally](https://docs.rome.tools/lint/rules/noUnsafeFinally)
+- [lint/correctness/noConstructorReturn](https://docs.rome.tools/lint/rules/noConstructorReturn)
+- [lint/correctness/noPrecisionLoss](https://docs.rome.tools/lint/rules/noPrecisionLoss)
+- [lint/correctness/noVoidTypeReturn](https://docs.rome.tools/lint/rules/noVoidTypeReturn)
+- [lint/correctness/noStringCaseMismatch](https://docs.rome.tools/lint/rules/noStringCaseMismatch)
+- [lint/correctness/noSetterReturn](https://docs.rome.tools/lint/rules/noSetterReturn)
+- [lint/a11y/useHtmlLang](https://docs.rome.tools/lint/rules/useHtmlLang)
+- [lint/a11y/noDistractingElements](https://docs.rome.tools/lint/rules/noDistractingElements)
+- [lint/a11y/noHeaderScope](https://docs.rome.tools/lint/rules/noHeaderScope)
+- [lint/a11y/noAccessKey](https://docs.rome.tools/lint/rules/noAccessKey)
+- [lint/style/useExponentiationOperator](https://docs.rome.tools/lint/rules/useExponentiationOperator)
+- [lint/style/useNumericLiterals](https://docs.rome.tools/lint/rules/useNumericLiterals)
+- [lint/style/useDefaultParameterLast](https://docs.rome.tools/lint/rules/useDefaultParameterLast)
+- [lint/style/useConst](https://docs.rome.tools/lint/rules/useConst)
+- [lint/style/noVar](https://docs.rome.tools/lint/rules/noVar)
+- [lint/style/noNonNullAssertion](https://docs.rome.tools/lint/rules/noNonNullAssertion)
+- [lint/style/useEnumInitializers](https://docs.rome.tools/lint/rules/useEnumInitializers)
+- [lint/suspicious/noEmptyInterface](https://docs.rome.tools/lint/rules/noEmptyInterface)
+- [lint/suspicious/noExtraNonNullAssertion](https://docs.rome.tools/lint/rules/noExtraNonNullAssertion)
+- [lint/suspicious/noRedundantUseStrict](https://docs.rome.tools/lint/rules/noRedundantUseStrict)
+- [lint/suspicious/noConstEnum](https://docs.rome.tools/lint/rules/noConstEnum)
+- [lint/suspicious/useDefaultSwitchClauseLast](https://docs.rome.tools/lint/rules/useDefaultSwitchClauseLast)
+- [lint/suspicious/noDuplicateObjectKeys](https://docs.rome.tools/lint/rules/noDuplicateObjectKeys)
+
 
 ### Parser
 
