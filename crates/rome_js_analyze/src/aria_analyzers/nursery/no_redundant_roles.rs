@@ -2,7 +2,9 @@ use crate::aria_services::Aria;
 use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleDiagnostic};
 use rome_aria::{roles::AriaRoleDefinition, AriaRoles};
 use rome_console::markup;
-use rome_js_syntax::{jsx_ext::AnyJsxElement, AnyJsLiteralExpression, AnyJsxAttributeValue};
+use rome_js_syntax::{
+    jsx_ext::AnyJsxElement, AnyJsLiteralExpression, AnyJsxAttributeValue, JsxAttributeList,
+};
 use rome_rowan::AstNode;
 
 declare_rule! {
@@ -62,25 +64,21 @@ impl Rule for NoRedundantRoles {
         let node = ctx.query();
         let aria_roles = ctx.aria_roles();
 
-        if let AnyJsxElement::JsxOpeningElement(_) = &node {
-            let token = &node.name_value_token()?;
-            let element_name = token.text_trimmed();
+        let (element_name, attributes) = get_element_name_and_attributes(node)?;
+        let attribute_name_to_values = ctx.extract_attributes(&attributes)?;
+        let implicit_role =
+            aria_roles.get_implicit_role(&element_name, &attribute_name_to_values)?;
 
-            let attribute_name_to_values = ctx.extract_attributes(&node.attributes())?;
-            let implicit_role =
-                aria_roles.get_implicit_role(element_name, &attribute_name_to_values)?;
+        let role_attribute = &node.find_attribute_by_name("role")?;
+        let role_attribute_value = role_attribute.initializer()?.value().ok()?;
+        let explicit_role = get_explicit_role(aria_roles, &role_attribute_value)?;
 
-            let role_attribute = &node.find_attribute_by_name("role")?;
-            let role_attribute_value = role_attribute.initializer()?.value().ok()?;
-            let explicit_role = get_explicit_role(aria_roles, &role_attribute_value)?;
-
-            let is_redundant = implicit_role.type_name() == explicit_role.type_name();
-            if is_redundant {
-                return Some(RuleState {
-                    redundant_element: role_attribute_value,
-                    element_name: element_name.to_string(),
-                });
-            }
+        let is_redundant = implicit_role.type_name() == explicit_role.type_name();
+        if is_redundant {
+            return Some(RuleState {
+                redundant_element: role_attribute_value,
+                element_name: element_name.to_string(),
+            });
         }
         None
     }
@@ -89,18 +87,30 @@ impl Rule for NoRedundantRoles {
         let binding = state.redundant_element.inner_text_value().ok()??;
         let role_attribute = binding.text();
         let element = state.element_name.to_string();
-        Some(
-            RuleDiagnostic::new(
-                rule_category!(),
-                state.redundant_element.range(),
-                markup! {
-                    "Using the role attribute '"{role_attribute}"' on the '"{element}"' element is redundant."
-                },
-            )
-            .note(markup! {
-                ""
-            }),
-        )
+        Some(RuleDiagnostic::new(
+            rule_category!(),
+            state.redundant_element.range(),
+            markup! {
+                "Using the role attribute '"{role_attribute}"' on the '"{element}"' element is redundant."
+            },
+        ))
+    }
+}
+
+fn get_element_name_and_attributes(node: &AnyJsxElement) -> Option<(String, JsxAttributeList)> {
+    match node {
+        AnyJsxElement::JsxOpeningElement(elem) => {
+            let token = elem.name().ok()?;
+            let element_name = token.as_jsx_name()?.value_token().ok()?;
+            let trimmed_element_name = element_name.text_trimmed().to_string();
+            Some((trimmed_element_name, elem.attributes()))
+        }
+        AnyJsxElement::JsxSelfClosingElement(elem) => {
+            let token = &elem.name().ok()?;
+            let element_name = token.as_jsx_name()?.value_token().ok()?;
+            let trimmed_element_name = element_name.text_trimmed().to_string();
+            Some((trimmed_element_name, elem.attributes()))
+        }
     }
 }
 
@@ -127,8 +137,8 @@ fn get_explicit_role(
         _ => return None,
     };
 
-    let text = text.to_lowercase();
-    let role = text.split(' ').collect::<Vec<&str>>();
-    let role = role.first()?;
-    aria_roles.get_role(role)
+    // If a role attribute has multiple values, the first valid value (specified role) will be used.
+    // Check: https://www.w3.org/TR/2014/REC-wai-aria-implementation-20140320/#mapping_role
+    let explicit_role = text.split(' ').find_map(|role| aria_roles.get_role(role))?;
+    Some(explicit_role)
 }

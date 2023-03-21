@@ -1,22 +1,34 @@
 <>
-	<a href="#" role="link"></a>
 	<article role="article"></article>
-	<button role="button"></buttton>
-	<html role="document"></html>
-	<h1 role="heading" aria-level="1"></h1>
+	<button role="button"></button>
+	<h1 role="heading" aria-level="1">
+		title
+	</h1>
+	<h1 role="heading">title</h1>
 	<h2 role={`heading`}></h2>
+	<dialog role="dialog"></dialog>
+	<input type="checkbox" role="checkbox" />
+	<figure role="figure"></figure>
 	<form role="form"></form>
-	<input type="checkbox" role="checkbox"></input>
-	<input type="search" role="searchbox"></input>
-	<input type="search" role="combobox" list="keywords"></input>
-	<input type="email" role="textbox"></input>
-	<input type="button" role="button"></input>
-	<img role="img"></img>
-	<img alt="alt" role="img button"></img>
+	{/* Needs to check the ancestors: <td role="gridcell"></td> */}
+	<fieldset role="group"></fieldset>
+	<img src="foo" alt="bar" role="img" />
 	<img alt="" role="presentation"></img>
-	<section aria-labelledby="valid-id" role="region"></section>
+	<a href="#" role="link"></a>
+	<ol role="list"></ol>
+	<ul role="list"></ul>
 	<select name="name" role="combobox"></select>
 	<select name="name" multiple size="4" role="listbox"></select>
-	<datalist role="listbox"></datalist>
+	<li role="listitem"></li>
+	<nav role="navigation"></nav>
+	{/* Needs to check the ancestors: <option role="option"></option> */}
+	<tr role="row"></tr>
+	<tbody role="rowgroup"></tbody>
+	<tfoot role="rowgroup"></tfoot>
+	<thead role="rowgroup"></thead>
+	{/* Needs to check the ancestors: <th scope="row" role="rowheader"></th> */}
+	<input type="search" role="searchbox" />
+	<table role="table"></table>
 	<textarea role="textbox"></textarea>
+	<input type="text" role="textbox" />
 </>;

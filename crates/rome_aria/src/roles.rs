@@ -891,7 +891,8 @@ impl<'a> AriaRoles {
                         Some(_) => &ComboBoxRole as &dyn AriaRoleDefinition,
                         _ => &TextboxRole as &dyn AriaRoleDefinition,
                     },
-                    _ => return None,
+                    "text" => &TextboxRole as &dyn AriaRoleDefinition,
+                    _ => &TextboxRole as &dyn AriaRoleDefinition,
                 }
             }
             "a" | "area" => match attributes.get("href") {
@@ -1047,19 +1048,19 @@ mod test {
     }
 
     #[test]
-    fn should_get_implicit_role() {
+    fn test_get_implicit_role() {
         let aria_roles = AriaRoles {};
 
         // No attributes
         let implicit_role = aria_roles
-            .get_implicit_role("button", HashMap::new())
+            .get_implicit_role("button", &HashMap::new())
             .unwrap();
         assert_eq!(implicit_role.type_name(), "rome_aria::roles::ButtonRole");
 
         // <input type="search">
         let mut attributes = HashMap::new();
         attributes.insert("type".to_string(), vec!["search".to_string()]);
-        let implicit_role = aria_roles.get_implicit_role("input", attributes).unwrap();
+        let implicit_role = aria_roles.get_implicit_role("input", &attributes).unwrap();
         assert_eq!(implicit_role.type_name(), "rome_aria::roles::SearchboxRole");
 
         // <select name="animals" multiple size="4">
@@ -1067,7 +1068,7 @@ mod test {
         attributes.insert("name".to_string(), vec!["animals".to_string()]);
         attributes.insert("multiple".to_string(), vec!["".to_string()]);
         attributes.insert("size".to_string(), vec!["4".to_string()]);
-        let implicit_role = aria_roles.get_implicit_role("select", attributes).unwrap();
+        let implicit_role = aria_roles.get_implicit_role("select", &attributes).unwrap();
         assert_eq!(implicit_role.type_name(), "rome_aria::roles::ListBoxRole");
     }
 }

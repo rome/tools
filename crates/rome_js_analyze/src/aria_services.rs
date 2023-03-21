@@ -40,7 +40,10 @@ impl AriaServices {
         languages()
     }
 
-    /// Extracts attributes as HashMap (key: attribute name, value: attribute values).
+    /// Parses a [JsxAttributeList] and extracts the names and values of each [JsxAttribute],
+    /// returning them as a [HashMap]. Attributes with no specified value are given a value of "true".
+    /// If an attribute has multiple values, each value is stored as a separate item in the
+    /// [HashMap] under the same attribute name. Returns [None] if the parsing fails.
     pub fn extract_attributes(
         &self,
         attribute_list: &JsxAttributeList,
@@ -48,23 +51,73 @@ impl AriaServices {
         let mut defined_attributes: HashMap<String, Vec<String>> = HashMap::new();
         for attribute in attribute_list {
             if let AnyJsxAttribute::JsxAttribute(attr) = attribute {
-                let name = attr.name().ok()?.syntax().text_trimmed();
-                let name = name.to_string().to_lowercase();
-                // handle name only attribute e.g. `<img aria-hidden alt="photo" />`
+                let name = attr.name().ok()?.syntax().text_trimmed().to_string();
+                // handle an attribute without values e.g. `<img aria-hidden />`
                 let Some(initializer) = attr.initializer() else {
                     defined_attributes.entry(name).or_insert(vec!["true".to_string()]);
                     continue
                 };
                 let initializer = initializer.value().ok()?;
                 let text = initializer.inner_text_value().ok()??;
-                let text = text.to_lowercase();
-                // handle multiple values e.g. `<div role="button checkbox">`
+                // handle multiple values e.g. `<div class="wrapper document">`
                 let values = text.split(' ');
                 let values = values.map(|s| s.to_string()).collect::<Vec<String>>();
                 defined_attributes.entry(name).or_insert(values);
             }
         }
         Some(defined_attributes)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::aria_services::AriaServices;
+    use rome_aria::{AriaProperties, AriaRoles};
+    use rome_js_factory::make::{
+        ident, jsx_attribute, jsx_attribute_initializer_clause, jsx_attribute_list, jsx_ident,
+        jsx_name, jsx_string, token,
+    };
+    use rome_js_syntax::{AnyJsxAttribute, AnyJsxAttributeName, AnyJsxAttributeValue, T};
+    use std::sync::Arc;
+
+    #[test]
+    fn test_extract_attributes() {
+        // Assume attributes of `<div class="wrapper document" role="article"></div>`
+        let attribute_list = jsx_attribute_list(vec![
+            AnyJsxAttribute::JsxAttribute(
+                jsx_attribute(AnyJsxAttributeName::JsxName(jsx_name(ident("class"))))
+                    .with_initializer(jsx_attribute_initializer_clause(
+                        token(T![=]),
+                        AnyJsxAttributeValue::JsxString(jsx_string(jsx_ident(
+                            "\"wrapper document\"",
+                        ))),
+                    ))
+                    .build(),
+            ),
+            AnyJsxAttribute::JsxAttribute(
+                jsx_attribute(AnyJsxAttributeName::JsxName(jsx_name(ident("role"))))
+                    .with_initializer(jsx_attribute_initializer_clause(
+                        token(T![=]),
+                        AnyJsxAttributeValue::JsxString(jsx_string(jsx_ident("\"article\""))),
+                    ))
+                    .build(),
+            ),
+        ]);
+        let services = AriaServices {
+            roles: Arc::new(AriaRoles {}),
+            properties: Arc::new(AriaProperties {}),
+        };
+
+        let attribute_name_to_values = services.extract_attributes(&attribute_list).unwrap();
+
+        assert_eq!(
+            attribute_name_to_values.get("class").unwrap(),
+            &vec!["wrapper".to_string(), "document".to_string()]
+        );
+        assert_eq!(
+            attribute_name_to_values.get("role").unwrap(),
+            &vec!["article".to_string()]
+        )
     }
 }
 
