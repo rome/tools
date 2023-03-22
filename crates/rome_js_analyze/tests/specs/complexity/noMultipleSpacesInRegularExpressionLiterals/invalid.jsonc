@@ -1,0 +1,8 @@
+[
+	"/   /;",
+	"/  foo/;",
+	"/foo   /;",
+	"/foo  bar/;",
+	"/foo   bar    baz/;",
+	"/foo [ba]r  b(a|z)/;"
+]

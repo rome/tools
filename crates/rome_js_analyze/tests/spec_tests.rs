@@ -37,11 +37,14 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
 
     let input_file = Path::new(input);
     let file_name = input_file.file_name().and_then(OsStr::to_str).unwrap();
-    let input_code = read_to_string(input_file)
-        .unwrap_or_else(|err| panic!("failed to read {:?}: {:?}", input_file, err));
 
     let (group, rule) = parse_test_path(input_file);
-
+    if rule == "specs" || rule == "suppression" {
+        panic!("the test file must be placed in the {rule}/<group-name>/<rule-name>/ directory");
+    }
+    if group == "specs" || group == "suppression" {
+        panic!("the test file must be placed in the {group}/{rule}/<rule-name>/ directory");
+    }
     if rome_js_analyze::metadata().find_rule(group, rule).is_none() {
         panic!("could not find rule {group}/{rule}");
     }
@@ -55,6 +58,8 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
     let mut snapshot = String::new();
     let extension = input_file.extension().unwrap_or_default();
 
+    let input_code = read_to_string(input_file)
+        .unwrap_or_else(|err| panic!("failed to read {:?}: {:?}", input_file, err));
     let quantity_diagnostics = if let Some(scripts) = scripts_from_json(extension, &input_code) {
         for script in scripts {
             write_analysis_to_snapshot(
@@ -211,25 +216,18 @@ pub(crate) fn write_analysis_to_snapshot(
 }
 
 /// The test runner for the analyzer is currently designed to have a
-/// one-to-one mapping between test case and analyzer rules, so each testing
-/// file will be run through the analyzer with only the rule corresponding
-/// to the file name (or the name of the parent directory if it's not "specs")
-/// enabled, eg. `style/useWhile.js` and `style/useWhile/test.js` will be analyzed with
-/// just the `style/useWhile` rule
+/// one-to-one mapping between test case and analyzer rules.
+/// So each testing file will be run through the analyzer with only the rule
+/// corresponding to the directory name. E.g., `style/useWhile/test.js`
+/// will be analyzed with just the `style/useWhile` rule.
 fn parse_test_path(file: &Path) -> (&str, &str) {
-    let file_stem = file.file_stem().unwrap();
+    let rule_folder = file.parent().unwrap();
+    let rule_name = rule_folder.file_name().unwrap();
 
-    let ancestor_0 = file.parent().unwrap();
-    let name_0 = ancestor_0.file_name().unwrap();
+    let group_folder = rule_folder.parent().unwrap();
+    let group_name = group_folder.file_name().unwrap();
 
-    let ancestor_1 = ancestor_0.parent().unwrap();
-    let name_1 = ancestor_1.file_name().unwrap();
-
-    if matches!(name_1.to_str().unwrap(), "specs" | "suppression") {
-        (name_0.to_str().unwrap(), file_stem.to_str().unwrap())
-    } else {
-        (name_1.to_str().unwrap(), name_0.to_str().unwrap())
-    }
+    (group_name.to_str().unwrap(), rule_name.to_str().unwrap())
 }
 
 fn markup_to_string(markup: Markup) -> String {
