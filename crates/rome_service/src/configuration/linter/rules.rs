@@ -1244,9 +1244,9 @@ pub struct Nursery {
     #[doc = "Disallow direct use of Object.prototype builtins."]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub no_prototype_builtins: Option<RuleConfiguration>,
-    #[doc = "Eliminate variables that have multiple declarations in the same scope."]
+    #[doc = "Disallow variable, function, class, and type redeclarations in the same scope."]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub no_redeclaration: Option<RuleConfiguration>,
+    pub no_redeclare: Option<RuleConfiguration>,
     #[doc = "Enforce img alt prop does not contain the word \"image\", \"picture\", or \"photo\"."]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub no_redundant_alt: Option<RuleConfiguration>,
@@ -1345,7 +1345,7 @@ impl Nursery {
         "noParameterAssign",
         "noParameterProperties",
         "noPrototypeBuiltins",
-        "noRedeclaration",
+        "noRedeclare",
         "noRedundantAlt",
         "noRestrictedGlobals",
         "noSelfAssign",
@@ -1390,7 +1390,7 @@ impl Nursery {
         "noNamespace",
         "noNoninteractiveElementToInteractiveRole",
         "noParameterAssign",
-        "noRedeclaration",
+        "noRedeclare",
         "noRedundantAlt",
         "noSelfAssign",
         "noSelfCompare",
@@ -1602,7 +1602,7 @@ impl Nursery {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[18]));
             }
         }
-        if let Some(rule) = self.no_redeclaration.as_ref() {
+        if let Some(rule) = self.no_redeclare.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[19]));
             }
@@ -1831,7 +1831,7 @@ impl Nursery {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[18]));
             }
         }
-        if let Some(rule) = self.no_redeclaration.as_ref() {
+        if let Some(rule) = self.no_redeclare.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[19]));
             }
@@ -2013,7 +2013,7 @@ impl Nursery {
             "noParameterAssign" => self.no_parameter_assign.as_ref(),
             "noParameterProperties" => self.no_parameter_properties.as_ref(),
             "noPrototypeBuiltins" => self.no_prototype_builtins.as_ref(),
-            "noRedeclaration" => self.no_redeclaration.as_ref(),
+            "noRedeclare" => self.no_redeclare.as_ref(),
             "noRedundantAlt" => self.no_redundant_alt.as_ref(),
             "noRestrictedGlobals" => self.no_restricted_globals.as_ref(),
             "noSelfAssign" => self.no_self_assign.as_ref(),

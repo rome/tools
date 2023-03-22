@@ -930,7 +930,7 @@ impl VisitNode<JsonLanguage> for Nursery {
                 "noParameterAssign",
                 "noParameterProperties",
                 "noPrototypeBuiltins",
-                "noRedeclaration",
+                "noRedeclare",
                 "noRedundantAlt",
                 "noRestrictedGlobals",
                 "noSelfAssign",
@@ -1317,16 +1317,16 @@ impl VisitNode<JsonLanguage> for Nursery {
                     ));
                 }
             },
-            "noRedeclaration" => match value {
+            "noRedeclare" => match value {
                 AnyJsonValue::JsonStringValue(_) => {
                     let mut configuration = RuleConfiguration::default();
                     self.map_to_known_string(&value, name_text, &mut configuration, diagnostics)?;
-                    self.no_redeclaration = Some(configuration);
+                    self.no_redeclare = Some(configuration);
                 }
                 AnyJsonValue::JsonObjectValue(_) => {
                     let mut configuration = RuleConfiguration::default();
                     self.map_to_object(&value, name_text, &mut configuration, diagnostics)?;
-                    self.no_redeclaration = Some(configuration);
+                    self.no_redeclare = Some(configuration);
                 }
                 _ => {
                     diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
