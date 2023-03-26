@@ -209,7 +209,7 @@ export function isJSXFilename(filename: string): boolean {
 }
 
 export function isScriptFilename(filename: string): boolean {
-	return filename.endsWith(".cjs")
+	return filename.endsWith(".cjs");
 }
 
 export function isModuleFilename(filename: string): boolean {
