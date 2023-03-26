@@ -145,6 +145,9 @@ pub struct FixAllParams<'a> {
     pub(crate) rules: Option<&'a Rules>,
     pub(crate) fix_file_mode: FixFileMode,
     pub(crate) settings: SettingsHandle<'a>,
+    /// Whether it should format the code action
+    pub(crate) should_format: bool,
+    pub(crate) rome_path: &'a RomePath,
 }
 
 #[derive(Default)]

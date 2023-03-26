@@ -51,4 +51,5 @@ tikv-jemallocator = "0.5.0"
 insta = { workspace = true }
 tokio = { workspace = true, features = ["io-util"] }
 rome_json_formatter = { path = "../rome_json_formatter" }
+rome_js_formatter = { path = "../rome_js_formatter" }
 rome_json_parser = { path = "../rome_json_parser" }

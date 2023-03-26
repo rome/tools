@@ -1025,7 +1025,7 @@ async fn pull_fix_all() -> Result<()> {
                     character: 0,
                 },
             },
-            new_text: String::from("if(a === 0) {}\nif(a === 0) {}\nif(a === 0) {}"),
+            new_text: String::from("if (a === 0) {\n}\nif (a === 0) {\n}\nif (a === 0) {\n}\n"),
         }],
     );
 

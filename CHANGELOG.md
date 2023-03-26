@@ -10,11 +10,18 @@
 - Fix an issue where formatting of JSX string literals property values were using incorrect quotes [#4054](https://github.com/rome/tools/issues/4054)
 
 ### Linter
+
+#### Other changes
+
+- Code actions are formatted using Rome's formatter. If the formatter is disabled,
+the code action is not formatted.
+
 #### New rules
 - [`noConfusingArrow`](https://docs.rome.tools/lint/rules/noConfusingArrow/)
 - [`noRedundantRoles`](https://docs.rome.tools/lint/rules/noRedundantRoles/)
 - [`noNoninteractiveTabindex`](https://docs.rome.tools/lint/rules/noNoninteractiveTabindex/)
 - [`noAriaUnsupportedElements`](https://docs.rome.tools/lint/rules/noAriaUnsupportedElements/)
+
 ### Parser
 
 - Allow module syntax in `cts` files

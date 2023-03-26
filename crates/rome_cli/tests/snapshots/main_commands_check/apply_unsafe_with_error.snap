@@ -7,7 +7,9 @@ expression: content
 ```js
 const a = 4;
 console.log(a);
-function f() { arguments; }
+function f() {
+	arguments;
+}
 
 ```
 
@@ -16,7 +18,9 @@ function f() { arguments; }
 ```js
 const a = 4;
 console.log(a);
-function f() { arguments; }
+function f() {
+	arguments;
+}
 
 ```
 

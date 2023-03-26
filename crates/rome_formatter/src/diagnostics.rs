@@ -1,4 +1,6 @@
 use crate::prelude::TagKind;
+use rome_console::fmt::Formatter;
+use rome_console::markup;
 use rome_diagnostics::{category, Category, Diagnostic, DiagnosticTags, Location, Severity};
 use rome_rowan::{SyntaxError, TextRange};
 use std::error::Error;
@@ -204,6 +206,7 @@ impl std::fmt::Display for InvalidDocumentError {
 }
 
 #[derive(Debug, Clone, Eq, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum PrintError {
     InvalidDocument(InvalidDocumentError),
 }
@@ -215,6 +218,27 @@ impl std::fmt::Display for PrintError {
         match self {
             PrintError::InvalidDocument(inner) => {
                 std::write!(f, "Invalid document: {inner}")
+            }
+        }
+    }
+}
+
+impl Diagnostic for PrintError {
+    fn category(&self) -> Option<&'static Category> {
+        Some(category!("format"))
+    }
+
+    fn severity(&self) -> Severity {
+        Severity::Error
+    }
+
+    fn message(&self, fmt: &mut Formatter<'_>) -> std::io::Result<()> {
+        match self {
+            PrintError::InvalidDocument(inner) => {
+                let inner = format!("{}", inner);
+                fmt.write_markup(markup! {
+                    "Invalid document: "{{inner}}
+                })
             }
         }
     }

@@ -364,6 +364,8 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, WorkspaceError> {
         rules,
         fix_file_mode,
         settings,
+        should_format,
+        rome_path,
     } = params;
 
     let mut tree: AnyJsRoot = parse.tree();
@@ -451,8 +453,18 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, WorkspaceError> {
                 }
             }
             None => {
+                let code = if should_format {
+                    format_node(
+                        settings.format_options::<JsLanguage>(rome_path),
+                        tree.syntax(),
+                    )?
+                    .print()?
+                    .into_code()
+                } else {
+                    tree.syntax().to_string()
+                };
                 return Ok(FixFileResult {
-                    code: tree.syntax().to_string(),
+                    code,
                     skipped_suggested_fixes,
                     actions,
                     errors: errors.into(),
