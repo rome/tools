@@ -9,7 +9,9 @@ use rome_rowan::AstNode;
 use std::collections::HashMap;
 
 declare_rule! {
-    /// Eliminate variables that have multiple declarations in the same scope.
+    /// Disallow variable, function, class, and type redeclarations in the same scope.
+    ///
+    /// Source: https://typescript-eslint.io/rules/no-redeclare
     ///
     /// ## Examples
     ///
@@ -58,9 +60,9 @@ declare_rule! {
     ///     bar(a: A, b: B) {}
     /// }
     /// ```
-    pub(crate) NoRedeclaration {
+    pub(crate) NoRedeclare {
         version: "12.0.0",
-        name: "noRedeclaration",
+        name: "noRedeclare",
         recommended: true,
     }
 }
@@ -72,7 +74,7 @@ pub(crate) struct Redeclaration {
     redeclaration: TextRange,
 }
 
-impl Rule for NoRedeclaration {
+impl Rule for NoRedeclare {
     type Query = SemanticServices;
     type State = Redeclaration;
     type Signals = Vec<Redeclaration>;
@@ -96,13 +98,13 @@ impl Rule for NoRedeclaration {
             rule_category!(),
             redeclaration,
             markup! {
-               "Shouldn't redeclare '"{ name }"'. Consider to delete it or rename it"
+               "Shouldn't redeclare '"{ name }"'. Consider to delete it or rename it."
             },
         )
         .detail(
             declaration,
             markup! {
-               "'"{ name }"' is defined here."
+               "'"{ name }"' is defined here:"
             },
         );
         Some(diag)

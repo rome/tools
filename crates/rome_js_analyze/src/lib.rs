@@ -189,7 +189,7 @@ mod tests {
 
         let mut error_ranges: Vec<TextRange> = Vec::new();
         let options = AnalyzerOptions::default();
-        let rule_filter = RuleFilter::Rule("nursery", "noRedeclaration");
+        let rule_filter = RuleFilter::Rule("nursery", "noRedeclare");
         analyze(
             &parsed.tree(),
             AnalysisFilter {
