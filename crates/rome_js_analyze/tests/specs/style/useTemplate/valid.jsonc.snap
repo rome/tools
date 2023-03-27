@@ -1,0 +1,16 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: valid.jsonc
+---
+# Input
+```js
+console.log('foo' + 'bar');
+```
+
+# Input
+```js
+console.log(foo() + '
+');
+```
+
+

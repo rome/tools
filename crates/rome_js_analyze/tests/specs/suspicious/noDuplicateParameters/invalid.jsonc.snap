@@ -1,0 +1,214 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: invalid.jsonc
+---
+# Input
+```js
+function b(a, b, b) {}
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:18 lint/suspicious/noDuplicateParameters ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Duplicate parameter name.
+  
+  > 1 │ function b(a, b, b) {}
+      │                  ^
+  
+  i The parameter overrides a preceding parameter by using the same name.
+  
+
+```
+
+# Input
+```js
+function c(a, a, a) {}
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:15 lint/suspicious/noDuplicateParameters ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Duplicate parameter name.
+  
+  > 1 │ function c(a, a, a) {}
+      │               ^
+  
+  i The parameter overrides a preceding parameter by using the same name.
+  
+
+```
+
+# Input
+```js
+const d = (a, b, a) => {};
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:18 lint/suspicious/noDuplicateParameters ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Duplicate parameter name.
+  
+  > 1 │ const d = (a, b, a) => {};
+      │                  ^
+  
+  i The parameter overrides a preceding parameter by using the same name.
+  
+
+```
+
+# Input
+```js
+function e(a, b, a, b) {}
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:18 lint/suspicious/noDuplicateParameters ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Duplicate parameter name.
+  
+  > 1 │ function e(a, b, a, b) {}
+      │                  ^
+  
+  i The parameter overrides a preceding parameter by using the same name.
+  
+
+```
+
+# Input
+```js
+var f = function (a, b, b) {};
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:25 lint/suspicious/noDuplicateParameters ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Duplicate parameter name.
+  
+  > 1 │ var f = function (a, b, b) {};
+      │                         ^
+  
+  i The parameter overrides a preceding parameter by using the same name.
+  
+
+```
+
+# Input
+```js
+class G { ggg(a, a, a) {} }
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:18 lint/suspicious/noDuplicateParameters ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Duplicate parameter name.
+  
+  > 1 │ class G { ggg(a, a, a) {} }
+      │                  ^
+  
+  i The parameter overrides a preceding parameter by using the same name.
+  
+
+```
+
+# Input
+```js
+let objectMethods = { method(a, b, c, c) {} }
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:39 lint/suspicious/noDuplicateParameters ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Duplicate parameter name.
+  
+  > 1 │ let objectMethods = { method(a, b, c, c) {} }
+      │                                       ^
+  
+  i The parameter overrides a preceding parameter by using the same name.
+  
+
+```
+
+# Input
+```js
+var h = function (a, b, a) {};
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:25 lint/suspicious/noDuplicateParameters ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Duplicate parameter name.
+  
+  > 1 │ var h = function (a, b, a) {};
+      │                         ^
+  
+  i The parameter overrides a preceding parameter by using the same name.
+  
+
+```
+
+# Input
+```js
+export default function (a, b, a, a) {}
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:32 lint/suspicious/noDuplicateParameters ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Duplicate parameter name.
+  
+  > 1 │ export default function (a, b, a, a) {}
+      │                                ^
+  
+  i The parameter overrides a preceding parameter by using the same name.
+  
+
+```
+
+# Input
+```js
+function f({ test: res = 3 }, res) {}
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:31 lint/suspicious/noDuplicateParameters ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Duplicate parameter name.
+  
+  > 1 │ function f({ test: res = 3 }, res) {}
+      │                               ^^^
+  
+  i The parameter overrides a preceding parameter by using the same name.
+  
+
+```
+
+# Input
+```js
+export function f2(a, b, c = (a, b, b) => {}) {}
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:37 lint/suspicious/noDuplicateParameters ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Duplicate parameter name.
+  
+  > 1 │ export function f2(a, b, c = (a, b, b) => {}) {}
+      │                                     ^
+  
+  i The parameter overrides a preceding parameter by using the same name.
+  
+
+```
+
+
