@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: jsx/jsx/quotes.js
+info: jsx/jsx/quotes.js
 ---
 
 # Input
@@ -58,27 +57,21 @@ info:
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,11 +1,11 @@
- <div id="&quot;'<>&amp;quot;" />;
+@@ -2,7 +2,7 @@
  <div id='"&#39;<>&amp;quot;' />;
  <div id={"'\"&quot;<>&amp;quot;"} />;
--<div id="123" />;
+ <div id="123" />;
 -<div id='&#39;"' />;
-+<div id='123' />;
-+<div id='&#39;&quot;' />;
++<div id="&#39;&quot;" />;
  <div id={"'\"\\'"} />;
  <div
--  single="foo"
-+  single='foo'
-   single2={"foo"}
-   double="bar"
-   double2={"bar"}
+   single="foo"
 @@ -14,17 +14,17 @@
    doubleSingle="'"
    doubleSingle2={"'"}
    singleEscaped={"'"}
 -  singleEscaped2="'"
-+  singleEscaped2='&apos;'
++  singleEscaped2="&apos;"
    doubleEscaped={'"'}
 -  doubleEscaped2='"'
 +  doubleEscaped2="&quot;"
@@ -105,11 +98,11 @@ info:
 <div id="&quot;'<>&amp;quot;" />;
 <div id='"&#39;<>&amp;quot;' />;
 <div id={"'\"&quot;<>&amp;quot;"} />;
-<div id='123' />;
-<div id='&#39;&quot;' />;
+<div id="123" />;
+<div id="&#39;&quot;" />;
 <div id={"'\"\\'"} />;
 <div
-  single='foo'
+  single="foo"
   single2={"foo"}
   double="bar"
   double2={"bar"}
@@ -118,7 +111,7 @@ info:
   doubleSingle="'"
   doubleSingle2={"'"}
   singleEscaped={"'"}
-  singleEscaped2='&apos;'
+  singleEscaped2="&apos;"
   doubleEscaped={'"'}
   doubleEscaped2="&quot;"
   singleBothEscaped={"'\""}
