@@ -131,7 +131,10 @@ impl LSPServer {
             if let Some(base_path) = self.session.base_path() {
                 CapabilityStatus::Enable(Some(json!(DidChangeWatchedFilesRegistrationOptions {
                     watchers: vec![FileSystemWatcher {
-                        glob_pattern: format!("{}/rome.json", base_path.display()),
+                        glob_pattern: GlobPattern::String(format!(
+                            "{}/rome.json",
+                            base_path.display()
+                        )),
                         kind: Some(WatchKind::all()),
                     }],
                 })))
@@ -210,6 +213,7 @@ impl LanguageServer for LSPServer {
         info!("Starting Rome Language Server...");
         self.is_initialized.store(true, Ordering::Relaxed);
 
+        let server_capabilities = server_capabilities(&params.capabilities);
         self.session.initialize(
             params.capabilities,
             params.client_info.map(|client_info| ClientInformation {
@@ -227,8 +231,9 @@ impl LanguageServer for LSPServer {
             warn!("The Rome Server was initialized with the `workspace_folders` parameter: this is unsupported at the moment, use `root_uri` instead");
         }
 
+        //
         let init = InitializeResult {
-            capabilities: server_capabilities(),
+            capabilities: server_capabilities,
             server_info: Some(ServerInfo {
                 name: String::from(env!("CARGO_PKG_NAME")),
                 version: Some(rome_service::VERSION.to_string()),
@@ -516,6 +521,7 @@ impl ServerFactory {
         workspace_method!(builder, get_control_flow_graph);
         workspace_method!(builder, get_formatter_ir);
         workspace_method!(builder, change_file);
+        workspace_method!(builder, get_file_content);
         workspace_method!(builder, close_file);
         workspace_method!(builder, pull_diagnostics);
         workspace_method!(builder, pull_actions);

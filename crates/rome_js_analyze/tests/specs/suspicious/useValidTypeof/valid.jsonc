@@ -1,0 +1,5 @@
+[
+	"typeof foo === 'string'",
+	"typeof bar == 'undefined'",
+	"typeof bar === typeof qux"
+]

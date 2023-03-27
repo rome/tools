@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 
+use crate::converters::from_proto;
 use crate::{session::Session, utils};
 use anyhow::{Context, Result};
 use tower_lsp::lsp_types::{RenameParams, WorkspaceEdit};
@@ -13,13 +14,18 @@ pub(crate) fn rename(session: &Session, params: RenameParams) -> Result<Option<W
     trace!("Renaming...");
 
     let doc = session.document(&url)?;
-    let cursor_range = utils::offset(&doc.line_index, params.text_document_position.position)
-        .with_context(|| {
-            format!(
-                "failed to access position {:?} in document {url}",
-                params.text_document_position.position
-            )
-        })?;
+    let position_encoding = session.position_encoding();
+    let cursor_range = from_proto::offset(
+        &doc.line_index,
+        params.text_document_position.position,
+        position_encoding,
+    )
+    .with_context(|| {
+        format!(
+            "failed to access position {:?} in document {url}",
+            params.text_document_position.position
+        )
+    })?;
 
     let result = session
         .workspace
@@ -30,7 +36,10 @@ pub(crate) fn rename(session: &Session, params: RenameParams) -> Result<Option<W
         })?;
 
     let mut changes = HashMap::new();
-    changes.insert(url, utils::text_edit(&doc.line_index, result.indels)?);
+    changes.insert(
+        url,
+        utils::text_edit(&doc.line_index, result.indels, position_encoding)?,
+    );
 
     let workspace_edit = WorkspaceEdit {
         changes: Some(changes),

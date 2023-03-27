@@ -615,8 +615,8 @@
 						{ "type": "null" }
 					]
 				},
-				"noRedeclaration": {
-					"description": "Eliminate variables that have multiple declarations in the same scope.",
+				"noRedeclare": {
+					"description": "Disallow variable, function, class, and type redeclarations in the same scope.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }

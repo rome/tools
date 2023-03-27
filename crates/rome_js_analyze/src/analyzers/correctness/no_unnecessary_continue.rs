@@ -2,7 +2,7 @@ use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Ast, Rule
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_syntax::{JsContinueStatement, JsLabeledStatement, JsSyntaxKind, JsSyntaxNode};
-use rome_rowan::{AstNode, BatchMutationExt};
+use rome_rowan::{chain_trivia_pieces, AstNode, BatchMutationExt};
 
 use crate::{utils, JsRuleAction};
 
@@ -101,10 +101,24 @@ impl Rule for NoUnnecessaryContinue {
 
     fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
         let node = ctx.query();
-
+        let continue_token = node.continue_token().ok()?;
         let mut mutation = ctx.root().begin();
+        if continue_token.has_leading_comments() {
+            let prev_token = continue_token.prev_token()?;
+            let leading_trivia = continue_token.leading_trivia().pieces();
+            let skip_count = leading_trivia.len()
+                - leading_trivia
+                    .rev()
+                    .position(|x| x.is_comments())
+                    .map(|pos| pos + 1)
+                    .unwrap_or(0);
+            let new_token = prev_token.with_trailing_trivia_pieces(chain_trivia_pieces(
+                prev_token.trailing_trivia().pieces(),
+                continue_token.leading_trivia().pieces().skip(skip_count),
+            ));
+            mutation.replace_token(prev_token, new_token);
+        }
         utils::remove_statement(&mut mutation, node)?;
-
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,

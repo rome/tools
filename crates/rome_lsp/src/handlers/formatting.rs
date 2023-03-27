@@ -1,7 +1,6 @@
+use crate::converters::{from_proto, to_proto};
 use crate::session::Session;
-use crate::utils;
 use anyhow::{Context, Error, Result};
-use rome_rowan::TextRange;
 use rome_service::{
     workspace::{FormatFileParams, FormatOnTypeParams, FormatRangeParams},
     WorkspaceError,
@@ -59,20 +58,15 @@ pub(crate) fn format_range(
     let rome_path = session.file_path(&url)?;
     let doc = session.document(&url)?;
 
-    let start_index = utils::offset(&doc.line_index, params.range.start).with_context(|| {
-        format!(
-            "failed to access position {:?} in document {url}",
-            params.range.start
-        )
-    })?;
-    let end_index = utils::offset(&doc.line_index, params.range.end).with_context(|| {
-        format!(
-            "failed to access position {:?} in document {url}",
-            params.range.end
-        )
-    })?;
+    let position_encoding = session.position_encoding();
+    let format_range = from_proto::text_range(&doc.line_index, params.range, position_encoding)
+        .with_context(|| {
+            format!(
+                "failed to convert range {:?} in document {url}",
+                params.range.end
+            )
+        })?;
 
-    let format_range = TextRange::new(start_index, end_index);
     let result = session.workspace.format_range(FormatRangeParams {
         path: rome_path,
         range: format_range,
@@ -89,12 +83,8 @@ pub(crate) fn format_range(
     // Recalculate the actual range that was reformatted from the formatter result
     let formatted_range = match formatted.range() {
         Some(range) => {
-            let start_loc = utils::position(&doc.line_index, range.start())?;
-            let end_loc = utils::position(&doc.line_index, range.end())?;
-            Range {
-                start: start_loc,
-                end: end_loc,
-            }
+            let position_encoding = session.position_encoding();
+            to_proto::range(&doc.line_index, range, position_encoding)?
         }
         None => Range {
             start: Position::default(),
@@ -122,7 +112,8 @@ pub(crate) fn format_on_type(
     let rome_path = session.file_path(&url)?;
     let doc = session.document(&url)?;
 
-    let offset = utils::offset(&doc.line_index, position)
+    let position_encoding = session.position_encoding();
+    let offset = from_proto::offset(&doc.line_index, position, position_encoding)
         .with_context(|| format!("failed to access position {position:?} in document {url}"))?;
 
     let result = session.workspace.format_on_type(FormatOnTypeParams {
@@ -141,8 +132,9 @@ pub(crate) fn format_on_type(
     // Recalculate the actual range that was reformatted from the formatter result
     let formatted_range = match formatted.range() {
         Some(range) => {
-            let start_loc = utils::position(&doc.line_index, range.start())?;
-            let end_loc = utils::position(&doc.line_index, range.end())?;
+            let position_encoding = session.position_encoding();
+            let start_loc = to_proto::position(&doc.line_index, range.start(), position_encoding)?;
+            let end_loc = to_proto::position(&doc.line_index, range.end(), position_encoding)?;
             Range {
                 start: start_loc,
                 end: end_loc,

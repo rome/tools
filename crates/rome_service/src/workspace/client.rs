@@ -1,6 +1,6 @@
 use crate::workspace::{
-    IsPathIgnoredParams, OrganizeImportsParams, OrganizeImportsResult, RageParams, RageResult,
-    ServerInfo, SupportsFeatureResult,
+    GetFileContentParams, IsPathIgnoredParams, OrganizeImportsParams, OrganizeImportsResult,
+    RageParams, RageResult, ServerInfo, SupportsFeatureResult,
 };
 use crate::{TransportError, Workspace, WorkspaceError};
 use rome_formatter::Printed;
@@ -135,6 +135,10 @@ where
 
     fn get_formatter_ir(&self, params: GetFormatterIRParams) -> Result<String, WorkspaceError> {
         self.request("rome/get_formatter_ir", params)
+    }
+
+    fn get_file_content(&self, params: GetFileContentParams) -> Result<String, WorkspaceError> {
+        self.request("rome/get_file_content", params)
     }
 
     fn change_file(&self, params: ChangeFileParams) -> Result<(), WorkspaceError> {

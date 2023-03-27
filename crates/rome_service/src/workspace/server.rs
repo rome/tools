@@ -7,8 +7,8 @@ use super::{
 };
 use crate::file_handlers::{Capabilities, FixAllParams, Language, LintParams};
 use crate::workspace::{
-    IsPathIgnoredParams, OrganizeImportsParams, OrganizeImportsResult, RageEntry, RageParams,
-    RageResult, ServerInfo, SupportsFeatureResult,
+    GetFileContentParams, IsPathIgnoredParams, OrganizeImportsParams, OrganizeImportsResult,
+    RageEntry, RageParams, RageResult, ServerInfo, SupportsFeatureResult,
 };
 use crate::{
     file_handlers::Features,
@@ -331,6 +331,14 @@ impl Workspace for WorkspaceServer {
         let printed = debug_control_flow(parse, params.cursor);
 
         Ok(printed)
+    }
+
+    fn get_file_content(&self, params: GetFileContentParams) -> Result<String, WorkspaceError> {
+        let document = self
+            .documents
+            .get(&params.path)
+            .ok_or(WorkspaceError::not_found())?;
+        Ok(document.content.clone())
     }
 
     fn get_formatter_ir(&self, params: GetFormatterIRParams) -> Result<String, WorkspaceError> {

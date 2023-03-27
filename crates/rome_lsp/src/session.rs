@@ -1,3 +1,4 @@
+use crate::converters::{negotiated_encoding, PositionEncoding, WideEncoding};
 use crate::documents::Document;
 use crate::extension_settings::ExtensionSettings;
 use crate::extension_settings::CONFIGURATION_SECTION;
@@ -287,15 +288,20 @@ impl Session {
             let result = result
                 .diagnostics
                 .into_iter()
-                .filter_map(
-                    |d| match utils::diagnostic_to_lsp(d, &url, &doc.line_index) {
+                .filter_map(|d| {
+                    match utils::diagnostic_to_lsp(
+                        d,
+                        &url,
+                        &doc.line_index,
+                        self.position_encoding(),
+                    ) {
                         Ok(diag) => Some(diag),
                         Err(err) => {
                             tracing::error!("failed to convert diagnostic to LSP: {err:?}");
                             None
                         }
-                    },
-                )
+                    }
+                })
                 .collect();
 
             tracing::trace!("lsp diagnostics: {:#?}", result);
@@ -475,5 +481,12 @@ impl Session {
                 .requires_configuration(),
             ConfigurationStatus::Error => true,
         }
+    }
+
+    pub fn position_encoding(&self) -> PositionEncoding {
+        self.initialize_params
+            .get()
+            .map(|params| negotiated_encoding(&params.client_capabilities))
+            .unwrap_or(PositionEncoding::Wide(WideEncoding::Utf16))
     }
 }

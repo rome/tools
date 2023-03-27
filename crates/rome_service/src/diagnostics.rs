@@ -281,10 +281,7 @@ pub struct ReportNotSerializable {
 pub struct NotFound;
 
 #[derive(Debug, Serialize, Deserialize, Diagnostic)]
-#[diagnostic(
-    category = "format",
-    message = "The file does not exist in the workspace."
-)]
+#[diagnostic(category = "format", message = "Format with errors is disabled.")]
 pub struct FormatWithErrorsDisabled;
 
 #[derive(Debug, Serialize, Deserialize, Diagnostic)]

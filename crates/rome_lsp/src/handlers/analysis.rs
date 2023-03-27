@@ -1,4 +1,5 @@
-use crate::line_index::LineIndex;
+use crate::converters::from_proto;
+use crate::converters::line_index::LineIndex;
 use crate::session::Session;
 use crate::utils;
 use anyhow::{Context, Result};
@@ -66,14 +67,16 @@ pub(crate) fn code_actions(
     let url = params.text_document.uri.clone();
     let rome_path = session.file_path(&url)?;
     let doc = session.document(&url)?;
+    let position_encoding = session.position_encoding();
 
     let diagnostics = params.context.diagnostics;
-    let cursor_range = utils::text_range(&doc.line_index, params.range).with_context(|| {
-        format!(
-            "failed to access range {:?} in document {url}",
-            params.range
-        )
-    })?;
+    let cursor_range = from_proto::text_range(&doc.line_index, params.range, position_encoding)
+        .with_context(|| {
+            format!(
+                "failed to access range {:?} in document {url} {:?}",
+                params.range, &doc.line_index,
+            )
+        })?;
 
     let result = session.workspace.pull_actions(PullActionsParams {
         path: rome_path.clone(),
@@ -106,8 +109,14 @@ pub(crate) fn code_actions(
                 return None;
             }
 
-            let action =
-                utils::code_fix_to_lsp(&url, &doc.line_index, &diagnostics, action).ok()?;
+            let action = utils::code_fix_to_lsp(
+                &url,
+                &doc.line_index,
+                position_encoding,
+                &diagnostics,
+                action,
+            )
+            .ok()?;
 
             has_fixes |= action.diagnostics.is_some();
             Some(CodeActionOrCommand::CodeAction(action))
@@ -160,8 +169,9 @@ fn fix_all(
             };
 
             let code = code.strip_prefix("lint/")?;
+            let position_encoding = session.position_encoding();
 
-            let diag_range = utils::text_range(line_index, d.range).ok()?;
+            let diag_range = from_proto::text_range(line_index, d.range, position_encoding).ok()?;
             let has_matching_rule = fixed.actions.iter().any(|action| {
                 let Some((group_name, rule_name)) = &action.rule_name else { return false };
                 let Some(code) = code.strip_prefix(group_name.as_ref()) else { return false };

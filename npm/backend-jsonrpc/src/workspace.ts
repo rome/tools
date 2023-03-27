@@ -433,9 +433,9 @@ export interface Nursery {
 	 */
 	noPrototypeBuiltins?: RuleConfiguration;
 	/**
-	 * Eliminate variables that have multiple declarations in the same scope.
+	 * Disallow variable, function, class, and type redeclarations in the same scope.
 	 */
-	noRedeclaration?: RuleConfiguration;
+	noRedeclare?: RuleConfiguration;
 	/**
 	 * Enforce img alt prop does not contain the word "image", "picture", or "photo".
 	 */
@@ -810,6 +810,9 @@ export interface GetSyntaxTreeResult {
 	ast: string;
 	cst: string;
 }
+export interface GetFileContentParams {
+	path: RomePath;
+}
 export interface GetControlFlowGraphParams {
 	cursor: TextSize;
 	path: RomePath;
@@ -933,7 +936,7 @@ export type Category =
 	| "lint/nursery/noUselessCatch"
 	| "lint/nursery/noParameterAssign"
 	| "lint/nursery/noNamespace"
-	| "lint/nursery/noRedeclaration"
+	| "lint/nursery/noRedeclare"
 	| "lint/nursery/useNamespaceKeyword"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
@@ -1238,6 +1241,7 @@ export interface Workspace {
 	changeFile(params: ChangeFileParams): Promise<void>;
 	closeFile(params: CloseFileParams): Promise<void>;
 	getSyntaxTree(params: GetSyntaxTreeParams): Promise<GetSyntaxTreeResult>;
+	getFileContent(params: GetFileContentParams): Promise<string>;
 	getControlFlowGraph(params: GetControlFlowGraphParams): Promise<string>;
 	getFormatterIr(params: GetFormatterIRParams): Promise<string>;
 	pullDiagnostics(
@@ -1270,6 +1274,9 @@ export function createWorkspace(transport: Transport): Workspace {
 		},
 		getSyntaxTree(params) {
 			return transport.request("rome/get_syntax_tree", params);
+		},
+		getFileContent(params) {
+			return transport.request("rome/get_file_content", params);
 		},
 		getControlFlowGraph(params) {
 			return transport.request("rome/get_control_flow_graph", params);

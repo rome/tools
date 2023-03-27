@@ -182,6 +182,12 @@ pub struct GetFormatterIRParams {
 
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+pub struct GetFileContentParams {
+    pub path: RomePath,
+}
+
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct ChangeFileParams {
     pub path: RomePath,
     pub content: String,
@@ -417,6 +423,9 @@ pub trait Workspace: Send + Sync + RefUnwindSafe {
 
     // Return a textual, debug representation of the formatter IR for a given document
     fn get_formatter_ir(&self, params: GetFormatterIRParams) -> Result<String, WorkspaceError>;
+
+    /// Return the content of a file
+    fn get_file_content(&self, params: GetFileContentParams) -> Result<String, WorkspaceError>;
 
     /// Change the content of an open file
     fn change_file(&self, params: ChangeFileParams) -> Result<(), WorkspaceError>;

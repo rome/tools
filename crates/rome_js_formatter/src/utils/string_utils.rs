@@ -246,7 +246,12 @@ impl<'token> LiteralStringNormaliser<'token> {
 
         let mut has_seen_number = false;
         text_to_check.chars().enumerate().all(|(index, c)| {
-            if index == 0 && c.is_numeric() {
+            if index == 0 && c.is_ascii_digit() {
+                // We can't remove quotes if the member is octal literals.
+                if c == '0' && text_to_check.len() > 1 {
+                    return false;
+                }
+
                 // In TypeScript, numbers like members have different meaning from numbers.
                 // Hence, if we see a number, we bail straightaway
                 if file_source == SourceFileKind::TypeScript {
@@ -258,9 +263,9 @@ impl<'token> LiteralStringNormaliser<'token> {
 
             let is_eligible_character = if has_seen_number {
                 // as we've seen a number, now eligible characters can only contain numbers
-                c.is_numeric()
+                c.is_ascii_digit()
             } else {
-                c.is_alphanumeric()
+                c.is_alphabetic() || c.is_ascii_digit()
             };
             is_eligible_character || matches!(c, '_' | '$')
         })
