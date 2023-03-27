@@ -1,11 +1,13 @@
-use crate::aria_services::Aria;
-use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleDiagnostic};
+use crate::{aria_services::Aria, JsRuleAction};
+use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Rule, RuleDiagnostic};
 use rome_aria::{roles::AriaRoleDefinition, AriaRoles};
 use rome_console::markup;
+use rome_diagnostics::Applicability;
 use rome_js_syntax::{
-    jsx_ext::AnyJsxElement, AnyJsLiteralExpression, AnyJsxAttributeValue, JsxAttributeList,
+    jsx_ext::AnyJsxElement, AnyJsLiteralExpression, AnyJsxAttributeValue, JsxAttribute,
+    JsxAttributeList,
 };
-use rome_rowan::AstNode;
+use rome_rowan::{AstNode, BatchMutationExt};
 
 declare_rule! {
     /// Enforce explicit `role` property is not the same as implicit/default role property on an element.
@@ -50,7 +52,8 @@ declare_rule! {
 }
 
 pub(crate) struct RuleState {
-    redundant_element: AnyJsxAttributeValue,
+    redundant_attribute: JsxAttribute,
+    redundant_attribute_value: AnyJsxAttributeValue,
     element_name: String,
 }
 
@@ -69,14 +72,15 @@ impl Rule for NoRedundantRoles {
         let implicit_role =
             aria_roles.get_implicit_role(&element_name, &attribute_name_to_values)?;
 
-        let role_attribute = &node.find_attribute_by_name("role")?;
+        let role_attribute = node.find_attribute_by_name("role")?;
         let role_attribute_value = role_attribute.initializer()?.value().ok()?;
         let explicit_role = get_explicit_role(aria_roles, &role_attribute_value)?;
 
         let is_redundant = implicit_role.type_name() == explicit_role.type_name();
         if is_redundant {
             return Some(RuleState {
-                redundant_element: role_attribute_value,
+                redundant_attribute: role_attribute,
+                redundant_attribute_value: role_attribute_value,
                 element_name: element_name.to_string(),
             });
         }
@@ -84,16 +88,27 @@ impl Rule for NoRedundantRoles {
     }
 
     fn diagnostic(_: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
-        let binding = state.redundant_element.inner_text_value().ok()??;
+        let binding = state.redundant_attribute_value.inner_text_value().ok()??;
         let role_attribute = binding.text();
         let element = state.element_name.to_string();
         Some(RuleDiagnostic::new(
             rule_category!(),
-            state.redundant_element.range(),
+            state.redundant_attribute_value.range(),
             markup! {
                 "Using the role attribute '"{role_attribute}"' on the '"{element}"' element is redundant."
             },
         ))
+    }
+
+    fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
+        let mut mutation = ctx.root().begin();
+        mutation.remove_node(state.redundant_attribute.clone());
+        Some(JsRuleAction {
+            category: ActionCategory::QuickFix,
+            applicability: Applicability::MaybeIncorrect,
+            message: markup! { "Remove the "<Emphasis>"role"</Emphasis>" attribute." }.to_owned(),
+            mutation,
+        })
     }
 }
 
