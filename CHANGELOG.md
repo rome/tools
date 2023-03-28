@@ -7,10 +7,11 @@
 ### Editors
 ### Formatter
 ### Linter
+#### New rules
+- `noConfusingArrow`
 ### Parser
 ### VSCode
 ### JavaScript APIs
-
 
 ## 12.0.0
 
@@ -130,7 +131,10 @@ details.
 a configuration file in your workspace/project. If Rome doesn't find a `rome.json` file, it won't
 emit diagnostics.
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9abb92e (release: 12.0.0 (#4002))
 ## 11.0.0
 
 ### CLI
