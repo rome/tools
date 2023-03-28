@@ -268,7 +268,7 @@ fn lint(params: LintParams) -> LintResults {
             .map(rome_diagnostics::serde::Diagnostic::new)
             .collect::<Vec<_>>(),
     );
-    let skipped_diagnostics = diagnostic_count - diagnostics.len() as u64;
+    let skipped_diagnostics = diagnostic_count.saturating_sub(diagnostics.len() as u64);
 
     LintResults {
         diagnostics,

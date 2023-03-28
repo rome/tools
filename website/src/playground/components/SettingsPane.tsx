@@ -1,7 +1,7 @@
 import type { SettingsTabProps } from "../tabs/SettingsTab";
-import { useState, useEffect } from "react";
-import { classNames, createLocalStorage } from "../utils";
 import SettingsTab from "../tabs/SettingsTab";
+import { classNames, createLocalStorage } from "../utils";
+import { useEffect, useState } from "react";
 
 const isCollapsedStore = createLocalStorage("settings-collapsed");
 

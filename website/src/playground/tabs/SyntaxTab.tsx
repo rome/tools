@@ -1,8 +1,8 @@
-import type { ReactCodeMirrorRef } from "@uiw/react-codemirror";
-import React from "react";
 import CodeMirror from "../CodeMirror";
-import { romeAst } from "codemirror-lang-rome-ast";
 import Collapsible from "../Collapsible";
+import type { ReactCodeMirrorRef } from "@uiw/react-codemirror";
+import { romeAst } from "codemirror-lang-rome-ast";
+import React from "react";
 
 interface Props {
 	ast: string;

@@ -31,7 +31,12 @@ const CHECK: Markup = markup! {
 "<Emphasis>"USAGE:"</Emphasis>"
     rome check <INPUTS...>
 
-    INPUTS can be one or more filesystem path, each pointing to a single file or an entire directory to be searched recursively for supported files
+    INPUTS can be one or more filesystem paths, each pointing to a single file or an entire directory.
+
+"<Emphasis>"EXAMPLES:"</Emphasis>"
+    rome check ./scripts/file.js
+    rome check ./
+    rome check ./src ./internal ./scripts
 
 "<Emphasis>"OPTIONS:"</Emphasis>"
     "<Dim>"--apply"</Dim>"                       Apply safe fixes
@@ -62,6 +67,11 @@ const CI: Markup = markup! {
 
     INPUTS can be one or more filesystem path, each pointing to a single file or an entire directory to be searched recursively for supported files
 
+"<Emphasis>"EXAMPLES:"</Emphasis>"
+    rome ci ./scripts/file.js
+    rome ci ./
+    rome ci ./src ./internal ./scripts
+
 "<Emphasis>"OPTIONS:"</Emphasis>"
     "<Dim>"--formatter-enabled"</Dim>"                      Allow to enable or disable the formatter check. (default: true)
     "<Dim>"--linter-enabled"</Dim>"                         Allow to enable or disable the linter check. (default: true)
@@ -79,6 +89,11 @@ const FORMAT: Markup = markup! {
     rome format [OPTIONS] <INPUTS...>
 
     INPUTS can be one or more filesystem path, each pointing to a single file or an entire directory to be searched recursively for supported files
+
+"<Emphasis>"EXAMPLES:"</Emphasis>"
+    rome format ./scripts/file.js
+    rome format ./
+    rome format ./src ./internal ./scripts
 
 "<Emphasis>"OPTIONS:"</Emphasis>"
     "<Dim>"--write"</Dim>"                                  Edit the files in place (beware!) instead of printing the diff to the console

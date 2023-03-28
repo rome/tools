@@ -1,17 +1,18 @@
-import { useEffect, useState, useRef, SetStateAction, Dispatch } from "react";
+import Playground from "./Playground";
+import LoadingScreen from "./components/LoadingScreen";
 import {
-	defaultPlaygroundState,
-	emptyPrettierOutput,
-	emptyRomeOutput,
 	IndentStyle,
+	LintRules,
 	LoadingState,
 	PlaygroundSettings,
 	PlaygroundState,
 	QuoteProperties,
 	QuoteStyle,
-	TrailingComma,
 	Semicolons,
-	LintRules,
+	TrailingComma,
+	defaultPlaygroundState,
+	emptyPrettierOutput,
+	emptyRomeOutput,
 } from "./types";
 import {
 	createLocalStorage,
@@ -25,8 +26,7 @@ import {
 	isTypeScriptFilename,
 	normalizeFilename,
 } from "./utils";
-import Playground from "./Playground";
-import LoadingScreen from "./components/LoadingScreen";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 
 function throttle(callback: () => void): () => void {
 	const timeout = setTimeout(callback, 100);

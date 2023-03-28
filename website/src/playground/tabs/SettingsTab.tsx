@@ -8,18 +8,18 @@ import {
 	SourceType,
 	TrailingComma,
 } from "../types";
-import type { Dispatch, SetStateAction } from "react";
-import React, { useState } from "react";
 import {
-	modifyFilename,
+	classnames,
 	createPlaygroundSettingsSetter,
+	getFileState,
 	isJSXFilename,
 	isScriptFilename,
 	isTypeScriptFilename,
-	classnames,
-	getFileState,
+	modifyFilename,
 	normalizeFilename,
 } from "../utils";
+import type { Dispatch, SetStateAction } from "react";
+import React, { useState } from "react";
 
 export interface SettingsTabProps {
 	state: PlaygroundState;
