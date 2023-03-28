@@ -250,8 +250,11 @@ appears after the `#### BREAKING CHANGES` heading.
 
 ##### Writing a changelog line
 
-- Use the present tense, e.g. "Add new feature", "Fix edge case"
-- If you fix a bug, please add the link to the issue, e.g. "Fix edge case [#4444]()"
+- Use the present tense, e.g. "Add new feature", "Fix edge case".
+- If you fix a bug, please add the link to the issue, e.g. "Fix edge case [#4444]()".
+- Whenever applicable, add a code block to show your new changes. For example, for a new
+rule you might want to show an invalid case, for the formatter you might want to show
+how the new formatting changes, and so on.
 
 #### Documentation
 
@@ -298,12 +301,6 @@ Even minor versions are dedicated to official releases, e.g. `*.6.*`.
 ### Playground
 
 - [run the playground locally](/website/playground/README.md)
-
-### Snapshot tests
-
-Internally, we use [`insta`](https://insta.rs/) for snapshot tests. This means that you
-follow their [installation instructions](https://insta.rs/docs/cli/) to update/accept
-the new snapshot tests.
 
 ### Using just
 
