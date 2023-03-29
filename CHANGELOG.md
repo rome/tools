@@ -8,7 +8,7 @@
 ### Formatter
 ### Linter
 #### New rules
-- `noConfusingArrow`
+- [`noConfusingArrow`](https://docs.rome.tools/lint/rules/noConfusingArrow/)
 ### Parser
 ### VSCode
 ### JavaScript APIs
