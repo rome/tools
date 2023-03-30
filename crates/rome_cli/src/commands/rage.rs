@@ -185,6 +185,7 @@ impl Display for RageConfiguration<'_, '_> {
                     {KeyValuePair("Status", status)}
                     {KeyValuePair("Formatter disabled", markup!({DebugDisplay(configuration.is_formatter_disabled())}))}
                     {KeyValuePair("Linter disabled", markup!({DebugDisplay(configuration.is_linter_disabled())}))}
+                    {KeyValuePair("Organize imports disabled", markup!({DebugDisplay(configuration.is_organize_imports_disabled())}))}
                 ).fmt(fmt)?
             }
             Err(err) => markup! (
@@ -236,7 +237,7 @@ impl Display for KeyValuePair<'_> {
         let KeyValuePair(key, value) = self;
         write!(fmt, "  {key}:")?;
 
-        let padding_width = 22usize.saturating_sub(key.len() + 1);
+        let padding_width = 30usize.saturating_sub(key.len() + 1);
 
         for _ in 0..padding_width {
             fmt.write_str(" ")?;

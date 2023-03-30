@@ -2,9 +2,9 @@ import CodeMirror from "../CodeMirror";
 import Collapsible from "../Collapsible";
 import PrettierHeader from "../components/PrettierHeader";
 import RomeHeader from "../components/RomeHeader";
-import fastDiff from "fast-diff";
 import type { PrettierOutput } from "../types";
 import type { Extension } from "@codemirror/state";
+import fastDiff from "fast-diff";
 
 interface Props {
 	prettier: PrettierOutput;

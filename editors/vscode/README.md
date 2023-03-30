@@ -1,17 +1,17 @@
 # Rome VS Code Extension
 
-[Rome](https://rome.tools/) unifies your development stack by combining the functionality of separate tools. It uses a single configuration file, has fantastic performance, and works with any stack. This extension brings Rome to your editor so that you can:
+[Rome](https://rome.tools/) unifies your development stack by combining the functionality of separate tools. It uses a single configuration file, has fantastic performance, and works with any stack. This extension brings Rome to your editor so that you can:
 
-- Format files *on save* or when issuing the *Format Document* command
+- Format files *on save* or when issuing the *Format Document* command
 - See lints while you type and apply code fixes
 - Perform refactors
 
 ## Installation
 
-You can install the code extension by heading to the extension's [Visual Studio Code Market Place page](https://marketplace.visualstudio.com/items?itemName=rome.rome) or from within VS Code by either:
+You can install the code extension by heading to the extension's [Visual Studio Code Market Place page](https://marketplace.visualstudio.com/items?itemName=rome.rome) or from within VS Code by either:
 
-- Open the *extensions* tab (_View_ → _Extensions)_ and search for Rome.
-- Open the _Quick Open Overlay_ (Ctrl/Cmd+P or _Go -> Go to File_), enter `ext install rome.rome`, and hit enter.
+- Open the *extensions* tab (_View_ → _Extensions)_ and search for Rome.
+- Open the _Quick Open Overlay_ (<kbd>Ctrl</kbd>/<kbd title="Cmd">⌘</kbd>+<kbd>P</kbd> or _Go -> Go to File_), enter `ext install rome.rome`, and hit enter.
 
 ## Getting Started
 
@@ -19,14 +19,14 @@ You can install the code extension by heading to the extension's [Visual Studio
 
 Configure Rome as the default formatter for supported files to ensure that VS Code uses Rome over other formatters that you may have installed. You can do so by opening a JavaScript or TypeScript and then:
 
-- Open the Command Palette (Ctrl/Cmd+Shift+P or View → Command Palette)
+- Open the Command Palette (<kbd>Ctrl</kbd>/<kbd title="Cmd">⌘</kbd>+<kbd title="Shift">⇧</kbd>+<kbd>P</kbd> or View → Command Palette)
 - Select _Format Document With…_
 - Select _Configure Default Formatter…_
 - Select Rome
 
 You can also enable Rome for specific languages only:
 
-- [Open the `settings.json`](https://code.visualstudio.com/docs/getstarted/settings#_settingsjson): open the _Command Palette_(Ctr+Shift+P) and select _Preferences: Open User Settings (JSON)_
+- [Open the `settings.json`](https://code.visualstudio.com/docs/getstarted/settings#_settingsjson): open the _Command Palette_(<kbd>Ctrl</kbd>/<kbd title="Cmd">⌘</kbd>+<kbd title="Shift">⇧</kbd>+<kbd>P</kbd>) and select _Preferences: Open User Settings (JSON)_
 - And set the `editor.defaultFormatter` to `rome.rome` for the desired language
 
 ```json
@@ -56,9 +56,9 @@ If the project has no dependency on Rome and no explicit path is configured, the
 
 ### Format document
 
-To format an entire document, open the _Command Palette_ (Ctrl/Cmd+Shift+P) and select _Format Document_.
+To format an entire document, open the _Command Palette_ (<kbd>Ctrl</kbd>/<kbd title="Cmd">⌘</kbd>+<kbd title="Shift">⇧</kbd>+<kbd>P</kbd>) and select _Format Document_.
 
-To format a text range, select the text you want to format, open the _Command Palette_ (Ctrl/Cmd+Shift+P), and select _Format Selection_.
+To format a text range, select the text you want to format, open the _Command Palette_ (<kbd>Ctrl</kbd>/<kbd title="Cmd">⌘</kbd>+<kbd title="Shift">⇧</kbd>+<kbd>P</kbd>), and select _Format Selection_.
 
 ### Format on save
 

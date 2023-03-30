@@ -1,10 +1,3 @@
-import init, {
-	Configuration,
-	DiagnosticPrinter,
-	RomePath,
-	RuleCategories,
-	Workspace,
-} from "@rometools/wasm-web";
 import {
 	IndentStyle,
 	LintRules,
@@ -16,6 +9,13 @@ import {
 	Semicolons,
 } from "../types";
 import { isJSONFilename } from "../utils";
+import init, {
+	Configuration,
+	DiagnosticPrinter,
+	RomePath,
+	RuleCategories,
+	Workspace,
+} from "@rometools/wasm-web";
 
 let workspace: Workspace | null = null;
 let fileCounter = 0;

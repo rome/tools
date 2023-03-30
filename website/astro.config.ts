@@ -1,14 +1,14 @@
-import { defineConfig } from "astro/config";
-import type { AstroIntegration } from "astro";
 import mdx from "@astrojs/mdx";
+import react from "@astrojs/react";
+import type { AstroIntegration } from "astro";
 import compress from "astro-compress";
-import path from "node:path";
-import fs from "node:fs/promises";
+import { defineConfig } from "astro/config";
 import { globby } from "globby";
+import fs from "node:fs/promises";
+import path from "node:path";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
 import remarkToc from "remark-toc";
-import react from "@astrojs/react";
 
 function resolveFile(relative: string, parent: string, root: string): string {
 	if (relative[0] === "/") {

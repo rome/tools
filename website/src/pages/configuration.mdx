@@ -101,19 +101,63 @@ An array of Unix shell style patterns.
 
 ### `linter.rules.recommended`
 
-Enables the [recommended rules](/lint/rules) for all categories.
+Enables the [recommended rules](/lint/rules) for all groups.
 
 > Default: `true`
 
-### `linter.rules.[category]`
 
-Options that influence the rules of a single category. Rome supports the following categories:
+### `linter.rules.all`
+
+Enable or disable all [rules](/lint/rules) for all groups.
+
+If `recommended` and `all` are both `true`, Rome will emit a diagnostic and fallback to its defaults.
+
+<CodeBlockHeader filename="rome.json" />
+
+```json
+{
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "all": true
+    }
+  }
+}
+```
+
+It's also possible to combine this flag to enable/disable different rule groups:
+
+<CodeBlockHeader filename="rome.json" />
+
+```json
+{
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "all": true,
+      "style": {
+        "all": false
+      },
+      "complexity": {
+        "all": false
+      }
+    }
+  }
+}
+```
+
+In the previous example, Rome will enable all rules, exception for rules that belong to the `style` and `complexity` groups.
+
+
+### `linter.rules.[group]`
+
+Options that influence the rules of a single group. Rome supports the following groups:
 
 <LintGroups />
 
-### `linter.rules.[category].recommended`
+### `linter.rules.[group].recommended`
 
-Enables the recommended rules for a single category.
+Enables the recommended rules for a single group.
 
 Example:
 
@@ -126,6 +170,28 @@ Example:
     "rules": {
       "nursery": {
         "recommended": true
+      }
+    }
+  }
+}
+```
+
+
+### `linter.rules.[group].all`
+
+Enables all rules for a single group.
+
+Example:
+
+<CodeBlockHeader filename="rome.json" />
+
+```json
+{
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "nursery": {
+        "all": true
       }
     }
   }
@@ -192,6 +258,30 @@ How many characters can be written on a single line.
 
 > Default: `80`
 
+## `organizeImports`
+
+### `organizeImports.enabled` (experimental)
+
+Enables Rome's sort imports.
+
+### `organizeImports.ignore`
+
+
+A list of Unix shell style patterns. Rome ignores files and folders that
+match these patterns.
+
+<CodeBlockHeader filename="rome.json" />
+
+```json
+{
+  "organizeImports": {
+    "enable": true,
+    "ignore": ["scripts/*.js"]
+  }
+}
+```
+> Default: `false`
+
 ## `javascript`
 
 These options apply only to JavaScript (and TypeScript) files.
@@ -235,6 +325,19 @@ Example:
     "formatter": {
       "semicolons": "asNeeded"
     }
+  }
+}
+```
+### `javascript.globals`
+
+A list of global names that Rome should ignore (analyzer, linter, etc.)
+
+<CodeBlockHeader filename="rome.json" />
+
+```json
+{
+  "javascript": {
+    "globals": ["$", "_", "externalVariable"]
   }
 }
 ```

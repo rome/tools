@@ -6,7 +6,7 @@ import { setContextValue } from "./utils";
 import { type ChildProcess, spawn } from "child_process";
 import { type Socket, connect } from "net";
 import { isAbsolute } from "path";
-import { promisify, TextDecoder } from "util";
+import { TextDecoder, promisify } from "util";
 import {
 	ExtensionContext,
 	OutputChannel,

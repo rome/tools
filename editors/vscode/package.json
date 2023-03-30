@@ -3,7 +3,7 @@
 	"publisher": "rome",
 	"displayName": "Rome",
 	"description": "Rome LSP VS Code Extension",
-	"version": "0.20.0",
+	"version": "0.22.0",
 	"icon": "icon.png",
 	"activationEvents": [
 		"onLanguage:javascript",
@@ -137,6 +137,7 @@
 		"install-extension": "code --install-extension rome_lsp.vsix --force",
 		"format": "cargo rome-cli-dev format ./src/ ./scripts --write",
 		"check": "cargo rome-cli-dev check ./src/ ./scripts",
+		"check:apply": "cargo rome-cli-dev check ./src/ ./scripts --apply-unsafe",
 		"pack:dev": "npm run compile && npm run package && npm run install-extension",
 		"tsc": "tsc"
 	},

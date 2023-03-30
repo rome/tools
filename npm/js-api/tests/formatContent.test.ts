@@ -1,5 +1,5 @@
-import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { Distribution, Rome } from "../dist";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
 describe("Rome WebAssembly formatContent", () => {
 	let rome: Rome;

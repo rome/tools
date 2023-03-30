@@ -1,7 +1,7 @@
-import { matchesDark, getCurrentTheme, setCurrentTheme } from "./util";
 import "./mobile";
-import "./toc";
 import "./package-manager-commands";
+import "./toc";
+import { getCurrentTheme, matchesDark, setCurrentTheme } from "./util";
 
 //# Team list shuffle
 

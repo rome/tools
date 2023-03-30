@@ -1,0 +1,232 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: invalid.jsx
+---
+# Input
+```js
+<>
+    <a />
+    <a href/>
+    <a href={null}/>
+    <a href={undefined}/>
+    <a href="specs/a11y/useValidAnchor#"/>
+    <a href={"#"}/>
+    <a href={`#`}/>
+    <a href="javascript:void(0)"/>
+    <a href={"javascript:void(0)"}/>
+    <a href={`javascript:void(0)`}/>
+    <a onClick={}/>
+    <a onClick={} href={}/>
+    <a href={<span><span className="token string">javascript:void(0)</span></span>}/>
+</>
+```
+
+# Diagnostics
+```
+invalid.jsx:2:5 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide a href attribute for the a element.
+  
+    1 │ <>
+  > 2 │     <a />
+      │     ^^^^^
+    3 │     <a href/>
+    4 │     <a href={null}/>
+  
+  i An anchor element should always have a href
+  
+  i Check this thorough explanation to better understand the context.
+  
+
+```
+
+```
+invalid.jsx:3:8 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The attribute href has to be assigned to a valid value.
+  
+    1 │ <>
+    2 │     <a />
+  > 3 │     <a href/>
+      │        ^^^^
+    4 │     <a href={null}/>
+    5 │     <a href={undefined}/>
+  
+  i The href attribute should be a valid a URL
+  
+  i Check this thorough explanation to better understand the context.
+  
+
+```
+
+```
+invalid.jsx:4:14 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide a valid value for the attribute href.
+  
+    2 │     <a />
+    3 │     <a href/>
+  > 4 │     <a href={null}/>
+      │              ^^^^
+    5 │     <a href={undefined}/>
+    6 │     <a href="specs/a11y/useValidAnchor#"/>
+  
+  i The href attribute should be a valid a URL
+  
+  i Check this thorough explanation to better understand the context.
+  
+
+```
+
+```
+invalid.jsx:5:14 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide a valid value for the attribute href.
+  
+    3 │     <a href/>
+    4 │     <a href={null}/>
+  > 5 │     <a href={undefined}/>
+      │              ^^^^^^^^^
+    6 │     <a href="specs/a11y/useValidAnchor#"/>
+    7 │     <a href={"#"}/>
+  
+  i The href attribute should be a valid a URL
+  
+  i Check this thorough explanation to better understand the context.
+  
+
+```
+
+```
+invalid.jsx:7:14 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide a valid value for the attribute href.
+  
+    5 │     <a href={undefined}/>
+    6 │     <a href="specs/a11y/useValidAnchor#"/>
+  > 7 │     <a href={"#"}/>
+      │              ^^^
+    8 │     <a href={`#`}/>
+    9 │     <a href="javascript:void(0)"/>
+  
+  i The href attribute should be a valid a URL
+  
+  i Check this thorough explanation to better understand the context.
+  
+
+```
+
+```
+invalid.jsx:8:15 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide a valid value for the attribute href.
+  
+     6 │     <a href="specs/a11y/useValidAnchor#"/>
+     7 │     <a href={"#"}/>
+   > 8 │     <a href={`#`}/>
+       │               ^
+     9 │     <a href="javascript:void(0)"/>
+    10 │     <a href={"javascript:void(0)"}/>
+  
+  i The href attribute should be a valid a URL
+  
+  i Check this thorough explanation to better understand the context.
+  
+
+```
+
+```
+invalid.jsx:9:13 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide a valid value for the attribute href.
+  
+     7 │     <a href={"#"}/>
+     8 │     <a href={`#`}/>
+   > 9 │     <a href="javascript:void(0)"/>
+       │             ^^^^^^^^^^^^^^^^^^^^
+    10 │     <a href={"javascript:void(0)"}/>
+    11 │     <a href={`javascript:void(0)`}/>
+  
+  i The href attribute should be a valid a URL
+  
+  i Check this thorough explanation to better understand the context.
+  
+
+```
+
+```
+invalid.jsx:11:15 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide a valid value for the attribute href.
+  
+     9 │     <a href="javascript:void(0)"/>
+    10 │     <a href={"javascript:void(0)"}/>
+  > 11 │     <a href={`javascript:void(0)`}/>
+       │               ^^^^^^^^^^^^^^^^^^
+    12 │     <a onClick={}/>
+    13 │     <a onClick={} href={}/>
+  
+  i The href attribute should be a valid a URL
+  
+  i Check this thorough explanation to better understand the context.
+  
+
+```
+
+```
+invalid.jsx:12:8 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use a button element instead of an a element.
+  
+    10 │     <a href={"javascript:void(0)"}/>
+    11 │     <a href={`javascript:void(0)`}/>
+  > 12 │     <a onClick={}/>
+       │        ^^^^^^^^^^
+    13 │     <a onClick={} href={}/>
+    14 │     <a href={<span><span className="token string">javascript:void(0)</span></span>}/>
+  
+  i Anchor elements should only be used for default sections or page navigation
+  
+  i Check this thorough explanation to better understand the context.
+  
+
+```
+
+```
+invalid.jsx:13:5 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use a button element instead of an a element.
+  
+    11 │     <a href={`javascript:void(0)`}/>
+    12 │     <a onClick={}/>
+  > 13 │     <a onClick={} href={}/>
+       │     ^^^^^^^^^^^^^^^^^^^^^^^
+    14 │     <a href={<span><span className="token string">javascript:void(0)</span></span>}/>
+    15 │ </>
+  
+  i Anchor elements should only be used for default sections or page navigation
+  
+  i Check this thorough explanation to better understand the context.
+  
+
+```
+
+```
+invalid.jsx:14:14 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide a valid value for the attribute href.
+  
+    12 │     <a onClick={}/>
+    13 │     <a onClick={} href={}/>
+  > 14 │     <a href={<span><span className="token string">javascript:void(0)</span></span>}/>
+       │              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    15 │ </>
+  
+  i The href attribute should be a valid a URL
+  
+  i Check this thorough explanation to better understand the context.
+  
+
+```
+
+
