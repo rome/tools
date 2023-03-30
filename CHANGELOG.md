@@ -9,6 +9,7 @@
 ### Linter
 #### New rules
 - [`noConfusingArrow`](https://docs.rome.tools/lint/rules/noConfusingArrow/)
+- [`noRedundantRoles`](https://docs.rome.tools/lint/rules/noRedundantRoles/)
 ### Parser
 ### VSCode
 ### JavaScript APIs

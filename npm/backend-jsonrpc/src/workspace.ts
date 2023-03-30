@@ -445,6 +445,10 @@ export interface Nursery {
 	 */
 	noRedundantAlt?: RuleConfiguration;
 	/**
+	 * Enforce explicit role property is not the same as implicit/default role property on an element.
+	 */
+	noRedundantRoles?: RuleConfiguration;
+	/**
 	 * This rule allows you to specify global variable names that you don’t want to use in your application.
 	 */
 	noRestrictedGlobals?: RuleConfiguration;
@@ -943,6 +947,7 @@ export type Category =
 	| "lint/nursery/noConfusingArrow"
 	| "lint/nursery/noRedeclare"
 	| "lint/nursery/useNamespaceKeyword"
+	| "lint/nursery/noRedundantRoles"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"
