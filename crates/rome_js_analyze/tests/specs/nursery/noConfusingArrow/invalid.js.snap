@@ -1,0 +1,39 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: invalid.js
+---
+# Input
+```js
+var x = a => 1 ? 2 : 3;
+var x = (a) => 1 ? 2 : 3;
+
+```
+
+# Diagnostics
+```
+invalid.js:1:11 lint/nursery/noConfusingArrow ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Fat arrows can be confused with some comparison operators (<, >, <=, >=).
+  
+  > 1 │ var x = a => 1 ? 2 : 3;
+      │           ^^
+    2 │ var x = (a) => 1 ? 2 : 3;
+    3 │ 
+  
+
+```
+
+```
+invalid.js:2:13 lint/nursery/noConfusingArrow ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Fat arrows can be confused with some comparison operators (<, >, <=, >=).
+  
+    1 │ var x = a => 1 ? 2 : 3;
+  > 2 │ var x = (a) => 1 ? 2 : 3;
+      │             ^^
+    3 │ 
+  
+
+```
+
+

@@ -373,6 +373,10 @@ export interface Nursery {
 	 */
 	noCommaOperator?: RuleConfiguration;
 	/**
+	 * Disallow arrow functions where they could be confused with comparisons.
+	 */
+	noConfusingArrow?: RuleConfiguration;
+	/**
 	 * Disallow labeled statements that are not loops.
 	 */
 	noConfusingLabels?: RuleConfiguration;
@@ -936,6 +940,7 @@ export type Category =
 	| "lint/nursery/noUselessCatch"
 	| "lint/nursery/noParameterAssign"
 	| "lint/nursery/noNamespace"
+	| "lint/nursery/noConfusingArrow"
 	| "lint/nursery/noRedeclare"
 	| "lint/nursery/useNamespaceKeyword"
 	| "lint/performance/noDelete"

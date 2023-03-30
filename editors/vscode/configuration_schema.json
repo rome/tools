@@ -510,6 +510,13 @@
 						{ "type": "null" }
 					]
 				},
+				"noConfusingArrow": {
+					"description": "Disallow arrow functions where they could be confused with comparisons.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"noConfusingLabels": {
 					"description": "Disallow labeled statements that are not loops.",
 					"anyOf": [
