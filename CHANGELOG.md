@@ -6,6 +6,9 @@
 ### Configuration
 ### Editors
 ### Formatter
+
+- Fixed an issue when formatting JSX string property values [#4054](https://github.com/rome/tools/issues/4054)
+
 ### Linter
 #### New rules
 - [`noConfusingArrow`](https://docs.rome.tools/lint/rules/noConfusingArrow/)
