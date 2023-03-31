@@ -948,13 +948,9 @@ export type Category =
 	| "lint/nursery/noUselessCatch"
 	| "lint/nursery/noParameterAssign"
 	| "lint/nursery/noNamespace"
-<<<<<<< HEAD
 	| "lint/nursery/noConfusingArrow"
-	| "lint/nursery/noRedeclare"
-=======
 	| "lint/nursery/noNoninteractiveTabindex"
-	| "lint/nursery/noRedeclaration"
->>>>>>> e910953dca (feat(rome_js_analyze): noNoninteractiveTabindex)
+	| "lint/nursery/noRedeclare"
 	| "lint/nursery/useNamespaceKeyword"
 	| "lint/nursery/noRedundantRoles"
 	| "lint/performance/noDelete"
