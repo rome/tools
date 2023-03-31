@@ -11,6 +11,9 @@
 - [`noConfusingArrow`](https://docs.rome.tools/lint/rules/noConfusingArrow/)
 - [`noRedundantRoles`](https://docs.rome.tools/lint/rules/noRedundantRoles/)
 ### Parser
+
+- Allow module syntax in `cts` files
+
 ### VSCode
 ### JavaScript APIs
 
@@ -132,10 +135,6 @@ details.
 a configuration file in your workspace/project. If Rome doesn't find a `rome.json` file, it won't
 emit diagnostics.
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 9abb92e (release: 12.0.0 (#4002))
 ## 11.0.0
 
 ### CLI
