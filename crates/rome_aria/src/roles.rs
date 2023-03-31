@@ -747,6 +747,7 @@ impl<'a> AriaRoles {
         "table",
         "term",
         "textbox",
+        "generic",
     ];
 
     /// It returns the metadata of a role, if it exits.
@@ -820,6 +821,7 @@ impl<'a> AriaRoles {
             "region" => &RegionRole as &dyn AriaRoleDefinition,
             "presentation" => &PresentationRole as &dyn AriaRoleDefinition,
             "document" => &DocumentRole as &dyn AriaRoleDefinition,
+            "generic" => &GenericRole as &dyn AriaRoleDefinition,
             _ => return None,
         };
         Some(result)
@@ -1003,6 +1005,7 @@ impl<'a> AriaRoles {
                 "table" => &TableRole as &dyn AriaRoleDefinitionWithConcepts,
                 "term" => &TermRole as &dyn AriaRoleDefinitionWithConcepts,
                 "textbox" => &TextboxRole as &dyn AriaRoleDefinitionWithConcepts,
+                "generic" => &GenericRole as &dyn AriaRoleDefinitionWithConcepts,
                 _ => return false,
             };
             if let Some(mut concepts) = role.concepts_by_element_name(element_name) {

@@ -425,6 +425,10 @@ export interface Nursery {
 	 */
 	noNoninteractiveElementToInteractiveRole?: RuleConfiguration;
 	/**
+	 * Enforce that tabIndex is not assigned to non-interactive HTML elements.
+	 */
+	noNoninteractiveTabindex?: RuleConfiguration;
+	/**
 	 * Disallow reassigning function parameters.
 	 */
 	noParameterAssign?: RuleConfiguration;
@@ -945,6 +949,7 @@ export type Category =
 	| "lint/nursery/noParameterAssign"
 	| "lint/nursery/noNamespace"
 	| "lint/nursery/noConfusingArrow"
+	| "lint/nursery/noNoninteractiveTabindex"
 	| "lint/nursery/noRedeclare"
 	| "lint/nursery/useNamespaceKeyword"
 	| "lint/nursery/noRedundantRoles"

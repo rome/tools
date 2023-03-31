@@ -10,6 +10,7 @@
 #### New rules
 - [`noConfusingArrow`](https://docs.rome.tools/lint/rules/noConfusingArrow/)
 - [`noRedundantRoles`](https://docs.rome.tools/lint/rules/noRedundantRoles/)
+- [`noNoninteractiveTabindex`](https://docs.rome.tools/lint/rules/noNoninteractiveTabindex/)
 ### Parser
 
 - Allow module syntax in `cts` files

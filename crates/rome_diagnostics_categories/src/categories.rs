@@ -100,6 +100,7 @@ define_categories! {
 "lint/nursery/noParameterAssign": "https://docs.rome.tools/lint/rules/noParameterAssign",
 "lint/nursery/noNamespace": "https://docs.rome.tools/lint/rules/noNamespace",
 "lint/nursery/noConfusingArrow": "https://docs.rome.tools/lint/rules/noConfusingArrow",
+"lint/nursery/noNoninteractiveTabindex": "https://docs.rome.tools/lint/rules/noNoninteractiveTabindex",
     // Insert new nursery rule here
     "lint/nursery/noRedeclare": "https://docs.rome.tools/lint/rules/noRedeclare",
     "lint/nursery/useNamespaceKeyword": "https://docs.rome.tools/lint/rules/useNamespaceKeyword",

@@ -601,6 +601,13 @@
 						{ "type": "null" }
 					]
 				},
+				"noNoninteractiveTabindex": {
+					"description": "Enforce that tabIndex is not assigned to non-interactive HTML elements.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"noParameterAssign": {
 					"description": "Disallow reassigning function parameters.",
 					"anyOf": [

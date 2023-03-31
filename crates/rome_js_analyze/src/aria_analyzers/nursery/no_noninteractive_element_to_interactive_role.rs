@@ -100,6 +100,13 @@ impl Rule for NoNoninteractiveElementToInteractiveRole {
             if aria_roles.is_not_interactive_element(element_name.text_trimmed())
                 && aria_roles.is_role_interactive(role_attribute_value.text())
             {
+                // <div> and <span> are considered neither interactive nor non-interactive, depending on the presence or absence of the role attribute.
+                // We don't report <div> and <span> here, because we cannot determine whether they are interactive or non-interactive.
+                let role_sensitive_elements = ["div", "span"];
+                if role_sensitive_elements.contains(&element_name.text_trimmed()) {
+                    return None;
+                }
+
                 return Some(RuleState {
                     attribute_range: role_attribute.range(),
                     element_name: element_name.text_trimmed().to_string(),
