@@ -1,5 +1,6 @@
 use crate::{define_role, is_aria_property_valid};
 use rome_aria_metadata::AriaPropertiesEnum;
+use std::collections::HashMap;
 use std::fmt::Debug;
 use std::slice::Iter;
 use std::str::FromStr;
@@ -59,6 +60,11 @@ pub trait AriaRoleDefinition: Debug {
     /// Whether the current role is interactive
     fn is_interactive(&self) -> bool {
         self.roles().any(|role| *role == "widget")
+    }
+
+    /// Returns a concrete type name.
+    fn type_name(&self) -> &'static str {
+        return std::any::type_name::<Self>();
     }
 }
 
@@ -531,6 +537,181 @@ define_role! {
     }
 }
 
+define_role! {
+    /// https://www.w3.org/TR/wai-aria-1.2/#generic
+    GenericRole {
+        PROPS: [],
+        ROLES: ["structure"],
+        CONCEPTS: &[("div", &[]), ("span", &[])],
+    }
+}
+
+define_role! {
+    /// https://www.w3.org/TR/wai-aria-1.2/#complementary
+    ComplementaryRole {
+        PROPS: [],
+        ROLES: ["landmark"],
+    }
+}
+
+define_role! {
+    /// https://www.w3.org/TR/wai-aria-1.2/#blockquote
+    BlockQuoteRole {
+        PROPS: [],
+        ROLES: ["section"],
+        CONCEPTS: &[("blockquote", &[])],
+    }
+}
+
+define_role! {
+    /// https://www.w3.org/TR/wai-aria-1.2/#caption
+    CaptionRole {
+        PROPS: [],
+        ROLES: ["section"],
+        CONCEPTS: &[("caption", &[]), ("figcaption", &[])],
+    }
+}
+
+define_role! {
+    /// https://www.w3.org/TR/wai-aria-1.2/#code
+    CodeRole {
+        PROPS: [],
+        ROLES: ["section"],
+        CONCEPTS: &[("code", &[])],
+    }
+}
+
+define_role! {
+    /// https://www.w3.org/TR/wai-aria-1.2/#deletion
+    DeletionRole {
+        PROPS: [],
+        ROLES: ["section"],
+        CONCEPTS: &[("del", &[])],
+    }
+}
+
+define_role! {
+    /// https://www.w3.org/TR/wai-aria-1.2/#document
+    DocumentRole {
+        PROPS: [],
+        ROLES: ["structure"],
+    }
+}
+
+define_role! {
+    /// https://www.w3.org/TR/wai-aria-1.2/#emphasis
+    EmphasisRole {
+        PROPS: [],
+        ROLES: ["section"],
+        CONCEPTS: &[("em", &[])],
+    }
+}
+
+define_role! {
+    /// https://www.w3.org/TR/wai-aria-1.2/#insertion
+    InsertionRole {
+        PROPS: [],
+        ROLES: ["section"],
+        CONCEPTS: &[("ins", &[])],
+    }
+}
+
+define_role! {
+    /// https://www.w3.org/TR/wai-aria-1.2/#math
+    MathRole {
+        PROPS: [],
+        ROLES: ["section"],
+    }
+}
+
+define_role! {
+    /// https://www.w3.org/TR/wai-aria-1.2/#strong
+    StrongRole {
+        PROPS: [],
+        ROLES: ["section"],
+        CONCEPTS: &[("strong", &[])],
+    }
+}
+
+define_role! {
+    /// https://www.w3.org/TR/wai-aria-1.2/#subscript
+    SubScriptRole {
+        PROPS: [],
+        ROLES: ["section"],
+        CONCEPTS: &[("sub", &[]), ("sup", &[])],
+    }
+}
+
+define_role! {
+    /// https://www.w3.org/TR/wai-aria-1.2/#superscript
+    SuperScriptRole {
+        PROPS: [],
+        ROLES: ["section"],
+        CONCEPTS: &[("sub", &[]), ("sup", &[])],
+    }
+}
+
+define_role! {
+    /// https://w3c.github.io/graphics-aria/#graphics-document
+    GraphicsDocumentRole {
+        PROPS: [],
+        ROLES: ["document"],
+        CONCEPTS: &[("graphics-object", &[]), ("img", &[]), ("article", &[])],
+    }
+}
+
+define_role! {
+    /// https://www.w3.org/TR/wai-aria-1.2/#time
+    TimeRole {
+        PROPS: [],
+        ROLES: ["section"],
+        CONCEPTS: &[("time", &[])],
+    }
+}
+
+define_role! {
+    /// https://www.w3.org/TR/wai-aria-1.2/#paragraph
+    ParagraphRole {
+        PROPS: [],
+        ROLES: ["section"],
+        CONCEPTS: &[("p", &[])],
+    }
+}
+
+define_role! {
+    /// https://www.w3.org/TR/wai-aria-1.2/#status
+    StatusRole {
+        PROPS: [],
+        ROLES: ["section"],
+    }
+}
+
+define_role! {
+    /// https://www.w3.org/TR/wai-aria-1.2/#meter
+    MeterRole {
+        PROPS: [],
+        ROLES: ["range"],
+        CONCEPTS: &[("meter", &[])],
+    }
+}
+
+define_role! {
+    /// https://www.w3.org/TR/wai-aria-1.2/#presentation
+    PresentationRole {
+        PROPS: [],
+        ROLES: ["structure"],
+    }
+}
+
+define_role! {
+    /// https://www.w3.org/TR/wai-aria-1.2/#region
+    RegionRole {
+        PROPS: [],
+        ROLES: ["landmark"],
+        CONCEPTS: &[("section", &[])],
+    }
+}
+
 impl<'a> AriaRoles {
     /// These are roles that will contain "concepts".
     pub(crate) const ROLE_WITH_CONCEPTS: &'a [&'a str] = &[
@@ -636,12 +817,139 @@ impl<'a> AriaRoles {
             "textbox" => &TextboxRole as &dyn AriaRoleDefinition,
             "toolbar" => &ToolbarRole as &dyn AriaRoleDefinition,
             "tree" => &TreeRole as &dyn AriaRoleDefinition,
+            "region" => &RegionRole as &dyn AriaRoleDefinition,
+            "presentation" => &PresentationRole as &dyn AriaRoleDefinition,
+            "document" => &DocumentRole as &dyn AriaRoleDefinition,
             _ => return None,
         };
         Some(result)
     }
 
-    /// Given a role, it return whether this role is interactive
+    /// Given a element and attributes, it returns the metadata of the element's implicit role.
+    ///
+    /// Check: https://www.w3.org/TR/html-aria/#docconformance
+    pub fn get_implicit_role(
+        &self,
+        element: &str,
+        // To generate `attributes`, you can use `rome_js_analyze::aria_services::AriaServices::extract_defined_attributes`
+        attributes: &HashMap<String, Vec<String>>,
+    ) -> Option<&'static dyn AriaRoleDefinition> {
+        let result = match element {
+            "article" => &ArticleRole as &dyn AriaRoleDefinition,
+            "aside" => &ComplementaryRole as &dyn AriaRoleDefinition,
+            "blockquote" => &BlockQuoteRole as &dyn AriaRoleDefinition,
+            "button" => &ButtonRole as &dyn AriaRoleDefinition,
+            "caption" => &CaptionRole as &dyn AriaRoleDefinition,
+            "code" => &CodeRole as &dyn AriaRoleDefinition,
+            "datalist" => &ListBoxRole as &dyn AriaRoleDefinition,
+            "del" => &DeletionRole as &dyn AriaRoleDefinition,
+            "dfn" => &TermRole as &dyn AriaRoleDefinition,
+            "dialog" => &DialogRole as &dyn AriaRoleDefinition,
+            "em" => &EmphasisRole as &dyn AriaRoleDefinition,
+            "figure" => &FigureRole as &dyn AriaRoleDefinition,
+            "form" => &FormRole as &dyn AriaRoleDefinition,
+            "hr" => &SeparatorRole as &dyn AriaRoleDefinition,
+            "html" => &DocumentRole as &dyn AriaRoleDefinition,
+            "ins" => &InsertionRole as &dyn AriaRoleDefinition,
+            "main" => &MainRole as &dyn AriaRoleDefinition,
+            "math" => &MathRole as &dyn AriaRoleDefinition,
+            "menu" => &ListRole as &dyn AriaRoleDefinition,
+            "meter" => &MeterRole as &dyn AriaRoleDefinition,
+            "nav" => &NavigationRole as &dyn AriaRoleDefinition,
+            "ul" | "ol" => &ListRole as &dyn AriaRoleDefinition,
+            "li" => &ListItemRole as &dyn AriaRoleDefinition,
+            "optgroup" => &GroupRole as &dyn AriaRoleDefinition,
+            "output" => &StatusRole as &dyn AriaRoleDefinition,
+            "p" => &ParagraphRole as &dyn AriaRoleDefinition,
+            "progress" => &ProgressBarRole as &dyn AriaRoleDefinition,
+            "strong" => &StrongRole as &dyn AriaRoleDefinition,
+            "sub" => &SubScriptRole as &dyn AriaRoleDefinition,
+            "sup" => &SuperScriptRole as &dyn AriaRoleDefinition,
+            "svg" => &GraphicsDocumentRole as &dyn AriaRoleDefinition,
+            "table" => &TableRole as &dyn AriaRoleDefinition,
+            "textarea" => &TextboxRole as &dyn AriaRoleDefinition,
+            "tr" => &RowRole as &dyn AriaRoleDefinition,
+            "time" => &TimeRole as &dyn AriaRoleDefinition,
+            "address" | "details" | "fieldset" => &GroupRole as &dyn AriaRoleDefinition,
+            "h1" | "h2" | "h3" | "h4" | "h5" | "h6" => &HeadingRole as &dyn AriaRoleDefinition,
+            "tbody" | "tfoot" | "thead" => &RowGroupRole as &dyn AriaRoleDefinition,
+            "input" => {
+                let type_values = attributes.get("type")?;
+                match type_values.first()?.as_str() {
+                    "checkbox" => &CheckboxRole as &dyn AriaRoleDefinition,
+                    "number" => &SpinButtonRole as &dyn AriaRoleDefinition,
+                    "radio" => &RadioRole as &dyn AriaRoleDefinition,
+                    "range" => &SliderRole as &dyn AriaRoleDefinition,
+                    "button" | "image" | "reset" | "submit" => {
+                        &ButtonRole as &dyn AriaRoleDefinition
+                    }
+                    "search" => match attributes.get("list") {
+                        Some(_) => &ComboBoxRole as &dyn AriaRoleDefinition,
+                        _ => &SearchboxRole as &dyn AriaRoleDefinition,
+                    },
+                    "email" | "tel" | "url" => match attributes.get("list") {
+                        Some(_) => &ComboBoxRole as &dyn AriaRoleDefinition,
+                        _ => &TextboxRole as &dyn AriaRoleDefinition,
+                    },
+                    "text" => &TextboxRole as &dyn AriaRoleDefinition,
+                    _ => &TextboxRole as &dyn AriaRoleDefinition,
+                }
+            }
+            "a" | "area" => match attributes.get("href") {
+                Some(_) => &LinkRole as &dyn AriaRoleDefinition,
+                _ => &GenericRole as &dyn AriaRoleDefinition,
+            },
+            "img" => match attributes.get("alt") {
+                Some(values) => {
+                    if values.iter().any(|x| !x.is_empty()) {
+                        &ImgRole as &dyn AriaRoleDefinition
+                    } else {
+                        &PresentationRole as &dyn AriaRoleDefinition
+                    }
+                }
+                None => &ImgRole as &dyn AriaRoleDefinition,
+            },
+            "section" => {
+                let has_accessible_name = attributes.get("aria-labelledby").is_some()
+                    || attributes.get("aria-label").is_some()
+                    || attributes.get("title").is_some();
+                if has_accessible_name {
+                    &RegionRole as &dyn AriaRoleDefinition
+                } else {
+                    return None;
+                }
+            }
+            "select" => {
+                let size = match attributes.get("size") {
+                    Some(size) => size
+                        .first()
+                        .unwrap_or(&"0".to_string())
+                        .parse::<i32>()
+                        .ok()?,
+                    None => 0,
+                };
+                let multiple = attributes.get("multiple");
+
+                if multiple.is_none() && size <= 1 {
+                    &ComboBoxRole as &dyn AriaRoleDefinition
+                } else {
+                    &ListBoxRole as &dyn AriaRoleDefinition
+                }
+            }
+            "b" | "bdi" | "bdo" | "body" | "data" | "div" | "hgroup" | "i" | "q" | "samp"
+            | "small" | "span" | "u" => &GenericRole as &dyn AriaRoleDefinition,
+            "header" | "footer" => {
+                // This crate does not support checking a descendant of an element.
+                // header (maybe BannerRole): https://www.w3.org/WAI/ARIA/apg/patterns/landmarks/examples/banner.html
+                // footer (maybe ContentInfoRole): https://www.w3.org/WAI/ARIA/apg/patterns/landmarks/examples/contentinfo.html
+                &GenericRole as &dyn AriaRoleDefinition
+            }
+            _ => return None,
+        };
+        Some(result)
+    }
+
+    /// Given a role, it returns whether this role is interactive
     pub fn is_role_interactive(&self, role: &str) -> bool {
         let role = self.get_role(role);
         if let Some(role) = role {
@@ -651,10 +959,10 @@ impl<'a> AriaRoles {
         }
     }
 
-    /// Given the name of element, the function tell whether it's interactive
+    /// Given the name of element, the function tells whether it's interactive
     pub fn is_not_interactive_element(&self, element_name: &str) -> bool {
         // <header> elements do not technically have semantics, unless the
-        // element is a direct descendant of <body>, and this plugin cannot
+        // element is a direct descendant of <body>, and this crate cannot
         // reliably test that.
         //
         // Check: https://www.w3.org/TR/wai-aria-practices/examples/landmarks/banner.html
@@ -722,6 +1030,8 @@ pub struct AriaRoles;
 
 #[cfg(test)]
 mod test {
+    use std::collections::HashMap;
+
     use crate::AriaRoles;
 
     #[test]
@@ -735,5 +1045,30 @@ mod test {
         assert!(aria_roles.is_not_interactive_element("h4"));
         assert!(aria_roles.is_not_interactive_element("h5"));
         assert!(aria_roles.is_not_interactive_element("h6"));
+    }
+
+    #[test]
+    fn test_get_implicit_role() {
+        let aria_roles = AriaRoles {};
+
+        // No attributes
+        let implicit_role = aria_roles
+            .get_implicit_role("button", &HashMap::new())
+            .unwrap();
+        assert_eq!(implicit_role.type_name(), "rome_aria::roles::ButtonRole");
+
+        // <input type="search">
+        let mut attributes = HashMap::new();
+        attributes.insert("type".to_string(), vec!["search".to_string()]);
+        let implicit_role = aria_roles.get_implicit_role("input", &attributes).unwrap();
+        assert_eq!(implicit_role.type_name(), "rome_aria::roles::SearchboxRole");
+
+        // <select name="animals" multiple size="4">
+        let mut attributes = HashMap::new();
+        attributes.insert("name".to_string(), vec!["animals".to_string()]);
+        attributes.insert("multiple".to_string(), vec!["".to_string()]);
+        attributes.insert("size".to_string(), vec!["4".to_string()]);
+        let implicit_role = aria_roles.get_implicit_role("select", &attributes).unwrap();
+        assert_eq!(implicit_role.type_name(), "rome_aria::roles::ListBoxRole");
     }
 }
