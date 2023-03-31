@@ -911,6 +911,7 @@ impl VisitNode<JsonLanguage> for Nursery {
             &[
                 "recommended",
                 "all",
+                "noAriaUnsupportedElements",
                 "noAssignInExpressions",
                 "noBannedTypes",
                 "noClassAssign",
@@ -978,6 +979,24 @@ impl VisitNode<JsonLanguage> for Nursery {
             "all" => {
                 self.all = Some(self.map_to_boolean(&value, name_text, diagnostics)?);
             }
+            "noAriaUnsupportedElements" => match value {
+                AnyJsonValue::JsonStringValue(_) => {
+                    let mut configuration = RuleConfiguration::default();
+                    self.map_to_known_string(&value, name_text, &mut configuration, diagnostics)?;
+                    self.no_aria_unsupported_elements = Some(configuration);
+                }
+                AnyJsonValue::JsonObjectValue(_) => {
+                    let mut configuration = RuleConfiguration::default();
+                    self.map_to_object(&value, name_text, &mut configuration, diagnostics)?;
+                    self.no_aria_unsupported_elements = Some(configuration);
+                }
+                _ => {
+                    diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
+                        "object or string",
+                        value.range(),
+                    ));
+                }
+            },
             "noAssignInExpressions" => match value {
                 AnyJsonValue::JsonStringValue(_) => {
                     let mut configuration = RuleConfiguration::default();
