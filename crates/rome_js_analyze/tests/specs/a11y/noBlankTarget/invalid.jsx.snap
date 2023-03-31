@@ -1,0 +1,142 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: invalid.jsx
+---
+# Input
+```js
+<>
+    <a href='http://external.link' target='_blank'>child</a>
+    <a href='http://external.link' target='_BLank'>child</a>
+    <a href={dynamicLink} target='_blank'>child</a>
+    <a href="http://external.link" target="_blank">child</a>
+    <a href="http://external.link" target="_blank" rel="noopener">child</a>
+    <a {...spread} href="http://external.link" target="_blank" rel="noopener">child</a>
+</>
+```
+
+# Diagnostics
+```
+invalid.jsx:2:36 lint/a11y/noBlankTarget  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid using target="_blank" without rel="noreferrer".
+  
+    1 │ <>
+  > 2 │     <a href='http://external.link' target='_blank'>child</a>
+      │                                    ^^^^^^^^^^^^^^^
+    3 │     <a href='http://external.link' target='_BLank'>child</a>
+    4 │     <a href={dynamicLink} target='_blank'>child</a>
+  
+  i Opening external links in new tabs without rel="noreferrer" is a security risk. See the explanation for more details.
+  
+  i Safe fix: Add the rel="noreferrer" attribute.
+  
+    2 │ ····<a·href='http://external.link'·target='_blank'·rel="noreferrer">child</a>
+      │                                                   +++++++++++++++++          
+
+```
+
+```
+invalid.jsx:3:36 lint/a11y/noBlankTarget  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid using target="_blank" without rel="noreferrer".
+  
+    1 │ <>
+    2 │     <a href='http://external.link' target='_blank'>child</a>
+  > 3 │     <a href='http://external.link' target='_BLank'>child</a>
+      │                                    ^^^^^^^^^^^^^^^
+    4 │     <a href={dynamicLink} target='_blank'>child</a>
+    5 │     <a href="http://external.link" target="_blank">child</a>
+  
+  i Opening external links in new tabs without rel="noreferrer" is a security risk. See the explanation for more details.
+  
+  i Safe fix: Add the rel="noreferrer" attribute.
+  
+    3 │ ····<a·href='http://external.link'·target='_BLank'·rel="noreferrer">child</a>
+      │                                                   +++++++++++++++++          
+
+```
+
+```
+invalid.jsx:4:27 lint/a11y/noBlankTarget  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid using target="_blank" without rel="noreferrer".
+  
+    2 │     <a href='http://external.link' target='_blank'>child</a>
+    3 │     <a href='http://external.link' target='_BLank'>child</a>
+  > 4 │     <a href={dynamicLink} target='_blank'>child</a>
+      │                           ^^^^^^^^^^^^^^^
+    5 │     <a href="http://external.link" target="_blank">child</a>
+    6 │     <a href="http://external.link" target="_blank" rel="noopener">child</a>
+  
+  i Opening external links in new tabs without rel="noreferrer" is a security risk. See the explanation for more details.
+  
+  i Safe fix: Add the rel="noreferrer" attribute.
+  
+    4 │ ····<a·href={dynamicLink}·target='_blank'·rel="noreferrer">child</a>
+      │                                          +++++++++++++++++          
+
+```
+
+```
+invalid.jsx:5:36 lint/a11y/noBlankTarget  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid using target="_blank" without rel="noreferrer".
+  
+    3 │     <a href='http://external.link' target='_BLank'>child</a>
+    4 │     <a href={dynamicLink} target='_blank'>child</a>
+  > 5 │     <a href="http://external.link" target="_blank">child</a>
+      │                                    ^^^^^^^^^^^^^^^
+    6 │     <a href="http://external.link" target="_blank" rel="noopener">child</a>
+    7 │     <a {...spread} href="http://external.link" target="_blank" rel="noopener">child</a>
+  
+  i Opening external links in new tabs without rel="noreferrer" is a security risk. See the explanation for more details.
+  
+  i Safe fix: Add the rel="noreferrer" attribute.
+  
+    5 │ ····<a·href="http://external.link"·target="_blank"·rel="noreferrer">child</a>
+      │                                                   +++++++++++++++++          
+
+```
+
+```
+invalid.jsx:6:36 lint/a11y/noBlankTarget  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid using target="_blank" without rel="noreferrer".
+  
+    4 │     <a href={dynamicLink} target='_blank'>child</a>
+    5 │     <a href="http://external.link" target="_blank">child</a>
+  > 6 │     <a href="http://external.link" target="_blank" rel="noopener">child</a>
+      │                                    ^^^^^^^^^^^^^^^
+    7 │     <a {...spread} href="http://external.link" target="_blank" rel="noopener">child</a>
+    8 │ </>
+  
+  i Opening external links in new tabs without rel="noreferrer" is a security risk. See the explanation for more details.
+  
+  i Safe fix: Add the "noreferrer" to the existing attribute.
+  
+    6 │ ····<a·href="http://external.link"·target="_blank"·rel="noreferrer·noopener">child</a>
+      │                                                         +++++++++++                   
+
+```
+
+```
+invalid.jsx:7:48 lint/a11y/noBlankTarget  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid using target="_blank" without rel="noreferrer".
+  
+    5 │     <a href="http://external.link" target="_blank">child</a>
+    6 │     <a href="http://external.link" target="_blank" rel="noopener">child</a>
+  > 7 │     <a {...spread} href="http://external.link" target="_blank" rel="noopener">child</a>
+      │                                                ^^^^^^^^^^^^^^^
+    8 │ </>
+  
+  i Opening external links in new tabs without rel="noreferrer" is a security risk. See the explanation for more details.
+  
+  i Safe fix: Add the "noreferrer" to the existing attribute.
+  
+    7 │ ····<a·{...spread}·href="http://external.link"·target="_blank"·rel="noreferrer·noopener">child</a>
+      │                                                                     +++++++++++                   
+
+```
+
+

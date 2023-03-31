@@ -87,6 +87,7 @@ impl WorkspaceServer {
     fn build_capability_error<'a>(
         &'a self,
         path: &'a RomePath,
+        // feature_name: &'a str,
     ) -> impl FnOnce() -> WorkspaceError + 'a {
         move || {
             let language_hint = self

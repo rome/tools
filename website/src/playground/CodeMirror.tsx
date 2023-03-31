@@ -1,15 +1,15 @@
+import { useTheme } from "./utils";
+import type { Diagnostic as CodeMirrorDiagnostic } from "@codemirror/lint";
+import { lintGutter, setDiagnostics } from "@codemirror/lint";
+import type { Extension } from "@codemirror/state";
+import { EditorView } from "@codemirror/view";
 import type { Diagnostic as RomeDiagnostic } from "@rometools/wasm-web";
 import type {
 	ReactCodeMirrorProps,
 	ReactCodeMirrorRef,
 } from "@uiw/react-codemirror";
-import type { Extension } from "@codemirror/state";
-import type { Diagnostic as CodeMirrorDiagnostic } from "@codemirror/lint";
-import { EditorView } from "@codemirror/view";
 import RealCodeMirror from "@uiw/react-codemirror";
 import { forwardRef, useEffect, useMemo, useState } from "react";
-import { useTheme } from "./utils";
-import { lintGutter, setDiagnostics } from "@codemirror/lint";
 
 interface Props extends ReactCodeMirrorProps {
 	diagnostics?: RomeDiagnostic[];

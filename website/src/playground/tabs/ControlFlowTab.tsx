@@ -1,6 +1,6 @@
-import { useMemo } from "react";
-import mermaid from "mermaid";
 import { useTheme } from "../utils";
+import mermaid from "mermaid";
+import { useMemo } from "react";
 
 interface Props {
 	graph: string;

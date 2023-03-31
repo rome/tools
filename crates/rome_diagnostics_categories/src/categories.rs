@@ -99,9 +99,11 @@ define_categories! {
     "lint/nursery/noUselessCatch": "https://docs.rome.tools/lint/rules/noUselessCatch",
 "lint/nursery/noParameterAssign": "https://docs.rome.tools/lint/rules/noParameterAssign",
 "lint/nursery/noNamespace": "https://docs.rome.tools/lint/rules/noNamespace",
+"lint/nursery/noConfusingArrow": "https://docs.rome.tools/lint/rules/noConfusingArrow",
     // Insert new nursery rule here
-    "lint/nursery/noRedeclaration": "https://docs.rome.tools/lint/rules/noRedeclaration",
+    "lint/nursery/noRedeclare": "https://docs.rome.tools/lint/rules/noRedeclare",
     "lint/nursery/useNamespaceKeyword": "https://docs.rome.tools/lint/rules/useNamespaceKeyword",
+    "lint/nursery/noRedundantRoles": "https://docs.rome.tools/lint/rules/noRedundantRoles",
 
     // performance
     "lint/performance/noDelete": "https://docs.rome.tools/lint/rules/noDelete",

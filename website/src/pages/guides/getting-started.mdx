@@ -24,12 +24,14 @@ The fastest way to download Rome is to use `npm` or your preferred package manag
 Run the following commands in a directory with a `package.json` file to install Rome.
 
 <PackageManagerCommand
-  npm="install --save-dev rome"
-  pnpm="add --save-dev rome"
-  yarn="add --dev rome"
+  npm="install --save-dev --save-exact rome"
+  pnpm="add --save-dev --save-exact rome"
+  yarn="add --dev --exact rome"
 />
 
 > **Note**: It is also possible to install Rome globally rather than locally. However, this is not recommended.
+
+It's **highly recommended** to not use range operators when installing Rome. Check the [versioning page](/internals/versioning/) for more info.
 
 You can now run Rome with:
 
@@ -49,6 +51,10 @@ After running the `init` command, you'll now have a new `rome.json` file in your
 
 ```json
 {
+  "$schema": "./node_modules/rome/configuration_schema.json",
+  "organizeImports": {
+    "enabled": false
+  },
   "linter": {
     "enabled": true,
     "rules": {
@@ -87,7 +93,7 @@ Install our official [Rome VS Code extension](https://marketplace.visualstudio.c
 
 To make Rome the default formatter open a supported file (JavaScript or TypeScript) and:
 
-* open the *Command Palette* (View or Command/Ctrl + Shift + P)
+* open the *Command Palette* (View or <kbd>Ctrl</kbd>/<kbd title="Cmd">⌘</kbd>+<kbd title="Shift">⇧</kbd>+<kbd>P</kbd>)
 * select  *Format Document With...*
 * select *Configure Default Formatter*
 * select *Rome*.

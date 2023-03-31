@@ -1,24 +1,16 @@
-import type { PlaygroundProps, RomeAstSyntacticData } from "./types";
-import type { ReactCodeMirrorRef } from "@uiw/react-codemirror";
 import CodeMirror from "./CodeMirror";
-import type { ViewUpdate } from "@codemirror/view";
-import * as codeMirrorLangRomeAST from "codemirror-lang-rome-ast";
-import { javascript } from "@codemirror/lang-javascript";
-import { json } from "@codemirror/lang-json";
+import DiagnosticsPane from "./components/DiagnosticsPane";
+import Resizable from "./components/Resizable";
 import SettingsPane from "./components/SettingsPane";
-import {
-	createRef,
-	useCallback,
-	useEffect,
-	useMemo,
-	useRef,
-	useState,
-} from "react";
-import { EditorSelection } from "@codemirror/state";
-import SyntaxTab from "./tabs/SyntaxTab";
+import Tabs from "./components/Tabs";
 import ControlFlowTab from "./tabs/ControlFlowTab";
+import DiagnosticsConsoleTab from "./tabs/DiagnosticsConsoleTab";
+import DiagnosticsListTab from "./tabs/DiagnosticsListTab";
 import FormatterCodeTab from "./tabs/FormatterCodeTab";
 import FormatterIRTab from "./tabs/FormatterIRTab";
+import SettingsTab from "./tabs/SettingsTab";
+import SyntaxTab from "./tabs/SyntaxTab";
+import type { PlaygroundProps, RomeAstSyntacticData } from "./types";
 import {
 	getCurrentCode,
 	getFileState,
@@ -27,12 +19,20 @@ import {
 	isTypeScriptFilename,
 	useWindowSize,
 } from "./utils";
-import Resizable from "./components/Resizable";
-import DiagnosticsPane from "./components/DiagnosticsPane";
-import Tabs from "./components/Tabs";
-import DiagnosticsConsoleTab from "./tabs/DiagnosticsConsoleTab";
-import DiagnosticsListTab from "./tabs/DiagnosticsListTab";
-import SettingsTab from "./tabs/SettingsTab";
+import { javascript } from "@codemirror/lang-javascript";
+import { json } from "@codemirror/lang-json";
+import { EditorSelection } from "@codemirror/state";
+import type { ViewUpdate } from "@codemirror/view";
+import type { ReactCodeMirrorRef } from "@uiw/react-codemirror";
+import * as codeMirrorLangRomeAST from "codemirror-lang-rome-ast";
+import {
+	createRef,
+	useCallback,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from "react";
 
 export default function PlaygroundLoader({
 	setPlaygroundState,

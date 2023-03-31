@@ -3,7 +3,7 @@ use crate::documents::Document;
 use crate::extension_settings::ExtensionSettings;
 use crate::extension_settings::CONFIGURATION_SECTION;
 use crate::utils;
-use anyhow::{anyhow, Result};
+use anyhow::Result;
 use futures::stream::futures_unordered::FuturesUnordered;
 use futures::StreamExt;
 use rome_analyze::RuleCategories;
@@ -240,9 +240,14 @@ impl Session {
     }
 
     pub(crate) fn file_path(&self, url: &lsp_types::Url) -> Result<RomePath> {
-        let mut path_to_file = url
-            .to_file_path()
-            .map_err(|()| anyhow!("failed to convert {url} to a filesystem path"))?;
+        let mut path_to_file = match url.to_file_path() {
+            Err(_) => {
+                // If we can't create a path, it's probably because the file doesn't exist.
+                // It can be a newly created file that it's not on disk
+                PathBuf::from(url.path())
+            }
+            Ok(path) => path,
+        };
 
         let relative_path = self.initialize_params.get().and_then(|initialize_params| {
             let root_uri = initialize_params.root_uri.as_ref()?;

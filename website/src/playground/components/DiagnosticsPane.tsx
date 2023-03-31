@@ -1,9 +1,9 @@
-import type { Diagnostic } from "@rometools/wasm-web";
-import type { ReactCodeMirrorRef } from "@uiw/react-codemirror";
-import { useState } from "react";
 import DiagnosticsConsoleTab from "../tabs/DiagnosticsConsoleTab";
 import DiagnosticsListTab from "../tabs/DiagnosticsListTab";
 import Tabs from "./Tabs";
+import type { Diagnostic } from "@rometools/wasm-web";
+import type { ReactCodeMirrorRef } from "@uiw/react-codemirror";
+import { useState } from "react";
 
 interface Props {
 	editorRef: React.RefObject<ReactCodeMirrorRef>;

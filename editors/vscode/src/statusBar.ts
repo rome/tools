@@ -1,7 +1,7 @@
+import { Commands } from "./commands";
 import { StatusBarAlignment, StatusBarItem, ThemeColor, window } from "vscode";
 import { State } from "vscode-languageclient";
 import { LanguageClient } from "vscode-languageclient/node";
-import { Commands } from "./commands";
 
 /**
  * Enumeration of all the status the extension can display

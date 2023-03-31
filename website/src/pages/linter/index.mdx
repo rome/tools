@@ -25,12 +25,18 @@ Rome Check: Run the linter on a set of files
 USAGE:
     rome check <INPUTS...>
 
-    INPUTS can be one or more filesystem path, each pointing to a single file or an entire directory to be searched recursively for supported files
+    INPUTS can be one or more filesystem paths, each pointing to a single file or an entire directory.
+
+EXAMPLES:
+    rome check ./scripts/file.js
+    rome check ./
+    rome check ./src ./internal ./scripts
 
 OPTIONS:
     --apply                       Apply safe fixes
-    --apply-suggested             Apply safe and suggested fixes
-    --max-diagnostics             Cap the amount of diagnostics displayed - default 20
+    --apply-unsafe                Apply safe and unsafe fixes
+    --max-diagnostics             Cap the amount of diagnostics displayed (default: 20)
+    --config-path                 Set the filesystem path to the directory of the rome.json configuration file
     --verbose                     Print additional verbose advices on diagnostics
 
 ```

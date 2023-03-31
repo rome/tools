@@ -1,6 +1,6 @@
+import * as fs from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import * as fs from "node:fs";
 
 const ROMECLI_ROOT = resolve(fileURLToPath(import.meta.url), "../..");
 const MANIFEST_PATH = resolve(ROMECLI_ROOT, "package.json");

@@ -146,16 +146,9 @@ _**your test cases are placed inside the wrong group, you won't see any diagnost
 
 Since each new rule will start from `nursery`, that's where we start.
 If you used `just new-lintrule`, a folder that use the name of the rule should exist.
+Otherwise, create a folder called `myRuleName/`, and then create one or more files where you want to create different cases.
 
-Otherwise, you have two options:
-
-- Create a single file called like the rule name, e.g. `myRuleName.js`, `myRuleName.tsx`, etc.
-  The extension of the file matters based on which kind of file you need to test;
-
-- Create a folder called `myRuleName/`, and then create various files where you want to create different cases.
-  These options are useful if your rules target different super languages, or you want to split your cases among different files.
-
-If you chose to create a folder, a common pattern is to create files prefixed by `invalid` or `valid`.
+A common pattern is to create files prefixed by `invalid` or `valid`.
 The files prefixed by `invalid` contain code that are reported by the rule.
 The files prefixed by `valid` contain code that are not reported by the rule.
 

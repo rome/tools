@@ -11,17 +11,17 @@ description: Available commands and arguments in the Rome CLI.
 
 ### `rome init`
 
-Helps you to set up Rome for a new project by guiding you through the creation of a new `rome.json` [configuration](/configuration) file.
+Help you to set up Rome for a new project by guiding you through the creation of a new `rome.json` [configuration](/configuration) file.
 
 The command fails if the project already has a `rome.json` configuration file.
 
 ### `rome version`
 
-Prints the version of the CLI and whether there's a server (daemon) connected
+Print the version of the CLI and whether there's a server (daemon) connected
 
 ### `rome rage`
 
-Prints information for debugging purpose
+Print information for debugging purpose
 
 ### `rome lsp-proxy`
 
@@ -31,15 +31,15 @@ This command is useful to interact with the Rome server when developing editors/
 
 ### `rome format`
 
-Runs the formatter on a set of files.
+Run the formatter on a set of files.
 
 ### `rome check`
 
-Runs the linter on a set of files and reports errors and warnings to the console.
+Run the linter on a set of files and reports errors and warnings to the console.
 
 ### `rome ci`
 
-Runs the linter and verifies the formatting of a set of files. It reports errors to the console. If any errors are found the process exits with a code of `1`.
+Run the linter and verifies the formatting of a set of files. It reports errors to the console. If any errors are found the process exits with a code of `1`.
 
 This command is intended to be used in CI workflows.
 
@@ -51,13 +51,15 @@ Start the Rome [daemon](/internals/architecture#daemon) server
 
 Stop the Rome [daemon](/internals/architecture#deamon) server
 
-## Common Options
+## Global Options
 
-### `--colors=<off|force>`
+### `--colors`
 
 Set the formatting mode for markup: `off` prints everything as plain text,
 `force` forces the formatting of markup using ANSI even if the console output
 is determined to be incompatible
+
+> Default: `force`
 
 ### `--use-server`
 
@@ -69,14 +71,23 @@ The maximum allowed size for source code files in bytes.
 
 > Default: 1024*1024 bytes (1 MB)
 
+### `--config-path`
+
+Tell Rome in which path to find the configuration file `rome.json`.
+
+> **Warning**: when passing `--config-path`, the auto discovery of the `rome.json` file is disabled.
+
+If Rome doesn't find a `rome.json`, it will abort the operation and exit with and error code.
+
+
 ## Global Options
 
 Use these flags to get information about the Rome CLI.
 
 ### `--version`
 
-Prints the Rome version and exits.
+Print the Rome version and exits.
 
 ### `--help`
 
-Prints the help message and exits.
+Print the help message and exits.

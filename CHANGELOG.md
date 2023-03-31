@@ -1,5 +1,141 @@
 # Rome changelog
 
+## [Unreleased]
+
+### CLI
+### Configuration
+### Editors
+### Formatter
+### Linter
+#### New rules
+- [`noConfusingArrow`](https://docs.rome.tools/lint/rules/noConfusingArrow/)
+- [`noRedundantRoles`](https://docs.rome.tools/lint/rules/noRedundantRoles/)
+### Parser
+### VSCode
+### JavaScript APIs
+
+## 12.0.0
+
+### CLI
+
+##### Breaking changes
+
+- Review how the traversal of the file system works. Now Rome won't navigate folders that are ignored.
+	While this change is a bug fix, this could affect how the `ignore` entries are defined inside a project. We suggest to review them
+	and make sure they still work.
+- `--apply-suggested` is now called `--apply-unsafe`
+- `rome check --apply` and `rome check --apply-unsafe` exits with non-zero code (error code)
+if there are still diagnostics to be addressed.
+
+##### Other changes
+
+- `rome check` now checks import statements. This is an experimental feature that needs to be
+	enabled via configuration. Import can be sorted using `rome check --apply-unsafe`
+- Rome is able to auto discover the configuration file. If Rome doesn't fine a configuration in the
+working directory, it will try to find one in the parent directories.
+- Add a new global options called `--config-path`. It tells Rome to try and discover a `rome.json` file
+in the given path.
+	```shell
+	rome format --config-path=../../other/path/
+	rome check --config-path=../../other/path/
+	```
+
+### Configuration
+
+#### Other changes
+
+- Rome now uses the internal JSON parser to validate the configuration file. This means Rome won't
+	exit anymore if there are issues with the `rome.json` file, instead it will apply its defaults
+	to the sections that are incorrect.
+- Add `javascript.organizeImports`. This is an experimental feature and users need to opt-in.
+
+```json
+{
+  "organizeImports": {
+    "enabled": true,
+    "ignore": ["trickyFile.js"]
+  }
+}
+```
+- Add `linter.rules.all` and `linter.rules.[group].all`. These options allow to enable or disable **all**
+rules, or all rules for a **given group**. `all` and `recommended` can't be both `true`.
+
+
+```json
+{
+  "linter": {
+    "rules": {
+      "all": true,
+      "style" : {
+        "all": false
+      }
+    }
+  }
+}
+```
+
+The previous example will enable all rules and disable all rules that belong to the `style` group.
+
+### Editors
+
+##### Other changes
+
+- Add support to display diagnostics for JSON files.
+- Add support to format JSON files.
+- Pull diagnostics when parsing a `rome.json` file.
+- Imports sorting is not applied for files that are not supported or ignored.
+
+### Formatter
+
+- Add support for JSON files
+- Add support for TypeScript 4.7
+- Add support for TypeScript 5.0
+
+### Linter
+
+New rules are promoted, please check [#4239](https://github.com/rome/tools/pull/4239) for more
+details.
+- [lint/correctness/noUnsafeFinally](https://docs.rome.tools/lint/rules/noUnsafeFinally)
+- [lint/correctness/noConstructorReturn](https://docs.rome.tools/lint/rules/noConstructorReturn)
+- [lint/correctness/noPrecisionLoss](https://docs.rome.tools/lint/rules/noPrecisionLoss)
+- [lint/correctness/noVoidTypeReturn](https://docs.rome.tools/lint/rules/noVoidTypeReturn)
+- [lint/correctness/noStringCaseMismatch](https://docs.rome.tools/lint/rules/noStringCaseMismatch)
+- [lint/correctness/noSetterReturn](https://docs.rome.tools/lint/rules/noSetterReturn)
+- [lint/a11y/useHtmlLang](https://docs.rome.tools/lint/rules/useHtmlLang)
+- [lint/a11y/noDistractingElements](https://docs.rome.tools/lint/rules/noDistractingElements)
+- [lint/a11y/noHeaderScope](https://docs.rome.tools/lint/rules/noHeaderScope)
+- [lint/a11y/noAccessKey](https://docs.rome.tools/lint/rules/noAccessKey)
+- [lint/style/useExponentiationOperator](https://docs.rome.tools/lint/rules/useExponentiationOperator)
+- [lint/style/useNumericLiterals](https://docs.rome.tools/lint/rules/useNumericLiterals)
+- [lint/style/useDefaultParameterLast](https://docs.rome.tools/lint/rules/useDefaultParameterLast)
+- [lint/style/useConst](https://docs.rome.tools/lint/rules/useConst)
+- [lint/style/noVar](https://docs.rome.tools/lint/rules/noVar)
+- [lint/style/noNonNullAssertion](https://docs.rome.tools/lint/rules/noNonNullAssertion)
+- [lint/style/useEnumInitializers](https://docs.rome.tools/lint/rules/useEnumInitializers)
+- [lint/suspicious/noEmptyInterface](https://docs.rome.tools/lint/rules/noEmptyInterface)
+- [lint/suspicious/noExtraNonNullAssertion](https://docs.rome.tools/lint/rules/noExtraNonNullAssertion)
+- [lint/suspicious/noRedundantUseStrict](https://docs.rome.tools/lint/rules/noRedundantUseStrict)
+- [lint/suspicious/noConstEnum](https://docs.rome.tools/lint/rules/noConstEnum)
+- [lint/suspicious/useDefaultSwitchClauseLast](https://docs.rome.tools/lint/rules/useDefaultSwitchClauseLast)
+- [lint/suspicious/noDuplicateObjectKeys](https://docs.rome.tools/lint/rules/noDuplicateObjectKeys)
+
+
+### Parser
+
+- Support for TypeScript 4.7
+- Support for TypeScript 5.0
+
+### VSCode
+
+##### Other changes
+- Add a new option called `requireConfiguration`. Enabling this option will force Rome to require
+a configuration file in your workspace/project. If Rome doesn't find a `rome.json` file, it won't
+emit diagnostics.
+
+<<<<<<< HEAD
+
+=======
+>>>>>>> 9abb92e (release: 12.0.0 (#4002))
 ## 11.0.0
 
 ### CLI

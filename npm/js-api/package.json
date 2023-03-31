@@ -1,13 +1,14 @@
 {
   "name": "@rometools/js-api",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "JavaScript APIs for the Rome package",
   "scripts": {
     "tsc": "tsc --noEmit",
     "format": "cargo rome-cli-dev format ./ --write",
     "ci": "cargo rome-cli-dev ci ./src && tsc --noEmit",
     "check": "pnpm rome:check && tsc --noEmit",
-		"rome:check": "cargo rome-cli-dev check ./src",
+		"rome:check": "cargo rome-cli-dev check ./",
+		"check:apply": "cargo rome-cli-dev check ./ --apply-unsafe",
     "build:wasm-bundler-dev": "wasm-pack build --out-dir ../../npm/wasm-bundler --target bundler --dev --scope rometools ../../crates/rome_wasm",
     "build:wasm-bundler": "wasm-pack build --out-dir ../../npm/wasm-bundler --target bundler --release --scope rometools ../../crates/rome_wasm",
     "build:wasm-node-dev": "wasm-pack build --out-dir ../../npm/wasm-nodejs --target nodejs --dev --scope rometools ../../crates/rome_wasm",

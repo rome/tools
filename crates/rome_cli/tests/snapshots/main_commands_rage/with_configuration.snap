@@ -16,34 +16,35 @@ expression: content
 
 ```block
 CLI:
-  Version:              0.0.0
-  Color support:        **PLACEHOLDER**
+  Version:                      0.0.0
+  Color support:                **PLACEHOLDER**
 
 Platform:
-  CPU Architecture:     **PLACEHOLDER**
-  OS:                   **PLACEHOLDER**
+  CPU Architecture:             **PLACEHOLDER**
+  OS:                           **PLACEHOLDER**
 
 Environment:
-  ROME_LOG_DIR:         **PLACEHOLDER**
-  NO_COLOR:             **PLACEHOLDER**
-  TERM:                 **PLACEHOLDER**
-  JS_RUNTIME_VERSION:   unset
-  JS_RUNTIME_NAME:      unset
-  NODE_PACKAGE_MANAGER: unset
+  ROME_LOG_DIR:                 **PLACEHOLDER**
+  NO_COLOR:                     **PLACEHOLDER**
+  TERM:                         **PLACEHOLDER**
+  JS_RUNTIME_VERSION:           unset
+  JS_RUNTIME_NAME:              unset
+  NODE_PACKAGE_MANAGER:         unset
 
 Rome Configuration:
-  Status:               Loaded successfully
-  Formatter disabled:   true
-  Linter disabled:      false
+  Status:                       Loaded successfully
+  Formatter disabled:           true
+  Linter disabled:              false
+  Organize imports disabled:    true
 
 Server:
-  Version:              0.0.0
-  Name:                 rome_lsp
-  CPU Architecture:     **PLACEHOLDER**
-  OS:                   **PLACEHOLDER**
+  Version:                      0.0.0
+  Name:                         rome_lsp
+  CPU Architecture:             **PLACEHOLDER**
+  OS:                           **PLACEHOLDER**
 
 Workspace:
-  Open Documents:       0
+  Open Documents:               0
 ```
 
 

@@ -18,6 +18,16 @@
 
 <!-- Demonstrate the code is solid. Example: The exact commands you ran and their output. -->
 
+## Changelog
+
+<!--
+Read the following paragraph for more information: https://github.com/rome/tools/blob/main/CONTRIBUTING.md#changelog
+
+Tick the checkbox if your PR requires a new line in the changelog.
+-->
+
+- [ ] The PR requires a changelog line
+
 ## Documentation
 
 <!--

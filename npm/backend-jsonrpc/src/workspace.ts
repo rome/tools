@@ -373,6 +373,10 @@ export interface Nursery {
 	 */
 	noCommaOperator?: RuleConfiguration;
 	/**
+	 * Disallow arrow functions where they could be confused with comparisons.
+	 */
+	noConfusingArrow?: RuleConfiguration;
+	/**
 	 * Disallow labeled statements that are not loops.
 	 */
 	noConfusingLabels?: RuleConfiguration;
@@ -433,13 +437,17 @@ export interface Nursery {
 	 */
 	noPrototypeBuiltins?: RuleConfiguration;
 	/**
-	 * Eliminate variables that have multiple declarations in the same scope.
+	 * Disallow variable, function, class, and type redeclarations in the same scope.
 	 */
-	noRedeclaration?: RuleConfiguration;
+	noRedeclare?: RuleConfiguration;
 	/**
 	 * Enforce img alt prop does not contain the word "image", "picture", or "photo".
 	 */
 	noRedundantAlt?: RuleConfiguration;
+	/**
+	 * Enforce explicit role property is not the same as implicit/default role property on an element.
+	 */
+	noRedundantRoles?: RuleConfiguration;
 	/**
 	 * This rule allows you to specify global variable names that you don’t want to use in your application.
 	 */
@@ -936,8 +944,10 @@ export type Category =
 	| "lint/nursery/noUselessCatch"
 	| "lint/nursery/noParameterAssign"
 	| "lint/nursery/noNamespace"
-	| "lint/nursery/noRedeclaration"
+	| "lint/nursery/noConfusingArrow"
+	| "lint/nursery/noRedeclare"
 	| "lint/nursery/useNamespaceKeyword"
+	| "lint/nursery/noRedundantRoles"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"

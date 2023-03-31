@@ -1,14 +1,13 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
 assertion_line: 351
-expression: ambient-module.ts
+expression: ts-module-export.ts
 ---
 # Input
 ```js
 export module MyModule {
 	export function id() {}
 }
-
 ```
 
 

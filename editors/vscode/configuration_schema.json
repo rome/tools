@@ -510,6 +510,13 @@
 						{ "type": "null" }
 					]
 				},
+				"noConfusingArrow": {
+					"description": "Disallow arrow functions where they could be confused with comparisons.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"noConfusingLabels": {
 					"description": "Disallow labeled statements that are not loops.",
 					"anyOf": [
@@ -615,8 +622,8 @@
 						{ "type": "null" }
 					]
 				},
-				"noRedeclaration": {
-					"description": "Eliminate variables that have multiple declarations in the same scope.",
+				"noRedeclare": {
+					"description": "Disallow variable, function, class, and type redeclarations in the same scope.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }
@@ -624,6 +631,13 @@
 				},
 				"noRedundantAlt": {
 					"description": "Enforce img alt prop does not contain the word \"image\", \"picture\", or \"photo\".",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
+				"noRedundantRoles": {
+					"description": "Enforce explicit role property is not the same as implicit/default role property on an element.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }
