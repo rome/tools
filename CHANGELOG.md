@@ -6,6 +6,9 @@
 ### Configuration
 ### Editors
 ### Formatter
+
+- Fix an issue where formatting of JSX string literals property values were using incorrect quotes [#4054](https://github.com/rome/tools/issues/4054)
+
 ### Linter
 #### New rules
 - [`noConfusingArrow`](https://docs.rome.tools/lint/rules/noConfusingArrow/)

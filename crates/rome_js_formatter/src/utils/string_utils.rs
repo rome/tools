@@ -1,7 +1,7 @@
 use crate::context::{JsFormatOptions, QuoteProperties, QuoteStyle};
 use crate::prelude::*;
 use rome_formatter::token::string::normalize_string;
-use rome_js_syntax::JsSyntaxKind::JS_STRING_LITERAL;
+use rome_js_syntax::JsSyntaxKind::{JSX_STRING_LITERAL, JS_STRING_LITERAL};
 use rome_js_syntax::{JsSyntaxToken, SourceType};
 use std::borrow::Cow;
 use unicode_width::UnicodeWidthStr;
@@ -37,7 +37,10 @@ impl<'token> FormatLiteralStringToken<'token> {
 
     pub fn clean_text(&self, options: &JsFormatOptions) -> CleanedStringLiteralText {
         let token = self.token();
-        debug_assert_eq!(token.kind(), JS_STRING_LITERAL);
+        debug_assert!(matches!(
+            token.kind(),
+            JS_STRING_LITERAL | JSX_STRING_LITERAL
+        ));
 
         let chosen_quote_style = options.quote_style();
         let chosen_quote_properties = options.quote_properties();
