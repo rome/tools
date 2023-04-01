@@ -7,7 +7,7 @@
 ### Editors
 ### Formatter
 
-- Fixed an issue when formatting JSX string property values [#4054](https://github.com/rome/tools/issues/4054)
+- Fix an issue where formatting of JSX string literals property values were using incorrect quotes [#4054](https://github.com/rome/tools/issues/4054)
 
 ### Linter
 #### New rules
