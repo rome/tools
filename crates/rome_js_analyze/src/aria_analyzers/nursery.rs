@@ -9,8 +9,4 @@ mod use_aria_prop_types;
 mod use_aria_props_for_role;
 mod use_valid_aria_props;
 mod use_valid_lang;
-<<<<<<< HEAD
-declare_group! { pub (crate) Nursery { name : "nursery" , rules : [self :: no_noninteractive_element_to_interactive_role :: NoNoninteractiveElementToInteractiveRole , self :: no_noninteractive_tabindex :: NoNoninteractiveTabindex , self :: no_redundant_roles :: NoRedundantRoles , self :: use_aria_prop_types :: UseAriaPropTypes , self :: use_aria_props_for_role :: UseAriaPropsForRole , self :: use_valid_aria_props :: UseValidAriaProps , self :: use_valid_lang :: UseValidLang ,] } }
-=======
-declare_group! { pub (crate) Nursery { name : "nursery" , rules : [self :: no_aria_unsupported_elements :: NoAriaUnsupportedElements , self :: no_noninteractive_element_to_interactive_role :: NoNoninteractiveElementToInteractiveRole , self :: no_redundant_roles :: NoRedundantRoles , self :: use_aria_prop_types :: UseAriaPropTypes , self :: use_aria_props_for_role :: UseAriaPropsForRole , self :: use_valid_aria_props :: UseValidAriaProps , self :: use_valid_lang :: UseValidLang ,] } }
->>>>>>> a123a0d385 (feat(rome_js_analyze): noAriaUnsupportedElements)
+declare_group! { pub (crate) Nursery { name : "nursery" , rules : [self :: no_aria_unsupported_elements :: NoAriaUnsupportedElements , self :: no_noninteractive_element_to_interactive_role :: NoNoninteractiveElementToInteractiveRole , self :: no_noninteractive_tabindex :: NoNoninteractiveTabindex , self :: no_redundant_roles :: NoRedundantRoles , self :: use_aria_prop_types :: UseAriaPropTypes , self :: use_aria_props_for_role :: UseAriaPropsForRole , self :: use_valid_aria_props :: UseValidAriaProps , self :: use_valid_lang :: UseValidLang ,] } }
