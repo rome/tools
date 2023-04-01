@@ -174,6 +174,7 @@ define_categories! {
     "format",
     "configuration",
     "organizeImports",
+    "migrate",
     "deserialize",
     "internalError/io",
     "internalError/fs",

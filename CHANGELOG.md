@@ -3,6 +3,11 @@
 ## [Unreleased]
 
 ### CLI
+
+#### Other changes
+- Add new command `rome migrate` the transform the configuration file `rome.json`
+when there are breaking changes.
+
 ### Configuration
 ### Editors
 ### Formatter

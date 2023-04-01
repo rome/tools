@@ -4,11 +4,38 @@ use crate::{CliDiagnostic, CliSession};
 use rome_deserialize::Deserialized;
 use rome_service::{load_config, Configuration, ConfigurationBasePath};
 
+#[derive(Default)]
+pub struct LoadedConfiguration {
+    deserialized: Deserialized<Configuration>,
+    path: Option<PathBuf>,
+}
+
+impl LoadedConfiguration {
+    pub fn consume(self) -> (Configuration, Vec<rome_diagnostics::Error>, Option<PathBuf>) {
+        let path = self.path;
+        let (configuration, diagnostics) = self.deserialized.consume();
+        (configuration, diagnostics, path)
+    }
+}
+
+impl From<Option<(Deserialized<Configuration>, PathBuf)>> for LoadedConfiguration {
+    fn from(value: Option<(Deserialized<Configuration>, PathBuf)>) -> Self {
+        if let Some((deserialized, path)) = value {
+            LoadedConfiguration {
+                deserialized,
+                path: Some(path),
+            }
+        } else {
+            LoadedConfiguration::default()
+        }
+    }
+}
+
 /// Load the configuration for this session of the CLI, merging the content of
 /// the `rome.json` file if it exists on disk with common command line options
 pub(crate) fn load_configuration(
     session: &mut CliSession,
-) -> Result<Deserialized<Configuration>, CliDiagnostic> {
+) -> Result<LoadedConfiguration, CliDiagnostic> {
     let config_path: Option<PathBuf> = session
         .args
         .opt_value_from_str("--config-path")
@@ -21,5 +48,5 @@ pub(crate) fn load_configuration(
 
     let config = load_config(&session.app.fs, base_path)?;
 
-    Ok(config.unwrap_or_default())
+    Ok(config.into())
 }

@@ -1,11 +1,14 @@
-use crate::traversal::traverse;
+mod diagnostics;
+mod migrate;
+mod process_file;
+mod std_in;
+mod traverse;
+
+use crate::execute::traverse::traverse;
 use crate::{CliDiagnostic, CliSession};
-use rome_console::{markup, ConsoleExt};
 use rome_diagnostics::MAXIMUM_DISPLAYABLE_DIAGNOSTICS;
 use rome_fs::RomePath;
-use rome_service::workspace::{
-    FeatureName, FixFileMode, FormatFileParams, Language, OpenFileParams, SupportsFeatureParams,
-};
+use rome_service::workspace::{FeatureName, FixFileMode};
 use std::path::PathBuf;
 
 /// Useful information during the traversal of files and virtual content
@@ -50,6 +53,11 @@ pub(crate) enum TraversalMode {
         /// 1. The virtual path to the file
         /// 2. The content of the file
         stdin: Option<(PathBuf, String)>,
+    },
+    /// This mode is enabled when running the command `rome migrate`
+    Migrate {
+        write: bool,
+        configuration_path: PathBuf,
     },
 }
 
@@ -139,6 +147,7 @@ impl Execution {
             TraversalMode::Check { fix_file_mode } => fix_file_mode.is_some(),
             TraversalMode::CI => false,
             TraversalMode::Format { write, .. } => write,
+            TraversalMode::Migrate { write: dry_run, .. } => dry_run,
         }
     }
 
@@ -155,6 +164,7 @@ impl Execution {
             TraversalMode::Check { .. } => "check",
             TraversalMode::CI { .. } => "ci",
             TraversalMode::Format { .. } => "format",
+            TraversalMode::Migrate { .. } => "migrate",
         }
     }
 }
@@ -184,46 +194,22 @@ pub(crate) fn execute_mode(
         // In case of other commands that pass here, we limit to 50 to avoid to delay the terminal.
         match &mode.traversal_mode {
             TraversalMode::Check { .. } => 20,
-            TraversalMode::CI | TraversalMode::Format { .. } => 50,
+            TraversalMode::CI | TraversalMode::Format { .. } | TraversalMode::Migrate { .. } => 50,
         }
     };
 
     // don't do any traversal if there's some content coming from stdin
     if let Some((path, content)) = mode.as_stdin_file() {
-        let workspace = &*session.app.workspace;
-        let console = &mut *session.app.console;
         let rome_path = RomePath::new(path);
+        std_in::run(session, &mode, rome_path, content.as_str())
+    } else if let TraversalMode::Migrate {
+        write,
+        configuration_path,
+    } = mode.traversal_mode
+    {
+        let verbose = session.args.contains("--verbose");
 
-        if mode.is_format() {
-            let unsupported_format_reason = workspace
-                .supports_feature(SupportsFeatureParams {
-                    path: rome_path.clone(),
-                    feature: FeatureName::Format,
-                })?
-                .reason;
-            if unsupported_format_reason.is_none() {
-                workspace.open_file(OpenFileParams {
-                    path: rome_path.clone(),
-                    version: 0,
-                    content: content.into(),
-                    language_hint: Language::default(),
-                })?;
-                let printed = workspace.format_file(FormatFileParams { path: rome_path })?;
-
-                console.append(markup! {
-                    {printed.as_code()}
-                });
-            } else {
-                console.append(markup! {
-                    {content}
-                });
-                console.error(markup!{
-                    <Warn>"The content was not formatted because the formatter is currently disabled."</Warn>
-                })
-            }
-        }
-
-        Ok(())
+        migrate::run(session, write, configuration_path, verbose)
     } else {
         traverse(mode, session)
     }

@@ -22,7 +22,6 @@ mod panic;
 mod parse_arguments;
 mod reports;
 mod service;
-mod traversal;
 
 pub use diagnostics::CliDiagnostic;
 pub(crate) use execute::{execute_mode, Execution, TraversalMode};
@@ -89,6 +88,7 @@ impl<'app> CliSession<'app> {
             Some("start") => commands::daemon::start(self),
             Some("stop") => commands::daemon::stop(self),
             Some("lsp-proxy") => commands::daemon::lsp_proxy(),
+            Some("migrate") => commands::migrate::migrate(self),
 
             // Internal commands
             Some("__run_server") => commands::daemon::run_server(self),

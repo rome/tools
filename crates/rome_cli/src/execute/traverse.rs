@@ -1,6 +1,8 @@
-mod process_file;
-
-use crate::traversal::process_file::DiffKind;
+use super::process_file::{process_file, DiffKind, FileStatus, Message};
+use crate::execute::diagnostics::{
+    CIFormatDiffDiagnostic, CIOrganizeImportsDiffDiagnostic, ContentDiffAdvice,
+    FormatDiffDiagnostic, OrganizeImportsDiffDiagnostic, PanicDiagnostic,
+};
 use crate::{
     CliDiagnostic, CliSession, Execution, FormatterReportFileDetail, FormatterReportSummary,
     Report, ReportDiagnostic, ReportDiff, ReportErrorKind, ReportKind, TraversalMode,
@@ -9,12 +11,10 @@ use crossbeam::{
     channel::{unbounded, Receiver, Sender},
     select,
 };
-use process_file::{process_file, FileStatus, Message};
 use rome_console::{fmt, markup, Console, ConsoleExt};
 use rome_diagnostics::{
-    adapters::{IoError, StdError},
-    category, Advices, Category, Diagnostic, DiagnosticExt, Error, PrintDescription,
-    PrintDiagnostic, Resource, Severity, Visit,
+    adapters::StdError, category, DiagnosticExt, Error, PrintDescription, PrintDiagnostic,
+    Resource, Severity,
 };
 use rome_fs::{FileSystem, PathInterner, RomePath};
 use rome_fs::{TraversalContext, TraversalScope};
@@ -23,7 +23,6 @@ use rome_service::{
     workspace::{FeatureName, SupportsFeatureParams},
     Workspace, WorkspaceError,
 };
-use rome_text_edit::TextEdit;
 use std::collections::HashSet;
 use std::{
     ffi::OsString,
@@ -181,6 +180,18 @@ pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<
                     <Info>"Formatted "{count}" file(s) in "{duration}</Info>
                 });
             }
+
+            TraversalMode::Migrate { write: false, .. } => {
+                console.log(markup! {
+                    <Info>"Checked your configuration file in "{duration}</Info>
+                });
+            }
+
+            TraversalMode::Migrate { write: true, .. } => {
+                console.log(markup! {
+                    <Info>"Migrated your configuration file in "{duration}</Info>
+                });
+            }
         }
     } else {
         if let TraversalMode::Format { write, .. } = execution.traversal_mode() {
@@ -271,82 +282,6 @@ struct ProcessMessagesOptions<'ctx> {
     report: &'ctx mut Report,
     /// Whether the console thread should print diagnostics in verbose mode
     verbose: bool,
-}
-
-#[derive(Debug, Diagnostic)]
-#[diagnostic(
-    category = "format",
-    message = "File content differs from formatting output"
-)]
-struct CIFormatDiffDiagnostic<'a> {
-    #[location(resource)]
-    file_name: &'a str,
-    #[advice]
-    diff: FormatDiffAdvice<'a>,
-}
-
-#[derive(Debug, Diagnostic)]
-#[diagnostic(
-    category = "organizeImports",
-    message = "Import statements differs from the output"
-)]
-struct CIOrganizeImportsDiffDiagnostic<'a> {
-    #[location(resource)]
-    file_name: &'a str,
-    #[advice]
-    diff: FormatDiffAdvice<'a>,
-}
-
-#[derive(Debug, Diagnostic)]
-#[diagnostic(
-    category = "format",
-    severity = Information,
-    message = "Formatter would have printed the following content:"
-)]
-struct FormatDiffDiagnostic<'a> {
-    #[location(resource)]
-    file_name: &'a str,
-    #[advice]
-    diff: FormatDiffAdvice<'a>,
-}
-
-#[derive(Debug, Diagnostic)]
-#[diagnostic(
-    category = "organizeImports",
-    severity = Information,
-    message = "Import statements could be sorted:"
-)]
-struct OrganizeImportsDiffDiagnostic<'a> {
-    #[location(resource)]
-    file_name: &'a str,
-    #[advice]
-    diff: FormatDiffAdvice<'a>,
-}
-
-#[derive(Debug)]
-struct FormatDiffAdvice<'a> {
-    old: &'a str,
-    new: &'a str,
-}
-
-impl Advices for FormatDiffAdvice<'_> {
-    fn record(&self, visitor: &mut dyn Visit) -> io::Result<()> {
-        let diff = TextEdit::from_unicode_words(self.old, self.new);
-        visitor.record_diff(&diff)
-    }
-}
-
-#[derive(Debug, Diagnostic)]
-struct TraversalDiagnostic<'a> {
-    #[location(resource)]
-    file_name: Option<&'a str>,
-    #[severity]
-    severity: Severity,
-    #[category]
-    category: &'static Category,
-    #[message]
-    #[description]
-    message: &'a str,
 }
 
 /// This thread receives [Message]s from the workers through the `recv_msgs`
@@ -576,7 +511,7 @@ fn process_messages(options: ProcessMessagesOptions) {
                                 DiffKind::Format => {
                                     let diag = CIFormatDiffDiagnostic {
                                         file_name: &file_name,
-                                        diff: FormatDiffAdvice {
+                                        diff: ContentDiffAdvice {
                                             old: &old,
                                             new: &new,
                                         },
@@ -588,7 +523,7 @@ fn process_messages(options: ProcessMessagesOptions) {
                                 DiffKind::OrganizeImports => {
                                     let diag = CIOrganizeImportsDiffDiagnostic {
                                         file_name: &file_name,
-                                        diff: FormatDiffAdvice {
+                                        diff: ContentDiffAdvice {
                                             old: &old,
                                             new: &new,
                                         },
@@ -603,7 +538,7 @@ fn process_messages(options: ProcessMessagesOptions) {
                                 DiffKind::Format => {
                                     let diag = FormatDiffDiagnostic {
                                         file_name: &file_name,
-                                        diff: FormatDiffAdvice {
+                                        diff: ContentDiffAdvice {
                                             old: &old,
                                             new: &new,
                                         },
@@ -615,7 +550,7 @@ fn process_messages(options: ProcessMessagesOptions) {
                                 DiffKind::OrganizeImports => {
                                     let diag = OrganizeImportsDiffDiagnostic {
                                         file_name: &file_name,
-                                        diff: FormatDiffAdvice {
+                                        diff: ContentDiffAdvice {
                                             old: &old,
                                             new: &new,
                                         },
@@ -659,11 +594,11 @@ fn process_messages(options: ProcessMessagesOptions) {
 /// Context object shared between directory traversal tasks
 pub(crate) struct TraversalOptions<'ctx, 'app> {
     /// Shared instance of [FileSystem]
-    fs: &'app dyn FileSystem,
+    pub(crate) fs: &'app dyn FileSystem,
     /// Instance of [Workspace] used by this instance of the CLI
-    workspace: &'ctx dyn Workspace,
+    pub(crate) workspace: &'ctx dyn Workspace,
     /// Determines how the files should be processed
-    execution: &'ctx Execution,
+    pub(crate) execution: &'ctx Execution,
     /// File paths interner cache used by the filesystem traversal
     interner: PathInterner,
     /// Shared atomic counter storing the number of processed files
@@ -671,45 +606,51 @@ pub(crate) struct TraversalOptions<'ctx, 'app> {
     /// Shared atomic counter storing the number of skipped files
     skipped: &'ctx AtomicUsize,
     /// Channel sending messages to the display thread
-    messages: Sender<Message>,
+    pub(crate) messages: Sender<Message>,
     /// Channel sending reports to the reports thread
     sender_reports: Sender<ReportKind>,
     /// The approximate number of diagnostics the console will print before
     /// folding the rest into the "skipped diagnostics" counter
-    remaining_diagnostics: &'ctx AtomicU16,
+    pub(crate) remaining_diagnostics: &'ctx AtomicU16,
 }
 
 impl<'ctx, 'app> TraversalOptions<'ctx, 'app> {
-    fn increment_processed(&self) {
+    pub(crate) fn increment_processed(&self) {
         self.processed.fetch_add(1, Ordering::Relaxed);
     }
 
     /// Send a message to the display thread
-    fn push_message(&self, msg: impl Into<Message>) {
+    pub(crate) fn push_message(&self, msg: impl Into<Message>) {
         self.messages.send(msg.into()).ok();
     }
 
-    fn can_format(&self, rome_path: &RomePath) -> Result<SupportsFeatureResult, WorkspaceError> {
+    pub(crate) fn can_format(
+        &self,
+        rome_path: &RomePath,
+    ) -> Result<SupportsFeatureResult, WorkspaceError> {
         self.workspace.supports_feature(SupportsFeatureParams {
             path: rome_path.clone(),
             feature: FeatureName::Format,
         })
     }
 
-    fn push_format_stat(&self, path: String, stat: FormatterReportFileDetail) {
+    pub(crate) fn push_format_stat(&self, path: String, stat: FormatterReportFileDetail) {
         self.sender_reports
             .send(ReportKind::Formatter(path, stat))
             .ok();
     }
 
-    fn can_lint(&self, rome_path: &RomePath) -> Result<SupportsFeatureResult, WorkspaceError> {
+    pub(crate) fn can_lint(
+        &self,
+        rome_path: &RomePath,
+    ) -> Result<SupportsFeatureResult, WorkspaceError> {
         self.workspace.supports_feature(SupportsFeatureParams {
             path: rome_path.clone(),
             feature: FeatureName::Lint,
         })
     }
 
-    fn can_organize_imports(
+    pub(crate) fn can_organize_imports(
         &self,
         rome_path: &RomePath,
     ) -> Result<SupportsFeatureResult, WorkspaceError> {
@@ -719,7 +660,7 @@ impl<'ctx, 'app> TraversalOptions<'ctx, 'app> {
         })
     }
 
-    fn miss_handler_err(&self, err: WorkspaceError, rome_path: &RomePath) {
+    pub(crate) fn miss_handler_err(&self, err: WorkspaceError, rome_path: &RomePath) {
         self.push_diagnostic(
             StdError::from(err)
                 .with_category(category!("files/missingHandler"))
@@ -781,6 +722,8 @@ impl<'ctx, 'app> TraversalContext for TraversalOptions<'ctx, 'app> {
                     self.miss_handler_err(err, rome_path);
                     false
                 }),
+            // Imagine if Rome can't handle its own configuration file...
+            TraversalMode::Migrate { .. } => true,
         }
     }
 
@@ -816,61 +759,5 @@ fn handle_file(ctx: &TraversalOptions, path: &Path) {
                 PanicDiagnostic { message }.with_file_path(path.display().to_string()),
             );
         }
-    }
-}
-
-#[derive(Debug, Diagnostic)]
-#[diagnostic(category = "internalError/panic", tags(INTERNAL))]
-struct PanicDiagnostic {
-    #[description]
-    #[message]
-    message: String,
-}
-
-#[derive(Debug, Diagnostic)]
-#[diagnostic(category = "files/missingHandler", message = "unhandled file type")]
-struct UnhandledDiagnostic;
-
-#[derive(Debug, Diagnostic)]
-#[diagnostic(category = "parse", message = "Skipped file with syntax errors")]
-struct SkippedDiagnostic;
-
-/// Extension trait for turning [Display]-able error types into [TraversalError]
-trait ResultExt {
-    type Result;
-    fn with_file_path_and_code(
-        self,
-        file_path: String,
-        code: &'static Category,
-    ) -> Result<Self::Result, Error>;
-}
-
-impl<T, E> ResultExt for Result<T, E>
-where
-    E: std::error::Error + Send + Sync + 'static,
-{
-    type Result = T;
-
-    fn with_file_path_and_code(
-        self,
-        file_path: String,
-        code: &'static Category,
-    ) -> Result<Self::Result, Error> {
-        self.map_err(move |err| {
-            StdError::from(err)
-                .with_category(code)
-                .with_file_path(file_path)
-        })
-    }
-}
-
-/// Extension trait for turning [io::Error] into [Error]
-trait ResultIoExt: ResultExt {
-    fn with_file_path(self, file_path: String) -> Result<Self::Result, Error>;
-}
-
-impl<T> ResultIoExt for io::Result<T> {
-    fn with_file_path(self, file_path: String) -> Result<Self::Result, Error> {
-        self.map_err(|error| IoError::from(error).with_file_path(file_path))
     }
 }
