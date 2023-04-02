@@ -154,7 +154,7 @@ impl CaseMismatchInfo {
         let expected_case = ExpectedStringCase::from_call(&call)?;
         let static_value = literal.as_static_value()?;
         let literal_value = static_value.text();
-        let expected_value = expected_case.convert(&literal_value);
+        let expected_value = expected_case.convert(literal_value);
         if literal_value != expected_value {
             Some(Self {
                 expected_case,
