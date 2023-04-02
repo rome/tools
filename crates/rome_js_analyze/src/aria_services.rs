@@ -58,9 +58,9 @@ impl AriaServices {
                     continue
                 };
                 let initializer = initializer.value().ok()?;
-                let text = initializer.inner_text_value().ok()??;
+                let static_value = initializer.as_static_value()?;
                 // handle multiple values e.g. `<div class="wrapper document">`
-                let values = text.split(' ');
+                let values = static_value.text().split(' ');
                 let values = values.map(|s| s.to_string()).collect::<Vec<String>>();
                 defined_attributes.entry(name).or_insert(values);
             }

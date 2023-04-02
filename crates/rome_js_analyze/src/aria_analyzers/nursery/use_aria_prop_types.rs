@@ -3,11 +3,8 @@ use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
 use rome_aria::AriaPropertyTypeEnum;
 use rome_console::markup;
-use rome_js_syntax::{
-    AnyJsExpression, AnyJsLiteralExpression, AnyJsxAttributeValue, JsSyntaxToken, JsxAttribute,
-    TextRange,
-};
-use rome_rowan::{AstNode, AstNodeList};
+use rome_js_syntax::{JsSyntaxToken, JsxAttribute, TextRange};
+use rome_rowan::AstNode;
 use std::slice::Iter;
 
 declare_rule! {
@@ -76,42 +73,10 @@ impl Rule for UseAriaPropTypes {
         let attribute_name = node.name().ok()?.as_jsx_name()?.value_token().ok()?;
 
         if let Some(aria_property) = aria_properties.get_property(attribute_name.text_trimmed()) {
-            let attribute_value = node.initializer()?.value().ok()?;
             let attribute_value_range = node.range();
-            let attribute_text = match attribute_value {
-                AnyJsxAttributeValue::JsxString(string) => Some(string.inner_string_text().ok()?),
-                AnyJsxAttributeValue::JsxExpressionAttributeValue(expression) => {
-                    match expression.expression().ok()? {
-                        AnyJsExpression::JsTemplateExpression(template) => {
-                            if template.elements().is_empty() {
-                                // Early error, the template literal is empty
-                                return Some(UseAriaProptypesState {
-                                    attribute_value_range,
-                                    allowed_values: aria_property.values(),
-                                    attribute_name,
-                                    property_type: aria_property.property_type(),
-                                });
-                            }
-                            template.elements().iter().next().and_then(|chunk| {
-                                Some(
-                                    chunk
-                                        .as_js_template_chunk_element()?
-                                        .template_chunk_token()
-                                        .ok()?
-                                        .token_text_trimmed(),
-                                )
-                            })
-                        }
-                        AnyJsExpression::AnyJsLiteralExpression(
-                            AnyJsLiteralExpression::JsStringLiteralExpression(string),
-                        ) => Some(string.inner_string_text().ok()?),
-                        _ => None,
-                    }
-                }
-                _ => return None,
-            }?;
-
-            if !aria_property.contains_correct_value(attribute_text.text()) {
+            let attribute_static_value = node.as_static_value()?;
+            let attribute_text = attribute_static_value.text();
+            if !aria_property.contains_correct_value(attribute_text) {
                 return Some(UseAriaProptypesState {
                     attribute_value_range,
                     allowed_values: aria_property.values(),

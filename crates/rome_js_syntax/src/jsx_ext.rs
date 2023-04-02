@@ -1,11 +1,11 @@
 use std::collections::HashSet;
 
 use crate::{
-    AnyJsExpression, AnyJsLiteralExpression, AnyJsxAttribute, AnyJsxAttributeValue,
-    AnyJsxElementName, JsSyntaxToken, JsxAttribute, JsxAttributeList, JsxName, JsxOpeningElement,
-    JsxSelfClosingElement, JsxString, TextSize,
+    static_value::{QuotedString, StaticValue},
+    AnyJsxAttribute, AnyJsxAttributeValue, AnyJsxElementName, JsSyntaxToken, JsxAttribute,
+    JsxAttributeList, JsxName, JsxOpeningElement, JsxSelfClosingElement, JsxString,
 };
-use rome_rowan::{declare_node_union, AstNode, AstNodeList, SyntaxResult, SyntaxTokenText};
+use rome_rowan::{declare_node_union, AstNode, AstNodeList, SyntaxResult};
 
 impl JsxString {
     /// Get the inner text of a string not including the quotes
@@ -19,23 +19,9 @@ impl JsxString {
     ///let string = jsx_string(jsx_ident("button").with_leading_trivia(vec![(TriviaPieceKind::Whitespace, " ")]));
     /// assert_eq!(string.inner_string_text().unwrap().text(), "button");
     /// ```
-    pub fn inner_string_text(&self) -> SyntaxResult<SyntaxTokenText> {
+    pub fn inner_string_text(&self) -> SyntaxResult<QuotedString> {
         let value = self.value_token()?;
-        let mut text = value.token_text_trimmed();
-
-        static QUOTES: [char; 2] = ['"', '\''];
-
-        if text.starts_with(QUOTES) {
-            let range = text.range().add_start(TextSize::from(1));
-            text = text.slice(range);
-        }
-
-        if text.ends_with(QUOTES) {
-            let range = text.range().sub_end(TextSize::from(1));
-            text = text.slice(range);
-        }
-
-        Ok(text)
+        Ok(QuotedString::new(value))
     }
 }
 
@@ -385,84 +371,26 @@ impl AnyJsxElement {
 }
 
 impl JsxAttribute {
-    pub fn is_value_undefined_or_null(&self) -> bool {
-        self.initializer()
-            .and_then(|x| {
-                let expression = x
-                    .value()
-                    .ok()?
-                    .as_jsx_expression_attribute_value()?
-                    .expression()
-                    .ok()?;
+    pub fn is_value_null_or_undefined(&self) -> bool {
+        self.as_static_value()
+            .map_or(false, |it| it.is_null_or_undefined())
+    }
 
-                if let Some(id) = expression.as_js_identifier_expression() {
-                    let name = id.name().ok()?.syntax().text_trimmed();
-
-                    return Some(name == "undefined");
-                }
-
-                expression
-                    .as_any_js_literal_expression()?
-                    .as_js_null_literal_expression()?;
-
-                Some(true)
-            })
-            .unwrap_or(false)
+    pub fn as_static_value(&self) -> Option<StaticValue> {
+        self.initializer()?.value().ok()?.as_static_value()
     }
 }
 
 impl AnyJsxAttributeValue {
-    /// Retrieves the text value of the attribute
-    ///
-    /// If the attribute is not a text or a text-like node, `Node` is returned.
-    ///
-    /// ## Examples
-    ///
-    /// ```
-    /// use rome_js_factory::make::{ident, js_string_literal_expression, jsx_attribute, jsx_attribute_initializer_clause, jsx_expression_attribute_value, jsx_name, jsx_string, token};
-    /// use rome_js_syntax::{AnyJsExpression, AnyJsLiteralExpression, AnyJsxAttributeName, AnyJsxAttributeValue, T};
-    /// let attribute = AnyJsxAttributeValue::JsxString(
-    ///     jsx_string(ident("en"))
-    /// );
-    /// assert_eq!(attribute.inner_text_value().unwrap().unwrap(), "en");
-    /// let attribute = AnyJsxAttributeValue::JsxExpressionAttributeValue(
-    ///     jsx_expression_attribute_value(
-    ///         token(T!['{']),
-    ///         AnyJsExpression::AnyJsLiteralExpression(
-    ///             AnyJsLiteralExpression::JsStringLiteralExpression(
-    ///                 js_string_literal_expression(ident("en"))
-    ///             )
-    ///         ),
-    ///        token(T!['}']),
-    ///     )
-    /// );
-    /// assert_eq!(attribute.inner_text_value().unwrap().unwrap(), "en");
-    /// ```
-    pub fn inner_text_value(&self) -> SyntaxResult<Option<SyntaxTokenText>> {
-        let result = match self {
-            AnyJsxAttributeValue::JsxString(string) => Some(string.inner_string_text()?),
+    pub fn as_static_value(&self) -> Option<StaticValue> {
+        match self {
+            AnyJsxAttributeValue::AnyJsxTag(_) => None,
             AnyJsxAttributeValue::JsxExpressionAttributeValue(expression) => {
-                match expression.expression()? {
-                    AnyJsExpression::JsTemplateExpression(template) => {
-                        template.elements().iter().next().and_then(|chunk| {
-                            Some(
-                                chunk
-                                    .as_js_template_chunk_element()?
-                                    .template_chunk_token()
-                                    .ok()?
-                                    .token_text_trimmed(),
-                            )
-                        })
-                    }
-                    AnyJsExpression::AnyJsLiteralExpression(
-                        AnyJsLiteralExpression::JsStringLiteralExpression(string),
-                    ) => Some(string.inner_string_text()?),
-                    _ => None,
-                }
+                expression.expression().ok()?.as_static_value()
             }
-            _ => return Ok(None),
-        };
-
-        Ok(result)
+            AnyJsxAttributeValue::JsxString(string) => {
+                Some(StaticValue::String(string.inner_string_text().ok()?))
+            }
+        }
     }
 }

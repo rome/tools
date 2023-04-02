@@ -224,8 +224,8 @@ fn is_aria_hidden_truthy(aria_hidden_attribute: JsxAttribute) -> Option<bool> {
         }
         AnyJsxAttributeValue::AnyJsxTag(_) => false,
         AnyJsxAttributeValue::JsxString(aria_hidden_string) => {
-            let aria_hidden_value = aria_hidden_string.inner_string_text().ok()?;
-            aria_hidden_value == "true"
+            let quoted_string = aria_hidden_string.inner_string_text().ok()?;
+            quoted_string.text() == "true"
         }
     })
 }
@@ -243,8 +243,8 @@ fn is_expression_truthy(expression: AnyJsExpression) -> Option<bool> {
             } else if let AnyJsLiteralExpression::JsStringLiteralExpression(string_literal) =
                 literal_expression
             {
-                let text = string_literal.inner_string_text().ok()?;
-                text == "true"
+                let quoted_string = string_literal.inner_string_text().ok()?;
+                quoted_string.text() == "true"
             } else {
                 false
             }

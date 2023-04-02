@@ -290,8 +290,8 @@ fn is_invalid_anchor(anchor_attribute: &JsxAttribute) -> Option<UseValidAnchorSt
                 AnyJsExpression::AnyJsLiteralExpression(
                     AnyJsLiteralExpression::JsStringLiteralExpression(string_literal),
                 ) => {
-                    let text = string_literal.inner_string_text().ok()?;
-                    if text == "#" {
+                    let quoted_string = string_literal.inner_string_text().ok()?;
+                    if quoted_string.text() == "#" {
                         return Some(UseValidAnchorState::IncorrectHref(
                             string_literal.syntax().text_trimmed_range(),
                         ));
@@ -327,7 +327,8 @@ fn is_invalid_anchor(anchor_attribute: &JsxAttribute) -> Option<UseValidAnchorSt
         }
         AnyJsxAttributeValue::AnyJsxTag(_) => {}
         AnyJsxAttributeValue::JsxString(href_string) => {
-            let href_value = href_string.inner_string_text().ok()?;
+            let quoted_string = href_string.inner_string_text().ok()?;
+            let href_value = quoted_string.text();
 
             // href="#" or href="javascript:void(0)"
             if href_value == "#" || href_value.contains("javascript:") {

@@ -73,7 +73,7 @@ impl Rule for NoRedundantAlt {
                         == "false"
                 }
                 AnyJsxAttributeValue::JsxString(aria_hidden) => {
-                    aria_hidden.inner_string_text().ok()? == "false"
+                    aria_hidden.inner_string_text().ok()?.text() == "false"
                 }
             };
 

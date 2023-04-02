@@ -152,7 +152,7 @@ fn input_has_type_image(element: &JsxSelfClosingElement) -> Option<bool> {
         let initializer = prop.initializer()?.value().ok()?;
         let initializer = initializer.as_jsx_string()?;
 
-        if initializer.inner_string_text().ok()? == "image" {
+        if initializer.inner_string_text().ok()?.text() == "image" {
             return Some(true);
         }
         return None;

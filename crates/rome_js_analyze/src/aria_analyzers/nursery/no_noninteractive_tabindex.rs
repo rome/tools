@@ -3,10 +3,10 @@ use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleDiagnostic};
 use rome_aria::AriaRoles;
 use rome_console::markup;
 use rome_js_syntax::{
-    jsx_ext::AnyJsxElement, AnyJsExpression, AnyJsLiteralExpression, AnyJsxAttributeValue,
-    JsNumberLiteralExpression, JsStringLiteralExpression, JsUnaryExpression, TextRange,
+    jsx_ext::AnyJsxElement, AnyJsxAttributeValue, JsNumberLiteralExpression,
+    JsStringLiteralExpression, JsUnaryExpression, TextRange,
 };
-use rome_rowan::{declare_node_union, AstNode, AstNodeList};
+use rome_rowan::{declare_node_union, AstNode};
 
 declare_rule! {
     /// Enforce that `tabIndex` is not assigned to non-interactive HTML elements.
@@ -187,31 +187,5 @@ fn attribute_has_interactive_role(
     role_attribute_value: &AnyJsxAttributeValue,
     aria_roles: &AriaRoles,
 ) -> Option<bool> {
-    let role_attribute_value = match role_attribute_value {
-        AnyJsxAttributeValue::JsxString(string) => string.inner_string_text().ok(),
-        AnyJsxAttributeValue::JsxExpressionAttributeValue(expression) => {
-            match expression.expression().ok()? {
-                AnyJsExpression::AnyJsLiteralExpression(
-                    AnyJsLiteralExpression::JsStringLiteralExpression(string),
-                ) => string.inner_string_text().ok(),
-                AnyJsExpression::JsTemplateExpression(template) => {
-                    if template.elements().len() == 1 {
-                        template
-                            .elements()
-                            .iter()
-                            .next()?
-                            .as_js_template_chunk_element()?
-                            .template_chunk_token()
-                            .ok()
-                            .map(|t| t.token_text_trimmed())
-                    } else {
-                        None
-                    }
-                }
-                _ => None,
-            }
-        }
-        _ => None,
-    }?;
-    Some(aria_roles.is_role_interactive(role_attribute_value.text()))
+    Some(aria_roles.is_role_interactive(role_attribute_value.as_static_value()?.text()))
 }

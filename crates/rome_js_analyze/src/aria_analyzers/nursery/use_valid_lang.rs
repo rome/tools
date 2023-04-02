@@ -58,8 +58,9 @@ impl Rule for UseValidLang {
         if element_text.text_trimmed() == "html" {
             let attribute = node.find_attribute_by_name("lang")?;
             let attribute_value = attribute.initializer()?.value().ok()?;
-            let attribute_text = attribute_value.inner_text_value().ok()??;
-            let mut split_value = attribute_text.text().split('-');
+            let attribute_static_value = attribute_value.as_static_value()?;
+            let attribute_text = attribute_static_value.text();
+            let mut split_value = attribute_text.split('-');
             match (split_value.next(), split_value.next()) {
                 (Some(language), Some(country)) => {
                     if !ctx.is_valid_iso_language(language) {

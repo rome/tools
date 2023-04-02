@@ -107,9 +107,10 @@ impl Rule for UseKeyWithMouseEvents {
 fn has_valid_focus_attributes(elem: &AnyJsxElement) -> bool {
     if let Some(on_mouse_over_attribute) = elem.find_attribute_by_name("onMouseOver") {
         if !elem.has_trailing_spread_prop(on_mouse_over_attribute) {
-            return elem
-                .find_attribute_by_name("onFocus")
-                .map_or(false, |it| !it.is_value_undefined_or_null());
+            return elem.find_attribute_by_name("onFocus").map_or(false, |it| {
+                !it.as_static_value()
+                    .map_or(false, |value| value.is_null_or_undefined())
+            });
         }
     }
     true
@@ -118,9 +119,10 @@ fn has_valid_focus_attributes(elem: &AnyJsxElement) -> bool {
 fn has_valid_blur_attributes(elem: &AnyJsxElement) -> bool {
     if let Some(on_mouse_attribute) = elem.find_attribute_by_name("onMouseOut") {
         if !elem.has_trailing_spread_prop(on_mouse_attribute) {
-            return elem
-                .find_attribute_by_name("onBlur")
-                .map_or(false, |it| !it.is_value_undefined_or_null());
+            return elem.find_attribute_by_name("onBlur").map_or(false, |it| {
+                !it.as_static_value()
+                    .map_or(false, |value| value.is_null_or_undefined())
+            });
         }
     }
     true

@@ -4,8 +4,7 @@ use rome_aria::{roles::AriaRoleDefinition, AriaRoles};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_syntax::{
-    jsx_ext::AnyJsxElement, AnyJsLiteralExpression, AnyJsxAttributeValue, JsxAttribute,
-    JsxAttributeList,
+    jsx_ext::AnyJsxElement, AnyJsxAttributeValue, JsxAttribute, JsxAttributeList,
 };
 use rome_rowan::{AstNode, BatchMutationExt};
 
@@ -88,7 +87,7 @@ impl Rule for NoRedundantRoles {
     }
 
     fn diagnostic(_: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
-        let binding = state.redundant_attribute_value.inner_text_value().ok()??;
+        let binding = state.redundant_attribute_value.as_static_value()?;
         let role_attribute = binding.text();
         let element = state.element_name.to_string();
         Some(RuleDiagnostic::new(
@@ -133,27 +132,13 @@ fn get_explicit_role(
     aria_roles: &AriaRoles,
     role_attribute_value: &AnyJsxAttributeValue,
 ) -> Option<&'static dyn AriaRoleDefinition> {
-    let text = match role_attribute_value {
-        AnyJsxAttributeValue::JsxString(val) => val.inner_string_text().ok()?,
-        AnyJsxAttributeValue::JsxExpressionAttributeValue(val) => match val.expression().ok()? {
-            rome_js_syntax::AnyJsExpression::AnyJsLiteralExpression(
-                AnyJsLiteralExpression::JsStringLiteralExpression(expr),
-            ) => expr.inner_string_text().ok()?,
-            rome_js_syntax::AnyJsExpression::JsTemplateExpression(expr) => {
-                let first_template_element = expr.elements().into_iter().next()?;
-                let first_element = first_template_element
-                    .as_js_template_chunk_element()?
-                    .template_chunk_token()
-                    .ok()?;
-                first_element.token_text_trimmed()
-            }
-            _ => return None,
-        },
-        _ => return None,
-    };
+    let static_value = role_attribute_value.as_static_value()?;
 
     // If a role attribute has multiple values, the first valid value (specified role) will be used.
     // Check: https://www.w3.org/TR/2014/REC-wai-aria-implementation-20140320/#mapping_role
-    let explicit_role = text.split(' ').find_map(|role| aria_roles.get_role(role))?;
+    let explicit_role = static_value
+        .text()
+        .split(' ')
+        .find_map(|role| aria_roles.get_role(role))?;
     Some(explicit_role)
 }
