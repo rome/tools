@@ -382,6 +382,11 @@ impl JsxAttribute {
 }
 
 impl AnyJsxAttributeValue {
+    pub fn is_value_null_or_undefined(&self) -> bool {
+        self.as_static_value()
+            .map_or(false, |it| it.is_null_or_undefined())
+    }
+
     pub fn as_static_value(&self) -> Option<StaticValue> {
         match self {
             AnyJsxAttributeValue::AnyJsxTag(_) => None,

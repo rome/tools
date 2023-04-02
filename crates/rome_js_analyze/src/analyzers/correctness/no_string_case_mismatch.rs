@@ -152,8 +152,8 @@ impl CaseMismatchInfo {
 
     fn compare_call_with_literal(call: JsCallExpression, literal: AnyJsExpression) -> Option<Self> {
         let expected_case = ExpectedStringCase::from_call(&call)?;
-        let string_constant = literal.as_string_constant()?;
-        let literal_value = string_constant.text();
+        let static_value = literal.as_static_value()?;
+        let literal_value = static_value.text();
         let expected_value = expected_case.convert(&literal_value);
         if literal_value != expected_value {
             Some(Self {

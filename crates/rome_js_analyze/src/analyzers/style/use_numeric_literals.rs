@@ -116,6 +116,7 @@ impl CallInfo {
             .next()?
             .ok()?
             .as_any_js_expression()?
+            .as_static_value()?
             .as_string_constant()?
             .to_string();
         let radix = args

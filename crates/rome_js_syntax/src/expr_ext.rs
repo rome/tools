@@ -1,6 +1,6 @@
 //! Extensions for things which are not easily generated in ast expr nodes
 use crate::numbers::parse_js_number;
-use crate::static_value::{QuotedString, StaticValue, StringConstant};
+use crate::static_value::{QuotedString, StaticValue};
 use crate::{
     AnyJsCallArgument, AnyJsExpression, AnyJsLiteralExpression, AnyJsTemplateElement,
     JsArrayExpression, JsArrayHole, JsAssignmentExpression, JsBinaryExpression, JsCallExpression,
@@ -266,10 +266,7 @@ impl JsBinaryExpression {
             self.operator(),
             Ok(JsBinaryOperator::StrictInequality | JsBinaryOperator::Inequality)
         ) {
-            Ok(self
-                .right()?
-                .as_static_value()
-                .map_or(false, |value| value.is_null_or_undefined()))
+            Ok(self.right()?.is_value_null_or_undefined())
         } else {
             Ok(false)
         }
@@ -638,18 +635,13 @@ impl AnyJsExpression {
     /// 1. A string literal
     /// 2. A template literal with no substitutions
     pub fn is_string_constant(&self, text: &str) -> bool {
-        if let Some(str_const) = self.as_string_constant() {
-            str_const.text() == text
-        } else {
-            false
-        }
+        self.as_static_value()
+            .map_or(false, |it| it.is_string_constant(text))
     }
 
-    /// Return the string value if the given expression is
-    /// 1. A string literal
-    /// 2. A template literal with no substitutions
-    pub fn as_string_constant(&self) -> Option<StringConstant> {
-        StringConstant::try_from(self.as_static_value()?).ok()
+    pub fn is_value_null_or_undefined(&self) -> bool {
+        self.as_static_value()
+            .map_or(false, |it| it.is_null_or_undefined())
     }
 
     pub fn as_static_value(&self) -> Option<StaticValue> {

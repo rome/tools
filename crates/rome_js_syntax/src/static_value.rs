@@ -75,47 +75,21 @@ impl StaticValue {
         }
     }
 
+    pub fn is_string_constant(&self, text: &str) -> bool {
+        match self {
+            StaticValue::String(_) | StaticValue::TemplateChunk(_) => self.text() == text,
+            _ => false,
+        }
+    }
+
+    pub fn as_string_constant(&self) -> Option<&str> {
+        match self {
+            StaticValue::String(_) | StaticValue::TemplateChunk(_) => Some(self.text()),
+            _ => None,
+        }
+    }
+
     pub fn is_null_or_undefined(&self) -> bool {
         matches!(self, StaticValue::Null(_) | StaticValue::Undefined(_))
-    }
-
-    pub fn is_undefined(&self) -> bool {
-        matches!(self, StaticValue::Undefined(_))
-    }
-}
-
-pub enum StringConstant {
-    TemplateChunk(Option<JsSyntaxToken>),
-    String(QuotedString),
-}
-
-impl StringConstant {
-    pub fn text(&self) -> &str {
-        match self {
-            StringConstant::TemplateChunk(token) => {
-                token.as_ref().map_or("", |it| it.text_trimmed())
-            }
-            StringConstant::String(quoted) => quoted.text(),
-        }
-    }
-}
-
-impl Deref for StringConstant {
-    type Target = str;
-
-    fn deref(&self) -> &Self::Target {
-        self.text()
-    }
-}
-
-impl TryFrom<StaticValue> for StringConstant {
-    type Error = ();
-
-    fn try_from(from: StaticValue) -> Result<Self, Self::Error> {
-        match from {
-            StaticValue::TemplateChunk(token) => Ok(StringConstant::TemplateChunk(token)),
-            StaticValue::String(token) => Ok(StringConstant::String(token)),
-            _ => Err(()),
-        }
     }
 }
