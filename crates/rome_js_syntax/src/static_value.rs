@@ -1,5 +1,5 @@
 use crate::{
-    JsSyntaxKind::{JSX_IDENT, JSX_STRING_LITERAL, JS_STRING_LITERAL},
+    JsSyntaxKind::{IDENT, JSX_IDENT, JSX_STRING_LITERAL, JS_STRING_LITERAL},
     JsSyntaxToken,
 };
 
@@ -12,7 +12,7 @@ impl QuotedString {
     pub fn new(token: JsSyntaxToken) -> Self {
         assert!(matches!(
             token.kind(),
-            JSX_IDENT | JS_STRING_LITERAL | JSX_STRING_LITERAL
+            IDENT | JSX_IDENT | JS_STRING_LITERAL | JSX_STRING_LITERAL
         ));
 
         Self(token)
