@@ -39,6 +39,8 @@ declare_rule! {
     }
 }
 
+const ARIA_UNSUPPORTED_ELEMENTS: [&str; 4] = ["meta", "html", "script", "style"];
+
 impl Rule for NoAriaUnsupportedElements {
     type Query = Aria<AnyJsxElement>;
     type State = ();
@@ -51,9 +53,8 @@ impl Rule for NoAriaUnsupportedElements {
 
         let element_name = node.name().ok()?.as_jsx_name()?.value_token().ok()?;
         let element_name = element_name.text_trimmed();
-        let aria_unsuppurted_elements = ["meta", "html", "script", "style"];
 
-        if aria_unsuppurted_elements.contains(&element_name) {
+        if ARIA_UNSUPPORTED_ELEMENTS.contains(&element_name) {
             // Check if the unsupported element has `role` or `aria-*` attribute
             let attributes: Vec<_> = node
                 .attributes()
