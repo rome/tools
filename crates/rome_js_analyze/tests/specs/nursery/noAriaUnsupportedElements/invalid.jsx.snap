@@ -29,7 +29,7 @@ invalid.jsx:2:2 lint/nursery/noAriaUnsupportedElements ━━━━━━━━�
     3 │ 	<meta charset="UTF-8" role="meta" />
     4 │ 	<html aria-required="true" />
   
-  i Using roles on elements that do not support them can cause issues with screen readers.
+  i Using aria-* on elements that do not support them can cause issues with screen readers.
   
 
 ```
@@ -46,7 +46,7 @@ invalid.jsx:3:2 lint/nursery/noAriaUnsupportedElements ━━━━━━━━�
     4 │ 	<html aria-required="true" />
     5 │ 	<html role="html"></html>
   
-  i Using roles on elements that do not support them can cause issues with screen readers.
+  i Using role on elements that do not support them can cause issues with screen readers.
   
 
 ```
@@ -63,7 +63,7 @@ invalid.jsx:4:2 lint/nursery/noAriaUnsupportedElements ━━━━━━━━�
     5 │ 	<html role="html"></html>
     6 │ 	<script aria-label="script"></script>
   
-  i Using roles on elements that do not support them can cause issues with screen readers.
+  i Using aria-* on elements that do not support them can cause issues with screen readers.
   
 
 ```
@@ -80,7 +80,7 @@ invalid.jsx:5:2 lint/nursery/noAriaUnsupportedElements ━━━━━━━━�
     6 │ 	<script aria-label="script"></script>
     7 │ 	<script role="script"></script>
   
-  i Using roles on elements that do not support them can cause issues with screen readers.
+  i Using role on elements that do not support them can cause issues with screen readers.
   
 
 ```
@@ -97,7 +97,7 @@ invalid.jsx:6:2 lint/nursery/noAriaUnsupportedElements ━━━━━━━━�
     7 │ 	<script role="script"></script>
     8 │ 	<style aria-labelledby></style>
   
-  i Using roles on elements that do not support them can cause issues with screen readers.
+  i Using aria-* on elements that do not support them can cause issues with screen readers.
   
 
 ```
@@ -114,7 +114,7 @@ invalid.jsx:7:2 lint/nursery/noAriaUnsupportedElements ━━━━━━━━�
     8 │ 	<style aria-labelledby></style>
     9 │ 	<style role="style"></style>
   
-  i Using roles on elements that do not support them can cause issues with screen readers.
+  i Using role on elements that do not support them can cause issues with screen readers.
   
 
 ```
@@ -131,7 +131,7 @@ invalid.jsx:8:2 lint/nursery/noAriaUnsupportedElements ━━━━━━━━�
      9 │ 	<style role="style"></style>
     10 │ </>;
   
-  i Using roles on elements that do not support them can cause issues with screen readers.
+  i Using aria-* on elements that do not support them can cause issues with screen readers.
   
 
 ```
@@ -148,7 +148,7 @@ invalid.jsx:9:2 lint/nursery/noAriaUnsupportedElements ━━━━━━━━�
     10 │ </>;
     11 │ 
   
-  i Using roles on elements that do not support them can cause issues with screen readers.
+  i Using role on elements that do not support them can cause issues with screen readers.
   
 
 ```

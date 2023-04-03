@@ -41,9 +41,30 @@ declare_rule! {
 
 const ARIA_UNSUPPORTED_ELEMENTS: [&str; 4] = ["meta", "html", "script", "style"];
 
+#[derive(Debug)]
+enum AttributeKind {
+    Role,
+    Aria,
+}
+
+impl AttributeKind {
+    /// Converts an [AttributeKind] to a string.
+    fn as_str(&self) -> &'static str {
+        match self {
+            AttributeKind::Role => "role",
+            AttributeKind::Aria => "aria-*",
+        }
+    }
+}
+
+#[derive(Debug)]
+pub struct RuleState {
+    attribute_kind: AttributeKind,
+}
+
 impl Rule for NoAriaUnsupportedElements {
     type Query = Aria<AnyJsxElement>;
-    type State = ();
+    type State = RuleState;
     type Signals = Option<Self::State>;
     type Options = ();
 
@@ -56,38 +77,36 @@ impl Rule for NoAriaUnsupportedElements {
 
         if ARIA_UNSUPPORTED_ELEMENTS.contains(&element_name) {
             // Check if the unsupported element has `role` or `aria-*` attribute
-            let attributes: Vec<_> = node
-                .attributes()
-                .iter()
-                .filter_map(|attribute| {
-                    let attribute = attribute.as_jsx_attribute()?;
-                    let attribute_name =
-                        attribute.name().ok()?.as_jsx_name()?.value_token().ok()?;
+            let report = node.attributes().iter().find_map(|attribute| {
+                let attribute = attribute.as_jsx_attribute()?;
+                let attribute_name = attribute.name().ok()?.as_jsx_name()?.value_token().ok()?;
 
-                    if attribute_name.text_trimmed().starts_with("aria-")
-                        && aria_properties
-                            .get_property(attribute_name.text_trimmed())
-                            .is_some()
-                    {
-                        return Some(());
-                    }
-                    if attribute_name.text_trimmed() == "role" {
-                        return Some(());
-                    }
-                    None
-                })
-                .collect();
+                if attribute_name.text_trimmed().starts_with("aria-")
+                    && aria_properties
+                        .get_property(attribute_name.text_trimmed())
+                        .is_some()
+                {
+                    return Some(RuleState {
+                        attribute_kind: AttributeKind::Aria,
+                    });
+                }
 
-            if !attributes.is_empty() {
-                return Some(());
-            }
+                if attribute_name.text_trimmed() == "role" {
+                    return Some(RuleState {
+                        attribute_kind: AttributeKind::Role,
+                    });
+                }
+                None
+            });
+            return report;
         }
 
         None
     }
 
-    fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
         let node = ctx.query();
+        let attribute_kind = state.attribute_kind.as_str();
         Some(
             RuleDiagnostic::new(
                 rule_category!(),
@@ -97,7 +116,7 @@ impl Rule for NoAriaUnsupportedElements {
                 },
             )
             .note(markup! {
-                "Using roles on elements that do not support them can cause issues with screen readers."
+                "Using "{attribute_kind}" on elements that do not support them can cause issues with screen readers."
             }),
         )
     }
