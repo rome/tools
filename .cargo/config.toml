@@ -19,6 +19,9 @@ documentation = """
     -p rome_cli \
     -p rome_console \
     -p rome_*parser \
+    -p rome_text_edit \
+    -p rome_text_size \
+    -p rome_markup \
     -p rome_rowan
     --no-deps
 """

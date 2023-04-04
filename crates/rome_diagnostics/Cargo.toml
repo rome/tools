@@ -1,10 +1,11 @@
 [package]
 name = "rome_diagnostics"
-version = "0.0.0"
+version = "0.0.1"
 authors = ["RSLint developers"]
 edition = "2021"
 license = "MIT"
 description = "Pretty error reporting library based on codespan-reporting built for the RSLint project"
+documentation = "https://rustdocs.rome.tools/rome_diagnostics/index.html"
 
 [[example]]
 name = "cli"
@@ -23,12 +24,12 @@ name = "serde"
 test = true
 
 [dependencies]
-rome_rowan = { path = "../rome_rowan" }
-rome_console = { path = "../rome_console", features = ["serde_markup"] }
-rome_diagnostics_macros = { path = "../rome_diagnostics_macros" }
-rome_diagnostics_categories = { path = "../rome_diagnostics_categories", features = ["serde"] }
-rome_text_edit = { path = "../rome_text_edit" }
-rome_text_size = { path = "../rome_text_size" }
+rome_rowan = { version = "0.0.1", path = "../rome_rowan" }
+rome_console = {  version = "0.0.1", path = "../rome_console", features = ["serde_markup"] }
+rome_diagnostics_macros = { version = "0.0.1", path = "../rome_diagnostics_macros" }
+rome_diagnostics_categories = { version = "0.0.1", path = "../rome_diagnostics_categories", features = ["serde"] }
+rome_text_edit = { version = "0.0.1", path = "../rome_text_edit" }
+rome_text_size = { version = "0.0.1", path = "../rome_text_size" }
 unicode-width = "0.1.9"
 serde = { version = "1.0.133", features = ["derive"] }
 termcolor = "1.1.2"

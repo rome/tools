@@ -1684,7 +1684,7 @@ dependencies = [
 
 [[package]]
 name = "rome_console"
-version = "0.0.0"
+version = "0.0.1"
 dependencies = [
  "atty",
  "rome_markup",
@@ -1735,7 +1735,7 @@ dependencies = [
 
 [[package]]
 name = "rome_diagnostics"
-version = "0.0.0"
+version = "0.0.1"
 dependencies = [
  "backtrace",
  "bitflags",
@@ -1756,7 +1756,7 @@ dependencies = [
 
 [[package]]
 name = "rome_diagnostics_categories"
-version = "0.0.0"
+version = "0.0.1"
 dependencies = [
  "quote",
  "schemars",
@@ -1765,7 +1765,7 @@ dependencies = [
 
 [[package]]
 name = "rome_diagnostics_macros"
-version = "0.0.0"
+version = "0.0.1"
 dependencies = [
  "proc-macro-error",
  "proc-macro2",
@@ -2031,7 +2031,7 @@ dependencies = [
 
 [[package]]
 name = "rome_markup"
-version = "0.0.0"
+version = "0.0.1"
 dependencies = [
  "proc-macro-error",
  "proc-macro2",
@@ -2050,7 +2050,7 @@ dependencies = [
 
 [[package]]
 name = "rome_rowan"
-version = "0.0.0"
+version = "0.0.1"
 dependencies = [
  "countme",
  "hashbrown",
@@ -2102,7 +2102,7 @@ dependencies = [
 
 [[package]]
 name = "rome_text_edit"
-version = "0.0.0"
+version = "0.0.1"
 dependencies = [
  "rome_text_size",
  "schemars",
@@ -2112,7 +2112,7 @@ dependencies = [
 
 [[package]]
 name = "rome_text_size"
-version = "0.0.0"
+version = "0.0.1"
 dependencies = [
  "schemars",
  "serde",
