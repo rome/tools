@@ -20,8 +20,7 @@ expression: content
 ## `fix.js`
 
 ```js
-
-(1 >= -0)
+1 >= -0;
 
 ```
 

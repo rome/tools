@@ -38,8 +38,7 @@ const NEW_SYMBOL: &str = "new Symbol(\"\");";
 const FIX_BEFORE: &str = "
 (1 >= -0)
 ";
-const FIX_AFTER: &str = "
-(1 >= 0)
+const FIX_AFTER: &str = "1 >= 0;
 ";
 
 const APPLY_SUGGESTED_BEFORE: &str = "let a = 4;
@@ -49,8 +48,8 @@ console.log(a);
 
 const APPLY_SUGGESTED_AFTER: &str = "const a = 4;\nconsole.log(a);\n";
 
-const NO_DEBUGGER_BEFORE: &str = "debugger;";
-const NO_DEBUGGER_AFTER: &str = "debugger;";
+const NO_DEBUGGER_BEFORE: &str = "debugger;\n";
+const NO_DEBUGGER_AFTER: &str = "debugger;\n";
 
 const UPGRADE_SEVERITY_CODE: &str = r#"if(!cond) { exprA(); } else { exprB() }"#;
 
@@ -332,7 +331,7 @@ function f() { arguments; }
 
     let expected = "const a = 4;
 console.log(a);
-function f() { arguments; }
+function f() {\n\targuments;\n}
 ";
 
     let test1 = Path::new("test1.js");
@@ -533,7 +532,7 @@ fn should_disable_a_rule_group() {
         .read_to_string(&mut buffer)
         .unwrap();
 
-    assert_eq!(buffer, FIX_BEFORE);
+    assert_eq!(buffer, "1 >= -0;\n");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),

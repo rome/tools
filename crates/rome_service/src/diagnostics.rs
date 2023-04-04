@@ -3,7 +3,7 @@ use crate::ConfigurationDiagnostic;
 use rome_console::fmt::Bytes;
 use rome_console::markup;
 use rome_diagnostics::{category, Category, Diagnostic, DiagnosticTags, Location, Severity};
-use rome_formatter::FormatError;
+use rome_formatter::{FormatError, PrintError};
 use rome_js_analyze::utils::rename::RenameError;
 use rome_js_analyze::RuleError;
 use serde::{Deserialize, Serialize};
@@ -26,6 +26,8 @@ pub enum WorkspaceError {
     SourceFileNotSupported(SourceFileNotSupported),
     /// The formatter encountered an error while formatting the file
     FormatError(FormatError),
+    /// The formatter encountered an error while formatting the file
+    PrintError(PrintError),
     /// The file could not be formatted since it has syntax errors and `format_with_errors` is disabled
     FormatWithErrorsDisabled(FormatWithErrorsDisabled),
     /// The file could not be analyzed because a rule caused an error.
@@ -111,6 +113,7 @@ impl Diagnostic for WorkspaceError {
         match self {
             WorkspaceError::FormatWithErrorsDisabled(error) => error.category(),
             WorkspaceError::FormatError(err) => err.category(),
+            WorkspaceError::PrintError(err) => err.category(),
             WorkspaceError::RuleError(error) => error.category(),
             WorkspaceError::Configuration(error) => error.category(),
             WorkspaceError::RenameError(error) => error.category(),
@@ -130,6 +133,7 @@ impl Diagnostic for WorkspaceError {
         match self {
             WorkspaceError::FormatWithErrorsDisabled(error) => error.description(fmt),
             WorkspaceError::FormatError(error) => Diagnostic::description(error, fmt),
+            WorkspaceError::PrintError(error) => Diagnostic::description(error, fmt),
             WorkspaceError::RuleError(error) => Diagnostic::description(error, fmt),
             WorkspaceError::Configuration(error) => error.description(fmt),
             WorkspaceError::RenameError(error) => error.description(fmt),
@@ -149,6 +153,7 @@ impl Diagnostic for WorkspaceError {
         match self {
             WorkspaceError::FormatWithErrorsDisabled(error) => error.message(fmt),
             WorkspaceError::FormatError(err) => err.message(fmt),
+            WorkspaceError::PrintError(err) => err.message(fmt),
             WorkspaceError::RuleError(error) => error.message(fmt),
             WorkspaceError::Configuration(error) => error.message(fmt),
             WorkspaceError::RenameError(error) => error.message(fmt),
@@ -167,6 +172,7 @@ impl Diagnostic for WorkspaceError {
     fn severity(&self) -> Severity {
         match self {
             WorkspaceError::FormatError(err) => err.severity(),
+            WorkspaceError::PrintError(err) => err.severity(),
             WorkspaceError::RuleError(error) => error.severity(),
             WorkspaceError::Configuration(error) => error.severity(),
             WorkspaceError::RenameError(error) => error.severity(),
@@ -186,6 +192,7 @@ impl Diagnostic for WorkspaceError {
     fn tags(&self) -> DiagnosticTags {
         match self {
             WorkspaceError::FormatError(err) => err.tags(),
+            WorkspaceError::PrintError(err) => err.tags(),
             WorkspaceError::RuleError(error) => error.tags(),
             WorkspaceError::Configuration(error) => error.tags(),
             WorkspaceError::RenameError(error) => error.tags(),
@@ -205,6 +212,7 @@ impl Diagnostic for WorkspaceError {
     fn location(&self) -> Location<'_> {
         match self {
             WorkspaceError::FormatError(err) => err.location(),
+            WorkspaceError::PrintError(err) => err.location(),
             WorkspaceError::RuleError(error) => error.location(),
             WorkspaceError::Configuration(error) => error.location(),
             WorkspaceError::RenameError(error) => error.location(),
@@ -224,6 +232,7 @@ impl Diagnostic for WorkspaceError {
     fn source(&self) -> Option<&dyn Diagnostic> {
         match self {
             WorkspaceError::FormatError(error) => Diagnostic::source(error),
+            WorkspaceError::PrintError(error) => Diagnostic::source(error),
             WorkspaceError::RuleError(error) => Diagnostic::source(error),
             WorkspaceError::Configuration(error) => Diagnostic::source(error),
             WorkspaceError::RenameError(error) => Diagnostic::source(error),
@@ -250,6 +259,12 @@ impl From<FormatError> for WorkspaceError {
 impl From<TransportError> for WorkspaceError {
     fn from(err: TransportError) -> Self {
         Self::TransportError(err)
+    }
+}
+
+impl From<PrintError> for WorkspaceError {
+    fn from(err: PrintError) -> Self {
+        Self::PrintError(err)
     }
 }
 
