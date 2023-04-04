@@ -1863,7 +1863,7 @@ dependencies = [
 
 [[package]]
 name = "rome_js_factory"
-version = "0.0.0"
+version = "0.0.1"
 dependencies = [
  "rome_js_syntax",
  "rome_rowan",
@@ -1900,7 +1900,7 @@ dependencies = [
 
 [[package]]
 name = "rome_js_parser"
-version = "0.0.0"
+version = "0.0.1"
 dependencies = [
  "bitflags",
  "cfg-if",
@@ -1937,7 +1937,7 @@ dependencies = [
 
 [[package]]
 name = "rome_js_syntax"
-version = "0.0.0"
+version = "0.0.1"
 dependencies = [
  "rome_console",
  "rome_diagnostics",
@@ -1949,7 +1949,7 @@ dependencies = [
 
 [[package]]
 name = "rome_js_unicode_table"
-version = "0.0.0"
+version = "0.0.1"
 
 [[package]]
 name = "rome_json_factory"
@@ -2040,7 +2040,7 @@ dependencies = [
 
 [[package]]
 name = "rome_parser"
-version = "0.0.0"
+version = "0.0.1"
 dependencies = [
  "drop_bomb",
  "rome_console",

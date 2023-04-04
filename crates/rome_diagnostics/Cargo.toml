@@ -1,10 +1,10 @@
 [package]
 name = "rome_diagnostics"
 version = "0.0.1"
-authors = ["RSLint developers"]
+authors = ["Rome Tools Developers and Contributors"]
 edition = "2021"
 license = "MIT"
-description = "Pretty error reporting library based on codespan-reporting built for the RSLint project"
+description = "Pretty error reporting library"
 documentation = "https://rustdocs.rome.tools/rome_diagnostics/index.html"
 
 [[example]]
