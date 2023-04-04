@@ -14,6 +14,7 @@
 - [`noConfusingArrow`](https://docs.rome.tools/lint/rules/noConfusingArrow/)
 - [`noRedundantRoles`](https://docs.rome.tools/lint/rules/noRedundantRoles/)
 - [`noNoninteractiveTabindex`](https://docs.rome.tools/lint/rules/noNoninteractiveTabindex/)
+- [`noAriaUnsupportedElements`](https://docs.rome.tools/lint/rules/noAriaUnsupportedElements/)
 ### Parser
 
 - Allow module syntax in `cts` files

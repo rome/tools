@@ -101,6 +101,7 @@ define_categories! {
 "lint/nursery/noNamespace": "https://docs.rome.tools/lint/rules/noNamespace",
 "lint/nursery/noConfusingArrow": "https://docs.rome.tools/lint/rules/noConfusingArrow",
 "lint/nursery/noNoninteractiveTabindex": "https://docs.rome.tools/lint/rules/noNoninteractiveTabindex",
+"lint/nursery/noAriaUnsupportedElements": "https://docs.rome.tools/lint/rules/noAriaUnsupportedElements",
     // Insert new nursery rule here
     "lint/nursery/noRedeclare": "https://docs.rome.tools/lint/rules/noRedeclare",
     "lint/nursery/useNamespaceKeyword": "https://docs.rome.tools/lint/rules/useNamespaceKeyword",

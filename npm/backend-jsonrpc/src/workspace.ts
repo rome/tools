@@ -357,6 +357,10 @@ export interface Nursery {
 	 */
 	all?: boolean;
 	/**
+	 * Enforce that elements that do not support ARIA roles, states, and properties do not have those attributes.
+	 */
+	noAriaUnsupportedElements?: RuleConfiguration;
+	/**
 	 * Disallow assignments in expressions.
 	 */
 	noAssignInExpressions?: RuleConfiguration;
@@ -950,6 +954,7 @@ export type Category =
 	| "lint/nursery/noNamespace"
 	| "lint/nursery/noConfusingArrow"
 	| "lint/nursery/noNoninteractiveTabindex"
+	| "lint/nursery/noAriaUnsupportedElements"
 	| "lint/nursery/noRedeclare"
 	| "lint/nursery/useNamespaceKeyword"
 	| "lint/nursery/noRedundantRoles"
