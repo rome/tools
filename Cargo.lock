@@ -1685,7 +1685,7 @@ dependencies = [
 
 [[package]]
 name = "rome_console"
-version = "0.0.0"
+version = "0.0.1"
 dependencies = [
  "atty",
  "rome_markup",
@@ -1736,7 +1736,7 @@ dependencies = [
 
 [[package]]
 name = "rome_diagnostics"
-version = "0.0.0"
+version = "0.0.1"
 dependencies = [
  "backtrace",
  "bitflags",
@@ -1757,7 +1757,7 @@ dependencies = [
 
 [[package]]
 name = "rome_diagnostics_categories"
-version = "0.0.0"
+version = "0.0.1"
 dependencies = [
  "quote",
  "schemars",
@@ -1766,7 +1766,7 @@ dependencies = [
 
 [[package]]
 name = "rome_diagnostics_macros"
-version = "0.0.0"
+version = "0.0.1"
 dependencies = [
  "proc-macro-error",
  "proc-macro2",
@@ -1864,7 +1864,7 @@ dependencies = [
 
 [[package]]
 name = "rome_js_factory"
-version = "0.0.0"
+version = "0.0.1"
 dependencies = [
  "rome_js_syntax",
  "rome_rowan",
@@ -1901,7 +1901,7 @@ dependencies = [
 
 [[package]]
 name = "rome_js_parser"
-version = "0.0.0"
+version = "0.0.1"
 dependencies = [
  "bitflags",
  "cfg-if",
@@ -1938,7 +1938,7 @@ dependencies = [
 
 [[package]]
 name = "rome_js_syntax"
-version = "0.0.0"
+version = "0.0.1"
 dependencies = [
  "rome_console",
  "rome_diagnostics",
@@ -1950,7 +1950,7 @@ dependencies = [
 
 [[package]]
 name = "rome_js_unicode_table"
-version = "0.0.0"
+version = "0.0.1"
 
 [[package]]
 name = "rome_json_factory"
@@ -2032,7 +2032,7 @@ dependencies = [
 
 [[package]]
 name = "rome_markup"
-version = "0.0.0"
+version = "0.0.1"
 dependencies = [
  "proc-macro-error",
  "proc-macro2",
@@ -2041,7 +2041,7 @@ dependencies = [
 
 [[package]]
 name = "rome_parser"
-version = "0.0.0"
+version = "0.0.1"
 dependencies = [
  "drop_bomb",
  "rome_console",
@@ -2051,7 +2051,7 @@ dependencies = [
 
 [[package]]
 name = "rome_rowan"
-version = "0.0.0"
+version = "0.0.1"
 dependencies = [
  "countme",
  "hashbrown",
@@ -2103,7 +2103,7 @@ dependencies = [
 
 [[package]]
 name = "rome_text_edit"
-version = "0.0.0"
+version = "0.0.1"
 dependencies = [
  "rome_text_size",
  "schemars",
@@ -2113,7 +2113,7 @@ dependencies = [
 
 [[package]]
 name = "rome_text_size"
-version = "0.0.0"
+version = "0.0.1"
 dependencies = [
  "schemars",
  "serde",

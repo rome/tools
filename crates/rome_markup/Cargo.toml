@@ -1,11 +1,13 @@
 [package]
 name = "rome_markup"
-version = "0.0.0"
-description = ""
+version = "0.0.1"
+description = "Macro to write text using a HTML-like syntax"
 license = "MIT"
 edition = "2021"
 authors = ["Rome Tools Developers and Contributors"]
 repository = "https://github.com/rome/tools"
+documentation = "https://rustdocs.rome.tools/rome_markup/index.html"
+
 
 [lib]
 proc-macro = true

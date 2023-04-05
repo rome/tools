@@ -1,15 +1,16 @@
 [package]
 name = "rome_parser"
-version = "0.0.0"
+version = "0.0.1"
 edition = "2021"
 authors = ["Rome Tools Developers and Contributors"]
 description = "Shared infrastructure for Rome's parser"
 repository = "https://github.com/rome/tools"
+documentation = "https://rustdocs.rome.tools/rome_parser/index.html"
 license = "MIT"
 
 
 [dependencies]
-rome_console = { path = "../rome_console" }
-rome_diagnostics = { path = "../rome_diagnostics" }
-rome_rowan = { path = "../rome_rowan" }
+rome_console = { version = "0.0.1", path = "../rome_console" }
+rome_diagnostics = { version = "0.0.1",path = "../rome_diagnostics" }
+rome_rowan = { version = "0.0.1",path = "../rome_rowan" }
 drop_bomb = "0.1.5"
