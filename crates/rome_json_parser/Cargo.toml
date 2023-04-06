@@ -1,11 +1,12 @@
 [package]
-edition = "2021"
+edition = { workspace = true }
 name = "rome_json_parser"
 version = "0.0.0"
 authors = ["Rome Tools and Contributors"]
-license = "MIT"
+license = { workspace = true }
 description = "An extremely fast JSON parser"
-repository = "https://github.com/rome/tools"
+repository = { workspace = true }
+documentation = "https://rustdocs.rome.tools/rome_json_parser/index.html"
 
 [dependencies]
 rome_rowan = { path = "../rome_rowan" }
@@ -23,3 +24,6 @@ quickcheck = "1.0.3"
 quickcheck_macros = "1.0.0"
 insta = { workspace = true }
 
+# cargo-workspaces metadata
+[package.metadata.workspaces]
+independent = true

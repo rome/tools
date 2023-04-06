@@ -1,12 +1,12 @@
 [package]
 name = "rome_parser"
 version = "0.0.1"
-edition = "2021"
-authors = ["Rome Tools Developers and Contributors"]
+edition = { workspace = true }
+authors = { workspace = true }
 description = "Shared infrastructure for Rome's parser"
-repository = "https://github.com/rome/tools"
+repository = { workspace = true }
 documentation = "https://rustdocs.rome.tools/rome_parser/index.html"
-license = "MIT"
+license = { workspace = true }
 
 
 [dependencies]

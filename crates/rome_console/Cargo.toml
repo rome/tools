@@ -1,11 +1,11 @@
 [package]
 name = "rome_console"
 version = "0.0.1"
-edition = "2021"
-authors = ["Rome Tools Developers and Contributors"]
-license = "MIT"
+edition = { workspace = true }
+authors = { workspace = true }
+license = { workspace = true }
 description = "Expose utilities to print HTML-syntax messages"
-repository = "https://github.com/rome/tools"
+repository = { workspace = true }
 documentation = "https://rustdocs.rome.tools/rome_console/index.html"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

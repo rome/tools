@@ -1780,7 +1780,7 @@ version = "0.0.0"
 
 [[package]]
 name = "rome_formatter"
-version = "0.0.0"
+version = "0.0.1"
 dependencies = [
  "cfg-if",
  "countme",
@@ -1872,7 +1872,7 @@ dependencies = [
 
 [[package]]
 name = "rome_js_formatter"
-version = "0.0.0"
+version = "0.0.2"
 dependencies = [
  "cfg-if",
  "countme",

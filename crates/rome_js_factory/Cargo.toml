@@ -1,11 +1,11 @@
 [package]
 name = "rome_js_factory"
 version = "0.0.1"
-edition = "2021"
-authors = ["Rome Tools Developers and Contributors"]
-license = "MIT"
+edition = { workspace = true }
+authors = { workspace = true }
+license = { workspace = true }
 description = "Utilities to create JavaScript AST for rome_js_parser"
-repository = "https://github.com/rome/tools"
+repository = { workspace = true }
 documentation = "https://rustdocs.rome.tools/rome_js_factory/index.html"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html

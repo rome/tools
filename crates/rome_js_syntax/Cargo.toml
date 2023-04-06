@@ -1,11 +1,11 @@
 [package]
-edition = "2021"
+edition = { workspace = true }
 name = "rome_js_syntax"
 version = "0.0.1"
-authors = ["Rome Tools Developers and Contributors"]
+authors = { workspace = true }
 description = "SyntaxKind and common rowan definitions for rome_js_parser"
-license = "MIT"
-repository = "https://github.com/rome/tools"
+license = { workspace = true }
+repository = { workspace = true }
 documentation = "https://rustdocs.rome.tools/rome_js_syntax/index.html"
 
 [dependencies]

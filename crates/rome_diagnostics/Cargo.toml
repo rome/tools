@@ -1,11 +1,12 @@
 [package]
 name = "rome_diagnostics"
 version = "0.0.1"
-authors = ["Rome Tools Developers and Contributors"]
-edition = "2021"
-license = "MIT"
+authors = { workspace = true }
+edition = { workspace = true }
+license = { workspace = true }
 description = "Pretty error reporting library"
 documentation = "https://rustdocs.rome.tools/rome_diagnostics/index.html"
+categories = ["development-tools"]
 
 [[example]]
 name = "cli"
@@ -25,7 +26,7 @@ test = true
 
 [dependencies]
 rome_rowan = { version = "0.0.1", path = "../rome_rowan" }
-rome_console = {  version = "0.0.1", path = "../rome_console", features = ["serde_markup"] }
+rome_console = { version = "0.0.1", path = "../rome_console", features = ["serde_markup"] }
 rome_diagnostics_macros = { version = "0.0.1", path = "../rome_diagnostics_macros" }
 rome_diagnostics_categories = { version = "0.0.1", path = "../rome_diagnostics_categories", features = ["serde"] }
 rome_text_edit = { version = "0.0.1", path = "../rome_text_edit" }

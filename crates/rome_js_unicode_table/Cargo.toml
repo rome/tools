@@ -1,11 +1,11 @@
 [package]
-edition = "2021"
+edition = { workspace = true }
 name = "rome_js_unicode_table"
 version = "0.0.1"
 authors = ["Rome Tools and Contributors"]
-license = "MIT"
+license = { workspace = true }
 description = "Unicode table for JavaScript IDs"
-repository = "https://github.com/rome/tools"
+repository = { workspace = true }
 documentation = "https://rustdocs.rome.tools/rome_js_parser/index.html"
 
 [dependencies]

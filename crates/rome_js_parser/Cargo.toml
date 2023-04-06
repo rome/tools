@@ -1,22 +1,22 @@
 [package]
-edition = "2021"
+edition = { workspace = true }
 name = "rome_js_parser"
 version = "0.0.1"
-authors = ["Rome Tools Developers and Contributors"]
-license = "MIT"
+authors = { workspace = true }
+license = { workspace = true }
 description = "An extremely fast ECMAScript parser made for the rslint project"
-repository = "https://github.com/rome/tools"
+repository = { workspace = true }
 documentation = "https://rustdocs.rome.tools/rome_js_parser/index.html"
-
+categories = ["parser-implementations", "development-tools"]
 
 [dependencies]
-rome_console = { version = "0.0.1",path = "../rome_console" }
-rome_diagnostics = { version = "0.0.1",path = "../rome_diagnostics" }
-rome_js_syntax = { version = "0.0.1",path = "../rome_js_syntax" }
-rome_js_factory = { version = "0.0.1",path = "../rome_js_factory" }
-rome_js_unicode_table = {  version = "0.0.1",path = "../rome_js_unicode_table" }
-rome_rowan = { version = "0.0.1",path = "../rome_rowan" }
-rome_parser = { version = "0.0.1",path = "../rome_parser" }
+rome_console = { version = "0.0.1", path = "../rome_console" }
+rome_diagnostics = { version = "0.0.1", path = "../rome_diagnostics" }
+rome_js_syntax = { version = "0.0.1", path = "../rome_js_syntax" }
+rome_js_factory = { version = "0.0.1", path = "../rome_js_factory" }
+rome_js_unicode_table = { version = "0.0.1", path = "../rome_js_unicode_table" }
+rome_rowan = { version = "0.0.1", path = "../rome_rowan" }
+rome_parser = { version = "0.0.1", path = "../rome_parser" }
 drop_bomb = "0.1.5"
 bitflags = "1.3.2"
 indexmap = { workspace = true }
@@ -33,3 +33,7 @@ quickcheck_macros = "1.0.0"
 [features]
 serde = ["rome_js_syntax/serde"]
 tests = []
+
+# cargo-workspaces metadata
+[package.metadata.workspaces]
+independent = true
