@@ -7,6 +7,8 @@ parent: lint/rules/index
 
 When expressing array types, this rule promotes the usage of `T[]` shorthand instead of `Array<T>`.
 
+ESLint (typescript-eslint) equivalent: [array-type/array-simple](https://typescript-eslint.io/rules/array-type/#array-simple)
+
 ## Examples
 
 ### Invalid

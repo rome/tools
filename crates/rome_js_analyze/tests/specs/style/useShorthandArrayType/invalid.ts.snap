@@ -14,6 +14,8 @@ let readonlyInvalid1: ReadonlyArray<foo>;
 let readonlyInvalid2: Promise<ReadonlyArray<string>>;
 let readonlyInvalid3: ReadonlyArray<Foo<Bar>>;
 let readonlyInvalid4: ReadonlyArray<[number, number]>;
+let readonlyInvalid5: ReadonlyArray<ReadonlyArray<number>>;
+let readonlyInvalid6: ReadonlyArray<ReadonlyArray<ReadonlyArray<number>>>;
 
 ```
 
@@ -211,7 +213,7 @@ invalid.ts:9:23 lint/style/useShorthandArrayType  FIXABLE  ━━━━━━━
    > 9 │ let readonlyInvalid3: ReadonlyArray<Foo<Bar>>;
        │                       ^^^^^^^^^^^^^^^^^^^^^^^
     10 │ let readonlyInvalid4: ReadonlyArray<[number, number]>;
-    11 │ 
+    11 │ let readonlyInvalid5: ReadonlyArray<ReadonlyArray<number>>;
   
   i Suggested fix: Use shorthand readonly T[] syntax to replace
   
@@ -220,7 +222,7 @@ invalid.ts:9:23 lint/style/useShorthandArrayType  FIXABLE  ━━━━━━━
      9    │ - let·readonlyInvalid3:·ReadonlyArray<Foo<Bar>>;
         9 │ + let·readonlyInvalid3:·readonly·Foo<Bar>[];
     10 10 │   let readonlyInvalid4: ReadonlyArray<[number, number]>;
-    11 11 │   
+    11 11 │   let readonlyInvalid5: ReadonlyArray<ReadonlyArray<number>>;
   
 
 ```
@@ -234,7 +236,8 @@ invalid.ts:10:23 lint/style/useShorthandArrayType  FIXABLE  ━━━━━━�
      9 │ let readonlyInvalid3: ReadonlyArray<Foo<Bar>>;
   > 10 │ let readonlyInvalid4: ReadonlyArray<[number, number]>;
        │                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    11 │ 
+    11 │ let readonlyInvalid5: ReadonlyArray<ReadonlyArray<number>>;
+    12 │ let readonlyInvalid6: ReadonlyArray<ReadonlyArray<ReadonlyArray<number>>>;
   
   i Suggested fix: Use shorthand readonly T[] syntax to replace
   
@@ -242,7 +245,122 @@ invalid.ts:10:23 lint/style/useShorthandArrayType  FIXABLE  ━━━━━━�
      9  9 │   let readonlyInvalid3: ReadonlyArray<Foo<Bar>>;
     10    │ - let·readonlyInvalid4:·ReadonlyArray<[number,·number]>;
        10 │ + let·readonlyInvalid4:·readonly·[number,·number][];
-    11 11 │   
+    11 11 │   let readonlyInvalid5: ReadonlyArray<ReadonlyArray<number>>;
+    12 12 │   let readonlyInvalid6: ReadonlyArray<ReadonlyArray<ReadonlyArray<number>>>;
+  
+
+```
+
+```
+invalid.ts:11:23 lint/style/useShorthandArrayType  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use shorthand readonly T[] syntax instead of ReadonlyArray<T> syntax.
+  
+     9 │ let readonlyInvalid3: ReadonlyArray<Foo<Bar>>;
+    10 │ let readonlyInvalid4: ReadonlyArray<[number, number]>;
+  > 11 │ let readonlyInvalid5: ReadonlyArray<ReadonlyArray<number>>;
+       │                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    12 │ let readonlyInvalid6: ReadonlyArray<ReadonlyArray<ReadonlyArray<number>>>;
+    13 │ 
+  
+  i Suggested fix: Use shorthand readonly T[] syntax to replace
+  
+     9  9 │   let readonlyInvalid3: ReadonlyArray<Foo<Bar>>;
+    10 10 │   let readonlyInvalid4: ReadonlyArray<[number, number]>;
+    11    │ - let·readonlyInvalid5:·ReadonlyArray<ReadonlyArray<number>>;
+       11 │ + let·readonlyInvalid5:·readonly·(readonly·number[])[];
+    12 12 │   let readonlyInvalid6: ReadonlyArray<ReadonlyArray<ReadonlyArray<number>>>;
+    13 13 │   
+  
+
+```
+
+```
+invalid.ts:11:37 lint/style/useShorthandArrayType  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use shorthand readonly T[] syntax instead of ReadonlyArray<T> syntax.
+  
+     9 │ let readonlyInvalid3: ReadonlyArray<Foo<Bar>>;
+    10 │ let readonlyInvalid4: ReadonlyArray<[number, number]>;
+  > 11 │ let readonlyInvalid5: ReadonlyArray<ReadonlyArray<number>>;
+       │                                     ^^^^^^^^^^^^^^^^^^^^^
+    12 │ let readonlyInvalid6: ReadonlyArray<ReadonlyArray<ReadonlyArray<number>>>;
+    13 │ 
+  
+  i Suggested fix: Use shorthand readonly T[] syntax to replace
+  
+     9  9 │   let readonlyInvalid3: ReadonlyArray<Foo<Bar>>;
+    10 10 │   let readonlyInvalid4: ReadonlyArray<[number, number]>;
+    11    │ - let·readonlyInvalid5:·ReadonlyArray<ReadonlyArray<number>>;
+       11 │ + let·readonlyInvalid5:·ReadonlyArray<readonly·number[]>;
+    12 12 │   let readonlyInvalid6: ReadonlyArray<ReadonlyArray<ReadonlyArray<number>>>;
+    13 13 │   
+  
+
+```
+
+```
+invalid.ts:12:23 lint/style/useShorthandArrayType  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use shorthand readonly T[] syntax instead of ReadonlyArray<T> syntax.
+  
+    10 │ let readonlyInvalid4: ReadonlyArray<[number, number]>;
+    11 │ let readonlyInvalid5: ReadonlyArray<ReadonlyArray<number>>;
+  > 12 │ let readonlyInvalid6: ReadonlyArray<ReadonlyArray<ReadonlyArray<number>>>;
+       │                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    13 │ 
+  
+  i Suggested fix: Use shorthand readonly T[] syntax to replace
+  
+    10 10 │   let readonlyInvalid4: ReadonlyArray<[number, number]>;
+    11 11 │   let readonlyInvalid5: ReadonlyArray<ReadonlyArray<number>>;
+    12    │ - let·readonlyInvalid6:·ReadonlyArray<ReadonlyArray<ReadonlyArray<number>>>;
+       12 │ + let·readonlyInvalid6:·readonly·(readonly·(readonly·number[])[])[];
+    13 13 │   
+  
+
+```
+
+```
+invalid.ts:12:37 lint/style/useShorthandArrayType  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use shorthand readonly T[] syntax instead of ReadonlyArray<T> syntax.
+  
+    10 │ let readonlyInvalid4: ReadonlyArray<[number, number]>;
+    11 │ let readonlyInvalid5: ReadonlyArray<ReadonlyArray<number>>;
+  > 12 │ let readonlyInvalid6: ReadonlyArray<ReadonlyArray<ReadonlyArray<number>>>;
+       │                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    13 │ 
+  
+  i Suggested fix: Use shorthand readonly T[] syntax to replace
+  
+    10 10 │   let readonlyInvalid4: ReadonlyArray<[number, number]>;
+    11 11 │   let readonlyInvalid5: ReadonlyArray<ReadonlyArray<number>>;
+    12    │ - let·readonlyInvalid6:·ReadonlyArray<ReadonlyArray<ReadonlyArray<number>>>;
+       12 │ + let·readonlyInvalid6:·ReadonlyArray<readonly·(readonly·number[])[]>;
+    13 13 │   
+  
+
+```
+
+```
+invalid.ts:12:51 lint/style/useShorthandArrayType  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use shorthand readonly T[] syntax instead of ReadonlyArray<T> syntax.
+  
+    10 │ let readonlyInvalid4: ReadonlyArray<[number, number]>;
+    11 │ let readonlyInvalid5: ReadonlyArray<ReadonlyArray<number>>;
+  > 12 │ let readonlyInvalid6: ReadonlyArray<ReadonlyArray<ReadonlyArray<number>>>;
+       │                                                   ^^^^^^^^^^^^^^^^^^^^^
+    13 │ 
+  
+  i Suggested fix: Use shorthand readonly T[] syntax to replace
+  
+    10 10 │   let readonlyInvalid4: ReadonlyArray<[number, number]>;
+    11 11 │   let readonlyInvalid5: ReadonlyArray<ReadonlyArray<number>>;
+    12    │ - let·readonlyInvalid6:·ReadonlyArray<ReadonlyArray<ReadonlyArray<number>>>;
+       12 │ + let·readonlyInvalid6:·ReadonlyArray<ReadonlyArray<readonly·number[]>>;
+    13 13 │   
   
 
 ```

@@ -8,3 +8,5 @@ let readonlyInvalid1: ReadonlyArray<foo>;
 let readonlyInvalid2: Promise<ReadonlyArray<string>>;
 let readonlyInvalid3: ReadonlyArray<Foo<Bar>>;
 let readonlyInvalid4: ReadonlyArray<[number, number]>;
+let readonlyInvalid5: ReadonlyArray<ReadonlyArray<number>>;
+let readonlyInvalid6: ReadonlyArray<ReadonlyArray<ReadonlyArray<number>>>;
