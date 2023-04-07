@@ -164,7 +164,8 @@ impl Rule for NoBlankTarget {
         let message = if let Some(rel_attribute) = rel_attribute {
             let old_jsx_string = rel_attribute.initializer()?.value().ok()?;
             let old_jsx_string = old_jsx_string.as_jsx_string()?;
-            let rel_text = old_jsx_string.inner_string_text().ok()?;
+            let rel_quoted_string = old_jsx_string.inner_string_text().ok()?;
+            let rel_text = rel_quoted_string.text();
             let new_text = format!("\"noreferrer {rel_text}\"");
             let new_jsx_string = jsx_string(jsx_ident(&new_text));
             mutation.replace_node(old_jsx_string.clone(), new_jsx_string);

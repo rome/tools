@@ -103,8 +103,8 @@ impl Rule for UseIframeTitle {
 
         match attribute_value {
             AnyJsxAttributeValue::JsxString(str) => {
-                let text = str.inner_string_text().ok()?;
-                let is_valid_string = !text.is_empty() && text != r#"``"#;
+                let quoted_string = str.inner_string_text().ok()?;
+                let is_valid_string = !quoted_string.is_empty() && quoted_string.text() != r#"``"#;
                 if is_valid_string {
                     return None;
                 }

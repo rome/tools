@@ -159,8 +159,8 @@ fn is_valid_attribute_value(
             let opening_element = jsx_element.opening_element().ok()?;
             let maybe_attribute = opening_element.find_attribute_by_name("id").ok()?;
             let child_attribute_value = maybe_attribute?.initializer()?.value().ok()?;
-            let is_valid = attribute_value.inner_text_value().ok()??.text()
-                == child_attribute_value.inner_text_value().ok()??.text();
+            let is_valid = attribute_value.as_static_value()?.text()
+                == child_attribute_value.as_static_value()?.text();
             Some(is_valid)
         })
         .any(|x| x);

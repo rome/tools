@@ -3,8 +3,8 @@ use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::jsx_ext::AnyJsxElement;
-use rome_js_syntax::{AnyJsExpression, AnyJsLiteralExpression, AnyJsxAttributeValue};
-use rome_rowan::{AstNode, AstNodeList, TextRange};
+use rome_rowan::{AstNode, TextRange};
+
 declare_rule! {
     /// Enforce that interactive ARIA roles are not assigned to non-interactive HTML elements.
     ///
@@ -66,39 +66,11 @@ impl Rule for NoNoninteractiveElementToInteractiveRole {
         let aria_roles = ctx.aria_roles();
         if node.is_element() {
             let role_attribute = node.find_attribute_by_name("role")?;
-            let role_attribute_value = role_attribute.initializer()?.value().ok()?;
-            let role_attribute_value = match role_attribute_value {
-                AnyJsxAttributeValue::JsxString(string) => string.inner_string_text().ok(),
-                AnyJsxAttributeValue::JsxExpressionAttributeValue(expression) => {
-                    match expression.expression().ok()? {
-                        AnyJsExpression::AnyJsLiteralExpression(
-                            AnyJsLiteralExpression::JsStringLiteralExpression(string),
-                        ) => string.inner_string_text().ok(),
-                        AnyJsExpression::JsTemplateExpression(template) => {
-                            if template.elements().len() == 1 {
-                                template
-                                    .elements()
-                                    .iter()
-                                    .next()
-                                    .and_then(|chunk| {
-                                        chunk
-                                            .as_js_template_chunk_element()
-                                            .and_then(|t| t.template_chunk_token().ok())
-                                    })
-                                    .map(|t| t.token_text_trimmed())
-                            } else {
-                                None
-                            }
-                        }
-                        _ => None,
-                    }
-                }
-
-                _ => None,
-            }?;
+            let role_attribute_static_value = role_attribute.as_static_value()?;
+            let role_attribute_value = role_attribute_static_value.text();
             let element_name = node.name().ok()?.as_jsx_name()?.value_token().ok()?;
             if aria_roles.is_not_interactive_element(element_name.text_trimmed())
-                && aria_roles.is_role_interactive(role_attribute_value.text())
+                && aria_roles.is_role_interactive(role_attribute_value)
             {
                 // <div> and <span> are considered neither interactive nor non-interactive, depending on the presence or absence of the role attribute.
                 // We don't report <div> and <span> here, because we cannot determine whether they are interactive or non-interactive.

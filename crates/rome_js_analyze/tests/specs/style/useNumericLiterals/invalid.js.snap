@@ -419,6 +419,21 @@ invalid.js:18:1 lint/style/useNumericLiterals ━━━━━━━━━━━�
 ```
 
 ```
+invalid.js:19:1 lint/style/useNumericLiterals ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use octal literals instead of parseInt()
+  
+    17 │ parseInt(`1F7`, 16) === 255;
+    18 │ parseInt('', 8);
+  > 19 │ parseInt(``, 8);
+       │ ^^^^^^^^^^^^^^^
+    20 │ parseInt(`7999`, 8);
+    21 │ parseInt(`1234`, 2);
+  
+
+```
+
+```
 invalid.js:20:1 lint/style/useNumericLiterals ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Use octal literals instead of parseInt()

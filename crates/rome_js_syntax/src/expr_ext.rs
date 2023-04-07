@@ -1,19 +1,19 @@
 //! Extensions for things which are not easily generated in ast expr nodes
 use crate::numbers::parse_js_number;
+use crate::static_value::{QuotedString, StaticValue};
 use crate::{
     AnyJsCallArgument, AnyJsExpression, AnyJsLiteralExpression, AnyJsTemplateElement,
     JsArrayExpression, JsArrayHole, JsAssignmentExpression, JsBinaryExpression, JsCallExpression,
-    JsComputedMemberExpression, JsIdentifierExpression, JsLiteralMemberName, JsLogicalExpression,
-    JsNewExpression, JsNumberLiteralExpression, JsObjectExpression, JsPostUpdateExpression,
-    JsReferenceIdentifier, JsRegexLiteralExpression, JsStaticMemberExpression,
-    JsStringLiteralExpression, JsSyntaxKind, JsSyntaxToken, JsTemplateExpression,
-    JsUnaryExpression, OperatorPrecedence, T,
+    JsComputedMemberExpression, JsLiteralMemberName, JsLogicalExpression, JsNewExpression,
+    JsNumberLiteralExpression, JsObjectExpression, JsPostUpdateExpression, JsReferenceIdentifier,
+    JsRegexLiteralExpression, JsStaticMemberExpression, JsStringLiteralExpression, JsSyntaxKind,
+    JsSyntaxToken, JsTemplateExpression, JsUnaryExpression, OperatorPrecedence, T,
 };
 use crate::{JsPreUpdateExpression, JsSyntaxKind::*};
 use core::iter;
 use rome_rowan::{
-    declare_node_union, AstNode, AstSeparatedList, NodeOrToken, SyntaxResult, SyntaxTokenText,
-    TextRange, TextSize,
+    declare_node_union, AstNode, AstNodeList, AstSeparatedList, NodeOrToken, SyntaxResult,
+    TextRange,
 };
 use std::collections::HashSet;
 
@@ -266,29 +266,10 @@ impl JsBinaryExpression {
             self.operator(),
             Ok(JsBinaryOperator::StrictInequality | JsBinaryOperator::Inequality)
         ) {
-            let right = self.right()?;
-
-            let is_right_null_expression = right
-                .as_any_js_literal_expression()
-                .map_or(false, |expression| {
-                    expression.as_js_null_literal_expression().is_some()
-                });
-
-            if is_right_null_expression {
-                return Ok(true);
-            }
-
-            let is_right_undefined_expression = right
-                .as_js_identifier_expression()
-                .map(|expression| expression.is_undefined())
-                .transpose()?
-                .unwrap_or(false);
-
-            if is_right_undefined_expression {
-                return Ok(true);
-            }
+            Ok(self.right()?.is_value_null_or_undefined())
+        } else {
+            Ok(false)
         }
-        Ok(false)
     }
 }
 
@@ -528,23 +509,8 @@ impl JsStringLiteralExpression {
     ///     .with_leading_trivia(vec![(TriviaPieceKind::Whitespace, " ")]));
     /// assert_eq!(string.inner_string_text().unwrap().text(), "foo");
     /// ```
-    pub fn inner_string_text(&self) -> SyntaxResult<SyntaxTokenText> {
-        let value = self.value_token()?;
-        let mut text = value.token_text_trimmed();
-
-        static QUOTES: [char; 2] = ['"', '\''];
-
-        if text.starts_with(QUOTES) {
-            let range = text.range().add_start(TextSize::from(1));
-            text = text.slice(range);
-        }
-
-        if text.ends_with(QUOTES) {
-            let range = text.range().sub_end(TextSize::from(1));
-            text = text.slice(range);
-        }
-
-        Ok(text)
+    pub fn inner_string_text(&self) -> SyntaxResult<QuotedString> {
+        Ok(QuotedString::new(self.value_token()?))
     }
 }
 
@@ -569,21 +535,6 @@ impl JsTemplateExpression {
             start.text_range().start(),
             self.syntax().text_range().end(),
         ))
-    }
-
-    /// Return token if the template is a string constant.
-    pub fn as_string_constant(&self) -> Option<JsSyntaxToken> {
-        if self.tag().is_some() {
-            return None;
-        }
-
-        let mut elements = self.elements().into_iter();
-        match (elements.next(), elements.next()) {
-            (Some(AnyJsTemplateElement::JsTemplateChunkElement(chunk)), None) => {
-                chunk.template_chunk_token().ok()
-            }
-            _ => None,
-        }
     }
 }
 
@@ -680,37 +631,52 @@ impl AnyJsExpression {
             .and_then(|it| it.name().ok())
     }
 
-    /// Return the expression is a string of given value if the given expression is
+    /// Return `true` if the static value match the given string value and it is
     /// 1. A string literal
     /// 2. A template literal with no substitutions
     pub fn is_string_constant(&self, text: &str) -> bool {
-        self.with_string_constant(|it| it == text).unwrap_or(false)
+        self.as_static_value()
+            .map_or(false, |it| it.is_string_constant(text))
     }
 
-    /// Return the string value if the given expression is
-    /// 1. A string literal
-    /// 2. A template literal with no substitutions
-    pub fn as_string_constant(&self) -> Option<String> {
-        self.with_string_constant(|it| it.to_string())
+    pub fn is_value_null_or_undefined(&self) -> bool {
+        self.as_static_value()
+            .map_or(false, |it| it.is_null_or_undefined())
     }
 
-    /// Call the given closure if the given expression is
-    /// 1. A string literal
-    /// 2. A template literal with no substitutions
-    fn with_string_constant<R>(&self, f: impl FnOnce(&str) -> R) -> Option<R> {
+    pub fn as_static_value(&self) -> Option<StaticValue> {
         match self {
-            Self::JsTemplateExpression(t) => t.as_string_constant().map(|it| f(it.text_trimmed())),
-            Self::AnyJsLiteralExpression(AnyJsLiteralExpression::JsStringLiteralExpression(s)) => {
-                s.inner_string_text().ok().map(|it| f(&it))
+            AnyJsExpression::AnyJsLiteralExpression(literal) => literal.as_static_value(),
+            AnyJsExpression::JsTemplateExpression(template) => {
+                let element_list = template.elements();
+
+                if element_list.len() > 1 {
+                    return None;
+                }
+
+                if element_list.len() == 0 {
+                    return Some(StaticValue::TemplateChunk(None));
+                }
+
+                match element_list.first()? {
+                    AnyJsTemplateElement::JsTemplateChunkElement(element) => Some(
+                        StaticValue::TemplateChunk(Some(element.template_chunk_token().ok()?)),
+                    ),
+                    AnyJsTemplateElement::JsTemplateElement(element) => {
+                        element.expression().ok()?.as_static_value()
+                    }
+                }
+            }
+            AnyJsExpression::JsIdentifierExpression(identifier) => {
+                let identifier_token = identifier.name().ok()?.value_token().ok()?;
+                match identifier_token.text_trimmed() {
+                    "undefined" => Some(StaticValue::Undefined(identifier_token)),
+                    "NaN" => Some(StaticValue::Number(identifier_token)),
+                    _ => None,
+                }
             }
             _ => None,
         }
-    }
-}
-
-impl JsIdentifierExpression {
-    pub fn is_undefined(&self) -> SyntaxResult<bool> {
-        Ok(self.name()?.value_token()?.text_trimmed() == "undefined")
     }
 }
 
@@ -733,6 +699,27 @@ impl AnyJsLiteralExpression {
             AnyJsLiteralExpression::JsStringLiteralExpression(expression) => {
                 expression.value_token()
             }
+        }
+    }
+
+    pub fn as_static_value(&self) -> Option<StaticValue> {
+        match self {
+            AnyJsLiteralExpression::JsBigintLiteralExpression(bigint) => {
+                Some(StaticValue::BigInt(bigint.value_token().ok()?))
+            }
+            AnyJsLiteralExpression::JsBooleanLiteralExpression(boolean) => {
+                Some(StaticValue::Boolean(boolean.value_token().ok()?))
+            }
+            AnyJsLiteralExpression::JsNullLiteralExpression(null) => {
+                Some(StaticValue::Null(null.value_token().ok()?))
+            }
+            AnyJsLiteralExpression::JsNumberLiteralExpression(number) => {
+                Some(StaticValue::Number(number.value_token().ok()?))
+            }
+            AnyJsLiteralExpression::JsRegexLiteralExpression(_) => None,
+            AnyJsLiteralExpression::JsStringLiteralExpression(string) => Some(StaticValue::String(
+                QuotedString::new(string.value_token().ok()?),
+            )),
         }
     }
 }

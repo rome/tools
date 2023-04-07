@@ -109,7 +109,7 @@ impl Rule for UseButtonType {
                     .as_js_string_literal_expression()?;
 
                 // case sensitive is important, <button> is different from <Button>
-                if first_argument.inner_string_text().ok()? == "button" {
+                if first_argument.inner_string_text().ok()?.text() == "button" {
                     return if let Some(props) = react_create_element.props.as_ref() {
                         let type_member = react_create_element.find_prop_by_name("type");
                         if let Some(member) = type_member {

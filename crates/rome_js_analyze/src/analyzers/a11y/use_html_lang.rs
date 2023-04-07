@@ -104,7 +104,7 @@ used by screen readers when no user default is specified."
 }
 
 fn is_valid_lang_attribute(attr: JsxAttribute) -> Option<()> {
-    if attr.is_value_undefined_or_null() {
+    if attr.is_value_null_or_undefined() {
         return None;
     }
 

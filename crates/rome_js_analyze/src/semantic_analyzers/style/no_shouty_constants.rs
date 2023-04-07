@@ -66,7 +66,7 @@ fn is_id_and_string_literal_inner_text_equal(
         .as_js_string_literal_expression()?;
     let literal_text = literal.inner_string_text().ok()?;
 
-    if id_text.len() != usize::from(literal_text.len()) {
+    if id_text.len() != literal_text.len() {
         return None;
     }
 
