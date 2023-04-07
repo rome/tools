@@ -16,6 +16,8 @@ declare_rule! {
     ///
     /// ```js,expect_diagnostic
     /// var x = a => 1 ? 2 : 3;
+    /// ```
+    /// ```js,expect_diagnostic
     /// var x = (a) => 1 ? 2 : 3;
     /// ```
     ///
@@ -69,28 +71,4 @@ impl Rule for NoConfusingArrow {
             },
         ))
     }
-
-    // Formatter is not happy with the added parenthesis at the time of commit.
-    // This should be fixed before enabling the action.
-    //fn action(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<JsRuleAction> {
-    //    let body_expr = ctx.query().body().ok()?.as_any_js_expression()?.clone();
-    //
-    //    let mut mutation = ctx.root().begin();
-    //
-    //    mutation.replace_node(
-    //        body_expr.clone(),
-    //        AnyJsExpression::from(make::js_parenthesized_expression(
-    //            JsSyntaxToken::new_detached(JsSyntaxKind::L_PAREN, "(", [], []),
-    //            body_expr,
-    //            JsSyntaxToken::new_detached(JsSyntaxKind::R_PAREN, ")", [], []),
-    //        )),
-    //    );
-    //
-    //    Some(JsRuleAction {
-    //        category: ActionCategory::QuickFix,
-    //        applicability: Applicability::Always,
-    //        message: markup! { "Wrap the function body in parenthesis." }.to_owned(),
-    //        mutation,
-    //    })
-    //}
 }

@@ -385,6 +385,10 @@ export interface Nursery {
 	 */
 	noConfusingLabels?: RuleConfiguration;
 	/**
+	 * Disallow the use of console.log
+	 */
+	noConsoleLog?: RuleConfiguration;
+	/**
 	 * Disallow duplicate case labels. If a switch statement has duplicate test expressions in case clauses, it is likely that a programmer copied a case clause but forgot to change the test expression.
 	 */
 	noDuplicateCase?: RuleConfiguration;
@@ -955,6 +959,7 @@ export type Category =
 	| "lint/nursery/noConfusingArrow"
 	| "lint/nursery/noNoninteractiveTabindex"
 	| "lint/nursery/noAriaUnsupportedElements"
+	| "lint/nursery/noConsoleLog"
 	| "lint/nursery/noRedeclare"
 	| "lint/nursery/useNamespaceKeyword"
 	| "lint/nursery/noRedundantRoles"
