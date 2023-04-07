@@ -10,7 +10,7 @@ pub(crate) mod constructor_parameter_list;
 pub(crate) mod directive_list;
 pub(crate) mod export_named_from_specifier_list;
 pub(crate) mod export_named_specifier_list;
-pub(crate) mod import_assertion_entry_list;
+pub(crate) mod import_attribute_entry_list;
 pub(crate) mod method_modifier_list;
 pub(crate) mod module_item_list;
 pub(crate) mod named_import_specifier_list;

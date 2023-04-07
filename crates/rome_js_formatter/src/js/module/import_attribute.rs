@@ -1,24 +1,21 @@
 use crate::prelude::*;
-
 use rome_formatter::write;
-use rome_js_syntax::JsImportAssertion;
-use rome_js_syntax::JsImportAssertionFields;
-
+use rome_js_syntax::{JsImportAttribute, JsImportAttributeFields};
+use rome_rowan::AstNode;
 #[derive(Debug, Clone, Default)]
-pub(crate) struct FormatJsImportAssertion;
-
-impl FormatNodeRule<JsImportAssertion> for FormatJsImportAssertion {
-    fn fmt_fields(&self, node: &JsImportAssertion, f: &mut JsFormatter) -> FormatResult<()> {
-        let JsImportAssertionFields {
-            assert_token,
+pub(crate) struct FormatJsImportAttribute;
+impl FormatNodeRule<JsImportAttribute> for FormatJsImportAttribute {
+    fn fmt_fields(&self, node: &JsImportAttribute, f: &mut JsFormatter) -> FormatResult<()> {
+        let JsImportAttributeFields {
+            with_token,
             l_curly_token,
-            assertions,
+            attributes,
             r_curly_token,
         } = node.as_fields();
 
-        write![f, [assert_token.format(), space(), l_curly_token.format()]]?;
+        write![f, [with_token.format(), space(), l_curly_token.format()]]?;
 
-        if assertions.is_empty() {
+        if attributes.is_empty() {
             let has_dangling = f.comments().has_dangling_comments(node.syntax());
             write!(
                 f,
@@ -31,7 +28,7 @@ impl FormatNodeRule<JsImportAssertion> for FormatJsImportAssertion {
         } else {
             write!(
                 f,
-                [group(&soft_space_or_block_indent(&assertions.format()))]
+                [group(&soft_space_or_block_indent(&attributes.format()))]
             )?;
         }
 
@@ -40,7 +37,7 @@ impl FormatNodeRule<JsImportAssertion> for FormatJsImportAssertion {
 
     fn fmt_dangling_comments(
         &self,
-        _: &JsImportAssertion,
+        _: &JsImportAttribute,
         _: &mut JsFormatter,
     ) -> FormatResult<()> {
         // Handled as part of `fmt_fields`

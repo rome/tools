@@ -8,7 +8,11 @@
 ### Formatter
 
 - Fix an issue where formatting of JSX string literals property values were using incorrect quotes [#4054](https://github.com/rome/tools/issues/4054)
-
+- Changed import assertion grammar to the new import attribute assertion
+```diff
+- import "module" assert {}
++ import "module" with {}
+```
 ### Linter
 
 #### Other changes
@@ -26,6 +30,12 @@ the code action is not formatted.
 ### Parser
 
 - Allow module syntax in `cts` files
+- Changed import assertion grammar to the new import attribute assertion
+```diff
+- import "module" assert {}
++ import "module" with {}
+```
+
 
 ### VSCode
 ### JavaScript APIs

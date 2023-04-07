@@ -5969,41 +5969,41 @@ impl IntoFormat<JsFormatContext> for rome_js_syntax::JsModuleSource {
         )
     }
 }
-impl FormatRule<rome_js_syntax::JsImportAssertion>
-    for crate::js::module::import_assertion::FormatJsImportAssertion
+impl FormatRule<rome_js_syntax::JsImportAttribute>
+    for crate::js::module::import_attribute::FormatJsImportAttribute
 {
     type Context = JsFormatContext;
     #[inline(always)]
     fn fmt(
         &self,
-        node: &rome_js_syntax::JsImportAssertion,
+        node: &rome_js_syntax::JsImportAttribute,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {
-        FormatNodeRule::<rome_js_syntax::JsImportAssertion>::fmt(self, node, f)
+        FormatNodeRule::<rome_js_syntax::JsImportAttribute>::fmt(self, node, f)
     }
 }
-impl AsFormat<JsFormatContext> for rome_js_syntax::JsImportAssertion {
+impl AsFormat<JsFormatContext> for rome_js_syntax::JsImportAttribute {
     type Format<'a> = FormatRefWithRule<
         'a,
-        rome_js_syntax::JsImportAssertion,
-        crate::js::module::import_assertion::FormatJsImportAssertion,
+        rome_js_syntax::JsImportAttribute,
+        crate::js::module::import_attribute::FormatJsImportAttribute,
     >;
     fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
-            crate::js::module::import_assertion::FormatJsImportAssertion::default(),
+            crate::js::module::import_attribute::FormatJsImportAttribute::default(),
         )
     }
 }
-impl IntoFormat<JsFormatContext> for rome_js_syntax::JsImportAssertion {
+impl IntoFormat<JsFormatContext> for rome_js_syntax::JsImportAttribute {
     type Format = FormatOwnedWithRule<
-        rome_js_syntax::JsImportAssertion,
-        crate::js::module::import_assertion::FormatJsImportAssertion,
+        rome_js_syntax::JsImportAttribute,
+        crate::js::module::import_attribute::FormatJsImportAttribute,
     >;
     fn into_format(self) -> Self::Format {
         FormatOwnedWithRule::new(
             self,
-            crate::js::module::import_assertion::FormatJsImportAssertion::default(),
+            crate::js::module::import_attribute::FormatJsImportAttribute::default(),
         )
     }
 }
@@ -6223,41 +6223,41 @@ impl IntoFormat<JsFormatContext> for rome_js_syntax::JsLiteralExportName {
         )
     }
 }
-impl FormatRule<rome_js_syntax::JsImportAssertionEntry>
-    for crate::js::module::import_assertion_entry::FormatJsImportAssertionEntry
+impl FormatRule<rome_js_syntax::JsImportAttributeEntry>
+    for crate::js::module::import_attribute_entry::FormatJsImportAttributeEntry
 {
     type Context = JsFormatContext;
     #[inline(always)]
     fn fmt(
         &self,
-        node: &rome_js_syntax::JsImportAssertionEntry,
+        node: &rome_js_syntax::JsImportAttributeEntry,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {
-        FormatNodeRule::<rome_js_syntax::JsImportAssertionEntry>::fmt(self, node, f)
+        FormatNodeRule::<rome_js_syntax::JsImportAttributeEntry>::fmt(self, node, f)
     }
 }
-impl AsFormat<JsFormatContext> for rome_js_syntax::JsImportAssertionEntry {
+impl AsFormat<JsFormatContext> for rome_js_syntax::JsImportAttributeEntry {
     type Format<'a> = FormatRefWithRule<
         'a,
-        rome_js_syntax::JsImportAssertionEntry,
-        crate::js::module::import_assertion_entry::FormatJsImportAssertionEntry,
+        rome_js_syntax::JsImportAttributeEntry,
+        crate::js::module::import_attribute_entry::FormatJsImportAttributeEntry,
     >;
     fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
-            crate::js::module::import_assertion_entry::FormatJsImportAssertionEntry::default(),
+            crate::js::module::import_attribute_entry::FormatJsImportAttributeEntry::default(),
         )
     }
 }
-impl IntoFormat<JsFormatContext> for rome_js_syntax::JsImportAssertionEntry {
+impl IntoFormat<JsFormatContext> for rome_js_syntax::JsImportAttributeEntry {
     type Format = FormatOwnedWithRule<
-        rome_js_syntax::JsImportAssertionEntry,
-        crate::js::module::import_assertion_entry::FormatJsImportAssertionEntry,
+        rome_js_syntax::JsImportAttributeEntry,
+        crate::js::module::import_attribute_entry::FormatJsImportAttributeEntry,
     >;
     fn into_format(self) -> Self::Format {
         FormatOwnedWithRule::new(
             self,
-            crate::js::module::import_assertion_entry::FormatJsImportAssertionEntry::default(),
+            crate::js::module::import_attribute_entry::FormatJsImportAttributeEntry::default(),
         )
     }
 }
@@ -9906,23 +9906,23 @@ impl IntoFormat<JsFormatContext> for rome_js_syntax::JsExportNamedSpecifierList 
         FormatOwnedWithRule :: new (self , crate :: js :: lists :: export_named_specifier_list :: FormatJsExportNamedSpecifierList :: default ())
     }
 }
-impl AsFormat<JsFormatContext> for rome_js_syntax::JsImportAssertionEntryList {
+impl AsFormat<JsFormatContext> for rome_js_syntax::JsImportAttributeEntryList {
     type Format<'a> = FormatRefWithRule<
         'a,
-        rome_js_syntax::JsImportAssertionEntryList,
-        crate::js::lists::import_assertion_entry_list::FormatJsImportAssertionEntryList,
+        rome_js_syntax::JsImportAttributeEntryList,
+        crate::js::lists::import_attribute_entry_list::FormatJsImportAttributeEntryList,
     >;
     fn format(&self) -> Self::Format<'_> {
-        FormatRefWithRule :: new (self , crate :: js :: lists :: import_assertion_entry_list :: FormatJsImportAssertionEntryList :: default ())
+        FormatRefWithRule :: new (self , crate :: js :: lists :: import_attribute_entry_list :: FormatJsImportAttributeEntryList :: default ())
     }
 }
-impl IntoFormat<JsFormatContext> for rome_js_syntax::JsImportAssertionEntryList {
+impl IntoFormat<JsFormatContext> for rome_js_syntax::JsImportAttributeEntryList {
     type Format = FormatOwnedWithRule<
-        rome_js_syntax::JsImportAssertionEntryList,
-        crate::js::lists::import_assertion_entry_list::FormatJsImportAssertionEntryList,
+        rome_js_syntax::JsImportAttributeEntryList,
+        crate::js::lists::import_attribute_entry_list::FormatJsImportAttributeEntryList,
     >;
     fn into_format(self) -> Self::Format {
-        FormatOwnedWithRule :: new (self , crate :: js :: lists :: import_assertion_entry_list :: FormatJsImportAssertionEntryList :: default ())
+        FormatOwnedWithRule :: new (self , crate :: js :: lists :: import_attribute_entry_list :: FormatJsImportAttributeEntryList :: default ())
     }
 }
 impl AsFormat<JsFormatContext> for rome_js_syntax::JsMethodModifierList {
@@ -10798,36 +10798,36 @@ impl IntoFormat<JsFormatContext> for rome_js_syntax::JsBogusParameter {
         )
     }
 }
-impl FormatRule<rome_js_syntax::JsBogusImportAssertionEntry>
-    for crate::js::bogus::bogus_import_assertion_entry::FormatJsBogusImportAssertionEntry
+impl FormatRule<rome_js_syntax::JsBogusImportAttributeEntry>
+    for crate::js::bogus::bogus_import_attribute_entry::FormatJsBogusImportAttributeEntry
 {
     type Context = JsFormatContext;
     #[inline(always)]
     fn fmt(
         &self,
-        node: &rome_js_syntax::JsBogusImportAssertionEntry,
+        node: &rome_js_syntax::JsBogusImportAttributeEntry,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {
-        FormatBogusNodeRule::<rome_js_syntax::JsBogusImportAssertionEntry>::fmt(self, node, f)
+        FormatBogusNodeRule::<rome_js_syntax::JsBogusImportAttributeEntry>::fmt(self, node, f)
     }
 }
-impl AsFormat<JsFormatContext> for rome_js_syntax::JsBogusImportAssertionEntry {
+impl AsFormat<JsFormatContext> for rome_js_syntax::JsBogusImportAttributeEntry {
     type Format<'a> = FormatRefWithRule<
         'a,
-        rome_js_syntax::JsBogusImportAssertionEntry,
-        crate::js::bogus::bogus_import_assertion_entry::FormatJsBogusImportAssertionEntry,
+        rome_js_syntax::JsBogusImportAttributeEntry,
+        crate::js::bogus::bogus_import_attribute_entry::FormatJsBogusImportAttributeEntry,
     >;
     fn format(&self) -> Self::Format<'_> {
-        FormatRefWithRule :: new (self , crate :: js :: bogus :: bogus_import_assertion_entry :: FormatJsBogusImportAssertionEntry :: default ())
+        FormatRefWithRule :: new (self , crate :: js :: bogus :: bogus_import_attribute_entry :: FormatJsBogusImportAttributeEntry :: default ())
     }
 }
-impl IntoFormat<JsFormatContext> for rome_js_syntax::JsBogusImportAssertionEntry {
+impl IntoFormat<JsFormatContext> for rome_js_syntax::JsBogusImportAttributeEntry {
     type Format = FormatOwnedWithRule<
-        rome_js_syntax::JsBogusImportAssertionEntry,
-        crate::js::bogus::bogus_import_assertion_entry::FormatJsBogusImportAssertionEntry,
+        rome_js_syntax::JsBogusImportAttributeEntry,
+        crate::js::bogus::bogus_import_attribute_entry::FormatJsBogusImportAttributeEntry,
     >;
     fn into_format(self) -> Self::Format {
-        FormatOwnedWithRule :: new (self , crate :: js :: bogus :: bogus_import_assertion_entry :: FormatJsBogusImportAssertionEntry :: default ())
+        FormatOwnedWithRule :: new (self , crate :: js :: bogus :: bogus_import_attribute_entry :: FormatJsBogusImportAttributeEntry :: default ())
     }
 }
 impl FormatRule<rome_js_syntax::JsBogusNamedImportSpecifier>
@@ -11931,28 +11931,28 @@ impl IntoFormat<JsFormatContext> for rome_js_syntax::AnyJsNamedImportSpecifier {
         )
     }
 }
-impl AsFormat<JsFormatContext> for rome_js_syntax::AnyJsImportAssertionEntry {
+impl AsFormat<JsFormatContext> for rome_js_syntax::AnyJsImportAttributeEntry {
     type Format<'a> = FormatRefWithRule<
         'a,
-        rome_js_syntax::AnyJsImportAssertionEntry,
-        crate::js::any::import_assertion_entry::FormatAnyJsImportAssertionEntry,
+        rome_js_syntax::AnyJsImportAttributeEntry,
+        crate::js::any::import_attribute_entry::FormatAnyJsImportAttributeEntry,
     >;
     fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
-            crate::js::any::import_assertion_entry::FormatAnyJsImportAssertionEntry::default(),
+            crate::js::any::import_attribute_entry::FormatAnyJsImportAttributeEntry::default(),
         )
     }
 }
-impl IntoFormat<JsFormatContext> for rome_js_syntax::AnyJsImportAssertionEntry {
+impl IntoFormat<JsFormatContext> for rome_js_syntax::AnyJsImportAttributeEntry {
     type Format = FormatOwnedWithRule<
-        rome_js_syntax::AnyJsImportAssertionEntry,
-        crate::js::any::import_assertion_entry::FormatAnyJsImportAssertionEntry,
+        rome_js_syntax::AnyJsImportAttributeEntry,
+        crate::js::any::import_attribute_entry::FormatAnyJsImportAttributeEntry,
     >;
     fn into_format(self) -> Self::Format {
         FormatOwnedWithRule::new(
             self,
-            crate::js::any::import_assertion_entry::FormatAnyJsImportAssertionEntry::default(),
+            crate::js::any::import_attribute_entry::FormatAnyJsImportAttributeEntry::default(),
         )
     }
 }
