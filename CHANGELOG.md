@@ -10,20 +10,13 @@
 - Fix an issue where formatting of JSX string literals property values were using incorrect quotes [#4054](https://github.com/rome/tools/issues/4054)
 
 ### Linter
-
 #### New rules
-
 - [`noConfusingArrow`](https://docs.rome.tools/lint/rules/noConfusingArrow/)
 - [`noRedundantRoles`](https://docs.rome.tools/lint/rules/noRedundantRoles/)
 - [`noNoninteractiveTabindex`](https://docs.rome.tools/lint/rules/noNoninteractiveTabindex/)
-
-#### Other changes
-
-- Refactor common logic for checking value of the JSX attributes or JS expressions [#4073](https://github.com/rome/tools/pull/4073)
-
 ### Parser
 
-- Allow module syntax in `cts` files [#4317](https://github.com/rome/tools/pull/4317)
+- Allow module syntax in `cts` files
 
 ### VSCode
 ### JavaScript APIs
