@@ -179,17 +179,13 @@ mod tests {
             String::from_utf8(buffer).unwrap()
         }
 
-        const SOURCE: &str = r#"class Foo {
-     f(a: P): undefined;
-     f(a: P): bool;
-     f(a: P, b: D) {}
-   }"#;
+        const SOURCE: &str = r#"a.b["c"];"#;
 
         let parsed = parse(SOURCE, SourceType::tsx());
 
         let mut error_ranges: Vec<TextRange> = Vec::new();
         let options = AnalyzerOptions::default();
-        let rule_filter = RuleFilter::Rule("nursery", "noRedeclare");
+        let rule_filter = RuleFilter::Rule("nursery", "useLiteralKeys");
         analyze(
             &parsed.tree(),
             AnalysisFilter {
