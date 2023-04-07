@@ -631,7 +631,7 @@ impl AnyJsExpression {
             .and_then(|it| it.name().ok())
     }
 
-    /// Return the expression is a string of given value if the given expression is
+    /// Return `true` if the static value match the given string value and it is
     /// 1. A string literal
     /// 2. A template literal with no substitutions
     pub fn is_string_constant(&self, text: &str) -> bool {
