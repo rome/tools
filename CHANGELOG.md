@@ -21,6 +21,7 @@ the code action is not formatted.
 - [`noRedundantRoles`](https://docs.rome.tools/lint/rules/noRedundantRoles/)
 - [`noNoninteractiveTabindex`](https://docs.rome.tools/lint/rules/noNoninteractiveTabindex/)
 - [`noAriaUnsupportedElements`](https://docs.rome.tools/lint/rules/noAriaUnsupportedElements/)
+- [`noConsoleLog`](https://docs.rome.tools/lint/rules/noConsoleLog/)
 
 ### Parser
 

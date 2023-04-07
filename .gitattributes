@@ -13,6 +13,7 @@ npm/backend-jsonrpc/src/workspace.ts linguist-generated=true text=auto eol=lf
 website/src/docs/lint/rules/**/*.md linguist-generated=true text=auto eol=lf
 npm/rome/configuration_schema.json linguist-generated=true text=auto eol=lf
 editors/vscode/configuration_schema.json linguist-generated=true text=auto eol=lf
+crates/rome_service/src/configuration/parse/json/rules.rs linguist-generated=true text=auto eol=lf
 
 
 crates/rome_js_formatter/tests/**/*.ts.prettier-snap linguist-language=TypeScript

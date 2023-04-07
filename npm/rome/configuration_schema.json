@@ -531,6 +531,13 @@
 						{ "type": "null" }
 					]
 				},
+				"noConsoleLog": {
+					"description": "Disallow the use of console.log",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"noDuplicateCase": {
 					"description": "Disallow duplicate case labels. If a switch statement has duplicate test expressions in case clauses, it is likely that a programmer copied a case clause but forgot to change the test expression.",
 					"anyOf": [

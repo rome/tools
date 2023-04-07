@@ -18,7 +18,6 @@ Source: https://eslint.org/docs/latest/rules/no-confusing-arrow
 
 ```jsx
 var x = a => 1 ? 2 : 3;
-var x = (a) => 1 ? 2 : 3;
 ```
 
 <pre class="language-text"><code class="language-text">nursery/noConfusingArrow.js:1:11 <a href="https://docs.rome.tools/lint/rules/noConfusingArrow">lint/nursery/noConfusingArrow</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -27,17 +26,21 @@ var x = (a) => 1 ? 2 : 3;
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>var x = a =&gt; 1 ? 2 : 3;
    <strong>   │ </strong>          <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
-    <strong>2 │ </strong>var x = (a) =&gt; 1 ? 2 : 3;
-    <strong>3 │ </strong>
+    <strong>2 │ </strong>
   
-nursery/noConfusingArrow.js:2:13 <a href="https://docs.rome.tools/lint/rules/noConfusingArrow">lint/nursery/noConfusingArrow</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+</code></pre>
+
+```jsx
+var x = (a) => 1 ? 2 : 3;
+```
+
+<pre class="language-text"><code class="language-text">nursery/noConfusingArrow.js:1:13 <a href="https://docs.rome.tools/lint/rules/noConfusingArrow">lint/nursery/noConfusingArrow</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Fat arrows can be confused with some comparison operators (</span><span style="color: Orange;"><strong>&lt;</strong></span><span style="color: Orange;">, </span><span style="color: Orange;"><strong>&gt;</strong></span><span style="color: Orange;">, </span><span style="color: Orange;"><strong>&lt;=</strong></span><span style="color: Orange;">, </span><span style="color: Orange;"><strong>&gt;=</strong></span><span style="color: Orange;">).</span>
   
-    <strong>1 │ </strong>var x = a =&gt; 1 ? 2 : 3;
-<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>var x = (a) =&gt; 1 ? 2 : 3;
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>var x = (a) =&gt; 1 ? 2 : 3;
    <strong>   │ </strong>            <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
-    <strong>3 │ </strong>
+    <strong>2 │ </strong>
   
 </code></pre>
 
