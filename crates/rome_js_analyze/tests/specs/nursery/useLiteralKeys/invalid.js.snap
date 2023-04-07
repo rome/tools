@@ -9,6 +9,11 @@ a.b["c"];
 a.b["c"].d.e["f"];
 a.b[`c`];
 a.b[c["d"]];
+a["b"] = "something";
+a.b["c"] = "something";
+a.b["c"].d.e["f"] = "something";
+a.b[`c`] = "something";
+a.b[c["d"]] = "something";
 
 ```
 
@@ -25,10 +30,10 @@ invalid.js:1:3 lint/nursery/useLiteralKeys  FIXABLE  ━━━━━━━━━
   
   i Suggested fix: Replace it with a static expression.
   
-    1   │ - a["b"];
-      1 │ + a.b;
-    2 2 │   a.b["c"];
-    3 3 │   a.b["c"].d.e["f"];
+     1    │ - a["b"];
+        1 │ + a.b;
+     2  2 │   a.b["c"];
+     3  3 │   a.b["c"].d.e["f"];
   
 
 ```
@@ -46,11 +51,11 @@ invalid.js:2:5 lint/nursery/useLiteralKeys  FIXABLE  ━━━━━━━━━
   
   i Suggested fix: Replace it with a static expression.
   
-    1 1 │   a["b"];
-    2   │ - a.b["c"];
-      2 │ + a.b.c;
-    3 3 │   a.b["c"].d.e["f"];
-    4 4 │   a.b[`c`];
+     1  1 │   a["b"];
+     2    │ - a.b["c"];
+        2 │ + a.b.c;
+     3  3 │   a.b["c"].d.e["f"];
+     4  4 │   a.b[`c`];
   
 
 ```
@@ -69,12 +74,12 @@ invalid.js:3:5 lint/nursery/useLiteralKeys  FIXABLE  ━━━━━━━━━
   
   i Suggested fix: Replace it with a static expression.
   
-    1 1 │   a["b"];
-    2 2 │   a.b["c"];
-    3   │ - a.b["c"].d.e["f"];
-      3 │ + a.b.c.d.e["f"];
-    4 4 │   a.b[`c`];
-    5 5 │   a.b[c["d"]];
+     1  1 │   a["b"];
+     2  2 │   a.b["c"];
+     3    │ - a.b["c"].d.e["f"];
+        3 │ + a.b.c.d.e["f"];
+     4  4 │   a.b[`c`];
+     5  5 │   a.b[c["d"]];
   
 
 ```
@@ -93,12 +98,12 @@ invalid.js:3:14 lint/nursery/useLiteralKeys  FIXABLE  ━━━━━━━━�
   
   i Suggested fix: Replace it with a static expression.
   
-    1 1 │   a["b"];
-    2 2 │   a.b["c"];
-    3   │ - a.b["c"].d.e["f"];
-      3 │ + a.b["c"].d.e.f;
-    4 4 │   a.b[`c`];
-    5 5 │   a.b[c["d"]];
+     1  1 │   a["b"];
+     2  2 │   a.b["c"];
+     3    │ - a.b["c"].d.e["f"];
+        3 │ + a.b["c"].d.e.f;
+     4  4 │   a.b[`c`];
+     5  5 │   a.b[c["d"]];
   
 
 ```
@@ -113,16 +118,16 @@ invalid.js:4:5 lint/nursery/useLiteralKeys  FIXABLE  ━━━━━━━━━
   > 4 │ a.b[`c`];
       │     ^^^
     5 │ a.b[c["d"]];
-    6 │ 
+    6 │ a["b"] = "something";
   
   i Suggested fix: Replace it with a static expression.
   
-    2 2 │   a.b["c"];
-    3 3 │   a.b["c"].d.e["f"];
-    4   │ - a.b[`c`];
-      4 │ + a.b.c;
-    5 5 │   a.b[c["d"]];
-    6 6 │   
+     2  2 │   a.b["c"];
+     3  3 │   a.b["c"].d.e["f"];
+     4    │ - a.b[`c`];
+        4 │ + a.b.c;
+     5  5 │   a.b[c["d"]];
+     6  6 │   a["b"] = "something";
   
 
 ```
@@ -136,15 +141,159 @@ invalid.js:5:7 lint/nursery/useLiteralKeys  FIXABLE  ━━━━━━━━━
     4 │ a.b[`c`];
   > 5 │ a.b[c["d"]];
       │       ^^^
-    6 │ 
+    6 │ a["b"] = "something";
+    7 │ a.b["c"] = "something";
   
   i Suggested fix: Replace it with a static expression.
   
-    3 3 │   a.b["c"].d.e["f"];
-    4 4 │   a.b[`c`];
-    5   │ - a.b[c["d"]];
-      5 │ + a.b[c.d];
-    6 6 │   
+     3  3 │   a.b["c"].d.e["f"];
+     4  4 │   a.b[`c`];
+     5    │ - a.b[c["d"]];
+        5 │ + a.b[c.d];
+     6  6 │   a["b"] = "something";
+     7  7 │   a.b["c"] = "something";
+  
+
+```
+
+```
+invalid.js:6:3 lint/nursery/useLiteralKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The computed expression can be simplified without the use of a string literal.
+  
+    4 │ a.b[`c`];
+    5 │ a.b[c["d"]];
+  > 6 │ a["b"] = "something";
+      │   ^^^
+    7 │ a.b["c"] = "something";
+    8 │ a.b["c"].d.e["f"] = "something";
+  
+  i Suggested fix: Replace it with a static expression.
+  
+     4  4 │   a.b[`c`];
+     5  5 │   a.b[c["d"]];
+     6    │ - a["b"]·=·"something";
+        6 │ + a.b·=·"something";
+     7  7 │   a.b["c"] = "something";
+     8  8 │   a.b["c"].d.e["f"] = "something";
+  
+
+```
+
+```
+invalid.js:7:5 lint/nursery/useLiteralKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The computed expression can be simplified without the use of a string literal.
+  
+    5 │ a.b[c["d"]];
+    6 │ a["b"] = "something";
+  > 7 │ a.b["c"] = "something";
+      │     ^^^
+    8 │ a.b["c"].d.e["f"] = "something";
+    9 │ a.b[`c`] = "something";
+  
+  i Suggested fix: Replace it with a static expression.
+  
+     5  5 │   a.b[c["d"]];
+     6  6 │   a["b"] = "something";
+     7    │ - a.b["c"]·=·"something";
+        7 │ + a.b.c·=·"something";
+     8  8 │   a.b["c"].d.e["f"] = "something";
+     9  9 │   a.b[`c`] = "something";
+  
+
+```
+
+```
+invalid.js:8:5 lint/nursery/useLiteralKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The computed expression can be simplified without the use of a string literal.
+  
+     6 │ a["b"] = "something";
+     7 │ a.b["c"] = "something";
+   > 8 │ a.b["c"].d.e["f"] = "something";
+       │     ^^^
+     9 │ a.b[`c`] = "something";
+    10 │ a.b[c["d"]] = "something";
+  
+  i Suggested fix: Replace it with a static expression.
+  
+     6  6 │   a["b"] = "something";
+     7  7 │   a.b["c"] = "something";
+     8    │ - a.b["c"].d.e["f"]·=·"something";
+        8 │ + a.b.c.d.e["f"]·=·"something";
+     9  9 │   a.b[`c`] = "something";
+    10 10 │   a.b[c["d"]] = "something";
+  
+
+```
+
+```
+invalid.js:8:14 lint/nursery/useLiteralKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The computed expression can be simplified without the use of a string literal.
+  
+     6 │ a["b"] = "something";
+     7 │ a.b["c"] = "something";
+   > 8 │ a.b["c"].d.e["f"] = "something";
+       │              ^^^
+     9 │ a.b[`c`] = "something";
+    10 │ a.b[c["d"]] = "something";
+  
+  i Suggested fix: Replace it with a static expression.
+  
+     6  6 │   a["b"] = "something";
+     7  7 │   a.b["c"] = "something";
+     8    │ - a.b["c"].d.e["f"]·=·"something";
+        8 │ + a.b["c"].d.e.f·=·"something";
+     9  9 │   a.b[`c`] = "something";
+    10 10 │   a.b[c["d"]] = "something";
+  
+
+```
+
+```
+invalid.js:9:5 lint/nursery/useLiteralKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The computed expression can be simplified without the use of a string literal.
+  
+     7 │ a.b["c"] = "something";
+     8 │ a.b["c"].d.e["f"] = "something";
+   > 9 │ a.b[`c`] = "something";
+       │     ^^^
+    10 │ a.b[c["d"]] = "something";
+    11 │ 
+  
+  i Suggested fix: Replace it with a static expression.
+  
+     7  7 │   a.b["c"] = "something";
+     8  8 │   a.b["c"].d.e["f"] = "something";
+     9    │ - a.b[`c`]·=·"something";
+        9 │ + a.b.c·=·"something";
+    10 10 │   a.b[c["d"]] = "something";
+    11 11 │   
+  
+
+```
+
+```
+invalid.js:10:7 lint/nursery/useLiteralKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The computed expression can be simplified without the use of a string literal.
+  
+     8 │ a.b["c"].d.e["f"] = "something";
+     9 │ a.b[`c`] = "something";
+  > 10 │ a.b[c["d"]] = "something";
+       │       ^^^
+    11 │ 
+  
+  i Suggested fix: Replace it with a static expression.
+  
+     8  8 │   a.b["c"].d.e["f"] = "something";
+     9  9 │   a.b[`c`] = "something";
+    10    │ - a.b[c["d"]]·=·"something";
+       10 │ + a.b[c.d]·=·"something";
+    11 11 │   
   
 
 ```

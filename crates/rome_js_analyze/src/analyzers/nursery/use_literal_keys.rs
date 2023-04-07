@@ -4,9 +4,10 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make::{ident, js_name, js_static_member_expression, token};
 use rome_js_syntax::{
-    AnyJsExpression, AnyJsLiteralExpression, AnyJsName, JsComputedMemberExpression, T,
+    AnyJsExpression, AnyJsLiteralExpression, AnyJsName, JsComputedMemberAssignment,
+    JsComputedMemberExpression, T,
 };
-use rome_rowan::{AstNode, BatchMutationExt, TextRange};
+use rome_rowan::{declare_node_union, AstNode, BatchMutationExt, SyntaxResult, TextRange};
 
 declare_rule! {
     /// Enforce the usage of a computed expression over a static expression with strings.
@@ -23,6 +24,10 @@ declare_rule! {
     /// a.c[`d`]
     /// ```
     ///
+    /// ```js,expect_diagnostic
+    /// a.c[`d`] = "something"
+    /// ```
+    ///
     /// ## Valid
     ///
     /// ```js
@@ -37,8 +42,28 @@ declare_rule! {
     }
 }
 
+declare_node_union! {
+    pub(crate) AnyJsComputedMember = JsComputedMemberExpression | JsComputedMemberAssignment
+}
+
+impl AnyJsComputedMember {
+    pub(crate) fn member(&self) -> SyntaxResult<AnyJsExpression> {
+        match self {
+            AnyJsComputedMember::JsComputedMemberExpression(node) => node.member(),
+            AnyJsComputedMember::JsComputedMemberAssignment(node) => node.member(),
+        }
+    }
+
+    pub(crate) fn object(&self) -> SyntaxResult<AnyJsExpression> {
+        match self {
+            AnyJsComputedMember::JsComputedMemberExpression(node) => node.object(),
+            AnyJsComputedMember::JsComputedMemberAssignment(node) => node.object(),
+        }
+    }
+}
+
 impl Rule for UseLiteralKeys {
-    type Query = Ast<JsComputedMemberExpression>;
+    type Query = Ast<AnyJsComputedMember>;
     type State = (TextRange, String);
     type Signals = Option<Self::State>;
     type Options = ();
