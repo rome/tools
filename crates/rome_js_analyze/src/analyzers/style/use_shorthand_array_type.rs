@@ -157,6 +157,7 @@ fn convert_to_array_type(
                     | AnyTsType::TsConditionalType(_)
                     | AnyTsType::TsTypeOperatorType(_)
                     | AnyTsType::TsInferType(_)
+                    | AnyTsType::TsObjectType(_)
                     | AnyTsType::TsMappedType(_) => None,
 
                     AnyTsType::TsReferenceType(ty) => match get_array_kind_by_reference(ty) {
