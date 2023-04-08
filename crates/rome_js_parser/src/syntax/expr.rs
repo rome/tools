@@ -13,7 +13,7 @@ use crate::rewrite::RewriteParseEvents;
 use crate::syntax::assignment::parse_assignment;
 use crate::syntax::assignment::AssignmentExprPrecedence;
 use crate::syntax::assignment::{expression_to_assignment, expression_to_assignment_pattern};
-use crate::syntax::class::parse_class_expression;
+use crate::syntax::class::{parse_class_expression, parse_decorators};
 use crate::syntax::function::{
     is_at_async_function, parse_arrow_function_expression, parse_function_expression, LineBreak,
 };
@@ -57,7 +57,7 @@ bitflags! {
 
         /// If `true` then, don't parse computed member expressions because they can as well indicate
         /// the start of a computed class member.
-        const IN_TS_DECORATOR = 1 << 2;
+        const IN_DECORATOR = 1 << 2;
 
         /// If `true` allows a typescript type assertion.
         /// Currently disabled on "new" expressions.
@@ -74,8 +74,8 @@ impl ExpressionContext {
         self.and(ExpressionContextFlags::ALLOW_OBJECT_EXPRESSION, allowed)
     }
 
-    pub(crate) fn and_in_ts_decorator(self, in_decorator: bool) -> Self {
-        self.and(ExpressionContextFlags::IN_TS_DECORATOR, in_decorator)
+    pub(crate) fn and_in_decorator(self, in_decorator: bool) -> Self {
+        self.and(ExpressionContextFlags::IN_DECORATOR, in_decorator)
     }
 
     pub(crate) fn and_ts_type_assertion_allowed(self, allowed: bool) -> Self {
@@ -94,8 +94,8 @@ impl ExpressionContext {
     }
 
     /// Returns `true` if currently parsing a decorator expression `@<expr>`.
-    pub(crate) const fn is_in_ts_decorator(&self) -> bool {
-        self.0.contains(ExpressionContextFlags::IN_TS_DECORATOR)
+    pub(crate) const fn is_in_decorator(&self) -> bool {
+        self.0.contains(ExpressionContextFlags::IN_DECORATOR)
     }
 
     /// Adds the `flag` if `set` is `true`, otherwise removes the `flag`
@@ -721,7 +721,7 @@ fn parse_member_expression_rest(
         lhs = match p.cur() {
             T![.] => parse_static_member_expression(p, lhs, T![.]).unwrap(),
             // Don't parse out `[` as a member expression because it may as well be the start of a computed class member
-            T!['['] if !context.is_in_ts_decorator() => {
+            T!['['] if !context.is_in_decorator() => {
                 parse_computed_member_expression(p, lhs, false).unwrap()
             }
             T![?.] if allow_optional_chain => {
@@ -1277,6 +1277,35 @@ fn parse_primary_expression(p: &mut JsParser, context: ExpressionContext) -> Par
             p.expect(T![this]);
             m.complete(p, JS_THIS_EXPRESSION)
         }
+        T![@] => {
+            let decorator_list = parse_decorators(p);
+
+            return match p.cur() {
+                T![class] => {
+                    // test decorator_expression_class
+                    // let a = @decorator class {};
+                    // let b = @first @second class foo {
+                    //  constructor() {}
+                    // }
+                    parse_class_expression(p, decorator_list)
+                }
+                _ => {
+                    // test_err decorator_expression_class
+                    // let a = @decorator () => {};
+                    // let b = @first @second function foo {}
+                    // let a = @decorator ( () => {} )
+                    decorator_list
+                        .add_diagnostic_if_present(p, |p, range| {
+                            p.err_builder("Decorators are not valid here.", range)
+                        })
+                        .map(|mut marker| {
+                            marker.change_kind(p, JS_BOGUS_EXPRESSION);
+                            marker
+                        });
+                    parse_assignment_expression_or_higher(p, context)
+                }
+            };
+        }
         T![class] => {
             // test class_expr
             // let a = class {};
@@ -1284,7 +1313,7 @@ fn parse_primary_expression(p: &mut JsParser, context: ExpressionContext) -> Par
             //  constructor() {}
             // }
             // foo[class {}]
-            parse_class_expression(p).unwrap()
+            parse_class_expression(p, Absent).unwrap()
         }
         // test async_ident
         // let a = async;

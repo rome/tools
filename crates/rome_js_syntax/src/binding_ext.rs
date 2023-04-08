@@ -82,6 +82,7 @@ impl AnyJsBindingDeclaration {
     ///
     /// let class_id = make::js_identifier_binding(make::ident("Order"));
     /// let class_decl: AnyJsBindingDeclaration = make::js_class_declaration(
+    ///     make::js_decorator_list(std::iter::empty()),
     ///     make::token(T![class]),
     ///     class_id.into(),
     ///     make::token(T!['{']),

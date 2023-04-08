@@ -4,6 +4,7 @@ pub(crate) mod accessor_modifier;
 pub(crate) mod array_hole;
 pub(crate) mod case_clause;
 pub(crate) mod catch_clause;
+pub(crate) mod decorator;
 pub(crate) mod default_clause;
 pub(crate) mod directive;
 pub(crate) mod else_clause;

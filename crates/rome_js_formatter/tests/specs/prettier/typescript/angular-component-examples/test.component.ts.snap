@@ -13,10 +13,10 @@ info: typescript/angular-component-examples/test.component.ts
   </ul>
   `,
   styles: [   `
-  
+
  :host {
    color: red;
- } 
+ }
  div { background: blue
  }
 `
@@ -54,10 +54,10 @@ class     TestComponent {}
 +  </ul>
 +  `,
 +  styles: [   `
-+  
++
 + :host {
 +   color: red;
-+ } 
++ }
 + div { background: blue
 + }
 +`
@@ -76,10 +76,10 @@ class     TestComponent {}
   </ul>
   `,
   styles: [   `
-  
+
  :host {
    color: red;
- } 
+ }
  div { background: blue
  }
 `

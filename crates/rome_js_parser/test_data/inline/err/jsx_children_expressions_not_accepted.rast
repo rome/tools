@@ -36,6 +36,7 @@ JsModule {
                             l_curly_token: L_CURLY@24..25 "{" [] [],
                             expression: JsBogusExpression {
                                 items: [
+                                    JsDecoratorList [],
                                     CLASS_KW@25..31 "class" [] [Whitespace(" ")],
                                     JsIdentifierBinding {
                                         name_token: IDENT@31..32 "A" [] [],
@@ -131,12 +132,13 @@ JsModule {
             3: JSX_EXPRESSION_CHILD@24..35
               0: L_CURLY@24..25 "{" [] []
               1: JS_BOGUS_EXPRESSION@25..34
-                0: CLASS_KW@25..31 "class" [] [Whitespace(" ")]
-                1: JS_IDENTIFIER_BINDING@31..32
+                0: JS_DECORATOR_LIST@25..25
+                1: CLASS_KW@25..31 "class" [] [Whitespace(" ")]
+                2: JS_IDENTIFIER_BINDING@31..32
                   0: IDENT@31..32 "A" [] []
-                2: L_CURLY@32..33 "{" [] []
-                3: JS_CLASS_MEMBER_LIST@33..33
-                4: R_CURLY@33..34 "}" [] []
+                3: L_CURLY@32..33 "{" [] []
+                4: JS_CLASS_MEMBER_LIST@33..33
+                5: R_CURLY@33..34 "}" [] []
               2: R_CURLY@34..35 "}" [] []
             4: JSX_TEXT@35..38
               0: JSX_TEXT_LITERAL@35..38 "\n  " [] []

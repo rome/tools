@@ -49,66 +49,66 @@ info: js/decorators/class-expression/member-expression.js
 member-expression.js:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `)` but instead found `@`
-  
+
   > 1 │ (@deco class Foo {}).name;
       │  ^
     2 │ (@deco class {}).name;
-    3 │ 
-  
+    3 │
+
   i Remove @
-  
+
 member-expression.js:1:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a statement but instead found ').name'
-  
+
   > 1 │ (@deco class Foo {}).name;
       │                    ^^^^^^
     2 │ (@deco class {}).name;
-    3 │ 
-  
+    3 │
+
   i Expected a statement here
-  
+
   > 1 │ (@deco class Foo {}).name;
       │                    ^^^^^^
     2 │ (@deco class {}).name;
-    3 │ 
-  
+    3 │
+
 member-expression.js:2:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `)` but instead found `@`
-  
+
     1 │ (@deco class Foo {}).name;
   > 2 │ (@deco class {}).name;
       │  ^
-    3 │ 
-  
+    3 │
+
   i Remove @
-  
+
 member-expression.js:2:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × class declarations must have a name
-  
+
     1 │ (@deco class Foo {}).name;
   > 2 │ (@deco class {}).name;
       │        ^^^^^^
-    3 │ 
-  
+    3 │
+
 member-expression.js:2:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a statement but instead found ').name'
-  
+
     1 │ (@deco class Foo {}).name;
   > 2 │ (@deco class {}).name;
       │                ^^^^^^
-    3 │ 
-  
+    3 │
+
   i Expected a statement here
-  
+
     1 │ (@deco class Foo {}).name;
   > 2 │ (@deco class {}).name;
       │                ^^^^^^
-    3 │ 
-  
+    3 │
+
 
 ```
 

@@ -3,6 +3,7 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -55,11 +56,12 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..28
     0: JS_CLASS_DECLARATION@0..28
-      0: (empty)
-      1: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@6..16
+      0: JS_DECORATOR_LIST@0..0
+      1: (empty)
+      2: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@6..16
         0: IDENT@6..16 "BuildError" [] []
-      3: TS_TYPE_PARAMETERS@16..26
+      4: TS_TYPE_PARAMETERS@16..26
         0: L_ANGLE@16..17 "<" [] []
         1: TS_TYPE_PARAMETER_LIST@17..24
           0: TS_TYPE_PARAMETER@17..18
@@ -83,9 +85,9 @@ JsModule {
             2: (empty)
             3: (empty)
         2: R_ANGLE@24..26 ">" [] [Whitespace(" ")]
-      4: (empty)
       5: (empty)
-      6: L_CURLY@26..27 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@27..27
-      8: R_CURLY@27..28 "}" [] []
+      6: (empty)
+      7: L_CURLY@26..27 "{" [] []
+      8: JS_CLASS_MEMBER_LIST@27..27
+      9: R_CURLY@27..28 "}" [] []
   3: EOF@28..29 "" [Newline("\n")] []

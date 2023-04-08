@@ -49,7 +49,7 @@ export class Bar{}
 +++ Rome
 @@ -1,9 +1,9 @@
  var x = 100;
- 
+
  @Hello({
 -  a: "a", // Comment is in the wrong place
 +  a: 'a', // Comment is in the wrong place
@@ -58,7 +58,7 @@ export class Bar{}
 +  b: '2'
  })
  class X {}
- 
+
 ```
 
 # Output

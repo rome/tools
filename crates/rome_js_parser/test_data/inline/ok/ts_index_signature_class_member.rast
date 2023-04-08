@@ -3,6 +3,7 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -40,6 +41,7 @@ JsModule {
             r_curly_token: R_CURLY@34..36 "}" [Newline("\n")] [],
         },
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@36..43 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -97,15 +99,16 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..78
     0: JS_CLASS_DECLARATION@0..36
-      0: (empty)
-      1: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@6..8
+      0: JS_DECORATOR_LIST@0..0
+      1: (empty)
+      2: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@6..8
         0: IDENT@6..8 "A" [] [Whitespace(" ")]
-      3: (empty)
       4: (empty)
       5: (empty)
-      6: L_CURLY@8..9 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@9..34
+      6: (empty)
+      7: L_CURLY@8..9 "{" [] []
+      8: JS_CLASS_MEMBER_LIST@9..34
         0: TS_INDEX_SIGNATURE_CLASS_MEMBER@9..34
           0: TS_INDEX_SIGNATURE_MODIFIER_LIST@9..9
           1: L_BRACK@9..15 "[" [Newline("\n"), Whitespace("    ")] []
@@ -122,17 +125,18 @@ JsModule {
             1: TS_STRING_TYPE@27..33
               0: STRING_KW@27..33 "string" [] []
           5: SEMICOLON@33..34 ";" [] []
-      8: R_CURLY@34..36 "}" [Newline("\n")] []
+      9: R_CURLY@34..36 "}" [Newline("\n")] []
     1: JS_CLASS_DECLARATION@36..78
-      0: (empty)
-      1: CLASS_KW@36..43 "class" [Newline("\n")] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@43..45
+      0: JS_DECORATOR_LIST@36..36
+      1: (empty)
+      2: CLASS_KW@36..43 "class" [Newline("\n")] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@43..45
         0: IDENT@43..45 "B" [] [Whitespace(" ")]
-      3: (empty)
       4: (empty)
       5: (empty)
-      6: L_CURLY@45..46 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@46..76
+      6: (empty)
+      7: L_CURLY@45..46 "{" [] []
+      8: JS_CLASS_MEMBER_LIST@46..76
         0: TS_INDEX_SIGNATURE_CLASS_MEMBER@46..76
           0: TS_INDEX_SIGNATURE_MODIFIER_LIST@46..46
           1: L_BRACK@46..52 "[" [Newline("\n"), Whitespace("    ")] []
@@ -158,5 +162,5 @@ JsModule {
                   4: (empty)
               2: R_CURLY@75..76 "}" [] []
           5: (empty)
-      8: R_CURLY@76..78 "}" [Newline("\n")] []
+      9: R_CURLY@76..78 "}" [Newline("\n")] []
   3: EOF@78..79 "" [Newline("\n")] []

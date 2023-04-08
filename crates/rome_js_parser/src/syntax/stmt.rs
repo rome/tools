@@ -14,7 +14,7 @@ use crate::state::{
     LabelledItem, StrictMode as StrictModeState, WithLabel,
 };
 use crate::syntax::assignment::expression_to_assignment_pattern;
-use crate::syntax::class::{parse_class_declaration, parse_initializer_clause};
+use crate::syntax::class::{parse_class_declaration, parse_decorators, parse_initializer_clause};
 use crate::syntax::expr::{
     is_at_expression, is_at_identifier, is_nth_at_identifier,
     parse_assignment_expression_or_higher, parse_expression_or_recover_to_next_statement,
@@ -221,17 +221,63 @@ pub(crate) fn parse_statement(p: &mut JsParser, context: StatementContext) -> Pa
             parse_function_declaration(p, context)
         }
         // class and abstract class
-        T![class] => parse_class_declaration(p, context),
+        T![class] => parse_class_declaration(p, Absent, context),
         T![@] => {
-            skip_ts_decorators(p);
-            parse_statement(p, context)
+            let decorator_list = parse_decorators(p);
+
+            match p.cur() {
+                T![class] => {
+                    // test decorator_class_declaration
+                    // function foo() {
+                    //      @decorator
+                    //      class Foo { }
+                    //      @first.field @second @(() => decorator)()
+                    //      class Bar {}
+                    // }
+                    parse_class_declaration(p, decorator_list, context)
+                }
+                T![abstract] if is_at_ts_abstract_class_declaration(p, LineBreak::DoCheck) => {
+                    // test ts decorator_abstract_class_declaration
+                    // function foo() {
+                    //      @decorator abstract class A {}
+                    //      @first.field @second @(() => decorator)()
+                    //      abstract class Bar {}
+                    // }
+                    TypeScript.parse_exclusive_syntax(
+                        p,
+                        |p| parse_class_declaration(p, decorator_list, context),
+                        |p, abstract_class| {
+                            ts_only_syntax_error(p, "abstract classes", abstract_class.range(p))
+                        },
+                    )
+                }
+                _ => {
+                    // test_err decorator_class_declaration
+                    // function bar() {
+                    //      @decorator
+                    //      let a;
+                    //      @decorator @decorator2
+                    //      function Foo() { }
+                    // }
+                    decorator_list
+                        .add_diagnostic_if_present(p, |p, range| {
+                            p.err_builder("Decorators are not valid here.", range)
+                        })
+                        .map(|mut marker| {
+                            marker.change_kind(p, JS_BOGUS_STATEMENT);
+                            marker
+                        });
+
+                    parse_statement(p, context)
+                }
+            }
         }
         T![abstract] if is_at_ts_abstract_class_declaration(p, LineBreak::DoCheck) => {
             // test_err abstract_class_in_js
             // abstract class A {}
             TypeScript.parse_exclusive_syntax(
                 p,
-                |p| parse_class_declaration(p, context),
+                |p| parse_class_declaration(p, Absent, context),
                 |p, abstract_class| {
                     ts_only_syntax_error(p, "abstract classes", abstract_class.range(p))
                 },

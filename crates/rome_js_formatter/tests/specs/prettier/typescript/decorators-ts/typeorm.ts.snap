@@ -41,7 +41,7 @@ export class Board {
 @@ -15,6 +15,6 @@
    @Column()
    description: string;
- 
+
 -  @OneToMany((type) => Topic, (topic) => topic.board)
 +  @OneToMany(type => Topic, topic => topic.board)
    topics: Topic[];

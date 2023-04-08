@@ -3,6 +3,7 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -44,15 +45,16 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..21
     0: JS_CLASS_DECLARATION@0..19
-      0: (empty)
-      1: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@6..10
+      0: JS_DECORATOR_LIST@0..0
+      1: (empty)
+      2: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@6..10
         0: IDENT@6..10 "foo" [] [Whitespace(" ")]
-      3: (empty)
       4: (empty)
       5: (empty)
-      6: L_CURLY@10..11 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@11..18
+      6: (empty)
+      7: L_CURLY@10..11 "{" [] []
+      8: JS_CLASS_MEMBER_LIST@11..18
         0: JS_PROPERTY_CLASS_MEMBER@11..17
           0: JS_PROPERTY_MODIFIER_LIST@11..11
           1: JS_LITERAL_MEMBER_NAME@11..17
@@ -62,7 +64,7 @@ JsModule {
           4: (empty)
         1: JS_BOGUS_MEMBER@17..18
           0: L_CURLY@17..18 "{" [] []
-      8: R_CURLY@18..19 "}" [] []
+      9: R_CURLY@18..19 "}" [] []
     1: JS_BOGUS_STATEMENT@19..21
       0: R_CURLY@19..21 "}" [Newline("\n")] []
   3: EOF@21..22 "" [Newline("\n")] []

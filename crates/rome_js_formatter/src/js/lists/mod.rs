@@ -7,6 +7,7 @@ pub(crate) mod call_argument_list;
 pub(crate) mod class_member_list;
 pub(crate) mod constructor_modifier_list;
 pub(crate) mod constructor_parameter_list;
+pub(crate) mod decorator_list;
 pub(crate) mod directive_list;
 pub(crate) mod export_named_from_specifier_list;
 pub(crate) mod export_named_specifier_list;

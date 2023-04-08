@@ -331,6 +331,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@228..235 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -361,6 +362,7 @@ JsModule {
             r_curly_token: R_CURLY@246..247 "}" [] [],
         },
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@247..254 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -395,6 +397,7 @@ JsModule {
             export_clause: JsExportDefaultDeclarationClause {
                 default_token: DEFAULT_KW@275..283 "default" [] [Whitespace(" ")],
                 declaration: JsClassExportDefaultDeclaration {
+                    decorators: JsDecoratorList [],
                     abstract_token: missing (optional),
                     class_token: CLASS_KW@283..289 "class" [] [Whitespace(" ")],
                     id: JsIdentifierBinding {
@@ -428,6 +431,7 @@ JsModule {
             },
         },
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@301..308 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -516,6 +520,7 @@ JsModule {
         TsDeclareStatement {
             declare_token: DECLARE_KW@368..377 "declare" [Newline("\n")] [Whitespace(" ")],
             declaration: JsClassDeclaration {
+                decorators: JsDecoratorList [],
                 abstract_token: missing (optional),
                 class_token: CLASS_KW@377..383 "class" [] [Whitespace(" ")],
                 id: JsIdentifierBinding {
@@ -549,6 +554,7 @@ JsModule {
         TsDeclareStatement {
             declare_token: DECLARE_KW@395..404 "declare" [Newline("\n")] [Whitespace(" ")],
             declaration: JsClassDeclaration {
+                decorators: JsDecoratorList [],
                 abstract_token: missing (optional),
                 class_token: CLASS_KW@404..410 "class" [] [Whitespace(" ")],
                 id: JsIdentifierBinding {
@@ -1024,6 +1030,7 @@ JsModule {
             semicolon_token: SEMICOLON@730..731 ";" [] [],
         },
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@731..738 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -1054,6 +1061,7 @@ JsModule {
             r_curly_token: R_CURLY@750..751 "}" [] [],
         },
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@751..758 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -1092,6 +1100,7 @@ JsModule {
             r_curly_token: R_CURLY@780..781 "}" [] [],
         },
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@781..788 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -1131,6 +1140,7 @@ JsModule {
             r_curly_token: R_CURLY@803..804 "}" [] [],
         },
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@804..811 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -1164,6 +1174,7 @@ JsModule {
             r_curly_token: R_CURLY@826..827 "}" [] [],
         },
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@827..834 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -1197,6 +1208,7 @@ JsModule {
             r_curly_token: R_CURLY@849..850 "}" [] [],
         },
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@850..857 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -1236,6 +1248,7 @@ JsModule {
             expression: JsParenthesizedExpression {
                 l_paren_token: L_PAREN@877..879 "(" [Newline("\n")] [],
                 expression: JsClassExpression {
+                    decorators: JsDecoratorList [],
                     class_token: CLASS_KW@879..885 "class" [] [Whitespace(" ")],
                     id: missing (optional),
                     type_parameters: TsTypeParameters {
@@ -1270,6 +1283,7 @@ JsModule {
             expression: JsParenthesizedExpression {
                 l_paren_token: L_PAREN@899..901 "(" [Newline("\n")] [],
                 expression: JsClassExpression {
+                    decorators: JsDecoratorList [],
                     class_token: CLASS_KW@901..907 "class" [] [Whitespace(" ")],
                     id: missing (optional),
                     type_parameters: TsTypeParameters {
@@ -1312,6 +1326,7 @@ JsModule {
             expression: JsParenthesizedExpression {
                 l_paren_token: L_PAREN@931..933 "(" [Newline("\n")] [],
                 expression: JsClassExpression {
+                    decorators: JsDecoratorList [],
                     class_token: CLASS_KW@933..939 "class" [] [Whitespace(" ")],
                     id: missing (optional),
                     type_parameters: TsTypeParameters {
@@ -1355,6 +1370,7 @@ JsModule {
             expression: JsParenthesizedExpression {
                 l_paren_token: L_PAREN@956..958 "(" [Newline("\n")] [],
                 expression: JsClassExpression {
+                    decorators: JsDecoratorList [],
                     class_token: CLASS_KW@958..964 "class" [] [Whitespace(" ")],
                     id: missing (optional),
                     type_parameters: TsTypeParameters {
@@ -1392,6 +1408,7 @@ JsModule {
             expression: JsParenthesizedExpression {
                 l_paren_token: L_PAREN@981..983 "(" [Newline("\n")] [],
                 expression: JsClassExpression {
+                    decorators: JsDecoratorList [],
                     class_token: CLASS_KW@983..989 "class" [] [Whitespace(" ")],
                     id: missing (optional),
                     type_parameters: TsTypeParameters {
@@ -1426,6 +1443,7 @@ JsModule {
             semicolon_token: SEMICOLON@1005..1006 ";" [] [],
         },
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@1006..1013 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -1965,11 +1983,12 @@ JsModule {
         2: R_CURLY@227..228 "}" [] []
       5: (empty)
     9: JS_CLASS_DECLARATION@228..247
-      0: (empty)
-      1: CLASS_KW@228..235 "class" [Newline("\n")] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@235..238
+      0: JS_DECORATOR_LIST@228..228
+      1: (empty)
+      2: CLASS_KW@228..235 "class" [Newline("\n")] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@235..238
         0: IDENT@235..238 "Foo" [] []
-      3: TS_TYPE_PARAMETERS@238..245
+      4: TS_TYPE_PARAMETERS@238..245
         0: L_ANGLE@238..239 "<" [] []
         1: TS_TYPE_PARAMETER_LIST@239..243
           0: TS_TYPE_PARAMETER@239..243
@@ -1981,17 +2000,18 @@ JsModule {
             2: (empty)
             3: (empty)
         2: R_ANGLE@243..245 ">" [] [Whitespace(" ")]
-      4: (empty)
       5: (empty)
-      6: L_CURLY@245..246 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@246..246
-      8: R_CURLY@246..247 "}" [] []
+      6: (empty)
+      7: L_CURLY@245..246 "{" [] []
+      8: JS_CLASS_MEMBER_LIST@246..246
+      9: R_CURLY@246..247 "}" [] []
     10: JS_CLASS_DECLARATION@247..267
-      0: (empty)
-      1: CLASS_KW@247..254 "class" [Newline("\n")] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@254..257
+      0: JS_DECORATOR_LIST@247..247
+      1: (empty)
+      2: CLASS_KW@247..254 "class" [Newline("\n")] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@254..257
         0: IDENT@254..257 "Foo" [] []
-      3: TS_TYPE_PARAMETERS@257..265
+      4: TS_TYPE_PARAMETERS@257..265
         0: L_ANGLE@257..258 "<" [] []
         1: TS_TYPE_PARAMETER_LIST@258..263
           0: TS_TYPE_PARAMETER@258..263
@@ -2003,21 +2023,22 @@ JsModule {
             2: (empty)
             3: (empty)
         2: R_ANGLE@263..265 ">" [] [Whitespace(" ")]
-      4: (empty)
       5: (empty)
-      6: L_CURLY@265..266 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@266..266
-      8: R_CURLY@266..267 "}" [] []
+      6: (empty)
+      7: L_CURLY@265..266 "{" [] []
+      8: JS_CLASS_MEMBER_LIST@266..266
+      9: R_CURLY@266..267 "}" [] []
     11: JS_EXPORT@267..301
       0: EXPORT_KW@267..275 "export" [Newline("\n")] [Whitespace(" ")]
       1: JS_EXPORT_DEFAULT_DECLARATION_CLAUSE@275..301
         0: DEFAULT_KW@275..283 "default" [] [Whitespace(" ")]
         1: JS_CLASS_EXPORT_DEFAULT_DECLARATION@283..301
-          0: (empty)
-          1: CLASS_KW@283..289 "class" [] [Whitespace(" ")]
-          2: JS_IDENTIFIER_BINDING@289..292
+          0: JS_DECORATOR_LIST@283..283
+          1: (empty)
+          2: CLASS_KW@283..289 "class" [] [Whitespace(" ")]
+          3: JS_IDENTIFIER_BINDING@289..292
             0: IDENT@289..292 "Foo" [] []
-          3: TS_TYPE_PARAMETERS@292..299
+          4: TS_TYPE_PARAMETERS@292..299
             0: L_ANGLE@292..293 "<" [] []
             1: TS_TYPE_PARAMETER_LIST@293..297
               0: TS_TYPE_PARAMETER@293..297
@@ -2029,18 +2050,19 @@ JsModule {
                 2: (empty)
                 3: (empty)
             2: R_ANGLE@297..299 ">" [] [Whitespace(" ")]
-          4: (empty)
           5: (empty)
-          6: L_CURLY@299..300 "{" [] []
-          7: JS_CLASS_MEMBER_LIST@300..300
-          8: R_CURLY@300..301 "}" [] []
+          6: (empty)
+          7: L_CURLY@299..300 "{" [] []
+          8: JS_CLASS_MEMBER_LIST@300..300
+          9: R_CURLY@300..301 "}" [] []
         2: (empty)
     12: JS_CLASS_DECLARATION@301..321
-      0: (empty)
-      1: CLASS_KW@301..308 "class" [Newline("\n")] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@308..311
+      0: JS_DECORATOR_LIST@301..301
+      1: (empty)
+      2: CLASS_KW@301..308 "class" [Newline("\n")] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@308..311
         0: IDENT@308..311 "Foo" [] []
-      3: TS_TYPE_PARAMETERS@311..319
+      4: TS_TYPE_PARAMETERS@311..319
         0: L_ANGLE@311..312 "<" [] []
         1: TS_TYPE_PARAMETER_LIST@312..317
           0: TS_TYPE_PARAMETER@312..317
@@ -2052,11 +2074,11 @@ JsModule {
             2: (empty)
             3: (empty)
         2: R_ANGLE@317..319 ">" [] [Whitespace(" ")]
-      4: (empty)
       5: (empty)
-      6: L_CURLY@319..320 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@320..320
-      8: R_CURLY@320..321 "}" [] []
+      6: (empty)
+      7: L_CURLY@319..320 "{" [] []
+      8: JS_CLASS_MEMBER_LIST@320..320
+      9: R_CURLY@320..321 "}" [] []
     13: TS_INTERFACE_DECLARATION@321..344
       0: INTERFACE_KW@321..332 "interface" [Newline("\n")] [Whitespace(" ")]
       1: TS_IDENTIFIER_BINDING@332..335
@@ -2100,11 +2122,12 @@ JsModule {
     15: TS_DECLARE_STATEMENT@368..395
       0: DECLARE_KW@368..377 "declare" [Newline("\n")] [Whitespace(" ")]
       1: JS_CLASS_DECLARATION@377..395
-        0: (empty)
-        1: CLASS_KW@377..383 "class" [] [Whitespace(" ")]
-        2: JS_IDENTIFIER_BINDING@383..386
+        0: JS_DECORATOR_LIST@377..377
+        1: (empty)
+        2: CLASS_KW@377..383 "class" [] [Whitespace(" ")]
+        3: JS_IDENTIFIER_BINDING@383..386
           0: IDENT@383..386 "Foo" [] []
-        3: TS_TYPE_PARAMETERS@386..393
+        4: TS_TYPE_PARAMETERS@386..393
           0: L_ANGLE@386..387 "<" [] []
           1: TS_TYPE_PARAMETER_LIST@387..391
             0: TS_TYPE_PARAMETER@387..391
@@ -2116,19 +2139,20 @@ JsModule {
               2: (empty)
               3: (empty)
           2: R_ANGLE@391..393 ">" [] [Whitespace(" ")]
-        4: (empty)
         5: (empty)
-        6: L_CURLY@393..394 "{" [] []
-        7: JS_CLASS_MEMBER_LIST@394..394
-        8: R_CURLY@394..395 "}" [] []
+        6: (empty)
+        7: L_CURLY@393..394 "{" [] []
+        8: JS_CLASS_MEMBER_LIST@394..394
+        9: R_CURLY@394..395 "}" [] []
     16: TS_DECLARE_STATEMENT@395..423
       0: DECLARE_KW@395..404 "declare" [Newline("\n")] [Whitespace(" ")]
       1: JS_CLASS_DECLARATION@404..423
-        0: (empty)
-        1: CLASS_KW@404..410 "class" [] [Whitespace(" ")]
-        2: JS_IDENTIFIER_BINDING@410..413
+        0: JS_DECORATOR_LIST@404..404
+        1: (empty)
+        2: CLASS_KW@404..410 "class" [] [Whitespace(" ")]
+        3: JS_IDENTIFIER_BINDING@410..413
           0: IDENT@410..413 "Foo" [] []
-        3: TS_TYPE_PARAMETERS@413..421
+        4: TS_TYPE_PARAMETERS@413..421
           0: L_ANGLE@413..414 "<" [] []
           1: TS_TYPE_PARAMETER_LIST@414..419
             0: TS_TYPE_PARAMETER@414..419
@@ -2140,11 +2164,11 @@ JsModule {
               2: (empty)
               3: (empty)
           2: R_ANGLE@419..421 ">" [] [Whitespace(" ")]
-        4: (empty)
         5: (empty)
-        6: L_CURLY@421..422 "{" [] []
-        7: JS_CLASS_MEMBER_LIST@422..422
-        8: R_CURLY@422..423 "}" [] []
+        6: (empty)
+        7: L_CURLY@421..422 "{" [] []
+        8: JS_CLASS_MEMBER_LIST@422..422
+        9: R_CURLY@422..423 "}" [] []
     17: TS_DECLARE_STATEMENT@423..454
       0: DECLARE_KW@423..432 "declare" [Newline("\n")] [Whitespace(" ")]
       1: TS_INTERFACE_DECLARATION@432..454
@@ -2471,11 +2495,12 @@ JsModule {
         2: R_PAREN@729..730 ")" [] []
       1: SEMICOLON@730..731 ";" [] []
     28: JS_CLASS_DECLARATION@731..751
-      0: (empty)
-      1: CLASS_KW@731..738 "class" [Newline("\n")] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@738..739
+      0: JS_DECORATOR_LIST@731..731
+      1: (empty)
+      2: CLASS_KW@731..738 "class" [Newline("\n")] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@738..739
         0: IDENT@738..739 "A" [] []
-      3: TS_TYPE_PARAMETERS@739..749
+      4: TS_TYPE_PARAMETERS@739..749
         0: L_ANGLE@739..740 "<" [] []
         1: TS_TYPE_PARAMETER_LIST@740..747
           0: TS_TYPE_PARAMETER@740..747
@@ -2487,17 +2512,18 @@ JsModule {
             2: (empty)
             3: (empty)
         2: R_ANGLE@747..749 ">" [] [Whitespace(" ")]
-      4: (empty)
       5: (empty)
-      6: L_CURLY@749..750 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@750..750
-      8: R_CURLY@750..751 "}" [] []
+      6: (empty)
+      7: L_CURLY@749..750 "{" [] []
+      8: JS_CLASS_MEMBER_LIST@750..750
+      9: R_CURLY@750..751 "}" [] []
     29: JS_CLASS_DECLARATION@751..781
-      0: (empty)
-      1: CLASS_KW@751..758 "class" [Newline("\n")] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@758..759
+      0: JS_DECORATOR_LIST@751..751
+      1: (empty)
+      2: CLASS_KW@751..758 "class" [Newline("\n")] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@758..759
         0: IDENT@758..759 "B" [] []
-      3: TS_TYPE_PARAMETERS@759..779
+      4: TS_TYPE_PARAMETERS@759..779
         0: L_ANGLE@759..760 "<" [] []
         1: TS_TYPE_PARAMETER_LIST@760..777
           0: TS_TYPE_PARAMETER@760..777
@@ -2514,17 +2540,18 @@ JsModule {
                 1: (empty)
             3: (empty)
         2: R_ANGLE@777..779 ">" [] [Whitespace(" ")]
-      4: (empty)
       5: (empty)
-      6: L_CURLY@779..780 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@780..780
-      8: R_CURLY@780..781 "}" [] []
+      6: (empty)
+      7: L_CURLY@779..780 "{" [] []
+      8: JS_CLASS_MEMBER_LIST@780..780
+      9: R_CURLY@780..781 "}" [] []
     30: JS_CLASS_DECLARATION@781..804
-      0: (empty)
-      1: CLASS_KW@781..788 "class" [Newline("\n")] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@788..789
+      0: JS_DECORATOR_LIST@781..781
+      1: (empty)
+      2: CLASS_KW@781..788 "class" [Newline("\n")] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@788..789
         0: IDENT@788..789 "C" [] []
-      3: TS_TYPE_PARAMETERS@789..802
+      4: TS_TYPE_PARAMETERS@789..802
         0: L_ANGLE@789..790 "<" [] []
         1: TS_TYPE_PARAMETER_LIST@790..800
           0: TS_TYPE_PARAMETER@790..791
@@ -2543,17 +2570,18 @@ JsModule {
             2: (empty)
             3: (empty)
         2: R_ANGLE@800..802 ">" [] [Whitespace(" ")]
-      4: (empty)
       5: (empty)
-      6: L_CURLY@802..803 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@803..803
-      8: R_CURLY@803..804 "}" [] []
+      6: (empty)
+      7: L_CURLY@802..803 "{" [] []
+      8: JS_CLASS_MEMBER_LIST@803..803
+      9: R_CURLY@803..804 "}" [] []
     31: JS_CLASS_DECLARATION@804..827
-      0: (empty)
-      1: CLASS_KW@804..811 "class" [Newline("\n")] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@811..812
+      0: JS_DECORATOR_LIST@804..804
+      1: (empty)
+      2: CLASS_KW@804..811 "class" [Newline("\n")] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@811..812
         0: IDENT@811..812 "D" [] []
-      3: TS_TYPE_PARAMETERS@812..825
+      4: TS_TYPE_PARAMETERS@812..825
         0: L_ANGLE@812..813 "<" [] []
         1: TS_TYPE_PARAMETER_LIST@813..823
           0: TS_TYPE_PARAMETER@813..823
@@ -2567,17 +2595,18 @@ JsModule {
             2: (empty)
             3: (empty)
         2: R_ANGLE@823..825 ">" [] [Whitespace(" ")]
-      4: (empty)
       5: (empty)
-      6: L_CURLY@825..826 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@826..826
-      8: R_CURLY@826..827 "}" [] []
+      6: (empty)
+      7: L_CURLY@825..826 "{" [] []
+      8: JS_CLASS_MEMBER_LIST@826..826
+      9: R_CURLY@826..827 "}" [] []
     32: JS_CLASS_DECLARATION@827..850
-      0: (empty)
-      1: CLASS_KW@827..834 "class" [Newline("\n")] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@834..835
+      0: JS_DECORATOR_LIST@827..827
+      1: (empty)
+      2: CLASS_KW@827..834 "class" [Newline("\n")] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@834..835
         0: IDENT@834..835 "E" [] []
-      3: TS_TYPE_PARAMETERS@835..848
+      4: TS_TYPE_PARAMETERS@835..848
         0: L_ANGLE@835..836 "<" [] []
         1: TS_TYPE_PARAMETER_LIST@836..846
           0: TS_TYPE_PARAMETER@836..846
@@ -2591,17 +2620,18 @@ JsModule {
             2: (empty)
             3: (empty)
         2: R_ANGLE@846..848 ">" [] [Whitespace(" ")]
-      4: (empty)
       5: (empty)
-      6: L_CURLY@848..849 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@849..849
-      8: R_CURLY@849..850 "}" [] []
+      6: (empty)
+      7: L_CURLY@848..849 "{" [] []
+      8: JS_CLASS_MEMBER_LIST@849..849
+      9: R_CURLY@849..850 "}" [] []
     33: JS_CLASS_DECLARATION@850..877
-      0: (empty)
-      1: CLASS_KW@850..857 "class" [Newline("\n")] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@857..858
+      0: JS_DECORATOR_LIST@850..850
+      1: (empty)
+      2: CLASS_KW@850..857 "class" [Newline("\n")] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@857..858
         0: IDENT@857..858 "F" [] []
-      3: TS_TYPE_PARAMETERS@858..875
+      4: TS_TYPE_PARAMETERS@858..875
         0: L_ANGLE@858..859 "<" [] []
         1: TS_TYPE_PARAMETER_LIST@859..873
           0: TS_TYPE_PARAMETER@859..873
@@ -2617,18 +2647,19 @@ JsModule {
             2: (empty)
             3: (empty)
         2: R_ANGLE@873..875 ">" [] [Whitespace(" ")]
-      4: (empty)
       5: (empty)
-      6: L_CURLY@875..876 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@876..876
-      8: R_CURLY@876..877 "}" [] []
+      6: (empty)
+      7: L_CURLY@875..876 "{" [] []
+      8: JS_CLASS_MEMBER_LIST@876..876
+      9: R_CURLY@876..877 "}" [] []
     34: JS_EXPRESSION_STATEMENT@877..899
       0: JS_PARENTHESIZED_EXPRESSION@877..898
         0: L_PAREN@877..879 "(" [Newline("\n")] []
         1: JS_CLASS_EXPRESSION@879..897
-          0: CLASS_KW@879..885 "class" [] [Whitespace(" ")]
-          1: (empty)
-          2: TS_TYPE_PARAMETERS@885..895
+          0: JS_DECORATOR_LIST@879..879
+          1: CLASS_KW@879..885 "class" [] [Whitespace(" ")]
+          2: (empty)
+          3: TS_TYPE_PARAMETERS@885..895
             0: L_ANGLE@885..886 "<" [] []
             1: TS_TYPE_PARAMETER_LIST@886..893
               0: TS_TYPE_PARAMETER@886..893
@@ -2640,20 +2671,21 @@ JsModule {
                 2: (empty)
                 3: (empty)
             2: R_ANGLE@893..895 ">" [] [Whitespace(" ")]
-          3: (empty)
           4: (empty)
-          5: L_CURLY@895..896 "{" [] []
-          6: JS_CLASS_MEMBER_LIST@896..896
-          7: R_CURLY@896..897 "}" [] []
+          5: (empty)
+          6: L_CURLY@895..896 "{" [] []
+          7: JS_CLASS_MEMBER_LIST@896..896
+          8: R_CURLY@896..897 "}" [] []
         2: R_PAREN@897..898 ")" [] []
       1: SEMICOLON@898..899 ";" [] []
     35: JS_EXPRESSION_STATEMENT@899..931
       0: JS_PARENTHESIZED_EXPRESSION@899..930
         0: L_PAREN@899..901 "(" [Newline("\n")] []
         1: JS_CLASS_EXPRESSION@901..929
-          0: CLASS_KW@901..907 "class" [] [Whitespace(" ")]
-          1: (empty)
-          2: TS_TYPE_PARAMETERS@907..927
+          0: JS_DECORATOR_LIST@901..901
+          1: CLASS_KW@901..907 "class" [] [Whitespace(" ")]
+          2: (empty)
+          3: TS_TYPE_PARAMETERS@907..927
             0: L_ANGLE@907..908 "<" [] []
             1: TS_TYPE_PARAMETER_LIST@908..925
               0: TS_TYPE_PARAMETER@908..925
@@ -2670,20 +2702,21 @@ JsModule {
                     1: (empty)
                 3: (empty)
             2: R_ANGLE@925..927 ">" [] [Whitespace(" ")]
-          3: (empty)
           4: (empty)
-          5: L_CURLY@927..928 "{" [] []
-          6: JS_CLASS_MEMBER_LIST@928..928
-          7: R_CURLY@928..929 "}" [] []
+          5: (empty)
+          6: L_CURLY@927..928 "{" [] []
+          7: JS_CLASS_MEMBER_LIST@928..928
+          8: R_CURLY@928..929 "}" [] []
         2: R_PAREN@929..930 ")" [] []
       1: SEMICOLON@930..931 ";" [] []
     36: JS_EXPRESSION_STATEMENT@931..956
       0: JS_PARENTHESIZED_EXPRESSION@931..955
         0: L_PAREN@931..933 "(" [Newline("\n")] []
         1: JS_CLASS_EXPRESSION@933..954
-          0: CLASS_KW@933..939 "class" [] [Whitespace(" ")]
-          1: (empty)
-          2: TS_TYPE_PARAMETERS@939..952
+          0: JS_DECORATOR_LIST@933..933
+          1: CLASS_KW@933..939 "class" [] [Whitespace(" ")]
+          2: (empty)
+          3: TS_TYPE_PARAMETERS@939..952
             0: L_ANGLE@939..940 "<" [] []
             1: TS_TYPE_PARAMETER_LIST@940..950
               0: TS_TYPE_PARAMETER@940..941
@@ -2702,20 +2735,21 @@ JsModule {
                 2: (empty)
                 3: (empty)
             2: R_ANGLE@950..952 ">" [] [Whitespace(" ")]
-          3: (empty)
           4: (empty)
-          5: L_CURLY@952..953 "{" [] []
-          6: JS_CLASS_MEMBER_LIST@953..953
-          7: R_CURLY@953..954 "}" [] []
+          5: (empty)
+          6: L_CURLY@952..953 "{" [] []
+          7: JS_CLASS_MEMBER_LIST@953..953
+          8: R_CURLY@953..954 "}" [] []
         2: R_PAREN@954..955 ")" [] []
       1: SEMICOLON@955..956 ";" [] []
     37: JS_EXPRESSION_STATEMENT@956..981
       0: JS_PARENTHESIZED_EXPRESSION@956..980
         0: L_PAREN@956..958 "(" [Newline("\n")] []
         1: JS_CLASS_EXPRESSION@958..979
-          0: CLASS_KW@958..964 "class" [] [Whitespace(" ")]
-          1: (empty)
-          2: TS_TYPE_PARAMETERS@964..977
+          0: JS_DECORATOR_LIST@958..958
+          1: CLASS_KW@958..964 "class" [] [Whitespace(" ")]
+          2: (empty)
+          3: TS_TYPE_PARAMETERS@964..977
             0: L_ANGLE@964..965 "<" [] []
             1: TS_TYPE_PARAMETER_LIST@965..975
               0: TS_TYPE_PARAMETER@965..975
@@ -2729,20 +2763,21 @@ JsModule {
                 2: (empty)
                 3: (empty)
             2: R_ANGLE@975..977 ">" [] [Whitespace(" ")]
-          3: (empty)
           4: (empty)
-          5: L_CURLY@977..978 "{" [] []
-          6: JS_CLASS_MEMBER_LIST@978..978
-          7: R_CURLY@978..979 "}" [] []
+          5: (empty)
+          6: L_CURLY@977..978 "{" [] []
+          7: JS_CLASS_MEMBER_LIST@978..978
+          8: R_CURLY@978..979 "}" [] []
         2: R_PAREN@979..980 ")" [] []
       1: SEMICOLON@980..981 ";" [] []
     38: JS_EXPRESSION_STATEMENT@981..1006
       0: JS_PARENTHESIZED_EXPRESSION@981..1005
         0: L_PAREN@981..983 "(" [Newline("\n")] []
         1: JS_CLASS_EXPRESSION@983..1004
-          0: CLASS_KW@983..989 "class" [] [Whitespace(" ")]
-          1: (empty)
-          2: TS_TYPE_PARAMETERS@989..1002
+          0: JS_DECORATOR_LIST@983..983
+          1: CLASS_KW@983..989 "class" [] [Whitespace(" ")]
+          2: (empty)
+          3: TS_TYPE_PARAMETERS@989..1002
             0: L_ANGLE@989..990 "<" [] []
             1: TS_TYPE_PARAMETER_LIST@990..1000
               0: TS_TYPE_PARAMETER@990..1000
@@ -2756,23 +2791,24 @@ JsModule {
                 2: (empty)
                 3: (empty)
             2: R_ANGLE@1000..1002 ">" [] [Whitespace(" ")]
-          3: (empty)
           4: (empty)
-          5: L_CURLY@1002..1003 "{" [] []
-          6: JS_CLASS_MEMBER_LIST@1003..1003
-          7: R_CURLY@1003..1004 "}" [] []
+          5: (empty)
+          6: L_CURLY@1002..1003 "{" [] []
+          7: JS_CLASS_MEMBER_LIST@1003..1003
+          8: R_CURLY@1003..1004 "}" [] []
         2: R_PAREN@1004..1005 ")" [] []
       1: SEMICOLON@1005..1006 ";" [] []
     39: JS_CLASS_DECLARATION@1006..1100
-      0: (empty)
-      1: CLASS_KW@1006..1013 "class" [Newline("\n")] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@1013..1015
+      0: JS_DECORATOR_LIST@1006..1006
+      1: (empty)
+      2: CLASS_KW@1006..1013 "class" [Newline("\n")] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@1013..1015
         0: IDENT@1013..1015 "_" [] [Whitespace(" ")]
-      3: (empty)
       4: (empty)
       5: (empty)
-      6: L_CURLY@1015..1016 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@1016..1098
+      6: (empty)
+      7: L_CURLY@1015..1016 "{" [] []
+      8: JS_CLASS_MEMBER_LIST@1016..1098
         0: JS_METHOD_CLASS_MEMBER@1016..1039
           0: JS_METHOD_MODIFIER_LIST@1016..1016
           1: (empty)
@@ -2872,7 +2908,7 @@ JsModule {
             1: JS_DIRECTIVE_LIST@1097..1097
             2: JS_STATEMENT_LIST@1097..1097
             3: R_CURLY@1097..1098 "}" [] []
-      8: R_CURLY@1098..1100 "}" [Newline("\n")] []
+      9: R_CURLY@1098..1100 "}" [Newline("\n")] []
     40: TS_DECLARE_STATEMENT@1100..1152
       0: DECLARE_KW@1100..1109 "declare" [Newline("\n")] [Whitespace(" ")]
       1: TS_MODULE_DECLARATION@1109..1152
