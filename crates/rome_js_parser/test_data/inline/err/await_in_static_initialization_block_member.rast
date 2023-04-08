@@ -3,6 +3,7 @@ JsScript {
     directives: JsDirectiveList [],
     statements: JsStatementList [
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@0..16 "class" [Comments("// SCRIPT"), Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -36,6 +37,7 @@ JsScript {
             r_curly_token: R_CURLY@38..39 "}" [] [],
         },
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@39..46 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -76,15 +78,16 @@ JsScript {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_STATEMENT_LIST@0..72
     0: JS_CLASS_DECLARATION@0..39
-      0: (empty)
-      1: CLASS_KW@0..16 "class" [Comments("// SCRIPT"), Newline("\n")] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@16..18
+      0: JS_DECORATOR_LIST@0..0
+      1: (empty)
+      2: CLASS_KW@0..16 "class" [Comments("// SCRIPT"), Newline("\n")] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@16..18
         0: IDENT@16..18 "A" [] [Whitespace(" ")]
-      3: (empty)
       4: (empty)
       5: (empty)
-      6: L_CURLY@18..20 "{" [] [Whitespace(" ")]
-      7: JS_CLASS_MEMBER_LIST@20..38
+      6: (empty)
+      7: L_CURLY@18..20 "{" [] [Whitespace(" ")]
+      8: JS_CLASS_MEMBER_LIST@20..38
         0: JS_STATIC_INITIALIZATION_BLOCK_CLASS_MEMBER@20..38
           0: STATIC_KW@20..27 "static" [] [Whitespace(" ")]
           1: L_CURLY@27..29 "{" [] [Whitespace(" ")]
@@ -95,17 +98,18 @@ JsScript {
                   0: IDENT@29..34 "await" [] []
               1: SEMICOLON@34..36 ";" [] [Whitespace(" ")]
           3: R_CURLY@36..38 "}" [] [Whitespace(" ")]
-      8: R_CURLY@38..39 "}" [] []
+      9: R_CURLY@38..39 "}" [] []
     1: JS_CLASS_DECLARATION@39..72
-      0: (empty)
-      1: CLASS_KW@39..46 "class" [Newline("\n")] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@46..48
+      0: JS_DECORATOR_LIST@39..39
+      1: (empty)
+      2: CLASS_KW@39..46 "class" [Newline("\n")] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@46..48
         0: IDENT@46..48 "B" [] [Whitespace(" ")]
-      3: (empty)
       4: (empty)
       5: (empty)
-      6: L_CURLY@48..50 "{" [] [Whitespace(" ")]
-      7: JS_CLASS_MEMBER_LIST@50..71
+      6: (empty)
+      7: L_CURLY@48..50 "{" [] [Whitespace(" ")]
+      8: JS_CLASS_MEMBER_LIST@50..71
         0: JS_STATIC_INITIALIZATION_BLOCK_CLASS_MEMBER@50..71
           0: STATIC_KW@50..57 "static" [] [Whitespace(" ")]
           1: L_CURLY@57..59 "{" [] [Whitespace(" ")]
@@ -117,7 +121,7 @@ JsScript {
                   0: JS_NUMBER_LITERAL@65..67 "10" [] []
               1: SEMICOLON@67..69 ";" [] [Whitespace(" ")]
           3: R_CURLY@69..71 "}" [] [Whitespace(" ")]
-      8: R_CURLY@71..72 "}" [] []
+      9: R_CURLY@71..72 "}" [] []
   3: EOF@72..73 "" [Newline("\n")] []
 --
 await_in_static_initialization_block_member.js:2:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

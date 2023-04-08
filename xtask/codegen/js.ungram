@@ -578,6 +578,7 @@ JsShorthandPropertyObjectMember = name: JsReferenceIdentifier
 ///////////////
 
 JsClassDeclaration =
+	decorators: JsDecoratorList
 	'abstract'?
 	'class'
 	id: AnyJsBinding
@@ -589,6 +590,7 @@ JsClassDeclaration =
 	'}'
 
 JsClassExpression =
+	decorators: JsDecoratorList
 	'class'
 	id: AnyJsBinding?
 	type_parameters: TsTypeParameters?
@@ -1403,6 +1405,7 @@ AnyJsExportDefaultDeclaration =
 // export default class {}
 //                ^^^^^^^^
 JsClassExportDefaultDeclaration =
+	decorators: JsDecoratorList
 	'abstract'?
 	'class'
 	id: AnyJsBinding?
@@ -1628,6 +1631,19 @@ JsFunctionBody =
 	directives: JsDirectiveList
 	statements: JsStatementList
 	'}'
+
+JsDecoratorList = JsDecorator*
+
+JsDecorator =
+	'@'
+	expression: AnyJsDecorator
+
+AnyJsDecorator =
+	JsParenthesizedExpression
+	| JsCallExpression
+	| JsStaticMemberExpression
+	| JsIdentifierExpression
+	| JsBogusExpression
 
 ///////////////
 // TYPESCRIPT

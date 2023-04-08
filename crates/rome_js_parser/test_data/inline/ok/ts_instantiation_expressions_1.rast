@@ -3,6 +3,7 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -1139,6 +1140,7 @@ JsModule {
                 },
                 operator_token: R_ANGLE@508..510 ">" [] [Whitespace(" ")],
                 right: JsClassExpression {
+                    decorators: JsDecoratorList [],
                     class_token: CLASS_KW@510..516 "class" [] [Whitespace(" ")],
                     id: JsIdentifierBinding {
                         name_token: IDENT@516..518 "A" [] [Whitespace(" ")],
@@ -1614,15 +1616,16 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..794
     0: JS_CLASS_DECLARATION@0..48
-      0: (empty)
-      1: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@6..8
+      0: JS_DECORATOR_LIST@0..0
+      1: (empty)
+      2: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@6..8
         0: IDENT@6..8 "A" [] [Whitespace(" ")]
-      3: (empty)
       4: (empty)
       5: (empty)
-      6: L_CURLY@8..9 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@9..46
+      6: (empty)
+      7: L_CURLY@8..9 "{" [] []
+      8: JS_CLASS_MEMBER_LIST@9..46
         0: JS_CONSTRUCTOR_CLASS_MEMBER@9..46
           0: JS_CONSTRUCTOR_MODIFIER_LIST@9..9
           1: JS_LITERAL_MEMBER_NAME@9..22
@@ -1657,7 +1660,7 @@ JsModule {
                       2: R_PAREN@41..42 ")" [] []
                 1: SEMICOLON@42..43 ";" [] []
             3: R_CURLY@43..46 "}" [Newline("\n"), Whitespace(" ")] []
-      8: R_CURLY@46..48 "}" [Newline("\n")] []
+      9: R_CURLY@46..48 "}" [Newline("\n")] []
     1: JS_EXPRESSION_STATEMENT@48..75
       0: JS_TEMPLATE_EXPRESSION@48..74
         0: JS_IDENTIFIER_EXPRESSION@48..50
@@ -2353,15 +2356,16 @@ JsModule {
               0: IDENT@506..508 "T" [] [Whitespace(" ")]
         1: R_ANGLE@508..510 ">" [] [Whitespace(" ")]
         2: JS_CLASS_EXPRESSION@510..520
-          0: CLASS_KW@510..516 "class" [] [Whitespace(" ")]
-          1: JS_IDENTIFIER_BINDING@516..518
+          0: JS_DECORATOR_LIST@510..510
+          1: CLASS_KW@510..516 "class" [] [Whitespace(" ")]
+          2: JS_IDENTIFIER_BINDING@516..518
             0: IDENT@516..518 "A" [] [Whitespace(" ")]
-          2: (empty)
           3: (empty)
           4: (empty)
-          5: L_CURLY@518..519 "{" [] []
-          6: JS_CLASS_MEMBER_LIST@519..519
-          7: R_CURLY@519..520 "}" [] []
+          5: (empty)
+          6: L_CURLY@518..519 "{" [] []
+          7: JS_CLASS_MEMBER_LIST@519..519
+          8: R_CURLY@519..520 "}" [] []
       1: SEMICOLON@520..521 ";" [] []
     34: JS_EXPRESSION_STATEMENT@521..538
       0: JS_BINARY_EXPRESSION@521..537

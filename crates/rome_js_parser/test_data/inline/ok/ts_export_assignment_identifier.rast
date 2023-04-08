@@ -59,6 +59,7 @@ JsModule {
             export_clause: TsExportAssignmentClause {
                 eq_token: EQ@50..52 "=" [] [Whitespace(" ")],
                 expression: JsClassExpression {
+                    decorators: JsDecoratorList [],
                     class_token: CLASS_KW@52..58 "class" [] [Whitespace(" ")],
                     id: missing (optional),
                     type_parameters: missing (optional),
@@ -169,14 +170,15 @@ JsModule {
       1: TS_EXPORT_ASSIGNMENT_CLAUSE@50..60
         0: EQ@50..52 "=" [] [Whitespace(" ")]
         1: JS_CLASS_EXPRESSION@52..60
-          0: CLASS_KW@52..58 "class" [] [Whitespace(" ")]
-          1: (empty)
+          0: JS_DECORATOR_LIST@52..52
+          1: CLASS_KW@52..58 "class" [] [Whitespace(" ")]
           2: (empty)
           3: (empty)
           4: (empty)
-          5: L_CURLY@58..59 "{" [] []
-          6: JS_CLASS_MEMBER_LIST@59..59
-          7: R_CURLY@59..60 "}" [] []
+          5: (empty)
+          6: L_CURLY@58..59 "{" [] []
+          7: JS_CLASS_MEMBER_LIST@59..59
+          8: R_CURLY@59..60 "}" [] []
         2: (empty)
     3: JS_EXPORT@60..84
       0: EXPORT_KW@60..68 "export" [Newline("\n")] [Whitespace(" ")]

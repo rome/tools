@@ -3,6 +3,7 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -48,6 +49,7 @@ JsModule {
             r_curly_token: R_CURLY@42..44 "}" [Newline("\n")] [],
         },
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@44..51 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -93,6 +95,7 @@ JsModule {
             r_curly_token: R_CURLY@88..90 "}" [Newline("\n")] [],
         },
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@90..97 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -146,15 +149,16 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..138
     0: JS_CLASS_DECLARATION@0..44
-      0: (empty)
-      1: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@6..8
+      0: JS_DECORATOR_LIST@0..0
+      1: (empty)
+      2: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@6..8
         0: IDENT@6..8 "A" [] [Whitespace(" ")]
-      3: (empty)
       4: (empty)
       5: (empty)
-      6: L_CURLY@8..9 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@9..42
+      6: (empty)
+      7: L_CURLY@8..9 "{" [] []
+      8: JS_CLASS_MEMBER_LIST@9..42
         0: JS_BOGUS_MEMBER@9..42
           0: JS_BOGUS@9..22
             0: TS_ACCESSIBILITY_MODIFIER@9..22
@@ -173,17 +177,18 @@ JsModule {
             1: TS_STRING_TYPE@35..41
               0: STRING_KW@35..41 "string" [] []
           5: SEMICOLON@41..42 ";" [] []
-      8: R_CURLY@42..44 "}" [Newline("\n")] []
+      9: R_CURLY@42..44 "}" [Newline("\n")] []
     1: JS_CLASS_DECLARATION@44..90
-      0: (empty)
-      1: CLASS_KW@44..51 "class" [Newline("\n")] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@51..53
+      0: JS_DECORATOR_LIST@44..44
+      1: (empty)
+      2: CLASS_KW@44..51 "class" [Newline("\n")] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@51..53
         0: IDENT@51..53 "B" [] [Whitespace(" ")]
-      3: (empty)
       4: (empty)
       5: (empty)
-      6: L_CURLY@53..54 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@54..88
+      6: (empty)
+      7: L_CURLY@53..54 "{" [] []
+      8: JS_CLASS_MEMBER_LIST@54..88
         0: JS_BOGUS_MEMBER@54..88
           0: JS_BOGUS@54..68
             0: TS_ACCESSIBILITY_MODIFIER@54..68
@@ -202,17 +207,18 @@ JsModule {
             1: TS_STRING_TYPE@81..87
               0: STRING_KW@81..87 "string" [] []
           5: SEMICOLON@87..88 ";" [] []
-      8: R_CURLY@88..90 "}" [Newline("\n")] []
+      9: R_CURLY@88..90 "}" [Newline("\n")] []
     2: JS_CLASS_DECLARATION@90..138
-      0: (empty)
-      1: CLASS_KW@90..97 "class" [Newline("\n")] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@97..99
+      0: JS_DECORATOR_LIST@90..90
+      1: (empty)
+      2: CLASS_KW@90..97 "class" [Newline("\n")] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@97..99
         0: IDENT@97..99 "C" [] [Whitespace(" ")]
-      3: (empty)
       4: (empty)
       5: (empty)
-      6: L_CURLY@99..100 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@100..136
+      6: (empty)
+      7: L_CURLY@99..100 "{" [] []
+      8: JS_CLASS_MEMBER_LIST@100..136
         0: JS_BOGUS_MEMBER@100..136
           0: JS_BOGUS@100..116
             0: TS_ACCESSIBILITY_MODIFIER@100..116
@@ -231,7 +237,7 @@ JsModule {
             1: TS_STRING_TYPE@129..135
               0: STRING_KW@129..135 "string" [] []
           5: SEMICOLON@135..136 ";" [] []
-      8: R_CURLY@136..138 "}" [Newline("\n")] []
+      9: R_CURLY@136..138 "}" [Newline("\n")] []
   3: EOF@138..139 "" [Newline("\n")] []
 --
 ts_index_signature_class_member_cannot_have_visibility_modifiers.ts:2:5 parse ━━━━━━━━━━━━━━━━━━━━━━

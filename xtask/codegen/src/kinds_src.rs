@@ -384,6 +384,8 @@ pub const JS_KINDS_SRC: KindsSrc = KindsSrc {
         "TS_EXPORT_DECLARE_CLAUSE",
         "JS_LITERAL_EXPORT_NAME",
         "JS_AWAIT_EXPRESSION",
+        "JS_DECORATOR",
+        "JS_DECORATOR_LIST",
         // TypeScript
         "TS_IDENTIFIER_BINDING",
         "TS_ANY_TYPE",

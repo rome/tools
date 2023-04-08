@@ -5,6 +5,7 @@ JsModule {
         JsExport {
             export_token: EXPORT_KW@0..7 "export" [] [Whitespace(" ")],
             export_clause: JsClassDeclaration {
+                decorators: JsDecoratorList [],
                 abstract_token: missing (optional),
                 class_token: CLASS_KW@7..13 "class" [] [Whitespace(" ")],
                 id: JsIdentifierBinding {
@@ -47,15 +48,16 @@ JsModule {
     0: JS_EXPORT@0..65
       0: EXPORT_KW@0..7 "export" [] [Whitespace(" ")]
       1: JS_CLASS_DECLARATION@7..65
-        0: (empty)
-        1: CLASS_KW@7..13 "class" [] [Whitespace(" ")]
-        2: JS_IDENTIFIER_BINDING@13..17
+        0: JS_DECORATOR_LIST@7..7
+        1: (empty)
+        2: CLASS_KW@7..13 "class" [] [Whitespace(" ")]
+        3: JS_IDENTIFIER_BINDING@13..17
           0: IDENT@13..17 "Foo" [] [Whitespace(" ")]
-        3: (empty)
         4: (empty)
         5: (empty)
-        6: L_CURLY@17..18 "{" [] []
-        7: JS_CLASS_MEMBER_LIST@18..63
+        6: (empty)
+        7: L_CURLY@17..18 "{" [] []
+        8: JS_CLASS_MEMBER_LIST@18..63
           0: JS_PROPERTY_CLASS_MEMBER@18..63
             0: JS_PROPERTY_MODIFIER_LIST@18..18
             1: JS_LITERAL_MEMBER_NAME@18..54
@@ -68,5 +70,5 @@ JsModule {
                   0: NUMBER_KW@57..63 "number" [] []
             3: (empty)
             4: (empty)
-        8: R_CURLY@63..65 "}" [Newline("\n")] []
+        9: R_CURLY@63..65 "}" [Newline("\n")] []
   3: EOF@65..66 "" [Newline("\n")] []

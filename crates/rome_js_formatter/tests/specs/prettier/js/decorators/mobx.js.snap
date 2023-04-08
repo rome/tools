@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: js/decorators/mobx.js
+info: js/decorators/mobx.js
 ---
 
 # Input
@@ -52,20 +51,18 @@ import {observable} from "mobx";
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,9 +1,8 @@
- import { observable } from "mobx";
+@@ -2,8 +2,8 @@
  
--@observer
--class OrderLine {
+ @observer
+ class OrderLine {
 -  @observable price: number = 0;
 -  @observable amount: number = 1;
-+@observer class OrderLine {
 +  @observable price:number = 0;
 +  @observable amount:number = 1;
  
    constructor(price) {
      this.price = price;
-@@ -27,20 +26,11 @@
+@@ -27,20 +27,11 @@
      this.price = price;
    }
  
@@ -96,7 +93,8 @@ import {observable} from "mobx";
 ```js
 import { observable } from "mobx";
 
-@observer class OrderLine {
+@observer
+class OrderLine {
   @observable price:number = 0;
   @observable amount:number = 1;
 
@@ -190,9 +188,9 @@ mobx.js:35:35 parse ━━━━━━━━━━━━━━━━━━━━
 
 # Lines exceeding max width of 80 characters
 ```
-   29:   @computed @computed @computed @computed @computed @computed @computed get total() {
-   33:   @action handleDecrease = (event: React.ChangeEvent<HTMLInputElement>) => this.count--;
-   35:   @action handleSomething = (event: React.ChangeEvent<HTMLInputElement>) => doSomething();
+   30:   @computed @computed @computed @computed @computed @computed @computed get total() {
+   34:   @action handleDecrease = (event: React.ChangeEvent<HTMLInputElement>) => this.count--;
+   36:   @action handleSomething = (event: React.ChangeEvent<HTMLInputElement>) => doSomething();
 ```
 
 
