@@ -15,6 +15,7 @@ JsModule {
             semicolon_token: SEMICOLON@36..37 ";" [] [],
         },
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@37..44 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -79,12 +80,13 @@ JsModule {
         0: STRING_KW@30..36 "string" [] []
       5: SEMICOLON@36..37 ";" [] []
     1: JS_CLASS_DECLARATION@37..101
-      0: (empty)
-      1: CLASS_KW@37..44 "class" [Newline("\n")] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@44..46
+      0: JS_DECORATOR_LIST@37..37
+      1: (empty)
+      2: CLASS_KW@37..44 "class" [Newline("\n")] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@44..46
         0: IDENT@44..46 "D" [] [Whitespace(" ")]
-      3: (empty)
-      4: JS_EXTENDS_CLAUSE@46..80
+      4: (empty)
+      5: JS_EXTENDS_CLAUSE@46..80
         0: EXTENDS_KW@46..54 "extends" [] [Whitespace(" ")]
         1: JS_IDENTIFIER_EXPRESSION@54..55
           0: JS_REFERENCE_IDENTIFIER@54..55
@@ -97,9 +99,9 @@ JsModule {
                 0: IDENT@56..78 "IHasVisualizationModel" [] []
               1: (empty)
           2: R_ANGLE@78..80 ">" [] [Whitespace(" ")]
-      5: (empty)
-      6: L_CURLY@80..81 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@81..99
+      6: (empty)
+      7: L_CURLY@80..81 "{" [] []
+      8: JS_CLASS_MEMBER_LIST@81..99
         0: JS_PROPERTY_CLASS_MEMBER@81..99
           0: JS_PROPERTY_MODIFIER_LIST@81..81
           1: JS_LITERAL_MEMBER_NAME@81..88
@@ -110,5 +112,5 @@ JsModule {
             1: JS_STRING_LITERAL_EXPRESSION@90..98
               0: JS_STRING_LITERAL@90..98 "\"string\"" [] []
           4: SEMICOLON@98..99 ";" [] []
-      8: R_CURLY@99..101 "}" [Newline("\n")] []
+      9: R_CURLY@99..101 "}" [Newline("\n")] []
   3: EOF@101..102 "" [Newline("\n")] []

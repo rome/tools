@@ -4,12 +4,15 @@ use crate::state::{EnterAmbientContext, ExportDefaultItem, ExportDefaultItemKind
 use crate::syntax::binding::{
     is_at_identifier_binding, is_nth_at_identifier_binding, parse_binding, parse_identifier_binding,
 };
-use crate::syntax::class::parse_class_export_default_declaration;
+use crate::syntax::class::{
+    is_at_ts_abstract_class_declaration, parse_class_declaration,
+    parse_class_export_default_declaration, parse_decorators,
+};
 use crate::syntax::expr::{
     is_nth_at_expression, is_nth_at_reference_identifier, parse_assignment_expression_or_higher,
     parse_name, parse_reference_identifier, ExpressionContext,
 };
-use crate::syntax::function::parse_function_export_default_declaration;
+use crate::syntax::function::{parse_function_export_default_declaration, LineBreak};
 use crate::syntax::js_parse_error::{
     duplicate_assertion_keys_error, expected_binding, expected_declaration, expected_export_clause,
     expected_export_name_specifier, expected_expression, expected_identifier,
@@ -20,7 +23,7 @@ use crate::syntax::stmt::{parse_statement, semi, StatementContext, STMT_RECOVERY
 use crate::syntax::typescript::ts_parse_error::ts_only_syntax_error;
 use crate::syntax::typescript::{
     parse_ts_enum_declaration, parse_ts_import_equals_declaration_rest,
-    parse_ts_interface_declaration, skip_ts_decorators,
+    parse_ts_interface_declaration,
 };
 use crate::JsSyntaxFeature::TypeScript;
 use crate::{Absent, JsParser, ParseRecovery, ParsedSyntax, Present};
@@ -115,8 +118,54 @@ fn parse_module_item(p: &mut JsParser) -> ParsedSyntax {
         }
         T![export] => parse_export(p),
         T![@] => {
-            skip_ts_decorators(p);
-            parse_module_item(p)
+            let decorator_list = parse_decorators(p);
+
+            match p.cur() {
+                T![class] => {
+                    // test decorator_class_declaration_top_level
+                    // @decorator
+                    // class Foo { }
+                    // @first.field @second @(() => decorator)()
+                    // class Bar {}
+                    parse_class_declaration(p, decorator_list, StatementContext::StatementList)
+                }
+                T![abstract] if is_at_ts_abstract_class_declaration(p, LineBreak::DoCheck) => {
+                    // test ts decorator_abstract_class_declaration_top_level
+                    // @decorator abstract class A {}
+                    // @first.field @second @(() => decorator)()
+                    // abstract class Bar {}
+                    TypeScript.parse_exclusive_syntax(
+                        p,
+                        |p| {
+                            parse_class_declaration(
+                                p,
+                                decorator_list,
+                                StatementContext::StatementList,
+                            )
+                        },
+                        |p, abstract_class| {
+                            ts_only_syntax_error(p, "abstract classes", abstract_class.range(p))
+                        },
+                    )
+                }
+                _ => {
+                    // test_err decorator_class_declaration_top_level
+                    // @decorator
+                    // let a;
+                    // @decorator1 @decorator2
+                    // function Foo() { }
+                    decorator_list
+                        .add_diagnostic_if_present(p, |p, range| {
+                            p.err_builder("Decorators are not valid here.", range)
+                        })
+                        .map(|mut marker| {
+                            marker.change_kind(p, JS_BOGUS_STATEMENT);
+                            marker
+                        });
+
+                    parse_module_item(p)
+                }
+            }
         }
         _ => parse_statement(p, StatementContext::StatementList),
     }
@@ -1182,7 +1231,7 @@ fn parse_export_default_declaration_clause(
 
     let declaration = match kind {
         ExportDefaultDeclarationKind::Function => parse_function_export_default_declaration(p),
-        ExportDefaultDeclarationKind::Class => parse_class_export_default_declaration(p),
+        ExportDefaultDeclarationKind::Class => parse_class_export_default_declaration(p, Absent),
 
         // test ts ts_export_default_interface
         // export default interface A { }
@@ -1326,6 +1375,9 @@ fn parse_ts_export_declare_clause(p: &mut JsParser, stmt_start: TextSize) -> Par
     let m = p.start();
     p.expect(T![declare]);
     p.with_state(EnterAmbientContext, |p| {
+        // test_err ts ts_export_declare
+        // export declare @decorator class D {}
+        // export declare @decorator abstract class D {}
         parse_declaration_clause(p, stmt_start).or_add_diagnostic(p, expected_declaration)
     });
 

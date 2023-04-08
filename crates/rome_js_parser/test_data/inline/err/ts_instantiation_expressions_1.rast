@@ -644,6 +644,7 @@ JsModule {
             semicolon_token: SEMICOLON@299..300 ";" [] [],
         },
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@300..307 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -1173,15 +1174,16 @@ JsModule {
     24: JS_EMPTY_STATEMENT@299..300
       0: SEMICOLON@299..300 ";" [] []
     25: JS_CLASS_DECLARATION@300..361
-      0: (empty)
-      1: CLASS_KW@300..307 "class" [Newline("\n")] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@307..310
+      0: JS_DECORATOR_LIST@300..300
+      1: (empty)
+      2: CLASS_KW@300..307 "class" [Newline("\n")] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@307..310
         0: IDENT@307..310 "C5" [] [Whitespace(" ")]
-      3: (empty)
       4: (empty)
       5: (empty)
-      6: L_CURLY@310..311 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@311..359
+      6: (empty)
+      7: L_CURLY@310..311 "{" [] []
+      8: JS_CLASS_MEMBER_LIST@311..359
         0: JS_PROPERTY_CLASS_MEMBER@311..359
           0: JS_PROPERTY_MODIFIER_LIST@311..326
             0: TS_ACCESSIBILITY_MODIFIER@311..326
@@ -1209,7 +1211,7 @@ JsModule {
               2: JS_NUMBER_LITERAL_EXPRESSION@356..359
                 0: JS_NUMBER_LITERAL@356..359 "123" [] []
           4: (empty)
-      8: R_CURLY@359..361 "}" [Newline("\n")] []
+      9: R_CURLY@359..361 "}" [Newline("\n")] []
     26: JS_FOR_IN_STATEMENT@361..401
       0: FOR_KW@361..366 "for" [Newline("\n")] [Whitespace(" ")]
       1: L_PAREN@366..367 "(" [] []

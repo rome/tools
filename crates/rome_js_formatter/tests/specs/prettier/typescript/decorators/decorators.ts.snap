@@ -100,10 +100,10 @@ class Class6 {
 +    @ILifecycleService lifecycleService,
 +  ) {}
  }
- 
+
  @commonEditorContribution
  export class TabCompletionController {}
- 
+
  @Component({
 -  selector: "angular-component",
 +  selector: 'angular-component',
@@ -112,14 +112,14 @@ class Class6 {
    @Input() myInput: string;
 @@ -50,12 +52,24 @@
  }
- 
+
  class Class5 {
 -  method(@Decorator { prop1 }: Type) {}
 +  method(
 +    @Decorator { prop1 }: Type,
 +  ) {}
  }
- 
+
  class Class6 {
 -  method(@Decorator({}) { prop1 }: Type) {}
 -  method(@Decorator({}) { prop1 }: Type) {}

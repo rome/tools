@@ -3,6 +3,7 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -43,15 +44,16 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..30
     0: JS_CLASS_DECLARATION@0..30
-      0: (empty)
-      1: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@6..14
+      0: JS_DECORATOR_LIST@0..0
+      1: (empty)
+      2: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@6..14
         0: IDENT@6..14 "Setters" [] [Whitespace(" ")]
-      3: (empty)
       4: (empty)
       5: (empty)
-      6: L_CURLY@14..15 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@15..28
+      6: (empty)
+      7: L_CURLY@14..15 "{" [] []
+      8: JS_CLASS_MEMBER_LIST@15..28
         0: JS_SETTER_CLASS_MEMBER@15..28
           0: JS_METHOD_MODIFIER_LIST@15..15
           1: SET_KW@15..22 "set" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
@@ -66,7 +68,7 @@ JsModule {
             3: (empty)
           5: R_PAREN@27..28 ")" [] []
           6: (empty)
-      8: R_CURLY@28..30 "}" [Newline("\n")] []
+      9: R_CURLY@28..30 "}" [Newline("\n")] []
   3: EOF@30..31 "" [Newline("\n")] []
 --
 setter_class_no_body.js:3:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

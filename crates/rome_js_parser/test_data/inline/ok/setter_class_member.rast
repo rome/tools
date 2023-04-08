@@ -3,6 +3,7 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -193,6 +194,7 @@ JsModule {
             r_curly_token: R_CURLY@150..152 "}" [Newline("\n")] [],
         },
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@152..159 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -312,15 +314,16 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..222
     0: JS_CLASS_DECLARATION@0..152
-      0: (empty)
-      1: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@6..14
+      0: JS_DECORATOR_LIST@0..0
+      1: (empty)
+      2: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@6..14
         0: IDENT@6..14 "Setters" [] [Whitespace(" ")]
-      3: (empty)
       4: (empty)
       5: (empty)
-      6: L_CURLY@14..15 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@15..150
+      6: (empty)
+      7: L_CURLY@14..15 "{" [] []
+      8: JS_CLASS_MEMBER_LIST@15..150
         0: JS_SETTER_CLASS_MEMBER@15..31
           0: JS_METHOD_MODIFIER_LIST@15..15
           1: SET_KW@15..22 "set" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
@@ -457,17 +460,18 @@ JsModule {
             1: JS_DIRECTIVE_LIST@149..149
             2: JS_STATEMENT_LIST@149..149
             3: R_CURLY@149..150 "}" [] []
-      8: R_CURLY@150..152 "}" [Newline("\n")] []
+      9: R_CURLY@150..152 "}" [Newline("\n")] []
     1: JS_CLASS_DECLARATION@152..222
-      0: (empty)
-      1: CLASS_KW@152..159 "class" [Newline("\n")] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@159..170
+      0: JS_DECORATOR_LIST@152..152
+      1: (empty)
+      2: CLASS_KW@152..159 "class" [Newline("\n")] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@159..170
         0: IDENT@159..170 "NotSetters" [] [Whitespace(" ")]
-      3: (empty)
       4: (empty)
       5: (empty)
-      6: L_CURLY@170..171 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@171..220
+      6: (empty)
+      7: L_CURLY@170..171 "{" [] []
+      8: JS_CLASS_MEMBER_LIST@171..220
         0: JS_METHOD_CLASS_MEMBER@171..183
           0: JS_METHOD_MODIFIER_LIST@171..171
           1: (empty)
@@ -542,5 +546,5 @@ JsModule {
             1: JS_DIRECTIVE_LIST@219..219
             2: JS_STATEMENT_LIST@219..219
             3: R_CURLY@219..220 "}" [] []
-      8: R_CURLY@220..222 "}" [Newline("\n")] []
+      9: R_CURLY@220..222 "}" [Newline("\n")] []
   3: EOF@222..223 "" [Newline("\n")] []

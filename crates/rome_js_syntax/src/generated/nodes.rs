@@ -949,6 +949,7 @@ impl JsClassDeclaration {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> JsClassDeclarationFields {
         JsClassDeclarationFields {
+            decorators: self.decorators(),
             abstract_token: self.abstract_token(),
             class_token: self.class_token(),
             id: self.id(),
@@ -960,24 +961,25 @@ impl JsClassDeclaration {
             r_curly_token: self.r_curly_token(),
         }
     }
-    pub fn abstract_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
+    pub fn decorators(&self) -> JsDecoratorList { support::list(&self.syntax, 0usize) }
+    pub fn abstract_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
     pub fn class_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 1usize)
+        support::required_token(&self.syntax, 2usize)
     }
-    pub fn id(&self) -> SyntaxResult<AnyJsBinding> { support::required_node(&self.syntax, 2usize) }
+    pub fn id(&self) -> SyntaxResult<AnyJsBinding> { support::required_node(&self.syntax, 3usize) }
     pub fn type_parameters(&self) -> Option<TsTypeParameters> {
-        support::node(&self.syntax, 3usize)
+        support::node(&self.syntax, 4usize)
     }
-    pub fn extends_clause(&self) -> Option<JsExtendsClause> { support::node(&self.syntax, 4usize) }
+    pub fn extends_clause(&self) -> Option<JsExtendsClause> { support::node(&self.syntax, 5usize) }
     pub fn implements_clause(&self) -> Option<TsImplementsClause> {
-        support::node(&self.syntax, 5usize)
+        support::node(&self.syntax, 6usize)
     }
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 6usize)
+        support::required_token(&self.syntax, 7usize)
     }
-    pub fn members(&self) -> JsClassMemberList { support::list(&self.syntax, 7usize) }
+    pub fn members(&self) -> JsClassMemberList { support::list(&self.syntax, 8usize) }
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 8usize)
+        support::required_token(&self.syntax, 9usize)
     }
 }
 #[cfg(feature = "serde")]
@@ -991,6 +993,7 @@ impl Serialize for JsClassDeclaration {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsClassDeclarationFields {
+    pub decorators: JsDecoratorList,
     pub abstract_token: Option<SyntaxToken>,
     pub class_token: SyntaxResult<SyntaxToken>,
     pub id: SyntaxResult<AnyJsBinding>,
@@ -1015,6 +1018,7 @@ impl JsClassExportDefaultDeclaration {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> JsClassExportDefaultDeclarationFields {
         JsClassExportDefaultDeclarationFields {
+            decorators: self.decorators(),
             abstract_token: self.abstract_token(),
             class_token: self.class_token(),
             id: self.id(),
@@ -1026,24 +1030,25 @@ impl JsClassExportDefaultDeclaration {
             r_curly_token: self.r_curly_token(),
         }
     }
-    pub fn abstract_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
+    pub fn decorators(&self) -> JsDecoratorList { support::list(&self.syntax, 0usize) }
+    pub fn abstract_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
     pub fn class_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 1usize)
+        support::required_token(&self.syntax, 2usize)
     }
-    pub fn id(&self) -> Option<AnyJsBinding> { support::node(&self.syntax, 2usize) }
+    pub fn id(&self) -> Option<AnyJsBinding> { support::node(&self.syntax, 3usize) }
     pub fn type_parameters(&self) -> Option<TsTypeParameters> {
-        support::node(&self.syntax, 3usize)
+        support::node(&self.syntax, 4usize)
     }
-    pub fn extends_clause(&self) -> Option<JsExtendsClause> { support::node(&self.syntax, 4usize) }
+    pub fn extends_clause(&self) -> Option<JsExtendsClause> { support::node(&self.syntax, 5usize) }
     pub fn implements_clause(&self) -> Option<TsImplementsClause> {
-        support::node(&self.syntax, 5usize)
+        support::node(&self.syntax, 6usize)
     }
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 6usize)
+        support::required_token(&self.syntax, 7usize)
     }
-    pub fn members(&self) -> JsClassMemberList { support::list(&self.syntax, 7usize) }
+    pub fn members(&self) -> JsClassMemberList { support::list(&self.syntax, 8usize) }
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 8usize)
+        support::required_token(&self.syntax, 9usize)
     }
 }
 #[cfg(feature = "serde")]
@@ -1057,6 +1062,7 @@ impl Serialize for JsClassExportDefaultDeclaration {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsClassExportDefaultDeclarationFields {
+    pub decorators: JsDecoratorList,
     pub abstract_token: Option<SyntaxToken>,
     pub class_token: SyntaxResult<SyntaxToken>,
     pub id: Option<AnyJsBinding>,
@@ -1081,6 +1087,7 @@ impl JsClassExpression {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> JsClassExpressionFields {
         JsClassExpressionFields {
+            decorators: self.decorators(),
             class_token: self.class_token(),
             id: self.id(),
             type_parameters: self.type_parameters(),
@@ -1091,23 +1098,24 @@ impl JsClassExpression {
             r_curly_token: self.r_curly_token(),
         }
     }
+    pub fn decorators(&self) -> JsDecoratorList { support::list(&self.syntax, 0usize) }
     pub fn class_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 0usize)
+        support::required_token(&self.syntax, 1usize)
     }
-    pub fn id(&self) -> Option<AnyJsBinding> { support::node(&self.syntax, 1usize) }
+    pub fn id(&self) -> Option<AnyJsBinding> { support::node(&self.syntax, 2usize) }
     pub fn type_parameters(&self) -> Option<TsTypeParameters> {
-        support::node(&self.syntax, 2usize)
+        support::node(&self.syntax, 3usize)
     }
-    pub fn extends_clause(&self) -> Option<JsExtendsClause> { support::node(&self.syntax, 3usize) }
+    pub fn extends_clause(&self) -> Option<JsExtendsClause> { support::node(&self.syntax, 4usize) }
     pub fn implements_clause(&self) -> Option<TsImplementsClause> {
-        support::node(&self.syntax, 4usize)
+        support::node(&self.syntax, 5usize)
     }
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 5usize)
+        support::required_token(&self.syntax, 6usize)
     }
-    pub fn members(&self) -> JsClassMemberList { support::list(&self.syntax, 6usize) }
+    pub fn members(&self) -> JsClassMemberList { support::list(&self.syntax, 7usize) }
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 7usize)
+        support::required_token(&self.syntax, 8usize)
     }
 }
 #[cfg(feature = "serde")]
@@ -1121,6 +1129,7 @@ impl Serialize for JsClassExpression {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsClassExpressionFields {
+    pub decorators: JsDecoratorList,
     pub class_token: SyntaxResult<SyntaxToken>,
     pub id: Option<AnyJsBinding>,
     pub type_parameters: Option<TsTypeParameters>,
@@ -1496,6 +1505,45 @@ impl Serialize for JsDebuggerStatement {
 pub struct JsDebuggerStatementFields {
     pub debugger_token: SyntaxResult<SyntaxToken>,
     pub semicolon_token: Option<SyntaxToken>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsDecorator {
+    pub(crate) syntax: SyntaxNode,
+}
+impl JsDecorator {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsDecoratorFields {
+        JsDecoratorFields {
+            at_token: self.at_token(),
+            expression: self.expression(),
+        }
+    }
+    pub fn at_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+    pub fn expression(&self) -> SyntaxResult<AnyJsDecorator> {
+        support::required_node(&self.syntax, 1usize)
+    }
+}
+#[cfg(feature = "serde")]
+impl Serialize for JsDecorator {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize))]
+pub struct JsDecoratorFields {
+    pub at_token: SyntaxResult<SyntaxToken>,
+    pub expression: SyntaxResult<AnyJsDecorator>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsDefaultClause {
@@ -12906,6 +12954,47 @@ impl AnyJsDeclarationClause {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
+pub enum AnyJsDecorator {
+    JsBogusExpression(JsBogusExpression),
+    JsCallExpression(JsCallExpression),
+    JsIdentifierExpression(JsIdentifierExpression),
+    JsParenthesizedExpression(JsParenthesizedExpression),
+    JsStaticMemberExpression(JsStaticMemberExpression),
+}
+impl AnyJsDecorator {
+    pub fn as_js_bogus_expression(&self) -> Option<&JsBogusExpression> {
+        match &self {
+            AnyJsDecorator::JsBogusExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_call_expression(&self) -> Option<&JsCallExpression> {
+        match &self {
+            AnyJsDecorator::JsCallExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_identifier_expression(&self) -> Option<&JsIdentifierExpression> {
+        match &self {
+            AnyJsDecorator::JsIdentifierExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_parenthesized_expression(&self) -> Option<&JsParenthesizedExpression> {
+        match &self {
+            AnyJsDecorator::JsParenthesizedExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_static_member_expression(&self) -> Option<&JsStaticMemberExpression> {
+        match &self {
+            AnyJsDecorator::JsStaticMemberExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
 pub enum AnyJsExportClause {
     AnyJsDeclarationClause(AnyJsDeclarationClause),
     JsExportDefaultDeclarationClause(JsExportDefaultDeclarationClause),
@@ -15911,6 +16000,7 @@ impl AstNode for JsClassDeclaration {
 impl std::fmt::Debug for JsClassDeclaration {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("JsClassDeclaration")
+            .field("decorators", &self.decorators())
             .field(
                 "abstract_token",
                 &support::DebugOptionalElement(self.abstract_token()),
@@ -15968,6 +16058,7 @@ impl AstNode for JsClassExportDefaultDeclaration {
 impl std::fmt::Debug for JsClassExportDefaultDeclaration {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("JsClassExportDefaultDeclaration")
+            .field("decorators", &self.decorators())
             .field(
                 "abstract_token",
                 &support::DebugOptionalElement(self.abstract_token()),
@@ -16025,6 +16116,7 @@ impl AstNode for JsClassExpression {
 impl std::fmt::Debug for JsClassExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("JsClassExpression")
+            .field("decorators", &self.decorators())
             .field(
                 "class_token",
                 &support::DebugSyntaxResult(self.class_token()),
@@ -16352,6 +16444,35 @@ impl From<JsDebuggerStatement> for SyntaxNode {
 }
 impl From<JsDebuggerStatement> for SyntaxElement {
     fn from(n: JsDebuggerStatement) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for JsDecorator {
+    type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(JS_DECORATOR as u16));
+    fn can_cast(kind: SyntaxKind) -> bool { kind == JS_DECORATOR }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
+}
+impl std::fmt::Debug for JsDecorator {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("JsDecorator")
+            .field("at_token", &support::DebugSyntaxResult(self.at_token()))
+            .field("expression", &support::DebugSyntaxResult(self.expression()))
+            .finish()
+    }
+}
+impl From<JsDecorator> for SyntaxNode {
+    fn from(n: JsDecorator) -> SyntaxNode { n.syntax }
+}
+impl From<JsDecorator> for SyntaxElement {
+    fn from(n: JsDecorator) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for JsDefaultClause {
     type Language = Language;
@@ -26898,6 +27019,108 @@ impl From<AnyJsDeclarationClause> for SyntaxElement {
         node.into()
     }
 }
+impl From<JsBogusExpression> for AnyJsDecorator {
+    fn from(node: JsBogusExpression) -> AnyJsDecorator { AnyJsDecorator::JsBogusExpression(node) }
+}
+impl From<JsCallExpression> for AnyJsDecorator {
+    fn from(node: JsCallExpression) -> AnyJsDecorator { AnyJsDecorator::JsCallExpression(node) }
+}
+impl From<JsIdentifierExpression> for AnyJsDecorator {
+    fn from(node: JsIdentifierExpression) -> AnyJsDecorator {
+        AnyJsDecorator::JsIdentifierExpression(node)
+    }
+}
+impl From<JsParenthesizedExpression> for AnyJsDecorator {
+    fn from(node: JsParenthesizedExpression) -> AnyJsDecorator {
+        AnyJsDecorator::JsParenthesizedExpression(node)
+    }
+}
+impl From<JsStaticMemberExpression> for AnyJsDecorator {
+    fn from(node: JsStaticMemberExpression) -> AnyJsDecorator {
+        AnyJsDecorator::JsStaticMemberExpression(node)
+    }
+}
+impl AstNode for AnyJsDecorator {
+    type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> = JsBogusExpression::KIND_SET
+        .union(JsCallExpression::KIND_SET)
+        .union(JsIdentifierExpression::KIND_SET)
+        .union(JsParenthesizedExpression::KIND_SET)
+        .union(JsStaticMemberExpression::KIND_SET);
+    fn can_cast(kind: SyntaxKind) -> bool {
+        matches!(
+            kind,
+            JS_BOGUS_EXPRESSION
+                | JS_CALL_EXPRESSION
+                | JS_IDENTIFIER_EXPRESSION
+                | JS_PARENTHESIZED_EXPRESSION
+                | JS_STATIC_MEMBER_EXPRESSION
+        )
+    }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        let res = match syntax.kind() {
+            JS_BOGUS_EXPRESSION => AnyJsDecorator::JsBogusExpression(JsBogusExpression { syntax }),
+            JS_CALL_EXPRESSION => AnyJsDecorator::JsCallExpression(JsCallExpression { syntax }),
+            JS_IDENTIFIER_EXPRESSION => {
+                AnyJsDecorator::JsIdentifierExpression(JsIdentifierExpression { syntax })
+            }
+            JS_PARENTHESIZED_EXPRESSION => {
+                AnyJsDecorator::JsParenthesizedExpression(JsParenthesizedExpression { syntax })
+            }
+            JS_STATIC_MEMBER_EXPRESSION => {
+                AnyJsDecorator::JsStaticMemberExpression(JsStaticMemberExpression { syntax })
+            }
+            _ => return None,
+        };
+        Some(res)
+    }
+    fn syntax(&self) -> &SyntaxNode {
+        match self {
+            AnyJsDecorator::JsBogusExpression(it) => &it.syntax,
+            AnyJsDecorator::JsCallExpression(it) => &it.syntax,
+            AnyJsDecorator::JsIdentifierExpression(it) => &it.syntax,
+            AnyJsDecorator::JsParenthesizedExpression(it) => &it.syntax,
+            AnyJsDecorator::JsStaticMemberExpression(it) => &it.syntax,
+        }
+    }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            AnyJsDecorator::JsBogusExpression(it) => it.syntax,
+            AnyJsDecorator::JsCallExpression(it) => it.syntax,
+            AnyJsDecorator::JsIdentifierExpression(it) => it.syntax,
+            AnyJsDecorator::JsParenthesizedExpression(it) => it.syntax,
+            AnyJsDecorator::JsStaticMemberExpression(it) => it.syntax,
+        }
+    }
+}
+impl std::fmt::Debug for AnyJsDecorator {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            AnyJsDecorator::JsBogusExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsDecorator::JsCallExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsDecorator::JsIdentifierExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsDecorator::JsParenthesizedExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsDecorator::JsStaticMemberExpression(it) => std::fmt::Debug::fmt(it, f),
+        }
+    }
+}
+impl From<AnyJsDecorator> for SyntaxNode {
+    fn from(n: AnyJsDecorator) -> SyntaxNode {
+        match n {
+            AnyJsDecorator::JsBogusExpression(it) => it.into(),
+            AnyJsDecorator::JsCallExpression(it) => it.into(),
+            AnyJsDecorator::JsIdentifierExpression(it) => it.into(),
+            AnyJsDecorator::JsParenthesizedExpression(it) => it.into(),
+            AnyJsDecorator::JsStaticMemberExpression(it) => it.into(),
+        }
+    }
+}
+impl From<AnyJsDecorator> for SyntaxElement {
+    fn from(n: AnyJsDecorator) -> SyntaxElement {
+        let node: SyntaxNode = n.into();
+        node.into()
+    }
+}
 impl From<JsExportDefaultDeclarationClause> for AnyJsExportClause {
     fn from(node: JsExportDefaultDeclarationClause) -> AnyJsExportClause {
         AnyJsExportClause::JsExportDefaultDeclarationClause(node)
@@ -32508,6 +32731,11 @@ impl std::fmt::Display for AnyJsDeclarationClause {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for AnyJsDecorator {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for AnyJsExportClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -32939,6 +33167,11 @@ impl std::fmt::Display for JsContinueStatement {
     }
 }
 impl std::fmt::Display for JsDebuggerStatement {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for JsDecorator {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -35105,6 +35338,75 @@ impl IntoIterator for JsConstructorParameterList {
 impl IntoIterator for &JsConstructorParameterList {
     type Item = SyntaxResult<AnyJsConstructorParameter>;
     type IntoIter = AstSeparatedListNodesIterator<Language, AnyJsConstructorParameter>;
+    fn into_iter(self) -> Self::IntoIter { self.iter() }
+}
+#[derive(Clone, Eq, PartialEq, Hash)]
+pub struct JsDecoratorList {
+    syntax_list: SyntaxList,
+}
+impl JsDecoratorList {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub unsafe fn new_unchecked(syntax: SyntaxNode) -> Self {
+        Self {
+            syntax_list: syntax.into_list(),
+        }
+    }
+}
+impl AstNode for JsDecoratorList {
+    type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(JS_DECORATOR_LIST as u16));
+    fn can_cast(kind: SyntaxKind) -> bool { kind == JS_DECORATOR_LIST }
+    fn cast(syntax: SyntaxNode) -> Option<JsDecoratorList> {
+        if Self::can_cast(syntax.kind()) {
+            Some(JsDecoratorList {
+                syntax_list: syntax.into_list(),
+            })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
+}
+#[cfg(feature = "serde")]
+impl Serialize for JsDecoratorList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
+}
+impl AstNodeList for JsDecoratorList {
+    type Language = Language;
+    type Node = JsDecorator;
+    fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
+}
+impl Debug for JsDecoratorList {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        f.write_str("JsDecoratorList ")?;
+        f.debug_list().entries(self.iter()).finish()
+    }
+}
+impl IntoIterator for &JsDecoratorList {
+    type Item = JsDecorator;
+    type IntoIter = AstNodeListIterator<Language, JsDecorator>;
+    fn into_iter(self) -> Self::IntoIter { self.iter() }
+}
+impl IntoIterator for JsDecoratorList {
+    type Item = JsDecorator;
+    type IntoIter = AstNodeListIterator<Language, JsDecorator>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]

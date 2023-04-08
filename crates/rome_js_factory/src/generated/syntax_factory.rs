@@ -748,8 +748,15 @@ impl SyntaxFactory for JsSyntaxFactory {
             }
             JS_CLASS_DECLARATION => {
                 let mut elements = (&children).into_iter();
-                let mut slots: RawNodeSlots<9usize> = RawNodeSlots::default();
+                let mut slots: RawNodeSlots<10usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
+                if let Some(element) = &current_element {
+                    if JsDecoratorList::can_cast(element.kind()) {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
                 if let Some(element) = &current_element {
                     if element.kind() == T![abstract] {
                         slots.mark_present();
@@ -823,8 +830,15 @@ impl SyntaxFactory for JsSyntaxFactory {
             }
             JS_CLASS_EXPORT_DEFAULT_DECLARATION => {
                 let mut elements = (&children).into_iter();
-                let mut slots: RawNodeSlots<9usize> = RawNodeSlots::default();
+                let mut slots: RawNodeSlots<10usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
+                if let Some(element) = &current_element {
+                    if JsDecoratorList::can_cast(element.kind()) {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
                 if let Some(element) = &current_element {
                     if element.kind() == T![abstract] {
                         slots.mark_present();
@@ -898,8 +912,15 @@ impl SyntaxFactory for JsSyntaxFactory {
             }
             JS_CLASS_EXPRESSION => {
                 let mut elements = (&children).into_iter();
-                let mut slots: RawNodeSlots<8usize> = RawNodeSlots::default();
+                let mut slots: RawNodeSlots<9usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
+                if let Some(element) = &current_element {
+                    if JsDecoratorList::can_cast(element.kind()) {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
                 if let Some(element) = &current_element {
                     if element.kind() == T![class] {
                         slots.mark_present();
@@ -1262,6 +1283,32 @@ impl SyntaxFactory for JsSyntaxFactory {
                     );
                 }
                 slots.into_node(JS_DEBUGGER_STATEMENT, children)
+            }
+            JS_DECORATOR => {
+                let mut elements = (&children).into_iter();
+                let mut slots: RawNodeSlots<2usize> = RawNodeSlots::default();
+                let mut current_element = elements.next();
+                if let Some(element) = &current_element {
+                    if element.kind() == T ! [@] {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
+                if let Some(element) = &current_element {
+                    if AnyJsDecorator::can_cast(element.kind()) {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
+                if current_element.is_some() {
+                    return RawSyntaxNode::new(
+                        JS_DECORATOR.to_bogus(),
+                        children.into_iter().map(Some),
+                    );
+                }
+                slots.into_node(JS_DECORATOR, children)
             }
             JS_DEFAULT_CLAUSE => {
                 let mut elements = (&children).into_iter();
@@ -9782,6 +9829,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 T ! [,],
                 true,
             ),
+            JS_DECORATOR_LIST => Self::make_node_list_syntax(kind, children, JsDecorator::can_cast),
             JS_DIRECTIVE_LIST => Self::make_node_list_syntax(kind, children, JsDirective::can_cast),
             JS_EXPORT_NAMED_FROM_SPECIFIER_LIST => Self::make_separated_list_syntax(
                 kind,

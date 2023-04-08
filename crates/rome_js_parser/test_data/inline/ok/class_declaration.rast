@@ -3,6 +3,7 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -16,6 +17,7 @@ JsModule {
             r_curly_token: R_CURLY@11..12 "}" [] [],
         },
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@12..19 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -37,6 +39,7 @@ JsModule {
             r_curly_token: R_CURLY@36..37 "}" [] [],
         },
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@37..44 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -72,39 +75,42 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..66
     0: JS_CLASS_DECLARATION@0..12
-      0: (empty)
-      1: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@6..10
+      0: JS_DECORATOR_LIST@0..0
+      1: (empty)
+      2: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@6..10
         0: IDENT@6..10 "foo" [] [Whitespace(" ")]
-      3: (empty)
       4: (empty)
       5: (empty)
-      6: L_CURLY@10..11 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@11..11
-      8: R_CURLY@11..12 "}" [] []
+      6: (empty)
+      7: L_CURLY@10..11 "{" [] []
+      8: JS_CLASS_MEMBER_LIST@11..11
+      9: R_CURLY@11..12 "}" [] []
     1: JS_CLASS_DECLARATION@12..37
-      0: (empty)
-      1: CLASS_KW@12..19 "class" [Newline("\n")] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@19..23
+      0: JS_DECORATOR_LIST@12..12
+      1: (empty)
+      2: CLASS_KW@12..19 "class" [Newline("\n")] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@19..23
         0: IDENT@19..23 "foo" [] [Whitespace(" ")]
-      3: (empty)
-      4: JS_EXTENDS_CLAUSE@23..35
+      4: (empty)
+      5: JS_EXTENDS_CLAUSE@23..35
         0: EXTENDS_KW@23..31 "extends" [] [Whitespace(" ")]
         1: JS_IDENTIFIER_EXPRESSION@31..35
           0: JS_REFERENCE_IDENTIFIER@31..35
             0: IDENT@31..35 "bar" [] [Whitespace(" ")]
         2: (empty)
-      5: (empty)
-      6: L_CURLY@35..36 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@36..36
-      8: R_CURLY@36..37 "}" [] []
+      6: (empty)
+      7: L_CURLY@35..36 "{" [] []
+      8: JS_CLASS_MEMBER_LIST@36..36
+      9: R_CURLY@36..37 "}" [] []
     2: JS_CLASS_DECLARATION@37..66
-      0: (empty)
-      1: CLASS_KW@37..44 "class" [Newline("\n")] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@44..48
+      0: JS_DECORATOR_LIST@37..37
+      1: (empty)
+      2: CLASS_KW@37..44 "class" [Newline("\n")] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@44..48
         0: IDENT@44..48 "foo" [] [Whitespace(" ")]
-      3: (empty)
-      4: JS_EXTENDS_CLAUSE@48..64
+      4: (empty)
+      5: JS_EXTENDS_CLAUSE@48..64
         0: EXTENDS_KW@48..56 "extends" [] [Whitespace(" ")]
         1: JS_STATIC_MEMBER_EXPRESSION@56..64
           0: JS_IDENTIFIER_EXPRESSION@56..59
@@ -114,8 +120,8 @@ JsModule {
           2: JS_NAME@60..64
             0: IDENT@60..64 "bar" [] [Whitespace(" ")]
         2: (empty)
-      5: (empty)
-      6: L_CURLY@64..65 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@65..65
-      8: R_CURLY@65..66 "}" [] []
+      6: (empty)
+      7: L_CURLY@64..65 "{" [] []
+      8: JS_CLASS_MEMBER_LIST@65..65
+      9: R_CURLY@65..66 "}" [] []
   3: EOF@66..67 "" [Newline("\n")] []

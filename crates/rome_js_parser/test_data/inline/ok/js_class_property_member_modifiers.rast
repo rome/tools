@@ -3,6 +3,7 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -74,6 +75,7 @@ JsModule {
             r_curly_token: R_CURLY@77..79 "}" [Newline("\n")] [],
         },
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@79..86 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -114,15 +116,16 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..114
     0: JS_CLASS_DECLARATION@0..79
-      0: (empty)
-      1: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@6..11
+      0: JS_DECORATOR_LIST@0..0
+      1: (empty)
+      2: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@6..11
         0: IDENT@6..11 "Test" [] [Whitespace(" ")]
-      3: (empty)
       4: (empty)
       5: (empty)
-      6: L_CURLY@11..12 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@12..77
+      6: (empty)
+      7: L_CURLY@11..12 "{" [] []
+      8: JS_CLASS_MEMBER_LIST@12..77
         0: JS_PROPERTY_CLASS_MEMBER@12..30
           0: JS_PROPERTY_MODIFIER_LIST@12..24
             0: JS_STATIC_MODIFIER@12..24
@@ -161,17 +164,18 @@ JsModule {
             1: JS_NUMBER_LITERAL_EXPRESSION@75..76
               0: JS_NUMBER_LITERAL@75..76 "1" [] []
           4: SEMICOLON@76..77 ";" [] []
-      8: R_CURLY@77..79 "}" [Newline("\n")] []
+      9: R_CURLY@77..79 "}" [Newline("\n")] []
     1: JS_CLASS_DECLARATION@79..114
-      0: (empty)
-      1: CLASS_KW@79..86 "class" [Newline("\n")] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@86..90
+      0: JS_DECORATOR_LIST@79..79
+      1: (empty)
+      2: CLASS_KW@79..86 "class" [Newline("\n")] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@86..90
         0: IDENT@86..90 "Foo" [] [Whitespace(" ")]
-      3: (empty)
       4: (empty)
       5: (empty)
-      6: L_CURLY@90..91 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@91..112
+      6: (empty)
+      7: L_CURLY@90..91 "{" [] []
+      8: JS_CLASS_MEMBER_LIST@91..112
         0: JS_PROPERTY_CLASS_MEMBER@91..104
           0: JS_PROPERTY_MODIFIER_LIST@91..91
           1: JS_LITERAL_MEMBER_NAME@91..104
@@ -186,5 +190,5 @@ JsModule {
           2: (empty)
           3: (empty)
           4: (empty)
-      8: R_CURLY@112..114 "}" [Newline("\n")] []
+      9: R_CURLY@112..114 "}" [Newline("\n")] []
   3: EOF@114..115 "" [Newline("\n")] []

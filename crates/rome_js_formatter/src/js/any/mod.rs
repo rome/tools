@@ -15,6 +15,7 @@ pub(crate) mod class_member_name;
 pub(crate) mod constructor_parameter;
 pub(crate) mod declaration;
 pub(crate) mod declaration_clause;
+pub(crate) mod decorator;
 pub(crate) mod export_clause;
 pub(crate) mod export_default_declaration;
 pub(crate) mod export_named_specifier;

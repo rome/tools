@@ -9,6 +9,7 @@ JsModule {
                 expression: JsParenthesizedExpression {
                     l_paren_token: L_PAREN@15..16 "(" [] [],
                     expression: JsClassExpression {
+                        decorators: JsDecoratorList [],
                         class_token: CLASS_KW@16..22 "class" [] [Whitespace(" ")],
                         id: missing (optional),
                         type_parameters: missing (optional),
@@ -97,14 +98,15 @@ JsModule {
         1: JS_PARENTHESIZED_EXPRESSION@15..25
           0: L_PAREN@15..16 "(" [] []
           1: JS_CLASS_EXPRESSION@16..24
-            0: CLASS_KW@16..22 "class" [] [Whitespace(" ")]
-            1: (empty)
+            0: JS_DECORATOR_LIST@16..16
+            1: CLASS_KW@16..22 "class" [] [Whitespace(" ")]
             2: (empty)
             3: (empty)
             4: (empty)
-            5: L_CURLY@22..23 "{" [] []
-            6: JS_CLASS_MEMBER_LIST@23..23
-            7: R_CURLY@23..24 "}" [] []
+            5: (empty)
+            6: L_CURLY@22..23 "{" [] []
+            7: JS_CLASS_MEMBER_LIST@23..23
+            8: R_CURLY@23..24 "}" [] []
           2: R_PAREN@24..25 ")" [] []
         2: (empty)
     1: JS_BOGUS_STATEMENT@25..47

@@ -14,6 +14,7 @@ JsModule {
                         initializer: JsInitializerClause {
                             eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
                             expression: JsClassExpression {
+                                decorators: JsDecoratorList [],
                                 class_token: CLASS_KW@8..14 "class" [] [Whitespace(" ")],
                                 id: missing (optional),
                                 type_parameters: missing (optional),
@@ -41,6 +42,7 @@ JsModule {
                         initializer: JsInitializerClause {
                             eq_token: EQ@24..26 "=" [] [Whitespace(" ")],
                             expression: JsClassExpression {
+                                decorators: JsDecoratorList [],
                                 class_token: CLASS_KW@26..32 "class" [] [Whitespace(" ")],
                                 id: JsIdentifierBinding {
                                     name_token: IDENT@32..36 "foo" [] [Whitespace(" ")],
@@ -86,6 +88,7 @@ JsModule {
                 optional_chain_token: missing (optional),
                 l_brack_token: L_BRACK@61..62 "[" [] [],
                 member: JsClassExpression {
+                    decorators: JsDecoratorList [],
                     class_token: CLASS_KW@62..68 "class" [] [Whitespace(" ")],
                     id: missing (optional),
                     type_parameters: missing (optional),
@@ -118,14 +121,15 @@ JsModule {
             2: JS_INITIALIZER_CLAUSE@6..16
               0: EQ@6..8 "=" [] [Whitespace(" ")]
               1: JS_CLASS_EXPRESSION@8..16
-                0: CLASS_KW@8..14 "class" [] [Whitespace(" ")]
-                1: (empty)
+                0: JS_DECORATOR_LIST@8..8
+                1: CLASS_KW@8..14 "class" [] [Whitespace(" ")]
                 2: (empty)
                 3: (empty)
                 4: (empty)
-                5: L_CURLY@14..15 "{" [] []
-                6: JS_CLASS_MEMBER_LIST@15..15
-                7: R_CURLY@15..16 "}" [] []
+                5: (empty)
+                6: L_CURLY@14..15 "{" [] []
+                7: JS_CLASS_MEMBER_LIST@15..15
+                8: R_CURLY@15..16 "}" [] []
       1: SEMICOLON@16..17 ";" [] []
     1: JS_VARIABLE_STATEMENT@17..57
       0: JS_VARIABLE_DECLARATION@17..57
@@ -138,14 +142,15 @@ JsModule {
             2: JS_INITIALIZER_CLAUSE@24..57
               0: EQ@24..26 "=" [] [Whitespace(" ")]
               1: JS_CLASS_EXPRESSION@26..57
-                0: CLASS_KW@26..32 "class" [] [Whitespace(" ")]
-                1: JS_IDENTIFIER_BINDING@32..36
+                0: JS_DECORATOR_LIST@26..26
+                1: CLASS_KW@26..32 "class" [] [Whitespace(" ")]
+                2: JS_IDENTIFIER_BINDING@32..36
                   0: IDENT@32..36 "foo" [] [Whitespace(" ")]
-                2: (empty)
                 3: (empty)
                 4: (empty)
-                5: L_CURLY@36..37 "{" [] []
-                6: JS_CLASS_MEMBER_LIST@37..55
+                5: (empty)
+                6: L_CURLY@36..37 "{" [] []
+                7: JS_CLASS_MEMBER_LIST@37..55
                   0: JS_CONSTRUCTOR_CLASS_MEMBER@37..55
                     0: JS_CONSTRUCTOR_MODIFIER_LIST@37..37
                     1: JS_LITERAL_MEMBER_NAME@37..50
@@ -159,7 +164,7 @@ JsModule {
                       1: JS_DIRECTIVE_LIST@54..54
                       2: JS_STATEMENT_LIST@54..54
                       3: R_CURLY@54..55 "}" [] []
-                7: R_CURLY@55..57 "}" [Newline("\n")] []
+                8: R_CURLY@55..57 "}" [Newline("\n")] []
       1: (empty)
     2: JS_EXPRESSION_STATEMENT@57..71
       0: JS_COMPUTED_MEMBER_EXPRESSION@57..71
@@ -169,14 +174,15 @@ JsModule {
         1: (empty)
         2: L_BRACK@61..62 "[" [] []
         3: JS_CLASS_EXPRESSION@62..70
-          0: CLASS_KW@62..68 "class" [] [Whitespace(" ")]
-          1: (empty)
+          0: JS_DECORATOR_LIST@62..62
+          1: CLASS_KW@62..68 "class" [] [Whitespace(" ")]
           2: (empty)
           3: (empty)
           4: (empty)
-          5: L_CURLY@68..69 "{" [] []
-          6: JS_CLASS_MEMBER_LIST@69..69
-          7: R_CURLY@69..70 "}" [] []
+          5: (empty)
+          6: L_CURLY@68..69 "{" [] []
+          7: JS_CLASS_MEMBER_LIST@69..69
+          8: R_CURLY@69..70 "}" [] []
         4: R_BRACK@70..71 "]" [] []
       1: (empty)
   3: EOF@71..72 "" [Newline("\n")] []

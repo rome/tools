@@ -4,7 +4,7 @@ use crate::state::{EnterFunction, EnterParameters, SignatureFlags};
 use crate::syntax::binding::{
     is_at_identifier_binding, is_nth_at_identifier_binding, parse_binding, parse_binding_pattern,
 };
-use crate::syntax::class::parse_initializer_clause;
+use crate::syntax::class::{parse_initializer_clause, skip_ts_decorators};
 use crate::syntax::expr::{
     is_nth_at_identifier, parse_assignment_expression_or_higher, ExpressionContext,
 };
@@ -14,7 +14,7 @@ use crate::syntax::stmt::{is_semi, parse_block_impl, semi, StatementContext};
 use crate::syntax::typescript::ts_parse_error::ts_only_syntax_error;
 use crate::syntax::typescript::{
     is_nth_at_type_parameter_modifier, parse_ts_return_type_annotation, parse_ts_type_annotation,
-    parse_ts_type_parameters, skip_ts_decorators, try_parse, TypeContext,
+    parse_ts_type_parameters, try_parse, TypeContext,
 };
 
 use crate::JsSyntaxFeature::TypeScript;

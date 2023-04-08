@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: ts/decoartors.ts
+info: ts/decoartors.ts
 ---
 
 # Input
@@ -98,9 +97,9 @@ export default class {}
 export class Test {}
 
 // Leading comment before decorator
-@test // first decorator
-// Leading comment before class
-class Test2 {
+@test // first decorator // first decorator
+class // Leading comment before class
+Test2 {
 	/*
 	 * Leading multiline comment
 	 */
@@ -124,8 +123,6 @@ class Test2 {
 "\t\t@aVeryLongDecoratorNameLetsSeeWhatHappensWith" => 104..151
 "@param" => 175..181
 "@param" => 219..225
-"@sealed" => 239..246
-"@sealed" => 272..279
-"@test" => 338..343
-"\t@test /* trailing multiline comment\n\t for decorator */ @anotherDecorator(" => 449..523
+"@test // first decorator // first decorator\nclass // Leading c" => 338..400
+"\t@test /* trailing multiline comment\n\t for decorator */ @anotherDecorator(" => 468..542
 

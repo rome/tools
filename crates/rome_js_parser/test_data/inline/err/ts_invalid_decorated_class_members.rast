@@ -3,6 +3,7 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: ABSTRACT_KW@0..9 "abstract" [] [Whitespace(" ")],
             class_token: CLASS_KW@9..15 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -114,15 +115,16 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..164
     0: JS_CLASS_DECLARATION@0..164
-      0: ABSTRACT_KW@0..9 "abstract" [] [Whitespace(" ")]
-      1: CLASS_KW@9..15 "class" [] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@15..20
+      0: JS_DECORATOR_LIST@0..0
+      1: ABSTRACT_KW@0..9 "abstract" [] [Whitespace(" ")]
+      2: CLASS_KW@9..15 "class" [] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@15..20
         0: IDENT@15..20 "Test" [] [Whitespace(" ")]
-      3: (empty)
       4: (empty)
       5: (empty)
-      6: L_CURLY@20..21 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@21..162
+      6: (empty)
+      7: L_CURLY@20..21 "{" [] []
+      8: JS_CLASS_MEMBER_LIST@21..162
         0: TS_METHOD_SIGNATURE_CLASS_MEMBER@21..39
           0: TS_METHOD_SIGNATURE_MODIFIER_LIST@21..21
           1: (empty)
@@ -189,7 +191,7 @@ JsModule {
           4: (empty)
           5: R_PAREN@160..161 ")" [] []
           6: SEMICOLON@161..162 ";" [] []
-      8: R_CURLY@162..164 "}" [Newline("\n")] []
+      9: R_CURLY@162..164 "}" [Newline("\n")] []
   3: EOF@164..165 "" [Newline("\n")] []
 --
 ts_invalid_decorated_class_members.ts:6:29 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

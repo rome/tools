@@ -13,7 +13,7 @@ mod language {
 // use this test check if your snippet prints as you wish, without using a snapshot
 fn quick_test() {
     let src = r#"
-f<number> delete;
+const foo = @deco class {}
 "#;
     let syntax = SourceType::tsx();
     let tree = parse(src, syntax);
