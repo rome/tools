@@ -109,6 +109,7 @@ define_categories! {
     "lint/nursery/noRedeclare": "https://docs.rome.tools/lint/rules/noRedeclare",
     "lint/nursery/useNamespaceKeyword": "https://docs.rome.tools/lint/rules/useNamespaceKeyword",
     "lint/nursery/noRedundantRoles": "https://docs.rome.tools/lint/rules/noRedundantRoles",
+    "lint/nursery/noConstantCondition": "https://docs.rome.tools/lint/rules/noConstantCondition",
 
     // performance
     "lint/performance/noDelete": "https://docs.rome.tools/lint/rules/noDelete",
