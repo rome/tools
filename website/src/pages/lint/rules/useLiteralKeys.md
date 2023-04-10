@@ -5,7 +5,9 @@ parent: lint/rules/index
 
 # useLiteralKeys (since vnext)
 
-Enforce the usage of a computed expression over a static expression with strings.
+Enforce the usage of a static property access over computed property access.
+
+Source: https://eslint.org/docs/latest/rules/dot-notation
 
 ## Examples
 
