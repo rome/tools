@@ -459,7 +459,7 @@ fn parse_any_named_import_specifier(p: &mut JsParser) -> ParsedSyntax {
 // import "bar" \u{61}ith { type: "json" };
 // import { foo } with { type: "json" };
 // import "lorem"
-// assert { type: "json" }
+// with { type: "json" }
 // import foo2 from "foo.json" with { "type": "json", type: "html", "type": "js" };
 // import "x" with;
 // import ipsum from "ipsum.json" with { type: "json", lazy: true, startAtLine: 1 };
@@ -482,7 +482,7 @@ fn parse_import_attributes(p: &mut JsParser) -> ParsedSyntax {
 
 #[derive(Default)]
 struct ImportAttributeList {
-    assertion_keys: HashMap<String, TextRange>,
+    attribute_keys: HashMap<String, TextRange>,
 }
 
 impl ParseSeparatedList for ImportAttributeList {
@@ -492,7 +492,7 @@ impl ParseSeparatedList for ImportAttributeList {
     const LIST_KIND: Self::Kind = JS_IMPORT_ATTRIBUTE_ENTRY_LIST;
 
     fn parse_element(&mut self, p: &mut JsParser) -> ParsedSyntax {
-        parse_import_assertion_entry(p, &mut self.assertion_keys)
+        parse_import_attribute_entry(p, &mut self.attribute_keys)
     }
 
     fn is_at_list_end(&self, p: &mut JsParser) -> bool {
@@ -507,7 +507,7 @@ impl ParseSeparatedList for ImportAttributeList {
                 STMT_RECOVERY_SET.union(token_set![T![,], T!['}']]),
             )
             .enable_recovery_on_line_break(),
-            |p, range| expected_node("import assertion entry", range).into_diagnostic(p),
+            |p, range| expected_node("import attribute entry", range).into_diagnostic(p),
         )
     }
 
@@ -520,9 +520,9 @@ impl ParseSeparatedList for ImportAttributeList {
     }
 }
 
-fn parse_import_assertion_entry(
+fn parse_import_attribute_entry(
     p: &mut JsParser,
-    seen_assertion_keys: &mut HashMap<String, TextRange>,
+    seen_attribute_keys: &mut HashMap<String, TextRange>,
 ) -> ParsedSyntax {
     let m = p.start();
     let key_range = p.cur_range();
@@ -556,7 +556,7 @@ fn parse_import_assertion_entry(
     let mut valid = true;
 
     if let Some(key) = key {
-        if let Some(first_use) = seen_assertion_keys.get(&key) {
+        if let Some(first_use) = seen_attribute_keys.get(&key) {
             p.error(duplicate_assertion_keys_error(
                 p,
                 &key,
@@ -565,7 +565,7 @@ fn parse_import_assertion_entry(
             ));
             valid = false;
         } else {
-            seen_assertion_keys.insert(key, key_range);
+            seen_attribute_keys.insert(key, key_range);
         }
     };
 
