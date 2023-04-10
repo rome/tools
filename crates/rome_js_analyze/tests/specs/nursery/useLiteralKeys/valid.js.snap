@@ -7,6 +7,9 @@ expression: valid.js
 a["b" + 1];
 a["c" + "d"];
 a["c" + "d"];
+a = {
+	["c" + "d"]: d
+};
 
 ```
 

@@ -545,6 +545,10 @@ export interface Nursery {
 	 */
 	useIsNan?: RuleConfiguration;
 	/**
+	 * Enforce the usage of a literal access to properties over computed property access.
+	 */
+	useLiteralKeys?: RuleConfiguration;
+	/**
 	 * Enforces that audio and video elements must have a track for captions.
 	 */
 	useMediaCaption?: RuleConfiguration;
@@ -965,6 +969,7 @@ export type Category =
 	| "lint/nursery/noAriaUnsupportedElements"
 	| "lint/nursery/noConsoleLog"
 	| "lint/nursery/noForEach"
+	| "lint/nursery/useLiteralKeys"
 	| "lint/nursery/noRedeclare"
 	| "lint/nursery/useNamespaceKeyword"
 	| "lint/nursery/noRedundantRoles"

@@ -2,17 +2,17 @@ use crate::JsRuleAction;
 use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
-use rome_js_factory::make::{ident, js_name, js_static_member_expression, token};
+use rome_js_factory::make::{
+    ident, js_literal_member_name, js_name, js_static_member_expression, token,
+};
 use rome_js_syntax::{
     AnyJsExpression, AnyJsLiteralExpression, AnyJsName, JsComputedMemberAssignment,
-    JsComputedMemberExpression, T,
+    JsComputedMemberExpression, JsComputedMemberName, T,
 };
 use rome_rowan::{declare_node_union, AstNode, BatchMutationExt, SyntaxResult, TextRange};
 
 declare_rule! {
-    /// Enforce the usage of a static property access over computed property access.
-    ///
-    /// Source: https://eslint.org/docs/latest/rules/dot-notation
+    /// Enforce the usage of a literal access to properties over computed property access.
     ///
     /// ## Examples
     ///
@@ -30,6 +30,12 @@ declare_rule! {
     /// a.c[`d`] = "something"
     /// ```
     ///
+    /// ```js,expect_diagnostic
+    /// a = {
+    /// 	['b']: d
+    /// }
+    /// ```
+    ///
     /// ## Valid
     ///
     /// ```js
@@ -45,21 +51,25 @@ declare_rule! {
 }
 
 declare_node_union! {
-    pub(crate) AnyJsComputedMember = JsComputedMemberExpression | JsComputedMemberAssignment
+    pub(crate) AnyJsComputedMember = AnyJsCompputedExpression | JsComputedMemberName
 }
 
-impl AnyJsComputedMember {
+declare_node_union! {
+    pub(crate) AnyJsCompputedExpression = JsComputedMemberExpression | JsComputedMemberAssignment
+}
+
+impl AnyJsCompputedExpression {
     pub(crate) fn member(&self) -> SyntaxResult<AnyJsExpression> {
         match self {
-            AnyJsComputedMember::JsComputedMemberExpression(node) => node.member(),
-            AnyJsComputedMember::JsComputedMemberAssignment(node) => node.member(),
+            AnyJsCompputedExpression::JsComputedMemberExpression(node) => node.member(),
+            AnyJsCompputedExpression::JsComputedMemberAssignment(node) => node.member(),
         }
     }
 
     pub(crate) fn object(&self) -> SyntaxResult<AnyJsExpression> {
         match self {
-            AnyJsComputedMember::JsComputedMemberExpression(node) => node.object(),
-            AnyJsComputedMember::JsComputedMemberAssignment(node) => node.object(),
+            AnyJsCompputedExpression::JsComputedMemberExpression(node) => node.object(),
+            AnyJsCompputedExpression::JsComputedMemberAssignment(node) => node.object(),
         }
     }
 }
@@ -73,8 +83,14 @@ impl Rule for UseLiteralKeys {
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let computed_expression = ctx.query();
 
-        let member = computed_expression.member().ok()?;
-        match member {
+        let inner_expression = match computed_expression {
+            AnyJsComputedMember::AnyJsCompputedExpression(computed_expression) => {
+                computed_expression.member().ok()?
+            }
+            AnyJsComputedMember::JsComputedMemberName(member) => member.expression().ok()?,
+        };
+
+        match inner_expression {
             AnyJsExpression::AnyJsLiteralExpression(
                 AnyJsLiteralExpression::JsStringLiteralExpression(string_literal),
             ) => {
@@ -92,7 +108,8 @@ impl Rule for UseLiteralKeys {
             }
 
             _ => {}
-        };
+        }
+
         None
     }
 
@@ -111,22 +128,42 @@ impl Rule for UseLiteralKeys {
 
         let mut mutation = ctx.root().begin();
 
-        let object = node.object().ok()?;
-        let member = js_name(ident(identifier));
-        let static_expression =
-            js_static_member_expression(object, token(T![.]), AnyJsName::JsName(member));
-        mutation.replace_element(
-            node.clone().into_syntax().into(),
-            static_expression.into_syntax().into(),
-        );
-        Some(JsRuleAction {
-            mutation,
-            applicability: Applicability::MaybeIncorrect,
-            category: ActionCategory::QuickFix,
-            message: markup! {
-                "Replace it with a static expression."
+        match node {
+            AnyJsComputedMember::AnyJsCompputedExpression(node) => {
+                let object = node.object().ok()?;
+                let member = js_name(ident(identifier));
+                let static_expression =
+                    js_static_member_expression(object, token(T![.]), AnyJsName::JsName(member));
+                mutation.replace_element(
+                    node.clone().into_syntax().into(),
+                    static_expression.into_syntax().into(),
+                );
+                Some(JsRuleAction {
+                    mutation,
+                    applicability: Applicability::MaybeIncorrect,
+                    category: ActionCategory::QuickFix,
+                    message: markup! {
+                        "Replace it with a static expression."
+                    }
+                    .to_owned(),
+                })
             }
-            .to_owned(),
-        })
+            AnyJsComputedMember::JsComputedMemberName(member) => {
+                let literal_member_name = js_literal_member_name(ident(identifier));
+                mutation.replace_element(
+                    member.clone().into_syntax().into(),
+                    literal_member_name.into_syntax().into(),
+                );
+                Some(JsRuleAction {
+                    mutation,
+                    applicability: Applicability::MaybeIncorrect,
+                    category: ActionCategory::QuickFix,
+                    message: markup! {
+                        "Replace it with a static expression."
+                    }
+                    .to_owned(),
+                })
+            }
+        }
     }
 }

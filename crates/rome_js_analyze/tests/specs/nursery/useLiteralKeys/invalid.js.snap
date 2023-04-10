@@ -14,6 +14,12 @@ a.b["c"] = "something";
 a.b["c"].d.e["f"] = "something";
 a.b[`c`] = "something";
 a.b[c["d"]] = "something";
+a = {
+	['b']: d
+};
+a = {
+	[`b`]: d
+};
 
 ```
 
@@ -262,7 +268,7 @@ invalid.js:9:5 lint/nursery/useLiteralKeys  FIXABLE  ━━━━━━━━━
    > 9 │ a.b[`c`] = "something";
        │     ^^^
     10 │ a.b[c["d"]] = "something";
-    11 │ 
+    11 │ a = {
   
   i Suggested fix: Replace it with a static expression.
   
@@ -271,7 +277,7 @@ invalid.js:9:5 lint/nursery/useLiteralKeys  FIXABLE  ━━━━━━━━━
      9    │ - a.b[`c`]·=·"something";
         9 │ + a.b.c·=·"something";
     10 10 │   a.b[c["d"]] = "something";
-    11 11 │   
+    11 11 │   a = {
   
 
 ```
@@ -285,7 +291,8 @@ invalid.js:10:7 lint/nursery/useLiteralKeys  FIXABLE  ━━━━━━━━�
      9 │ a.b[`c`] = "something";
   > 10 │ a.b[c["d"]] = "something";
        │       ^^^
-    11 │ 
+    11 │ a = {
+    12 │ 	['b']: d
   
   i Suggested fix: Replace it with a static expression.
   
@@ -293,8 +300,47 @@ invalid.js:10:7 lint/nursery/useLiteralKeys  FIXABLE  ━━━━━━━━�
      9  9 │   a.b[`c`] = "something";
     10    │ - a.b[c["d"]]·=·"something";
        10 │ + a.b[c.d]·=·"something";
-    11 11 │   
+    11 11 │   a = {
+    12 12 │   	['b']: d
   
+
+```
+
+```
+invalid.js:12:3 lint/nursery/useLiteralKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The computed expression can be simplified without the use of a string literal.
+  
+    10 │ a.b[c["d"]] = "something";
+    11 │ a = {
+  > 12 │ 	['b']: d
+       │ 	 ^^^
+    13 │ };
+    14 │ a = {
+  
+  i Suggested fix: Replace it with a static expression.
+  
+    12 │ → ['b']:·d
+       │   -- --   
+
+```
+
+```
+invalid.js:15:3 lint/nursery/useLiteralKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The computed expression can be simplified without the use of a string literal.
+  
+    13 │ };
+    14 │ a = {
+  > 15 │ 	[`b`]: d
+       │ 	 ^^^
+    16 │ };
+    17 │ 
+  
+  i Suggested fix: Replace it with a static expression.
+  
+    15 │ → [`b`]:·d
+       │   -- --   
 
 ```
 
