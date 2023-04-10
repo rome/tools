@@ -22,6 +22,7 @@ the code action is not formatted.
 - [`noNoninteractiveTabindex`](https://docs.rome.tools/lint/rules/noNoninteractiveTabindex/)
 - [`noAriaUnsupportedElements`](https://docs.rome.tools/lint/rules/noAriaUnsupportedElements/)
 - [`noConsoleLog`](https://docs.rome.tools/lint/rules/noConsoleLog/)
+- [`noForEach`](https://docs.rome.tools/lint/rules/noForEach/)
 
 ### Parser
 

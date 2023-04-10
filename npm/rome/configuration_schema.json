@@ -573,6 +573,13 @@
 						{ "type": "null" }
 					]
 				},
+				"noForEach": {
+					"description": "Prefer for...of statement instead of Array.forEach.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"noGlobalObjectCalls": {
 					"description": "Disallow calling global object properties as functions",
 					"anyOf": [
