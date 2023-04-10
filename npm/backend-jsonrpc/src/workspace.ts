@@ -409,6 +409,10 @@ export interface Nursery {
 	 */
 	noExtraSemicolons?: RuleConfiguration;
 	/**
+	 * Prefer for...of statement instead of Array.forEach.
+	 */
+	noForEach?: RuleConfiguration;
+	/**
 	 * Disallow calling global object properties as functions
 	 */
 	noGlobalObjectCalls?: RuleConfiguration;
@@ -960,6 +964,7 @@ export type Category =
 	| "lint/nursery/noNoninteractiveTabindex"
 	| "lint/nursery/noAriaUnsupportedElements"
 	| "lint/nursery/noConsoleLog"
+	| "lint/nursery/noForEach"
 	| "lint/nursery/noRedeclare"
 	| "lint/nursery/useNamespaceKeyword"
 	| "lint/nursery/noRedundantRoles"
