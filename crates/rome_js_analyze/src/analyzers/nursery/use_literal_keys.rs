@@ -10,7 +10,9 @@ use rome_js_syntax::{
 use rome_rowan::{declare_node_union, AstNode, BatchMutationExt, SyntaxResult, TextRange};
 
 declare_rule! {
-    /// Enforce the usage of a computed expression over a static expression with strings.
+    /// Enforce the usage of a static property access over computed property access.
+    ///
+    /// Source: https://eslint.org/docs/latest/rules/dot-notation
     ///
     /// ## Examples
     ///
