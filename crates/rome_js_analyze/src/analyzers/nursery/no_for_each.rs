@@ -71,7 +71,7 @@ impl Rule for NoForEach {
             _ => return None,
         };
 
-        is_for_each.then(|| ())
+        is_for_each.then_some(())
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
