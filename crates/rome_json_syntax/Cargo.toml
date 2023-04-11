@@ -1,13 +1,14 @@
 [package]
 name = "rome_json_syntax"
-version = "0.0.0"
+version = "0.0.1"
 edition = { workspace = true }
-authors = ["Rome Tools"]
+authors = { workspace = true }
 description = "SyntaxKind and common rowan definitions for rome_json_parser"
 license = { workspace = true }
 repository = { workspace = true }
+documentation = "https://rustdocs.rome.tools/rome_json_parser/index.html"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-rome_rowan = { path = "../rome_rowan" }
+rome_rowan = { version = "0.0.1", path = "../rome_rowan" }

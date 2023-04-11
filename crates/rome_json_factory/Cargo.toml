@@ -1,13 +1,15 @@
 [package]
 name = "rome_json_factory"
-version = "0.0.0"
+version = "0.0.1"
 edition = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
 license = { workspace = true }
+description = "Utilities to create JSON AST for rome_json_parser"
+documentation = "https://rustdocs.rome.tools/rome_json_parser/index.html"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-rome_rowan = { path = "../rome_rowan" }
-rome_json_syntax = { path = "../rome_json_syntax" }
+rome_rowan = { version = "0.0.1",path = "../rome_rowan" }
+rome_json_syntax = { version = "0.0.1",path = "../rome_json_syntax" }

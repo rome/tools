@@ -1,7 +1,7 @@
 [package]
 edition = { workspace = true }
 name = "rome_js_parser"
-version = "0.0.1"
+version = "0.0.2"
 authors = { workspace = true }
 license = { workspace = true }
 description = "An extremely fast ECMAScript parser for Rome, forked from the RSlint project"

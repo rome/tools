@@ -1,21 +1,22 @@
 [package]
-edition = { workspace = true }
 name = "rome_json_parser"
-version = "0.0.0"
-authors = ["Rome Tools and Contributors"]
+version = "0.0.1"
+edition = { workspace = true }
+authors = { workspace = true }
+repository = { workspace = true }
 license = { workspace = true }
 description = "An extremely fast JSON parser"
-repository = { workspace = true }
 documentation = "https://rustdocs.rome.tools/rome_json_parser/index.html"
+categories = ["parser-implementations", "development-tools"]
 
 [dependencies]
-rome_rowan = { path = "../rome_rowan" }
-rome_console = { path = "../rome_console" }
-rome_diagnostics = { path = "../rome_diagnostics" }
-rome_json_syntax = { path = "../rome_json_syntax" }
-rome_json_factory = { path = "../rome_json_factory" }
-rome_js_unicode_table = { path = "../rome_js_unicode_table" }
-rome_parser = { path = "../rome_parser" }
+rome_rowan = {version = "0.0.1",  path = "../rome_rowan" }
+rome_console = {version = "0.0.1",  path = "../rome_console" }
+rome_diagnostics = {version = "0.0.1",  path = "../rome_diagnostics" }
+rome_json_syntax = {version = "0.0.1",  path = "../rome_json_syntax" }
+rome_json_factory = { version = "0.0.1", path = "../rome_json_factory" }
+rome_js_unicode_table = {version = "0.0.1",  path = "../rome_js_unicode_table" }
+rome_parser = { version = "0.0.1", path = "../rome_parser" }
 tracing = { workspace = true }
 
 [dev-dependencies]
