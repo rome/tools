@@ -13,12 +13,19 @@ mod language {
 fn quick_test() {
     let src = r#"
 {
-    "a": 5,
-    "b": [1, 2, 3, 4],
-    "c": null,
-    "d": true,
-    "e": false
-}
+    "enabled": true,
+    "formatWithErrors": false,
+    "indentSize": 2,
+    "indentStyle": "space",
+    "lineWidth": 80,
+    "ignore": [
+      "**/cache/**",
+      "**/dist/**",
+      "./packages/laravel/**/*",
+      "./packages/presets/templates/**/*",
+      "./sandboxes/**/*"
+    ]
+  }
 "#;
     let parse = parse_json(src);
     let options = JsonFormatOptions::default();

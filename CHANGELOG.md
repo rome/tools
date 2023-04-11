@@ -13,6 +13,7 @@
 - import "module" assert {}
 + import "module" with {}
 ```
+- Fix an issue where JSON formatter does not respect lineWidth for arrays [#4351](https://github.com/rome/tools/issues/4351)
 ### Linter
 
 #### Other changes

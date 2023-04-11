@@ -82,13 +82,6 @@ pub(crate) fn can_concisely_print_array_list(list: &JsonArrayElementList) -> boo
         return false;
     }
 
-    list.iter().all(|node| {
-        matches!(
-            node,
-            Ok(AnyJsonValue::JsonStringValue(_)
-                | AnyJsonValue::JsonBooleanValue(_)
-                | AnyJsonValue::JsonNullValue(_)
-                | AnyJsonValue::JsonNumberValue(_))
-        )
-    })
+    list.iter()
+        .all(|node| matches!(node, Ok(AnyJsonValue::JsonNumberValue(_))))
 }
