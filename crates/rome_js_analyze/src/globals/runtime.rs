@@ -1,4 +1,5 @@
-pub const BUILTIN: [&str; 65] = [
+pub const BUILTIN: [&str; 66] = [
+    "AggregateError",
     "Array",
     "ArrayBuffer",
     "Atomics",
@@ -295,7 +296,8 @@ pub const ES_2020: [&str; 63] = [
     "valueOf",
 ];
 
-pub const ES_2021: [&str; 65] = [
+pub const ES_2021: [&str; 66] = [
+    "AggregateError",
     "Array",
     "ArrayBuffer",
     "Atomics",

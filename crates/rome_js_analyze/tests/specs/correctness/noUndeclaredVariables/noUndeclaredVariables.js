@@ -10,3 +10,4 @@ assignment = "value";
 document;
 navigator;
 new ArrayBuffer();
+new AggregateError();
