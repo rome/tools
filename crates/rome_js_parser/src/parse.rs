@@ -242,9 +242,9 @@ pub fn parse_module(text: &str) -> Parse<JsModule> {
 /// assert_eq!(parsed.diagnostics().len(), 0);
 /// // parse source text with granular control
 /// module = SourceType::default()
-/// 	.with_version(LanguageVersion::ESNext)
-/// 	.with_module_kind(ModuleKind::Module)
-/// 	.with_variant(LanguageVariant::Jsx);
+///   .with_version(LanguageVersion::ESNext)
+///   .with_module_kind(ModuleKind::Module)
+///   .with_variant(LanguageVariant::Jsx);
 /// parsed = parse("foo[bar]", module);
 /// assert_eq!(parsed.diagnostics().len(), 0);
 /// ```
@@ -267,12 +267,11 @@ pub fn parse(text: &str, source_type: SourceType) -> Parse<AnyJsRoot> {
 /// let mut source = "function f() { return 2 }";
 ///
 /// let parsed = parse_js_with_cache(source, source_type, &mut cache);
-///	assert_eq!(parsed.diagnostics().len(), 0);
+/// assert_eq!(parsed.diagnostics().len(), 0);
 ///
 /// source = "function bar() { return 3 }";
 /// let parsed  = parse_js_with_cache(source, source_type, &mut cache);
-///	assert_eq!(parsed.diagnostics().len(), 0);
-///
+/// assert_eq!(parsed.diagnostics().len(), 0);
 /// ```
 pub fn parse_js_with_cache(
     text: &str,
