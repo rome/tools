@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: js/import-assertions/bracket-spacing/empty.js
+info: js/import-assertions/bracket-spacing/empty.js
 ---
 
 # Input
@@ -16,15 +15,59 @@ export * as bar from "bar.json" assert { }
 ```diff
 --- Prettier
 +++ Rome
-@@ -1 +1 @@
--export * as bar from "bar.json";
-+export * as bar from "bar.json" assert {};
+@@ -1 +1,4 @@
+ export * as bar from "bar.json";
++assert;
++{
++}
 ```
 
 # Output
 
 ```js
-export * as bar from "bar.json" assert {};
+export * as bar from "bar.json";
+assert;
+{
+}
+```
+
+# Errors
+```
+empty.js:1:33 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  > 1 │ export * as bar from "bar.json" assert { }
+      │                                 ^^^^^^
+  
+  i An explicit or implicit semicolon is expected here...
+  
+  > 1 │ export * as bar from "bar.json" assert { }
+      │                                 ^^^^^^
+  
+  i ...Which is required to end this statement
+  
+  > 1 │ export * as bar from "bar.json" assert { }
+      │        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  
+empty.js:1:40 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  > 1 │ export * as bar from "bar.json" assert { }
+      │                                        ^
+  
+  i An explicit or implicit semicolon is expected here...
+  
+  > 1 │ export * as bar from "bar.json" assert { }
+      │                                        ^
+  
+  i ...Which is required to end this statement
+  
+  > 1 │ export * as bar from "bar.json" assert { }
+      │                                 ^^^^^^^^
+  
+
 ```
 
 

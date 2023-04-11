@@ -1,14 +1,14 @@
 use crate::context::trailing_comma::FormatTrailingComma;
 use crate::prelude::*;
-use rome_js_syntax::JsImportAssertionEntryList;
+use rome_js_syntax::JsImportAttributeEntryList;
 
 #[derive(Debug, Clone, Default)]
-pub(crate) struct FormatJsImportAssertionEntryList;
+pub(crate) struct FormatJsImportAttributeEntryList;
 
-impl FormatRule<JsImportAssertionEntryList> for FormatJsImportAssertionEntryList {
+impl FormatRule<JsImportAttributeEntryList> for FormatJsImportAttributeEntryList {
     type Context = JsFormatContext;
 
-    fn fmt(&self, node: &JsImportAssertionEntryList, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &JsImportAttributeEntryList, f: &mut JsFormatter) -> FormatResult<()> {
         let trailing_separator = FormatTrailingComma::ES5.trailing_separator(f.options());
 
         f.join_with(&soft_line_break_or_space())

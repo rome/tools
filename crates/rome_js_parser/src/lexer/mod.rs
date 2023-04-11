@@ -1060,7 +1060,6 @@ impl<'src> Lexer<'src> {
             b"accessor" => ACCESSOR_KW,
             b"as" => AS_KW,
             b"asserts" => ASSERTS_KW,
-            b"assert" => ASSERT_KW,
             b"any" => ANY_KW,
             b"async" => ASYNC_KW,
             b"await" => AWAIT_KW,

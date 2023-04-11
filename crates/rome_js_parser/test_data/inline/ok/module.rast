@@ -13,7 +13,7 @@ JsModule {
                 source: JsModuleSource {
                     value_token: JS_STRING_LITERAL@14..17 "\"b\"" [] [],
                 },
-                assertion: missing (optional),
+                attribute: missing (optional),
             },
             semicolon_token: SEMICOLON@17..18 ";" [] [],
         },
@@ -72,7 +72,7 @@ JsModule {
                 source: JsModuleSource {
                     value_token: JS_STRING_LITERAL@56..59 "\"c\"" [] [],
                 },
-                assertion: missing (optional),
+                attribute: missing (optional),
             },
             semicolon_token: SEMICOLON@59..60 ";" [] [],
         },

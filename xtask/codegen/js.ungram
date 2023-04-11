@@ -44,7 +44,7 @@ JsBogusMember = SyntaxElement*
 JsBogusBinding = SyntaxElement*
 JsBogusAssignment = SyntaxElement*
 JsBogusParameter = SyntaxElement*
-JsBogusImportAssertionEntry = SyntaxElement*
+JsBogusImportAttributeEntry = SyntaxElement*
 JsBogusNamedImportSpecifier = SyntaxElement*
 TsBogusType = SyntaxElement*
 
@@ -1221,7 +1221,7 @@ AnyJsImportClause =
 // import "abcd" assert ...
 JsImportBareClause =
 	source: JsModuleSource
-	assertion: JsImportAssertion?
+	attribute: JsImportAttribute?
 
 // import foo from "mod"
 // import type foo from "mod"
@@ -1230,7 +1230,7 @@ JsImportDefaultClause =
 		local_name: AnyJsBinding
 		'from'
 		source: JsModuleSource
-		assertion: JsImportAssertion?
+		attribute: JsImportAttribute?
 
 // import * as foo from "mod";
 // import type * as foo from "mod";
@@ -1241,7 +1241,7 @@ JsImportNamespaceClause =
 	local_name: AnyJsBinding
 	'from'
 	source: JsModuleSource
-	assertion: JsImportAssertion?
+	attribute: JsImportAttribute?
 
 // import { a, b: c } from "d"
 //        ^^^^^^^^^^^^^^^^^^^^
@@ -1260,7 +1260,7 @@ JsImportNamedClause =
     named_import: AnyJsNamedImport
     'from'
     source: JsModuleSource
-    assertion: JsImportAssertion?
+    attribute: JsImportAttribute?
 
 // import a, { b, c } from "d";
 //        ^^
@@ -1311,21 +1311,21 @@ JsShorthandNamedImportSpecifier =
 
 // import a from "mod" assert { type: "json" }
 //                     ^^^^^^^^^^^^^^^^^^^^^^^
-JsImportAssertion =
-    'assert'
+JsImportAttribute =
+    'with'
     '{'
-    assertions: JsImportAssertionEntryList
+    attributes: JsImportAttributeEntryList
     '}'
 
-JsImportAssertionEntryList = (AnyJsImportAssertionEntry (',' AnyJsImportAssertionEntry)* ','?)
+JsImportAttributeEntryList = (AnyJsImportAttributeEntry (',' AnyJsImportAttributeEntry)* ','?)
 
-AnyJsImportAssertionEntry =
-	JsImportAssertionEntry
-	| JsBogusImportAssertionEntry
+AnyJsImportAttributeEntry =
+	JsImportAttributeEntry
+	| JsBogusImportAttributeEntry
 
-// import a from "mod" assert { type: "json" }
+// import a from "mod" with { type: "json" }
 //                              ^^^^^^^^^^^^
-JsImportAssertionEntry =
+JsImportAttributeEntry =
     key: ('ident' | 'js_string_literal')
     ':'
     value: 'js_string_literal'
@@ -1462,7 +1462,7 @@ JsExportFromClause =
 	export_as: JsExportAsClause?
 	'from'
 	source: JsModuleSource
-	assertion: JsImportAssertion?
+	attribute: JsImportAttribute?
 	';'?
 
 // export { a } from "b";
@@ -1476,7 +1476,7 @@ JsExportNamedFromClause =
 	'}'
 	'from'
 	source: JsModuleSource
-	assertion: JsImportAssertion?
+	attribute: JsImportAttribute?
 	';'?
 
 JsExportNamedFromSpecifierList = (JsExportNamedFromSpecifier (',' JsExportNamedFromSpecifier)* ','?)

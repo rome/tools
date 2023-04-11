@@ -18,7 +18,7 @@ impl FormatNodeRule<JsExportNamedFromClause> for FormatJsExportNamedFromClause {
             r_curly_token,
             from_token,
             source,
-            assertion,
+            attribute,
             semicolon_token,
         } = node.as_fields();
 
@@ -64,8 +64,8 @@ impl FormatNodeRule<JsExportNamedFromClause> for FormatJsExportNamedFromClause {
             ]
         ]?;
 
-        if let Some(assertion) = &assertion {
-            write!(f, [space(), assertion.format()])?;
+        if let Some(attribute) = &attribute {
+            write!(f, [space(), attribute.format()])?;
         }
 
         write!(f, [FormatStatementSemicolon::new(semicolon_token.as_ref())])
