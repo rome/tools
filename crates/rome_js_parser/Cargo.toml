@@ -4,7 +4,7 @@ name = "rome_js_parser"
 version = "0.0.1"
 authors = { workspace = true }
 license = { workspace = true }
-description = "An extremely fast ECMAScript parser made for the rslint project"
+description = "An extremely fast ECMAScript parser for Rome, forked from the RSlint project"
 repository = { workspace = true }
 documentation = "https://rustdocs.rome.tools/rome_js_parser/index.html"
 categories = ["parser-implementations", "development-tools"]
