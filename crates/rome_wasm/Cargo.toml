@@ -1,11 +1,11 @@
 [package]
 name = "rome_wasm"
 version = "0.0.0"
-edition = { workspace = true }
-authors = { workspace = true }
-repository = { workspace = true }
+edition = "2021"
+authors = ["Rome Tools Developers and Contributors"]
+repository = "https://github.com/rome/tools"
 description = "WebAssembly bindings to the Rome Workspace API"
-license = { workspace = true }
+license = "MIT"
 
 
 [lib]
