@@ -29,6 +29,7 @@ the code action is not formatted.
 - [`noAriaUnsupportedElements`](https://docs.rome.tools/lint/rules/noAriaUnsupportedElements/)
 - [`noConsoleLog`](https://docs.rome.tools/lint/rules/noConsoleLog/)
 - [`noForEach`](https://docs.rome.tools/lint/rules/noForEach/)
+- [`useLiteralKeys`](https://docs.rome.tools/lint/rules/useLiteralKeys/)
 
 ### Parser
 

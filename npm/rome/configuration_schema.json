@@ -808,6 +808,13 @@
 						{ "type": "null" }
 					]
 				},
+				"useLiteralKeys": {
+					"description": "Enforce the usage of a literal access to properties over computed property access.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"useMediaCaption": {
 					"description": "Enforces that audio and video elements must have a track for captions.",
 					"anyOf": [

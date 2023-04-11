@@ -9,7 +9,7 @@ const rootManifest = JSON.parse(
 	fs.readFileSync(MANIFEST_PATH).toString("utf-8"),
 );
 
-let version = rootManifest["version"];
+let version = rootManifest.version;
 
 if (
 	typeof process.env.GITHUB_SHA !== "string" ||
@@ -19,7 +19,7 @@ if (
 }
 
 version += `-nightly.${process.env.GITHUB_SHA.substring(0, 7)}`;
-rootManifest["version"] = version;
+rootManifest.version = version;
 
 const content = JSON.stringify(rootManifest);
 fs.writeFileSync(MANIFEST_PATH, content);
