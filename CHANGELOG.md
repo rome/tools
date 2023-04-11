@@ -16,7 +16,7 @@
 - Code actions are formatted using Rome's formatter. If the formatter is disabled,
 the code action is not formatted.
 
-- Fix `noUndeclaredVariables` incorrectly identifies `AggregateError` as an undeclared variable. https://github.com/rome/tools/issues/4365
+- Fix an issue when `noUndeclaredVariables` incorrectly identifies `AggregateError` as an undeclared variable. [#4365](https://github.com/rome/tools/issues/4365)
 #### New rules
 - [`noConfusingArrow`](https://docs.rome.tools/lint/rules/noConfusingArrow/)
 - [`noRedundantRoles`](https://docs.rome.tools/lint/rules/noRedundantRoles/)
