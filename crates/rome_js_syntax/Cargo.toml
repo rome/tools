@@ -1,7 +1,7 @@
 [package]
 edition = { workspace = true }
 name = "rome_js_syntax"
-version = "0.0.1"
+version = "0.0.2"
 authors = { workspace = true }
 description = "SyntaxKind and common rowan definitions for rome_js_parser"
 license = { workspace = true }

@@ -15,8 +15,8 @@ categories = [
 
 [dependencies]
 cfg-if = "1.0.0"
-rome_js_syntax = { version = "0.0.1", path = "../rome_js_syntax" }
-rome_js_factory = { version = "0.0.1", path = "../rome_js_factory" }
+rome_js_syntax = { version = "0.0.2", path = "../rome_js_syntax" }
+rome_js_factory = { version = "0.0.2", path = "../rome_js_factory" }
 rome_formatter = { version = "0.0.1", path = "../rome_formatter" }
 rome_rowan = { version = "0.0.1", path = "../rome_rowan" }
 rome_text_size = { version = "0.0.1", path = "../rome_text_size" }

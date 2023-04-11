@@ -1,6 +1,6 @@
 [package]
 name = "rome_js_factory"
-version = "0.0.1"
+version = "0.0.2"
 edition = { workspace = true }
 authors = { workspace = true }
 license = { workspace = true }
@@ -12,4 +12,4 @@ documentation = "https://rustdocs.rome.tools/rome_js_factory/index.html"
 
 [dependencies]
 rome_rowan = { version = "0.0.1",path = "../rome_rowan" }
-rome_js_syntax = { version = "0.0.1",path = "../rome_js_syntax" }
+rome_js_syntax = { version = "0.0.2",path = "../rome_js_syntax" }

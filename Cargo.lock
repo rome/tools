@@ -1864,7 +1864,7 @@ dependencies = [
 
 [[package]]
 name = "rome_js_factory"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "rome_js_syntax",
  "rome_rowan",
@@ -1938,7 +1938,7 @@ dependencies = [
 
 [[package]]
 name = "rome_js_syntax"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "rome_console",
  "rome_diagnostics",
