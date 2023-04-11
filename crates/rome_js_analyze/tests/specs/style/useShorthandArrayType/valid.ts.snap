@@ -19,6 +19,8 @@ let valid8: Array<string & number>;
 type valid9<T> = T extends Array<infer R> ? R : any;
 // mapped type
 type valid10<T> = { [K in keyof T]: T[K] };
+// object type
+type valid11 = Array<{ value: string; label: string }>;
 
 let readonlyValid1: ReadonlyArray<Foo | Bar>;
 let readonlyValid2: ReadonlyArray<keyof Bar>;

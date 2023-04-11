@@ -12,6 +12,8 @@ use crate::JsRuleAction;
 declare_rule! {
     /// When expressing array types, this rule promotes the usage of `T[]` shorthand instead of `Array<T>`.
     ///
+    /// ESLint (typescript-eslint) equivalent: [array-type/array-simple](https://typescript-eslint.io/rules/array-type/#array-simple)
+    ///
     /// ## Examples
     ///
     /// ### Invalid
@@ -155,6 +157,7 @@ fn convert_to_array_type(
                     | AnyTsType::TsConditionalType(_)
                     | AnyTsType::TsTypeOperatorType(_)
                     | AnyTsType::TsInferType(_)
+                    | AnyTsType::TsObjectType(_)
                     | AnyTsType::TsMappedType(_) => None,
 
                     AnyTsType::TsReferenceType(ty) => match get_array_kind_by_reference(ty) {
@@ -169,26 +172,53 @@ fn convert_to_array_type(
                     },
                     _ => Some(param),
                 };
-                element_type.map(|element_type| {
-                    let array_type = make::ts_array_type(
+                element_type.map(|element_type| match array_kind {
+                    TsArrayKind::Simple => AnyTsType::TsArrayType(make::ts_array_type(
                         element_type,
                         make::token(T!['[']),
                         make::token(T![']']),
-                    );
-                    match array_kind {
-                        TsArrayKind::Simple => AnyTsType::TsArrayType(array_type),
-                        TsArrayKind::Readonly => {
-                            let readonly_token = JsSyntaxToken::new_detached(
-                                JsSyntaxKind::TS_READONLY_MODIFIER,
-                                "readonly ",
-                                [],
-                                [TriviaPiece::new(TriviaPieceKind::Whitespace, 1)],
-                            );
-                            AnyTsType::TsTypeOperatorType(make::ts_type_operator_type(
-                                readonly_token,
-                                AnyTsType::TsArrayType(array_type),
-                            ))
+                    )),
+                    TsArrayKind::Readonly => {
+                        let readonly_token = JsSyntaxToken::new_detached(
+                            JsSyntaxKind::TS_READONLY_MODIFIER,
+                            "readonly ",
+                            [],
+                            [TriviaPiece::new(TriviaPieceKind::Whitespace, 1)],
+                        );
+
+                        // Modify `ReadonlyArray<ReadonlyArray<T>>` to `readonly (readonly T[])[]`
+                        if let AnyTsType::TsTypeOperatorType(op) = &element_type {
+                            if let Ok(op) = op.operator_token() {
+                                if op.text_trimmed() == "readonly" {
+                                    return AnyTsType::TsTypeOperatorType(
+                                        make::ts_type_operator_type(
+                                            readonly_token,
+                                            // wrap ArrayType
+                                            AnyTsType::TsArrayType(make::ts_array_type(
+                                                AnyTsType::TsParenthesizedType(
+                                                    make::ts_parenthesized_type(
+                                                        make::token(T!['(']),
+                                                        element_type,
+                                                        make::token(T![')']),
+                                                    ),
+                                                ),
+                                                make::token(T!['[']),
+                                                make::token(T![']']),
+                                            )),
+                                        ),
+                                    );
+                                }
+                            }
                         }
+
+                        AnyTsType::TsTypeOperatorType(make::ts_type_operator_type(
+                            readonly_token,
+                            AnyTsType::TsArrayType(make::ts_array_type(
+                                element_type,
+                                make::token(T!['[']),
+                                make::token(T![']']),
+                            )),
+                        ))
                     }
                 })
             })
