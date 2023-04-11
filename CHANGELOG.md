@@ -15,6 +15,7 @@
 
 - Code actions are formatted using Rome's formatter. If the formatter is disabled,
 the code action is not formatted.
+- Fixed an issue that [`useShorthandArrayType`](https://docs.rome.tools/lint/rules/useShorthandArrayType) rule did not handle nested ReadonlyArray types correctly and erroneously reported TsObjectType [#4354](https://github.com/rome/tools/issues/4353)
 
 #### New rules
 - [`noConfusingArrow`](https://docs.rome.tools/lint/rules/noConfusingArrow/)
