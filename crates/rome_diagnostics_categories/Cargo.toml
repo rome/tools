@@ -1,10 +1,10 @@
 [package]
 name = "rome_diagnostics_categories"
 version = "0.0.1"
-authors = ["Rome Tools Developers and Contributors"]
-repository = "https://github.com/rome/tools"
-license = "MIT"
-edition = "2021"
+authors = { workspace = true }
+repository = { workspace = true }
+license = { workspace = true }
+edition = { workspace = true }
 description = "Diagnostic categories for rome_diagnostics. It exposes a macro that emits compile-time errors for extranous categories."
 documentation = "https://rustdocs.rome.tools/rome_diagnostics/index.html"
 

@@ -1,21 +1,26 @@
 [package]
 name = "rome_js_formatter"
-version = "0.0.0"
-edition = "2021"
-authors = ["Rome Tools Developers and Contributors"]
-repository = "https://github.com/rome/tools"
-license = "MIT"
+version = "0.0.2"
+edition = { workspace = true }
+authors = { workspace = true }
+repository = { workspace = true }
+license = { workspace = true }
+documentation = "https://rustdocs.rome.tools/rome_js_formatter/index.html"
+description = "Rome's JavaScript formatter"
+categories = [
+	"development-tools"
+]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 cfg-if = "1.0.0"
-rome_js_syntax = { path = "../rome_js_syntax" }
-rome_js_factory = { path = "../rome_js_factory" }
-rome_formatter = { path = "../rome_formatter" }
-rome_rowan = { path = "../rome_rowan" }
-rome_text_size = { path = "../rome_text_size"}
-rome_diagnostics_categories = { path = "../rome_diagnostics_categories"}
+rome_js_syntax = { version = "0.0.2", path = "../rome_js_syntax" }
+rome_js_factory = { version = "0.0.2", path = "../rome_js_factory" }
+rome_formatter = { version = "0.0.1", path = "../rome_formatter" }
+rome_rowan = { version = "0.0.1", path = "../rome_rowan" }
+rome_text_size = { version = "0.0.1", path = "../rome_text_size" }
+rome_diagnostics_categories = { version = "0.0.1", path = "../rome_diagnostics_categories" }
 tracing = { workspace = true }
 unicode-width = "0.1.9"
 serde = { version = "1.0.136", features = ["derive"], optional = true }
@@ -23,7 +28,7 @@ schemars = { version = "0.8.10", optional = true }
 
 [dev-dependencies]
 rome_parser = { path = "../rome_parser" }
-rome_formatter_test = {path = "../rome_formatter_test"}
+rome_formatter_test = { path = "../rome_formatter_test" }
 rome_fs = { path = "../rome_fs" }
 rome_js_parser = { path = "../rome_js_parser" }
 rome_js_factory = { path = "../rome_js_factory" }
@@ -43,3 +48,7 @@ harness = false
 
 [features]
 serde = ["dep:serde", "schemars"]
+
+# cargo-workspaces metadata
+[package.metadata.workspaces]
+independent = true

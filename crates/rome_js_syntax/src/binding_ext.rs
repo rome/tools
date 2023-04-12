@@ -46,7 +46,7 @@ declare_node_union! {
 impl AnyJsBindingDeclaration {
     /// Returns `true` if `self` and `other` are mergeable declarations.
     ///
-    /// See also: https://www.typescriptlang.org/docs/handbook/declaration-merging.html
+    /// See also: <https://www.typescriptlang.org/docs/handbook/declaration-merging.html>
     ///
     /// ## Examples
     ///

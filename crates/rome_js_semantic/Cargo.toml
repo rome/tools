@@ -1,11 +1,11 @@
 [package]
-edition = "2021"
+edition = { workspace = true }
 name = "rome_js_semantic"
 version = "0.0.0"
-authors = ["Rome Tools Developers and Contributors"]
-license = "MIT"
+authors = { workspace = true }
+license = { workspace = true }
 description = "Semantic model for the JavaScript language"
-repository = "https://github.com/rome/tools"
+repository = { workspace = true }
 
 [dependencies]
 rome_rowan = { path = "../rome_rowan" }

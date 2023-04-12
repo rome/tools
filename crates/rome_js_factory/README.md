@@ -25,11 +25,12 @@
 [npm-url]: https://www.npmjs.com/package/rome/v/latest
 [vscode-badge]: https://img.shields.io/visual-studio-marketplace/v/rome.rome?color=brightgreen&label=vscode
 [vscode-url]: https://marketplace.visualstudio.com/items?itemName=rome.rome
-[cargo-badge]: https://img.shields.io/crates/v/rome_js_formatter?&color=brightgreen
-[cargo-url]: https://crates.io/crates/rome_js_formatter
+[cargo-badge]: https://img.shields.io/crates/v/rome_js_factory?&color=brightgreen
+[cargo-url]: https://crates.io/crates/rome_js_factory
 
 </div>
 
-# `rome_js_formatter`
+# `rome_js_factory`
 
-Rome's JavaScript formatter implementation. Follow the [documentation](https://rustdocs.rome.tools/rome_js_formatter/index.html).
+Rome's JavaScript parser implementation. Follow the [documentation](https://rustdocs.rome.tools/rome_js_parser/index.html).
+

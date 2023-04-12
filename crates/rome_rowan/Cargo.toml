@@ -4,8 +4,8 @@ version = "0.0.1"
 authors = ["Aleksey Kladov <aleksey.kladov@gmail.com>"]
 license = "MIT OR Apache-2.0"
 description = "Library for generic lossless syntax trees"
-edition = "2021"
-repository = "https://github.com/rome/tools"
+edition = { workspace = true }
+repository = { workspace = true }
 documentation = "https://rustdocs.rome.tools/rome_rowan/index.html"
 
 [dependencies]

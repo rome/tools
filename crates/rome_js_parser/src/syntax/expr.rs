@@ -1177,12 +1177,6 @@ fn parse_parenthesized_expression(p: &mut JsParser) -> ParsedSyntax {
     Present(m.complete(p, JS_PARENTHESIZED_EXPRESSION))
 }
 
-pub(crate) fn parse_expression_snipped(p: &mut JsParser) -> ParsedSyntax {
-    let m = p.start();
-    parse_expression(p, ExpressionContext::default()).or_add_diagnostic(p, expected_expression);
-    m.complete(p, JS_EXPRESSION_SNIPPED).into()
-}
-
 /// A general expression.
 pub(crate) fn parse_expression(p: &mut JsParser, context: ExpressionContext) -> ParsedSyntax {
     let first = parse_assignment_expression_or_higher(p, context);

@@ -2,8 +2,7 @@
 
 use crate::*;
 use rome_js_syntax::{
-    AnyJsRoot, JsExpressionSnipped, JsLanguage, JsModule, JsScript, JsSyntaxNode, ModuleKind,
-    SourceType,
+    AnyJsRoot, JsLanguage, JsModule, JsScript, JsSyntaxNode, ModuleKind, SourceType,
 };
 use rome_parser::event::Event;
 use rome_parser::token_source::Trivia;
@@ -184,7 +183,42 @@ pub fn parse_script(text: &str) -> Parse<JsScript> {
     .unwrap()
 }
 
-/// Same as `parse_text` but configures the parser to parse an ECMAScript module instead of a script
+/// Same as [parse_script] but configures the parser to parse an ECMAScript module instead of a script
+///
+/// ### Examples
+///
+/// Check the diagnostics emitted by the code
+/// ```
+/// use rome_js_parser::parse_module;
+/// let source = r#"
+/// import { someModule } from "./someModule.js";
+///
+/// someModule();
+/// "#;
+///
+/// let parse = parse_module(source);
+///
+/// // Retrieve the diagnostics emitted
+/// assert_eq!(parse.diagnostics().len(), 0);
+/// ```
+///
+/// Retrieve the emitted AST and check its kind:
+/// ```
+/// use rome_js_parser::parse_module;
+/// use rome_js_syntax::JsSyntaxKind;
+/// use rome_rowan::AstNode;
+/// let source = r#"
+/// import { someModule } from "./someModule.js";
+///
+/// someModule();
+/// "#;
+/// let parse = parse_module(source);
+///
+/// let tree = parse.tree();
+///
+/// assert_eq!(tree.syntax().kind(), JsSyntaxKind::JS_MODULE);
+/// ```
+///
 pub fn parse_module(text: &str) -> Parse<JsModule> {
     parse(text, SourceType::js_module())
         .cast::<JsModule>()
@@ -192,12 +226,53 @@ pub fn parse_module(text: &str) -> Parse<JsModule> {
 }
 
 /// Parses the provided string as a EcmaScript program using the provided syntax features.
+///
+/// ### Examples
+///
+/// ```
+/// use rome_js_parser::parse;
+/// use rome_js_syntax::{LanguageVariant, LanguageVersion, ModuleKind, SourceType};
+/// // parse source text as TypeScript
+/// let mut module = SourceType::ts();
+/// let mut parsed = parse("type F = {}", module);
+/// assert_eq!(parsed.diagnostics().len(), 0);
+/// // parse source text as JSX
+/// module = SourceType::jsx();
+/// parsed = parse("<Component></Component>", module);
+/// assert_eq!(parsed.diagnostics().len(), 0);
+/// // parse source text with granular control
+/// module = SourceType::default()
+///   .with_version(LanguageVersion::ESNext)
+///   .with_module_kind(ModuleKind::Module)
+///   .with_variant(LanguageVariant::Jsx);
+/// parsed = parse("foo[bar]", module);
+/// assert_eq!(parsed.diagnostics().len(), 0);
+/// ```
 pub fn parse(text: &str, source_type: SourceType) -> Parse<AnyJsRoot> {
     let mut cache = NodeCache::default();
     parse_js_with_cache(text, source_type, &mut cache)
 }
 
 /// Parses the provided string as a EcmaScript program using the provided syntax features and node cache.
+///
+/// ### Examples
+///
+/// ```
+/// use rome_js_parser::parse_js_with_cache;
+/// use rome_js_syntax::SourceType;
+/// use rome_rowan::NodeCache;
+///
+/// let source_type = SourceType::js_module();
+/// let mut cache = NodeCache::default();
+/// let mut source = "function f() { return 2 }";
+///
+/// let parsed = parse_js_with_cache(source, source_type, &mut cache);
+/// assert_eq!(parsed.diagnostics().len(), 0);
+///
+/// source = "function bar() { return 3 }";
+/// let parsed  = parse_js_with_cache(source, source_type, &mut cache);
+/// assert_eq!(parsed.diagnostics().len(), 0);
+/// ```
 pub fn parse_js_with_cache(
     text: &str,
     source_type: SourceType,
@@ -210,16 +285,4 @@ pub fn parse_js_with_cache(
         let (green, parse_errors) = tree_sink.finish();
         Parse::new(green, parse_errors)
     })
-}
-/// Losslessly Parse text into an expression [`Parse`](Parse) which can then be turned into an untyped root [`JsSyntaxNode`](JsSyntaxNode).
-/// Or turned into a typed [`JsExpressionSnipped`](JsExpressionSnipped) with [`tree`](Parse::tree).
-pub fn parse_expression(text: &str) -> Parse<JsExpressionSnipped> {
-    let mut parser = JsParser::new(text, SourceType::js_module());
-    syntax::expr::parse_expression_snipped(&mut parser).unwrap();
-    let (events, tokens, errors) = parser.finish();
-
-    let mut tree_sink = JsLosslessTreeSink::new(text, &tokens);
-    rome_parser::event::process(&mut tree_sink, events, errors);
-    let (green, parse_errors) = tree_sink.finish();
-    Parse::new_script(green, parse_errors)
 }
