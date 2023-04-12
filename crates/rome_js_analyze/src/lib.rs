@@ -7,7 +7,7 @@ use rome_analyze::{
 use rome_aria::{AriaProperties, AriaRoles};
 use rome_diagnostics::{category, Diagnostic, Error as DiagnosticError};
 use rome_js_syntax::suppression::SuppressionDiagnostic;
-use rome_js_syntax::{suppression::parse_suppression_comment, JsLanguage};
+use rome_js_syntax::{suppression::parse_suppression_comment, JsLanguage, SourceType};
 use serde::{Deserialize, Serialize};
 use std::sync::Arc;
 use std::{borrow::Cow, error::Error};
@@ -56,6 +56,7 @@ pub fn analyze_with_inspect_matcher<'a, V, F, B>(
     filter: AnalysisFilter,
     inspect_matcher: V,
     options: &'a AnalyzerOptions,
+    source_type: SourceType,
     mut emit_signal: F,
 ) -> (Option<B>, Vec<DiagnosticError>)
 where
@@ -120,6 +121,7 @@ where
 
     services.insert_service(Arc::new(AriaRoles::default()));
     services.insert_service(Arc::new(AriaProperties::default()));
+    services.insert_service(source_type);
     let globals: Vec<_> = options
         .configuration
         .globals
@@ -132,6 +134,7 @@ where
             range: filter.range,
             services,
             globals: globals.as_slice(),
+            file_path: options.file_path.as_path(),
         }),
         diagnostics,
     )
@@ -144,13 +147,14 @@ pub fn analyze<'a, F, B>(
     root: &LanguageRoot<JsLanguage>,
     filter: AnalysisFilter,
     options: &'a AnalyzerOptions,
+    source_type: SourceType,
     emit_signal: F,
 ) -> (Option<B>, Vec<DiagnosticError>)
 where
     F: FnMut(&dyn AnalyzerSignal<JsLanguage>) -> ControlFlow<B> + 'a,
     B: 'a,
 {
-    analyze_with_inspect_matcher(root, filter, |_| {}, options, emit_signal)
+    analyze_with_inspect_matcher(root, filter, |_| {}, options, source_type, emit_signal)
 }
 
 #[cfg(test)]
@@ -193,6 +197,7 @@ mod tests {
                 ..AnalysisFilter::default()
             },
             &options,
+            SourceType::tsx(),
             |signal| {
                 if let Some(diag) = signal.diagnostic() {
                     error_ranges.push(diag.location().span.unwrap());
@@ -278,6 +283,7 @@ mod tests {
             &parsed.tree(),
             AnalysisFilter::default(),
             &options,
+            SourceType::js_module(),
             |signal| {
                 if let Some(diag) = signal.diagnostic() {
                     let span = diag.get_span();
@@ -356,16 +362,22 @@ mod tests {
         };
 
         let options = AnalyzerOptions::default();
-        analyze(&parsed.tree(), filter, &options, |signal| {
-            if let Some(diag) = signal.diagnostic() {
-                let code = diag.category().unwrap();
-                if code != category!("suppressions/unused") {
-                    panic!("unexpected diagnostic {code:?}");
+        analyze(
+            &parsed.tree(),
+            filter,
+            &options,
+            SourceType::js_module(),
+            |signal| {
+                if let Some(diag) = signal.diagnostic() {
+                    let code = diag.category().unwrap();
+                    if code != category!("suppressions/unused") {
+                        panic!("unexpected diagnostic {code:?}");
+                    }
                 }
-            }
 
-            ControlFlow::<Never>::Continue(())
-        });
+                ControlFlow::<Never>::Continue(())
+            },
+        );
     }
 }
 

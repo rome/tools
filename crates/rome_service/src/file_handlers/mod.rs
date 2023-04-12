@@ -197,7 +197,8 @@ pub(crate) struct LintResults {
 }
 
 type Lint = fn(LintParams) -> LintResults;
-type CodeActions = fn(AnyParse, TextRange, Option<&Rules>, SettingsHandle) -> PullActionsResult;
+type CodeActions =
+    fn(AnyParse, TextRange, Option<&Rules>, SettingsHandle, &RomePath) -> PullActionsResult;
 type FixAll = fn(FixAllParams) -> Result<FixFileResult, WorkspaceError>;
 type Rename = fn(&RomePath, AnyParse, TextSize, String) -> Result<RenameResult, WorkspaceError>;
 type OrganizeImports = fn(AnyParse) -> Result<OrganizeImportsResult, WorkspaceError>;

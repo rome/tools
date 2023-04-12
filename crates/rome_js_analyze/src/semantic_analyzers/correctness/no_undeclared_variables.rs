@@ -1,12 +1,12 @@
 use crate::globals::browser::BROWSER;
 use crate::globals::node::NODE;
-use crate::globals::runtime::ES_2021;
+use crate::globals::runtime::{BUILTIN, ES_2021};
 use crate::globals::typescript::TYPESCRIPT_BUILTIN;
 use crate::semantic_services::SemanticServices;
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_syntax::{TextRange, TsAsExpression, TsReferenceType};
+use rome_js_syntax::{Language, SourceType, TextRange, TsAsExpression, TsReferenceType};
 use rome_rowan::AstNode;
 
 declare_rule! {
@@ -18,6 +18,16 @@ declare_rule! {
     ///
     /// ```js,expect_diagnostic
     /// foobar;
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// // throw diagnostic for JavaScript files
+    /// PromiseLike;
+    /// ```
+    /// ### Valid
+    ///
+    /// ```ts
+    /// type B<T> = PromiseLike<T>
     /// ```
     pub(crate) NoUndeclaredVariables {
         version: "0.10.0",
@@ -45,6 +55,8 @@ impl Rule for NoUndeclaredVariables {
                 let token = identifier.value_token().ok()?;
                 let text = token.text_trimmed();
 
+                let source_type = ctx.source_type::<SourceType>();
+
                 if ctx.is_global(text) {
                     return None;
                 }
@@ -54,7 +66,7 @@ impl Rule for NoUndeclaredVariables {
                     return None;
                 }
 
-                if is_global(text) {
+                if is_global(text, source_type) {
                     return None;
                 }
 
@@ -76,9 +88,15 @@ impl Rule for NoUndeclaredVariables {
     }
 }
 
-fn is_global(reference_name: &str) -> bool {
+fn is_global(reference_name: &str, source_type: &SourceType) -> bool {
     ES_2021.binary_search(&reference_name).is_ok()
         || BROWSER.binary_search(&reference_name).is_ok()
         || NODE.binary_search(&reference_name).is_ok()
-        || TYPESCRIPT_BUILTIN.binary_search(&reference_name).is_ok()
+        || match source_type.language() {
+            Language::JavaScript => BUILTIN.binary_search(&reference_name).is_ok(),
+            Language::TypeScript { .. } => {
+                BUILTIN.binary_search(&reference_name).is_ok()
+                    || TYPESCRIPT_BUILTIN.binary_search(&reference_name).is_ok()
+            }
+        }
 }

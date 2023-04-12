@@ -551,7 +551,7 @@ fn assert_lint(
                 };
 
                 let options = AnalyzerOptions::default();
-                let (_, diagnostics) = analyze(&root, filter, &options, |signal| {
+                let (_, diagnostics) = analyze(&root, filter, &options, source_type, |signal| {
                     if let Some(mut diag) = signal.diagnostic() {
                         let category = diag.category().expect("linter diagnostic has no code");
                         let severity = settings.get_severity_from_rule_code(category).expect(

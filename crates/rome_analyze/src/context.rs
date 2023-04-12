@@ -1,6 +1,7 @@
 use crate::{registry::RuleRoot, FromServices, Queryable, Rule, RuleKey, ServiceBag};
 use rome_diagnostics::{Error, Result};
 use std::ops::Deref;
+use std::path::Path;
 
 type RuleQueryResult<R> = <<R as Rule>::Query as Queryable>::Output;
 type RuleServiceBag<R> = <<R as Rule>::Query as Queryable>::Services;
@@ -17,6 +18,7 @@ where
     bag: &'a ServiceBag,
     services: RuleServiceBag<R>,
     globals: &'a [&'a str],
+    file_path: &'a Path,
 }
 
 impl<'a, R> RuleContext<'a, R>
@@ -28,6 +30,7 @@ where
         root: &'a RuleRoot<R>,
         services: &'a ServiceBag,
         globals: &'a [&'a str],
+        file_path: &'a Path,
     ) -> Result<Self, Error> {
         let rule_key = RuleKey::rule::<R>();
         Ok(Self {
@@ -36,6 +39,7 @@ where
             bag: services,
             services: FromServices::from_services(&rule_key, services)?,
             globals,
+            file_path,
         })
     }
 
@@ -96,6 +100,18 @@ where
     /// Checks whether the provided text belongs to globals
     pub fn is_global(&self, text: &str) -> bool {
         self.globals.contains(&text)
+    }
+
+    /// Returns the source type of the current file
+    pub fn source_type<T: 'static>(&self) -> &T {
+        self.bag
+            .get_service::<T>()
+            .expect("Source type is not registered")
+    }
+
+    /// The file path of the current file
+    pub fn file_path(&self) -> &Path {
+        self.file_path
     }
 }
 

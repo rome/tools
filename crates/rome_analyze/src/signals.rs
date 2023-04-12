@@ -12,6 +12,7 @@ use rome_rowan::{BatchMutation, Language};
 use std::borrow::Cow;
 use std::iter::FusedIterator;
 use std::marker::PhantomData;
+use std::path::Path;
 use std::vec::IntoIter;
 
 /// Event raised by the analyzer when a [Rule](crate::Rule)
@@ -245,6 +246,7 @@ pub(crate) struct RuleSignal<'phase, R: Rule> {
     apply_suppression_comment: SuppressionCommentEmitter<RuleLanguage<R>>,
     /// A list of strings that are considered "globals" inside the analyzer
     globals: &'phase [&'phase str],
+    file_path: &'phase Path,
 }
 
 impl<'phase, R> RuleSignal<'phase, R>
@@ -260,6 +262,7 @@ where
             <<R as Rule>::Query as Queryable>::Language,
         >,
         globals: &'phase [&'phase str],
+        file_path: &'phase Path,
     ) -> Self {
         Self {
             root,
@@ -268,6 +271,7 @@ where
             services,
             apply_suppression_comment,
             globals,
+            file_path,
         }
     }
 }
@@ -277,14 +281,27 @@ where
     R: Rule + 'static,
 {
     fn diagnostic(&self) -> Option<AnalyzerDiagnostic> {
-        let ctx =
-            RuleContext::new(&self.query_result, self.root, self.services, self.globals).ok()?;
+        let ctx = RuleContext::new(
+            &self.query_result,
+            self.root,
+            self.services,
+            self.globals,
+            self.file_path,
+        )
+        .ok()?;
 
         R::diagnostic(&ctx, &self.state).map(AnalyzerDiagnostic::from)
     }
 
     fn actions(&self) -> AnalyzerActionIter<RuleLanguage<R>> {
-        let ctx = RuleContext::new(&self.query_result, self.root, self.services, self.globals).ok();
+        let ctx = RuleContext::new(
+            &self.query_result,
+            self.root,
+            self.services,
+            self.globals,
+            self.file_path,
+        )
+        .ok();
         if let Some(ctx) = ctx {
             let mut actions = Vec::new();
             if let Some(action) = R::action(&ctx, &self.state) {

@@ -1,9 +1,11 @@
 use crate::RuleKey;
 use serde::Deserialize;
 use std::collections::HashMap;
+use std::fmt::Debug;
+use std::path::PathBuf;
 
 /// A convenient new type data structure to store the options that belong to a rule
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Default, Deserialize)]
 pub struct RuleOptions(String);
 
 impl RuleOptions {
@@ -19,7 +21,7 @@ impl RuleOptions {
 }
 
 /// A convenient new type data structure to insert and get rules
-#[derive(Debug, Clone, Default)]
+#[derive(Debug, Default)]
 pub struct AnalyzerRules(HashMap<RuleKey, RuleOptions>);
 
 impl AnalyzerRules {
@@ -35,7 +37,7 @@ impl AnalyzerRules {
 }
 
 /// A data structured derived from the `rome.json` file
-#[derive(Debug, Clone, Default)]
+#[derive(Debug, Default)]
 pub struct AnalyzerConfiguration {
     /// A list of rules and their options
     pub rules: AnalyzerRules,
@@ -47,8 +49,11 @@ pub struct AnalyzerConfiguration {
 }
 
 /// A set of information useful to the analyzer infrastructure
-#[derive(Debug, Clone, Default)]
+#[derive(Debug, Default)]
 pub struct AnalyzerOptions {
     /// A data structured derived from the [`rome.json`] file
     pub configuration: AnalyzerConfiguration,
+
+    /// The file that is being analyzed
+    pub file_path: PathBuf,
 }

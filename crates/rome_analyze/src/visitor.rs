@@ -1,4 +1,5 @@
 use std::collections::BinaryHeap;
+use std::path::Path;
 
 use rome_rowan::{AstNode, Language, SyntaxNode, TextRange, WalkEvent};
 
@@ -18,6 +19,7 @@ pub struct VisitorContext<'phase, 'query, L: Language> {
     pub(crate) signal_queue: &'query mut BinaryHeap<SignalEntry<'phase, L>>,
     pub apply_suppression_comment: SuppressionCommentEmitter<L>,
     pub globals: &'phase [&'phase str],
+    pub file_path: &'phase Path,
 }
 
 impl<'phase, 'query, L: Language> VisitorContext<'phase, 'query, L> {
@@ -30,6 +32,7 @@ impl<'phase, 'query, L: Language> VisitorContext<'phase, 'query, L> {
             signal_queue: self.signal_queue,
             apply_suppression_comment: self.apply_suppression_comment,
             globals: self.globals,
+            file_path: self.file_path,
         })
     }
 }
