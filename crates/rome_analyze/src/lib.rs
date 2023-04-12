@@ -5,6 +5,7 @@ use std::cmp::Ordering;
 use std::collections::{BTreeMap, BinaryHeap};
 use std::fmt::{Debug, Display, Formatter};
 use std::ops;
+use std::path::Path;
 
 mod categories;
 pub mod context;
@@ -77,6 +78,7 @@ pub struct AnalyzerContext<'a, L: Language> {
     pub services: ServiceBag,
     pub range: Option<TextRange>,
     pub globals: &'a [&'a str],
+    pub file_path: &'a Path,
 }
 
 impl<'analyzer, L, Matcher, Break, Diag> Analyzer<'analyzer, L, Matcher, Break, Diag>
@@ -142,6 +144,7 @@ where
                 range: ctx.range,
                 globals: ctx.globals,
                 apply_suppression_comment,
+                file_path: ctx.file_path,
             };
 
             // The first phase being run will inspect the tokens and parse the
@@ -220,6 +223,8 @@ struct PhaseRunner<'analyzer, 'phase, L: Language, Matcher, Break, Diag> {
     range: Option<TextRange>,
     /// Options passed to the analyzer
     globals: &'phase [&'phase str],
+    /// The [Path] of the current file
+    file_path: &'phase Path,
 }
 
 /// Single entry for a suppression comment in the `line_suppressions` buffer
@@ -279,6 +284,7 @@ where
                     signal_queue: &mut self.signal_queue,
                     apply_suppression_comment: self.apply_suppression_comment,
                     globals: self.globals,
+                    file_path: self.file_path,
                 };
 
                 visitor.visit(&node_event, ctx);
@@ -304,6 +310,7 @@ where
                     signal_queue: &mut self.signal_queue,
                     apply_suppression_comment: self.apply_suppression_comment,
                     globals: self.globals,
+                    file_path: self.file_path,
                 };
 
                 visitor.visit(&event, ctx);

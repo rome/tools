@@ -453,7 +453,13 @@ impl Workspace for WorkspaceServer {
         let parse = self.get_parse(params.path.clone(), Some(FeatureName::Lint))?;
         let settings = self.settings.read().unwrap();
         let rules = settings.linter().rules.as_ref();
-        Ok(code_actions(parse, params.range, rules, self.settings()))
+        Ok(code_actions(
+            parse,
+            params.range,
+            rules,
+            self.settings(),
+            &params.path,
+        ))
     }
 
     /// Runs the given file through the formatter using the provided options

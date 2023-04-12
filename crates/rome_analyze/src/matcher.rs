@@ -3,6 +3,7 @@ use crate::{
     SuppressionCommentEmitter,
 };
 use rome_rowan::{Language, TextRange};
+use std::path::Path;
 use std::{
     any::{Any, TypeId},
     cmp::Ordering,
@@ -27,6 +28,7 @@ pub struct MatchQueryParams<'phase, 'query, L: Language> {
     pub signal_queue: &'query mut BinaryHeap<SignalEntry<'phase, L>>,
     pub apply_suppression_comment: SuppressionCommentEmitter<L>,
     pub globals: &'phase [&'phase str],
+    pub file_path: &'phase Path,
 }
 
 /// Wrapper type for a [QueryMatch]
@@ -197,6 +199,7 @@ where
 #[cfg(test)]
 mod tests {
     use std::convert::Infallible;
+    use std::path::Path;
 
     use rome_diagnostics::{category, DiagnosticExt};
     use rome_diagnostics::{Diagnostic, Severity};
@@ -381,6 +384,7 @@ mod tests {
             range: None,
             services: ServiceBag::default(),
             globals: &[],
+            file_path: Path::new(""),
         };
 
         let result: Option<Never> = analyzer.run(ctx);

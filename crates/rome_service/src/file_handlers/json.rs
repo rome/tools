@@ -216,6 +216,7 @@ fn code_actions(
     _range: TextRange,
     _rules: Option<&Rules>,
     _settings: SettingsHandle,
+    _path: &RomePath,
 ) -> PullActionsResult {
     PullActionsResult {
         actions: Vec::new(),

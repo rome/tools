@@ -148,7 +148,7 @@ pub(crate) fn write_analysis_to_snapshot(
         None
     };
 
-    let (_, errors) = rome_js_analyze::analyze(&root, filter, &options, |event| {
+    let (_, errors) = rome_js_analyze::analyze(&root, filter, &options, source_type, |event| {
         if let Some(mut diag) = event.diagnostic() {
             for action in event.actions() {
                 if check_action_type.is_suppression() {

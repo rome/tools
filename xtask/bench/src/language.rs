@@ -123,7 +123,7 @@ impl Analyze {
                     ..AnalysisFilter::default()
                 };
                 let options = AnalyzerOptions::default();
-                analyze(root, filter, &options, |event| {
+                analyze(root, filter, &options, SourceType::default(), |event| {
                     black_box(event.diagnostic());
                     black_box(event.actions());
                     ControlFlow::<Never>::Continue(())
