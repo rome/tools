@@ -1669,7 +1669,10 @@ dependencies = [
  "rome_js_formatter",
  "rome_json_formatter",
  "rome_json_parser",
+ "rome_json_syntax",
  "rome_lsp",
+ "rome_migrate",
+ "rome_rowan",
  "rome_service",
  "rome_text_edit",
  "rome_text_size",
@@ -2037,6 +2040,18 @@ dependencies = [
  "proc-macro-error",
  "proc-macro2",
  "quote",
+]
+
+[[package]]
+name = "rome_migrate"
+version = "0.1.0"
+dependencies = [
+ "lazy_static",
+ "rome_analyze",
+ "rome_diagnostics",
+ "rome_json_parser",
+ "rome_json_syntax",
+ "rome_rowan",
 ]
 
 [[package]]

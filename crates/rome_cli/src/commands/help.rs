@@ -10,12 +10,13 @@ const MAIN: Markup = markup! {
     - "<Emphasis>"ci"</Emphasis>"           Run the linter and check the formatting of a set of files
     - "<Emphasis>"format"</Emphasis>"       Run the formatter on a set of files
     - "<Emphasis>"init"</Emphasis>"         Bootstraps a new rome project
+    - "<Emphasis>"help"</Emphasis>"         Prints this help message
+    - "<Emphasis>"lsp-proxy"</Emphasis>"    Acts as a server for the Language Server Protocol over stdin/stdout
+    - "<Emphasis>"migrate"</Emphasis>"      It updates the configuration when there are breaking changes
+    - "<Emphasis>"rage"</Emphasis>"         Prints information for debugging
     - "<Emphasis>"start"</Emphasis>"        Start the Rome daemon server process
     - "<Emphasis>"stop"</Emphasis>"         Stop the Rome daemon server process
-    - "<Emphasis>"lsp-proxy"</Emphasis>"    Acts as a server for the Language Server Protocol over stdin/stdout
-    - "<Emphasis>"rage"</Emphasis>"         Prints information for debugging
     - "<Emphasis>"version"</Emphasis>"      Shows the Rome version information and quit
-    - "<Emphasis>"help"</Emphasis>"         Prints this help message
 
 "<Emphasis>"OPTIONS:"</Emphasis>"
     "<Dim>"--colors=<off|force>"</Dim>"     Set the formatting mode for markup: \"off\" prints everything as plain text, \"force\" forces the formatting of markup using ANSI even if the console output is determined to be incompatible
@@ -146,6 +147,18 @@ const VERSION_HELP_TEXT: Markup = markup! {
     rome version"
 };
 
+const MIGRATE: Markup = markup! {
+"Rome migrate: updates the configuration file to a newer version
+
+"<Emphasis>"EXAMPLES:"</Emphasis>"
+    rome migrate
+    rome migrate --write
+
+"<Emphasis>"OPTIONS:"</Emphasis>"
+    "<Dim>"--write"</Dim>"      It writes the contents to disk
+"
+};
+
 pub(crate) fn help(session: CliSession, command: Option<&str>) -> Result<(), CliDiagnostic> {
     let help_text = match command {
         Some("help") | None => MAIN,
@@ -158,6 +171,7 @@ pub(crate) fn help(session: CliSession, command: Option<&str>) -> Result<(), Cli
         Some("lsp-proxy") => START_LSP_PROXY,
         Some("version") => VERSION_HELP_TEXT,
         Some("rage") => RAGE,
+        Some("migrate") => MIGRATE,
 
         Some(cmd) => return Err(CliDiagnostic::new_unknown_help(cmd)),
     };

@@ -1,7 +1,6 @@
+use crate::execute::diagnostics::{ResultExt, ResultIoExt, SkippedDiagnostic, UnhandledDiagnostic};
+use crate::execute::traverse::TraversalOptions;
 use crate::execute::TraversalMode;
-use crate::traversal::{
-    ResultExt, ResultIoExt, SkippedDiagnostic, TraversalOptions, UnhandledDiagnostic,
-};
 use crate::{CliDiagnostic, FormatterReportFileDetail};
 use rome_diagnostics::{category, DiagnosticExt, Error};
 use rome_fs::{OpenOptions, RomePath};
@@ -101,6 +100,7 @@ pub(crate) fn process_file(ctx: &TraversalOptions, path: &Path) -> FileResult {
                 .and(supported_format.reason.as_ref())
                 .and(supported_organize_imports.reason.as_ref()),
             TraversalMode::Format { .. } => supported_format.reason.as_ref(),
+            TraversalMode::Migrate { .. } => None,
         };
 
         if let Some(reason) = unsupported_reason {
@@ -285,6 +285,7 @@ pub(crate) fn process_file(ctx: &TraversalOptions, path: &Path) -> FileResult {
                 }
                 TraversalMode::CI { .. } => false,
                 TraversalMode::Format { write, .. } => *write,
+                TraversalMode::Migrate { write: dry_run, .. } => *dry_run,
             };
 
             let printed = file_guard

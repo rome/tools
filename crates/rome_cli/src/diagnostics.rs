@@ -52,6 +52,8 @@ pub enum CliDiagnostic {
     IncompatibleEndConfiguration(IncompatibleEndConfiguration),
     /// No files processed during the file system traversal
     NoFilesWereProcessed(NoFilesWereProcessed),
+    /// Errors thrown when running the `rome migrate` command
+    MigrateError(MigrationDiagnostic),
 }
 
 #[derive(Debug, Diagnostic)]
@@ -258,6 +260,19 @@ pub struct IncompatibleEndConfiguration {
 )]
 pub struct NoFilesWereProcessed;
 
+#[derive(Debug, Diagnostic)]
+#[diagnostic(
+	category = "migrate",
+	severity = Error,
+	message(
+		message("Migration has encountered an error: "{{&self.reason}}),
+		description = "Migration has encountered an error: {reason}"
+	)
+)]
+pub struct MigrationDiagnostic {
+    pub reason: String,
+}
+
 /// Advices for the [CliDiagnostic]
 #[derive(Debug, Default)]
 struct CliAdvice {
@@ -422,6 +437,7 @@ impl Diagnostic for CliDiagnostic {
             CliDiagnostic::IncompatibleEndConfiguration(diagnostic) => diagnostic.category(),
             CliDiagnostic::NoFilesWereProcessed(diagnostic) => diagnostic.category(),
             CliDiagnostic::FileCheckApply(diagnostic) => diagnostic.category(),
+            CliDiagnostic::MigrateError(diagnostic) => diagnostic.category(),
         }
     }
 
@@ -442,6 +458,7 @@ impl Diagnostic for CliDiagnostic {
             CliDiagnostic::IncompatibleEndConfiguration(diagnostic) => diagnostic.tags(),
             CliDiagnostic::NoFilesWereProcessed(diagnostic) => diagnostic.tags(),
             CliDiagnostic::FileCheckApply(diagnostic) => diagnostic.tags(),
+            CliDiagnostic::MigrateError(diagnostic) => diagnostic.tags(),
         }
     }
 
@@ -462,6 +479,7 @@ impl Diagnostic for CliDiagnostic {
             CliDiagnostic::IncompatibleEndConfiguration(diagnostic) => diagnostic.severity(),
             CliDiagnostic::NoFilesWereProcessed(diagnostic) => diagnostic.severity(),
             CliDiagnostic::FileCheckApply(diagnostic) => diagnostic.severity(),
+            CliDiagnostic::MigrateError(diagnostic) => diagnostic.severity(),
         }
     }
 
@@ -482,6 +500,7 @@ impl Diagnostic for CliDiagnostic {
             CliDiagnostic::IncompatibleEndConfiguration(diagnostic) => diagnostic.location(),
             CliDiagnostic::NoFilesWereProcessed(diagnostic) => diagnostic.location(),
             CliDiagnostic::FileCheckApply(diagnostic) => diagnostic.location(),
+            CliDiagnostic::MigrateError(diagnostic) => diagnostic.location(),
         }
     }
 
@@ -502,6 +521,7 @@ impl Diagnostic for CliDiagnostic {
             CliDiagnostic::IncompatibleEndConfiguration(diagnostic) => diagnostic.message(fmt),
             CliDiagnostic::NoFilesWereProcessed(diagnostic) => diagnostic.message(fmt),
             CliDiagnostic::FileCheckApply(diagnostic) => diagnostic.message(fmt),
+            CliDiagnostic::MigrateError(diagnostic) => diagnostic.message(fmt),
         }
     }
 
@@ -522,6 +542,7 @@ impl Diagnostic for CliDiagnostic {
             CliDiagnostic::IncompatibleEndConfiguration(diagnostic) => diagnostic.description(fmt),
             CliDiagnostic::NoFilesWereProcessed(diagnostic) => diagnostic.description(fmt),
             CliDiagnostic::FileCheckApply(diagnostic) => diagnostic.description(fmt),
+            CliDiagnostic::MigrateError(diagnostic) => diagnostic.description(fmt),
         }
     }
 
@@ -542,6 +563,7 @@ impl Diagnostic for CliDiagnostic {
             CliDiagnostic::IncompatibleEndConfiguration(diagnostic) => diagnostic.advices(visitor),
             CliDiagnostic::NoFilesWereProcessed(diagnostic) => diagnostic.advices(visitor),
             CliDiagnostic::FileCheckApply(diagnostic) => diagnostic.advices(visitor),
+            CliDiagnostic::MigrateError(diagnostic) => diagnostic.advices(visitor),
         }
     }
 
@@ -566,6 +588,7 @@ impl Diagnostic for CliDiagnostic {
             }
             CliDiagnostic::NoFilesWereProcessed(diagnostic) => diagnostic.verbose_advices(visitor),
             CliDiagnostic::FileCheckApply(diagnostic) => diagnostic.verbose_advices(visitor),
+            CliDiagnostic::MigrateError(diagnostic) => diagnostic.verbose_advices(visitor),
         }
     }
 
@@ -586,6 +609,7 @@ impl Diagnostic for CliDiagnostic {
             CliDiagnostic::IncompatibleEndConfiguration(diagnostic) => diagnostic.source(),
             CliDiagnostic::NoFilesWereProcessed(diagnostic) => diagnostic.source(),
             CliDiagnostic::FileCheckApply(diagnostic) => diagnostic.source(),
+            CliDiagnostic::MigrateError(diagnostic) => diagnostic.source(),
         }
     }
 }

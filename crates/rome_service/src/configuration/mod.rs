@@ -139,7 +139,8 @@ impl FilesConfiguration {
 /// - [Option]: sometimes not having a configuration file should not be an error, so we need this type.
 /// - [Deserialized]: result of the deserialization of the configuration.
 /// - [Configuration]: the type needed to [Deserialized] to infer the return type.
-type LoadConfig = Result<Option<Deserialized<Configuration>>, WorkspaceError>;
+/// - [PathBuf]: the path of where the first `rome.json` path was found
+type LoadConfig = Result<Option<(Deserialized<Configuration>, PathBuf)>, WorkspaceError>;
 
 #[derive(Debug, Default, PartialEq)]
 pub enum ConfigurationBasePath {
@@ -210,7 +211,7 @@ pub fn load_config(
 
                 let deserialized = deserialize_from_json_str::<Configuration>(&buffer)
                     .with_file_path(&configuration_path.display().to_string());
-                Ok(Some(deserialized))
+                Ok(Some((deserialized, configuration_path)))
             }
             Err(err) => {
                 // base paths from users are not eligible for auto discovery

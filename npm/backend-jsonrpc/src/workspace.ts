@@ -1022,6 +1022,7 @@ export type Category =
 	| "format"
 	| "configuration"
 	| "organizeImports"
+	| "migrate"
 	| "deserialize"
 	| "internalError/io"
 	| "internalError/fs"
