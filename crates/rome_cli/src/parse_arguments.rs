@@ -1,5 +1,6 @@
 use crate::{CliDiagnostic, CliSession};
 use rome_formatter::IndentStyle;
+use rome_service::configuration::vcs::{VcsClientKind, VcsConfiguration};
 use rome_service::configuration::{
     FormatterConfiguration, JavascriptConfiguration, JavascriptFormatter, PlainIndentStyle,
 };
@@ -104,6 +105,51 @@ pub(crate) fn apply_files_settings_from_cli(
         let files = configuration.files.get_or_insert_with(Default::default);
         files.max_size = Some(files_max_size);
     }
+
+    Ok(())
+}
+
+pub(crate) fn apply_vcs_settings_from_cli(
+    session: &mut CliSession,
+    configuration: &mut Configuration,
+) -> Result<(), CliDiagnostic> {
+    let vcs = configuration
+        .vcs
+        .get_or_insert_with(VcsConfiguration::default);
+
+    let enabled = session
+        .args
+        .opt_value_from_str("--vcs-enabled")
+        .map_err(|source| CliDiagnostic::parse_error("--vcs-enabled", source))?;
+    let client_kind = session
+        .args
+        .opt_value_from_str("--vcs-client-kind")
+        .map_err(|source| CliDiagnostic::parse_error("--vcs-client-kind", source))?;
+
+    let use_ignore_file = session
+        .args
+        .opt_value_from_str("--vcs-use-ignore-file")
+        .map_err(|source| CliDiagnostic::parse_error("--vcs-use-ignore-file", source))?;
+    let root = session
+        .args
+        .opt_value_from_str("--vcs-root")
+        .map_err(|source| CliDiagnostic::parse_error("--vcs-root", source))?;
+
+    if let Some(enabled) = enabled {
+        vcs.enabled = enabled;
+    }
+
+    match client_kind {
+        None => {}
+        Some(VcsClientKind::Git) => {
+            vcs.client_kind = Some(VcsClientKind::Git);
+        }
+    }
+
+    if let Some(use_ignore_file) = use_ignore_file {
+        vcs.use_ignore_file = use_ignore_file;
+    }
+    vcs.root = root;
 
     Ok(())
 }

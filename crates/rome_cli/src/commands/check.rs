@@ -1,11 +1,11 @@
 use crate::configuration::load_configuration;
-use crate::parse_arguments::{apply_files_settings_from_cli, apply_format_settings_from_cli};
-use crate::vcs::read_vcs_ignore_file;
+use crate::parse_arguments::{
+    apply_files_settings_from_cli, apply_format_settings_from_cli, apply_vcs_settings_from_cli,
+};
+use crate::vcs::store_path_to_ignore_from_vcs;
 use crate::{execute_mode, CliDiagnostic, CliSession, Execution, TraversalMode};
-use indexmap::IndexSet;
 use rome_console::{markup, ConsoleExt};
 use rome_diagnostics::{DiagnosticExt, PrintDiagnostic, Severity};
-use rome_service::configuration::FilesConfiguration;
 use rome_service::workspace::{FixFileMode, UpdateSettingsParams};
 
 /// Handler for the "check" command of the Rome CLI
@@ -26,22 +26,11 @@ pub(crate) fn check(mut session: CliSession) -> Result<(), CliDiagnostic> {
     }
     apply_files_settings_from_cli(&mut session, &mut configuration)?;
     apply_format_settings_from_cli(&mut session, &mut configuration)?;
+    apply_vcs_settings_from_cli(&mut session, &mut configuration)?;
 
     // check if support of git ignore files is enabled
-
-    let files_to_ignore =
-        if let (Some(vcs), Some(configuration_path)) = (&configuration.vcs, configuration_path) {
-            read_vcs_ignore_file(&mut session, configuration_path, vcs)?
-        } else {
-            vec![]
-        };
-    if files_to_ignore.len() > 0 {
-        let files = configuration
-            .files
-            .get_or_insert_with(FilesConfiguration::default);
-        let ignored_files = files.ignore.get_or_insert_with(IndexSet::new);
-        ignored_files.extend(files_to_ignore.into_iter());
-    }
+    let vcs_base_path = configuration_path.or(session.app.fs.working_directory());
+    store_path_to_ignore_from_vcs(&mut session, &mut configuration, vcs_base_path)?;
 
     session
         .app

@@ -287,7 +287,18 @@ pub struct MigrationDiagnostic {
 pub struct NoVcsFolderFound {
     #[location(resource)]
     pub path: String,
+	
+	#[source]
+	pub source: Option<Error>
 }
+
+#[derive(Debug, Diagnostic)]
+#[diagnostic(
+	category = "internalError/fs",
+	severity = Warning,
+	message = "Rome couldn't determine a directory for the VCS integration. VCS integration will be disabled."
+)]
+pub struct DisabledVcs {}
 
 /// Advices for the [CliDiagnostic]
 #[derive(Debug, Default)]

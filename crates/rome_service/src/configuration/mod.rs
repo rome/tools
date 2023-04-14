@@ -118,6 +118,10 @@ impl Configuration {
             .map(|f| !f.enabled)
             .unwrap_or(false)
     }
+
+    pub fn is_vcs_disabled(&self) -> bool {
+        self.vcs.as_ref().map(|f| !f.enabled).unwrap_or(true)
+    }
 }
 
 /// The configuration of the filesystem
@@ -195,8 +199,7 @@ pub fn load_config(
     let configuration_file_path = configuration_directory.join(config_name);
     let should_error = base_path.is_from_user();
 
-    let result =
-        file_system.auto_search(configuration_directory.clone(), config_name, should_error)?;
+    let result = file_system.auto_search(configuration_directory, config_name, should_error)?;
 
     if let Some((buffer, configuration_path)) = result {
         let deserialized = deserialize_from_json_str::<Configuration>(&buffer)

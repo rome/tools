@@ -1,4 +1,5 @@
 use crate::configuration::organize_imports::OrganizeImports;
+use crate::configuration::parse::json::vcs::validate_vcs_configuration;
 use crate::configuration::vcs::VcsConfiguration;
 use crate::configuration::{
     FilesConfiguration, FormatterConfiguration, JavascriptConfiguration, LinterConfiguration,
@@ -40,6 +41,7 @@ impl VisitNode<JsonLanguage> for Configuration {
             "vcs" => {
                 let mut vcs = VcsConfiguration::default();
                 self.map_to_object(&value, name_text, &mut vcs, diagnostics)?;
+                validate_vcs_configuration(&value, &mut vcs, diagnostics);
                 self.vcs = Some(vcs);
             }
             "formatter" => {

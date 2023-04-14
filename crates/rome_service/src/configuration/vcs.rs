@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use std::str::FromStr;
 
 const GIT_IGNORE_FILE_NAME: &str = ".gitignore";
 
@@ -7,7 +8,7 @@ const GIT_IGNORE_FILE_NAME: &str = ".gitignore";
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(deny_unknown_fields, rename_all = "camelCase")]
 pub struct VcsConfiguration {
-    /// The kind of client. Default value is `git`.
+    /// The kind of client.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub client_kind: Option<VcsClientKind>,
 
@@ -16,11 +17,13 @@ pub struct VcsConfiguration {
 
     /// Whether Rome should use the VCS ignore file. When [true], Rome will ignore the files
     /// specified in the ignore file.
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub use_ignore_file: Option<bool>,
+    pub use_ignore_file: bool,
 
-    /// The folder where Rome should check for VCS files. By default, Rome will use the
-    /// the working directory.
+    /// The folder where Rome should check for VCS files. By default, Rome will use the same
+    /// folder where `rome.json` was found.
+    ///
+    /// If Rome can't fine the configuration, it will attempt to use the current working directory.
+    /// If no current working directory can't be found, Rome won't use the VCS integration.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub root: Option<String>,
 }
@@ -44,17 +47,18 @@ impl VcsClientKind {
     }
 }
 
+impl FromStr for VcsClientKind {
+    type Err = &'static str;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "git" => Ok(Self::Git),
+            _ => Err("Value not supported for VcsClientKind"),
+        }
+    }
+}
+
 impl VcsConfiguration {
     pub const KNOWN_KEYS: &'static [&'static str] =
         &["clientKind", "enabled", "useIgnoreFile", "root"];
-
-    /// Configuration for `git`
-    pub fn git() -> Self {
-        Self {
-            client_kind: Some(VcsClientKind::Git),
-            enabled: true,
-            use_ignore_file: Some(true),
-            root: None,
-        }
-    }
 }

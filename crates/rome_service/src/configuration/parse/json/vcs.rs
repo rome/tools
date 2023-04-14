@@ -1,8 +1,9 @@
 use crate::configuration::vcs::{VcsClientKind, VcsConfiguration};
+use rome_console::markup;
 use rome_deserialize::json::{has_only_known_keys, with_only_known_variants, VisitJsonNode};
 use rome_deserialize::{DeserializationDiagnostic, VisitNode};
-use rome_json_syntax::JsonLanguage;
-use rome_rowan::SyntaxNode;
+use rome_json_syntax::{AnyJsonValue, JsonLanguage};
+use rome_rowan::{AstNode, SyntaxNode};
 
 impl VisitJsonNode for VcsConfiguration {}
 
@@ -33,7 +34,7 @@ impl VisitNode<JsonLanguage> for VcsConfiguration {
                 self.enabled = self.map_to_boolean(&value, name_text, diagnostics)?;
             }
             "useIgnoreFile" => {
-                self.use_ignore_file = self.map_to_boolean(&value, name_text, diagnostics);
+                self.use_ignore_file = self.map_to_boolean(&value, name_text, diagnostics)?;
             }
 
             "root" => {
@@ -58,5 +59,22 @@ impl VisitNode<JsonLanguage> for VcsClientKind {
             *self = VcsClientKind::Git;
         }
         Some(())
+    }
+}
+
+pub(crate) fn validate_vcs_configuration(
+    node: &AnyJsonValue,
+    configuration: &mut VcsConfiguration,
+    diagnostics: &mut Vec<DeserializationDiagnostic>,
+) {
+    if configuration.client_kind.is_none() && configuration.enabled {
+        diagnostics.push(
+            DeserializationDiagnostic::new(markup! {
+                "You enabled the VCS integration, but you didn't specify a client."
+            })
+            .with_range(node.range())
+            .with_note("Rome will disable the VCS integration until the issue is fixed."),
+        );
+        configuration.enabled = false;
     }
 }
