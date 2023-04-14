@@ -14,7 +14,6 @@ use std::io::ErrorKind;
 use std::marker::PhantomData;
 use std::num::NonZeroU64;
 use std::path::{Path, PathBuf};
-use tracing::{error, info};
 
 pub mod diagnostics;
 mod formatter;
@@ -23,10 +22,12 @@ mod javascript;
 pub mod linter;
 pub mod organize_imports;
 mod parse;
+pub mod vcs;
 
 pub use crate::configuration::diagnostics::ConfigurationDiagnostic;
 use crate::configuration::generated::push_to_analyzer_rules;
 use crate::configuration::organize_imports::OrganizeImports;
+use crate::configuration::vcs::VcsConfiguration;
 use crate::settings::{LanguagesSettings, LinterSettings};
 pub use formatter::{FormatterConfiguration, PlainIndentStyle};
 pub use javascript::{JavascriptConfiguration, JavascriptFormatter};
@@ -47,6 +48,11 @@ pub struct Configuration {
     #[serde(rename(serialize = "$schema", deserialize = "$schema"))]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub schema: Option<String>,
+
+    /// The configuration of the filesystem
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub vcs: Option<VcsConfiguration>,
+
     /// The configuration of the filesystem
     #[serde(skip_serializing_if = "Option::is_none")]
     pub files: Option<FilesConfiguration>,
@@ -80,12 +86,14 @@ impl Default for Configuration {
             formatter: None,
             javascript: None,
             schema: None,
+            vcs: None,
         }
     }
 }
 
 impl Configuration {
     const KNOWN_KEYS: &'static [&'static str] = &[
+        "vcs",
         "files",
         "linter",
         "formatter",
@@ -175,7 +183,7 @@ pub fn load_config(
 ) -> LoadConfig {
     let config_name = file_system.config_name();
     let working_directory = file_system.working_directory();
-    let mut configuration_directory = match base_path {
+    let configuration_directory = match base_path {
         ConfigurationBasePath::Lsp(ref path) | ConfigurationBasePath::FromUser(ref path) => {
             path.clone()
         }
@@ -184,72 +192,17 @@ pub fn load_config(
             None => PathBuf::new(),
         },
     };
-    let mut configuration_path = configuration_directory.join(config_name);
+    let configuration_path = configuration_directory.join(config_name);
     let should_error = base_path.is_from_user();
-    info!(
-        "Attempting to read the configuration file from {}",
-        configuration_path.display()
-    );
 
-    let mut from_parent = false;
-    loop {
-        let options = OpenOptions::default().read(true);
-        let file = file_system.open_with_options(&configuration_path, options);
-        return match file {
-            Ok(mut file) => {
-                let mut buffer = String::new();
-                file.read_to_string(&mut buffer).map_err(|_| {
-                    WorkspaceError::cant_read_file(format!("{}", configuration_path.display()))
-                })?;
+    let buffer =
+        file_system.auto_search(configuration_directory.clone(), config_name, should_error)?;
 
-                if from_parent {
-                    info!(
-                        "Rome auto discovered a configuration file at following path that wasn't in the working directory: {}",
-                        configuration_path.display()
-                    );
-                }
-
-                let deserialized = deserialize_from_json_str::<Configuration>(&buffer)
-                    .with_file_path(&configuration_path.display().to_string());
-                Ok(Some((deserialized, configuration_path)))
-            }
-            Err(err) => {
-                // base paths from users are not eligible for auto discovery
-                if !base_path.is_from_user() {
-                    let parent_directory = if let Some(path) = configuration_directory.parent() {
-                        if path.is_dir() {
-                            Some(PathBuf::from(path))
-                        } else {
-                            None
-                        }
-                    } else {
-                        None
-                    };
-                    if let Some(parent_directory) = parent_directory {
-                        configuration_directory = parent_directory;
-                        configuration_path = configuration_directory.join(config_name);
-                        from_parent = true;
-                        continue;
-                    }
-                }
-                // We skip the error when the configuration file is not found.
-                // Not having a configuration file is only an error when the `base_path` is
-                // set to `BasePath::FromUser`.
-                if should_error || err.kind() != ErrorKind::NotFound {
-                    return Err(WorkspaceError::cant_read_file(format!(
-                        "{}",
-                        configuration_path.display()
-                    )));
-                }
-                error!(
-                    "Could not read the configuration file from {:?}, reason:\n {}",
-                    configuration_path.display(),
-                    err
-                );
-                Ok(None)
-            }
-        };
-    }
+    Ok(buffer.map(|buffer| {
+        let deserialized = deserialize_from_json_str::<Configuration>(&buffer)
+            .with_file_path(&configuration_path.display().to_string());
+        deserialized
+    }))
 }
 
 /// Creates a new configuration on file system

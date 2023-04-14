@@ -4,7 +4,7 @@ expression: javascript_formatter_semicolons.json
 ---
 javascript_formatter_semicolons.json:4:18 deserialize ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Found an unknown value `lorem`
+  × Found an unknown value `lorem`.
   
     2 │ 	"javascript": {
     3 │ 		"formatter": {
@@ -13,7 +13,7 @@ javascript_formatter_semicolons.json:4:18 deserialize ━━━━━━━━�
     5 │ 		}
     6 │ 	}
   
-  i Accepted values
+  i Accepted values:
   
   - always
   - asNeeded

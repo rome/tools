@@ -7,7 +7,7 @@ use std::str;
 use std::sync::Arc;
 
 use parking_lot::{lock_api::ArcMutexGuard, Mutex, RawMutex, RwLock};
-use rome_diagnostics::Error;
+use rome_diagnostics::{Error, Severity};
 
 use crate::fs::OpenOptions;
 use crate::{FileSystem, RomePath, TraversalContext, TraversalScope};
@@ -253,6 +253,7 @@ impl<'scope> TraversalScope<'scope> for MemoryTraversalScope<'scope> {
                             ErrorKind::InfiniteSymlinkExpansion(path.to_string_lossy().to_string())
                         }
                     },
+                    severity: Severity::Warning,
                 }));
             }
         }

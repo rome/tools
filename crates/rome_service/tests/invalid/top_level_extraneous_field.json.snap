@@ -4,7 +4,7 @@ expression: top_level_extraneous_field.json
 ---
 top_level_extraneous_field.json:2:2 deserialize ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Found an unknown key `foo_bar`
+  × Found an unknown key `foo_bar`.
   
     1 │ {
   > 2 │ 	"foo_bar": {
@@ -14,6 +14,7 @@ top_level_extraneous_field.json:2:2 deserialize ━━━━━━━━━━�
   
   i Accepted keys
   
+  - vcs
   - files
   - linter
   - formatter

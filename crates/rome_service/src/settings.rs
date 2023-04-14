@@ -272,6 +272,7 @@ impl TryFrom<FilesConfiguration> for FilesSettings {
             require_literal_separator: false,
         });
         if let Some(ignore) = config.ignore {
+            dbg!(&ignore);
             for pattern in ignore {
                 matcher.add_pattern(&pattern).map_err(|err| {
                     WorkspaceError::Configuration(

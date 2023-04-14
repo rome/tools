@@ -39,6 +39,13 @@
 		"organizeImports": {
 			"description": "The configuration of the import sorting",
 			"anyOf": [{ "$ref": "#/definitions/OrganizeImports" }, { "type": "null" }]
+		},
+		"vcs": {
+			"description": "The configuration of the filesystem",
+			"anyOf": [
+				{ "$ref": "#/definitions/VcsConfiguration" },
+				{ "type": "null" }
+			]
 		}
 	},
 	"additionalProperties": false,
@@ -1306,6 +1313,42 @@
 				}
 			}
 		},
-		"TrailingComma": { "type": "string", "enum": ["all", "es5", "none"] }
+		"TrailingComma": { "type": "string", "enum": ["all", "es5", "none"] },
+		"VcsClientKind": {
+			"oneOf": [
+				{
+					"description": "Integration with the git client as VCS",
+					"type": "string",
+					"enum": ["git"]
+				}
+			]
+		},
+		"VcsConfiguration": {
+			"description": "Set",
+			"type": "object",
+			"required": ["enabled"],
+			"properties": {
+				"clientKind": {
+					"description": "The kind of client. Default value is `git`.",
+					"anyOf": [
+						{ "$ref": "#/definitions/VcsClientKind" },
+						{ "type": "null" }
+					]
+				},
+				"enabled": {
+					"description": "Whether Rome should integrate itself with the VCS client",
+					"type": "boolean"
+				},
+				"root": {
+					"description": "The folder where Rome should check for VCS files. By default, Rome will use the the working directory.",
+					"type": ["string", "null"]
+				},
+				"useIgnoreFile": {
+					"description": "Whether Rome should use the VCS ignore file. When [true], Rome will ignore the files specified in the ignore file.",
+					"type": ["boolean", "null"]
+				}
+			},
+			"additionalProperties": false
+		}
 	}
 }

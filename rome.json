@@ -1,5 +1,11 @@
 {
 	"$schema": "./npm/rome/configuration_schema.json",
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"useIgnoreFile": true,
+		"root": "/"
+	},
 	"files": {
 		"ignore": [
 			"build",
