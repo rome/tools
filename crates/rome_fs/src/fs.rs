@@ -38,7 +38,7 @@ pub trait FileSystem: Send + Sync + RefUnwindSafe {
         mut file_path: PathBuf,
         file_name: &str,
         should_error_if_file_not_found: bool,
-    ) -> Result<Option<String>, FileSystemDiagnostic> {
+    ) -> Result<Option<(String, PathBuf)>, FileSystemDiagnostic> {
         let mut from_parent = false;
         let mut file_directory_path = file_path.join(file_name);
         loop {
@@ -65,7 +65,7 @@ pub trait FileSystem: Send + Sync + RefUnwindSafe {
 
                     // let deserialized = deserialize_from_json_str::<Configuration>(&buffer)
                     //     .with_file_path(&configuration_path.display().to_string());
-                    return Ok(Some(buffer));
+                    return Ok(Some((buffer, file_path)));
                 }
                 Err(err) => {
                     // base paths from users are not eligible for auto discovery

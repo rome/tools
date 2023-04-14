@@ -5,12 +5,28 @@ expression: content
 # Termination Message
 
 ```block
-.git internalError/fs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Rome couldn't find the VCS folder at the following path: .git
+  × No files were processed in the specified paths.
   
 
 
+```
+
+# Emitted Messages
+
+```block
+<TEMP_DIR>/rome_test_broken_symlink/broken_symlink internalError/fs ━━━━━━━━━━━━━━━━━━━━
+
+  ! Dereferenced symlink
+  
+  i Rome encountered a file system entry that is a broken symbolic link: <TEMP_DIR>/rome_test_broken_symlink/broken_symlink
+  
+
+```
+
+```block
+Checked 0 file(s) in <TIME>
 ```
 
 

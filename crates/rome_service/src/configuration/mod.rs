@@ -192,17 +192,19 @@ pub fn load_config(
             None => PathBuf::new(),
         },
     };
-    let configuration_path = configuration_directory.join(config_name);
+    let configuration_file_path = configuration_directory.join(config_name);
     let should_error = base_path.is_from_user();
 
-    let buffer =
+    let result =
         file_system.auto_search(configuration_directory.clone(), config_name, should_error)?;
 
-    Ok(buffer.map(|buffer| {
+    if let Some((buffer, configuration_path)) = result {
         let deserialized = deserialize_from_json_str::<Configuration>(&buffer)
-            .with_file_path(&configuration_path.display().to_string());
-        deserialized
-    }))
+            .with_file_path(&configuration_file_path.display().to_string());
+        Ok(Some((deserialized, configuration_path)))
+    } else {
+        Ok(None)
+    }
 }
 
 /// Creates a new configuration on file system

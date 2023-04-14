@@ -7,11 +7,11 @@ use rome_console::{markup, ConsoleExt};
 use rome_diagnostics::{DiagnosticExt, PrintDiagnostic, Severity};
 use rome_service::configuration::FilesConfiguration;
 use rome_service::workspace::{FixFileMode, UpdateSettingsParams};
-use std::path::PathBuf;
 
 /// Handler for the "check" command of the Rome CLI
 pub(crate) fn check(mut session: CliSession) -> Result<(), CliDiagnostic> {
-    let (mut configuration, diagnostics, _) = load_configuration(&mut session)?.consume();
+    let (mut configuration, diagnostics, configuration_path) =
+        load_configuration(&mut session)?.consume();
     if !diagnostics.is_empty() {
         let console = &mut session.app.console;
         console.log(markup!{
@@ -29,12 +29,12 @@ pub(crate) fn check(mut session: CliSession) -> Result<(), CliDiagnostic> {
 
     // check if support of git ignore files is enabled
 
-    let files_to_ignore = if let Some(vcs) = &configuration.vcs {
-        read_vcs_ignore_file(&mut session, PathBuf::new(), vcs)?
-    } else {
-        vec![]
-    };
-    dbg!(&files_to_ignore);
+    let files_to_ignore =
+        if let (Some(vcs), Some(configuration_path)) = (&configuration.vcs, configuration_path) {
+            read_vcs_ignore_file(&mut session, configuration_path, vcs)?
+        } else {
+            vec![]
+        };
     if files_to_ignore.len() > 0 {
         let files = configuration
             .files

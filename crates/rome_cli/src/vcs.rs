@@ -13,23 +13,6 @@ pub(crate) fn read_vcs_ignore_file(
         return Ok(vec![]);
     }
     let file_system = &session.app.fs;
-    // let working_directory = file_system.working_directory();
-    // let current_directory = match working_directory {
-    //     Some(wd) => wd,
-    //     None => PathBuf::new(),
-    // };
-    // let current_directory = match &configuration.root {
-    //     None => current_directory,
-    //     Some(root) => {
-    //         if root == "/" {
-    //             current_directory
-    //         } else {
-    //             current_directory.join(root)
-    //         }
-    //     }
-    // };
-
-    dbg!(&current_directory);
 
     if let Some(client_kind) = &configuration.client_kind {
         match client_kind {
@@ -47,10 +30,18 @@ pub(crate) fn read_vcs_ignore_file(
                 .auto_search(current_directory, client_kind.ignore_file(), false)
                 .map_err(WorkspaceError::from)?;
 
-            if let Some(buffer) = buffer {
+            if let Some((buffer, _)) = buffer {
                 return Ok(buffer
                     .split("\n")
-                    .map(|item| item.to_string())
+                    .filter(|line| line.len() > 0)
+                    .filter_map(|item| {
+                        let line = item.to_string();
+                        if !line.starts_with("#") {
+                            Some(line)
+                        } else {
+                            None
+                        }
+                    })
                     .collect::<Vec<String>>());
             }
         }
