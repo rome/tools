@@ -59,11 +59,11 @@ export async function activate(context: ExtensionContext) {
 	);
 
 	const documentSelector: DocumentFilter[] = [
-		{ language: "javascript" },
-		{ language: "typescript" },
-		{ language: "javascriptreact" },
-		{ language: "typescriptreact" },
-		{ language: "json" },
+		{ language: "javascript", scheme: "file" },
+		{ language: "typescript", scheme: "file" },
+		{ language: "javascriptreact", scheme: "file" },
+		{ language: "typescriptreact", scheme: "file" },
+		{ language: "json", scheme: "file" },
 	];
 
 	const clientOptions: LanguageClientOptions = {
