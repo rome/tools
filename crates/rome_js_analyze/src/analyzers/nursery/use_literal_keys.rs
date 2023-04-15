@@ -94,8 +94,10 @@ impl Rule for UseLiteralKeys {
             AnyJsExpression::AnyJsLiteralExpression(
                 AnyJsLiteralExpression::JsStringLiteralExpression(string_literal),
             ) => {
-                let value = string_literal.inner_string_text().ok()?;
-                return Some((string_literal.range(), value.to_string()));
+                let value = string_literal.inner_string_text().ok()?.to_string();
+                if is_convert_key_string_to_static_member(&value) {
+                    return Some((string_literal.range(), value));
+                }
             }
             AnyJsExpression::JsTemplateExpression(template_expression) => {
                 let mut value = String::new();
@@ -104,7 +106,9 @@ impl Rule for UseLiteralKeys {
 
                     value.push_str(chunk.template_chunk_token().ok()?.text_trimmed());
                 }
-                return Some((template_expression.range(), value));
+                if is_convert_key_string_to_static_member(&value) {
+                    return Some((template_expression.range(), value));
+                }
             }
 
             _ => {}
@@ -166,4 +170,15 @@ impl Rule for UseLiteralKeys {
             }
         }
     }
+}
+
+// check if the string key can convert to a static member
+fn is_convert_key_string_to_static_member(key: &str) -> bool {
+    key.chars().enumerate().all(|(index, c)| {
+        if index == 0 {
+            c.is_alphabetic() || c == '_'
+        } else {
+            c.is_alphabetic() || c.is_ascii_digit() || c == '_'
+        }
+    })
 }
