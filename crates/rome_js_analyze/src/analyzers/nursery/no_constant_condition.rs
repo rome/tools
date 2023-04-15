@@ -134,7 +134,6 @@ impl ConditionalStatement {
             Self::JsWhileStatement(it) => it.body().ok(),
             Self::JsDoWhileStatement(it) => it.body().ok(),
             Self::JsForStatement(it) => it.body().ok(),
-            // We don't need to care the other elements body
             _ => None,
         }
     }
@@ -162,7 +161,7 @@ impl From<AnyJsStatement> for ConditionalStatement {
     }
 }
 
-// Gets the yield expression from the given statement
+// Gets a yield expression from the given statement
 fn get_yield_expression(stmt: &AnyJsStatement) -> Option<JsYieldExpression> {
     let stmt = stmt.as_js_expression_statement()?;
     let expr = stmt.as_fields().expression.ok()?;
@@ -170,7 +169,7 @@ fn get_yield_expression(stmt: &AnyJsStatement) -> Option<JsYieldExpression> {
     Some(expr.clone())
 }
 
-// Checks if the given statement has yield expression
+// Checks recursively if the given statement has a valid yield expression
 fn has_valid_yield_expression(stmt: &AnyJsStatement) -> Option<bool> {
     let block_stmt = stmt.as_js_block_statement()?;
     let mut stmt_list = block_stmt.as_fields().statements.into_iter();
