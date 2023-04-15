@@ -1,7 +1,7 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: js/objects/expression.js
+assertion_line: 212
+info: js/objects/expression.js
 ---
 
 # Input
@@ -40,26 +40,22 @@ const a3 = {
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,10 +1,12 @@
+@@ -1,9 +1,11 @@
 -() => ({}``);
--({}``);
--a = () => ({}.x);
--({} && a, b);
--({}::b, 0);
--({}::b()``[""].c++ && 0 ? 0 : 0, 0);
--({}(), 0);
 +() => ({})``;
-+({})``;
+ ({})``;
+-a = () => ({}.x);
 +a = () => ({}).x;
-+({}) && a, b;
+ ({}) && a, b;
+-({})::b, 0;
+-({})::b()``[""].c++ && 0 ? 0 : 0, 0;
 +({}
 +::b, 0)
 +({}
 +::b()``[''].c++ && 0 ? 0 : 0, 0)
-+({})(), 0;
+ ({})(), 0;
  ({} = 0);
  ({} = 0), 1;
- 
 ```
 
 # Output

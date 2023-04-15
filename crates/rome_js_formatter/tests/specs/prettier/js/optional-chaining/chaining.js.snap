@@ -1,7 +1,7 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: js/optional-chaining/chaining.js
+assertion_line: 212
+info: js/optional-chaining/chaining.js
 ---
 
 # Input
@@ -142,7 +142,7 @@ new (foo?.())();
  
  a?.[b ? c : d];
  
-@@ -59,28 +59,28 @@
+@@ -59,26 +59,26 @@
  (function () {})?.();
  (() => f)?.();
  (() => f)?.x;
@@ -167,8 +167,6 @@ new (foo?.())();
 -(x) => ({}?.().b);
 -(x) => ({}?.b());
 -(x) => ({}?.b.b);
--({}?.a().b());
--({ a: 1 }?.entries());
 +let f = () => ({})?.();
 +let g = () => ({})?.b;
 +a = () => ({})?.() && a;
@@ -182,11 +180,9 @@ new (foo?.())();
 +(x) => ({})?.().b;
 +(x) => ({})?.b();
 +(x) => ({})?.b.b;
-+({})?.a().b();
-+({ a: 1 })?.entries();
+ ({})?.a().b();
+ ({ a: 1 })?.entries();
  
- new (foo?.bar)();
- new (foo?.bar())();
 ```
 
 # Output

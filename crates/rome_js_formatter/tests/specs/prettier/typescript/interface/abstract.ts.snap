@@ -1,7 +1,7 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: typescript/interface/abstract.ts
+assertion_line: 212
+info: typescript/interface/abstract.ts
 ---
 
 # Input

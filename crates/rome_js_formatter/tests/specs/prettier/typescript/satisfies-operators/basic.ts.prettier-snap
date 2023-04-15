@@ -17,7 +17,7 @@ let obj: { f(s: string): void } & Record<string, unknown> = {
   g(s) {},
 } satisfies { g(s: string): void } & Record<string, unknown>;
 
-({ f(x) {} } satisfies { f(s: string): void });
+({ f(x) {} }) satisfies { f(s: string): void };
 
 const car = {
   start() {},

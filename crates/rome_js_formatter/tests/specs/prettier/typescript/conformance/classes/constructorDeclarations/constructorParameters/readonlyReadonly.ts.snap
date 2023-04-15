@@ -1,7 +1,7 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: typescript/conformance/classes/constructorDeclarations/constructorParameters/readonlyReadonly.ts
+assertion_line: 212
+info: typescript/conformance/classes/constructorDeclarations/constructorParameters/readonlyReadonly.ts
 ---
 
 # Input

@@ -1,7 +1,7 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: js/export-default/body.js
+assertion_line: 212
+info: js/export-default/body.js
 ---
 
 # Input
