@@ -7,9 +7,7 @@ parent: lint/rules/index
 
 > This rule is recommended by Rome.
 
-Check that the scope attribute is only used on `th` elements.
-
-ESLint Equivalent: [scope](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/scope.md)
+The scope prop should be used only on `<th>` elements.
 
 ## Examples
 
@@ -60,6 +58,11 @@ ESLint Equivalent: [scope](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/
 ```jsx
 <th scope="col"></th>
 ```
+
+## Accessibility guidelines
+
+- [WCAG 1.3.1](https://www.w3.org/WAI/WCAG21/Understanding/info-and-relationships)
+- [WCAG 4.1.1](https://www.w3.org/WAI/WCAG21/Understanding/parsing)
 
 ## Related links
 

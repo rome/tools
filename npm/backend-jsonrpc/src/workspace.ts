@@ -178,7 +178,7 @@ export interface A11y {
 	 */
 	noAccessKey?: RuleConfiguration;
 	/**
-	 * Avoid the autoFocus attribute
+	 * Enforce that autoFocus prop is not used on elements.
 	 */
 	noAutofocus?: RuleConfiguration;
 	/**
@@ -190,7 +190,7 @@ export interface A11y {
 	 */
 	noDistractingElements?: RuleConfiguration;
 	/**
-	 * Check that the scope attribute is only used on th elements.
+	 * The scope prop should be used only on <th> elements.
 	 */
 	noHeaderScope?: RuleConfiguration;
 	/**
