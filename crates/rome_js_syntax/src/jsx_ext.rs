@@ -2,8 +2,8 @@ use std::collections::HashSet;
 
 use crate::{
     static_value::{QuotedString, StaticValue},
-    AnyJsxAttribute, AnyJsxAttributeValue, AnyJsxElementName, JsSyntaxToken, JsxAttribute,
-    JsxAttributeList, JsxName, JsxOpeningElement, JsxSelfClosingElement, JsxString,
+    AnyJsxAttribute, AnyJsxAttributeName, AnyJsxAttributeValue, AnyJsxElementName, JsSyntaxToken,
+    JsxAttribute, JsxAttributeList, JsxName, JsxOpeningElement, JsxSelfClosingElement, JsxString,
 };
 use rome_rowan::{declare_node_union, AstNode, AstNodeList, SyntaxResult};
 
@@ -303,20 +303,22 @@ impl JsxAttributeList {
     }
 }
 
-declare_node_union! {
-    pub AnyJsxElement = JsxOpeningElement | JsxSelfClosingElement
-}
-
-impl AnyJsxElement {
+impl AnyJsxElementName {
     pub fn name_value_token(&self) -> Option<JsSyntaxToken> {
-        match self.name().ok()? {
+        match self {
             AnyJsxElementName::JsxMemberName(member) => member.member().ok()?.value_token().ok(),
             AnyJsxElementName::JsxName(name) => name.value_token().ok(),
             AnyJsxElementName::JsxNamespaceName(name) => name.name().ok()?.value_token().ok(),
             AnyJsxElementName::JsxReferenceIdentifier(name) => name.value_token().ok(),
         }
     }
+}
 
+declare_node_union! {
+    pub AnyJsxElement = JsxOpeningElement | JsxSelfClosingElement
+}
+
+impl AnyJsxElement {
     pub fn attributes(&self) -> JsxAttributeList {
         match self {
             AnyJsxElement::JsxOpeningElement(element) => element.attributes(),
@@ -329,6 +331,10 @@ impl AnyJsxElement {
             AnyJsxElement::JsxOpeningElement(element) => element.name(),
             AnyJsxElement::JsxSelfClosingElement(element) => element.name(),
         }
+    }
+
+    pub fn name_value_token(&self) -> Option<JsSyntaxToken> {
+        self.name().ok()?.name_value_token()
     }
 
     /// Return true if the current element is actually a component
@@ -345,6 +351,12 @@ impl AnyJsxElement {
     /// - `<span ></span>` is **not** component and it returns `true`
     pub fn is_element(&self) -> bool {
         self.name().map_or(false, |it| it.as_jsx_name().is_some())
+    }
+
+    pub fn has_spread_prop(&self) -> bool {
+        self.attributes()
+            .into_iter()
+            .any(|attribute| matches!(attribute, AnyJsxAttribute::JsxSpreadAttribute(_)))
     }
 
     pub fn has_trailing_spread_prop(&self, current_attribute: impl Into<AnyJsxAttribute>) -> bool {
@@ -378,6 +390,13 @@ impl JsxAttribute {
 
     pub fn as_static_value(&self) -> Option<StaticValue> {
         self.initializer()?.value().ok()?.as_static_value()
+    }
+
+    pub fn name_value_token(&self) -> Option<JsSyntaxToken> {
+        match self.name().ok()? {
+            AnyJsxAttributeName::JsxName(name) => name.value_token().ok(),
+            AnyJsxAttributeName::JsxNamespaceName(name) => name.name().ok()?.value_token().ok(),
+        }
     }
 }
 

@@ -1,5 +1,5 @@
 <div>
-    <div/>
-    <marquee/>
-    <blink/>
+    <div />
+    <marquee />
+    <blink />
 </div>

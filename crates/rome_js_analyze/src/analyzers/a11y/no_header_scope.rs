@@ -9,9 +9,7 @@ use rome_rowan::{AstNode, BatchMutationExt};
 use crate::JsRuleAction;
 
 declare_rule! {
-    /// Check that the scope attribute is only used on `th` elements.
-    ///
-    /// ESLint Equivalent: [scope](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/scope.md)
+    /// The scope prop should be used only on `<th>` elements.
     ///
     /// ## Examples
     ///
@@ -34,6 +32,12 @@ declare_rule! {
     /// ```jsx
     /// <th scope="col"></th>
     /// ```
+    ///
+    /// ## Accessibility guidelines
+    ///
+    /// - [WCAG 1.3.1](https://www.w3.org/WAI/WCAG21/Understanding/info-and-relationships)
+    /// - [WCAG 4.1.1](https://www.w3.org/WAI/WCAG21/Understanding/parsing)
+    ///
     pub(crate) NoHeaderScope {
         version: "11.0.0",
         name: "noHeaderScope",
@@ -50,7 +54,7 @@ impl Rule for NoHeaderScope {
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let attr = ctx.query();
 
-        if attr.name().ok()?.syntax().text_trimmed() != "scope" {
+        if attr.name_value_token()?.text_trimmed() != "scope" {
             return None;
         }
 

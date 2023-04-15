@@ -6,7 +6,9 @@ use rome_js_syntax::{jsx_ext::AnyJsxElement, JsxAttribute};
 use rome_rowan::{AstNode, BatchMutationExt};
 
 declare_rule! {
-    /// Avoid the `autoFocus` attribute
+    /// Enforce that autoFocus prop is not used on elements.
+    ///
+    /// Autofocusing elements can cause usability issues for sighted and non-sighted users, alike.
     ///
     /// ## Examples
     ///
@@ -46,6 +48,12 @@ declare_rule! {
     /// // `autoFocus` prop in user created component is valid
     /// <MyComponent autoFocus={true} />
     ///```
+    ///
+    /// ## Resources
+    ///
+    /// - [WHATWG HTML Standard, The autofocus attribute](https://html.spec.whatwg.org/multipage/interaction.html#attr-fe-autofocus)
+    /// - [The accessibility of HTML 5 autofocus](https://brucelawson.co.uk/2009/the-accessibility-of-html-5-autofocus/)
+    ///
     pub(crate) NoAutoFocus {
         version: "10.0.0",
         name: "noAutofocus",
@@ -61,16 +69,11 @@ impl Rule for NoAutoFocus {
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
-        match node {
-            AnyJsxElement::JsxOpeningElement(element) => {
-                element.name().ok()?.as_jsx_name()?;
-                element.find_attribute_by_name("autoFocus").ok()?
-            }
-            AnyJsxElement::JsxSelfClosingElement(element) => {
-                element.name().ok()?.as_jsx_name()?;
-                element.find_attribute_by_name("autoFocus").ok()?
-            }
+        if node.is_custom_component() {
+            return None;
         }
+
+        node.find_attribute_by_name("autoFocus")
     }
 
     fn diagnostic(_ctx: &RuleContext<Self>, attr: &Self::State) -> Option<RuleDiagnostic> {
