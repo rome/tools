@@ -5,13 +5,6 @@
 		"clientKind": "git",
 		"useIgnoreFile": true
 	},
-	"files": {
-		"ignore": [
-			"build",
-			"dist",
-			"target"
-		]
-	},
 	"formatter": {
 		"ignore": [
 			"configuration-schema.json"
