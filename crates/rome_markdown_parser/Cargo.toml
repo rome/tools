@@ -1,0 +1,19 @@
+[package]
+name = "rome_markdown_parser"
+version = "0.1.0"
+edition = { workspace = true }
+authors = { workspace = true }
+license = { workspace = true }
+repository = { workspace = true }
+documentation = "https://rustdocs.rome.tools/rome_markdown_parser/index.html"
+description = "Rome Markdown parser"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+rome_rowan = { version = "0.0.1", path = "../rome_rowan"}
+rome_parser = { version = "0.0.1", path = "../rome_parser" }
+rome_markdown_syntax = { version = "0.0.0", path = "../rome_markdown_syntax" }
+rome_markdown_factory = { version = "0.0.0", path = "../rome_markdown_factory" }
+tracing = { workspace = true }
+rome_js_unicode_table = { version = "0.0.1", path = "../rome_js_unicode_table" }

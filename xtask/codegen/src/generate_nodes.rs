@@ -1,6 +1,7 @@
 use crate::css_kinds_src::CSS_KINDS_SRC;
 use crate::json_kinds_src::JSON_KINDS_SRC;
 use crate::kinds_src::{AstSrc, Field, TokenKind, JS_KINDS_SRC};
+use crate::md_kinds_src::MD_KINDS_SRC;
 use crate::{to_lower_snake_case, to_upper_snake_case, LanguageKind};
 use proc_macro2::Literal;
 use quote::{format_ident, quote};
@@ -869,6 +870,7 @@ pub(crate) fn token_kind_to_code(
         LanguageKind::Js => JS_KINDS_SRC,
         LanguageKind::Css => CSS_KINDS_SRC,
         LanguageKind::Json => JSON_KINDS_SRC,
+        LanguageKind::Md => MD_KINDS_SRC,
     };
     if kind_source.literals.contains(&kind_variant_name.as_str())
         || kind_source.tokens.contains(&kind_variant_name.as_str())

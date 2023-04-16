@@ -15,6 +15,7 @@ use crate::generate_nodes_mut::generate_nodes_mut;
 use crate::generate_syntax_factory::generate_syntax_factory;
 use crate::json_kinds_src::JSON_KINDS_SRC;
 use crate::kinds_src::{AstListSeparatorConfiguration, AstListSrc, TokenKind};
+use crate::md_kinds_src::MD_KINDS_SRC;
 use crate::termcolorful::{println_string_with_fg_color, Color};
 use crate::ALL_LANGUAGE_KIND;
 use crate::{
@@ -27,6 +28,7 @@ use crate::{
 use std::fmt::Write;
 use ungrammar::{Grammar, Rule, Token};
 use xtask::{project_root, Result};
+
 // these node won't generate any code
 pub const SYNTAX_ELEMENT_TYPE: &str = "SyntaxElement";
 
@@ -66,6 +68,7 @@ pub(crate) fn load_ast(language: LanguageKind) -> AstSrc {
         LanguageKind::Js => load_js_ast(),
         LanguageKind::Css => load_css_ast(),
         LanguageKind::Json => load_json_ast(),
+        LanguageKind::Md => load_md_ast(),
     }
 }
 
@@ -83,6 +86,7 @@ pub(crate) fn generate_syntax(ast: AstSrc, mode: &Mode, language_kind: LanguageK
         LanguageKind::Js => JS_KINDS_SRC,
         LanguageKind::Css => CSS_KINDS_SRC,
         LanguageKind::Json => JSON_KINDS_SRC,
+        LanguageKind::Md => MD_KINDS_SRC,
     };
 
     let ast_nodes_file = syntax_generated_path.join("nodes.rs");
@@ -179,6 +183,11 @@ pub(crate) fn load_css_ast() -> AstSrc {
 
 pub(crate) fn load_json_ast() -> AstSrc {
     let grammar_src = include_str!("../json.ungram");
+    let grammar: Grammar = grammar_src.parse().unwrap();
+    make_ast(&grammar)
+}
+pub(crate) fn load_md_ast() -> AstSrc {
+    let grammar_src = include_str!("../md.ungram");
     let grammar: Grammar = grammar_src.parse().unwrap();
     make_ast(&grammar)
 }

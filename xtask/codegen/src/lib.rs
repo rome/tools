@@ -13,9 +13,11 @@ mod generate_syntax_factory;
 mod generate_syntax_kinds;
 mod json_kinds_src;
 mod kinds_src;
+mod md_kinds_src;
 mod parser_tests;
 mod termcolorful;
 mod unicode;
+
 use proc_macro2::{Ident, Span, TokenStream};
 use quote::quote;
 use std::path::Path;
@@ -39,6 +41,7 @@ pub enum LanguageKind {
     Js,
     Css,
     Json,
+    Md,
 }
 
 impl std::fmt::Display for LanguageKind {
@@ -47,12 +50,17 @@ impl std::fmt::Display for LanguageKind {
             LanguageKind::Js => write!(f, "js"),
             LanguageKind::Css => write!(f, "css"),
             LanguageKind::Json => write!(f, "json"),
+            LanguageKind::Md => write!(f, "md"),
         }
     }
 }
 
-pub const ALL_LANGUAGE_KIND: [LanguageKind; 3] =
-    [LanguageKind::Js, LanguageKind::Css, LanguageKind::Json];
+pub const ALL_LANGUAGE_KIND: [LanguageKind; 4] = [
+    LanguageKind::Js,
+    LanguageKind::Css,
+    LanguageKind::Json,
+    LanguageKind::Md,
+];
 
 impl FromStr for LanguageKind {
     type Err = String;
@@ -62,6 +70,7 @@ impl FromStr for LanguageKind {
             "js" => Ok(LanguageKind::Js),
             "css" => Ok(LanguageKind::Css),
             "json" => Ok(LanguageKind::Json),
+            "md" => Ok(LanguageKind::Md),
             _ => Err(format!(
                 "Language {} not supported, please use: `js`, `css` or `json`",
                 kind
@@ -80,6 +89,7 @@ impl LanguageKind {
             LanguageKind::Js => quote! { JsSyntaxKind },
             LanguageKind::Css => quote! { CssSyntaxKind },
             LanguageKind::Json => quote! {JsonSyntaxKind},
+            LanguageKind::Md => quote! {MdSyntaxKind},
         }
     }
 
@@ -88,6 +98,7 @@ impl LanguageKind {
             LanguageKind::Js => quote! { JsSyntaxNode },
             LanguageKind::Css => quote! { CssSyntaxNode },
             LanguageKind::Json => quote! { JsonSyntaxNode },
+            LanguageKind::Md => quote! { MdSyntaxNode },
         }
     }
 
@@ -96,6 +107,7 @@ impl LanguageKind {
             LanguageKind::Js => quote! { JsSyntaxElement },
             LanguageKind::Css => quote! { CssSyntaxElement },
             LanguageKind::Json => quote! { JsonSyntaxElement },
+            LanguageKind::Md => quote! { MdSyntaxElement },
         }
     }
 
@@ -104,6 +116,7 @@ impl LanguageKind {
             LanguageKind::Js => quote! { JsSyntaxToken },
             LanguageKind::Css => quote! { CssSyntaxToken },
             LanguageKind::Json => quote! { JsonSyntaxToken },
+            LanguageKind::Md => quote! { MdSyntaxToken },
         }
     }
 
@@ -112,6 +125,7 @@ impl LanguageKind {
             LanguageKind::Js => quote! { JsSyntaxElementChildren },
             LanguageKind::Css => quote! { CssSyntaxElementChildren },
             LanguageKind::Json => quote! { JsonSyntaxElementChildren },
+            LanguageKind::Md => quote! { MdSyntaxElementChildren },
         }
     }
 
@@ -120,6 +134,7 @@ impl LanguageKind {
             LanguageKind::Js => quote! { JsSyntaxList },
             LanguageKind::Css => quote! { CssSyntaxList },
             LanguageKind::Json => quote! { JsonSyntaxList },
+            LanguageKind::Md => quote! { MdSyntaxList },
         }
     }
 
@@ -128,6 +143,7 @@ impl LanguageKind {
             LanguageKind::Js => quote! { JsLanguage },
             LanguageKind::Css => quote! { CssLanguage },
             LanguageKind::Json => quote! { JsonLanguage },
+            LanguageKind::Md => quote! { MdLanguage },
         }
     }
 
@@ -136,6 +152,7 @@ impl LanguageKind {
             LanguageKind::Js => "rome_js_formatter",
             LanguageKind::Css => "rome_css_formatter",
             LanguageKind::Json => "rome_json_formatter",
+            LanguageKind::Md => "rome_markdown_formatter",
         }
     }
 
@@ -144,6 +161,7 @@ impl LanguageKind {
             LanguageKind::Js => "rome_js_syntax",
             LanguageKind::Css => "rome_css_syntax",
             LanguageKind::Json => "rome_json_syntax",
+            LanguageKind::Md => "rome_markdown_syntax",
         }
     }
 
@@ -152,6 +170,7 @@ impl LanguageKind {
             LanguageKind::Js => "rome_js_factory",
             LanguageKind::Css => "rome_css_factory",
             LanguageKind::Json => "rome_json_factory",
+            LanguageKind::Md => "rome_markdown_factory",
         }
     }
 }

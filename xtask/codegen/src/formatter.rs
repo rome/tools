@@ -727,6 +727,7 @@ fn name_to_module(kind: &NodeKind, in_name: &str, language: LanguageKind) -> Nod
                 _ => NodeConcept::Auxiliary,
             },
             LanguageKind::Css => NodeConcept::Auxiliary,
+            LanguageKind::Md => NodeConcept::Auxiliary,
         }
     };
 
@@ -767,6 +768,7 @@ impl LanguageKind {
             LanguageKind::Js => "JsFormatter",
             LanguageKind::Css => "CssFormatter",
             LanguageKind::Json => "JsonFormatter",
+            LanguageKind::Md => "MdFormatter",
         };
 
         Ident::new(name, Span::call_site())
@@ -777,6 +779,7 @@ impl LanguageKind {
             LanguageKind::Js => "JsFormatContext",
             LanguageKind::Css => "CssFormatContext",
             LanguageKind::Json => "JsonFormatContext",
+            LanguageKind::Md => "MdFormatContext",
         };
 
         Ident::new(name, Span::call_site())

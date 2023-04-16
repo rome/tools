@@ -2031,6 +2031,33 @@ dependencies = [
 ]
 
 [[package]]
+name = "rome_markdown_factory"
+version = "0.0.0"
+dependencies = [
+ "rome_markdown_syntax",
+ "rome_rowan",
+]
+
+[[package]]
+name = "rome_markdown_parser"
+version = "0.1.0"
+dependencies = [
+ "rome_js_unicode_table",
+ "rome_markdown_factory",
+ "rome_markdown_syntax",
+ "rome_parser",
+ "rome_rowan",
+ "tracing",
+]
+
+[[package]]
+name = "rome_markdown_syntax"
+version = "0.0.0"
+dependencies = [
+ "rome_rowan",
+]
+
+[[package]]
 name = "rome_markup"
 version = "0.0.1"
 dependencies = [

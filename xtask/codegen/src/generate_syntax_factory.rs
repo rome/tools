@@ -22,6 +22,11 @@ pub fn generate_syntax_factory(ast: &AstSrc, language_kind: LanguageKind) -> Res
             quote! { JsonSyntaxKind },
             quote! { JsonSyntaxFactory },
         ),
+        LanguageKind::Md => (
+            quote! { rome_markdown_syntax },
+            quote! { MdSyntaxKind },
+            quote! { MdSyntaxFactory },
+        ),
     };
     let normal_node_arms = ast.nodes.iter().map(|node| {
         let kind = format_ident!("{}", to_upper_snake_case(&node.name));
