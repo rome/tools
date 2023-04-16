@@ -176,9 +176,9 @@ impl Rule for UseLiteralKeys {
 fn is_convert_key_string_to_static_member(key: &str) -> bool {
     key.chars().enumerate().all(|(index, c)| {
         if index == 0 {
-            c.is_alphabetic() || c == '_'
+            c.is_alphabetic() || matches!(c, '_' | '$')
         } else {
-            c.is_alphabetic() || c.is_ascii_digit() || c == '_'
+            c.is_alphabetic() || c.is_ascii_digit() || matches!(c, '_' | '$')
         }
     })
 }
