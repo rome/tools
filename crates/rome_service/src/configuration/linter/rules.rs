@@ -337,7 +337,7 @@ pub struct A11y {
     #[doc = "Enforce that the accessKey attribute is not used on any HTML element."]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub no_access_key: Option<RuleConfiguration>,
-    #[doc = "Avoid the autoFocus attribute"]
+    #[doc = "Enforce that autoFocus prop is not used on elements."]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub no_autofocus: Option<RuleConfiguration>,
     #[doc = "Disallow target=\"_blank\" attribute without rel=\"noreferrer\""]
@@ -346,7 +346,7 @@ pub struct A11y {
     #[doc = "Enforces that no distracting elements are used."]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub no_distracting_elements: Option<RuleConfiguration>,
-    #[doc = "Check that the scope attribute is only used on th elements."]
+    #[doc = "The scope prop should be used only on <th> elements."]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub no_header_scope: Option<RuleConfiguration>,
     #[doc = "Prevent the usage of positive integers on tabIndex property"]

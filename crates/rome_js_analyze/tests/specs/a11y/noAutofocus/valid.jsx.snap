@@ -1,15 +1,18 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-expression: noAutoFocusValid.jsx
+expression: valid.jsx
 ---
 # Input
 ```js
 <>
-	<div />
-	<button />
+    <div />
+    <button />
     <input />
+    <div autofocus />
+    <input autofocus="true" />
     <MyComponent autoFocus={true} />
 </>
+
 ```
 
 

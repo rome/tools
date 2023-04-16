@@ -1,2 +1,10 @@
 <input type="submit" accessKey="s" value="Submit" />;
 <button accessKey="n">Next</button>;
+<div accessKey="h" {...props} />;
+<div accessKey={"y"} />;
+<div accessKey={`${y}`} />;
+<div accessKey={`${undefined}y${undefined}`} />;
+<div accessKey={`This is ${bad}`} />;
+<div accessKey={accessKey} />;
+<div accessKey={`${undefined}`} />;
+<div accessKey={`${undefined}${undefined}`} />;

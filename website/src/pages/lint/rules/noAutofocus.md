@@ -7,7 +7,9 @@ parent: lint/rules/index
 
 > This rule is recommended by Rome.
 
-Avoid the `autoFocus` attribute
+Enforce that autoFocus prop is not used on elements.
+
+Autofocusing elements can cause usability issues for sighted and non-sighted users, alike.
 
 ## Examples
 
@@ -103,6 +105,11 @@ Avoid the `autoFocus` attribute
 // `autoFocus` prop in user created component is valid
 <MyComponent autoFocus={true} />
 ```
+
+## Resources
+
+- [WHATWG HTML Standard, The autofocus attribute](https://html.spec.whatwg.org/multipage/interaction.html#attr-fe-autofocus)
+- [The accessibility of HTML 5 autofocus](https://brucelawson.co.uk/2009/the-accessibility-of-html-5-autofocus/)
 
 ## Related links
 

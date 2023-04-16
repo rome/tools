@@ -20,18 +20,23 @@ declare_rule! {
     /// ### Invalid
     ///
     /// ```jsx,expect_diagnostic
-    /// <marquee/>
+    /// <marquee />
     /// ```
     ///
     /// ```jsx,expect_diagnostic
-    /// <blink/>
+    /// <blink />
     /// ```
     ///
     /// ### Valid
     ///
     /// ```jsx
-    /// <div/>
+    /// <div />
     /// ```
+    ///
+    /// ## Accessibility guidelines
+    ///
+    /// - [WCAG 2.2.2](https://www.w3.org/WAI/WCAG21/Understanding/pause-stop-hide)
+    ///
     pub(crate) NoDistractingElements {
         version: "11.0.0",
         name: "noDistractingElements",

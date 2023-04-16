@@ -663,7 +663,17 @@ impl AnyJsExpression {
                         StaticValue::TemplateChunk(Some(element.template_chunk_token().ok()?)),
                     ),
                     AnyJsTemplateElement::JsTemplateElement(element) => {
-                        element.expression().ok()?.as_static_value()
+                        let static_value = element.expression().ok()?.as_static_value();
+                        match static_value {
+                            Some(StaticValue::Boolean(token))
+                            | Some(StaticValue::Null(token))
+                            | Some(StaticValue::Undefined(token))
+                            | Some(StaticValue::Number(token))
+                            | Some(StaticValue::BigInt(token)) => {
+                                Some(StaticValue::String(QuotedString::new(token)))
+                            }
+                            _ => static_value,
+                        }
                     }
                 }
             }

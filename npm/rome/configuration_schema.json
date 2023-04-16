@@ -59,7 +59,7 @@
 					]
 				},
 				"noAutofocus": {
-					"description": "Avoid the autoFocus attribute",
+					"description": "Enforce that autoFocus prop is not used on elements.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }
@@ -80,7 +80,7 @@
 					]
 				},
 				"noHeaderScope": {
-					"description": "Check that the scope attribute is only used on th elements.",
+					"description": "The scope prop should be used only on <th> elements.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }
