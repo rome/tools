@@ -14,10 +14,10 @@ use crate::syntax::expr::{
 };
 use crate::syntax::function::{parse_function_export_default_declaration, LineBreak};
 use crate::syntax::js_parse_error::{
-    duplicate_assertion_keys_error, expected_binding, expected_declaration, expected_export_clause,
-    expected_export_name_specifier, expected_expression, expected_identifier,
-    expected_literal_export_name, expected_module_source, expected_named_import,
-    expected_named_import_specifier, expected_statement,
+    decorators_not_allowed, duplicate_assertion_keys_error, expected_binding, expected_declaration,
+    expected_export_clause, expected_export_name_specifier, expected_expression,
+    expected_identifier, expected_literal_export_name, expected_module_source,
+    expected_named_import, expected_named_import_specifier, expected_statement,
 };
 use crate::syntax::stmt::{parse_statement, semi, StatementContext, STMT_RECOVERY_SET};
 use crate::syntax::typescript::ts_parse_error::ts_only_syntax_error;
@@ -155,9 +155,7 @@ fn parse_module_item(p: &mut JsParser) -> ParsedSyntax {
                     // @decorator1 @decorator2
                     // function Foo() { }
                     decorator_list
-                        .add_diagnostic_if_present(p, |p, range| {
-                            p.err_builder("Decorators are not valid here.", range)
-                        })
+                        .add_diagnostic_if_present(p, decorators_not_allowed)
                         .map(|mut marker| {
                             marker.change_kind(p, JS_BOGUS_STATEMENT);
                             marker

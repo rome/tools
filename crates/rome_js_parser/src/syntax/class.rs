@@ -15,8 +15,9 @@ use crate::syntax::function::{
 };
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{
-    expected_binding, expected_expression, invalid_decorator_error, modifier_already_seen,
-    modifier_cannot_be_used_with_modifier, modifier_must_precede_modifier,
+    decorator_must_precede_modifier, decorators_not_allowed, expected_binding, expected_expression,
+    invalid_decorator_error, modifier_already_seen, modifier_cannot_be_used_with_modifier,
+    modifier_must_precede_modifier,
 };
 use crate::syntax::object::{
     is_at_literal_member_name, parse_computed_member_name, parse_literal_member_name,
@@ -127,17 +128,17 @@ pub(super) fn parse_class_expression(
 //   @test method() {}
 //   @test get getter() {}
 //   @test set setter(a) {}
-//   @test constructor() {}
-//   @test declare prop;
 // }
 
 // test_err ts ts_invalid_decorated_class_members
 // abstract class Test {
+//   @test constructor() {}
+//   @test declare prop;
 //   @test method();
 //   @test [index: string]: string;
 //   @test abstract method2();
 //   @test abstract get getter();
-//   @test abstract set setter();
+//   @test abstract set setter(val);
 // }
 
 /// Parses a class declaration if it is valid and otherwise returns [Invalid].
@@ -510,7 +511,6 @@ fn parse_class_member(p: &mut JsParser, inside_abstract_class: bool) -> ParsedSy
         return Present(member_marker.complete(p, JS_EMPTY_CLASS_MEMBER));
     }
 
-    skip_ts_decorators(p);
     let mut modifiers = parse_class_member_modifiers(p, false);
 
     if is_at_static_initialization_block_class_member(p) {
@@ -883,8 +883,28 @@ fn is_at_static_initialization_block_class_member(p: &mut JsParser) -> bool {
 fn parse_static_initialization_block_class_member(
     p: &mut JsParser,
     member_marker: Marker,
+    // decorator_list: ParsedSyntax,
     modifiers: ClassMemberModifiers,
 ) -> CompletedMarker {
+    // match decorator_list {
+    //     Present(marker) if marker.range(p).is_empty() => {
+    //         marker.undo_completion(p).abandon(p);
+    //     }
+    //     decorator_list => {
+    //         // test_err ts ts_static_initialization_block_member_with_decorators
+    //         // class Foo {
+    //         //   @dec static {
+    //         //     this.a = "test";
+    //         //   }
+    //         // }
+    //         if let Some(mut marker) =
+    //             decorator_list.add_diagnostic_if_present(p, decorators_not_allowed)
+    //         {
+    //             marker.change_to_bogus(p);
+    //         }
+    //     }
+    // }
+
     if modifiers.is_empty() {
         modifiers.abandon(p);
     } else {
@@ -1527,8 +1547,6 @@ fn parse_constructor_parameter_list(p: &mut JsParser) -> ParsedSyntax {
 // // SCRIPT
 // class A { constructor(readonly, private, protected, public) {} }
 fn parse_constructor_parameter(p: &mut JsParser, context: ExpressionContext) -> ParsedSyntax {
-    skip_ts_decorators(p);
-
     // test_err class_constructor_parameter
     // class B { constructor(protected b) {} }
 
@@ -1619,6 +1637,7 @@ pub(crate) fn is_nth_at_modifier(p: &mut JsParser, n: usize, constructor_paramet
             | T![accessor]
             | T![readonly]
             | T![abstract]
+            | T![@]
     ) {
         return false;
     }
@@ -1630,8 +1649,12 @@ pub(crate) fn is_nth_at_modifier(p: &mut JsParser, n: usize, constructor_paramet
     let followed_by_any_member = is_at_class_member_name(p, n + 1);
     let followed_by_class_member = !constructor_parameter && p.nth_at(n + 1, T![*]);
     let followed_by_parameter = constructor_parameter && matches!(p.nth(n + 1), T!['{'] | T!['[']);
+    let followed_by_decorator = p.nth_at(n + 1, T![@]);
 
-    followed_by_any_member || followed_by_class_member || followed_by_parameter
+    followed_by_any_member
+        || followed_by_class_member
+        || followed_by_parameter
+        || followed_by_decorator
 }
 
 // test static_generator_constructor_method
@@ -1695,21 +1718,64 @@ fn parse_modifier(p: &mut JsParser, constructor_parameter: bool) -> Option<Class
         T![accessor] => ModifierKind::Accessor,
         T![readonly] => ModifierKind::Readonly,
         T![abstract] => ModifierKind::Abstract,
+        T![@] => ModifierKind::Decorator,
         _ => {
             return None;
         }
     };
 
-    let m = p.start();
-    let range = p.cur_range();
-    p.bump_any();
-    m.complete(p, modifier_kind.as_syntax_kind());
+    match modifier_kind {
+        ModifierKind::Decorator => {
+            // test ts decorator_class_member
+            // class Foo {
+            // // properties
+            // @dec foo = 2;
+            // @dec public foo = 1;
+            // @dec static foo = 2;
+            // @dec accessor foo = 2;
+            // @dec readonly foo = 2;
+            // @dec override foo = 2;
+            // // methods
+            // @dec foo() {}
+            // @dec public foo() {}
+            // @dec static foo() {}
+            // @dec override foo() {}
+            // // getters
+            // @dec get foo() {}
+            // @dec public get foo() {}
+            // @dec static get foo() {}
+            // @dec override get foo() {}
+            // // setters
+            // @dec set foo(val) {}
+            // @dec public set foo(val) {}
+            // @dec static set foo(val) {}
+            // @dec override set foo(val) {}
+            // }
 
-    Some(ClassMemberModifier {
-        start: range.start(),
-        length: u32::from(range.len()) as u8,
-        kind: modifier_kind,
-    })
+            // SAFETY: Guaranteed to succeed because the parser is at @ token.
+            let decorator = parse_decorator(p).unwrap();
+
+            let range = decorator.range(p);
+
+            Some(ClassMemberModifier {
+                start: range.start(),
+                length: u32::from(range.len()) as u8,
+                kind: modifier_kind,
+            })
+        }
+        _ => {
+            let m = p.start();
+            let range = p.cur_range();
+            p.bump_any();
+            m.complete(p, modifier_kind.as_syntax_kind());
+
+            Some(ClassMemberModifier {
+                start: range.start(),
+                length: u32::from(range.len()) as u8,
+                kind: modifier_kind,
+            })
+        }
+    }
 }
 
 bitflags! {
@@ -1727,8 +1793,21 @@ bitflags! {
         const OVERRIDE      = 1 << 7;
         const PRIVATE_NAME  = 1 << 8;
         const ACCESSOR      = 1 << 9;
+        const DECORATOR     = 1 << 10;
 
         const ACCESSIBILITY = ModifierFlags::PRIVATE.bits | ModifierFlags::PROTECTED.bits | ModifierFlags::PUBLIC.bits;
+
+        const ALL_MODIFIERS_EXCEPT_DECORATOR = ModifierFlags::DECLARE.bits
+            | ModifierFlags::PRIVATE.bits
+            | ModifierFlags::PROTECTED.bits
+            | ModifierFlags::PUBLIC.bits
+            | ModifierFlags::STATIC.bits
+            | ModifierFlags::READONLY.bits
+            | ModifierFlags::ABSTRACT.bits
+            | ModifierFlags::OVERRIDE.bits
+            | ModifierFlags::PRIVATE_NAME.bits
+            | ModifierFlags::ACCESSOR.bits;
+
     }
 }
 
@@ -1744,11 +1823,15 @@ enum ModifierKind {
     Accessor,
     Readonly,
     Override,
+    Decorator,
 }
 
 impl ModifierKind {
     const fn is_ts_modifier(&self) -> bool {
-        !matches!(self, ModifierKind::Static | ModifierKind::Accessor)
+        !matches!(
+            self,
+            ModifierKind::Static | ModifierKind::Accessor | ModifierKind::Decorator
+        )
     }
 
     const fn as_syntax_kind(&self) -> JsSyntaxKind {
@@ -1762,6 +1845,7 @@ impl ModifierKind {
             ModifierKind::Accessor => JS_ACCESSOR_MODIFIER,
             ModifierKind::Readonly => TS_READONLY_MODIFIER,
             ModifierKind::Override => TS_OVERRIDE_MODIFIER,
+            ModifierKind::Decorator => JS_DECORATOR,
         }
     }
 
@@ -1776,6 +1860,7 @@ impl ModifierKind {
             ModifierKind::Accessor => ModifierFlags::ACCESSOR,
             ModifierKind::Readonly => ModifierFlags::READONLY,
             ModifierKind::Override => ModifierFlags::OVERRIDE,
+            ModifierKind::Decorator => ModifierFlags::DECORATOR,
         }
     }
 }
@@ -2055,18 +2140,55 @@ impl ClassMemberModifiers {
         //     protected  [a: number]: string;
         // }
 
-        // test_err ts ts_index_signature_class_member_cannot_be_abstract
-        // abstract class A {
-        //     abstract [a: number]: string;
-        // }
+        if modifier.kind == ModifierKind::Decorator
+            && !matches!(
+                member_kind,
+                JS_PROPERTY_CLASS_MEMBER
+                    | JS_METHOD_CLASS_MEMBER
+                    | JS_GETTER_CLASS_MEMBER
+                    | JS_SETTER_CLASS_MEMBER
+            )
+        {
+            // test_err ts decorator_parameters
+            // class Foo {
+            //    constructor(@dec a: string) {}
+            // }
 
-        // test_err ts ts_index_signature_class_member_cannot_be_accessor
-        // abstract class A {
-        //     accessor [a: number]: string;
-        // }
-        if member_kind == TS_INDEX_SIGNATURE_CLASS_MEMBER
+            // test_err ts decorator_class_member
+            // class Foo {
+            //    @dec constructor() {}
+            //    @dec [index: string]: { props: string }
+            // }
+            // class Quiz {
+            //    @dec public constructor() {}
+            // }
+            // class Bar extends Foo {
+            //    @dec
+            //    constructor();
+            //    constructor(a: String)
+            //    constructor(a?: String) {}
+            // }
+            // declare class Baz {
+            //   @dec method();
+            //   @dec get foo();
+            //   @dec set foo(a);
+            // }
+            // abstract class Qux {
+            //   @dec declare static foo: string;
+            // }
+            return Some(decorators_not_allowed(p, modifier.as_text_range()));
+        } else if member_kind == TS_INDEX_SIGNATURE_CLASS_MEMBER
             && !matches!(modifier.kind, ModifierKind::Static | ModifierKind::Readonly)
         {
+            // test_err ts ts_index_signature_class_member_cannot_be_abstract
+            // abstract class A {
+            //     abstract [a: number]: string;
+            // }
+
+            // test_err ts ts_index_signature_class_member_cannot_be_accessor
+            // abstract class A {
+            //     accessor [a: number]: string;
+            // }
             return Some(p.err_builder(
                 format!(
                     "'{}' modifier cannot appear on an index signature.",
@@ -2110,6 +2232,26 @@ impl ClassMemberModifiers {
         }
 
         match modifier.kind {
+            ModifierKind::Decorator => {
+                if preceding_modifiers.intersects(ModifierFlags::ALL_MODIFIERS_EXCEPT_DECORATOR) {
+                    // test_err ts decorator_precede_class_member
+                    // class Bar {
+                    //   public @dec get foo() {}
+                    //   static @dec foo: string;
+                    //   readonly @dec test() {}
+                    //   private @dec test() {}
+                    //   protected @dec test() {}
+                    // }
+                    // class Qux extends Bar {
+                    //   public @dec get foo() {}
+                    //   static @dec foo: string;
+                    //   readonly @dec test() {}
+                    //   private @dec test() {}
+                    //   accessor @dec test() {}
+                    // }
+                    return Some(decorator_must_precede_modifier(p, modifier.as_text_range()));
+                }
+            }
             ModifierKind::Readonly => {
                 if preceding_modifiers.contains(ModifierFlags::READONLY) {
                     return Some(modifier_already_seen(
@@ -2461,6 +2603,7 @@ fn parse_decorator(p: &mut JsParser) -> ParsedSyntax {
 
     let m = p.start();
     p.bump(T![@]);
+
     if let Some(mut complete_marker) =
         parse_expression(p, ExpressionContext::default().and_in_ts_decorator(true))
             .or_add_diagnostic(p, expected_expression)

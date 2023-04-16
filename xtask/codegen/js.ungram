@@ -720,6 +720,7 @@ AnyJsPropertyModifier =
 	TsAccessibilityModifier
 	| JsStaticModifier
 	| JsAccessorModifier
+	| JsDecorator
 	| TsReadonlyModifier
 	| TsOverrideModifier
 
@@ -782,6 +783,7 @@ JsMethodClassMember =
 AnyJsMethodModifier =
 	TsAccessibilityModifier
 	| JsStaticModifier
+	| JsDecorator
 	| TsOverrideModifier
 
 JsMethodModifierList = AnyJsMethodModifier*

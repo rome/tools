@@ -130,23 +130,23 @@ JsModule {
 --
 ts_export_declare.ts:1:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Decorators are not valid here.
-  
+  × Decorators are not valid here
+
   > 1 │ export declare @decorator class D {}
       │                ^^^^^^^^^^
     2 │ export declare @decorator abstract class D {}
-    3 │ 
-  
+    3 │
+
 --
 ts_export_declare.ts:2:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Decorators are not valid here.
-  
+  × Decorators are not valid here
+
     1 │ export declare @decorator class D {}
   > 2 │ export declare @decorator abstract class D {}
       │                ^^^^^^^^^^
-    3 │ 
-  
+    3 │
+
 --
 export declare @decorator class D {}
 export declare @decorator abstract class D {}

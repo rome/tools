@@ -10,6 +10,7 @@ impl FormatRule<AnyJsMethodModifier> for FormatAnyJsMethodModifier {
         match node {
             AnyJsMethodModifier::TsAccessibilityModifier(node) => node.format().fmt(f),
             AnyJsMethodModifier::JsStaticModifier(node) => node.format().fmt(f),
+            AnyJsMethodModifier::JsDecorator(node) => node.format().fmt(f),
             AnyJsMethodModifier::TsOverrideModifier(node) => node.format().fmt(f),
         }
     }

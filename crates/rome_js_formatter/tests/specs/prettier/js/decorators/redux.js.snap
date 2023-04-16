@@ -43,7 +43,7 @@ export class Home extends React.Component {}
 ```
 redux.js:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Decorators are not valid here.
+  × Decorators are not valid here
   
   > 1 │ @connect(mapStateToProps, mapDispatchToProps)
       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -52,7 +52,7 @@ redux.js:1:1 parse ━━━━━━━━━━━━━━━━━━━━�
   
 redux.js:4:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Decorators are not valid here.
+  × Decorators are not valid here
   
     2 │ export class MyApp extends React.Component {}
     3 │ 

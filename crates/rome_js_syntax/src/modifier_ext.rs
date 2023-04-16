@@ -7,6 +7,7 @@ use crate::{
 #[derive(Debug, Ord, PartialOrd, Eq, PartialEq)]
 pub enum Modifiers {
     // modifiers must be sorted by precedence.
+    Decorator,
     Accessibility,
     Declare,
     Static,
@@ -28,6 +29,7 @@ impl From<&AnyTsIndexSignatureModifier> for Modifiers {
 impl From<&AnyJsMethodModifier> for Modifiers {
     fn from(modifier: &AnyJsMethodModifier) -> Self {
         match modifier {
+            AnyJsMethodModifier::JsDecorator(_) => Modifiers::Decorator,
             AnyJsMethodModifier::JsStaticModifier(_) => Modifiers::Static,
             AnyJsMethodModifier::TsAccessibilityModifier(_) => Modifiers::Accessibility,
             AnyJsMethodModifier::TsOverrideModifier(_) => Modifiers::Override,
@@ -49,6 +51,7 @@ impl From<&AnyTsMethodSignatureModifier> for Modifiers {
 impl From<&AnyJsPropertyModifier> for Modifiers {
     fn from(modifier: &AnyJsPropertyModifier) -> Self {
         match modifier {
+            AnyJsPropertyModifier::JsDecorator(_) => Modifiers::Decorator,
             AnyJsPropertyModifier::JsStaticModifier(_) => Modifiers::Static,
             AnyJsPropertyModifier::JsAccessorModifier(_) => Modifiers::Accessor,
             AnyJsPropertyModifier::TsAccessibilityModifier(_) => Modifiers::Accessibility,

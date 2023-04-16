@@ -126,25 +126,25 @@ JsModule {
 --
 decorator_class_declaration_top_level.js:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Decorators are not valid here.
-  
+  × Decorators are not valid here
+
   > 1 │ @decorator
       │ ^^^^^^^^^^
     2 │ let a;
     3 │ @decorator1 @decorator2
-  
+
 --
 decorator_class_declaration_top_level.js:3:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Decorators are not valid here.
-  
+  × Decorators are not valid here
+
     1 │ @decorator
     2 │ let a;
   > 3 │ @decorator1 @decorator2
       │ ^^^^^^^^^^^^^^^^^^^^^^^
     4 │ function Foo() { }
-    5 │ 
-  
+    5 │
+
 --
 @decorator
 let a;

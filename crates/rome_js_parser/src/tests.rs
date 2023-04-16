@@ -392,10 +392,15 @@ fn diagnostics_print_correctly() {
 #[ignore]
 #[test]
 pub fn quick_test() {
-    let code = r"@1 + 2 class MyClass {};
-";
+    let code = r#"
+class Foo {
+  method(@dec a: string) {}
+  }
+
+
+    "#;
     let root = parse(code, SourceType::ts());
     let syntax = root.syntax();
 
-    dbg!(syntax);
+    dbg!(syntax, root.diagnostics());
 }

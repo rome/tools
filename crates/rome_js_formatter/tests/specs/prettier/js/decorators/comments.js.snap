@@ -97,7 +97,7 @@ export class Bar {}
 ```
 comments.js:13:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Decorators are not valid here.
+  × Decorators are not valid here
   
   > 13 │ @NgModule({
        │ ^^^^^^^^^^^
@@ -111,7 +111,7 @@ comments.js:13:1 parse ━━━━━━━━━━━━━━━━━━━
   
 comments.js:27:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Decorators are not valid here.
+  × Decorators are not valid here
   
     26 │ // A
   > 27 │ @Foo()

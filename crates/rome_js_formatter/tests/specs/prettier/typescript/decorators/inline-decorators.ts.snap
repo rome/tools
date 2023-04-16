@@ -64,20 +64,32 @@ class MyContainerComponent {
 ```diff
 --- Prettier
 +++ Rome
-@@ -6,9 +6,9 @@
+@@ -5,20 +5,13 @@
+ class Class1 {}
  
  class Class2 {
-   @d1
+-  @d1
 -  @d2(foo)
 -  @d3.bar
 -  @d4.baz()
-+    @d2(foo)
-+    @d3.bar
-+    @d4.baz()
-   method1() {}
+-  method1() {}
++  @d1 @d2(foo) @d3.bar @d4.baz() method1() {}
  
-   @d1
-@@ -30,11 +30,10 @@
+-  @d1
+-  method2() {}
++  @d1 method2() {}
+ 
+-  @d2(foo)
+-  method3() {}
++  @d2(foo) method3() {}
+ 
+-  @d3.bar
+-  method4() {}
++  @d3.bar method4() {}
+ }
+ 
+ class Class3 {
+@@ -30,11 +23,10 @@
    constructor(
      @d1 private x: number,
      @d2(foo) private y: number,
@@ -92,7 +104,7 @@ class MyContainerComponent {
    ) {}
  }
  
-@@ -46,6 +45,5 @@
+@@ -46,6 +38,5 @@
  }
  
  class MyContainerComponent {
@@ -112,20 +124,13 @@ class MyContainerComponent {
 class Class1 {}
 
 class Class2 {
-  @d1
-    @d2(foo)
-    @d3.bar
-    @d4.baz()
-  method1() {}
+  @d1 @d2(foo) @d3.bar @d4.baz() method1() {}
 
-  @d1
-  method2() {}
+  @d1 method2() {}
 
-  @d2(foo)
-  method3() {}
+  @d2(foo) method3() {}
 
-  @d3.bar
-  method4() {}
+  @d3.bar method4() {}
 }
 
 class Class3 {
@@ -156,9 +161,60 @@ class MyContainerComponent {
 }
 ```
 
+# Errors
+```
+inline-decorators.ts:32:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Decorators are not valid here
+  
+    31 │     constructor (
+  > 32 │         @d1 private x: number,
+       │         ^^^
+    33 │         @d2(foo) private y: number,
+    34 │         @d3('foo') private z: number,
+  
+inline-decorators.ts:33:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Decorators are not valid here
+  
+    31 │     constructor (
+    32 │         @d1 private x: number,
+  > 33 │         @d2(foo) private y: number,
+       │         ^^^^^^^^
+    34 │         @d3('foo') private z: number,
+    35 │         @d4({
+  
+inline-decorators.ts:34:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Decorators are not valid here
+  
+    32 │         @d1 private x: number,
+    33 │         @d2(foo) private y: number,
+  > 34 │         @d3('foo') private z: number,
+       │         ^^^^^^^^^^
+    35 │         @d4({
+    36 │             x: string
+  
+inline-decorators.ts:35:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Decorators are not valid here
+  
+    33 │         @d2(foo) private y: number,
+    34 │         @d3('foo') private z: number,
+  > 35 │         @d4({
+       │         ^^^^^
+  > 36 │             x: string
+  > 37 │         }) private a: string,
+       │         ^^
+    38 │     ) {}
+    39 │ }
+  
+
+```
+
 # Lines exceeding max width of 80 characters
 ```
-   48:   @ContentChildren(MyComponent) components: QueryListSomeBigName<MyComponentThat>;
+   41:   @ContentChildren(MyComponent) components: QueryListSomeBigName<MyComponentThat>;
 ```
 
 

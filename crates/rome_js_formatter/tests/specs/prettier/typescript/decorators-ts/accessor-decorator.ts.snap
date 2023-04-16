@@ -1,0 +1,75 @@
+---
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info: typescript/decorators-ts/accessor-decorator.ts
+---
+
+# Input
+
+```ts
+class Point {
+  private _x: number;
+  private _y: number;
+  constructor(x: number, y: number) {
+    this._x = x;
+    this._y = y;
+  }
+
+  @configurable(false)
+  get x() {
+    return this._x;
+  }
+
+  @configurable(false)
+  get y() {
+    return this._y;
+  }
+}
+
+```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -6,13 +6,11 @@
+     this._y = y;
+   }
+ 
+-  @configurable(false)
+-  get x() {
++  @configurable(false) get x() {
+     return this._x;
+   }
+ 
+-  @configurable(false)
+-  get y() {
++  @configurable(false) get y() {
+     return this._y;
+   }
+ }
+```
+
+# Output
+
+```ts
+class Point {
+  private _x: number;
+  private _y: number;
+  constructor(x: number, y: number) {
+    this._x = x;
+    this._y = y;
+  }
+
+  @configurable(false) get x() {
+    return this._x;
+  }
+
+  @configurable(false) get y() {
+    return this._y;
+  }
+}
+```
+
+

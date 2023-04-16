@@ -1,0 +1,81 @@
+---
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info: js/decorators/parens.js
+---
+
+# Input
+
+```js
+class X {
+  @(computed().volatile())
+  x
+}
+
+```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,4 +1,4 @@
+ class X {
+-  @(computed().volatile())
+-  x;
++@(computed().volatile())
++x;
+ }
+```
+
+# Output
+
+```js
+class X {
+@(computed().volatile())
+x;
+}
+```
+
+# Errors
+```
+parens.js:2:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
+  
+    1 │ class X {
+  > 2 │   @(computed().volatile())
+      │   ^
+    3 │   x
+    4 │ }
+  
+  i Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
+  
+    1 │ class X {
+  > 2 │   @(computed().volatile())
+      │   ^
+    3 │   x
+    4 │ }
+  
+parens.js:4:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected a statement but instead found '}'
+  
+    2 │   @(computed().volatile())
+    3 │   x
+  > 4 │ }
+      │ ^
+    5 │ 
+  
+  i Expected a statement here
+  
+    2 │   @(computed().volatile())
+    3 │   x
+  > 4 │ }
+      │ ^
+    5 │ 
+  
+
+```
+
+

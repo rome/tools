@@ -92,12 +92,13 @@ class Class6 {
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,12 +1,14 @@
+@@ -1,12 +1,15 @@
  export class TestTextFileService {
 -  constructor(@ILifecycleService lifecycleService) {}
 +  constructor(
-+    @ILifecycleService lifecycleService,
-+  ) {}
++		@ILifecycleService lifecycleService,
++	) {
++	}
  }
  
  @commonEditorContribution
@@ -109,7 +110,7 @@ class Class6 {
  })
  class AngularComponent {
    @Input() myInput: string;
-@@ -50,12 +52,24 @@
+@@ -50,12 +53,24 @@
  }
  
  class Class5 {
@@ -146,8 +147,9 @@ class Class6 {
 ```ts
 export class TestTextFileService {
   constructor(
-    @ILifecycleService lifecycleService,
-  ) {}
+		@ILifecycleService lifecycleService,
+	) {
+	}
 }
 
 @commonEditorContribution
@@ -223,9 +225,20 @@ class Class6 {
 
 # Errors
 ```
+decorators.ts:3:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Decorators are not valid here
+  
+    1 │ export class TestTextFileService {
+    2 │ 	constructor(
+  > 3 │ 		@ILifecycleService lifecycleService,
+      │ 		^^^^^^^^^^^^^^^^^^
+    4 │ 	) {
+    5 │ 	}
+  
 decorators.ts:8:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Decorators are not valid here.
+  × Decorators are not valid here
   
      6 │ }
      7 │ 
