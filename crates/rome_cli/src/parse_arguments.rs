@@ -146,9 +146,7 @@ pub(crate) fn apply_vcs_settings_from_cli(
         }
     }
 
-    if let Some(use_ignore_file) = use_ignore_file {
-        vcs.use_ignore_file = use_ignore_file;
-    }
+    vcs.use_ignore_file = use_ignore_file;
     vcs.root = root;
 
     Ok(())

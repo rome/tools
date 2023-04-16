@@ -287,9 +287,9 @@ pub struct MigrationDiagnostic {
 pub struct NoVcsFolderFound {
     #[location(resource)]
     pub path: String,
-	
-	#[source]
-	pub source: Option<Error>
+
+    #[source]
+    pub source: Option<Error>,
 }
 
 #[derive(Debug, Diagnostic)]

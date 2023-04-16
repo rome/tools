@@ -2,8 +2,7 @@ use crate::diagnostics::{DisabledVcs, NoVcsFolderFound};
 use crate::{CliDiagnostic, CliSession};
 use indexmap::IndexSet;
 use rome_console::{markup, ConsoleExt};
-use rome_diagnostics::{adapters::IoError, Error, PrintDiagnostic};
-use rome_fs::FileSystemExt;
+use rome_diagnostics::PrintDiagnostic;
 use rome_service::configuration::vcs::{VcsClientKind, VcsConfiguration};
 use rome_service::configuration::FilesConfiguration;
 use rome_service::{Configuration, WorkspaceError};
@@ -61,16 +60,17 @@ pub(crate) fn read_vcs_ignore_file(
         match client_kind {
             VcsClientKind::Git => {
                 let git_folder = current_directory.join(".git");
-                let result = file_system.open(git_folder.as_path());
-                if let Err(err) = result {
+
+                if !file_system.path_exists(git_folder.as_path()) {
                     return Err(CliDiagnostic::NoVcsFolderFound(NoVcsFolderFound {
                         path: git_folder.display().to_string(),
-                        source: Some(Error::from(IoError::from(err))),
+                        source: None,
+                        // source: Some(Error::from(IoError::from(err))),
                     }));
                 }
             }
         }
-        if configuration.use_ignore_file {
+        if !configuration.ignore_file_disabled() {
             let buffer = file_system
                 .auto_search(current_directory, client_kind.ignore_file(), false)
                 .map_err(WorkspaceError::from)?;

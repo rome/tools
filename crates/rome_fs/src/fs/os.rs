@@ -41,6 +41,10 @@ impl FileSystem for OsFileSystem {
     fn working_directory(&self) -> Option<PathBuf> {
         env::current_dir().ok()
     }
+
+    fn path_exists(&self, path: &Path) -> bool {
+        path.exists()
+    }
 }
 
 struct OsFile {

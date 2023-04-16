@@ -126,7 +126,7 @@ export interface OrganizeImports {
  */
 export interface VcsConfiguration {
 	/**
-	 * The kind of client. Default value is `git`.
+	 * The kind of client.
 	 */
 	clientKind?: VcsClientKind;
 	/**
@@ -134,7 +134,9 @@ export interface VcsConfiguration {
 	 */
 	enabled: boolean;
 	/**
-	 * The folder where Rome should check for VCS files. By default, Rome will use the the working directory.
+	* The folder where Rome should check for VCS files. By default, Rome will use the same folder where `rome.json` was found.
+
+If Rome can't fine the configuration, it will attempt to use the current working directory. If no current working directory can't be found, Rome won't use the VCS integration. 
 	 */
 	root?: string;
 	/**
@@ -1050,7 +1052,6 @@ export type Category =
 	| "organizeImports"
 	| "migrate"
 	| "deserialize"
-	| "vcs"
 	| "internalError/io"
 	| "internalError/fs"
 	| "internalError/panic"

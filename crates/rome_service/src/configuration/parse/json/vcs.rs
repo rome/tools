@@ -34,7 +34,7 @@ impl VisitNode<JsonLanguage> for VcsConfiguration {
                 self.enabled = self.map_to_boolean(&value, name_text, diagnostics)?;
             }
             "useIgnoreFile" => {
-                self.use_ignore_file = self.map_to_boolean(&value, name_text, diagnostics)?;
+                self.use_ignore_file = self.map_to_boolean(&value, name_text, diagnostics);
             }
 
             "root" => {

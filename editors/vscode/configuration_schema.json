@@ -1329,7 +1329,7 @@
 			"required": ["enabled"],
 			"properties": {
 				"clientKind": {
-					"description": "The kind of client. Default value is `git`.",
+					"description": "The kind of client.",
 					"anyOf": [
 						{ "$ref": "#/definitions/VcsClientKind" },
 						{ "type": "null" }
@@ -1340,7 +1340,7 @@
 					"type": "boolean"
 				},
 				"root": {
-					"description": "The folder where Rome should check for VCS files. By default, Rome will use the the working directory.",
+					"description": "The folder where Rome should check for VCS files. By default, Rome will use the same folder where `rome.json` was found.\n\nIf Rome can't fine the configuration, it will attempt to use the current working directory. If no current working directory can't be found, Rome won't use the VCS integration.",
 					"type": ["string", "null"]
 				},
 				"useIgnoreFile": {

@@ -17,7 +17,7 @@ pub struct VcsConfiguration {
 
     /// Whether Rome should use the VCS ignore file. When [true], Rome will ignore the files
     /// specified in the ignore file.
-    pub use_ignore_file: bool,
+    pub use_ignore_file: Option<bool>,
 
     /// The folder where Rome should check for VCS files. By default, Rome will use the same
     /// folder where `rome.json` was found.
@@ -26,6 +26,12 @@ pub struct VcsConfiguration {
     /// If no current working directory can't be found, Rome won't use the VCS integration.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub root: Option<String>,
+}
+
+impl VcsConfiguration {
+    pub const fn ignore_file_disabled(&self) -> bool {
+        matches!(self.use_ignore_file, Some(false))
+    }
 }
 
 #[derive(Debug, Default, Deserialize, Serialize)]

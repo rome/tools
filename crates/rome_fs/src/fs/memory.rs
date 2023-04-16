@@ -161,6 +161,11 @@ impl FileSystem for MemoryFileSystem {
     fn working_directory(&self) -> Option<PathBuf> {
         None
     }
+
+    fn path_exists(&self, path: &Path) -> bool {
+        let files = self.files.0.read();
+        files.get(path).is_some()
+    }
 }
 
 struct MemoryFile {

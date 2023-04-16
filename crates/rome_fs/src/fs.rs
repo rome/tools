@@ -33,6 +33,9 @@ pub trait FileSystem: Send + Sync + RefUnwindSafe {
     /// Return the path to the working directory
     fn working_directory(&self) -> Option<PathBuf>;
 
+    /// Checks if the given path exists in the file system
+    fn path_exists(&self, path: &Path) -> bool;
+
     fn auto_search(
         &self,
         mut file_path: PathBuf,
@@ -251,6 +254,10 @@ where
 
     fn working_directory(&self) -> Option<PathBuf> {
         T::working_directory(self)
+    }
+
+    fn path_exists(&self, path: &Path) -> bool {
+        T::path_exists(self, path)
     }
 }
 
