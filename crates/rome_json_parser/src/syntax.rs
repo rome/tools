@@ -1,7 +1,8 @@
 use crate::prelude::*;
+use rome_diagnostics::DiagnosticExt;
 use rome_json_syntax::JsonSyntaxKind;
 use rome_json_syntax::JsonSyntaxKind::*;
-use rome_parser::diagnostic::{expected_any, expected_node};
+use rome_parser::diagnostic::{expected_any, expected_node, expected_token};
 use rome_parser::parse_recovery::ParseRecovery;
 use rome_parser::parsed_syntax::ParsedSyntax::Absent;
 use rome_parser::prelude::ParsedSyntax::Present;
@@ -171,10 +172,19 @@ fn parse_sequence(p: &mut JsonParser, root_kind: SequenceKind) -> ParsedSyntax {
         let mut progress = ParserProgress::default();
 
         while !p.at(EOF) && !p.at(current.kind.close_paren()) {
-            if first {
+            let last_token = if first {
                 first = false;
+				Some(current.kind.open_paren())
             } else {
-                p.expect(T![,]);
+                let last_token = p.last();
+				p.expect(T![,]);
+				last_token
+            };
+
+            if p.at(current.kind.close_paren()) && !matches!(last_token, Some(T![,]) | None) {
+				// SAFETY: we know that previous should not be none
+				// let builder = p.err_builder("Trailing comma is not allowed in json", p.cur_range()).with_severity(rome_diagnostics::Severity::Warning);
+                break;
             }
 
             progress.assert_progressing(p);
@@ -214,6 +224,9 @@ fn parse_sequence(p: &mut JsonParser, root_kind: SequenceKind) -> ParsedSyntax {
             }
         }
 
+        // while p.at(T![,]) {
+        //     p.bump_any();
+        // }
         current.list.complete(p, current.kind.list_kind());
         p.expect(current.kind.close_paren());
         let node = current.node.complete(p, current.kind.node_kind());

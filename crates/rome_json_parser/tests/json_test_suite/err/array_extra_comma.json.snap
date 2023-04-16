@@ -50,12 +50,7 @@ JsonRoot {
 ```
 array_extra_comma.json:1:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × expected an array, an object, or a literal but instead found ']'
-  
-  > 1 │ ["",]
-      │     ^
-  
-  i Expected an array, an object, or a literal here
+  × Trailing comma is not allowed in json
   
   > 1 │ ["",]
       │     ^
