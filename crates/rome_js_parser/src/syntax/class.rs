@@ -2605,7 +2605,7 @@ fn parse_decorator(p: &mut JsParser) -> ParsedSyntax {
     p.bump(T![@]);
 
     if let Some(mut complete_marker) =
-        parse_expression(p, ExpressionContext::default().and_in_ts_decorator(true))
+        parse_lhs_expr(p, ExpressionContext::default().and_in_decorator(true))
             .or_add_diagnostic(p, expected_expression)
     {
         if !matches!(
@@ -2652,7 +2652,7 @@ fn parse_decorator_bogus(p: &mut JsParser) -> ParsedSyntax {
         //  @Decorator((val) => val)
         //  badField!: number
         // }
-        parse_lhs_expr(p, ExpressionContext::default().and_in_ts_decorator(true))
+        parse_lhs_expr(p, ExpressionContext::default().and_in_decorator(true))
             .or_add_diagnostic(p, expected_expression);
 
         Present(m.complete(p, JS_BOGUS))

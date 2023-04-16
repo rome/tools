@@ -99,13 +99,13 @@ JsModule {
 ts_static_initialization_block_member_with_decorators.ts:2:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Static class blocks cannot have any modifier.
-
+  
     1 │ class Foo {
   > 2 │   @dec static {
       │   ^^^^
     3 │     this.a = "test";
     4 │   }
-
+  
 --
 class Foo {
   @dec static {

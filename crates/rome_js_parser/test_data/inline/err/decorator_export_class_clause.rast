@@ -137,24 +137,24 @@ JsModule {
 decorator_export_class_clause.js:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Decorators are not valid here
-
+  
   > 1 │ @decorator
       │ ^^^^^^^^^^
     2 │ export let a;
     3 │ @decorator1 @decorator2
-
+  
 --
 decorator_export_class_clause.js:3:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Decorators are not valid here
-
+  
     1 │ @decorator
     2 │ export let a;
   > 3 │ @decorator1 @decorator2
       │ ^^^^^^^^^^^^^^^^^^^^^^^
     4 │ export function Foo() { }
-    5 │
-
+    5 │ 
+  
 --
 @decorator
 export let a;

@@ -116,23 +116,23 @@ JsModule {
 --
 ts_declare_const_initializer.ts:1:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Decorators are not valid here
-
+  × Decorators are not valid here.
+  
   > 1 │ declare @decorator class D {}
       │         ^^^^^^^^^^
     2 │ declare @decorator abstract class D {}
-    3 │
-
+    3 │ 
+  
 --
 ts_declare_const_initializer.ts:2:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Decorators are not valid here
-
+  × Decorators are not valid here.
+  
     1 │ declare @decorator class D {}
   > 2 │ declare @decorator abstract class D {}
       │         ^^^^^^^^^^
-    3 │
-
+    3 │ 
+  
 --
 declare @decorator class D {}
 declare @decorator abstract class D {}

@@ -470,223 +470,223 @@ JsModule {
 import_attribute_err.js:1:25 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `:` but instead found `,`
-
+  
   > 1 │ import "foo" with { type, "json" };
       │                         ^
     2 │ import "bar" \u{61}ith { type: "json" };
     3 │ import { foo } with { type: "json" };
-
+  
   i Remove ,
-
+  
 --
 import_attribute_err.js:1:34 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `:` but instead found `}`
-
+  
   > 1 │ import "foo" with { type, "json" };
       │                                  ^
     2 │ import "bar" \u{61}ith { type: "json" };
     3 │ import { foo } with { type: "json" };
-
+  
   i Remove }
-
+  
 --
 import_attribute_err.js:2:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
-
+  
     1 │ import "foo" with { type, "json" };
   > 2 │ import "bar" \u{61}ith { type: "json" };
       │              ^^^^^^^^^
     3 │ import { foo } with { type: "json" };
     4 │ import "lorem"
-
+  
   i An explicit or implicit semicolon is expected here...
-
+  
     1 │ import "foo" with { type, "json" };
   > 2 │ import "bar" \u{61}ith { type: "json" };
       │              ^^^^^^^^^
     3 │ import { foo } with { type: "json" };
     4 │ import "lorem"
-
+  
   i ...Which is required to end this statement
-
+  
     1 │ import "foo" with { type, "json" };
   > 2 │ import "bar" \u{61}ith { type: "json" };
       │ ^^^^^^^^^^^^^
     3 │ import { foo } with { type: "json" };
     4 │ import "lorem"
-
+  
 --
 import_attribute_err.js:2:24 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
-
+  
     1 │ import "foo" with { type, "json" };
   > 2 │ import "bar" \u{61}ith { type: "json" };
       │                        ^
     3 │ import { foo } with { type: "json" };
     4 │ import "lorem"
-
+  
   i An explicit or implicit semicolon is expected here...
-
+  
     1 │ import "foo" with { type, "json" };
   > 2 │ import "bar" \u{61}ith { type: "json" };
       │                        ^
     3 │ import { foo } with { type: "json" };
     4 │ import "lorem"
-
+  
   i ...Which is required to end this statement
-
+  
     1 │ import "foo" with { type, "json" };
   > 2 │ import "bar" \u{61}ith { type: "json" };
       │              ^^^^^^^^^^^
     3 │ import { foo } with { type: "json" };
     4 │ import "lorem"
-
+  
 --
 import_attribute_err.js:3:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `from` but instead found `with`
-
+  
     1 │ import "foo" with { type, "json" };
     2 │ import "bar" \u{61}ith { type: "json" };
   > 3 │ import { foo } with { type: "json" };
       │                ^^^^
     4 │ import "lorem"
     5 │ with { type: "json" }
-
+  
   i Remove with
-
+  
 --
 import_attribute_err.js:5:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `(` but instead found `{`
-
+  
     3 │ import { foo } with { type: "json" };
     4 │ import "lorem"
   > 5 │ with { type: "json" }
       │      ^
     6 │ import foo2 from "foo.json" with { "type": "json", type: "html", "type": "js" };
     7 │ import "x" with;
-
+  
   i Remove {
-
+  
 --
 import_attribute_err.js:5:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × `with` statements are not allowed in strict mode
-
+  
     3 │ import { foo } with { type: "json" };
     4 │ import "lorem"
   > 5 │ with { type: "json" }
       │ ^^^^^^^^^^^^^^^^^^^^^
     6 │ import foo2 from "foo.json" with { "type": "json", type: "html", "type": "js" };
     7 │ import "x" with;
-
+  
 --
 import_attribute_err.js:6:36 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Duplicate assertion keys are not allowed
-
+  
     4 │ import "lorem"
     5 │ with { type: "json" }
   > 6 │ import foo2 from "foo.json" with { "type": "json", type: "html", "type": "js" };
       │                                    ^^^^^^
     7 │ import "x" with;
     8 │ import ipsum from "ipsum.json" with { type: "json", lazy: true, startAtLine: 1 };
-
+  
   i First use of the key `type`
-
+  
     4 │ import "lorem"
     5 │ with { type: "json" }
   > 6 │ import foo2 from "foo.json" with { "type": "json", type: "html", "type": "js" };
       │                                    ^^^^^^
     7 │ import "x" with;
     8 │ import ipsum from "ipsum.json" with { type: "json", lazy: true, startAtLine: 1 };
-
+  
   i second use here
-
+  
     4 │ import "lorem"
     5 │ with { type: "json" }
   > 6 │ import foo2 from "foo.json" with { "type": "json", type: "html", "type": "js" };
       │                                                    ^^^^
     7 │ import "x" with;
     8 │ import ipsum from "ipsum.json" with { type: "json", lazy: true, startAtLine: 1 };
-
+  
 --
 import_attribute_err.js:7:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `{` but instead found `;`
-
+  
     5 │ with { type: "json" }
     6 │ import foo2 from "foo.json" with { "type": "json", type: "html", "type": "js" };
   > 7 │ import "x" with;
       │                ^
     8 │ import ipsum from "ipsum.json" with { type: "json", lazy: true, startAtLine: 1 };
     9 │ import { a } from "a.json" with
-
+  
   i Remove ;
-
+  
 --
 import_attribute_err.js:8:59 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `string literal` but instead found `true`
-
+  
      6 │ import foo2 from "foo.json" with { "type": "json", type: "html", "type": "js" };
      7 │ import "x" with;
    > 8 │ import ipsum from "ipsum.json" with { type: "json", lazy: true, startAtLine: 1 };
        │                                                           ^^^^
      9 │ import { a } from "a.json" with
-    10 │
-
+    10 │ 
+  
   i Remove true
-
+  
 --
 import_attribute_err.js:8:63 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `:` but instead found `,`
-
+  
      6 │ import foo2 from "foo.json" with { "type": "json", type: "html", "type": "js" };
      7 │ import "x" with;
    > 8 │ import ipsum from "ipsum.json" with { type: "json", lazy: true, startAtLine: 1 };
        │                                                               ^
      9 │ import { a } from "a.json" with
-    10 │
-
+    10 │ 
+  
   i Remove ,
-
+  
 --
 import_attribute_err.js:8:78 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `string literal` but instead found `1`
-
+  
      6 │ import foo2 from "foo.json" with { "type": "json", type: "html", "type": "js" };
      7 │ import "x" with;
    > 8 │ import ipsum from "ipsum.json" with { type: "json", lazy: true, startAtLine: 1 };
        │                                                                              ^
      9 │ import { a } from "a.json" with
-    10 │
-
+    10 │ 
+  
   i Remove 1
-
+  
 --
 import_attribute_err.js:10:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `{` but instead the file ends
-
+  
      8 │ import ipsum from "ipsum.json" with { type: "json", lazy: true, startAtLine: 1 };
      9 │ import { a } from "a.json" with
-  > 10 │
-       │
-
+  > 10 │ 
+       │ 
+  
   i the file ends here
-
+  
      8 │ import ipsum from "ipsum.json" with { type: "json", lazy: true, startAtLine: 1 };
      9 │ import { a } from "a.json" with
-  > 10 │
-       │
-
+  > 10 │ 
+       │ 
+  
 --
 import "foo" with { type, "json" };
 import "bar" \u{61}ith { type: "json" };

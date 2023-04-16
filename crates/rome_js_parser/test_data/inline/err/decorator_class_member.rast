@@ -674,97 +674,97 @@ JsModule {
 decorator_class_member.ts:2:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Decorators are not valid here
-
+  
     1 │ class Foo {
   > 2 │    @dec constructor() {}
       │    ^^^^
     3 │    @dec [index: string]: { props: string }
     4 │ }
-
+  
 --
 decorator_class_member.ts:3:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Decorators are not valid here
-
+  
     1 │ class Foo {
     2 │    @dec constructor() {}
   > 3 │    @dec [index: string]: { props: string }
       │    ^^^^
     4 │ }
     5 │ class Quiz {
-
+  
 --
 decorator_class_member.ts:6:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Decorators are not valid here
-
+  
     4 │ }
     5 │ class Quiz {
   > 6 │    @dec public constructor() {}
       │    ^^^^
     7 │ }
     8 │ class Bar extends Foo {
-
+  
 --
 decorator_class_member.ts:9:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Decorators are not valid here
-
+  
      7 │ }
      8 │ class Bar extends Foo {
    > 9 │    @dec
        │    ^^^^
     10 │    constructor();
     11 │    constructor(a: String)
-
+  
 --
 decorator_class_member.ts:15:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Decorators are not valid here
-
+  
     13 │ }
     14 │ declare class Baz {
   > 15 │   @dec method();
        │   ^^^^
     16 │   @dec get foo();
     17 │   @dec set foo(a);
-
+  
 --
 decorator_class_member.ts:16:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Decorators are not valid here
-
+  
     14 │ declare class Baz {
     15 │   @dec method();
   > 16 │   @dec get foo();
        │   ^^^^
     17 │   @dec set foo(a);
     18 │ }
-
+  
 --
 decorator_class_member.ts:17:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Decorators are not valid here
-
+  
     15 │   @dec method();
     16 │   @dec get foo();
   > 17 │   @dec set foo(a);
        │   ^^^^
     18 │ }
     19 │ abstract class Qux {
-
+  
 --
 decorator_class_member.ts:20:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Decorators are not valid here
-
+  
     18 │ }
     19 │ abstract class Qux {
   > 20 │   @dec declare static foo: string;
        │   ^^^^
     21 │ }
-    22 │
-
+    22 │ 
+  
 --
 class Foo {
    @dec constructor() {}

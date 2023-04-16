@@ -393,10 +393,11 @@ fn diagnostics_print_correctly() {
 #[test]
 pub fn quick_test() {
     let code = r#"
-class Foo {
-  method(@dec a: string) {}
+export default class MyComponent {
+  @task
+  *foo() {
   }
-
+}
 
     "#;
     let root = parse(code, SourceType::ts());

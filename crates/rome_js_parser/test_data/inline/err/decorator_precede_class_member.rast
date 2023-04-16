@@ -576,157 +576,157 @@ JsModule {
 decorator_precede_class_member.ts:2:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Decorators must precede the name and all keywords of property declarations
-
+  
     1 │ class Bar {
   > 2 │   public @dec get foo() {}
       │          ^^^^
     3 │   static @dec foo: string;
     4 │   readonly @dec test() {}
-
+  
 --
 decorator_precede_class_member.ts:3:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Decorators must precede the name and all keywords of property declarations
-
+  
     1 │ class Bar {
     2 │   public @dec get foo() {}
   > 3 │   static @dec foo: string;
       │          ^^^^
     4 │   readonly @dec test() {}
     5 │   private @dec test() {}
-
+  
 --
 decorator_precede_class_member.ts:4:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Readonly can only appear on a property declaration or index signature.
-
+  
     2 │   public @dec get foo() {}
     3 │   static @dec foo: string;
   > 4 │   readonly @dec test() {}
       │   ^^^^^^^^
     5 │   private @dec test() {}
     6 │   protected @dec test() {}
-
+  
 --
 decorator_precede_class_member.ts:4:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Decorators must precede the name and all keywords of property declarations
-
+  
     2 │   public @dec get foo() {}
     3 │   static @dec foo: string;
   > 4 │   readonly @dec test() {}
       │            ^^^^
     5 │   private @dec test() {}
     6 │   protected @dec test() {}
-
+  
 --
 decorator_precede_class_member.ts:5:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Decorators must precede the name and all keywords of property declarations
-
+  
     3 │   static @dec foo: string;
     4 │   readonly @dec test() {}
   > 5 │   private @dec test() {}
       │           ^^^^
     6 │   protected @dec test() {}
     7 │ }
-
+  
 --
 decorator_precede_class_member.ts:6:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Decorators must precede the name and all keywords of property declarations
-
+  
     4 │   readonly @dec test() {}
     5 │   private @dec test() {}
   > 6 │   protected @dec test() {}
       │             ^^^^
     7 │ }
     8 │ class Qux extends Bar {
-
+  
 --
 decorator_precede_class_member.ts:9:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Decorators must precede the name and all keywords of property declarations
-
+  
      7 │ }
      8 │ class Qux extends Bar {
    > 9 │   public @dec get foo() {}
        │          ^^^^
     10 │   static @dec foo: string;
     11 │   readonly @dec test() {}
-
+  
 --
 decorator_precede_class_member.ts:10:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Decorators must precede the name and all keywords of property declarations
-
+  
      8 │ class Qux extends Bar {
      9 │   public @dec get foo() {}
   > 10 │   static @dec foo: string;
        │          ^^^^
     11 │   readonly @dec test() {}
     12 │   private @dec test() {}
-
+  
 --
 decorator_precede_class_member.ts:11:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Readonly can only appear on a property declaration or index signature.
-
+  
      9 │   public @dec get foo() {}
     10 │   static @dec foo: string;
   > 11 │   readonly @dec test() {}
        │   ^^^^^^^^
     12 │   private @dec test() {}
     13 │   accessor @dec test() {}
-
+  
 --
 decorator_precede_class_member.ts:11:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Decorators must precede the name and all keywords of property declarations
-
+  
      9 │   public @dec get foo() {}
     10 │   static @dec foo: string;
   > 11 │   readonly @dec test() {}
        │            ^^^^
     12 │   private @dec test() {}
     13 │   accessor @dec test() {}
-
+  
 --
 decorator_precede_class_member.ts:12:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Decorators must precede the name and all keywords of property declarations
-
+  
     10 │   static @dec foo: string;
     11 │   readonly @dec test() {}
   > 12 │   private @dec test() {}
        │           ^^^^
     13 │   accessor @dec test() {}
     14 │ }
-
+  
 --
 decorator_precede_class_member.ts:13:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'accessor' modifier is only allowed on properties.
-
+  
     11 │   readonly @dec test() {}
     12 │   private @dec test() {}
   > 13 │   accessor @dec test() {}
        │   ^^^^^^^^
     14 │ }
-    15 │
-
+    15 │ 
+  
 --
 decorator_precede_class_member.ts:13:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Decorators must precede the name and all keywords of property declarations
-
+  
     11 │   readonly @dec test() {}
     12 │   private @dec test() {}
   > 13 │   accessor @dec test() {}
        │            ^^^^
     14 │ }
-    15 │
-
+    15 │ 
+  
 --
 class Bar {
   public @dec get foo() {}

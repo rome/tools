@@ -165,26 +165,26 @@ JsModule {
 --
 decorator_class_declaration.js:2:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Decorators are not valid here
-
+  × Decorators are not valid here.
+  
     1 │ function bar() {
   > 2 │      @decorator
       │      ^^^^^^^^^^
     3 │      let a;
     4 │      @decorator @decorator2
-
+  
 --
 decorator_class_declaration.js:4:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Decorators are not valid here
-
+  × Decorators are not valid here.
+  
     2 │      @decorator
     3 │      let a;
   > 4 │      @decorator @decorator2
       │      ^^^^^^^^^^^^^^^^^^^^^^
     5 │      function Foo() { }
     6 │ }
-
+  
 --
 function bar() {
      @decorator
