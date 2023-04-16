@@ -1,7 +1,7 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: js/ternaries/func-call.js
+assertion_line: 212
+info: js/ternaries/func-call.js
 ---
 
 # Input
@@ -11,10 +11,11 @@ fn(
   bifornCringerMoshedPerplexSawder,
   askTrovenaBeenaDependsRowans,
   glimseGlyphsHazardNoopsTieTie === averredBathersBoxroomBuggyNurl &&
-    anodyneCondosMalateOverateRetinol 
-      ? annularCooeedSplicesWalksWayWay 
-      : kochabCooieGameOnOboleUnweave 
+    anodyneCondosMalateOverateRetinol
+      ? annularCooeedSplicesWalksWayWay
+      : kochabCooieGameOnOboleUnweave
 );
+// TODO(rattrayalex): try to indent consequent/alternate here.
 
 ```
 
@@ -46,6 +47,7 @@ fn(
     ? annularCooeedSplicesWalksWayWay
     : kochabCooieGameOnOboleUnweave,
 );
+// TODO(rattrayalex): try to indent consequent/alternate here.
 ```
 
 

@@ -1,7 +1,7 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: js/decorators/class-expression/arguments.js
+assertion_line: 212
+info: js/decorators/class-expression/arguments.js
 ---
 
 # Input

@@ -1,7 +1,7 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: js/tuple/tuple-trailing-comma.js
+assertion_line: 212
+info: js/tuple/tuple-trailing-comma.js
 ---
 
 # Input

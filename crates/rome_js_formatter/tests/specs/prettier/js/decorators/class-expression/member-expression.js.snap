@@ -1,7 +1,7 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: js/decorators/class-expression/member-expression.js
+assertion_line: 212
+info: js/decorators/class-expression/member-expression.js
 ---
 
 # Input
@@ -19,18 +19,16 @@ info:
 --- Prettier
 +++ Rome
 @@ -1,8 +1,6 @@
--((
+ (
 -  @deco
 -  class Foo {}
--).name);
--((
--  @deco
--  class {}
--).name);
-+(
+-).name;
 +@deco class Foo {}
 +).name
-+(
+ (
+-  @deco
+-  class {}
+-).name;
 +@deco class {}
 +).name
 ```

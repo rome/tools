@@ -1,5 +1,5 @@
-({} satisfies {});
-({} satisfies X);
+({}) satisfies {};
+({}) satisfies X;
 () => ({} satisfies X);
 this.isTabActionBar((e.target || e.srcElement) satisfies HTMLElement);
 

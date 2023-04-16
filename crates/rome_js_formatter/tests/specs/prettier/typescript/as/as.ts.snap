@@ -1,7 +1,7 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: typescript/as/as.ts
+assertion_line: 212
+info: typescript/as/as.ts
 ---
 
 # Input
@@ -56,21 +56,11 @@ const iter2 = createIterator(self.controller, child, self.tag as SyncFunctionCom
 ```diff
 --- Prettier
 +++ Rome
-@@ -17,15 +17,15 @@
- >) {}
- export const MobxTypedForm = class extends (Form as { new (): any }) {};
- export abstract class MobxTypedForm1 extends (Form as { new (): any }) {}
--({} as {});
-+({}) as {};
- function* g() {
-   const test = (yield "foo") as number;
- }
- async function g1() {
+@@ -25,7 +25,7 @@
    const test = (await "foo") as number;
  }
--({} as X);
+ ({}) as X;
 -() => ({} as X);
-+({}) as X;
 +() => ({}) as X;
  const state = JSON.stringify({
    next: window.location.href,
@@ -154,4 +144,5 @@ const iter2 = createIterator(
    43:   thisIsAnIdentifier as thisIsAReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyLongInterface;
    53:   thisIsAReallyReallyReallyReallyReallyReallyReallyReallyReallyLongIdentifier as [
 ```
+
 

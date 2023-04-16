@@ -1,7 +1,7 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: typescript/satisfies-operators/satisfies.ts
+assertion_line: 212
+info: typescript/satisfies-operators/satisfies.ts
 ---
 
 # Input
@@ -39,11 +39,9 @@ foo as unknown satisfies Bar;
 --- Prettier
 +++ Rome
 @@ -1,6 +1,6 @@
--({} satisfies {});
--({} satisfies X);
+ ({}) satisfies {};
+ ({}) satisfies X;
 -() => ({} satisfies X);
-+({}) satisfies {};
-+({}) satisfies X;
 +() => ({}) satisfies X;
  this.isTabActionBar((e.target || e.srcElement) satisfies HTMLElement);
  

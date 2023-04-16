@@ -1,7 +1,7 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: jsx/newlines/test.js
+assertion_line: 212
+info: jsx/newlines/test.js
 ---
 
 # Input
@@ -190,4 +190,5 @@ regression_extra_newline_2 = (
 ```
    45:     <span className="nuclide-console-new-messages-notification-icon icon icon-nuclicon-arrow-down" />
 ```
+
 
