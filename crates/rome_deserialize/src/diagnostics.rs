@@ -1,16 +1,13 @@
 use rome_console::fmt::Display;
 use rome_console::{markup, MarkupBuf};
 use rome_diagnostics::location::AsSpan;
-use rome_diagnostics::{Advices, Diagnostic, LogCategory, MessageAndDescription, Visit};
+use rome_diagnostics::{Advices, Diagnostic, LogCategory, MessageAndDescription, Severity, Visit};
 use rome_rowan::{SyntaxError, TextRange};
 use serde::{Deserialize, Serialize};
 
 /// Diagnostic emitted during the deserialization
 #[derive(Debug, Serialize, Clone, Deserialize, Diagnostic)]
-#[diagnostic(
-    category = "deserialize",
-    severity = Error
-)]
+#[diagnostic(category = "deserialize")]
 pub struct DeserializationDiagnostic {
     #[message]
     #[description]
@@ -19,6 +16,8 @@ pub struct DeserializationDiagnostic {
     range: Option<TextRange>,
     #[advice]
     deserialization_advice: DeserializationAdvice,
+    #[severity]
+    severity: Severity,
 }
 
 impl DeserializationDiagnostic {
@@ -27,6 +26,7 @@ impl DeserializationDiagnostic {
             reason: markup! {{reason}}.to_owned().into(),
             range: None,
             deserialization_advice: DeserializationAdvice::default(),
+            severity: Severity::Error,
         }
     }
 
@@ -37,14 +37,14 @@ impl DeserializationDiagnostic {
         range: impl AsSpan,
     ) -> Self {
         Self::new(markup! {
-                "The value of key "<Emphasis>{{key_name}}</Emphasis>" is incorrect. Expected "<Emphasis>{{expected_type}}</Emphasis>
+                "The value of key "<Emphasis>{{key_name}}</Emphasis>" is incorrect. Expected a "<Emphasis>{{expected_type}}"."</Emphasis>
             }).with_range(range)
     }
 
     /// Emitted when a generic node has an incorrect type
     pub fn new_incorrect_type(expected_type: impl Display, range: impl AsSpan) -> Self {
         Self::new(markup! {
-            "Incorrect type, expected a "<Emphasis>{{expected_type}}</Emphasis>
+            "Incorrect type, expected a "<Emphasis>{{expected_type}}"."</Emphasis>
         })
         .with_range(range)
     }
@@ -55,7 +55,7 @@ impl DeserializationDiagnostic {
         range: impl AsSpan,
         known_members: &[&str],
     ) -> Self {
-        Self::new(markup!("Found an unknown key `"<Emphasis>{{ key_name }}</Emphasis>"`" ))
+        Self::new(markup!("Found an unknown key `"<Emphasis>{{ key_name }}</Emphasis>"`." ))
             .with_range(range)
             .note_with_list("Accepted keys", known_members)
     }
@@ -66,9 +66,9 @@ impl DeserializationDiagnostic {
         range: impl AsSpan,
         known_variants: &[&str],
     ) -> Self {
-        Self::new(markup! {"Found an unknown value `"<Emphasis>{{ variant_name }}</Emphasis>"`"})
+        Self::new(markup! {"Found an unknown value `"<Emphasis>{{ variant_name }}</Emphasis>"`."})
             .with_range(range)
-            .note_with_list("Accepted values", known_variants)
+            .note_with_list("Accepted values:", known_variants)
     }
 
     /// Adds a range to the diagnostic
@@ -82,6 +82,12 @@ impl DeserializationDiagnostic {
         self.deserialization_advice
             .notes
             .push((markup! {{message}}.to_owned(), vec![]));
+        self
+    }
+
+    /// Changes the severity of the diagnostic
+    pub fn with_custom_severity(mut self, severity: Severity) -> Self {
+        self.severity = severity;
         self
     }
 

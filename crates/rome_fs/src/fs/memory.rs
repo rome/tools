@@ -7,7 +7,7 @@ use std::str;
 use std::sync::Arc;
 
 use parking_lot::{lock_api::ArcMutexGuard, Mutex, RawMutex, RwLock};
-use rome_diagnostics::Error;
+use rome_diagnostics::{Error, Severity};
 
 use crate::fs::OpenOptions;
 use crate::{FileSystem, RomePath, TraversalContext, TraversalScope};
@@ -161,6 +161,11 @@ impl FileSystem for MemoryFileSystem {
     fn working_directory(&self) -> Option<PathBuf> {
         None
     }
+
+    fn path_exists(&self, path: &Path) -> bool {
+        let files = self.files.0.read();
+        files.get(path).is_some()
+    }
 }
 
 struct MemoryFile {
@@ -253,6 +258,7 @@ impl<'scope> TraversalScope<'scope> for MemoryTraversalScope<'scope> {
                             ErrorKind::InfiniteSymlinkExpansion(path.to_string_lossy().to_string())
                         }
                     },
+                    severity: Severity::Warning,
                 }));
             }
         }

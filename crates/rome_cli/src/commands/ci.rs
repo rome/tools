@@ -1,4 +1,7 @@
-use crate::parse_arguments::{apply_files_settings_from_cli, apply_format_settings_from_cli};
+use crate::parse_arguments::{
+    apply_files_settings_from_cli, apply_format_settings_from_cli, apply_vcs_settings_from_cli,
+};
+use crate::vcs::store_path_to_ignore_from_vcs;
 use crate::{
     configuration::load_configuration, execute_mode, CliDiagnostic, CliSession, Execution,
     TraversalMode,
@@ -11,7 +14,8 @@ use rome_service::workspace::UpdateSettingsParams;
 
 /// Handler for the "ci" command of the Rome CLI
 pub(crate) fn ci(mut session: CliSession) -> Result<(), CliDiagnostic> {
-    let (mut configuration, diagnostics, _) = load_configuration(&mut session)?.consume();
+    let (mut configuration, diagnostics, configuration_path) =
+        load_configuration(&mut session)?.consume();
 
     if !diagnostics.is_empty() {
         let console = &mut session.app.console;
@@ -76,6 +80,12 @@ pub(crate) fn ci(mut session: CliSession) -> Result<(), CliDiagnostic> {
     if !configuration.is_formatter_disabled() {
         apply_format_settings_from_cli(&mut session, &mut configuration)?;
     }
+
+    apply_vcs_settings_from_cli(&mut session, &mut configuration)?;
+
+    // check if support of git ignore files is enabled
+    let vcs_base_path = configuration_path.or(session.app.fs.working_directory());
+    store_path_to_ignore_from_vcs(&mut session, &mut configuration, vcs_base_path)?;
 
     session
         .app
