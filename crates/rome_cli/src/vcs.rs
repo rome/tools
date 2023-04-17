@@ -16,31 +16,32 @@ pub(crate) fn store_path_to_ignore_from_vcs(
     vcs_base_path: Option<PathBuf>,
 ) -> Result<(), CliDiagnostic> {
     let verbose = session.args.contains("--verbose");
-    if let Some(vcs) = &configuration.vcs {
-        if vcs.enabled {
-            let vcs_base_path = match (vcs_base_path, &vcs.root) {
-                (Some(vcs_base_path), Some(root)) => vcs_base_path.join(root),
-                (None, Some(root)) => PathBuf::from(root),
-                (Some(vcs_base_path), None) => vcs_base_path,
-                (None, None) => {
-                    let console = &mut session.app.console;
-                    let diagnostic = DisabledVcs {};
-                    console.error(markup! {
+    let Some(vcs) = &configuration.vcs else {
+		return Ok(())
+	};
+    if vcs.enabled {
+        let vcs_base_path = match (vcs_base_path, &vcs.root) {
+            (Some(vcs_base_path), Some(root)) => vcs_base_path.join(root),
+            (None, Some(root)) => PathBuf::from(root),
+            (Some(vcs_base_path), None) => vcs_base_path,
+            (None, None) => {
+                let console = &mut session.app.console;
+                let diagnostic = DisabledVcs {};
+                console.error(markup! {
 					{if verbose { PrintDiagnostic::verbose(&diagnostic) } else { PrintDiagnostic::simple(&diagnostic) }}
                 });
-                    return Ok(());
-                }
-            };
-
-            let files_to_ignore = read_vcs_ignore_file(session, vcs_base_path, vcs)?;
-
-            if !files_to_ignore.is_empty() {
-                let files = configuration
-                    .files
-                    .get_or_insert_with(FilesConfiguration::default);
-                let ignored_files = files.ignore.get_or_insert_with(IndexSet::new);
-                ignored_files.extend(files_to_ignore.into_iter());
+                return Ok(());
             }
+        };
+
+        let files_to_ignore = read_vcs_ignore_file(session, vcs_base_path, vcs)?;
+
+        if !files_to_ignore.is_empty() {
+            let files = configuration
+                .files
+                .get_or_insert_with(FilesConfiguration::default);
+            let ignored_files = files.ignore.get_or_insert_with(IndexSet::new);
+            ignored_files.extend(files_to_ignore.into_iter());
         }
     }
     Ok(())
@@ -65,7 +66,6 @@ pub(crate) fn read_vcs_ignore_file(
                     return Err(CliDiagnostic::NoVcsFolderFound(NoVcsFolderFound {
                         path: git_folder.display().to_string(),
                         source: None,
-                        // source: Some(Error::from(IoError::from(err))),
                     }));
                 }
             }

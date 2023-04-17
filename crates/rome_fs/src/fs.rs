@@ -66,8 +66,6 @@ pub trait FileSystem: Send + Sync + RefUnwindSafe {
                     );
                     }
 
-                    // let deserialized = deserialize_from_json_str::<Configuration>(&buffer)
-                    //     .with_file_path(&configuration_path.display().to_string());
                     return Ok(Some((buffer, file_path)));
                 }
                 Err(err) => {
