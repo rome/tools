@@ -6,8 +6,7 @@ use crate::state::{
 };
 use crate::syntax::binding::parse_binding;
 use crate::syntax::expr::{
-    parse_assignment_expression_or_higher, parse_expression, parse_lhs_expr, parse_private_name,
-    ExpressionContext,
+    parse_assignment_expression_or_higher, parse_lhs_expr, parse_private_name, ExpressionContext,
 };
 use crate::syntax::function::{
     parse_any_parameter, parse_formal_parameter, parse_function_body, parse_parameter_list,
