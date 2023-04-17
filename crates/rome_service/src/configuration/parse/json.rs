@@ -5,7 +5,7 @@ mod configuration;
 mod files;
 mod formatter;
 mod javascript;
-mod json;
+mod json_visitor;
 mod linter;
 mod organize_imports;
 mod rules;

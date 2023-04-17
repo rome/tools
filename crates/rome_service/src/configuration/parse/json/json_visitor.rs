@@ -25,12 +25,9 @@ impl VisitNode<JsonLanguage> for JsonConfiguration {
         let (name, value) = self.get_key_and_value(key, value, diagnostics)?;
         let name_text = name.text();
 
-        match name_text {
-            "allowComments" => {
-                let glob_array = self.map_to_index_set_string(&value, name_text, diagnostics)?;
-                self.allow_comments = Some(glob_array);
-            }
-            _ => {}
+        if let "allowComments" = name_text {
+            let glob_array = self.map_to_index_set_string(&value, name_text, diagnostics)?;
+            self.allow_comments = Some(glob_array);
         }
 
         Some(())
