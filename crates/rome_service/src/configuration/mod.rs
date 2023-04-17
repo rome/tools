@@ -3,9 +3,9 @@
 //! The configuration is divided by "tool", and then it's possible to further customise it
 //! by language. The language might further options divided by tool.
 
-use crate::{DynRef, WorkspaceError, VERSION};
+use crate::{DynRef, WorkspaceError};
 use bpaf::Bpaf;
-use rome_fs::{AutoSearchResult, FileSystem, OpenOptions};
+use rome_fs::{FileSystem, OpenOptions};
 use serde::{Deserialize, Serialize};
 use std::fmt::Debug;
 use std::io::ErrorKind;
@@ -16,6 +16,9 @@ pub mod diagnostics;
 pub mod formatter;
 mod generated;
 pub mod javascript;
+mod javascript;
+mod javascript;
+mod json;
 pub mod linter;
 mod merge;
 pub mod organize_imports;
@@ -40,6 +43,8 @@ use rome_js_analyze::metadata;
 use rome_json_formatter::context::JsonFormatOptions;
 use rome_json_parser::parse_json;
 
+use self::json::JsonConfiguration;
+
 /// The configuration that is contained inside the file `rome.json`
 #[derive(Debug, Deserialize, Serialize, Clone, Bpaf)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
@@ -51,7 +56,7 @@ pub struct Configuration {
     #[bpaf(hide)]
     pub schema: Option<String>,
 
-    /// The configuration of the VCS integration
+    /// The configuration of the filesystem
     #[serde(skip_serializing_if = "Option::is_none")]
     #[bpaf(external(vcs_configuration), optional, hide_usage)]
     pub vcs: Option<VcsConfiguration>,
@@ -81,10 +86,9 @@ pub struct Configuration {
     #[bpaf(external(javascript_configuration), optional)]
     pub javascript: Option<JavascriptConfiguration>,
 
-    /// A list of paths to other JSON files, used to extends the current configuration.
+    /// Specific configuration for the JavaScript language
     #[serde(skip_serializing_if = "Option::is_none")]
-    #[bpaf(hide)]
-    pub extends: Option<StringSet>,
+    pub json: Option<JsonConfiguration>,
 }
 
 impl Default for Configuration {
@@ -100,7 +104,7 @@ impl Default for Configuration {
             javascript: None,
             schema: None,
             vcs: None,
-            extends: None,
+            json: None,
         }
     }
 }
@@ -114,7 +118,6 @@ impl Configuration {
         "javascript",
         "$schema",
         "organizeImports",
-        "extends",
     ];
     pub fn is_formatter_disabled(&self) -> bool {
         self.formatter
@@ -251,15 +254,10 @@ pub struct FilesConfiguration {
     #[serde(skip_serializing_if = "Option::is_none")]
     #[bpaf(hide)]
     pub ignore: Option<StringSet>,
-
-    /// Tells Rome to not emit diagnostics when handling files that doesn't know
-    #[serde(skip_serializing_if = "Option::is_none")]
-    #[bpaf(long("files-ignore-unknown"), argument("true|false"), optional)]
-    pub ignore_unknown: Option<bool>,
 }
 
 impl FilesConfiguration {
-    const KNOWN_KEYS: &'static [&'static str] = &["maxSize", "ignore", "ignoreUnknown"];
+    const KNOWN_KEYS: &'static [&'static str] = &["maxSize", "ignore"];
 }
 
 impl MergeWith<FilesConfiguration> for FilesConfiguration {
@@ -270,26 +268,15 @@ impl MergeWith<FilesConfiguration> for FilesConfiguration {
         if let Some(max_size) = other.max_size {
             self.max_size = Some(max_size)
         }
-        if let Some(ignore_unknown) = other.ignore_unknown {
-            self.ignore_unknown = Some(ignore_unknown)
-        }
     }
 }
 
 /// - [Result]: if an error occurred while loading the configuration file.
 /// - [Option]: sometimes not having a configuration file should not be an error, so we need this type.
-/// - [ConfigurationPayload]: The result of the operation
-type LoadConfig = Result<Option<ConfigurationPayload>, WorkspaceError>;
-
-pub struct ConfigurationPayload {
-    /// The result of the deserialization
-    pub deserialized: Deserialized<Configuration>,
-    /// The path of where the `rome.json` file was found. This contains the `rome.json` name.
-    pub configuration_file_path: PathBuf,
-    /// The base path of where the `rome.json` file was found.
-    /// This has to be used to resolve other configuration files.
-    pub configuration_directory_path: PathBuf,
-}
+/// - [Deserialized]: result of the deserialization of the configuration.
+/// - [Configuration]: the type needed to [Deserialized] to infer the return type.
+/// - [PathBuf]: the path of where the first `rome.json` path was found
+type LoadConfig = Result<Option<(Deserialized<Configuration>, PathBuf)>, WorkspaceError>;
 
 #[derive(Debug, Default, PartialEq)]
 pub enum ConfigurationBasePath {
@@ -333,22 +320,15 @@ pub fn load_config(
             None => PathBuf::new(),
         },
     };
+    let configuration_file_path = configuration_directory.join(config_name);
     let should_error = base_path.is_from_user();
 
     let result = file_system.auto_search(configuration_directory, config_name, should_error)?;
 
-    if let Some(auto_search_result) = result {
-        let AutoSearchResult {
-            content,
-            directory_path,
-            file_path,
-        } = auto_search_result;
-        let deserialized = deserialize_from_json_str::<Configuration>(&content);
-        Ok(Some(ConfigurationPayload {
-            deserialized,
-            configuration_file_path: file_path,
-            configuration_directory_path: directory_path,
-        }))
+    if let Some((buffer, configuration_path)) = result {
+        let deserialized = deserialize_from_json_str::<Configuration>(&buffer)
+            .with_file_path(&configuration_file_path.display().to_string());
+        Ok(Some((deserialized, configuration_path)))
     } else {
         Ok(None)
     }
@@ -378,17 +358,10 @@ pub fn create_config(
     })?;
 
     // we now check if rome is installed inside `node_modules` and if so, we
-    if VERSION == "0.0.0" {
-        let schema_path = Path::new("./node_modules/rome/configuration_schema.json");
-        let options = OpenOptions::default().read(true);
-        if fs.open_with_options(schema_path, options).is_ok() {
-            configuration.schema = schema_path.to_str().map(String::from);
-        }
-    } else {
-        configuration.schema = Some(format!(
-            "https://docs.rome.tools/schemas/{}/schema.json",
-            VERSION
-        ));
+    let schema_path = Path::new("./node_modules/rome/configuration_schema.json");
+    let options = OpenOptions::default().read(true);
+    if fs.open_with_options(schema_path, options).is_ok() {
+        configuration.schema = schema_path.to_str().map(String::from);
     }
 
     let contents = serde_json::to_string_pretty(&configuration).map_err(|_| {
