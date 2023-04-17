@@ -1,3 +1,4 @@
+use crate::configuration::json::JsonConfiguration;
 use crate::configuration::organize_imports::OrganizeImports;
 use crate::configuration::parse::json::vcs::validate_vcs_configuration;
 use crate::configuration::vcs::VcsConfiguration;
@@ -58,6 +59,11 @@ impl VisitNode<JsonLanguage> for Configuration {
                 let mut javascript = JavascriptConfiguration::default();
                 self.map_to_object(&value, name_text, &mut javascript, diagnostics)?;
                 self.javascript = Some(javascript);
+            }
+            "json" => {
+                let mut json = JsonConfiguration::default();
+                self.map_to_object(&value, name_text, &mut json, diagnostics)?;
+                self.json = Some(json);
             }
             "organizeImports" => {
                 let mut organize_imports = OrganizeImports::default();
