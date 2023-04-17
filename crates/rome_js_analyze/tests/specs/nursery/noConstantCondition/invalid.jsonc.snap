@@ -247,12 +247,12 @@ invalid.jsonc:1:5 lint/nursery/noConstantCondition ━━━━━━━━━�
 
 # Diagnostics
 ```
-invalid.jsonc:1:2 lint/nursery/noConstantCondition ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsonc:1:1 lint/nursery/noConstantCondition ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Unexpected constant condition.
   
   > 1 │ (q = 0) ? 1 : 2;
-      │  ^^^^^
+      │ ^^^^^^^
   
 
 ```

@@ -104,7 +104,7 @@ impl Rule for NoConstantCondition {
             }
         }
 
-        let test = conditional_stmt.test()?.omit_parentheses();
+        let test = conditional_stmt.test()?;
         is_constant_condition(&test, true, model).map(|_| test)
     }
 
