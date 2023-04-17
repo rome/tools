@@ -5,8 +5,8 @@ use rome_js_semantic::SemanticModel;
 use rome_js_syntax::{
     AnyJsArrayElement, AnyJsExpression, AnyJsLiteralExpression, AnyJsStatement,
     AnyJsTemplateElement, JsAssignmentOperator, JsConditionalExpression, JsDoWhileStatement,
-    JsForStatement, JsFunctionDeclaration, JsIfStatement, JsLogicalOperator, JsUnaryOperator,
-    JsWhileStatement, JsYieldExpression,
+    JsForStatement, JsFunctionDeclaration, JsFunctionExpression, JsIfStatement, JsLogicalOperator,
+    JsStatementList, JsUnaryOperator, JsWhileStatement, JsYieldExpression,
 };
 use rome_rowan::{declare_node_union, AstNode, AstSeparatedList};
 
@@ -74,7 +74,7 @@ declare_rule! {
     /// ```
     ///
     pub(crate) NoConstantCondition    {
-        version: "12.0.0",
+        version: "next",
         name: "noConstantCondition",
         recommended: true,
     }
@@ -97,8 +97,8 @@ impl Rule for NoConstantCondition {
         // We need to check the conditional statmenet is in a generator function.
         // If the statement has valid yield expression, we don't need to check the statement's `test`.
         if let Some(any_js_stmt) = conditional_stmt.body() {
-            if conditional_stmt.is_in_generator_function().is_some()
-                && has_valid_yield_expression(&any_js_stmt).is_some()
+            if conditional_stmt.is_in_generator_function().unwrap_or(false)
+                && has_valid_yield_expression(&any_js_stmt).unwrap_or(false)
             {
                 return None;
             }
@@ -137,15 +137,17 @@ impl ConditionalStatement {
             _ => None,
         }
     }
-    fn find_function_declaration(&self) -> Option<JsFunctionDeclaration> {
-        self.syntax()
-            .ancestors()
-            .find_map(JsFunctionDeclaration::cast)
-    }
     // Checks if the self statement is in a generator function
     fn is_in_generator_function(&self) -> Option<bool> {
-        self.find_function_declaration()
-            .map(|func_decl| func_decl.as_fields().star_token.is_some())
+        self.syntax().ancestors().find_map(|node| {
+            if let Some(func_decl) = JsFunctionDeclaration::cast(node.clone()) {
+                return Some(func_decl.as_fields().star_token.is_some());
+            };
+            if let Some(func_expr) = JsFunctionExpression::cast(node) {
+                return Some(func_expr.as_fields().star_token.is_some());
+            };
+            None
+        })
     }
 }
 
@@ -169,26 +171,36 @@ fn get_yield_expression(stmt: &AnyJsStatement) -> Option<JsYieldExpression> {
     Some(expr.clone())
 }
 
-// Checks recursively if the given statement has a valid yield expression
-fn has_valid_yield_expression(stmt: &AnyJsStatement) -> Option<bool> {
-    let block_stmt = stmt.as_js_block_statement()?;
-    let mut stmt_list = block_stmt.as_fields().statements.into_iter();
-    let first_stmt = stmt_list.next()?;
+fn get_stmt_list(stmt: &AnyJsStatement) -> Option<JsStatementList> {
+    Some(stmt.as_js_block_statement()?.as_fields().statements)
+}
 
-    if get_yield_expression(&first_stmt).is_some()
-        || stmt_list.any(|stmt| get_yield_expression(&stmt).is_some())
-    {
-        Some(true)
-    } else {
-        match first_stmt {
-            AnyJsStatement::JsWhileStatement(stmt) => {
-                has_valid_yield_expression(&stmt.body().ok()?)
+fn has_valid_yield_expression(stmt: &AnyJsStatement) -> Option<bool> {
+    let mut stmt_list = get_stmt_list(stmt)?.into_iter();
+
+    loop {
+        match stmt_list.next() {
+            Some(first_stmt) => {
+                if get_yield_expression(&first_stmt).is_some()
+                    || stmt_list.any(|stmt| get_yield_expression(&stmt).is_some())
+                {
+                    return Some(true);
+                } else {
+                    match first_stmt {
+                        AnyJsStatement::JsWhileStatement(stmt) => {
+                            stmt_list = get_stmt_list(&stmt.body().ok()?)?.into_iter();
+                        }
+                        AnyJsStatement::JsDoWhileStatement(stmt) => {
+                            stmt_list = get_stmt_list(&stmt.body().ok()?)?.into_iter();
+                        }
+                        AnyJsStatement::JsForStatement(stmt) => {
+                            stmt_list = get_stmt_list(&stmt.body().ok()?)?.into_iter();
+                        }
+                        _ => return None,
+                    }
+                }
             }
-            AnyJsStatement::JsDoWhileStatement(stmt) => {
-                has_valid_yield_expression(&stmt.body().ok()?)
-            }
-            AnyJsStatement::JsForStatement(stmt) => has_valid_yield_expression(&stmt.body().ok()?),
-            _ => has_valid_yield_expression(&first_stmt),
+            None => return None,
         }
     }
 }
@@ -514,3 +526,27 @@ mod tests {
         assert_boolean_value("-3.14", true);
     }
 }
+
+// Checks recursively if the given statement has a valid yield expression
+// fn has_valid_yield_expression(stmt: &AnyJsStatement) -> Option<bool> {
+//     let block_stmt = stmt.as_js_block_statement()?;
+//     let mut stmt_list = block_stmt.as_fields().statements.into_iter();
+//     let first_stmt = stmt_list.next()?;
+
+//     if get_yield_expression(&first_stmt).is_some()
+//         || stmt_list.any(|stmt| get_yield_expression(&stmt).is_some())
+//     {
+//         Some(true)
+//     } else {
+//         match first_stmt {
+//             AnyJsStatement::JsWhileStatement(stmt) => {
+//                 has_valid_yield_expression(&stmt.body().ok()?)
+//             }
+//             AnyJsStatement::JsDoWhileStatement(stmt) => {
+//                 has_valid_yield_expression(&stmt.body().ok()?)
+//             }
+//             AnyJsStatement::JsForStatement(stmt) => has_valid_yield_expression(&stmt.body().ok()?),
+//             _ => has_valid_yield_expression(&first_stmt),
+//         }
+//     }
+// }
