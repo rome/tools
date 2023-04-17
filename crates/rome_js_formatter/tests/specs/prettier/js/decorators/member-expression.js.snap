@@ -1,6 +1,5 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-assertion_line: 212
 info: js/decorators/member-expression.js
 ---
 
@@ -75,7 +74,7 @@ info: js/decorators/member-expression.js
    },
    class {
 -    @decorators [0];
-+    @decorators[0]
++    @decorators[0];
      method() {}
    },
    class {
@@ -101,20 +100,21 @@ info: js/decorators/member-expression.js
      method() {}
    },
    class {
+-    @decorators[first]
 +    @(decorators[first])
 +    method() {}
 +  },
 +  class {
-     @decorators[first]
-     method() {}
-   },
-   class {
--    @decorators [first];
-+    @(decorators["first"])
++    @decorators[first];
 +    method() {}
 +  },
-+  @(decorators[first])
 +  class {
++    @(decorators["first"])
+     method() {}
+   },
++  @(decorators[first])
+   class {
+-    @decorators [first];
      method() {}
    },
 +  @(decorators[0])
@@ -134,8 +134,7 @@ info: js/decorators/member-expression.js
 -      method() {}
 -    }
 -  ),
--];
-+]
+ ];
 ```
 
 # Output
@@ -147,7 +146,7 @@ info: js/decorators/member-expression.js
     method() {}
   },
   class {
-    @decorators[0]
+    @decorators[0];
     method() {}
   },
   class {
@@ -175,7 +174,7 @@ info: js/decorators/member-expression.js
     method() {}
   },
   class {
-    @decorators[first]
+    @decorators[first];
     method() {}
   },
   class {
@@ -190,104 +189,7 @@ info: js/decorators/member-expression.js
   class {
     method() {}
   },
-]
-```
-
-# Errors
-```
-member-expression.js:42:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected a property, an expression, or a method but instead found '@'
-  
-    40 │     method() {}
-    41 │   },
-  > 42 │   @(decorators[first])
-       │   ^
-    43 │   class {
-    44 │     method() {}
-  
-  i Expected a property, an expression, or a method here
-  
-    40 │     method() {}
-    41 │   },
-  > 42 │   @(decorators[first])
-       │   ^
-    43 │   class {
-    44 │     method() {}
-  
-member-expression.js:42:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected `,` but instead found `(`
-  
-    40 │     method() {}
-    41 │   },
-  > 42 │   @(decorators[first])
-       │    ^
-    43 │   class {
-    44 │     method() {}
-  
-  i Remove (
-  
-member-expression.js:43:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected `,` but instead found `class`
-  
-    41 │   },
-    42 │   @(decorators[first])
-  > 43 │   class {
-       │   ^^^^^
-    44 │     method() {}
-    45 │   },
-  
-  i Remove class
-  
-member-expression.js:46:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected a property, an expression, or a method but instead found '@'
-  
-    44 │     method() {}
-    45 │   },
-  > 46 │   @(decorators[0])
-       │   ^
-    47 │   class {
-    48 │     method() {}
-  
-  i Expected a property, an expression, or a method here
-  
-    44 │     method() {}
-    45 │   },
-  > 46 │   @(decorators[0])
-       │   ^
-    47 │   class {
-    48 │     method() {}
-  
-member-expression.js:46:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected `,` but instead found `(`
-  
-    44 │     method() {}
-    45 │   },
-  > 46 │   @(decorators[0])
-       │    ^
-    47 │   class {
-    48 │     method() {}
-  
-  i Remove (
-  
-member-expression.js:47:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected `,` but instead found `class`
-  
-    45 │   },
-    46 │   @(decorators[0])
-  > 47 │   class {
-       │   ^^^^^
-    48 │     method() {}
-    49 │   },
-  
-  i Remove class
-  
-
+];
 ```
 
 

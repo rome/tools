@@ -23,7 +23,7 @@ export default @decorator class {}
 -@decorator
 +export @decorator
  class Foo {}
-
+ 
 -export default
 -@decorator
 -class {}
