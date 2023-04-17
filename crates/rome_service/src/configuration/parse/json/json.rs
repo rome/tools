@@ -1,4 +1,3 @@
-
 use crate::configuration::json::JsonConfiguration;
 
 use rome_deserialize::json::{has_only_known_keys, VisitJsonNode};
