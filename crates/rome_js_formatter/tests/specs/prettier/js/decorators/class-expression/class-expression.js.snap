@@ -1,6 +1,5 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-assertion_line: 212
 info: js/decorators/class-expression/class-expression.js
 ---
 
@@ -30,7 +29,7 @@ const b2 = []
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,35 +1,26 @@
+@@ -1,34 +1,18 @@
 -const a1 =
 -  (
 -    @deco
@@ -41,292 +40,64 @@ const b2 = []
 -    @deco
 -    class {}
 -  );
-+const a1 = (
-+@deco class Foo {}
-+)
-+const a2 = (
-+@deco class {}
-+)
-
- (
++const a1 = @deco class Foo {};
++const a2 = @deco class {};
+ 
+-(
 -  @deco
 -  class Foo {}
 -);
-+@deco class Foo {}
-+)
- (
+-(
 -  @deco
 -  class {}
 -);
-+@deco class {}
-+)
-
++(@deco
++class Foo {});
++(@deco
++class {});
+ 
  const b1 = [];
- (
+-(
 -  @deco
 -  class Foo {}
 -);
-+@deco class Foo {}
-+)
-
++(@deco
++class Foo {});
+ 
  const b2 = [];
- (
+-(
 -  @deco
 -  class {}
 -);
-+@deco class {}
-+)
-
++(@deco
++class {});
+ 
  // This is not a `ClassExpression` but `ClassDeclaration`
--@deco
--class Foo {}
-+@deco class Foo {}
+ @deco
 ```
 
 # Output
 
 ```js
-const a1 = (
-@deco class Foo {}
-)
-const a2 = (
-@deco class {}
-)
+const a1 = @deco class Foo {};
+const a2 = @deco class {};
 
-(
-@deco class Foo {}
-)
-(
-@deco class {}
-)
+(@deco
+class Foo {});
+(@deco
+class {});
 
 const b1 = [];
-(
-@deco class Foo {}
-)
+(@deco
+class Foo {});
 
 const b2 = [];
-(
-@deco class {}
-)
+(@deco
+class {});
 
 // This is not a `ClassExpression` but `ClassDeclaration`
-@deco class Foo {}
-```
-
-# Errors
-```
-class-expression.js:1:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected `)` but instead found `@`
-
-  > 1 │ const a1 = (@deco class Foo {});
-      │             ^
-    2 │ const a2 = (@deco class {});
-    3 │
-
-  i Remove @
-
-class-expression.js:1:31 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected a statement but instead found ')'
-
-  > 1 │ const a1 = (@deco class Foo {});
-      │                               ^
-    2 │ const a2 = (@deco class {});
-    3 │
-
-  i Expected a statement here
-
-  > 1 │ const a1 = (@deco class Foo {});
-      │                               ^
-    2 │ const a2 = (@deco class {});
-    3 │
-
-class-expression.js:2:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected `)` but instead found `@`
-
-    1 │ const a1 = (@deco class Foo {});
-  > 2 │ const a2 = (@deco class {});
-      │             ^
-    3 │
-    4 │ (@deco class Foo {});
-
-  i Remove @
-
-class-expression.js:2:19 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × class declarations must have a name
-
-    1 │ const a1 = (@deco class Foo {});
-  > 2 │ const a2 = (@deco class {});
-      │                   ^^^^^^
-    3 │
-    4 │ (@deco class Foo {});
-
-class-expression.js:2:27 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected a statement but instead found ')'
-
-    1 │ const a1 = (@deco class Foo {});
-  > 2 │ const a2 = (@deco class {});
-      │                           ^
-    3 │
-    4 │ (@deco class Foo {});
-
-  i Expected a statement here
-
-    1 │ const a1 = (@deco class Foo {});
-  > 2 │ const a2 = (@deco class {});
-      │                           ^
-    3 │
-    4 │ (@deco class Foo {});
-
-class-expression.js:4:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected `)` but instead found `@`
-
-    2 │ const a2 = (@deco class {});
-    3 │
-  > 4 │ (@deco class Foo {});
-      │  ^
-    5 │ (@deco class {});
-    6 │
-
-  i Remove @
-
-class-expression.js:4:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected a statement but instead found ')'
-
-    2 │ const a2 = (@deco class {});
-    3 │
-  > 4 │ (@deco class Foo {});
-      │                    ^
-    5 │ (@deco class {});
-    6 │
-
-  i Expected a statement here
-
-    2 │ const a2 = (@deco class {});
-    3 │
-  > 4 │ (@deco class Foo {});
-      │                    ^
-    5 │ (@deco class {});
-    6 │
-
-class-expression.js:5:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected `)` but instead found `@`
-
-    4 │ (@deco class Foo {});
-  > 5 │ (@deco class {});
-      │  ^
-    6 │
-    7 │ const b1 = []
-
-  i Remove @
-
-class-expression.js:5:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × class declarations must have a name
-
-    4 │ (@deco class Foo {});
-  > 5 │ (@deco class {});
-      │        ^^^^^^
-    6 │
-    7 │ const b1 = []
-
-class-expression.js:5:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected a statement but instead found ')'
-
-    4 │ (@deco class Foo {});
-  > 5 │ (@deco class {});
-      │                ^
-    6 │
-    7 │ const b1 = []
-
-  i Expected a statement here
-
-    4 │ (@deco class Foo {});
-  > 5 │ (@deco class {});
-      │                ^
-    6 │
-    7 │ const b1 = []
-
-class-expression.js:8:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected `)` but instead found `@`
-
-     7 │ const b1 = []
-   > 8 │ ;(@deco class Foo {})
-       │   ^
-     9 │
-    10 │ const b2 = []
-
-  i Remove @
-
-class-expression.js:8:21 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected a statement but instead found ')'
-
-     7 │ const b1 = []
-   > 8 │ ;(@deco class Foo {})
-       │                     ^
-     9 │
-    10 │ const b2 = []
-
-  i Expected a statement here
-
-     7 │ const b1 = []
-   > 8 │ ;(@deco class Foo {})
-       │                     ^
-     9 │
-    10 │ const b2 = []
-
-class-expression.js:11:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected `)` but instead found `@`
-
-    10 │ const b2 = []
-  > 11 │ ;(@deco class {})
-       │   ^
-    12 │
-    13 │ // This is not a `ClassExpression` but `ClassDeclaration`
-
-  i Remove @
-
-class-expression.js:11:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × class declarations must have a name
-
-    10 │ const b2 = []
-  > 11 │ ;(@deco class {})
-       │         ^^^^^^
-    12 │
-    13 │ // This is not a `ClassExpression` but `ClassDeclaration`
-
-class-expression.js:11:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected a statement but instead found ')'
-
-    10 │ const b2 = []
-  > 11 │ ;(@deco class {})
-       │                 ^
-    12 │
-    13 │ // This is not a `ClassExpression` but `ClassDeclaration`
-
-  i Expected a statement here
-
-    10 │ const b2 = []
-  > 11 │ ;(@deco class {})
-       │                 ^
-    12 │
-    13 │ // This is not a `ClassExpression` but `ClassDeclaration`
-
-
+@deco
+class Foo {}
 ```
 
 

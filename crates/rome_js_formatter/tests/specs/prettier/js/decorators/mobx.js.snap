@@ -1,6 +1,5 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-assertion_line: 212
 info: js/decorators/mobx.js
 ---
 
@@ -34,13 +33,13 @@ import {observable} from "mobx";
   setPrice(price) {
     this.price = price;
   }
-
+  
   @computed @computed @computed @computed @computed @computed @computed get total() {
     return this.price * this.amount;
   }
 
   @action handleDecrease = (event: React.ChangeEvent<HTMLInputElement>) => this.count--;
-
+  
   @action handleSomething = (event: React.ChangeEvent<HTMLInputElement>) => doSomething();
 }
 
@@ -52,23 +51,21 @@ import {observable} from "mobx";
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,9 +1,8 @@
- import { observable } from "mobx";
-
--@observer
--class OrderLine {
+@@ -2,8 +2,8 @@
+ 
+ @observer
+ class OrderLine {
 -  @observable price: number = 0;
 -  @observable amount: number = 1;
-+@observer class OrderLine {
 +  @observable price:number = 0;
 +  @observable amount:number = 1;
-
+ 
    constructor(price) {
      this.price = price;
-@@ -27,20 +26,11 @@
+@@ -27,20 +27,11 @@
      this.price = price;
    }
-
+ 
 -  @computed
 -  @computed
 -  @computed
@@ -80,11 +77,11 @@ import {observable} from "mobx";
 +  @computed @computed @computed @computed @computed @computed @computed get total() {
      return this.price * this.amount;
    }
-
+ 
 -  @action handleDecrease = (event: React.ChangeEvent<HTMLInputElement>) =>
 -    this.count--;
 +  @action handleDecrease = (event: React.ChangeEvent<HTMLInputElement>) => this.count--;
-
+ 
 -  @action handleSomething = (event: React.ChangeEvent<HTMLInputElement>) =>
 -    doSomething();
 +  @action handleSomething = (event: React.ChangeEvent<HTMLInputElement>) => doSomething();
@@ -96,7 +93,8 @@ import {observable} from "mobx";
 ```js
 import { observable } from "mobx";
 
-@observer class OrderLine {
+@observer
+class OrderLine {
   @observable price:number = 0;
   @observable amount:number = 1;
 
@@ -137,62 +135,62 @@ import { observable } from "mobx";
 mobx.js:4:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × return types can only be used in TypeScript files
-
+  
     3 │ @observer class OrderLine {
   > 4 │   @observable price:number = 0;
       │                    ^^^^^^^
     5 │   @observable amount:number = 1;
-    6 │
-
+    6 │ 
+  
   i remove this type annotation
-
+  
 mobx.js:5:21 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × return types can only be used in TypeScript files
-
+  
     3 │ @observer class OrderLine {
     4 │   @observable price:number = 0;
   > 5 │   @observable amount:number = 1;
       │                     ^^^^^^^
-    6 │
+    6 │ 
     7 │   constructor(price) {
-
+  
   i remove this type annotation
-
+  
 mobx.js:33:34 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Type annotations are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-
+  
     31 │   }
-    32 │
+    32 │ 
   > 33 │   @action handleDecrease = (event: React.ChangeEvent<HTMLInputElement>) => this.count--;
        │                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    34 │
+    34 │   
     35 │   @action handleSomething = (event: React.ChangeEvent<HTMLInputElement>) => doSomething();
-
+  
   i TypeScript only syntax
-
+  
 mobx.js:35:35 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Type annotations are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-
+  
     33 │   @action handleDecrease = (event: React.ChangeEvent<HTMLInputElement>) => this.count--;
-    34 │
+    34 │   
   > 35 │   @action handleSomething = (event: React.ChangeEvent<HTMLInputElement>) => doSomething();
        │                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     36 │ }
-    37 │
-
+    37 │ 
+  
   i TypeScript only syntax
-
+  
 
 ```
 
 # Lines exceeding max width of 80 characters
 ```
-   29:   @computed @computed @computed @computed @computed @computed @computed get total() {
-   33:   @action handleDecrease = (event: React.ChangeEvent<HTMLInputElement>) => this.count--;
-   35:   @action handleSomething = (event: React.ChangeEvent<HTMLInputElement>) => doSomething();
+   30:   @computed @computed @computed @computed @computed @computed @computed get total() {
+   34:   @action handleDecrease = (event: React.ChangeEvent<HTMLInputElement>) => this.count--;
+   36:   @action handleSomething = (event: React.ChangeEvent<HTMLInputElement>) => doSomething();
 ```
 
 

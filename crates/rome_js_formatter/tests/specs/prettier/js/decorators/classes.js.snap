@@ -1,6 +1,5 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-assertion_line: 212
 info: js/decorators/classes.js
 ---
 
@@ -31,126 +30,82 @@ const bar =
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,24 +1,16 @@
--@deco
--class Foo {}
-+@deco class Foo {}
-
--@deco
--export class Bar {}
-+@deco export class Bar {}
-
--@deco
--export default class Baz {}
-+@deco export default class Baz {}
-
- const foo =
+@@ -7,18 +7,12 @@
+ @deco
+ export default class Baz {}
+ 
+-const foo =
 -  (
 -    @deco
 -    class {
 -      //
 -    }
 -  );
-+@deco class {
++const foo = @deco
++class {
 +  //
-+}
-
- const bar =
++};
+ 
+-const bar =
 -  (
 -    @deco
 -    class {
 -      //
 -    }
 -  );
-+@deco
-+  class {
-+    //
-+  }
++const bar = @deco
++class {
++  //
++};
 ```
 
 # Output
 
 ```js
-@deco class Foo {}
-
-@deco export class Bar {}
-
-@deco export default class Baz {}
-
-const foo =
-@deco class {
-  //
-}
-
-const bar =
 @deco
-  class {
-    //
-  }
+class Foo {}
+
+@deco
+export class Bar {}
+
+@deco
+export default class Baz {}
+
+const foo = @deco
+class {
+  //
+};
+
+const bar = @deco
+class {
+  //
+};
 ```
 
 # Errors
 ```
-classes.js:7:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+classes.js:3:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × expected an expression, or an assignment but instead found '@'
-
+  × Decorators are not valid here.
+  
+    1 │ @deco class Foo {}
+    2 │ 
+  > 3 │ @deco export class Bar {}
+      │ ^^^^^
+    4 │ 
     5 │ @deco export default class Baz {}
-    6 │
-  > 7 │ const foo = @deco class {
-      │             ^
-    8 │   //
-    9 │ };
+  
+classes.js:5:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  i Expected an expression, or an assignment here
-
-    5 │ @deco export default class Baz {}
-    6 │
-  > 7 │ const foo = @deco class {
-      │             ^
-    8 │   //
-    9 │ };
-
-classes.js:7:19 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × class declarations must have a name
-
-    5 │ @deco export default class Baz {}
-    6 │
-  > 7 │ const foo = @deco class {
-      │                   ^^^^^^
-    8 │   //
-    9 │ };
-
-classes.js:12:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected an expression, or an assignment but instead found '@'
-
-    11 │ const bar =
-  > 12 │   @deco
-       │   ^
-    13 │   class {
-    14 │     //
-
-  i Expected an expression, or an assignment here
-
-    11 │ const bar =
-  > 12 │   @deco
-       │   ^
-    13 │   class {
-    14 │     //
-
-classes.js:13:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × class declarations must have a name
-
-    11 │ const bar =
-    12 │   @deco
-  > 13 │   class {
-       │   ^^^^^^
-    14 │     //
-    15 │   };
-
+  × Decorators are not valid here.
+  
+    3 │ @deco export class Bar {}
+    4 │ 
+  > 5 │ @deco export default class Baz {}
+      │ ^^^^^
+    6 │ 
+    7 │ const foo = @deco class {
+  
 
 ```
 
