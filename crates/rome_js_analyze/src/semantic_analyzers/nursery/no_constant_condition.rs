@@ -526,27 +526,3 @@ mod tests {
         assert_boolean_value("-3.14", true);
     }
 }
-
-// Checks recursively if the given statement has a valid yield expression
-// fn has_valid_yield_expression(stmt: &AnyJsStatement) -> Option<bool> {
-//     let block_stmt = stmt.as_js_block_statement()?;
-//     let mut stmt_list = block_stmt.as_fields().statements.into_iter();
-//     let first_stmt = stmt_list.next()?;
-
-//     if get_yield_expression(&first_stmt).is_some()
-//         || stmt_list.any(|stmt| get_yield_expression(&stmt).is_some())
-//     {
-//         Some(true)
-//     } else {
-//         match first_stmt {
-//             AnyJsStatement::JsWhileStatement(stmt) => {
-//                 has_valid_yield_expression(&stmt.body().ok()?)
-//             }
-//             AnyJsStatement::JsDoWhileStatement(stmt) => {
-//                 has_valid_yield_expression(&stmt.body().ok()?)
-//             }
-//             AnyJsStatement::JsForStatement(stmt) => has_valid_yield_expression(&stmt.body().ok()?),
-//             _ => has_valid_yield_expression(&first_stmt),
-//         }
-//     }
-// }
