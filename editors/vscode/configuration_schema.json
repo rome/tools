@@ -29,6 +29,13 @@
 				{ "type": "null" }
 			]
 		},
+		"json": {
+			"description": "Specific configuration for the JavaScript language",
+			"anyOf": [
+				{ "$ref": "#/definitions/JsonConfiguration" },
+				{ "type": "null" }
+			]
+		},
 		"linter": {
 			"description": "The configuration for the linter",
 			"anyOf": [
@@ -615,6 +622,17 @@
 		},
 		"JavascriptOrganizeImports": {
 			"type": "object",
+			"additionalProperties": false
+		},
+		"JsonConfiguration": {
+			"type": "object",
+			"properties": {
+				"allow_comments": {
+					"type": ["array", "null"],
+					"items": { "type": "string" },
+					"uniqueItems": true
+				}
+			},
 			"additionalProperties": false
 		},
 		"LineWidth": {
