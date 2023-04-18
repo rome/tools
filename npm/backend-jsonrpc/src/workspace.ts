@@ -533,6 +533,10 @@ export interface Nursery {
 	 */
 	noUselessCatch?: RuleConfiguration;
 	/**
+	 * Disallow unnecessary constructors.
+	 */
+	noUselessConstructor?: RuleConfiguration;
+	/**
 	 * Disallow renaming import, export, and destructured assignments to the same name.
 	 */
 	noUselessRename?: RuleConfiguration;
@@ -1002,6 +1006,7 @@ export type Category =
 	| "lint/nursery/noConsoleLog"
 	| "lint/nursery/noForEach"
 	| "lint/nursery/useLiteralKeys"
+	| "lint/nursery/noUselessConstructor"
 	| "lint/nursery/noRedeclare"
 	| "lint/nursery/useNamespaceKeyword"
 	| "lint/nursery/noRedundantRoles"
