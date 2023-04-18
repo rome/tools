@@ -51,7 +51,7 @@ const CHECK: Markup = markup! {
 
 const FORMAT_OPTIONS: Markup = markup! {
     "
-    "<Dim>"--indent-style <tabs|space>"</Dim>"              Change the indention character (default: tabs)
+    "<Dim>"--indent-style <tab|space>"</Dim>"               Change the indention character (default: tab)
     "<Dim>"--indent-size <number>"</Dim>"                   If the indentation style is set to spaces, determine how many spaces should be used for indentation (default: 2)
     "<Dim>"--line-width <number>"</Dim>"                    Change how many characters the formatter is allowed to print in a single line (default: 80)
     "<Dim>"--quote-style <single|double>"</Dim>"            Changes the quotation character for strings (default: double)
