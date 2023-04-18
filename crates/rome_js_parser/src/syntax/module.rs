@@ -5,6 +5,7 @@ use crate::syntax::binding::{
     is_at_identifier_binding, is_nth_at_identifier_binding, parse_binding, parse_identifier_binding,
 };
 use crate::syntax::class::{
+    is_at_export_class_declaration, is_at_export_default_class_declaration,
     is_at_ts_abstract_class_declaration, parse_class_declaration,
     parse_class_export_default_declaration, parse_decorators,
 };
@@ -116,11 +117,40 @@ fn parse_module_item(p: &mut JsParser) -> ParsedSyntax {
         T![import] if !token_set![T![.], T!['(']].contains(p.nth(1)) => {
             parse_import_or_import_equals_declaration(p)
         }
-        T![export] => parse_export(p),
+        T![export] => parse_export(p, Absent),
         T![@] => {
             let decorator_list = parse_decorators(p);
 
             match p.cur() {
+                T![export]
+                    if is_at_export_class_declaration(p)
+                        || is_at_export_default_class_declaration(p) =>
+                {
+                    // test decorator_export_top_level
+                    // @decorator
+                    // export class Foo { }
+                    // @first.field @second @(() => decorator)()
+                    // export class Bar {}
+                    // @before
+                    // export @after class Foo { }
+                    //  @before
+                    //  export abstract class Foo { }
+                    //  @before
+                    //  export @after abstract class Foo { }
+
+                    // test ts decorator_export_default_top_level
+                    // @decorator
+                    // export default class Foo { }
+                    // @first.field @second @(() => decorator)()
+                    // export default class Bar {}
+                    // @before
+                    // export default @after class Foo { }
+                    //  @before
+                    //  export default abstract class Foo { }
+                    //  @before
+                    //  export default @after abstract class Foo { }
+                    parse_export(p, decorator_list)
+                }
                 T![class] => {
                     // test decorator_class_declaration_top_level
                     // @decorator
@@ -645,13 +675,18 @@ fn parse_import_attribute_entry(
 // test_err export_huge_function_in_script
 // // SCRIPT
 // export function A () { return "Kinsmen hot Moria tea serves. Sticky camp spell covering forged they're Oakenshield vines. Admirable relatives march regained wheel Ere eternally on rest parts unhappy? Leave hundreds market's Argonath answered avail grieve doing goodness! Wrong miserable well-wishers wander stood immediately neither Agreed goat poison holes fire? Nobody tosses a Dwarf. Brigands Bilbo Baggins prisoner stinker birthday injuries. Kili's loosened shy spiders till. Gandalf's death was not in vain. Nor would he have you give up hope. Bread kindly ghost Beorn's jelly. Andûril two-faced bitterness biding seemed says drinking splendor feed light unnoticed one! Carven nearest Eärendil fireworks former. Mattress smelling wandering teaching appear taste wise Mithril uprooted winter forebearers wheel. Let's beside Proudfoots succumbed! Excuse Anárion stolen helpless nudge study shown holding form? Changes point Snowbourn material side outer highest eaves flash-flame relic descendant lurking. Thousand death Agreed oppose whole? Glóin head's hurts feasting fight shiny legacy. Thror's broken odds suffice believe well-protected? Rightfully manners begged Maggot's fairer. Unheard-of grog shields sad wondering gardener killed gone Galadriel! Pan Frodo fingers spreads magic parting amount interest idly naked. It's some form of Elvish. I can't read it. Silverwork Wraiths riddled enchantment apple anywhere."; }
-pub(super) fn parse_export(p: &mut JsParser) -> ParsedSyntax {
+pub(super) fn parse_export(p: &mut JsParser, decorators_list: ParsedSyntax) -> ParsedSyntax {
     if !p.at(T![export]) {
         return Absent;
     }
 
     let stmt_start = p.cur_range().start();
-    let m = p.start();
+    let decorators_list = decorators_list.or_else(|| {
+        let m = p.start();
+        Present(m.complete(p, JS_DECORATOR_LIST))
+    });
+
+    let m = decorators_list.precede(p);
 
     p.bump(T![export]);
 

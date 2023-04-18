@@ -3,6 +3,7 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsExport {
+            decorators: JsDecoratorList [],
             export_token: EXPORT_KW@0..7 "export" [] [Whitespace(" ")],
             export_clause: JsExportDefaultDeclarationClause {
                 default_token: DEFAULT_KW@7..15 "default" [] [Whitespace(" ")],
@@ -30,8 +31,9 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..32
     0: JS_EXPORT@0..32
-      0: EXPORT_KW@0..7 "export" [] [Whitespace(" ")]
-      1: JS_EXPORT_DEFAULT_DECLARATION_CLAUSE@7..32
+      0: JS_DECORATOR_LIST@0..0
+      1: EXPORT_KW@0..7 "export" [] [Whitespace(" ")]
+      2: JS_EXPORT_DEFAULT_DECLARATION_CLAUSE@7..32
         0: DEFAULT_KW@7..15 "default" [] [Whitespace(" ")]
         1: JS_CLASS_EXPORT_DEFAULT_DECLARATION@15..32
           0: JS_DECORATOR_LIST@15..15

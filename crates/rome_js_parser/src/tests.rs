@@ -392,7 +392,9 @@ fn diagnostics_print_correctly() {
 #[ignore]
 #[test]
 pub fn quick_test() {
-    let code = r"@1 + 2 class MyClass {};
+    let code = r"
+@decorator
+                    export default @after abstract  class Foo { }
 ";
     let root = parse(code, SourceType::ts());
     let syntax = root.syntax();

@@ -1,5 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
+assertion_line: 212
 info: js/decorators/classes.js
 ---
 
@@ -33,7 +34,7 @@ const bar =
 @@ -7,18 +7,12 @@
  @deco
  export default class Baz {}
-
+ 
 -const foo =
 -  (
 -    @deco
@@ -45,7 +46,7 @@ const bar =
 +class {
 +  //
 +};
-
+ 
 -const bar =
 -  (
 -    @deco
@@ -80,22 +81,6 @@ const bar = @deco
 class {
   //
 };
-```
-
-# Errors
-```
-classes.js:5:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × Decorators are not valid here.
-
-    3 │ @deco export class Bar {}
-    4 │
-  > 5 │ @deco export default class Baz {}
-      │ ^^^^^
-    6 │
-    7 │ const foo = @deco class {
-
-
 ```
 
 

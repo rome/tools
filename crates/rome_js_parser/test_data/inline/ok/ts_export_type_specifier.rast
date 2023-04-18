@@ -48,6 +48,7 @@ JsModule {
             semicolon_token: SEMICOLON@23..24 ";" [] [],
         },
         JsExport {
+            decorators: JsDecoratorList [],
             export_token: EXPORT_KW@24..32 "export" [Newline("\n")] [Whitespace(" ")],
             export_clause: JsExportNamedClause {
                 type_token: missing (optional),
@@ -65,6 +66,7 @@ JsModule {
             },
         },
         JsExport {
+            decorators: JsDecoratorList [],
             export_token: EXPORT_KW@41..49 "export" [Newline("\n")] [Whitespace(" ")],
             export_clause: JsExportNamedClause {
                 type_token: missing (optional),
@@ -86,6 +88,7 @@ JsModule {
             },
         },
         JsExport {
+            decorators: JsDecoratorList [],
             export_token: EXPORT_KW@64..72 "export" [Newline("\n")] [Whitespace(" ")],
             export_clause: JsExportNamedClause {
                 type_token: missing (optional),
@@ -107,6 +110,7 @@ JsModule {
             },
         },
         JsExport {
+            decorators: JsDecoratorList [],
             export_token: EXPORT_KW@85..93 "export" [Newline("\n")] [Whitespace(" ")],
             export_clause: JsExportNamedClause {
                 type_token: missing (optional),
@@ -128,6 +132,7 @@ JsModule {
             },
         },
         JsExport {
+            decorators: JsDecoratorList [],
             export_token: EXPORT_KW@110..118 "export" [Newline("\n")] [Whitespace(" ")],
             export_clause: JsExportNamedClause {
                 type_token: missing (optional),
@@ -145,6 +150,7 @@ JsModule {
             },
         },
         JsExport {
+            decorators: JsDecoratorList [],
             export_token: EXPORT_KW@132..140 "export" [Newline("\n")] [Whitespace(" ")],
             export_clause: JsExportNamedClause {
                 type_token: missing (optional),
@@ -162,6 +168,7 @@ JsModule {
             },
         },
         JsExport {
+            decorators: JsDecoratorList [],
             export_token: EXPORT_KW@152..160 "export" [Newline("\n")] [Whitespace(" ")],
             export_clause: JsExportNamedClause {
                 type_token: missing (optional),
@@ -221,8 +228,9 @@ JsModule {
             2: (empty)
       1: SEMICOLON@23..24 ";" [] []
     3: JS_EXPORT@24..41
-      0: EXPORT_KW@24..32 "export" [Newline("\n")] [Whitespace(" ")]
-      1: JS_EXPORT_NAMED_CLAUSE@32..41
+      0: JS_DECORATOR_LIST@24..24
+      1: EXPORT_KW@24..32 "export" [Newline("\n")] [Whitespace(" ")]
+      2: JS_EXPORT_NAMED_CLAUSE@32..41
         0: (empty)
         1: L_CURLY@32..34 "{" [] [Whitespace(" ")]
         2: JS_EXPORT_NAMED_SPECIFIER_LIST@34..39
@@ -233,8 +241,9 @@ JsModule {
         3: R_CURLY@39..40 "}" [] []
         4: SEMICOLON@40..41 ";" [] []
     4: JS_EXPORT@41..64
-      0: EXPORT_KW@41..49 "export" [Newline("\n")] [Whitespace(" ")]
-      1: JS_EXPORT_NAMED_CLAUSE@49..64
+      0: JS_DECORATOR_LIST@41..41
+      1: EXPORT_KW@41..49 "export" [Newline("\n")] [Whitespace(" ")]
+      2: JS_EXPORT_NAMED_CLAUSE@49..64
         0: (empty)
         1: L_CURLY@49..51 "{" [] [Whitespace(" ")]
         2: JS_EXPORT_NAMED_SPECIFIER_LIST@51..62
@@ -248,8 +257,9 @@ JsModule {
         3: R_CURLY@62..63 "}" [] []
         4: SEMICOLON@63..64 ";" [] []
     5: JS_EXPORT@64..85
-      0: EXPORT_KW@64..72 "export" [Newline("\n")] [Whitespace(" ")]
-      1: JS_EXPORT_NAMED_CLAUSE@72..85
+      0: JS_DECORATOR_LIST@64..64
+      1: EXPORT_KW@64..72 "export" [Newline("\n")] [Whitespace(" ")]
+      2: JS_EXPORT_NAMED_CLAUSE@72..85
         0: (empty)
         1: L_CURLY@72..74 "{" [] [Whitespace(" ")]
         2: JS_EXPORT_NAMED_SPECIFIER_LIST@74..83
@@ -263,8 +273,9 @@ JsModule {
         3: R_CURLY@83..84 "}" [] []
         4: SEMICOLON@84..85 ";" [] []
     6: JS_EXPORT@85..110
-      0: EXPORT_KW@85..93 "export" [Newline("\n")] [Whitespace(" ")]
-      1: JS_EXPORT_NAMED_CLAUSE@93..110
+      0: JS_DECORATOR_LIST@85..85
+      1: EXPORT_KW@85..93 "export" [Newline("\n")] [Whitespace(" ")]
+      2: JS_EXPORT_NAMED_CLAUSE@93..110
         0: (empty)
         1: L_CURLY@93..95 "{" [] [Whitespace(" ")]
         2: JS_EXPORT_NAMED_SPECIFIER_LIST@95..109
@@ -278,8 +289,9 @@ JsModule {
         3: R_CURLY@109..110 "}" [] []
         4: (empty)
     7: JS_EXPORT@110..132
-      0: EXPORT_KW@110..118 "export" [Newline("\n")] [Whitespace(" ")]
-      1: JS_EXPORT_NAMED_CLAUSE@118..132
+      0: JS_DECORATOR_LIST@110..110
+      1: EXPORT_KW@110..118 "export" [Newline("\n")] [Whitespace(" ")]
+      2: JS_EXPORT_NAMED_CLAUSE@118..132
         0: (empty)
         1: L_CURLY@118..120 "{" [] [Whitespace(" ")]
         2: JS_EXPORT_NAMED_SPECIFIER_LIST@120..130
@@ -290,8 +302,9 @@ JsModule {
         3: R_CURLY@130..131 "}" [] []
         4: SEMICOLON@131..132 ";" [] []
     8: JS_EXPORT@132..152
-      0: EXPORT_KW@132..140 "export" [Newline("\n")] [Whitespace(" ")]
-      1: JS_EXPORT_NAMED_CLAUSE@140..152
+      0: JS_DECORATOR_LIST@132..132
+      1: EXPORT_KW@132..140 "export" [Newline("\n")] [Whitespace(" ")]
+      2: JS_EXPORT_NAMED_CLAUSE@140..152
         0: (empty)
         1: L_CURLY@140..142 "{" [] [Whitespace(" ")]
         2: JS_EXPORT_NAMED_SPECIFIER_LIST@142..150
@@ -302,8 +315,9 @@ JsModule {
         3: R_CURLY@150..151 "}" [] []
         4: SEMICOLON@151..152 ";" [] []
     9: JS_EXPORT@152..177
-      0: EXPORT_KW@152..160 "export" [Newline("\n")] [Whitespace(" ")]
-      1: JS_EXPORT_NAMED_CLAUSE@160..177
+      0: JS_DECORATOR_LIST@152..152
+      1: EXPORT_KW@152..160 "export" [Newline("\n")] [Whitespace(" ")]
+      2: JS_EXPORT_NAMED_CLAUSE@160..177
         0: (empty)
         1: L_CURLY@160..162 "{" [] [Whitespace(" ")]
         2: JS_EXPORT_NAMED_SPECIFIER_LIST@162..175
