@@ -9,6 +9,7 @@ use rome_js_syntax::{
     AnyJsExpression, AnyJsLiteralExpression, AnyJsName, JsComputedMemberAssignment,
     JsComputedMemberExpression, JsComputedMemberName, T,
 };
+use rome_js_unicode_table::{is_id_continue, is_id_start};
 use rome_rowan::{declare_node_union, AstNode, BatchMutationExt, SyntaxResult, TextRange};
 
 declare_rule! {
@@ -172,13 +173,14 @@ impl Rule for UseLiteralKeys {
     }
 }
 
-// check if the string key can convert to a static member
+// This function check if the key is valid JavaScript identifier.
+// Currently, it doesn't check escaped unicode chars.
 fn can_convert_to_static_member(key: &str) -> bool {
     key.chars().enumerate().all(|(index, c)| {
         if index == 0 {
-            c.is_alphabetic() || matches!(c, '_' | '$')
+            is_id_start(c)
         } else {
-            c.is_alphabetic() || c.is_ascii_digit() || matches!(c, '_' | '$')
+            is_id_continue(c)
         }
     })
 }
