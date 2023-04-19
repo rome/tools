@@ -9,6 +9,7 @@ use rome_js_syntax::{
     AnyJsExpression, AnyJsLiteralExpression, AnyJsName, JsComputedMemberAssignment,
     JsComputedMemberExpression, JsComputedMemberName, T,
 };
+use rome_js_unicode_table::{is_id_continue, is_id_start};
 use rome_rowan::{declare_node_union, AstNode, BatchMutationExt, SyntaxResult, TextRange};
 
 declare_rule! {
@@ -95,7 +96,9 @@ impl Rule for UseLiteralKeys {
                 AnyJsLiteralExpression::JsStringLiteralExpression(string_literal),
             ) => {
                 let value = string_literal.inner_string_text().ok()?;
-                return Some((string_literal.range(), value.to_string()));
+                if can_convert_to_static_member(&value) {
+                    return Some((string_literal.range(), value.to_string()));
+                }
             }
             AnyJsExpression::JsTemplateExpression(template_expression) => {
                 let mut value = String::new();
@@ -104,7 +107,9 @@ impl Rule for UseLiteralKeys {
 
                     value.push_str(chunk.template_chunk_token().ok()?.text_trimmed());
                 }
-                return Some((template_expression.range(), value));
+                if can_convert_to_static_member(&value) {
+                    return Some((template_expression.range(), value));
+                }
             }
 
             _ => {}
@@ -166,4 +171,16 @@ impl Rule for UseLiteralKeys {
             }
         }
     }
+}
+
+// This function check if the key is valid JavaScript identifier.
+// Currently, it doesn't check escaped unicode chars.
+fn can_convert_to_static_member(key: &str) -> bool {
+    key.chars().enumerate().all(|(index, c)| {
+        if index == 0 {
+            is_id_start(c)
+        } else {
+            is_id_continue(c)
+        }
+    })
 }

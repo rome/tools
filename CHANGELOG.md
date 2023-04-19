@@ -29,8 +29,9 @@ when there are breaking changes.
 the code action is not formatted.
 - Fixed an issue that [`useShorthandArrayType`](https://docs.rome.tools/lint/rules/useShorthandArrayType) rule did not handle nested ReadonlyArray types correctly and erroneously reported TsObjectType [#4354](https://github.com/rome/tools/issues/4353).
 - [`noUndeclaredVariables`](https://docs.rome.tools/lint/rules/noUndeclaredVariables) detects globals based on the file type.
-
 - Fix an issue when `noUndeclaredVariables` incorrectly identifies `AggregateError` as an undeclared variable. [#4365](https://github.com/rome/tools/issues/4365)
+- Fix an issue that `useLiteralKeys` rule doesn't ignore valid uses of square bracket notation. [#4370](https://github.com/rome/tools/issues/4370)
+
 #### New rules
 - [`noConfusingArrow`](https://docs.rome.tools/lint/rules/noConfusingArrow/)
 - [`noRedundantRoles`](https://docs.rome.tools/lint/rules/noRedundantRoles/)

@@ -20,6 +20,8 @@ a = {
 a = {
 	[`b`]: d
 };
+a.b[`$c`];
+a.b["_d"];
 
 ```
 
@@ -335,12 +337,58 @@ invalid.js:15:3 lint/nursery/useLiteralKeys  FIXABLE  ━━━━━━━━�
   > 15 │ 	[`b`]: d
        │ 	 ^^^
     16 │ };
-    17 │ 
+    17 │ a.b[`$c`];
   
   i Suggested fix: Replace it with a static expression.
   
     15 │ → [`b`]:·d
        │   -- --   
+
+```
+
+```
+invalid.js:17:5 lint/nursery/useLiteralKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The computed expression can be simplified without the use of a string literal.
+  
+    15 │ 	[`b`]: d
+    16 │ };
+  > 17 │ a.b[`$c`];
+       │     ^^^^
+    18 │ a.b["_d"];
+    19 │ 
+  
+  i Suggested fix: Replace it with a static expression.
+  
+    15 15 │   	[`b`]: d
+    16 16 │   };
+    17    │ - a.b[`$c`];
+       17 │ + a.b.$c;
+    18 18 │   a.b["_d"];
+    19 19 │   
+  
+
+```
+
+```
+invalid.js:18:5 lint/nursery/useLiteralKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The computed expression can be simplified without the use of a string literal.
+  
+    16 │ };
+    17 │ a.b[`$c`];
+  > 18 │ a.b["_d"];
+       │     ^^^^
+    19 │ 
+  
+  i Suggested fix: Replace it with a static expression.
+  
+    16 16 │   };
+    17 17 │   a.b[`$c`];
+    18    │ - a.b["_d"];
+       18 │ + a.b._d;
+    19 19 │   
+  
 
 ```
 
