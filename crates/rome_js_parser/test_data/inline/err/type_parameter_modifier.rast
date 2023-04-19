@@ -4,6 +4,7 @@ JsModule {
     items: JsModuleItemList [
         JsBogusStatement {
             items: [
+                JsDecoratorList [],
                 EXPORT_KW@0..7 "export" [] [Whitespace(" ")],
                 JsBogus {
                     items: [
@@ -55,6 +56,7 @@ JsModule {
         },
         JsBogusStatement {
             items: [
+                JsDecoratorList [],
                 EXPORT_KW@38..46 "export" [Newline("\n")] [Whitespace(" ")],
                 JsBogusStatement {
                     items: [
@@ -101,6 +103,7 @@ JsModule {
         },
         JsBogusStatement {
             items: [
+                JsDecoratorList [],
                 EXPORT_KW@70..78 "export" [Newline("\n")] [Whitespace(" ")],
                 JsBogusStatement {
                     items: [
@@ -147,6 +150,7 @@ JsModule {
         },
         JsBogusStatement {
             items: [
+                JsDecoratorList [],
                 EXPORT_KW@102..110 "export" [Newline("\n")] [Whitespace(" ")],
                 JsBogusStatement {
                     items: [
@@ -2001,8 +2005,9 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..1072
     0: JS_BOGUS_STATEMENT@0..38
-      0: EXPORT_KW@0..7 "export" [] [Whitespace(" ")]
-      1: JS_BOGUS@7..38
+      0: JS_DECORATOR_LIST@0..0
+      1: EXPORT_KW@0..7 "export" [] [Whitespace(" ")]
+      2: JS_BOGUS@7..38
         0: DEFAULT_KW@7..15 "default" [] [Whitespace(" ")]
         1: JS_BOGUS@15..38
           0: FUNCTION_KW@15..24 "function" [] [Whitespace(" ")]
@@ -2027,8 +2032,9 @@ JsModule {
             2: JS_STATEMENT_LIST@37..37
             3: R_CURLY@37..38 "}" [] []
     1: JS_BOGUS_STATEMENT@38..70
-      0: EXPORT_KW@38..46 "export" [Newline("\n")] [Whitespace(" ")]
-      1: JS_BOGUS_STATEMENT@46..70
+      0: JS_DECORATOR_LIST@38..38
+      1: EXPORT_KW@38..46 "export" [Newline("\n")] [Whitespace(" ")]
+      2: JS_BOGUS_STATEMENT@46..70
         0: FUNCTION_KW@46..55 "function" [] [Whitespace(" ")]
         1: JS_IDENTIFIER_BINDING@55..58
           0: IDENT@55..58 "foo" [] []
@@ -2051,8 +2057,9 @@ JsModule {
           2: JS_STATEMENT_LIST@69..69
           3: R_CURLY@69..70 "}" [] []
     2: JS_BOGUS_STATEMENT@70..102
-      0: EXPORT_KW@70..78 "export" [Newline("\n")] [Whitespace(" ")]
-      1: JS_BOGUS_STATEMENT@78..102
+      0: JS_DECORATOR_LIST@70..70
+      1: EXPORT_KW@70..78 "export" [Newline("\n")] [Whitespace(" ")]
+      2: JS_BOGUS_STATEMENT@78..102
         0: FUNCTION_KW@78..87 "function" [] [Whitespace(" ")]
         1: JS_IDENTIFIER_BINDING@87..91
           0: IDENT@87..91 "foo1" [] []
@@ -2075,8 +2082,9 @@ JsModule {
           2: JS_STATEMENT_LIST@101..101
           3: R_CURLY@101..102 "}" [] []
     3: JS_BOGUS_STATEMENT@102..135
-      0: EXPORT_KW@102..110 "export" [Newline("\n")] [Whitespace(" ")]
-      1: JS_BOGUS_STATEMENT@110..135
+      0: JS_DECORATOR_LIST@102..102
+      1: EXPORT_KW@102..110 "export" [Newline("\n")] [Whitespace(" ")]
+      2: JS_BOGUS_STATEMENT@110..135
         0: FUNCTION_KW@110..119 "function" [] [Whitespace(" ")]
         1: JS_IDENTIFIER_BINDING@119..123
           0: IDENT@119..123 "foo2" [] []

@@ -1,6 +1,7 @@
 use crate::prelude::*;
 use crate::span::Span;
 use crate::JsParser;
+use crate::JsSyntaxFeature::TypeScript;
 use rome_js_syntax::TextRange;
 use rome_parser::diagnostic::{expected_any, expected_node};
 
@@ -182,6 +183,26 @@ pub(crate) fn expected_declaration(p: &JsParser, range: TextRange) -> ParseDiagn
         range,
     )
     .into_diagnostic(p)
+}
+
+pub(crate) fn expected_export_default_declaration(
+    p: &JsParser,
+    range: TextRange,
+) -> ParseDiagnostic {
+    let expected = if TypeScript.is_supported(p) {
+        expected_any(
+            &[
+                "class declaration",
+                "function declaration",
+                "interface declaration",
+            ],
+            range,
+        )
+    } else {
+        expected_any(&["class declaration", "function declaration"], range)
+    };
+
+    expected.into_diagnostic(p)
 }
 
 pub(crate) fn unexpected_body_inside_ambient_context(

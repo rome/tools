@@ -68,6 +68,16 @@ pub(crate) fn is_at_ts_abstract_class_declaration(
     }
 }
 
+pub(crate) fn is_at_export_class_declaration(p: &mut JsParser) -> bool {
+    p.at(T![export]) && (p.nth_at(1, T![class]) || p.nth_at(1, T![@]) || p.nth_at(1, T![abstract]))
+}
+
+pub(crate) fn is_at_export_default_class_declaration(p: &mut JsParser) -> bool {
+    p.at(T![export])
+        && p.nth_at(1, T![default])
+        && (p.nth_at(2, T![class]) || p.nth_at(2, T![@]) || p.nth_at(2, T![abstract]))
+}
+
 /// Parses a class expression, e.g. let a = class {}
 pub(super) fn parse_class_expression(
     p: &mut JsParser,
@@ -2409,6 +2419,14 @@ impl ClassMemberModifiers {
 // export @decorator class Foo {};
 // export @decorator @functionDecorator(1,2,3) class Bar {};
 // export @first @second class Baz {}
+// @decorator
+// export class Foo { }
+// @first.field @second @(() => decorator)()
+// export class Bar {}
+// @before
+// export @after class Foo { }
+// @before.field @before @(() => decorator)()
+// export @after.field @after @(() => decorator)() class Bar {}
 
 // test ts decorator_class_not_top_level
 // if (a) {
@@ -2478,6 +2496,13 @@ fn parse_decorator(p: &mut JsParser) -> ParsedSyntax {
 
     Present(m.complete(p, JS_DECORATOR))
 }
+
+// test ts ts_class_decorator
+// function test() {}
+// @test
+// class Test {}
+// @test.a?.c @test @test
+// class Test2{}
 
 /// Skips over any TypeScript decorator syntax.
 pub(crate) fn skip_ts_decorators(p: &mut JsParser) {

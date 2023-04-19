@@ -221,20 +221,4 @@ class Class6 {
 }
 ```
 
-# Errors
-```
-decorators.ts:8:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × Decorators are not valid here.
-  
-     6 │ }
-     7 │ 
-   > 8 │ @commonEditorContribution
-       │ ^^^^^^^^^^^^^^^^^^^^^^^^^
-     9 │ export class TabCompletionController {
-    10 │ }
-  
-
-```
-
 

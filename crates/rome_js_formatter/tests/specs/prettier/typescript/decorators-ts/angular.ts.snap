@@ -47,22 +47,4 @@ export class HeroButtonComponent {
 }
 ```
 
-# Errors
-```
-angular.ts:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × Decorators are not valid here.
-  
-  > 1 │ @Component({
-      │ ^^^^^^^^^^^^
-  > 2 │   selector: 'toh-hero-button',
-  > 3 │   template: `<button>{{label}}</button>`
-  > 4 │ })
-      │ ^^
-    5 │ export class HeroButtonComponent {
-    6 │   @Output() change = new EventEmitter<any>();
-  
-
-```
-
 

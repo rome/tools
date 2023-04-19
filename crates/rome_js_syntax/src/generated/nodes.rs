@@ -1846,15 +1846,17 @@ impl JsExport {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> JsExportFields {
         JsExportFields {
+            decorators: self.decorators(),
             export_token: self.export_token(),
             export_clause: self.export_clause(),
         }
     }
+    pub fn decorators(&self) -> JsDecoratorList { support::list(&self.syntax, 0usize) }
     pub fn export_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 0usize)
+        support::required_token(&self.syntax, 1usize)
     }
     pub fn export_clause(&self) -> SyntaxResult<AnyJsExportClause> {
-        support::required_node(&self.syntax, 1usize)
+        support::required_node(&self.syntax, 2usize)
     }
 }
 #[cfg(feature = "serde")]
@@ -1868,6 +1870,7 @@ impl Serialize for JsExport {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsExportFields {
+    pub decorators: JsDecoratorList,
     pub export_token: SyntaxResult<SyntaxToken>,
     pub export_clause: SyntaxResult<AnyJsExportClause>,
 }
@@ -16732,6 +16735,7 @@ impl AstNode for JsExport {
 impl std::fmt::Debug for JsExport {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("JsExport")
+            .field("decorators", &self.decorators())
             .field(
                 "export_token",
                 &support::DebugSyntaxResult(self.export_token()),
