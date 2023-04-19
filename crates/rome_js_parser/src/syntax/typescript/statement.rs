@@ -228,6 +228,9 @@ pub(crate) fn parse_ts_declare_statement(p: &mut JsParser) -> ParsedSyntax {
     p.expect(T![declare]);
 
     p.with_state(EnterAmbientContext, |p| {
+        // test_err ts ts_declare_const_initializer
+        // declare @decorator class D {}
+        // declare @decorator abstract class D {}
         parse_declaration_clause(p, stmt_start_pos)
             .expect("Expected a declaration as guaranteed by is_at_ts_declare_statement")
     });

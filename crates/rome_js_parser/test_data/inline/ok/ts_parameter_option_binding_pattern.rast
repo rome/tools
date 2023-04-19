@@ -15,6 +15,7 @@ JsModule {
                         JsExport {
                             export_token: EXPORT_KW@21..31 "export" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
                             export_clause: JsClassDeclaration {
+                                decorators: JsDecoratorList [],
                                 abstract_token: missing (optional),
                                 class_token: CLASS_KW@31..37 "class" [] [Whitespace(" ")],
                                 id: JsIdentifierBinding {
@@ -139,15 +140,16 @@ JsModule {
             0: JS_EXPORT@21..152
               0: EXPORT_KW@21..31 "export" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
               1: JS_CLASS_DECLARATION@31..152
-                0: (empty)
-                1: CLASS_KW@31..37 "class" [] [Whitespace(" ")]
-                2: JS_IDENTIFIER_BINDING@37..41
+                0: JS_DECORATOR_LIST@31..31
+                1: (empty)
+                2: CLASS_KW@31..37 "class" [] [Whitespace(" ")]
+                3: JS_IDENTIFIER_BINDING@37..41
                   0: IDENT@37..41 "Ajv" [] [Whitespace(" ")]
-                3: (empty)
                 4: (empty)
                 5: (empty)
-                6: L_CURLY@41..42 "{" [] []
-                7: JS_CLASS_MEMBER_LIST@42..148
+                6: (empty)
+                7: L_CURLY@41..42 "{" [] []
+                8: JS_CLASS_MEMBER_LIST@42..148
                   0: TS_METHOD_SIGNATURE_CLASS_MEMBER@42..148
                     0: TS_METHOD_SIGNATURE_MODIFIER_LIST@42..42
                     1: (empty)
@@ -208,6 +210,6 @@ JsModule {
                       1: TS_STRING_TYPE@141..147
                         0: STRING_KW@141..147 "string" [] []
                     7: SEMICOLON@147..148 ";" [] []
-                8: R_CURLY@148..152 "}" [Newline("\n"), Whitespace("  ")] []
+                9: R_CURLY@148..152 "}" [Newline("\n"), Whitespace("  ")] []
           2: R_CURLY@152..154 "}" [Newline("\n")] []
   3: EOF@154..155 "" [Newline("\n")] []

@@ -3,6 +3,7 @@ JsScript {
     directives: JsDirectiveList [],
     statements: JsStatementList [
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@0..16 "class" [Comments("// SCRIPT"), Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -84,15 +85,16 @@ JsScript {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_STATEMENT_LIST@0..74
     0: JS_CLASS_DECLARATION@0..74
-      0: (empty)
-      1: CLASS_KW@0..16 "class" [Comments("// SCRIPT"), Newline("\n")] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@16..18
+      0: JS_DECORATOR_LIST@0..0
+      1: (empty)
+      2: CLASS_KW@0..16 "class" [Comments("// SCRIPT"), Newline("\n")] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@16..18
         0: IDENT@16..18 "A" [] [Whitespace(" ")]
-      3: (empty)
       4: (empty)
       5: (empty)
-      6: L_CURLY@18..20 "{" [] [Whitespace(" ")]
-      7: JS_CLASS_MEMBER_LIST@20..73
+      6: (empty)
+      7: L_CURLY@18..20 "{" [] [Whitespace(" ")]
+      8: JS_CLASS_MEMBER_LIST@20..73
         0: JS_CONSTRUCTOR_CLASS_MEMBER@20..73
           0: JS_CONSTRUCTOR_MODIFIER_LIST@20..20
           1: JS_LITERAL_MEMBER_NAME@20..31
@@ -133,7 +135,7 @@ JsScript {
             1: JS_DIRECTIVE_LIST@71..71
             2: JS_STATEMENT_LIST@71..71
             3: R_CURLY@71..73 "}" [] [Whitespace(" ")]
-      8: R_CURLY@73..74 "}" [] []
+      9: R_CURLY@73..74 "}" [] []
   3: EOF@74..75 "" [Newline("\n")] []
 --
 js_constructor_parameter_reserved_names.js:2:33 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

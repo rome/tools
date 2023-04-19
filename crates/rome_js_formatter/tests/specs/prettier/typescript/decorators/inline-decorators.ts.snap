@@ -1,6 +1,5 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-assertion_line: 212
 info: typescript/decorators/inline-decorators.ts
 ---
 
@@ -78,7 +77,7 @@ class MyContainerComponent {
    method1() {}
  
    @d1
-@@ -30,22 +30,19 @@
+@@ -30,11 +30,10 @@
    constructor(
      @d1 private x: number,
      @d2(foo) private y: number,
@@ -93,12 +92,7 @@ class MyContainerComponent {
    ) {}
  }
  
--@decorated
--class Foo {}
-+@decorated class Foo {}
- 
- class Bar {
-   @decorated method() {}
+@@ -46,6 +45,5 @@
  }
  
  class MyContainerComponent {
@@ -150,7 +144,8 @@ class Class3 {
   ) {}
 }
 
-@decorated class Foo {}
+@decorated
+class Foo {}
 
 class Bar {
   @decorated method() {}
@@ -163,7 +158,7 @@ class MyContainerComponent {
 
 # Lines exceeding max width of 80 characters
 ```
-   47:   @ContentChildren(MyComponent) components: QueryListSomeBigName<MyComponentThat>;
+   48:   @ContentChildren(MyComponent) components: QueryListSomeBigName<MyComponentThat>;
 ```
 
 

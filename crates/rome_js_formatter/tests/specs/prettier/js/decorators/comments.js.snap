@@ -1,6 +1,5 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-assertion_line: 212
 info: js/decorators/comments.js
 ---
 
@@ -92,6 +91,38 @@ export class AppModule {}
 @Bar()
 // C
 export class Bar {}
+```
+
+# Errors
+```
+comments.js:13:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Decorators are not valid here.
+  
+  > 13 │ @NgModule({
+       │ ^^^^^^^^^^^
+  > 14 │   // Imports.
+        ...
+  > 22 │   ],
+  > 23 │ })
+       │ ^^
+    24 │ export class AppModule {}
+    25 │ 
+  
+comments.js:27:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Decorators are not valid here.
+  
+    26 │ // A
+  > 27 │ @Foo()
+       │ ^^^^^^
+  > 28 │ // B
+  > 29 │ @Bar()
+       │ ^^^^^^
+    30 │ // C
+    31 │ export class Bar{}
+  
+
 ```
 
 

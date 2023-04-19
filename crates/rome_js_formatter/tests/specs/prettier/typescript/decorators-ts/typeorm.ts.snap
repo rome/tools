@@ -1,6 +1,5 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-assertion_line: 212
 info: typescript/decorators-ts/typeorm.ts
 ---
 
@@ -71,6 +70,20 @@ export class Board {
   @OneToMany(type => Topic, topic => topic.board)
   topics: Topic[];
 }
+```
+
+# Errors
+```
+typeorm.ts:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Decorators are not valid here.
+  
+  > 1 │ @Entity()
+      │ ^^^^^^^^^
+    2 │ export class Board {
+    3 │ 
+  
+
 ```
 
 

@@ -1,12 +1,20 @@
 use crate::{
     AnyJsArrowFunctionParameters, AnyJsBinding, AnyJsClass, AnyJsClassMember, AnyJsClassMemberName,
     AnyJsFunction, AnyJsFunctionBody, AnyTsPropertyAnnotation, AnyTsVariableAnnotation,
-    JsClassMemberList, JsExtendsClause, JsSyntaxToken, TsImplementsClause, TsReturnTypeAnnotation,
-    TsTypeAnnotation, TsTypeParameters,
+    JsClassMemberList, JsDecoratorList, JsExtendsClause, JsSyntaxToken, TsImplementsClause,
+    TsReturnTypeAnnotation, TsTypeAnnotation, TsTypeParameters,
 };
 use rome_rowan::{AstSeparatedList, SyntaxResult};
 
 impl AnyJsClass {
+    pub fn decorators(&self) -> JsDecoratorList {
+        match self {
+            AnyJsClass::JsClassDeclaration(declaration) => declaration.decorators(),
+            AnyJsClass::JsClassExpression(expression) => expression.decorators(),
+            AnyJsClass::JsClassExportDefaultDeclaration(declaration) => declaration.decorators(),
+        }
+    }
+
     pub fn abstract_token(&self) -> Option<JsSyntaxToken> {
         match self {
             AnyJsClass::JsClassDeclaration(declaration) => declaration.abstract_token(),

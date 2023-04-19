@@ -3,6 +3,7 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -35,18 +36,19 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..11
     0: JS_CLASS_DECLARATION@0..10
-      0: (empty)
-      1: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@6..7
+      0: JS_DECORATOR_LIST@0..0
+      1: (empty)
+      2: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@6..7
         0: IDENT@6..7 "S" [] []
-      3: (empty)
       4: (empty)
       5: (empty)
-      6: L_CURLY@7..8 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@8..9
+      6: (empty)
+      7: L_CURLY@7..8 "{" [] []
+      8: JS_CLASS_MEMBER_LIST@8..9
         0: JS_BOGUS_MEMBER@8..9
           0: L_CURLY@8..9 "{" [] []
-      8: R_CURLY@9..10 "}" [] []
+      9: R_CURLY@9..10 "}" [] []
     1: JS_BOGUS_STATEMENT@10..11
       0: R_CURLY@10..11 "}" [] []
   3: EOF@11..12 "" [Newline("\n")] []

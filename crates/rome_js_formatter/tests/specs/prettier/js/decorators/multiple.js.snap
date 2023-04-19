@@ -1,6 +1,5 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-assertion_line: 212
 info: js/decorators/multiple.js
 ---
 
@@ -31,21 +30,22 @@ const foo = {
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,18 +1,15 @@
+@@ -1,18 +1,17 @@
  const dog = {
 -  @readonly
 +@readonly
    @nonenumerable
    @doubledValue
-   legs: 4,
+-  legs: 4,
++legs: 4,
  
--  @readonly
-+@readonly
+   @readonly
    @nonenumerable
    @doubledValue
 -  eyes: 2,
 -};
-+eyes: 2;
++  eyes
++: 2
 +}
  
  const foo = {
@@ -54,7 +54,8 @@ const foo = {
 -  @theyWontAllFitInOneline
 -  aVeryLongPropName: "A very long string as value",
 -};
-+@multipleDecorators @inline @theyWontAllFitInOneline aVeryLongPropName: "A very long string as value";
++@multipleDecorators @inline @theyWontAllFitInOneline
++aVeryLongPropName: "A very long string as value";
 +}
 ```
 
@@ -65,16 +66,18 @@ const dog = {
 @readonly
   @nonenumerable
   @doubledValue
-  legs: 4,
+legs: 4,
 
-@readonly
+  @readonly
   @nonenumerable
   @doubledValue
-eyes: 2;
+  eyes
+: 2
 }
 
 const foo = {
-@multipleDecorators @inline @theyWontAllFitInOneline aVeryLongPropName: "A very long string as value";
+@multipleDecorators @inline @theyWontAllFitInOneline
+aVeryLongPropName: "A very long string as value";
 }
 ```
 
@@ -100,43 +103,52 @@ multiple.js:2:3 parse ━━━━━━━━━━━━━━━━━━━�
   
 multiple.js:7:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × expected an expression but instead found '@'
+  × Decorators are not valid here.
   
-    5 │   legs: 4,
-    6 │ 
-  > 7 │   @readonly
-      │   ^
-    8 │   @nonenumerable
-    9 │   @doubledValue
+     5 │   legs: 4,
+     6 │ 
+   > 7 │   @readonly
+       │   ^^^^^^^^^
+   > 8 │   @nonenumerable
+   > 9 │   @doubledValue
+       │   ^^^^^^^^^^^^^
+    10 │   eyes: 2
+    11 │ };
   
-  i Expected an expression here
-  
-    5 │   legs: 4,
-    6 │ 
-  > 7 │   @readonly
-      │   ^
-    8 │   @nonenumerable
-    9 │   @doubledValue
-  
-multiple.js:11:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+multiple.js:10:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × expected a statement but instead found '}'
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
   
+     8 │   @nonenumerable
      9 │   @doubledValue
-    10 │   eyes: 2
-  > 11 │ };
-       │ ^
+  > 10 │   eyes: 2
+       │       ^
+    11 │ };
     12 │ 
-    13 │ const foo = {
   
-  i Expected a statement here
+  i An explicit or implicit semicolon is expected here...
   
+     8 │   @nonenumerable
      9 │   @doubledValue
-    10 │   eyes: 2
-  > 11 │ };
-       │ ^
+  > 10 │   eyes: 2
+       │       ^
+    11 │ };
     12 │ 
-    13 │ const foo = {
+  
+  i ...Which is required to end this statement
+  
+     3 │   @nonenumerable
+     4 │   @doubledValue
+   > 5 │   legs: 4,
+       │         ^^
+   > 6 │ 
+   > 7 │   @readonly
+   > 8 │   @nonenumerable
+   > 9 │   @doubledValue
+  > 10 │   eyes: 2
+       │   ^^^^^
+    11 │ };
+    12 │ 
   
 multiple.js:14:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -175,11 +187,6 @@ multiple.js:15:1 parse ━━━━━━━━━━━━━━━━━━━
     16 │ 
   
 
-```
-
-# Lines exceeding max width of 80 characters
-```
-   14: @multipleDecorators @inline @theyWontAllFitInOneline aVeryLongPropName: "A very long string as value";
 ```
 
 

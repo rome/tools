@@ -7,6 +7,7 @@ JsModule {
             export_clause: JsExportDefaultDeclarationClause {
                 default_token: DEFAULT_KW@7..15 "default" [] [Whitespace(" ")],
                 declaration: JsClassExportDefaultDeclaration {
+                    decorators: JsDecoratorList [],
                     abstract_token: ABSTRACT_KW@15..24 "abstract" [] [Whitespace(" ")],
                     class_token: CLASS_KW@24..30 "class" [] [Whitespace(" ")],
                     id: missing (optional),
@@ -33,14 +34,15 @@ JsModule {
       1: JS_EXPORT_DEFAULT_DECLARATION_CLAUSE@7..32
         0: DEFAULT_KW@7..15 "default" [] [Whitespace(" ")]
         1: JS_CLASS_EXPORT_DEFAULT_DECLARATION@15..32
-          0: ABSTRACT_KW@15..24 "abstract" [] [Whitespace(" ")]
-          1: CLASS_KW@24..30 "class" [] [Whitespace(" ")]
-          2: (empty)
+          0: JS_DECORATOR_LIST@15..15
+          1: ABSTRACT_KW@15..24 "abstract" [] [Whitespace(" ")]
+          2: CLASS_KW@24..30 "class" [] [Whitespace(" ")]
           3: (empty)
           4: (empty)
           5: (empty)
-          6: L_CURLY@30..31 "{" [] []
-          7: JS_CLASS_MEMBER_LIST@31..31
-          8: R_CURLY@31..32 "}" [] []
+          6: (empty)
+          7: L_CURLY@30..31 "{" [] []
+          8: JS_CLASS_MEMBER_LIST@31..31
+          9: R_CURLY@31..32 "}" [] []
         2: (empty)
   3: EOF@32..33 "" [Newline("\n")] []
