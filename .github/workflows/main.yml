@@ -145,6 +145,8 @@ jobs:
        os: [windows-latest, ubuntu-latest]
 
     steps:
+      - name: Support longpaths
+        run: git config --system core.longpaths true
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
