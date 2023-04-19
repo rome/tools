@@ -11,7 +11,7 @@ expression: malformedOptions.js
 ```
 malformedOptions.js:2:5 deserialize ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Found an unknown key `hook`
+  × Found an unknown key `hook`.
   
     1 │ {
   > 2 │     "hook": [

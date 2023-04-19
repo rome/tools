@@ -22,6 +22,7 @@ mod panic;
 mod parse_arguments;
 mod reports;
 mod service;
+mod vcs;
 
 pub use diagnostics::CliDiagnostic;
 pub(crate) use execute::{execute_mode, Execution, TraversalMode};

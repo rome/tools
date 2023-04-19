@@ -744,3 +744,116 @@ something( )
         result,
     ));
 }
+
+#[test]
+fn ignore_vcs_ignored_file() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let rome_json = r#"{
+        "vcs": {
+            "enabled": true,
+            "clientKind": "git",
+            "useIgnoreFile": true
+        }
+    }"#;
+
+    let git_ignore = r#"
+file2.js
+"#;
+
+    let code2 = r#"foo.call(); bar.call();"#;
+    let code1 = r#"array.map(sentence => sentence.split(' ')).flat();"#;
+
+    // ignored files
+    let file_path1 = Path::new("file1.js");
+    fs.insert(file_path1.into(), code1.as_bytes());
+    let file_path2 = Path::new("file2.js");
+    fs.insert(file_path2.into(), code2.as_bytes());
+
+    // configuration
+    let config_path = Path::new("rome.json");
+    fs.insert(config_path.into(), rome_json.as_bytes());
+
+    // git folder
+    let git_folder = Path::new(".git");
+    fs.insert(git_folder.into(), "".as_bytes());
+
+    // git ignore file
+    let ignore_file = Path::new(".gitignore");
+    fs.insert(ignore_file.into(), git_ignore.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Arguments::from_vec(vec![
+            OsString::from("ci"),
+            file_path1.as_os_str().into(),
+            file_path2.as_os_str().into(),
+        ]),
+    );
+
+    assert!(result.is_err(), "run_cli returned {result:?}");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "ignore_vcs_ignored_file",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn ignore_vcs_ignored_file_via_cli() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let git_ignore = r#"
+file2.js
+"#;
+
+    let code2 = r#"foo.call();
+
+
+	bar.call();"#;
+    let code1 = r#"array.map(sentence => sentence.split(' ')).flat();"#;
+
+    // ignored files
+    let file_path1 = Path::new("file1.js");
+    fs.insert(file_path1.into(), code1.as_bytes());
+    let file_path2 = Path::new("file2.js");
+    fs.insert(file_path2.into(), code2.as_bytes());
+
+    // git folder
+    let git_folder = Path::new("./.git");
+    fs.insert(git_folder.into(), "".as_bytes());
+
+    // git ignore file
+    let ignore_file = Path::new("./.gitignore");
+    fs.insert(ignore_file.into(), git_ignore.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Arguments::from_vec(vec![
+            OsString::from("ci"),
+            OsString::from("--vcs-enabled=true"),
+            OsString::from("--vcs-client-kind=git"),
+            OsString::from("--vcs-use-ignore-file=true"),
+            OsString::from("--vcs-root=."),
+            file_path1.as_os_str().into(),
+            file_path2.as_os_str().into(),
+        ]),
+    );
+
+    assert!(result.is_err(), "run_cli returned {result:?}");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "ignore_vcs_ignored_file_via_cli",
+        fs,
+        console,
+        result,
+    ));
+}

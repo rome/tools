@@ -36,6 +36,7 @@ Rome Configuration:
   Formatter disabled:           true
   Linter disabled:              false
   Organize imports disabled:    true
+  VCS disabled:                 true
 
 Server:
   Version:                      0.0.0

@@ -41,6 +41,7 @@ rome_json_formatter = { path = "../rome_json_formatter" }
 rome_json_syntax = { path = "../rome_json_syntax" }
 rome_migrate = { path = "../rome_migrate" }
 rome_rowan = { path = "../rome_rowan" }
+indexmap = { workspace = true }
 
 [target.'cfg(unix)'.dependencies]
 libc = "0.2.127"

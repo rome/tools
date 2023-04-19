@@ -11,6 +11,7 @@ Profile-*.json
 # Ignore third-party files
 **/node_modules
 **/dist
+**/build
 npm/cli-*
 .pnpm-debug.log
 

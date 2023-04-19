@@ -22,8 +22,8 @@ const MAIN: Markup = markup! {
     "<Dim>"--colors=<off|force>"</Dim>"     Set the formatting mode for markup: \"off\" prints everything as plain text, \"force\" forces the formatting of markup using ANSI even if the console output is determined to be incompatible
     "<Dim>"--use-server"</Dim>"             Connect to a running instance of the Rome daemon server
     "<Dim>"--version"</Dim>"                Show the Rome version information and quit
-    "<Dim>"--files-max-size"</Dim>"         The maximum allowed size for source code files in bytes (default: 1MB)
-"
+    "<Dim>"--files-max-size"</Dim>"         The maximum allowed size for source code files in bytes (default: 1MB)"
+{VCS_OPTIONS}
 };
 
 const CHECK: Markup = markup! {
@@ -46,17 +46,28 @@ const CHECK: Markup = markup! {
     "<Dim>"--config-path"</Dim>"                 Set the filesystem path to the directory of the rome.json configuration file
     "<Dim>"--verbose"</Dim>"                     Print additional verbose advices on diagnostics
 "
+    {VCS_OPTIONS}
 };
 
 const FORMAT_OPTIONS: Markup = markup! {
     "
-    "<Dim>"--indent-style <tabs|space>"</Dim>"              Change the indention character (default: tabs)
+    "<Dim>"--indent-style <tab|space>"</Dim>"               Change the indention character (default: tab)
     "<Dim>"--indent-size <number>"</Dim>"                   If the indentation style is set to spaces, determine how many spaces should be used for indentation (default: 2)
     "<Dim>"--line-width <number>"</Dim>"                    Change how many characters the formatter is allowed to print in a single line (default: 80)
     "<Dim>"--quote-style <single|double>"</Dim>"            Changes the quotation character for strings (default: double)
     "<Dim>"--quote-properties <as-needed|preserve>"</Dim>"  Changes when properties in object should be quoted (default: as-needed)
     "<Dim>"--trailing-comma <all|es5|none>"</Dim>"          Changes trailing commas in multi-line comma-separated syntactic structures (default: all)
     "<Dim>"--semicolons <always|as-needed>"</Dim>"          Changes when to print semicolons for statements (default: always)
+    "
+};
+
+const VCS_OPTIONS: Markup = markup! {
+    "
+    "<Dim>"--vcs-enabled <true|false>"</Dim>"              Whether Rome should integrate itself with the VCS client
+    "<Dim>"--vcs-client-kind <git>"</Dim>"                 The name of the client
+    "<Dim>"--vcs-use-ignore-file <true|false>"</Dim>"      Whether Rome should ignore the paths inside the ignore file
+    "<Dim>"--vcs-root <string>"</Dim>"                     Where Rome should look for VCS files. If a rome.json is present, Rome will append this root to the path of where
+rome.json is.
     "
 };
 
@@ -74,13 +85,14 @@ const CI: Markup = markup! {
     rome ci ./src ./internal ./scripts
 
 "<Emphasis>"OPTIONS:"</Emphasis>"
-    "<Dim>"--formatter-enabled"</Dim>"                      Allow to enable or disable the formatter check. (default: true)
-    "<Dim>"--linter-enabled"</Dim>"                         Allow to enable or disable the linter check. (default: true)
-    "<Dim>"--organize-imports-enabled"</Dim>"               Allow to enable or disable the organize imports. (default: true)
+    "<Dim>"--formatter-enabled <true|false>"</Dim>"                      Allow to enable or disable the formatter check. (default: true)
+    "<Dim>"--linter-enabled <true|false>"</Dim>"                         Allow to enable or disable the linter check. (default: true)
+    "<Dim>"--organize-imports-enabled <true|false>"</Dim>"               Allow to enable or disable the organize imports. (default: true)
     "<Dim>"--max-diagnostics"</Dim>"                        Cap the amount of diagnostics displayed (default: 50)
     "<Dim>"--config-path"</Dim>"                            Set the filesystem path to the directory of the rome.json configuration file
     "<Dim>"--verbose"</Dim>"                                Print additional verbose advices on diagnostics"
     {FORMAT_OPTIONS}
+    {VCS_OPTIONS}
 };
 
 const FORMAT: Markup = markup! {
@@ -101,10 +113,10 @@ const FORMAT: Markup = markup! {
     "<Dim>"--skip-errors"</Dim>"                            Skip over files containing syntax errors instead of emitting an error diagnostic.
     "<Dim>"--max-diagnostics"</Dim>"                        Cap the amount of diagnostics displayed (default: 50)
     "<Dim>"--config-path"</Dim>"                            Set the filesystem path to the directory of the rome.json configuration file
-    "<Dim>"--verbose"</Dim>"                                Print additional verbose advices on diagnostics"
+    "<Dim>"--verbose"</Dim>"                                Print additional verbose advices on diagnostics
+    "<Dim>"--stdin-file-path <string>"</Dim>"               A file name with its extension to pass when reading from standard in, e.g. echo 'let a;' | rome format --stdin-file-path file.js"
     {FORMAT_OPTIONS}
-   ""<Dim>"--stdin-file-path <string>"</Dim>"               A file name with its extension to pass when reading from standard in, e.g. echo 'let a;' | rome format --stdin-file-path file.js
-"
+    {VCS_OPTIONS}
 };
 
 const INIT: Markup = markup! {

@@ -6,7 +6,7 @@ use crate::{
     FileSystem, RomePath,
 };
 use rayon::{scope, Scope};
-use rome_diagnostics::{adapters::IoError, DiagnosticExt, Error};
+use rome_diagnostics::{adapters::IoError, DiagnosticExt, Error, Severity};
 use std::fs::DirEntry;
 use std::{
     env,
@@ -40,6 +40,10 @@ impl FileSystem for OsFileSystem {
 
     fn working_directory(&self) -> Option<PathBuf> {
         env::current_dir().ok()
+    }
+
+    fn path_exists(&self, path: &Path) -> bool {
+        path.exists()
     }
 }
 
@@ -129,6 +133,7 @@ impl<'scope> TraversalScope<'scope> for OsTraversalScope<'scope> {
                     ctx.push_diagnostic(Error::from(FileSystemDiagnostic {
                         path: path.clone(),
                         error_kind: ErrorKind::DereferencedSymlink(path),
+                        severity: Severity::Warning,
                     }));
                 } else {
                     ctx.push_diagnostic(
@@ -160,6 +165,7 @@ impl<'scope> TraversalScope<'scope> for OsTraversalScope<'scope> {
         ctx.push_diagnostic(Error::from(FileSystemDiagnostic {
             path: path.to_string_lossy().to_string(),
             error_kind: ErrorKind::from(file_type),
+            severity: Severity::Warning,
         }));
     }
 }
@@ -244,6 +250,7 @@ fn handle_dir_entry<'scope>(
                     ctx.push_diagnostic(Error::from(FileSystemDiagnostic {
                         path: path.clone(),
                         error_kind: ErrorKind::DereferencedSymlink(path),
+                        severity: Severity::Warning,
                     }));
                 } else {
                     ctx.push_diagnostic(
@@ -270,6 +277,7 @@ fn handle_dir_entry<'scope>(
         ctx.push_diagnostic(Error::from(FileSystemDiagnostic {
             path: path.clone(),
             error_kind: ErrorKind::InfiniteSymlinkExpansion(path),
+            severity: Severity::Warning,
         }));
         return;
     }
@@ -301,6 +309,7 @@ fn handle_dir_entry<'scope>(
                 ctx.push_diagnostic(Error::from(FileSystemDiagnostic {
                     path: path.to_string_lossy().to_string(),
                     error_kind: ErrorKind::UnknownFileType,
+                    severity: Severity::Warning,
                 }));
                 return;
             }
@@ -326,6 +335,7 @@ fn handle_dir_entry<'scope>(
     ctx.push_diagnostic(Error::from(FileSystemDiagnostic {
         path: path.to_string_lossy().to_string(),
         error_kind: ErrorKind::from(file_type),
+        severity: Severity::Warning,
     }));
 }
 
