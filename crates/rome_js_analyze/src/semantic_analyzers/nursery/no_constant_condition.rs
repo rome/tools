@@ -6,7 +6,7 @@ use rome_js_syntax::{
     AnyJsArrayElement, AnyJsExpression, AnyJsLiteralExpression, AnyJsStatement,
     AnyJsTemplateElement, JsAssignmentOperator, JsConditionalExpression, JsDoWhileStatement,
     JsForStatement, JsFunctionDeclaration, JsFunctionExpression, JsIfStatement, JsLogicalOperator,
-    JsStatementList, JsUnaryOperator, JsWhileStatement, JsYieldExpression,
+    JsStatementList, JsUnaryOperator, JsWhileStatement, JsYieldExpression, TextRange,
 };
 use rome_rowan::{declare_node_union, AstNode, AstSeparatedList};
 
@@ -86,7 +86,7 @@ declare_node_union! {
 
 impl Rule for NoConstantCondition {
     type Query = Semantic<ConditionalStatement>;
-    type State = AnyJsExpression;
+    type State = TextRange;
     type Signals = Option<Self::State>;
     type Options = ();
 
@@ -106,13 +106,13 @@ impl Rule for NoConstantCondition {
         }
 
         let test = conditional_stmt.test()?;
-        is_constant_condition(&test, true, model).map(|_| test)
+        is_constant_condition(&test, true, model).map(|_| Some(test.range()))?
     }
 
     fn diagnostic(_ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
         Some(RuleDiagnostic::new(
             rule_category!(),
-            state.range(),
+            state,
             markup! {
                 "Unexpected constant condition."
             },
