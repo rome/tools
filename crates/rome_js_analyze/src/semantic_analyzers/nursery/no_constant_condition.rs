@@ -447,39 +447,11 @@ fn is_logical_identity(node: AnyJsExpression, operator: JsLogicalOperator) -> bo
 
 fn get_boolean_value(node: AnyJsLiteralExpression) -> bool {
     use AnyJsLiteralExpression::*;
-
     match node {
-        JsBigintLiteralExpression(node) => {
-            if let Ok(value_token) = node.value_token() {
-                value_token.text_trimmed() != "0n"
-            } else {
-                false
-            }
-        }
-        JsBooleanLiteralExpression(node) => {
-            if let Ok(value_token) = node.value_token() {
-                value_token.text_trimmed() != "false"
-            } else {
-                false
-            }
-        }
-        JsNullLiteralExpression(_) => false,
-        JsNumberLiteralExpression(node) => {
-            if let Ok(value_token) = node.value_token() {
-                value_token.text_trimmed() != "0"
-            } else {
-                false
-            }
-        }
         JsRegexLiteralExpression(_) => true,
-        JsStringLiteralExpression(node) => {
-            if let Ok(value_token) = node.value_token() {
-                let text_trimmed = value_token.text_trimmed();
-                text_trimmed != "''" && text_trimmed != "\"\""
-            } else {
-                false
-            }
-        }
+        _ => node
+            .as_static_value()
+            .map_or(false, |value| !value.is_falsy()),
     }
 }
 
