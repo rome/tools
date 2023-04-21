@@ -1,9 +1,13 @@
 use crate::prelude::*;
 use crate::{JsFormatContext, JsFormatOptions};
+use rome_deserialize::json::with_only_known_variants;
+use rome_deserialize::{DeserializationDiagnostic, VisitNode};
 use rome_formatter::formatter::Formatter;
 use rome_formatter::prelude::{if_group_breaks, text};
 use rome_formatter::write;
 use rome_formatter::{Format, FormatResult};
+use rome_json_syntax::JsonLanguage;
+use rome_rowan::SyntaxNode;
 use std::fmt;
 use std::str::FromStr;
 
@@ -67,6 +71,8 @@ pub enum TrailingComma {
 }
 
 impl TrailingComma {
+    pub(crate) const KNOWN_VALUES: &'static [&'static str] = &["all", "es5", "none"];
+
     pub const fn is_es5(&self) -> bool {
         matches!(self, TrailingComma::ES5)
     }
@@ -99,5 +105,28 @@ impl fmt::Display for TrailingComma {
             TrailingComma::All => std::write!(f, "All"),
             TrailingComma::None => std::write!(f, "None"),
         }
+    }
+}
+
+impl VisitNode<JsonLanguage> for TrailingComma {
+    fn visit_member_value(
+        &mut self,
+        node: &SyntaxNode<JsonLanguage>,
+        diagnostics: &mut Vec<DeserializationDiagnostic>,
+    ) -> Option<()> {
+        let node = with_only_known_variants(node, TrailingComma::KNOWN_VALUES, diagnostics)?;
+        match node.inner_string_text().ok()?.text() {
+            "all" => {
+                *self = TrailingComma::All;
+            }
+            "es5" => {
+                *self = TrailingComma::ES5;
+            }
+            "none" => {
+                *self = TrailingComma::None;
+            }
+            _ => {}
+        }
+        Some(())
     }
 }

@@ -1,5 +1,7 @@
 use crate::comments::{FormatJsLeadingComment, JsCommentStyle, JsComments};
 use crate::context::trailing_comma::TrailingComma;
+use rome_deserialize::json::with_only_known_variants;
+use rome_deserialize::{DeserializationDiagnostic, VisitNode};
 use rome_formatter::printer::PrinterOptions;
 use rome_formatter::token::string::Quote;
 use rome_formatter::{
@@ -7,6 +9,8 @@ use rome_formatter::{
     TransformSourceMap,
 };
 use rome_js_syntax::{AnyJsFunctionBody, JsLanguage, SourceType};
+use rome_json_syntax::JsonLanguage;
+use rome_rowan::SyntaxNode;
 use std::fmt;
 use std::fmt::Debug;
 use std::rc::Rc;
@@ -284,6 +288,8 @@ impl fmt::Display for QuoteStyle {
 }
 
 impl QuoteStyle {
+    pub(crate) const KNOWN_VALUES: &'static [&'static str] = &["double", "single"];
+
     pub fn as_char(&self) -> char {
         match self {
             QuoteStyle::Double => '"',
@@ -336,6 +342,22 @@ impl From<QuoteStyle> for Quote {
     }
 }
 
+impl VisitNode<JsonLanguage> for QuoteStyle {
+    fn visit_member_value(
+        &mut self,
+        node: &SyntaxNode<JsonLanguage>,
+        diagnostics: &mut Vec<DeserializationDiagnostic>,
+    ) -> Option<()> {
+        let node = with_only_known_variants(node, QuoteStyle::KNOWN_VALUES, diagnostics)?;
+        if node.inner_string_text().ok()?.text() == "single" {
+            *self = QuoteStyle::Single;
+        } else {
+            *self = QuoteStyle::Double;
+        }
+        Some(())
+    }
+}
+
 #[derive(Debug, Eq, PartialEq, Clone, Copy, Default)]
 #[cfg_attr(
     feature = "serde",
@@ -369,6 +391,26 @@ impl fmt::Display for QuoteProperties {
     }
 }
 
+impl QuoteProperties {
+    pub(crate) const KNOWN_VALUES: &'static [&'static str] = &["preserve", "asNeeded"];
+}
+
+impl VisitNode<JsonLanguage> for QuoteProperties {
+    fn visit_member_value(
+        &mut self,
+        node: &SyntaxNode<JsonLanguage>,
+        diagnostics: &mut Vec<DeserializationDiagnostic>,
+    ) -> Option<()> {
+        let node = with_only_known_variants(node, QuoteProperties::KNOWN_VALUES, diagnostics)?;
+        if node.inner_string_text().ok()?.text() == "asNeeded" {
+            *self = QuoteProperties::AsNeeded;
+        } else {
+            *self = QuoteProperties::Preserve;
+        }
+        Some(())
+    }
+}
+
 #[derive(Debug, Eq, PartialEq, Clone, Copy, Default)]
 #[cfg_attr(
     feature = "serde",
@@ -381,6 +423,8 @@ pub enum Semicolons {
 }
 
 impl Semicolons {
+    pub(crate) const KNOWN_VALUES: &'static [&'static str] = &["always", "asNeeded"];
+
     pub const fn is_as_needed(&self) -> bool {
         matches!(self, Self::AsNeeded)
     }
@@ -408,5 +452,21 @@ impl fmt::Display for Semicolons {
             Semicolons::AsNeeded => write!(f, "As needed"),
             Semicolons::Always => write!(f, "Always"),
         }
+    }
+}
+
+impl VisitNode<JsonLanguage> for Semicolons {
+    fn visit_member_value(
+        &mut self,
+        node: &SyntaxNode<JsonLanguage>,
+        diagnostics: &mut Vec<DeserializationDiagnostic>,
+    ) -> Option<()> {
+        let node = with_only_known_variants(node, Semicolons::KNOWN_VALUES, diagnostics)?;
+        if node.inner_string_text().ok()?.text() == "asNeeded" {
+            *self = Semicolons::AsNeeded;
+        } else {
+            *self = Semicolons::Always;
+        }
+        Some(())
     }
 }
