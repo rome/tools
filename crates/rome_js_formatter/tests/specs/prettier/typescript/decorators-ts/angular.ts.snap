@@ -25,10 +25,9 @@ export class HeroButtonComponent {
 +++ Rome
 @@ -1,6 +1,6 @@
  @Component({
--  selector: "toh-hero-button",
+   selector: "toh-hero-button",
 -  template: `<button>{{ label }}</button>`,
-+  selector: 'toh-hero-button',
-+  template: `<button>{{label}}</button>`
++  template: `<button>{{label}}</button>`,
  })
  export class HeroButtonComponent {
    @Output() change = new EventEmitter<any>();
@@ -38,8 +37,8 @@ export class HeroButtonComponent {
 
 ```ts
 @Component({
-  selector: 'toh-hero-button',
-  template: `<button>{{label}}</button>`
+  selector: "toh-hero-button",
+  template: `<button>{{label}}</button>`,
 })
 export class HeroButtonComponent {
   @Output() change = new EventEmitter<any>();
