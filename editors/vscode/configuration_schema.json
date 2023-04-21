@@ -545,6 +545,13 @@
 						{ "type": "null" }
 					]
 				},
+				"noConstantCondition": {
+					"description": "Disallow constant expressions in conditions",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"noDuplicateCase": {
 					"description": "Disallow duplicate case labels. If a switch statement has duplicate test expressions in case clauses, it is likely that a programmer copied a case clause but forgot to change the test expression.",
 					"anyOf": [

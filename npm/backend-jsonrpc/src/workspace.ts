@@ -417,6 +417,10 @@ export interface Nursery {
 	 */
 	noConsoleLog?: RuleConfiguration;
 	/**
+	 * Disallow constant expressions in conditions
+	 */
+	noConstantCondition?: RuleConfiguration;
+	/**
 	 * Disallow duplicate case labels. If a switch statement has duplicate test expressions in case clauses, it is likely that a programmer copied a case clause but forgot to change the test expression.
 	 */
 	noDuplicateCase?: RuleConfiguration;
@@ -1001,6 +1005,7 @@ export type Category =
 	| "lint/nursery/noRedeclare"
 	| "lint/nursery/useNamespaceKeyword"
 	| "lint/nursery/noRedundantRoles"
+	| "lint/nursery/noConstantCondition"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"
