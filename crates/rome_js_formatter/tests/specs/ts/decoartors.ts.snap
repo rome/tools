@@ -97,9 +97,9 @@ export default class {}
 export class Test {}
 
 // Leading comment before decorator
-@test // first decorator // first decorator
-class // Leading comment before class
-Test2 {
+@test // first decorator
+// Leading comment before class
+class Test2 {
 	/*
 	 * Leading multiline comment
 	 */
@@ -116,13 +116,11 @@ Test2 {
 
 ## Unimplemented nodes/tokens
 
-"@sealed" => 0..7
 "\t@readonl" => 21..30
 "\t\t@par" => 62..68
 "\t\t@readon" => 77..86
 "\t\t@aVeryLongDecoratorNameLetsSeeWhatHappensWith" => 104..151
 "@param" => 175..181
 "@param" => 219..225
-"@test // first decorator // first decorator\nclass // Leading c" => 338..400
-"\t@test /* trailing multiline comment\n\t for decorator */ @anotherDecorator(" => 468..542
+"\t@test /* trailing multiline comment\n\t for decorator */ @anotherDecorator(" => 449..523
 
