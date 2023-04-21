@@ -748,6 +748,13 @@
 						{ "type": "null" }
 					]
 				},
+				"noUselessConstructor": {
+					"description": "Disallow unnecessary constructors.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"noUselessRename": {
 					"description": "Disallow renaming import, export, and destructured assignments to the same name.",
 					"anyOf": [
