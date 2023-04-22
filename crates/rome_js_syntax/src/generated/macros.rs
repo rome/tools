@@ -157,6 +157,10 @@ macro_rules! map_syntax_node {
                     let $pattern = unsafe { $crate::JsDebuggerStatement::new_unchecked(node) };
                     $body
                 }
+                $crate::JsSyntaxKind::JS_DECORATOR => {
+                    let $pattern = unsafe { $crate::JsDecorator::new_unchecked(node) };
+                    $body
+                }
                 $crate::JsSyntaxKind::JS_DEFAULT_CLAUSE => {
                     let $pattern = unsafe { $crate::JsDefaultClause::new_unchecked(node) };
                     $body
@@ -1291,6 +1295,10 @@ macro_rules! map_syntax_node {
                 $crate::JsSyntaxKind::JS_CONSTRUCTOR_PARAMETER_LIST => {
                     let $pattern =
                         unsafe { $crate::JsConstructorParameterList::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::JS_DECORATOR_LIST => {
+                    let $pattern = unsafe { $crate::JsDecoratorList::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::JS_DIRECTIVE_LIST => {

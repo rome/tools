@@ -100,7 +100,7 @@ pub trait VisitJsonNode: VisitNode<JsonLanguage> {
         diagnostics: &mut Vec<DeserializationDiagnostic>,
     ) -> Option<String> {
         JsonStringValue::cast_ref(value.syntax())
-            .map(|node| node.text())
+            .and_then(|node| Some(node.inner_string_text().ok()?.to_string()))
             .or_else(|| {
                 diagnostics.push(DeserializationDiagnostic::new_incorrect_type_for_value(
                     name,

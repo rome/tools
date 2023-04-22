@@ -254,3 +254,10 @@ pub(crate) fn modifier_must_precede_modifier(
     .detail(range, "move this modifier")
     .detail(to_precede_modifier_range, "before this modifier")
 }
+
+pub(crate) fn invalid_decorator_error(p: &JsParser, range: TextRange) -> ParseDiagnostic {
+    p.err_builder(
+        format!("Invalid decorator `{}`", p.text(range.as_range()),),
+        range,
+    )
+}

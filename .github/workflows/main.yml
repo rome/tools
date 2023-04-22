@@ -145,6 +145,10 @@ jobs:
        os: [windows-latest, ubuntu-latest]
 
     steps:
+      # ref: https://github.com/orgs/community/discussions/26952
+      - name: Support longpaths
+        if: matrix.os == 'windows-latest'
+        run: git config --system core.longpaths true
       - name: Checkout repository
         uses: actions/checkout@v3
         with:

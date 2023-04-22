@@ -10,8 +10,8 @@ const f = ((a) => {
   log(a);
 })!;
 
-if (a) ({ a, ...b }.a()!.c());
+if (a) ({ a, ...b }).a()!.c();
 
-(function () {}!());
+(function () {})!();
 
 class a extends ({}!) {}

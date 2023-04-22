@@ -105,10 +105,12 @@ define_categories! {
     "lint/nursery/noConsoleLog": "https://docs.rome.tools/lint/rules/noConsoleLog",
     "lint/nursery/noForEach": "https://docs.rome.tools/lint/rules/noForEach",
     "lint/nursery/useLiteralKeys": "https://docs.rome.tools/lint/rules/useLiteralKeys",
+"lint/nursery/noUselessConstructor": "https://docs.rome.tools/lint/rules/noUselessConstructor",
     // Insert new nursery rule here
     "lint/nursery/noRedeclare": "https://docs.rome.tools/lint/rules/noRedeclare",
     "lint/nursery/useNamespaceKeyword": "https://docs.rome.tools/lint/rules/useNamespaceKeyword",
     "lint/nursery/noRedundantRoles": "https://docs.rome.tools/lint/rules/noRedundantRoles",
+    "lint/nursery/noConstantCondition": "https://docs.rome.tools/lint/rules/noConstantCondition",
 
     // performance
     "lint/performance/noDelete": "https://docs.rome.tools/lint/rules/noDelete",

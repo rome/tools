@@ -215,6 +215,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@160..167 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -447,15 +448,16 @@ JsModule {
                 2: R_CURLY@159..160 "}" [] []
       1: (empty)
     4: JS_CLASS_DECLARATION@160..227
-      0: (empty)
-      1: CLASS_KW@160..167 "class" [Newline("\n")] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@167..169
+      0: JS_DECORATOR_LIST@160..160
+      1: (empty)
+      2: CLASS_KW@160..167 "class" [Newline("\n")] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@167..169
         0: IDENT@167..169 "D" [] [Whitespace(" ")]
-      3: (empty)
       4: (empty)
       5: (empty)
-      6: L_CURLY@169..171 "{" [] [Whitespace(" ")]
-      7: JS_CLASS_MEMBER_LIST@171..226
+      6: (empty)
+      7: L_CURLY@169..171 "{" [] [Whitespace(" ")]
+      8: JS_CLASS_MEMBER_LIST@171..226
         0: JS_METHOD_CLASS_MEMBER@171..226
           0: JS_METHOD_MODIFIER_LIST@171..171
           1: (empty)
@@ -499,5 +501,5 @@ JsModule {
                     0: JS_STRING_LITERAL@214..222 "\"string\"" [] []
                 2: SEMICOLON@222..224 ";" [] [Whitespace(" ")]
             3: R_CURLY@224..226 "}" [] [Whitespace(" ")]
-      8: R_CURLY@226..227 "}" [] []
+      9: R_CURLY@226..227 "}" [] []
   3: EOF@227..228 "" [Newline("\n")] []

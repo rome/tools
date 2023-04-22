@@ -826,7 +826,7 @@ async fn pull_diagnostics_for_rome_json() -> Result<()> {
                     code: Some(lsp::NumberOrString::String(String::from("deserialize",))),
                     code_description: None,
                     source: Some(String::from("rome")),
-                    message: String::from("Found an unknown value `magic`",),
+                    message: String::from("Found an unknown value `magic`.",),
                     related_information: None,
                     tags: None,
                     data: None,

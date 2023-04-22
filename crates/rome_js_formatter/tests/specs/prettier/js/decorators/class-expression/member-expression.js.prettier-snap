@@ -1,8 +1,8 @@
-((
+(
   @deco
   class Foo {}
-).name);
-((
+).name;
+(
   @deco
   class {}
-).name);
+).name;

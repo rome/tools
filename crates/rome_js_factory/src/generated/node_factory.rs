@@ -398,6 +398,7 @@ impl JsCatchDeclarationBuilder {
     }
 }
 pub fn js_class_declaration(
+    decorators: JsDecoratorList,
     class_token: SyntaxToken,
     id: AnyJsBinding,
     l_curly_token: SyntaxToken,
@@ -405,6 +406,7 @@ pub fn js_class_declaration(
     r_curly_token: SyntaxToken,
 ) -> JsClassDeclarationBuilder {
     JsClassDeclarationBuilder {
+        decorators,
         class_token,
         id,
         l_curly_token,
@@ -417,6 +419,7 @@ pub fn js_class_declaration(
     }
 }
 pub struct JsClassDeclarationBuilder {
+    decorators: JsDecoratorList,
     class_token: SyntaxToken,
     id: AnyJsBinding,
     l_curly_token: SyntaxToken,
@@ -448,6 +451,7 @@ impl JsClassDeclarationBuilder {
         JsClassDeclaration::unwrap_cast(SyntaxNode::new_detached(
             JsSyntaxKind::JS_CLASS_DECLARATION,
             [
+                Some(SyntaxElement::Node(self.decorators.into_syntax())),
                 self.abstract_token.map(|token| SyntaxElement::Token(token)),
                 Some(SyntaxElement::Token(self.class_token)),
                 Some(SyntaxElement::Node(self.id.into_syntax())),
@@ -465,12 +469,14 @@ impl JsClassDeclarationBuilder {
     }
 }
 pub fn js_class_export_default_declaration(
+    decorators: JsDecoratorList,
     class_token: SyntaxToken,
     l_curly_token: SyntaxToken,
     members: JsClassMemberList,
     r_curly_token: SyntaxToken,
 ) -> JsClassExportDefaultDeclarationBuilder {
     JsClassExportDefaultDeclarationBuilder {
+        decorators,
         class_token,
         l_curly_token,
         members,
@@ -483,6 +489,7 @@ pub fn js_class_export_default_declaration(
     }
 }
 pub struct JsClassExportDefaultDeclarationBuilder {
+    decorators: JsDecoratorList,
     class_token: SyntaxToken,
     l_curly_token: SyntaxToken,
     members: JsClassMemberList,
@@ -518,6 +525,7 @@ impl JsClassExportDefaultDeclarationBuilder {
         JsClassExportDefaultDeclaration::unwrap_cast(SyntaxNode::new_detached(
             JsSyntaxKind::JS_CLASS_EXPORT_DEFAULT_DECLARATION,
             [
+                Some(SyntaxElement::Node(self.decorators.into_syntax())),
                 self.abstract_token.map(|token| SyntaxElement::Token(token)),
                 Some(SyntaxElement::Token(self.class_token)),
                 self.id
@@ -536,12 +544,14 @@ impl JsClassExportDefaultDeclarationBuilder {
     }
 }
 pub fn js_class_expression(
+    decorators: JsDecoratorList,
     class_token: SyntaxToken,
     l_curly_token: SyntaxToken,
     members: JsClassMemberList,
     r_curly_token: SyntaxToken,
 ) -> JsClassExpressionBuilder {
     JsClassExpressionBuilder {
+        decorators,
         class_token,
         l_curly_token,
         members,
@@ -553,6 +563,7 @@ pub fn js_class_expression(
     }
 }
 pub struct JsClassExpressionBuilder {
+    decorators: JsDecoratorList,
     class_token: SyntaxToken,
     l_curly_token: SyntaxToken,
     members: JsClassMemberList,
@@ -583,6 +594,7 @@ impl JsClassExpressionBuilder {
         JsClassExpression::unwrap_cast(SyntaxNode::new_detached(
             JsSyntaxKind::JS_CLASS_EXPRESSION,
             [
+                Some(SyntaxElement::Node(self.decorators.into_syntax())),
                 Some(SyntaxElement::Token(self.class_token)),
                 self.id
                     .map(|token| SyntaxElement::Node(token.into_syntax())),
@@ -775,6 +787,15 @@ impl JsDebuggerStatementBuilder {
             ],
         ))
     }
+}
+pub fn js_decorator(at_token: SyntaxToken, expression: AnyJsDecorator) -> JsDecorator {
+    JsDecorator::unwrap_cast(SyntaxNode::new_detached(
+        JsSyntaxKind::JS_DECORATOR,
+        [
+            Some(SyntaxElement::Token(at_token)),
+            Some(SyntaxElement::Node(expression.into_syntax())),
+        ],
+    ))
 }
 pub fn js_default_clause(
     default_token: SyntaxToken,
@@ -6513,6 +6534,18 @@ where
                 Some(separators.next()?.into())
             }
         }),
+    ))
+}
+pub fn js_decorator_list<I>(items: I) -> JsDecoratorList
+where
+    I: IntoIterator<Item = JsDecorator>,
+    I::IntoIter: ExactSizeIterator,
+{
+    JsDecoratorList::unwrap_cast(SyntaxNode::new_detached(
+        JsSyntaxKind::JS_DECORATOR_LIST,
+        items
+            .into_iter()
+            .map(|item| Some(item.into_syntax().into())),
     ))
 }
 pub fn js_directive_list<I>(items: I) -> JsDirectiveList

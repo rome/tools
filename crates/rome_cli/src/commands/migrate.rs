@@ -6,11 +6,12 @@ use crate::{CliDiagnostic, CliSession};
 /// Handler for the "check" command of the Rome CLI
 pub(crate) fn migrate(mut session: CliSession) -> Result<(), CliDiagnostic> {
     let (_, _, path) = load_configuration(&mut session)?.consume();
+    let config_name = session.app.fs.config_name();
     if let Some(path) = path {
         execute_mode(
             Execution::new(TraversalMode::Migrate {
                 write: session.args.contains("--dry-run"),
-                configuration_path: path,
+                configuration_path: path.join(config_name),
             }),
             session,
         )

@@ -1,11 +1,9 @@
 {
 	"$schema": "./npm/rome/configuration_schema.json",
-	"files": {
-		"ignore": [
-			"build",
-			"dist",
-			"target"
-		]
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"useIgnoreFile": true
 	},
 	"formatter": {
 		"ignore": [

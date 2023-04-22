@@ -5,6 +5,7 @@ JsModule {
         TsDeclareStatement {
             declare_token: DECLARE_KW@0..8 "declare" [] [Whitespace(" ")],
             declaration: JsClassDeclaration {
+                decorators: JsDecoratorList [],
                 abstract_token: missing (optional),
                 class_token: CLASS_KW@8..14 "class" [] [Whitespace(" ")],
                 id: JsIdentifierBinding {
@@ -45,6 +46,7 @@ JsModule {
             },
         },
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@48..55 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -97,15 +99,16 @@ JsModule {
     0: TS_DECLARE_STATEMENT@0..48
       0: DECLARE_KW@0..8 "declare" [] [Whitespace(" ")]
       1: JS_CLASS_DECLARATION@8..48
-        0: (empty)
-        1: CLASS_KW@8..14 "class" [] [Whitespace(" ")]
-        2: JS_IDENTIFIER_BINDING@14..16
+        0: JS_DECORATOR_LIST@8..8
+        1: (empty)
+        2: CLASS_KW@8..14 "class" [] [Whitespace(" ")]
+        3: JS_IDENTIFIER_BINDING@14..16
           0: IDENT@14..16 "T" [] [Whitespace(" ")]
-        3: (empty)
         4: (empty)
         5: (empty)
-        6: L_CURLY@16..18 "{" [] [Whitespace(" ")]
-        7: JS_CLASS_MEMBER_LIST@18..47
+        6: (empty)
+        7: L_CURLY@16..18 "{" [] [Whitespace(" ")]
+        8: JS_CLASS_MEMBER_LIST@18..47
           0: JS_BOGUS_MEMBER@18..47
             0: TS_PROPERTY_SIGNATURE_MODIFIER_LIST@18..27
               0: TS_READONLY_MODIFIER@18..27
@@ -121,17 +124,18 @@ JsModule {
               1: JS_STRING_LITERAL_EXPRESSION@39..45
                 0: JS_STRING_LITERAL@39..45 "\"test\"" [] []
             4: SEMICOLON@45..47 ";" [] [Whitespace(" ")]
-        8: R_CURLY@47..48 "}" [] []
+        9: R_CURLY@47..48 "}" [] []
     1: JS_CLASS_DECLARATION@48..97
-      0: (empty)
-      1: CLASS_KW@48..55 "class" [Newline("\n")] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@55..57
+      0: JS_DECORATOR_LIST@48..48
+      1: (empty)
+      2: CLASS_KW@48..55 "class" [Newline("\n")] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@55..57
         0: IDENT@55..57 "T" [] [Whitespace(" ")]
-      3: (empty)
       4: (empty)
       5: (empty)
-      6: L_CURLY@57..59 "{" [] [Whitespace(" ")]
-      7: JS_CLASS_MEMBER_LIST@59..96
+      6: (empty)
+      7: L_CURLY@57..59 "{" [] [Whitespace(" ")]
+      8: JS_CLASS_MEMBER_LIST@59..96
         0: JS_BOGUS_MEMBER@59..96
           0: TS_PROPERTY_SIGNATURE_MODIFIER_LIST@59..76
             0: TS_DECLARE_MODIFIER@59..67
@@ -149,7 +153,7 @@ JsModule {
             1: JS_STRING_LITERAL_EXPRESSION@88..94
               0: JS_STRING_LITERAL@88..94 "\"test\"" [] []
           4: SEMICOLON@94..96 ";" [] [Whitespace(" ")]
-      8: R_CURLY@96..97 "}" [] []
+      9: R_CURLY@96..97 "}" [] []
   3: EOF@97..98 "" [Newline("\n")] []
 --
 ts_annotated_property_initializer_ambient_context.ts:1:38 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

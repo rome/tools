@@ -1,7 +1,7 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: typescript/non-null/braces.ts
+assertion_line: 212
+info: typescript/non-null/braces.ts
 ---
 
 # Input
@@ -31,7 +31,7 @@ class a extends ({}!) {}
 ```diff
 --- Prettier
 +++ Rome
-@@ -2,16 +2,16 @@
+@@ -2,9 +2,9 @@
    ({
      a: 42,
      b: 42,
@@ -43,15 +43,6 @@ class a extends ({}!) {}
  
  const f = ((a) => {
    log(a);
- })!;
- 
--if (a) ({ a, ...b }.a()!.c());
-+if (a) ({ a, ...b }).a()!.c();
- 
--(function () {}!());
-+(function () {})!();
- 
- class a extends ({}!) {}
 ```
 
 # Output

@@ -46,6 +46,10 @@ export interface Configuration {
 	 * The configuration of the import sorting
 	 */
 	organizeImports?: OrganizeImports;
+	/**
+	 * The configuration of the filesystem
+	 */
+	vcs?: VcsConfiguration;
 }
 /**
  * The configuration of the filesystem
@@ -117,6 +121,29 @@ export interface OrganizeImports {
 	 */
 	ignore?: string[];
 }
+/**
+ * Set
+ */
+export interface VcsConfiguration {
+	/**
+	 * The kind of client.
+	 */
+	clientKind?: VcsClientKind;
+	/**
+	 * Whether Rome should integrate itself with the VCS client
+	 */
+	enabled: boolean;
+	/**
+	* The folder where Rome should check for VCS files. By default, Rome will use the same folder where `rome.json` was found.
+
+If Rome can't fine the configuration, it will attempt to use the current working directory. If no current working directory can't be found, Rome won't use the VCS integration. 
+	 */
+	root?: string;
+	/**
+	 * Whether Rome should use the VCS ignore file. When [true], Rome will ignore the files specified in the ignore file.
+	 */
+	useIgnoreFile?: boolean;
+}
 export type PlainIndentStyle = "tab" | "space";
 /**
 	* Validated value for the `line_width` formatter options
@@ -161,6 +188,7 @@ export interface Rules {
 	style?: Style;
 	suspicious?: Suspicious;
 }
+export type VcsClientKind = "git";
 export type QuoteProperties = "asNeeded" | "preserve";
 export type QuoteStyle = "double" | "single";
 export type Semicolons = "always" | "asNeeded";
@@ -389,6 +417,10 @@ export interface Nursery {
 	 */
 	noConsoleLog?: RuleConfiguration;
 	/**
+	 * Disallow constant expressions in conditions
+	 */
+	noConstantCondition?: RuleConfiguration;
+	/**
 	 * Disallow duplicate case labels. If a switch statement has duplicate test expressions in case clauses, it is likely that a programmer copied a case clause but forgot to change the test expression.
 	 */
 	noDuplicateCase?: RuleConfiguration;
@@ -500,6 +532,10 @@ export interface Nursery {
 	 * Disallow unnecessary catch clauses.
 	 */
 	noUselessCatch?: RuleConfiguration;
+	/**
+	 * Disallow unnecessary constructors.
+	 */
+	noUselessConstructor?: RuleConfiguration;
 	/**
 	 * Disallow renaming import, export, and destructured assignments to the same name.
 	 */
@@ -970,9 +1006,11 @@ export type Category =
 	| "lint/nursery/noConsoleLog"
 	| "lint/nursery/noForEach"
 	| "lint/nursery/useLiteralKeys"
+	| "lint/nursery/noUselessConstructor"
 	| "lint/nursery/noRedeclare"
 	| "lint/nursery/useNamespaceKeyword"
 	| "lint/nursery/noRedundantRoles"
+	| "lint/nursery/noConstantCondition"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"

@@ -1,7 +1,7 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: typescript/conformance/types/union/unionTypeFromArrayLiteral.ts
+assertion_line: 212
+info: typescript/conformance/types/union/unionTypeFromArrayLiteral.ts
 ---
 
 # Input
@@ -90,4 +90,5 @@ var arr9 = [e, f]; // (E|F)[]
     4: // Otherwise, the resulting type is an array type with an element type that is the union of the types of the element expressions.
     9: var arr4Tuple: [number, string] = [3, "three", "hello"]; // [number, string, string]
 ```
+
 

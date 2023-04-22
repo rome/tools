@@ -1,17 +1,18 @@
+use crate::{PathInterner, RomePath};
+pub use memory::{ErrorEntry, MemoryFileSystem};
+pub use os::OsFileSystem;
+use rome_diagnostics::{console, Advices, Diagnostic, LogCategory, Visit};
+use rome_diagnostics::{Error, Severity};
+use serde::{Deserialize, Serialize};
 use std::io;
 use std::panic::RefUnwindSafe;
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
-
-use crate::{PathInterner, RomePath};
-use rome_diagnostics::{console, Advices, Diagnostic, LogCategory, Visit};
+use tracing::{error, info};
 
 mod memory;
 mod os;
 
-pub use memory::{ErrorEntry, MemoryFileSystem};
-pub use os::OsFileSystem;
-use rome_diagnostics::Error;
 pub const CONFIG_NAME: &str = "rome.json";
 
 pub trait FileSystem: Send + Sync + RefUnwindSafe {
@@ -31,6 +32,83 @@ pub trait FileSystem: Send + Sync + RefUnwindSafe {
 
     /// Return the path to the working directory
     fn working_directory(&self) -> Option<PathBuf>;
+
+    /// Checks if the given path exists in the file system
+    fn path_exists(&self, path: &Path) -> bool;
+
+    fn auto_search(
+        &self,
+        mut file_path: PathBuf,
+        file_name: &str,
+        should_error_if_file_not_found: bool,
+    ) -> Result<Option<(String, PathBuf)>, FileSystemDiagnostic> {
+        let mut from_parent = false;
+        let mut file_directory_path = file_path.join(file_name);
+        loop {
+            let options = OpenOptions::default().read(true);
+            let file = self.open_with_options(&file_directory_path, options);
+            return match file {
+                Ok(mut file) => {
+                    let mut buffer = String::new();
+                    file.read_to_string(&mut buffer)
+                        .map_err(|_| FileSystemDiagnostic {
+                            path: file_directory_path.display().to_string(),
+                            severity: Severity::Error,
+                            error_kind: ErrorKind::CantReadFile(
+                                file_directory_path.display().to_string(),
+                            ),
+                        })?;
+
+                    if from_parent {
+                        info!(
+                        "Rome auto discovered the file at following path that wasn't in the working directory: {}",
+                        file_path.display()
+                    );
+                    }
+
+                    return Ok(Some((buffer, file_path)));
+                }
+                Err(err) => {
+                    // base paths from users are not eligible for auto discovery
+                    if !should_error_if_file_not_found {
+                        let parent_directory = if let Some(path) = file_path.parent() {
+                            if path.is_dir() {
+                                Some(PathBuf::from(path))
+                            } else {
+                                None
+                            }
+                        } else {
+                            None
+                        };
+                        if let Some(parent_directory) = parent_directory {
+                            file_path = parent_directory;
+                            file_directory_path = file_path.join(file_name);
+                            from_parent = true;
+                            continue;
+                        }
+                    }
+                    // We skip the error when the configuration file is not found.
+                    // Not having a configuration file is only an error when the `base_path` is
+                    // set to `BasePath::FromUser`.
+                    if should_error_if_file_not_found || err.kind() != io::ErrorKind::NotFound {
+                        return Err(FileSystemDiagnostic {
+                            path: file_directory_path.display().to_string(),
+                            severity: Severity::Error,
+                            error_kind: ErrorKind::CantReadFile(
+                                file_directory_path.display().to_string(),
+                            ),
+                        });
+                    }
+                    error!(
+                        "Could not read the file from {:?}, reason:\n {}",
+                        file_directory_path.display(),
+                        err
+                    );
+                    Ok(None)
+                }
+            };
+        }
+    }
 }
 
 pub trait File {
@@ -175,21 +253,29 @@ where
     fn working_directory(&self) -> Option<PathBuf> {
         T::working_directory(self)
     }
+
+    fn path_exists(&self, path: &Path) -> bool {
+        T::path_exists(self, path)
+    }
 }
 
-#[derive(Debug, Diagnostic)]
-#[diagnostic(severity = Warning, category = "internalError/fs")]
-struct FileSystemDiagnostic {
+#[derive(Debug, Diagnostic, Deserialize, Serialize)]
+#[diagnostic(category = "internalError/fs")]
+pub struct FileSystemDiagnostic {
+    #[severity]
+    pub severity: Severity,
     #[location(resource)]
-    path: String,
+    pub path: String,
     #[message]
     #[description]
     #[advice]
-    error_kind: ErrorKind,
+    pub error_kind: ErrorKind,
 }
 
-#[derive(Clone, Debug)]
-enum ErrorKind {
+#[derive(Clone, Debug, Deserialize, Serialize)]
+pub enum ErrorKind {
+    /// File not found
+    CantReadFile(String),
     /// Unknown file type
     UnknownFileType,
     /// Dereferenced (broken) symbolic link
@@ -201,6 +287,7 @@ enum ErrorKind {
 impl console::fmt::Display for ErrorKind {
     fn fmt(&self, fmt: &mut console::fmt::Formatter) -> io::Result<()> {
         match self {
+            ErrorKind::CantReadFile(_) => fmt.write_str("Rome couldn't read the file"),
             ErrorKind::UnknownFileType => fmt.write_str("Unknown file type"),
             ErrorKind::DereferencedSymlink(_) => fmt.write_str("Dereferenced symlink"),
             ErrorKind::InfiniteSymlinkExpansion(_) => fmt.write_str("Infinite symlink expansion"),
@@ -211,6 +298,7 @@ impl console::fmt::Display for ErrorKind {
 impl std::fmt::Display for ErrorKind {
     fn fmt(&self, fmt: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
+            ErrorKind::CantReadFile(_) => fmt.write_str("Rome couldn't read the file"),
             ErrorKind::UnknownFileType => write!(fmt, "Unknown file type"),
             ErrorKind::DereferencedSymlink(_) => write!(fmt, "Dereferenced symlink"),
             ErrorKind::InfiniteSymlinkExpansion(_) => write!(fmt, "Infinite symlink expansion"),
@@ -221,6 +309,11 @@ impl std::fmt::Display for ErrorKind {
 impl Advices for ErrorKind {
     fn record(&self, visitor: &mut dyn Visit) -> io::Result<()> {
         match self {
+			ErrorKind::CantReadFile(path) => visitor.record_log(
+		LogCategory::Error,
+			&format!("Rome couldn't read the following file, maybe for permissions reasons or it doesn't exists: {}", path)
+			),
+
             ErrorKind::UnknownFileType => visitor.record_log(
                 LogCategory::Info,
                 &"Rome encountered a file system entry that's neither a file, directory or symbolic link",

@@ -2,11 +2,13 @@
 //!
 
 mod configuration;
+mod files;
 mod formatter;
 mod javascript;
 mod linter;
 mod organize_imports;
 mod rules;
+mod vcs;
 
 use crate::Configuration;
 use rome_deserialize::json::{JsonDeserialize, VisitJsonNode};

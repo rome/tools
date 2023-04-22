@@ -1,0 +1,42 @@
+---
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+assertion_line: 212
+info: typescript/typeof/typeof.ts
+---
+
+# Input
+
+```ts
+a as (typeof node.children)[number]
+a as (typeof node.children)[]
+a as ((typeof node.children)[number])[]
+a as number[(typeof node.children)]
+
+```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,4 +1,4 @@
+-a as (typeof node.children)[number];
+-a as (typeof node.children)[];
+-a as (typeof node.children)[number][];
++a as typeof node.children[number];
++a as typeof node.children[];
++a as typeof node.children[number][];
+ a as number[typeof node.children];
+```
+
+# Output
+
+```ts
+a as typeof node.children[number];
+a as typeof node.children[];
+a as typeof node.children[number][];
+a as number[typeof node.children];
+```
+
+

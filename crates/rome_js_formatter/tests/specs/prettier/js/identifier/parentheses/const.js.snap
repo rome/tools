@@ -1,0 +1,44 @@
+---
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+assertion_line: 212
+info: js/identifier/parentheses/const.js
+---
+
+# Input
+
+```js
+const [a = ((let)[0] = 1)] = 2;
+
+```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1 +1 @@
+-const [a = (let[0] = 1)] = 2;
++const [a = ((let)[0] = 1)] = 2;
+```
+
+# Output
+
+```js
+const [a = ((let)[0] = 1)] = 2;
+```
+
+# Errors
+```
+const.js:1:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Illegal use of reserved keyword `let` as an identifier in strict mode
+  
+  > 1 │ const [a = ((let)[0] = 1)] = 2;
+      │              ^^^
+    2 │ 
+  
+
+```
+
+

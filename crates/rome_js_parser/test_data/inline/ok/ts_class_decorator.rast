@@ -24,8 +24,18 @@ JsModule {
             },
         },
         JsClassDeclaration {
+            decorators: JsDecoratorList [
+                JsDecorator {
+                    at_token: AT@18..20 "@" [Newline("\n")] [],
+                    expression: JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@20..24 "test" [] [],
+                        },
+                    },
+                },
+            ],
             abstract_token: missing (optional),
-            class_token: CLASS_KW@18..31 "class" [Newline("\n"), Skipped("@"), Skipped("test"), Newline("\n")] [Whitespace(" ")],
+            class_token: CLASS_KW@24..31 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@31..36 "Test" [] [Whitespace(" ")],
             },
@@ -37,8 +47,46 @@ JsModule {
             r_curly_token: R_CURLY@37..38 "}" [] [],
         },
         JsClassDeclaration {
+            decorators: JsDecoratorList [
+                JsDecorator {
+                    at_token: AT@38..40 "@" [Newline("\n")] [],
+                    expression: JsStaticMemberExpression {
+                        object: JsStaticMemberExpression {
+                            object: JsIdentifierExpression {
+                                name: JsReferenceIdentifier {
+                                    value_token: IDENT@40..44 "test" [] [],
+                                },
+                            },
+                            operator_token: DOT@44..45 "." [] [],
+                            member: JsName {
+                                value_token: IDENT@45..46 "a" [] [],
+                            },
+                        },
+                        operator_token: QUESTIONDOT@46..48 "?." [] [],
+                        member: JsName {
+                            value_token: IDENT@48..50 "c" [] [Whitespace(" ")],
+                        },
+                    },
+                },
+                JsDecorator {
+                    at_token: AT@50..51 "@" [] [],
+                    expression: JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@51..56 "test" [] [Whitespace(" ")],
+                        },
+                    },
+                },
+                JsDecorator {
+                    at_token: AT@56..57 "@" [] [],
+                    expression: JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@57..61 "test" [] [],
+                        },
+                    },
+                },
+            ],
             abstract_token: missing (optional),
-            class_token: CLASS_KW@38..68 "class" [Newline("\n"), Skipped("@"), Skipped("test"), Skipped("."), Skipped("a"), Skipped("?."), Skipped("c"), Whitespace(" "), Skipped("@"), Skipped("test"), Whitespace(" "), Skipped("@"), Skipped("test"), Newline("\n")] [Whitespace(" ")],
+            class_token: CLASS_KW@61..68 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@68..73 "Test2" [] [],
             },
@@ -49,50 +97,14 @@ JsModule {
             members: JsClassMemberList [],
             r_curly_token: R_CURLY@74..75 "}" [] [],
         },
-        JsExport {
-            export_token: EXPORT_KW@75..89 "export" [Newline("\n"), Skipped("@"), Skipped("test"), Whitespace(" ")] [Whitespace(" ")],
-            export_clause: JsClassDeclaration {
-                abstract_token: missing (optional),
-                class_token: CLASS_KW@89..95 "class" [] [Whitespace(" ")],
-                id: JsIdentifierBinding {
-                    name_token: IDENT@95..100 "Test" [] [Whitespace(" ")],
-                },
-                type_parameters: missing (optional),
-                extends_clause: missing (optional),
-                implements_clause: missing (optional),
-                l_curly_token: L_CURLY@100..101 "{" [] [],
-                members: JsClassMemberList [],
-                r_curly_token: R_CURLY@101..102 "}" [] [],
-            },
-        },
-        JsExport {
-            export_token: EXPORT_KW@102..116 "export" [Newline("\n"), Skipped("@"), Skipped("test"), Whitespace(" ")] [Whitespace(" ")],
-            export_clause: JsExportDefaultDeclarationClause {
-                default_token: DEFAULT_KW@116..124 "default" [] [Whitespace(" ")],
-                declaration: JsClassExportDefaultDeclaration {
-                    abstract_token: missing (optional),
-                    class_token: CLASS_KW@124..130 "class" [] [Whitespace(" ")],
-                    id: JsIdentifierBinding {
-                        name_token: IDENT@130..135 "Test" [] [Whitespace(" ")],
-                    },
-                    type_parameters: missing (optional),
-                    extends_clause: missing (optional),
-                    implements_clause: missing (optional),
-                    l_curly_token: L_CURLY@135..136 "{" [] [],
-                    members: JsClassMemberList [],
-                    r_curly_token: R_CURLY@136..137 "}" [] [],
-                },
-                semicolon_token: missing (optional),
-            },
-        },
     ],
-    eof_token: EOF@137..138 "" [Newline("\n")] [],
+    eof_token: EOF@75..76 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..138
+0: JS_MODULE@0..76
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..137
+  2: JS_MODULE_ITEM_LIST@0..75
     0: JS_FUNCTION_DECLARATION@0..18
       0: (empty)
       1: FUNCTION_KW@0..9 "function" [] [Whitespace(" ")]
@@ -111,54 +123,55 @@ JsModule {
         2: JS_STATEMENT_LIST@17..17
         3: R_CURLY@17..18 "}" [] []
     1: JS_CLASS_DECLARATION@18..38
-      0: (empty)
-      1: CLASS_KW@18..31 "class" [Newline("\n"), Skipped("@"), Skipped("test"), Newline("\n")] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@31..36
+      0: JS_DECORATOR_LIST@18..24
+        0: JS_DECORATOR@18..24
+          0: AT@18..20 "@" [Newline("\n")] []
+          1: JS_IDENTIFIER_EXPRESSION@20..24
+            0: JS_REFERENCE_IDENTIFIER@20..24
+              0: IDENT@20..24 "test" [] []
+      1: (empty)
+      2: CLASS_KW@24..31 "class" [Newline("\n")] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@31..36
         0: IDENT@31..36 "Test" [] [Whitespace(" ")]
-      3: (empty)
       4: (empty)
       5: (empty)
-      6: L_CURLY@36..37 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@37..37
-      8: R_CURLY@37..38 "}" [] []
+      6: (empty)
+      7: L_CURLY@36..37 "{" [] []
+      8: JS_CLASS_MEMBER_LIST@37..37
+      9: R_CURLY@37..38 "}" [] []
     2: JS_CLASS_DECLARATION@38..75
-      0: (empty)
-      1: CLASS_KW@38..68 "class" [Newline("\n"), Skipped("@"), Skipped("test"), Skipped("."), Skipped("a"), Skipped("?."), Skipped("c"), Whitespace(" "), Skipped("@"), Skipped("test"), Whitespace(" "), Skipped("@"), Skipped("test"), Newline("\n")] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@68..73
+      0: JS_DECORATOR_LIST@38..61
+        0: JS_DECORATOR@38..50
+          0: AT@38..40 "@" [Newline("\n")] []
+          1: JS_STATIC_MEMBER_EXPRESSION@40..50
+            0: JS_STATIC_MEMBER_EXPRESSION@40..46
+              0: JS_IDENTIFIER_EXPRESSION@40..44
+                0: JS_REFERENCE_IDENTIFIER@40..44
+                  0: IDENT@40..44 "test" [] []
+              1: DOT@44..45 "." [] []
+              2: JS_NAME@45..46
+                0: IDENT@45..46 "a" [] []
+            1: QUESTIONDOT@46..48 "?." [] []
+            2: JS_NAME@48..50
+              0: IDENT@48..50 "c" [] [Whitespace(" ")]
+        1: JS_DECORATOR@50..56
+          0: AT@50..51 "@" [] []
+          1: JS_IDENTIFIER_EXPRESSION@51..56
+            0: JS_REFERENCE_IDENTIFIER@51..56
+              0: IDENT@51..56 "test" [] [Whitespace(" ")]
+        2: JS_DECORATOR@56..61
+          0: AT@56..57 "@" [] []
+          1: JS_IDENTIFIER_EXPRESSION@57..61
+            0: JS_REFERENCE_IDENTIFIER@57..61
+              0: IDENT@57..61 "test" [] []
+      1: (empty)
+      2: CLASS_KW@61..68 "class" [Newline("\n")] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@68..73
         0: IDENT@68..73 "Test2" [] []
-      3: (empty)
       4: (empty)
       5: (empty)
-      6: L_CURLY@73..74 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@74..74
-      8: R_CURLY@74..75 "}" [] []
-    3: JS_EXPORT@75..102
-      0: EXPORT_KW@75..89 "export" [Newline("\n"), Skipped("@"), Skipped("test"), Whitespace(" ")] [Whitespace(" ")]
-      1: JS_CLASS_DECLARATION@89..102
-        0: (empty)
-        1: CLASS_KW@89..95 "class" [] [Whitespace(" ")]
-        2: JS_IDENTIFIER_BINDING@95..100
-          0: IDENT@95..100 "Test" [] [Whitespace(" ")]
-        3: (empty)
-        4: (empty)
-        5: (empty)
-        6: L_CURLY@100..101 "{" [] []
-        7: JS_CLASS_MEMBER_LIST@101..101
-        8: R_CURLY@101..102 "}" [] []
-    4: JS_EXPORT@102..137
-      0: EXPORT_KW@102..116 "export" [Newline("\n"), Skipped("@"), Skipped("test"), Whitespace(" ")] [Whitespace(" ")]
-      1: JS_EXPORT_DEFAULT_DECLARATION_CLAUSE@116..137
-        0: DEFAULT_KW@116..124 "default" [] [Whitespace(" ")]
-        1: JS_CLASS_EXPORT_DEFAULT_DECLARATION@124..137
-          0: (empty)
-          1: CLASS_KW@124..130 "class" [] [Whitespace(" ")]
-          2: JS_IDENTIFIER_BINDING@130..135
-            0: IDENT@130..135 "Test" [] [Whitespace(" ")]
-          3: (empty)
-          4: (empty)
-          5: (empty)
-          6: L_CURLY@135..136 "{" [] []
-          7: JS_CLASS_MEMBER_LIST@136..136
-          8: R_CURLY@136..137 "}" [] []
-        2: (empty)
-  3: EOF@137..138 "" [Newline("\n")] []
+      6: (empty)
+      7: L_CURLY@73..74 "{" [] []
+      8: JS_CLASS_MEMBER_LIST@74..74
+      9: R_CURLY@74..75 "}" [] []
+  3: EOF@75..76 "" [Newline("\n")] []

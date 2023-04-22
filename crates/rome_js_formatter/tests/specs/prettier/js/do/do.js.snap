@@ -1,7 +1,7 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: js/do/do.js
+assertion_line: 212
+info: js/do/do.js
 ---
 
 # Input
@@ -132,7 +132,7 @@ function foo() {
  }
  
 -(do {});
--(do {} + 1);
+-(do {}) + 1;
 -1 + do {};
 -() => do {};
 +(

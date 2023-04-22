@@ -14,8 +14,8 @@ use crate::syntax::function::{
 };
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{
-    expected_binding, modifier_already_seen, modifier_cannot_be_used_with_modifier,
-    modifier_must_precede_modifier,
+    expected_binding, expected_expression, invalid_decorator_error, modifier_already_seen,
+    modifier_cannot_be_used_with_modifier, modifier_must_precede_modifier,
 };
 use crate::syntax::object::{
     is_at_literal_member_name, parse_computed_member_name, parse_literal_member_name,
@@ -29,8 +29,7 @@ use crate::syntax::typescript::ts_parse_error::{
 };
 use crate::syntax::typescript::{
     is_reserved_type_name, parse_ts_implements_clause, parse_ts_return_type_annotation,
-    parse_ts_type_annotation, parse_ts_type_arguments, parse_ts_type_parameters,
-    skip_ts_decorators, TypeContext,
+    parse_ts_type_annotation, parse_ts_type_arguments, parse_ts_type_parameters, TypeContext,
 };
 
 use crate::JsSyntaxFeature::TypeScript;
@@ -70,12 +69,15 @@ pub(crate) fn is_at_ts_abstract_class_declaration(
 }
 
 /// Parses a class expression, e.g. let a = class {}
-pub(super) fn parse_class_expression(p: &mut JsParser) -> ParsedSyntax {
+pub(super) fn parse_class_expression(
+    p: &mut JsParser,
+    decorator_list: ParsedSyntax,
+) -> ParsedSyntax {
     if !p.at(T![class]) {
         return Absent;
     }
 
-    Present(parse_class(p, ClassKind::Expression))
+    Present(parse_class(p, ClassKind::Expression, decorator_list))
 }
 
 // test class_declaration
@@ -141,12 +143,16 @@ pub(super) fn parse_class_expression(p: &mut JsParser) -> ParsedSyntax {
 ///
 /// A class can be invalid if
 /// * It uses an illegal identifier name
-pub(super) fn parse_class_declaration(p: &mut JsParser, context: StatementContext) -> ParsedSyntax {
+pub(super) fn parse_class_declaration(
+    p: &mut JsParser,
+    decorator_list: ParsedSyntax,
+    context: StatementContext,
+) -> ParsedSyntax {
     if !matches!(p.cur(), T![abstract] | T![class]) {
         return Absent;
     }
 
-    let mut class = parse_class(p, ClassKind::Declaration);
+    let mut class = parse_class(p, ClassKind::Declaration, decorator_list);
 
     if !class.kind(p).is_bogus() && context.is_single_statement() {
         // test_err class_in_single_statement_context
@@ -169,12 +175,15 @@ pub(super) fn parse_class_declaration(p: &mut JsParser, context: StatementContex
 
 // test ts typescript_export_default_abstract_class_case
 // export default abstract class {}
-pub(super) fn parse_class_export_default_declaration(p: &mut JsParser) -> ParsedSyntax {
+pub(super) fn parse_class_export_default_declaration(
+    p: &mut JsParser,
+    decorator_list: ParsedSyntax,
+) -> ParsedSyntax {
     if !matches!(p.cur(), T![abstract] | T![class]) {
         return Absent;
     }
 
-    Present(parse_class(p, ClassKind::ExportDefault))
+    Present(parse_class(p, ClassKind::ExportDefault, decorator_list))
 }
 
 #[derive(Debug, Clone, Copy, Eq, PartialEq, Hash)]
@@ -206,8 +215,13 @@ impl From<ClassKind> for JsSyntaxKind {
 // test ts ts_class_named_abstract_is_valid_in_ts
 // class abstract {}
 #[inline]
-fn parse_class(p: &mut JsParser, kind: ClassKind) -> CompletedMarker {
-    let m = p.start();
+fn parse_class(p: &mut JsParser, kind: ClassKind, decorator_list: ParsedSyntax) -> CompletedMarker {
+    let decorator_list = decorator_list.or_else(|| {
+        let m = p.start();
+        Present(m.complete(p, JS_DECORATOR_LIST))
+    });
+
+    let m = decorator_list.precede(p);
     let is_abstract = p.eat(T![abstract]);
 
     let class_token_range = p.cur_range();
@@ -2375,5 +2389,123 @@ impl ClassMemberModifiers {
         }
 
         None
+    }
+}
+
+// test ts decorator
+// // class expressions
+// let a = @decorator class {};
+// let b = @decorator @functionDecorator(1,2,3) class {};
+// let c = @first @second class Foo {}
+// // class declarations
+// @decorator class Foo {};
+// @decorator @functionDecorator(1,2,3) class Bar {};
+// @first @second class Baz {}
+// // abstract class declarations
+// @decorator abstract class Foo {};
+// @decorator @functionDecorator(1,2,3) abstract class Bar {};
+// @first @second abstract class Baz {}
+// // exported class declarations
+// export @decorator class Foo {};
+// export @decorator @functionDecorator(1,2,3) class Bar {};
+// export @first @second class Baz {}
+
+// test ts decorator_class_not_top_level
+// if (a) {
+//   @dec class MyClass {}
+// }
+// function foo() {
+//   @dec class MyClass {}
+// }
+
+// test_err ts decorator
+// @'dsads' class MyClass {}
+// @1 class MyClass {}
+// @++1 class MyClass {}
+// @[] in 1 class MyClass {}
+// @[] class MyClass {}
+// @() => {} class MyClass {}
+// @1 == 2 ? true : false class MyClass {}
+// @await fn class MyClass {}
+// @function(){} class MyClass {}
+// @obj instanceof Object class MyClass {}
+// @1 === 2 class MyClass {}
+// @new Object() class MyClass {}
+// @{} class MyClass {}
+// @a++ class MyClass {}
+// @a,b class MyClass {}
+// @`${d}foo` class MyClass {}
+// @obj as MyType class MyClass {}
+// @<MyType>obj class MyClass {}
+// @obj satisfies MyType class MyClass {}
+// @obj! class MyClass {}
+pub(crate) fn parse_decorators(p: &mut JsParser) -> ParsedSyntax {
+    if !p.at(T![@]) {
+        return Absent;
+    }
+
+    let decorators = p.start();
+
+    while p.at(T![@]) {
+        parse_decorator(p).ok();
+    }
+
+    Present(decorators.complete(p, JS_DECORATOR_LIST))
+}
+
+fn parse_decorator(p: &mut JsParser) -> ParsedSyntax {
+    if !p.at(T![@]) {
+        return Absent;
+    }
+
+    let m = p.start();
+    p.bump(T![@]);
+    if let Some(mut complete_marker) =
+        parse_lhs_expr(p, ExpressionContext::default().and_in_decorator(true))
+            .or_add_diagnostic(p, expected_expression)
+    {
+        if !matches!(
+            complete_marker.kind(p),
+            JS_PARENTHESIZED_EXPRESSION
+                | JS_CALL_EXPRESSION
+                | JS_STATIC_MEMBER_EXPRESSION
+                | JS_IDENTIFIER_EXPRESSION
+        ) {
+            p.error(invalid_decorator_error(p, complete_marker.range(p)));
+            complete_marker.change_to_bogus(p);
+        }
+    }
+
+    Present(m.complete(p, JS_DECORATOR))
+}
+
+/// Skips over any TypeScript decorator syntax.
+pub(crate) fn skip_ts_decorators(p: &mut JsParser) {
+    if !p.at(T![@]) {
+        return;
+    }
+
+    p.parse_as_skipped_trivia_tokens(|p| {
+        while p.at(T![@]) {
+            parse_decorator_bogus(p).ok();
+        }
+    });
+}
+
+fn parse_decorator_bogus(p: &mut JsParser) -> ParsedSyntax {
+    if p.at(T![@]) {
+        let m = p.start();
+        p.bump(T![@]);
+        // test ts ts_decorator_call_expression_with_arrow
+        // export class Foo {
+        //  @Decorator((val) => val)
+        //  badField!: number
+        // }
+        parse_lhs_expr(p, ExpressionContext::default().and_in_decorator(true))
+            .or_add_diagnostic(p, expected_expression);
+
+        Present(m.complete(p, JS_BOGUS))
+    } else {
+        Absent
     }
 }

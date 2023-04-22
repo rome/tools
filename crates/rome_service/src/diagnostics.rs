@@ -4,6 +4,7 @@ use rome_console::fmt::Bytes;
 use rome_console::markup;
 use rome_diagnostics::{category, Category, Diagnostic, DiagnosticTags, Location, Severity};
 use rome_formatter::{FormatError, PrintError};
+use rome_fs::FileSystemDiagnostic;
 use rome_js_analyze::utils::rename::RenameError;
 use rome_js_analyze::RuleError;
 use serde::{Deserialize, Serialize};
@@ -46,6 +47,8 @@ pub enum WorkspaceError {
     FileIgnored(FileIgnored),
     /// Emitted when a file could not be parsed because it's larger than the size limit
     FileTooLarge(FileTooLarge),
+    /// Diagnostics emitted when querying the file system
+    FileSystem(FileSystemDiagnostic),
 }
 
 impl WorkspaceError {
@@ -126,6 +129,7 @@ impl Diagnostic for WorkspaceError {
             WorkspaceError::CantReadFile(error) => error.category(),
             WorkspaceError::FileIgnored(error) => error.category(),
             WorkspaceError::FileTooLarge(error) => error.category(),
+            WorkspaceError::FileSystem(error) => error.category(),
         }
     }
 
@@ -146,6 +150,7 @@ impl Diagnostic for WorkspaceError {
             WorkspaceError::CantReadFile(error) => error.description(fmt),
             WorkspaceError::FileIgnored(error) => error.description(fmt),
             WorkspaceError::FileTooLarge(error) => error.description(fmt),
+            WorkspaceError::FileSystem(error) => error.description(fmt),
         }
     }
 
@@ -166,6 +171,7 @@ impl Diagnostic for WorkspaceError {
             WorkspaceError::CantReadFile(error) => error.message(fmt),
             WorkspaceError::FileIgnored(error) => error.message(fmt),
             WorkspaceError::FileTooLarge(error) => error.message(fmt),
+            WorkspaceError::FileSystem(error) => error.message(fmt),
         }
     }
 
@@ -186,6 +192,7 @@ impl Diagnostic for WorkspaceError {
             WorkspaceError::CantReadFile(error) => error.severity(),
             WorkspaceError::FileIgnored(error) => error.severity(),
             WorkspaceError::FileTooLarge(error) => error.severity(),
+            WorkspaceError::FileSystem(error) => error.severity(),
         }
     }
 
@@ -206,6 +213,7 @@ impl Diagnostic for WorkspaceError {
             WorkspaceError::CantReadFile(error) => error.tags(),
             WorkspaceError::FileIgnored(error) => error.tags(),
             WorkspaceError::FileTooLarge(error) => error.tags(),
+            WorkspaceError::FileSystem(error) => error.tags(),
         }
     }
 
@@ -226,6 +234,7 @@ impl Diagnostic for WorkspaceError {
             WorkspaceError::CantReadFile(error) => error.location(),
             WorkspaceError::FileIgnored(error) => error.location(),
             WorkspaceError::FileTooLarge(error) => error.location(),
+            WorkspaceError::FileSystem(error) => error.location(),
         }
     }
 
@@ -246,6 +255,7 @@ impl Diagnostic for WorkspaceError {
             WorkspaceError::CantReadFile(error) => Diagnostic::source(error),
             WorkspaceError::FileIgnored(error) => Diagnostic::source(error),
             WorkspaceError::FileTooLarge(error) => Diagnostic::source(error),
+            WorkspaceError::FileSystem(error) => Diagnostic::source(error),
         }
     }
 }
@@ -265,6 +275,12 @@ impl From<TransportError> for WorkspaceError {
 impl From<PrintError> for WorkspaceError {
     fn from(err: PrintError) -> Self {
         Self::PrintError(err)
+    }
+}
+
+impl From<FileSystemDiagnostic> for WorkspaceError {
+    fn from(err: FileSystemDiagnostic) -> Self {
+        Self::FileSystem(err)
     }
 }
 

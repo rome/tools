@@ -42,6 +42,7 @@ impl<'a> From<&'a AnyJsClass> for FormatClass<'a> {
 
 impl Format<JsFormatContext> for FormatClass<'_> {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
+        let decorators = self.class.decorators();
         let abstract_token = self.class.abstract_token();
         let id = self.class.id()?;
         let extends = self.class.extends_clause();
@@ -51,6 +52,8 @@ impl Format<JsFormatContext> for FormatClass<'_> {
         let members = self.class.members();
 
         let group_mode = self.should_group(f.comments())?;
+
+        write!(f, [decorators.format()])?;
 
         if let Some(abstract_token) = abstract_token {
             write!(f, [abstract_token.format(), space()])?;

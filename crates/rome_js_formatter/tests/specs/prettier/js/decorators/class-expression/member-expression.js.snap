@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: js/decorators/class-expression/member-expression.js
+info: js/decorators/class-expression/member-expression.js
 ---
 
 # Input
@@ -18,100 +17,28 @@ info:
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,8 +1,6 @@
--((
+@@ -1,8 +1,4 @@
+-(
 -  @deco
 -  class Foo {}
--).name);
--((
+-).name;
+-(
 -  @deco
 -  class {}
--).name);
-+(
-+@deco class Foo {}
-+).name
-+(
-+@deco class {}
-+).name
+-).name;
++(@deco
++class Foo {}).name;
++(@deco
++class {}).name;
 ```
 
 # Output
 
 ```js
-(
-@deco class Foo {}
-).name
-(
-@deco class {}
-).name
-```
-
-# Errors
-```
-member-expression.js:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected `)` but instead found `@`
-  
-  > 1 │ (@deco class Foo {}).name;
-      │  ^
-    2 │ (@deco class {}).name;
-    3 │ 
-  
-  i Remove @
-  
-member-expression.js:1:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected a statement but instead found ').name'
-  
-  > 1 │ (@deco class Foo {}).name;
-      │                    ^^^^^^
-    2 │ (@deco class {}).name;
-    3 │ 
-  
-  i Expected a statement here
-  
-  > 1 │ (@deco class Foo {}).name;
-      │                    ^^^^^^
-    2 │ (@deco class {}).name;
-    3 │ 
-  
-member-expression.js:2:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected `)` but instead found `@`
-  
-    1 │ (@deco class Foo {}).name;
-  > 2 │ (@deco class {}).name;
-      │  ^
-    3 │ 
-  
-  i Remove @
-  
-member-expression.js:2:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × class declarations must have a name
-  
-    1 │ (@deco class Foo {}).name;
-  > 2 │ (@deco class {}).name;
-      │        ^^^^^^
-    3 │ 
-  
-member-expression.js:2:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected a statement but instead found ').name'
-  
-    1 │ (@deco class Foo {}).name;
-  > 2 │ (@deco class {}).name;
-      │                ^^^^^^
-    3 │ 
-  
-  i Expected a statement here
-  
-    1 │ (@deco class Foo {}).name;
-  > 2 │ (@deco class {}).name;
-      │                ^^^^^^
-    3 │ 
-  
-
+(@deco
+class Foo {}).name;
+(@deco
+class {}).name;
 ```
 
 

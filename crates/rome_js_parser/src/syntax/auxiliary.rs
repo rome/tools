@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use crate::syntax::class::parse_class_declaration;
+use crate::syntax::class::{parse_class_declaration, parse_decorators};
 use crate::syntax::function::parse_function_declaration;
 use crate::syntax::module::parse_import_or_import_equals_declaration;
 use crate::syntax::stmt::{
@@ -11,7 +11,7 @@ use crate::syntax::typescript::{
     parse_ts_enum_declaration, parse_ts_interface_declaration, parse_ts_type_alias_declaration,
 };
 use crate::{Absent, JsParser, ParsedSyntax};
-use rome_js_syntax::JsSyntaxKind::JS_VARIABLE_DECLARATION_CLAUSE;
+use rome_js_syntax::JsSyntaxKind::{JS_BOGUS_STATEMENT, JS_VARIABLE_DECLARATION_CLAUSE};
 use rome_js_syntax::T;
 use rome_rowan::{TextRange, TextSize};
 
@@ -37,7 +37,7 @@ pub(crate) fn parse_variable_declaration_clause(p: &mut JsParser) -> ParsedSynta
 pub(crate) fn is_nth_at_declaration_clause(p: &mut JsParser, n: usize) -> bool {
     if matches!(
         p.nth(n),
-        T![function] | T![const] | T![enum] | T![class] | T![import]
+        T![function] | T![const] | T![enum] | T![class] | T![import] | T![@]
     ) {
         return true;
     }
@@ -76,8 +76,46 @@ pub(crate) fn is_nth_at_declaration_clause(p: &mut JsParser, n: usize) -> bool {
 pub(crate) fn parse_declaration_clause(p: &mut JsParser, stmt_start_pos: TextSize) -> ParsedSyntax {
     match p.cur() {
         T![function] => parse_function_declaration(p, StatementContext::StatementList),
-        T![class] => parse_class_declaration(p, StatementContext::StatementList),
-        T![abstract] => parse_class_declaration(p, StatementContext::StatementList),
+        T![@] => {
+            let decorator_list = parse_decorators(p);
+
+            match p.cur() {
+                T![class] | T![abstract] if !p.state().in_ambient_context() => {
+                    // test decorator_export_class_clause
+                    // export @decorator class Bar {};
+                    // export @first @second class Foo {
+                    //     constructor() {}
+                    // }
+
+                    //test ts decorator_abstract_export_class_clause
+                    // export @decorator abstract class Bar {};
+                    // export @first @second abstract class Foo {
+                    //     constructor() {}
+                    // }
+                    parse_class_declaration(p, decorator_list, StatementContext::StatementList)
+                }
+                _ => {
+                    // test_err decorator_export_class_clause
+                    // @decorator
+                    // export let a;
+                    // @decorator1 @decorator2
+                    // export function Foo() { }
+                    decorator_list
+                        .add_diagnostic_if_present(p, |p, range| {
+                            p.err_builder("Decorators are not valid here.", range)
+                        })
+                        .map(|mut marker| {
+                            marker.change_kind(p, JS_BOGUS_STATEMENT);
+                            marker
+                        });
+
+                    parse_declaration_clause(p, stmt_start_pos)
+                }
+            }
+        }
+        T![class] | T![abstract] => {
+            parse_class_declaration(p, Absent, StatementContext::StatementList)
+        }
         T![const] => {
             if p.nth_at(1, T![enum]) {
                 parse_ts_enum_declaration(p)
