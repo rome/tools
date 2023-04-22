@@ -4,7 +4,10 @@ use rome_js_syntax::{jsx_ext::AnyJsxElement, AnyJsxAttribute, AnyJsxElementName}
 use rome_rowan::AstNode;
 
 declare_rule! {
-    /// Enforce to have the `onClick` mouse event with the `onKeyUp`, the `onKeyDown`, or the `onKeyPress` keyboard event.
+    /// Enforce onClick is accompanied by at least one of the following: `onKeyUp`, `onKeyDown`, `onKeyPress`.
+    ///
+    /// Coding for the keyboard is important for users with physical disabilities who cannot use a mouse, AT compatibility, and screenreader users.
+    /// This does not apply for interactive or hidden elements.
     ///
     /// ## Examples
     ///
@@ -48,6 +51,11 @@ declare_rule! {
     /// ```jsx
     /// <button onClick={() => console.log("test")}>Submit</button>
     /// ```
+    ///
+    /// ## Accessibility guidelines
+    ///
+    /// - [WCAG 2.1.1](https://www.w3.org/WAI/WCAG21/Understanding/keyboard)
+    ///
     pub(crate) UseKeyWithClickEvents {
         version: "10.0.0",
         name: "useKeyWithClickEvents",

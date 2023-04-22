@@ -7,7 +7,10 @@ use rome_js_syntax::{
 use rome_rowan::{declare_node_union, AstNode};
 
 declare_rule! {
-    /// It asserts that alternative text to images or areas, help to rely on to screen readers to understand the purpose and the context of the image.
+    /// Enforce that all elements that require alternative text have meaningful information to relay back to the end user.
+    ///
+    /// This is a critical component of accessibility for screen reader users in order for them to understand the content's purpose on the page.
+    /// By default, this rule checks for alternative text on the following elements: `<img>`, `<area>`, `<input type="image">`, and `<object>`.
     ///
     /// ## Examples
     ///
@@ -38,7 +41,11 @@ declare_rule! {
     /// ```jsx
     /// <input type="image" src="image.png" aria-labelledby="someId" />
     /// ```
-
+    ///
+    /// ## Accessibility guidelines
+    ///
+    /// - [WCAG 1.1.1](https://www.w3.org/WAI/WCAG21/Understanding/non-text-content.html)
+    ///
     pub(crate) UseAltText {
         version: "10.0.0",
         name: "useAltText",

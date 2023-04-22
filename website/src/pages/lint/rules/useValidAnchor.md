@@ -25,9 +25,9 @@ used for user interaction.
 There are **many reasons** why an anchor should not have a logic and have a correct `href` attribute:
 
 - it can disrupt the correct flow of the user navigation e.g. a user that wants to open the link
-in another tab, but the default "click" behaviour is prevented;
-- it can source of invalid links, and [crawlers](https://en.wikipedia.org/wiki/Web_crawler) can't navigate the website, risking to penalise
-[SEO](https://en.wikipedia.org/wiki/Search_engine_optimization) ranking
+in another tab, but the default "click" behaviour is prevented
+- it can source of invalid links, and crawlers can't navigate the website, risking to penalise
+SEO ranking
 
 ## Examples
 
@@ -127,21 +127,15 @@ in another tab, but the default "click" behaviour is prevented;
 
 ```jsx
 <>
-    <a href={`https://www.javascript.com`}>navigate here</a>
-    <a href={somewhere}>navigate here</a>
-    <a {...spread}>navigate here</a>
+  <a href={`https://www.javascript.com`}>navigate here</a>
+  <a href={somewhere}>navigate here</a>
+  <a {...spread}>navigate here</a>
 </>
 ```
 
 ## Accessibility guidelines
 
-[WCAG 2.1.1](https://www.w3.org/WAI/WCAG21/Understanding/keyboard)
-
-## Resources
-
-- [WebAIM - Introduction to Links and Hypertext](https://webaim.org/techniques/hypertext/)
-- [Links vs. Buttons in Modern Web Applications](https://marcysutton.com/links-vs-buttons-in-modern-web-applications/)
-- [Using ARIA - Notes on ARIA use in HTML](https://www.w3.org/TR/using-aria/#NOTES)
+- [WCAG 2.1.1](https://www.w3.org/WAI/WCAG21/Understanding/keyboard)
 
 ## Related links
 

@@ -7,7 +7,7 @@ use rome_rowan::AstNode;
 
 declare_rule! {
     /// Enforce that `html` element has `lang` attribute.
-    /// This allows users to choose a language other than the default.
+    ///
     /// ## Examples
     ///
     /// ### Invalid
@@ -52,7 +52,8 @@ declare_rule! {
     ///
     /// ## Accessibility guidelines
     ///
-    /// [WCAG 3.1.1](https://www.w3.org/WAI/WCAG21/Understanding/language-of-page)
+    /// - [WCAG 3.1.1](https://www.w3.org/WAI/WCAG21/Understanding/language-of-page)
+    ///
     pub(crate) UseHtmlLang {
         version: "12.0.0",
         name: "useHtmlLang",
@@ -89,17 +90,17 @@ impl Rule for UseHtmlLang {
 
     fn diagnostic(_ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
         Some(RuleDiagnostic::new(
-			rule_category!(),
+            rule_category!(),
             state,
             markup! {
-				"Provide a "<Emphasis>"lang"</Emphasis>" attribute when using the "<Emphasis>"html"</Emphasis>" element."
-			}
+                "Provide a "<Emphasis>"lang"</Emphasis>" attribute when using the "<Emphasis>"html"</Emphasis>" element."
+            }
         ).note(
-			markup! {
-				"Setting a "<Emphasis>"lang"</Emphasis>" attribute on HTML document elements configures the language
-used by screen readers when no user default is specified."
-			}
-		))
+            markup! {
+                "Setting a "<Emphasis>"lang"</Emphasis>" attribute on HTML document elements configures the language"
+                "used by screen readers when no user default is specified."
+            }
+        ))
     }
 }
 

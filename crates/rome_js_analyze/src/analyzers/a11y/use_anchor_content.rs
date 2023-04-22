@@ -8,9 +8,9 @@ use rome_js_syntax::{
 use rome_rowan::{declare_node_union, AstNode, AstNodeList};
 
 declare_rule! {
-    /// Enforce that anchor elements have content and that the content is accessible to screen readers.
+    /// Enforce that anchors have content and that the content is accessible to screen readers.
     ///
-    /// Accessible means that the content is not hidden using the `aria-hidden` attribute.
+    /// Accessible means that it is not hidden using the aria-hidden prop. Refer to the references to learn about why this is important.
     ///
     /// ## Examples
     ///
@@ -56,6 +56,12 @@ declare_rule! {
     /// ```jsx
     /// <a><div aria-hidden="true"></div>content</a>
     /// ```
+    ///
+    /// ## Accessibility guidelines
+    ///
+    /// - [WCAG 2.4.4](https://www.w3.org/WAI/WCAG21/Understanding/link-purpose-in-context)
+    /// - [WCAG 4.1.2](https://www.w3.org/WAI/WCAG21/Understanding/name-role-value)
+    ///
     pub(crate) UseAnchorContent {
         version: "10.0.0",
         name: "useAnchorContent",
@@ -146,16 +152,16 @@ impl Rule for UseAnchorContent {
     fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
         let node = ctx.query();
         Some(RuleDiagnostic::new(
-			rule_category!(),
+            rule_category!(),
             node.syntax().text_trimmed_range(),
             markup! {
-				"Provide screen reader accessible content when using "<Emphasis>"`a`"</Emphasis>" elements."
-			}
+                "Provide screen reader accessible content when using "<Emphasis>"`a`"</Emphasis>" elements."
+            }
         ).note(
-			markup! {
-				"All links on a page should have content that is accessible to screen readers."
-			}
-		))
+            markup! {
+                "All links on a page should have content that is accessible to screen readers."
+            }
+        ))
     }
 }
 
