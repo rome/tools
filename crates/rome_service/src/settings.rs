@@ -72,7 +72,7 @@ impl WorkspaceSettings {
         // javascript settings
         let javascript = configuration.javascript;
         if let Some(javascript) = javascript {
-            self.languages.javascript.globals = javascript.globals;
+            self.languages.javascript.globals = javascript.globals.map(|g| g.into_index_set());
             let formatter = javascript.formatter;
             if let Some(formatter) = formatter {
                 self.languages.javascript.formatter.quote_style = Some(formatter.quote_style);
@@ -272,8 +272,8 @@ impl TryFrom<FilesConfiguration> for FilesSettings {
             require_literal_separator: false,
         });
         if let Some(ignore) = config.ignore {
-            for pattern in ignore {
-                matcher.add_pattern(&pattern).map_err(|err| {
+            for pattern in ignore.index_set() {
+                matcher.add_pattern(pattern).map_err(|err| {
                     WorkspaceError::Configuration(
                         ConfigurationDiagnostic::new_invalid_ignore_pattern(
                             pattern.to_string(),

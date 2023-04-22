@@ -14,13 +14,13 @@ mod diagnostics;
 pub mod workspace_types;
 
 pub use crate::configuration::{
-    create_config, load_config, Configuration, ConfigurationBasePath, ConfigurationDiagnostic,
-    RuleConfiguration, Rules,
+    create_config, load_config,
+    string_set::{deserialize_string_set, serialize_string_set},
+    Configuration, ConfigurationBasePath, ConfigurationDiagnostic, RuleConfiguration, Rules,
 };
 pub use crate::matcher::{MatchOptions, Matcher, Pattern};
 
 /// Exports only for this crate
-pub(crate) use crate::configuration::{deserialize_set_of_strings, serialize_set_of_strings};
 pub use crate::file_handlers::JsFormatterSettings;
 pub use crate::workspace::Workspace;
 

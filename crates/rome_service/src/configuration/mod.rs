@@ -4,14 +4,10 @@
 //! by language. The language might further options divided by tool.
 
 use crate::{DynRef, WorkspaceError};
-use indexmap::IndexSet;
 use rome_fs::{FileSystem, OpenOptions};
-use serde::de::{SeqAccess, Visitor};
-use serde::ser::SerializeSeq;
 use serde::{Deserialize, Serialize};
 use std::fmt::Debug;
 use std::io::ErrorKind;
-use std::marker::PhantomData;
 use std::num::NonZeroU64;
 use std::path::{Path, PathBuf};
 
@@ -22,11 +18,13 @@ mod javascript;
 pub mod linter;
 pub mod organize_imports;
 mod parse;
+pub mod string_set;
 pub mod vcs;
 
 pub use crate::configuration::diagnostics::ConfigurationDiagnostic;
 use crate::configuration::generated::push_to_analyzer_rules;
 use crate::configuration::organize_imports::OrganizeImports;
+pub use crate::configuration::string_set::StringSet;
 use crate::configuration::vcs::VcsConfiguration;
 use crate::settings::{LanguagesSettings, LinterSettings};
 pub use formatter::{FormatterConfiguration, PlainIndentStyle};
@@ -135,12 +133,8 @@ pub struct FilesConfiguration {
 
     /// A list of Unix shell style patterns. Rome tools will ignore files/folders that will
     /// match these patterns.
-    #[serde(
-        skip_serializing_if = "Option::is_none",
-        deserialize_with = "crate::deserialize_set_of_strings",
-        serialize_with = "crate::serialize_set_of_strings"
-    )]
-    pub ignore: Option<IndexSet<String>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub ignore: Option<StringSet>,
 }
 
 impl FilesConfiguration {
@@ -255,70 +249,6 @@ pub fn create_config(
         .map_err(|_| WorkspaceError::cant_read_file(format!("{}", path.display())))?;
 
     Ok(())
-}
-
-/// Some documentation
-pub fn deserialize_set_of_strings<'de, D>(
-    deserializer: D,
-) -> Result<Option<IndexSet<String>>, D::Error>
-where
-    D: serde::de::Deserializer<'de>,
-{
-    struct IndexVisitor {
-        marker: PhantomData<fn() -> Option<IndexSet<String>>>,
-    }
-
-    impl IndexVisitor {
-        fn new() -> Self {
-            IndexVisitor {
-                marker: PhantomData,
-            }
-        }
-    }
-
-    impl<'de> Visitor<'de> for IndexVisitor {
-        type Value = Option<IndexSet<String>>;
-
-        // Format a message stating what data this Visitor expects to receive.
-        fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
-            formatter.write_str("expecting a sequence")
-        }
-
-        fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error>
-        where
-            A: SeqAccess<'de>,
-        {
-            let mut index_set = IndexSet::with_capacity(seq.size_hint().unwrap_or(0));
-
-            while let Some(value) = seq.next_element()? {
-                index_set.insert(value);
-            }
-
-            Ok(Some(index_set))
-        }
-    }
-
-    deserializer.deserialize_seq(IndexVisitor::new())
-}
-
-pub fn serialize_set_of_strings<S>(
-    set_of_strings: &Option<IndexSet<String>>,
-    s: S,
-) -> Result<S::Ok, S::Error>
-where
-    S: serde::ser::Serializer,
-{
-    if let Some(set_of_strings) = set_of_strings {
-        let mut sequence = s.serialize_seq(Some(set_of_strings.len()))?;
-        let iter = set_of_strings.into_iter();
-        for global in iter {
-            sequence.serialize_element(global)?;
-        }
-
-        sequence.end()
-    } else {
-        s.serialize_none()
-    }
 }
 
 /// Converts a [WorkspaceSettings] into a suited [configuration for the analyzer].

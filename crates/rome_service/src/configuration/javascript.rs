@@ -1,4 +1,4 @@
-use indexmap::IndexSet;
+use crate::configuration::string_set::StringSet;
 use rome_js_formatter::context::{
     trailing_comma::TrailingComma, QuoteProperties, QuoteStyle, Semicolons,
 };
@@ -14,12 +14,8 @@ pub struct JavascriptConfiguration {
     /// A list of global bindings that should be ignored by the analyzers
     ///
     /// If defined here, they should not emit diagnostics.
-    #[serde(
-        skip_serializing_if = "Option::is_none",
-        deserialize_with = "crate::deserialize_set_of_strings",
-        serialize_with = "crate::serialize_set_of_strings"
-    )]
-    pub globals: Option<IndexSet<String>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub globals: Option<StringSet>,
 
     #[serde(skip_serializing_if = "Option::is_none")]
     pub organize_imports: Option<JavascriptOrganizeImports>,

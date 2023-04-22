@@ -350,9 +350,7 @@
 			"properties": {
 				"ignore": {
 					"description": "A list of Unix shell style patterns. Rome tools will ignore files/folders that will match these patterns.",
-					"type": ["array", "null"],
-					"items": { "type": "string" },
-					"uniqueItems": true
+					"anyOf": [{ "$ref": "#/definitions/StringSet" }, { "type": "null" }]
 				},
 				"maxSize": {
 					"description": "The maximum allowed size for source code files in bytes. Files above this limit will be ignored for performance reason. Defaults to 1 MiB",
@@ -375,9 +373,7 @@
 				},
 				"ignore": {
 					"description": "A list of Unix shell style patterns. The formatter will ignore files/folders that will match these patterns.",
-					"type": ["array", "null"],
-					"items": { "type": "string" },
-					"uniqueItems": true
+					"anyOf": [{ "$ref": "#/definitions/StringSet" }, { "type": "null" }]
 				},
 				"indentSize": {
 					"description": "The size of the indentation, 2 by default",
@@ -410,9 +406,7 @@
 				},
 				"globals": {
 					"description": "A list of global bindings that should be ignored by the analyzers\n\nIf defined here, they should not emit diagnostics.",
-					"type": ["array", "null"],
-					"items": { "type": "string" },
-					"uniqueItems": true
+					"anyOf": [{ "$ref": "#/definitions/StringSet" }, { "type": "null" }]
 				},
 				"organize_imports": {
 					"anyOf": [
@@ -469,9 +463,7 @@
 				},
 				"ignore": {
 					"description": "A list of Unix shell style patterns. The formatter will ignore files/folders that will match these patterns.",
-					"type": ["array", "null"],
-					"items": { "type": "string" },
-					"uniqueItems": true
+					"anyOf": [{ "$ref": "#/definitions/StringSet" }, { "type": "null" }]
 				},
 				"rules": {
 					"description": "List of rules",
@@ -883,9 +875,7 @@
 				},
 				"ignore": {
 					"description": "A list of Unix shell style patterns. The formatter will ignore files/folders that will match these patterns.",
-					"type": ["array", "null"],
-					"items": { "type": "string" },
-					"uniqueItems": true
+					"anyOf": [{ "$ref": "#/definitions/StringSet" }, { "type": "null" }]
 				}
 			},
 			"additionalProperties": false
@@ -1005,6 +995,11 @@
 			}
 		},
 		"Semicolons": { "type": "string", "enum": ["always", "asNeeded"] },
+		"StringSet": {
+			"type": "array",
+			"items": { "type": "string" },
+			"uniqueItems": true
+		},
 		"Style": {
 			"description": "A list of rules that belong to this group",
 			"type": "object",
