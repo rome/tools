@@ -1313,7 +1313,26 @@
 				}
 			}
 		},
-		"TrailingComma": { "type": "string", "enum": ["all", "es5", "none"] },
+		"TrailingComma": {
+			"description": "Print trailing commas wherever possible in multi-line comma-separated syntactic structures.",
+			"oneOf": [
+				{
+					"description": "Trailing commas wherever possible (including function parameters and calls).",
+					"type": "string",
+					"enum": ["all"]
+				},
+				{
+					"description": "Trailing commas where valid in ES5 (objects, arrays, etc.). No trailing commas in type parameters in TypeScript.",
+					"type": "string",
+					"enum": ["es5"]
+				},
+				{
+					"description": "No trailing commas.",
+					"type": "string",
+					"enum": ["none"]
+				}
+			]
+		},
 		"VcsClientKind": {
 			"oneOf": [
 				{

@@ -192,6 +192,9 @@ export type VcsClientKind = "git";
 export type QuoteProperties = "asNeeded" | "preserve";
 export type QuoteStyle = "double" | "single";
 export type Semicolons = "always" | "asNeeded";
+/**
+ * Print trailing commas wherever possible in multi-line comma-separated syntactic structures.
+ */
 export type TrailingComma = "all" | "es5" | "none";
 /**
  * A list of rules that belong to this group

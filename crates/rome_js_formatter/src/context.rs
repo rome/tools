@@ -256,7 +256,8 @@ impl fmt::Display for JsFormatOptions {
 #[derive(Debug, Eq, PartialEq, Clone, Copy)]
 #[cfg_attr(
     feature = "serde",
-    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema),
+    serde(rename_all = "camelCase")
 )]
 #[derive(Default)]
 pub enum QuoteStyle {
@@ -361,7 +362,8 @@ impl VisitNode<JsonLanguage> for QuoteStyle {
 #[derive(Debug, Eq, PartialEq, Clone, Copy, Default)]
 #[cfg_attr(
     feature = "serde",
-    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema),
+    serde(rename_all = "camelCase")
 )]
 pub enum QuoteProperties {
     #[default]
@@ -414,7 +416,8 @@ impl VisitNode<JsonLanguage> for QuoteProperties {
 #[derive(Debug, Eq, PartialEq, Clone, Copy, Default)]
 #[cfg_attr(
     feature = "serde",
-    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema),
+    serde(rename_all = "camelCase")
 )]
 pub enum Semicolons {
     #[default]
