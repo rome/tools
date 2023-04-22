@@ -121,7 +121,7 @@ impl From<JsSerializableTrailingComma> for TrailingComma {
     fn from(test: JsSerializableTrailingComma) -> Self {
         match test {
             JsSerializableTrailingComma::All => TrailingComma::All,
-            JsSerializableTrailingComma::ES5 => TrailingComma::ES5,
+            JsSerializableTrailingComma::ES5 => TrailingComma::Es5,
             JsSerializableTrailingComma::None => TrailingComma::None,
         }
     }

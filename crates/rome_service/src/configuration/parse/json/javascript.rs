@@ -1,10 +1,9 @@
-use crate::configuration::javascript::{
-    JavascriptOrganizeImports, PlainQuoteProperties, PlainQuoteStyle, PlainSemicolons,
-    PlainTrailingComma,
-};
+use crate::configuration::javascript::JavascriptOrganizeImports;
 use crate::configuration::{JavascriptConfiguration, JavascriptFormatter};
-use rome_deserialize::json::{has_only_known_keys, with_only_known_variants, VisitJsonNode};
+use rome_deserialize::json::{has_only_known_keys, VisitJsonNode};
 use rome_deserialize::{DeserializationDiagnostic, VisitNode};
+use rome_js_formatter::context::trailing_comma::TrailingComma;
+use rome_js_formatter::context::{QuoteProperties, QuoteStyle, Semicolons};
 use rome_json_syntax::{JsonLanguage, JsonSyntaxNode};
 use rome_rowan::SyntaxNode;
 
@@ -74,99 +73,28 @@ impl VisitNode<JsonLanguage> for JavascriptFormatter {
         let name_text = name.text();
         match name_text {
             "quoteStyle" => {
-                let mut quote_style = PlainQuoteStyle::default();
+                let mut quote_style = QuoteStyle::default();
                 self.map_to_known_string(&value, name_text, &mut quote_style, diagnostics)?;
-                self.quote_style = quote_style.into();
+                self.quote_style = quote_style;
             }
             "trailingComma" => {
-                let mut trailing_comma = PlainTrailingComma::default();
+                let mut trailing_comma = TrailingComma::default();
                 self.map_to_known_string(&value, name_text, &mut trailing_comma, diagnostics)?;
-                self.trailing_comma = trailing_comma.into();
+                self.trailing_comma = trailing_comma;
             }
             "quoteProperties" => {
-                let mut quote_properties = PlainQuoteProperties::default();
+                let mut quote_properties = QuoteProperties::default();
                 self.map_to_known_string(&value, name_text, &mut quote_properties, diagnostics)?;
-                self.quote_properties = quote_properties.into();
+                self.quote_properties = quote_properties;
             }
             "semicolons" => {
-                let mut semicolons = PlainSemicolons::default();
+                let mut semicolons = Semicolons::default();
                 self.map_to_known_string(&value, name_text, &mut semicolons, diagnostics)?;
-                self.semicolons = semicolons.into();
+                self.semicolons = semicolons;
             }
             _ => {}
         }
 
-        Some(())
-    }
-}
-
-impl VisitNode<JsonLanguage> for PlainQuoteStyle {
-    fn visit_member_value(
-        &mut self,
-        node: &SyntaxNode<JsonLanguage>,
-        diagnostics: &mut Vec<DeserializationDiagnostic>,
-    ) -> Option<()> {
-        let node = with_only_known_variants(node, PlainQuoteStyle::KNOWN_VALUES, diagnostics)?;
-        if node.inner_string_text().ok()?.text() == "single" {
-            *self = PlainQuoteStyle::Single;
-        } else {
-            *self = PlainQuoteStyle::Double;
-        }
-        Some(())
-    }
-}
-
-impl VisitNode<JsonLanguage> for PlainQuoteProperties {
-    fn visit_member_value(
-        &mut self,
-        node: &SyntaxNode<JsonLanguage>,
-        diagnostics: &mut Vec<DeserializationDiagnostic>,
-    ) -> Option<()> {
-        let node = with_only_known_variants(node, PlainQuoteProperties::KNOWN_VALUES, diagnostics)?;
-        if node.inner_string_text().ok()?.text() == "asNeeded" {
-            *self = PlainQuoteProperties::AsNeeded;
-        } else {
-            *self = PlainQuoteProperties::Preserve;
-        }
-        Some(())
-    }
-}
-
-impl VisitNode<JsonLanguage> for PlainTrailingComma {
-    fn visit_member_value(
-        &mut self,
-        node: &SyntaxNode<JsonLanguage>,
-        diagnostics: &mut Vec<DeserializationDiagnostic>,
-    ) -> Option<()> {
-        let node = with_only_known_variants(node, PlainTrailingComma::KNOWN_VALUES, diagnostics)?;
-        match node.inner_string_text().ok()?.text() {
-            "all" => {
-                *self = PlainTrailingComma::All;
-            }
-            "es5" => {
-                *self = PlainTrailingComma::ES5;
-            }
-            "none" => {
-                *self = PlainTrailingComma::None;
-            }
-            _ => {}
-        }
-        Some(())
-    }
-}
-
-impl VisitNode<JsonLanguage> for PlainSemicolons {
-    fn visit_member_value(
-        &mut self,
-        node: &SyntaxNode<JsonLanguage>,
-        diagnostics: &mut Vec<DeserializationDiagnostic>,
-    ) -> Option<()> {
-        let node = with_only_known_variants(node, PlainSemicolons::KNOWN_VALUES, diagnostics)?;
-        if node.inner_string_text().ok()?.text() == "asNeeded" {
-            *self = PlainSemicolons::AsNeeded;
-        } else {
-            *self = PlainSemicolons::Always;
-        }
         Some(())
     }
 }
