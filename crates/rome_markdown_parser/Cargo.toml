@@ -15,5 +15,13 @@ rome_rowan = { version = "0.0.1", path = "../rome_rowan"}
 rome_parser = { version = "0.0.1", path = "../rome_parser" }
 rome_markdown_syntax = { version = "0.0.0", path = "../rome_markdown_syntax" }
 rome_markdown_factory = { version = "0.0.0", path = "../rome_markdown_factory" }
+rome_diagnostics = { version = "0.0.1", path = "../rome_diagnostics"}
+rome_console = { version = "0.0.1", path = "../rome_console"}
 tracing = { workspace = true }
 rome_js_unicode_table = { version = "0.0.1", path = "../rome_js_unicode_table" }
+
+[dev-dependencies]
+tests_macros = { path = "../tests_macros"}
+insta = { workspace = true }
+quickcheck = "1.0.3"
+quickcheck_macros = "1.0.0"

@@ -271,7 +271,6 @@ impl<'src> Lexer<'src> {
 
         match dispatched {
             WHS => self.consume_newline_or_whitespaces(),
-            QOT => self.lex_string_literal(current),
             IDT => self.lex_identifier(current),
             // COM => self.eat_byte(T![,]),
             MIN | DIG | ZER => self.lex_number(current),
@@ -280,6 +279,7 @@ impl<'src> Lexer<'src> {
             BTC => self.eat_byte(T![']']),
             BEO => self.eat_byte(T!['{']),
             BEC => self.eat_byte(T!['}']),
+            HAS => self.eat_byte(T![#]),
 
             SLH => self.lex_slash(),
 
@@ -293,8 +293,8 @@ impl<'src> Lexer<'src> {
                 }
             }
 
-            ERR | EXL | HAS | TLD | PIP | TPL | CRT | BSL | AT_ | QST | MOR | LSS | SEM | MUL
-            | PNO | PNC | PRD | PRC | AMP | EQL | PLS | COM => self.eat_unexpected_character(),
+            ERR | EXL | TLD | PIP | TPL | CRT | BSL | AT_ | QST | MOR | LSS | SEM | MUL | PNO
+            | PNC | PRD | PRC | AMP | EQL | PLS | COM => self.lex_string_literal(current),
         }
     }
 

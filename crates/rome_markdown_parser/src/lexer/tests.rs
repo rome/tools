@@ -3,7 +3,7 @@
 
 use super::{Lexer, TextSize};
 use quickcheck_macros::quickcheck;
-use rome_json_syntax::JsonSyntaxKind::{self, EOF};
+use rome_markdown_syntax::MdSyntaxKind::{self, EOF};
 use std::sync::mpsc::channel;
 use std::thread;
 use std::time::Duration;
@@ -22,7 +22,7 @@ macro_rules! assert_lex {
         $(
             assert_eq!(
                 tokens[idx].kind,
-                rome_json_syntax::JsonSyntaxKind::$kind,
+                rome_markdown_syntax::MdSyntaxKind::$kind,
                 "expected token kind {}, but found {:?}",
                 stringify!($kind),
                 tokens[idx].kind,
@@ -103,24 +103,6 @@ fn empty() {
 }
 
 #[test]
-fn int() {
-    assert_lex! {
-        "5098382",
-        JSON_NUMBER_LITERAL:7,
-        EOF:0
-    }
-}
-
-#[test]
-fn float() {
-    assert_lex! {
-        "345.893872",
-        JSON_NUMBER_LITERAL:10,
-        EOF:0
-    }
-}
-
-#[test]
 fn float_invalid() {
     assert_lex! {
         "345.893872.43322",
@@ -130,34 +112,10 @@ fn float_invalid() {
 }
 
 #[test]
-fn negative() {
-    assert_lex! {
-        "-5098382",
-        JSON_NUMBER_LITERAL:8,
-        EOF:0
-    }
-}
-
-#[test]
 fn minus_without_number() {
     assert_lex! {
         "-",
         ERROR_TOKEN:1,
-        EOF:0
-    }
-}
-
-#[test]
-fn exponent() {
-    assert_lex! {
-        "-493e+534",
-        JSON_NUMBER_LITERAL:9,
-        EOF:0
-    }
-
-    assert_lex! {
-        "-493E-534",
-        JSON_NUMBER_LITERAL:9,
         EOF:0
     }
 }
@@ -178,138 +136,10 @@ fn multiple_exponent() {
 }
 
 #[test]
-fn array() {
-    assert_lex! {
-        "[1, 2, 3, 4]",
-        L_BRACK:1,
-        JSON_NUMBER_LITERAL:1,
-        COMMA:1
-        WHITESPACE:1,
-        JSON_NUMBER_LITERAL:1,
-        COMMA:1,
-        WHITESPACE:1,
-        JSON_NUMBER_LITERAL:1,
-        COMMA:1,
-        WHITESPACE:1,
-        JSON_NUMBER_LITERAL:1,
-        R_BRACK:1,
-        EOF:0,
-    }
-}
-
-#[test]
-fn object() {
-    assert_lex! {
-        r#"{ "key": "value", "other": 4 }"#,
-        L_CURLY:1,
-        WHITESPACE:1,
-
-        JSON_STRING_LITERAL:5,
-        COLON:1,
-        WHITESPACE:1,
-        JSON_STRING_LITERAL:7,
-        COMMA:1,
-
-        WHITESPACE:1,
-        JSON_STRING_LITERAL:7,
-        COLON:1,
-        WHITESPACE:1,
-        JSON_NUMBER_LITERAL:1,
-        WHITESPACE:1,
-        R_CURLY:1,
-        EOF:0,
-    }
-}
-
-#[test]
-fn basic_string() {
-    assert_lex! {
-        r#""A string consisting of ASCII characters only""#,
-        JSON_STRING_LITERAL:46,
-        EOF:0
-    }
-}
-
-#[test]
 fn single_quote_string() {
     assert_lex! {
         r#"'A string token using single quotes that are not supported in JSON'"#,
         ERROR_TOKEN:67,
-        EOF:0
-    }
-}
-
-#[test]
-fn unterminated_string() {
-    assert_lex! {
-        r#""A string without the closing quote"#,
-        JSON_STRING_LITERAL:35,
-        EOF:0
-    }
-}
-
-#[test]
-fn simple_escape_sequences() {
-    assert_lex! {
-        r#""Escaped \t""#,
-        JSON_STRING_LITERAL:12,
-        EOF:0
-    }
-
-    assert_lex! {
-        r#""Escaped \"""#,
-        JSON_STRING_LITERAL:12,
-        EOF:0
-    }
-
-    assert_lex! {
-        r#""Escaped \\""#,
-        JSON_STRING_LITERAL:12,
-        EOF:0
-    }
-
-    assert_lex! {
-        r#""Escaped \/""#,
-        JSON_STRING_LITERAL:12,
-        EOF:0
-    }
-
-    assert_lex! {
-        r#""Escaped \b""#,
-        JSON_STRING_LITERAL:12,
-        EOF:0
-    }
-
-    assert_lex! {
-        r#""Escaped \f""#,
-        JSON_STRING_LITERAL:12,
-        EOF:0
-    }
-
-    assert_lex! {
-        r#""Escaped \n""#,
-        JSON_STRING_LITERAL:12,
-        EOF:0
-    }
-
-    assert_lex! {
-        r#""Escaped \r""#,
-        JSON_STRING_LITERAL:12,
-        EOF:0
-    }
-}
-
-#[test]
-fn unicode_escape() {
-    assert_lex! {
-        r#""Escaped \u002F""#,
-        JSON_STRING_LITERAL:16,
-        EOF:0
-    }
-
-    assert_lex! {
-        r#""Escaped \u002f""#,
-        JSON_STRING_LITERAL:16,
         EOF:0
     }
 }
@@ -419,33 +249,33 @@ fn block_comment() {
         EOF:0
     }
 }
-
-#[test]
-fn keywords() {
-    let keywords = vec!["true", "false", "null"];
-
-    for keyword in keywords {
-        let kind = JsonSyntaxKind::from_keyword(keyword).expect(
-            "Expected `JsonSyntaxKind::from_keyword` to return a kind for keyword {keyword}.",
-        );
-
-        let mut lexer = Lexer::from_str(keyword);
-        let current = lexer.next_token().expect("To have lexed keyword");
-
-        assert_eq!(
-            current.kind, kind,
-            "Expected token '{keyword}' to be of kind {:?} but is {:?}.",
-            kind, current.kind
-        );
-
-        assert_eq!(
-            current.range.len(),
-            TextSize::from(keyword.len() as u32),
-            "Expected lexed keyword to be of len {} but has length {:?}",
-            keyword.len(),
-            current.range.len()
-        );
-
-        assert_eq!(lexer.next_token().expect("Expected EOF token").kind, EOF);
-    }
-}
+//
+// #[test]
+// fn keywords() {
+//     let keywords = vec!["true", "false", "null"];
+//
+//     for keyword in keywords {
+//         let kind = MdSyntaxKind::from_keyword(keyword).expect(
+//             "Expected `JsonSyntaxKind::from_keyword` to return a kind for keyword {keyword}.",
+//         );
+//
+//         let mut lexer = Lexer::from_str(keyword);
+//         let current = lexer.next_token().expect("To have lexed keyword");
+//
+//         assert_eq!(
+//             current.kind, kind,
+//             "Expected token '{keyword}' to be of kind {:?} but is {:?}.",
+//             kind, current.kind
+//         );
+//
+//         assert_eq!(
+//             current.range.len(),
+//             TextSize::from(keyword.len() as u32),
+//             "Expected lexed keyword to be of len {} but has length {:?}",
+//             keyword.len(),
+//             current.range.len()
+//         );
+//
+//         assert_eq!(lexer.next_token().expect("Expected EOF token").kind, EOF);
+//     }
+// }

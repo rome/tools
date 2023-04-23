@@ -2042,11 +2042,17 @@ dependencies = [
 name = "rome_markdown_parser"
 version = "0.1.0"
 dependencies = [
+ "insta",
+ "quickcheck",
+ "quickcheck_macros",
+ "rome_console",
+ "rome_diagnostics",
  "rome_js_unicode_table",
  "rome_markdown_factory",
  "rome_markdown_syntax",
  "rome_parser",
  "rome_rowan",
+ "tests_macros",
  "tracing",
 ]
 

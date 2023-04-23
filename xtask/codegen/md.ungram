@@ -50,7 +50,7 @@ AnyMdElement =
 
 MdHeading =
 	heading_level: ('#' | '##' | '###' | '####' | '#####')
-	value: MdText
+	value: MdText?
 
 MdText = value: 'md_string_literal'
 

@@ -40,7 +40,7 @@ impl MdHeading {
     pub fn heading_level(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn value(&self) -> SyntaxResult<MdText> { support::required_node(&self.syntax, 1usize) }
+    pub fn value(&self) -> Option<MdText> { support::node(&self.syntax, 1usize) }
 }
 #[cfg(feature = "serde")]
 impl Serialize for MdHeading {
@@ -54,7 +54,7 @@ impl Serialize for MdHeading {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct MdHeadingFields {
     pub heading_level: SyntaxResult<SyntaxToken>,
-    pub value: SyntaxResult<MdText>,
+    pub value: Option<MdText>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct MdRoot {
@@ -169,7 +169,7 @@ impl std::fmt::Debug for MdHeading {
                 "heading_level",
                 &support::DebugSyntaxResult(self.heading_level()),
             )
-            .field("value", &support::DebugSyntaxResult(self.value()))
+            .field("value", &support::DebugOptionalElement(self.value()))
             .finish()
     }
 }
