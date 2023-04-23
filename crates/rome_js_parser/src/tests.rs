@@ -392,11 +392,16 @@ fn diagnostics_print_correctly() {
 #[ignore]
 #[test]
 pub fn quick_test() {
-    let code = r"
-@first.field @second @(() => decorator)()
-export default class Bar {}
+    let code = r#"
+[
+  @(decorators[first])
+  class {
+    method() {}
+  },
+]
 
-";
+
+"#;
     let root = parse(code, SourceType::ts());
     let syntax = root.syntax();
 
