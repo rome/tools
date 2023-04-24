@@ -27,24 +27,24 @@ impl VisitNode<JsonLanguage> for FormatterConfiguration {
         let name_text = name.text();
         match name_text {
             "formatWithErrors" => {
-                self.format_with_errors = self.map_to_boolean(&value, name_text, diagnostics)?;
+                self.format_with_errors = self.map_to_boolean(&value, name_text, diagnostics);
             }
             "enabled" => {
-                self.enabled = self.map_to_boolean(&value, name_text, diagnostics)?;
+                self.enabled = self.map_to_boolean(&value, name_text, diagnostics);
             }
             "ignore" => {
                 self.ignore = self.map_to_index_set_string(&value, name_text, diagnostics);
             }
             "indentStyle" => {
                 let mut indent_style = PlainIndentStyle::default();
-                self.map_to_known_string(&value, name_text, &mut indent_style, diagnostics)?;
+                self.map_to_known_string(&value, name_text, &mut indent_style, diagnostics);
                 self.indent_style = indent_style;
             }
             "indentSize" => {
-                self.indent_size = self.map_to_u8(&value, name_text, u8::MAX, diagnostics)?;
+                self.indent_size = self.map_to_u8(&value, name_text, u8::MAX, diagnostics);
             }
             "lineWidth" => {
-                let line_width = self.map_to_u16(&value, name_text, LineWidth::MAX, diagnostics)?;
+                let line_width = self.map_to_u16(&value, name_text, LineWidth::MAX, diagnostics);
 
                 self.line_width = match LineWidth::try_from(line_width) {
                     Ok(result) => result,

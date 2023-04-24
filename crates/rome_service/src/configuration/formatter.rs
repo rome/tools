@@ -9,24 +9,24 @@ use serde::{Deserialize, Serialize};
 #[serde(rename_all = "camelCase", default, deny_unknown_fields)]
 pub struct FormatterConfiguration {
     // if `false`, it disables the feature. `true` by default
-    pub enabled: bool,
+    pub enabled: Option<bool>,
 
     /// Stores whether formatting should be allowed to proceed if a given file
     /// has syntax errors
-    pub format_with_errors: bool,
+    pub format_with_errors: Option<bool>,
 
     /// The indent style.
-    pub indent_style: PlainIndentStyle,
+    pub indent_style: Option<PlainIndentStyle>,
 
     /// The size of the indentation, 2 by default
-    pub indent_size: u8,
+    pub indent_size: Option<u8>,
 
     /// What's the max width of a line. Defaults to 80.
     #[serde(
         deserialize_with = "deserialize_line_width",
         serialize_with = "serialize_line_width"
     )]
-    pub line_width: LineWidth,
+    pub line_width: Option<LineWidth>,
 
     /// A list of Unix shell style patterns. The formatter will ignore files/folders that will
     /// match these patterns.
