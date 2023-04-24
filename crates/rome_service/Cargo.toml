@@ -34,6 +34,7 @@ rome_text_edit = { path = "../rome_text_edit" }
 indexmap = { workspace = true, features = ["serde"] }
 schemars = { version = "0.8.10", features = ["indexmap1"], optional = true }
 tracing = { workspace = true, features = ["attributes"] }
+bpaf = { version = "0.7.10", features = ["derive"] }
 
 [features]
 schemars = ["dep:schemars", "rome_formatter/serde", "rome_js_factory", "rome_text_edit/schemars"]

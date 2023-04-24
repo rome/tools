@@ -6,6 +6,9 @@
 //! to parse commands and arguments, redirect the execution of the commands and
 //! execute the traversal of directory and files, based on the command that were passed.
 
+use bpaf::{Args, ParseFailure};
+use std::env;
+use std::ffi::OsString;
 use std::str::FromStr;
 
 pub use pico_args::Arguments;
@@ -17,6 +20,7 @@ mod commands;
 mod configuration;
 mod diagnostics;
 mod execute;
+mod global_options;
 mod metrics;
 mod panic;
 mod parse_arguments;
@@ -24,6 +28,7 @@ mod reports;
 mod service;
 mod vcs;
 
+use crate::commands::{parse_command, Command};
 pub use diagnostics::CliDiagnostic;
 pub(crate) use execute::{execute_mode, Execution, TraversalMode};
 pub use panic::setup_panic_handler;
@@ -76,7 +81,33 @@ impl<'app> CliSession<'app> {
             .map_err(|source| CliDiagnostic::parse_error("<command>", source))?;
 
         // True if the command line did not contain any arguments beside the subcommand
+        let closed = self.args.clone();
+        let new_args = env::args_os().collect::<Vec<_>>();
         let is_empty = self.args.clone().finish().is_empty();
+
+        let command = parse_command().run_inner(Args::from(new_args.as_slice()));
+
+        match command {
+            Ok(command) => match command {
+                Command::Version => return commands::version::full_version(self),
+                Command::Rage => {}
+                Command::Start => return commands::daemon::start(self),
+                Command::Stop => return commands::daemon::stop(self),
+                Command::Check => {}
+                Command::Ci => {}
+                Command::Format { .. } => {}
+                Command::Init => {}
+                Command::Help => {}
+                Command::LspProxy => return commands::daemon::lsp_proxy(),
+                Command::Migrate(_, _) => {}
+            },
+            Err(err) => match err {
+                ParseFailure::Stdout(help) => {
+                    dbg!(help);
+                }
+                ParseFailure::Stderr(_) => {}
+            },
+        }
 
         let result = match subcommand.as_deref() {
             // Print the help for the subcommand if it was called with `--help`
@@ -86,9 +117,9 @@ impl<'app> CliSession<'app> {
             Some("ci") if !is_empty => commands::ci::ci(self),
             Some("format") if !is_empty => commands::format::format(self),
 
-            Some("start") => commands::daemon::start(self),
-            Some("stop") => commands::daemon::stop(self),
-            Some("lsp-proxy") => commands::daemon::lsp_proxy(),
+            // Some("start") => commands::daemon::start(self),
+            // Some("stop") => commands::daemon::stop(self),
+            // Some("lsp-proxy") => commands::daemon::lsp_proxy(),
             Some("migrate") => commands::migrate::migrate(self),
 
             // Internal commands

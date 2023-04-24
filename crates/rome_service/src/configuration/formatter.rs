@@ -1,12 +1,16 @@
 use crate::configuration::string_set::StringSet;
 use crate::settings::FormatSettings;
 use crate::{ConfigurationDiagnostic, MatchOptions, Matcher, WorkspaceError};
+use bpaf::Bpaf;
+use indexmap::IndexSet;
 use rome_formatter::{IndentStyle, LineWidth};
 use serde::{Deserialize, Serialize};
+use std::str::FromStr;
 
-#[derive(Deserialize, Serialize, Debug, Eq, PartialEq)]
+#[derive(Deserialize, Serialize, Debug, Eq, PartialEq, Bpaf)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "camelCase", default, deny_unknown_fields)]
+#[bpaf(options)]
 pub struct FormatterConfiguration {
     // if `false`, it disables the feature. `true` by default
     pub enabled: bool,
@@ -121,4 +125,12 @@ pub enum PlainIndentStyle {
 
 impl PlainIndentStyle {
     pub(crate) const KNOWN_VALUES: &'static [&'static str] = &["tab", "space"];
+}
+
+impl FromStr for PlainIndentStyle {
+    type Err = ();
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        todo!()
+    }
 }
