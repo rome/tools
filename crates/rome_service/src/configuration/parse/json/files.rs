@@ -1,3 +1,4 @@
+use crate::configuration::string_set::StringSet;
 use crate::configuration::FilesConfiguration;
 use rome_deserialize::json::{has_only_known_keys, VisitJsonNode};
 use rome_deserialize::{DeserializationDiagnostic, VisitNode};
@@ -30,7 +31,9 @@ impl VisitNode<JsonLanguage> for FilesConfiguration {
                     NonZeroU64::new(self.map_to_u64(&value, name_text, u64::MAX, diagnostics)?);
             }
             "ignore" => {
-                self.ignore = self.map_to_index_set_string(&value, name_text, diagnostics);
+                self.ignore = self
+                    .map_to_index_set_string(&value, name_text, diagnostics)
+                    .map(StringSet::new);
             }
             _ => {}
         }

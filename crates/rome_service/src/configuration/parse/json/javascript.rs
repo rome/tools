@@ -1,4 +1,5 @@
 use crate::configuration::javascript::JavascriptOrganizeImports;
+use crate::configuration::string_set::StringSet;
 use crate::configuration::{JavascriptConfiguration, JavascriptFormatter};
 use rome_deserialize::json::{has_only_known_keys, VisitJsonNode};
 use rome_deserialize::{DeserializationDiagnostic, VisitNode};
@@ -34,7 +35,9 @@ impl VisitNode<JsonLanguage> for JavascriptConfiguration {
                 self.formatter = Some(javascript_formatter);
             }
             "globals" => {
-                self.globals = self.map_to_index_set_string(&value, name_text, diagnostics);
+                self.globals = self
+                    .map_to_index_set_string(&value, name_text, diagnostics)
+                    .map(StringSet::new);
             }
             "organizeImports" => {
                 let mut javascript_organize_imports = JavascriptOrganizeImports::default();
