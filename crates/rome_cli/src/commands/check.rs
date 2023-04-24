@@ -1,4 +1,5 @@
 use crate::configuration::load_configuration;
+use crate::global_options::GlobalOptions;
 use crate::parse_arguments::{
     apply_files_settings_from_cli, apply_format_settings_from_cli, apply_vcs_settings_from_cli,
 };
@@ -7,9 +8,40 @@ use crate::{execute_mode, CliDiagnostic, CliSession, Execution, TraversalMode};
 use rome_console::{markup, ConsoleExt};
 use rome_diagnostics::{DiagnosticExt, PrintDiagnostic, Severity};
 use rome_service::workspace::{FixFileMode, UpdateSettingsParams};
+use rome_service::RomeConfiguration;
+
+pub(crate) struct CheckCommandPayload {
+    pub(crate) apply: bool,
+    pub(crate) apply_unsafe: bool,
+    pub(crate) global_options: GlobalOptions,
+    pub(crate) configuration: RomeConfiguration,
+}
 
 /// Handler for the "check" command of the Rome CLI
-pub(crate) fn check(mut session: CliSession) -> Result<(), CliDiagnostic> {
+pub(crate) fn check(
+    mut session: CliSession,
+    payload: CheckCommandPayload,
+) -> Result<(), CliDiagnostic> {
+    let CheckCommandPayload {
+        apply,
+        apply_unsafe,
+        global_options,
+        configuration,
+    } = payload;
+
+    let fix_file_mode = if apply && apply_unsafe {
+        return Err(CliDiagnostic::incompatible_arguments(
+            "--apply",
+            "--apply-unsafe",
+        ));
+    } else if !apply && !apply_unsafe {
+        None
+    } else if apply && !apply_unsafe {
+        Some(FixFileMode::SafeFixes)
+    } else {
+        Some(FixFileMode::SafeAndUnsafeFixes)
+    };
+
     let (mut configuration, diagnostics, configuration_path) =
         load_configuration(&mut session)?.consume();
     if !diagnostics.is_empty() {
@@ -39,19 +71,6 @@ pub(crate) fn check(mut session: CliSession) -> Result<(), CliDiagnostic> {
 
     let apply = session.args.contains("--apply");
     let apply_suggested = session.args.contains("--apply-unsafe");
-
-    let fix_file_mode = if apply && apply_suggested {
-        return Err(CliDiagnostic::incompatible_arguments(
-            "--apply",
-            "--apply-unsafe",
-        ));
-    } else if !apply && !apply_suggested {
-        None
-    } else if apply && !apply_suggested {
-        Some(FixFileMode::SafeFixes)
-    } else {
-        Some(FixFileMode::SafeAndUnsafeFixes)
-    };
 
     execute_mode(
         Execution::new(TraversalMode::Check { fix_file_mode }),

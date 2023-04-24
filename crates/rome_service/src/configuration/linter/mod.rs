@@ -1,25 +1,29 @@
 #[rustfmt::skip]
 mod rules;
 
-pub use crate::configuration::linter::rules::Rules;
+pub use crate::configuration::linter::rules::{rules, Rules};
 use crate::configuration::string_set::StringSet;
 use crate::settings::LinterSettings;
 use crate::{ConfigurationDiagnostic, MatchOptions, Matcher, WorkspaceError};
+use bpaf::Bpaf;
 use rome_diagnostics::Severity;
 pub use rules::*;
 #[cfg(feature = "schemars")]
 use schemars::{gen::SchemaGenerator, schema::Schema, JsonSchema};
 use serde::{Deserialize, Serialize};
+use std::str::FromStr;
 
-#[derive(Deserialize, Serialize, Debug)]
+#[derive(Deserialize, Serialize, Debug, Clone, Bpaf)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", default, deny_unknown_fields)]
 pub struct LinterConfiguration {
     /// if `false`, it disables the feature and the linter won't be executed. `true` by default
+    #[bpaf(hide)]
     pub enabled: bool,
 
     /// List of rules
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external, optional)]
     pub rules: Option<Rules>,
 
     /// A list of Unix shell style patterns. The formatter will ignore files/folders that will
@@ -71,7 +75,7 @@ impl TryFrom<LinterConfiguration> for LinterSettings {
     }
 }
 
-#[derive(Deserialize, Serialize, Debug, Clone)]
+#[derive(Deserialize, Serialize, Debug, Clone, Bpaf)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", deny_unknown_fields, untagged)]
 pub enum RuleConfiguration {
@@ -127,7 +131,7 @@ impl From<&RulePlainConfiguration> for Severity {
     }
 }
 
-#[derive(Default, Deserialize, Serialize, Debug, Eq, PartialEq, Clone)]
+#[derive(Default, Deserialize, Serialize, Debug, Eq, PartialEq, Clone, Bpaf)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[serde(rename_all = "camelCase")]
 pub enum RulePlainConfiguration {
@@ -141,7 +145,20 @@ impl RulePlainConfiguration {
     pub(crate) const KNOWN_KEYS: &'static [&'static str] = &["warn", "error", "off"];
 }
 
-#[derive(Default, Deserialize, Serialize, Debug, Clone)]
+impl FromStr for RulePlainConfiguration {
+    type Err = String;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "warn" => Ok(Self::Warn),
+            "error" => Ok(Self::Error),
+            "off" => Ok(Self::Off),
+            _ => Err("Invalid configuration for rule".to_string()),
+        }
+    }
+}
+
+#[derive(Default, Deserialize, Serialize, Debug, Clone, Bpaf)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct RuleWithOptions {
@@ -151,7 +168,25 @@ pub struct RuleWithOptions {
     pub options: Option<String>,
 }
 
+impl FromStr for RuleWithOptions {
+    type Err = String;
+    fn from_str(_s: &str) -> Result<Self, Self::Err> {
+        Ok(Self {
+            level: RulePlainConfiguration::default(),
+            options: None,
+        })
+    }
+}
+
 #[cfg(feature = "schemars")]
 fn schema_any(_gen: &mut SchemaGenerator) -> Schema {
     Schema::Bool(true)
+}
+
+impl FromStr for Rules {
+    type Err = String;
+
+    fn from_str(_s: &str) -> Result<Self, Self::Err> {
+        Ok(Rules::default())
+    }
 }

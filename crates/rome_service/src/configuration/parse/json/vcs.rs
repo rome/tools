@@ -31,7 +31,7 @@ impl VisitNode<JsonLanguage> for VcsConfiguration {
                 self.client_kind = Some(client_kind);
             }
             "enabled" => {
-                self.enabled = self.map_to_boolean(&value, name_text, diagnostics)?;
+                self.enabled = self.map_to_boolean(&value, name_text, diagnostics);
             }
             "useIgnoreFile" => {
                 self.use_ignore_file = self.map_to_boolean(&value, name_text, diagnostics);
@@ -67,7 +67,7 @@ pub(crate) fn validate_vcs_configuration(
     configuration: &mut VcsConfiguration,
     diagnostics: &mut Vec<DeserializationDiagnostic>,
 ) {
-    if configuration.client_kind.is_none() && configuration.enabled {
+    if configuration.client_kind.is_none() && !configuration.is_disabled() {
         diagnostics.push(
             DeserializationDiagnostic::new(markup! {
                 "You enabled the VCS integration, but you didn't specify a client."
@@ -75,6 +75,6 @@ pub(crate) fn validate_vcs_configuration(
             .with_range(node.range())
             .with_note("Rome will disable the VCS integration until the issue is fixed."),
         );
-        configuration.enabled = false;
+        configuration.enabled = Some(false);
     }
 }

@@ -1,6 +1,6 @@
 use crate::{
-    configuration::FilesConfiguration, Configuration, ConfigurationDiagnostic, MatchOptions,
-    Matcher, Rules, WorkspaceError,
+    configuration::FilesConfiguration, ConfigurationDiagnostic, MatchOptions, Matcher,
+    RomeConfiguration, Rules, WorkspaceError,
 };
 use indexmap::IndexSet;
 use rome_diagnostics::Category;
@@ -44,24 +44,24 @@ impl WorkspaceSettings {
         &self.organize_imports
     }
 
-    /// The (configuration)[Configuration] is merged into the workspace
+    /// The (configuration)[RomeConfiguration] is merged into the workspace
     #[tracing::instrument(level = "debug", skip(self))]
     pub fn merge_with_configuration(
         &mut self,
-        configuration: Configuration,
+        configuration: RomeConfiguration,
     ) -> Result<(), WorkspaceError> {
         // formatter part
-        if let Some(formatter) = configuration.formatter {
+        if let Some(formatter) = configuration.formatter_configuration {
             self.formatter = FormatSettings::try_from(formatter)?;
         }
 
         // linter part
-        if let Some(linter) = configuration.linter {
+        if let Some(linter) = configuration.linter_configuration {
             self.linter = LinterSettings::try_from(linter)?;
         }
 
         // Filesystem settings
-        if let Some(files) = configuration.files {
+        if let Some(files) = configuration.files_configuration {
             self.files = FilesSettings::try_from(files)?;
         }
 
@@ -70,10 +70,10 @@ impl WorkspaceSettings {
         }
 
         // javascript settings
-        let javascript = configuration.javascript;
+        let javascript = configuration.javascript_configuration;
         if let Some(javascript) = javascript {
             self.languages.javascript.globals = javascript.globals.map(|g| g.into_index_set());
-            let formatter = javascript.formatter;
+            let formatter = javascript.javascript_formatter;
             if let Some(formatter) = formatter {
                 self.languages.javascript.formatter.quote_style = Some(formatter.quote_style);
                 self.languages.javascript.formatter.quote_properties =
@@ -82,7 +82,7 @@ impl WorkspaceSettings {
                 self.languages.javascript.formatter.semicolons = Some(formatter.semicolons);
             }
 
-            let organize_imports = javascript.organize_imports;
+            let organize_imports = javascript.javascript_organize_imports;
             if let Some(_organize_imports) = organize_imports {}
         }
 

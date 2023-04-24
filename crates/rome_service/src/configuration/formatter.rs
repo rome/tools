@@ -2,27 +2,29 @@ use crate::configuration::string_set::StringSet;
 use crate::settings::FormatSettings;
 use crate::{ConfigurationDiagnostic, MatchOptions, Matcher, WorkspaceError};
 use bpaf::Bpaf;
-use indexmap::IndexSet;
 use rome_formatter::{IndentStyle, LineWidth};
 use serde::{Deserialize, Serialize};
 use std::str::FromStr;
 
-#[derive(Deserialize, Serialize, Debug, Eq, PartialEq, Bpaf)]
+#[derive(Deserialize, Serialize, Debug, Eq, PartialEq, Clone, Bpaf)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "camelCase", default, deny_unknown_fields)]
-#[bpaf(options)]
 pub struct FormatterConfiguration {
     // if `false`, it disables the feature. `true` by default
+    #[bpaf(hide)]
     pub enabled: bool,
 
     /// Stores whether formatting should be allowed to proceed if a given file
     /// has syntax errors
+    #[bpaf(hide)]
     pub format_with_errors: bool,
 
     /// The indent style.
+    #[bpaf(long("indent-style"), argument("tab|space"))]
     pub indent_style: PlainIndentStyle,
 
     /// The size of the indentation, 2 by default
+    #[bpaf(long("indent-size"), argument("NUMBER"))]
     pub indent_size: u8,
 
     /// What's the max width of a line. Defaults to 80.
@@ -30,11 +32,13 @@ pub struct FormatterConfiguration {
         deserialize_with = "deserialize_line_width",
         serialize_with = "serialize_line_width"
     )]
+    #[bpaf(long("line-width"), argument("NUMBER"))]
     pub line_width: LineWidth,
 
     /// A list of Unix shell style patterns. The formatter will ignore files/folders that will
     /// match these patterns.
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(hide)]
     pub ignore: Option<StringSet>,
 }
 
@@ -112,7 +116,7 @@ where
     s.serialize_u16(line_width.value())
 }
 
-#[derive(Deserialize, Serialize, Debug, Eq, PartialEq, Default)]
+#[derive(Deserialize, Serialize, Debug, Eq, PartialEq, Clone, Default)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "camelCase")]
 pub enum PlainIndentStyle {
@@ -128,9 +132,9 @@ impl PlainIndentStyle {
 }
 
 impl FromStr for PlainIndentStyle {
-    type Err = ();
+    type Err = String;
 
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
+    fn from_str(_s: &str) -> Result<Self, Self::Err> {
         todo!()
     }
 }

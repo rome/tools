@@ -4,21 +4,21 @@ use crate::configuration::vcs::VcsConfiguration;
 use crate::configuration::{
     FilesConfiguration, FormatterConfiguration, JavascriptConfiguration, LinterConfiguration,
 };
-use crate::Configuration;
+use crate::RomeConfiguration;
 use rome_deserialize::json::{has_only_known_keys, VisitJsonNode};
 use rome_deserialize::{DeserializationDiagnostic, VisitNode};
 use rome_json_syntax::{JsonLanguage, JsonSyntaxNode};
 use rome_rowan::SyntaxNode;
 
-impl VisitJsonNode for Configuration {}
+impl VisitJsonNode for RomeConfiguration {}
 
-impl VisitNode<JsonLanguage> for Configuration {
+impl VisitNode<JsonLanguage> for RomeConfiguration {
     fn visit_member_name(
         &mut self,
         node: &JsonSyntaxNode,
         diagnostics: &mut Vec<DeserializationDiagnostic>,
     ) -> Option<()> {
-        has_only_known_keys(node, Configuration::KNOWN_KEYS, diagnostics)
+        has_only_known_keys(node, RomeConfiguration::KNOWN_KEYS, diagnostics)
     }
 
     fn visit_map(
@@ -36,28 +36,28 @@ impl VisitNode<JsonLanguage> for Configuration {
             "files" => {
                 let mut files = FilesConfiguration::default();
                 self.map_to_object(&value, name_text, &mut files, diagnostics)?;
-                self.files = Some(files);
+                self.files_configuration = Some(files);
             }
             "vcs" => {
                 let mut vcs = VcsConfiguration::default();
                 self.map_to_object(&value, name_text, &mut vcs, diagnostics)?;
                 validate_vcs_configuration(&value, &mut vcs, diagnostics);
-                self.vcs = Some(vcs);
+                self.vcs_configuration = Some(vcs);
             }
             "formatter" => {
                 let mut formatter = FormatterConfiguration::default();
                 self.map_to_object(&value, name_text, &mut formatter, diagnostics)?;
-                self.formatter = Some(formatter);
+                self.formatter_configuration = Some(formatter);
             }
             "linter" => {
                 let mut linter = LinterConfiguration::default();
                 self.map_to_object(&value, name_text, &mut linter, diagnostics)?;
-                self.linter = Some(linter);
+                self.linter_configuration = Some(linter);
             }
             "javascript" => {
                 let mut javascript = JavascriptConfiguration::default();
                 self.map_to_object(&value, name_text, &mut javascript, diagnostics)?;
-                self.javascript = Some(javascript);
+                self.javascript_configuration = Some(javascript);
             }
             "organizeImports" => {
                 let mut organize_imports = OrganizeImports::default();

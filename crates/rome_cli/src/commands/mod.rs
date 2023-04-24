@@ -1,7 +1,12 @@
 use crate::global_options::{global_options, GlobalOptions};
 use crate::VERSION;
 use bpaf::{Bpaf, OptionParser};
-use rome_service::configuration::{formatter_configuration, FormatterConfiguration};
+use rome_service::configuration::{
+    formatter_configuration, javascript::javascript_formatter, rome_configuration,
+    FormatterConfiguration, JavascriptFormatter,
+};
+use rome_service::RomeConfiguration;
+use std::path::PathBuf;
 
 pub(crate) mod check;
 pub(crate) mod ci;
@@ -31,24 +36,73 @@ pub(crate) enum Command {
     #[bpaf(command)]
     Stop,
 
-    /// Run the linter on a set of files
+    /// Run various checks on a set of files
     #[bpaf(command)]
-    Check,
+    Check {
+        /// Apply safe fixes, formatting
+        #[bpaf(long("apply"), switch)]
+        apply: bool,
+        /// Apply safe fixes and unsafe fixes, formatting and import sorting
+        #[bpaf(long("apply-unsafe"), switch)]
+        apply_unsafe: bool,
+
+        #[bpaf(external, hide_usage)]
+        rome_configuration: RomeConfiguration,
+        #[bpaf(external, hide_usage)]
+        global_options: GlobalOptions,
+
+        /// Single file, single path or list of paths
+        #[bpaf(positional::<PathBuf>("PATH"), many)]
+        paths: Vec<PathBuf>,
+    },
     /// Run the linter and check the formatting of a set of files
     #[bpaf(command)]
-    Ci,
+    Ci {
+        /// Allow to enable or disable the formatter check.
+        #[bpaf(long("formatter-enabled"), argument("true|false"), fallback(true))]
+        formatter_enabled: bool,
+        /// Allow to enable or disable the linter check.
+        #[bpaf(long("linter-enabled"), argument("true|false"), fallback(true))]
+        linter_enabled: bool,
+        /// Allow to enable or disable the organize imports.
+        #[bpaf(
+            long("organize-imports-enabled"),
+            argument("true|false"),
+            fallback(true)
+        )]
+        organize_imports_enabled: bool,
+
+        #[bpaf(external, hide_usage)]
+        rome_configuration: RomeConfiguration,
+        #[bpaf(external, hide_usage)]
+        global_options: GlobalOptions,
+
+        /// Single file, single path or list of paths
+        #[bpaf(positional::<PathBuf>("PATH"), many)]
+        paths: Vec<PathBuf>,
+    },
     /// Run the formatter on a set of files
     #[bpaf(command)]
     Format {
-        #[bpaf(external(global_options))]
-        global_options: GlobalOptions,
+        #[bpaf(external, optional, hide_usage)]
+        formatter_configuration: Option<FormatterConfiguration>,
+
+        #[bpaf(external, optional, hide_usage)]
+        javascript_formatter: Option<JavascriptFormatter>,
 
         /// A file name with its extension to pass when reading from standard in, e.g. echo 'let a;' | rome format --stdin-file-path=file.js"
-        #[bpaf(long("stdin-file-path"), argument("PATH"))]
+        #[bpaf(long("stdin-file-path"), argument("PATH"), hide_usage)]
         stdin_file_path: Option<String>,
 
-        #[bpaf(external())]
-        formatter_configuration: FormatterConfiguration,
+        #[bpaf(external, hide_usage)]
+        global_options: GlobalOptions,
+
+        #[bpaf(switch)]
+        write: bool,
+
+        /// Single file, single path or list of paths
+        #[bpaf(positional::<PathBuf>("PATH"), many)]
+        paths: Vec<PathBuf>,
     },
     /// Bootstraps a new rome project
     #[bpaf(command)]
@@ -62,7 +116,7 @@ pub(crate) enum Command {
     /// It updates the configuration when there are breaking changes
     #[bpaf(command)]
     Migrate(
-        #[bpaf(external(global_options))] GlobalOptions,
+        #[bpaf(external(global_options), hide_usage)] GlobalOptions,
         /// Writes the new configuration file to disk
         #[bpaf(long("write"), switch)]
         bool,
@@ -80,9 +134,8 @@ mod test {
 
     #[test]
     fn version() {
-        let result =
-            parse_command().run_inner(Args::from(&["migrate", "--colors=force", "--write"]));
-        let help = parse_command().run_inner(Args::from(&["format", "--help"]));
+        let result = parse_command().run_inner(Args::from(&["migrate", "--write"]));
+        let help = parse_command().run_inner(Args::from(&["ci", "--help"]));
 
         // let result = result.unwrap_err().unwrap_stdout();
 

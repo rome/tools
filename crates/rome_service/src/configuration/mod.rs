@@ -4,6 +4,7 @@
 //! by language. The language might further options divided by tool.
 
 use crate::{DynRef, WorkspaceError};
+use bpaf::Bpaf;
 use rome_fs::{FileSystem, OpenOptions};
 use serde::{Deserialize, Serialize};
 use std::fmt::Debug;
@@ -12,9 +13,9 @@ use std::num::NonZeroU64;
 use std::path::{Path, PathBuf};
 
 pub mod diagnostics;
-mod formatter;
+pub mod formatter;
 mod generated;
-mod javascript;
+pub mod javascript;
 pub mod linter;
 pub mod organize_imports;
 mod parse;
@@ -23,13 +24,13 @@ pub mod vcs;
 
 pub use crate::configuration::diagnostics::ConfigurationDiagnostic;
 use crate::configuration::generated::push_to_analyzer_rules;
-use crate::configuration::organize_imports::OrganizeImports;
+use crate::configuration::organize_imports::{organize_imports, OrganizeImports};
 pub use crate::configuration::string_set::StringSet;
-use crate::configuration::vcs::VcsConfiguration;
+use crate::configuration::vcs::{vcs_configuration, VcsConfiguration};
 use crate::settings::{LanguagesSettings, LinterSettings};
-pub use formatter::{FormatterConfiguration, PlainIndentStyle};
-pub use javascript::{JavascriptConfiguration, JavascriptFormatter};
-pub use linter::{LinterConfiguration, RuleConfiguration, Rules};
+pub use formatter::{formatter_configuration, FormatterConfiguration, PlainIndentStyle};
+pub use javascript::{javascript_configuration, JavascriptConfiguration, JavascriptFormatter};
+pub use linter::{linter_configuration, LinterConfiguration, RuleConfiguration, Rules};
 use rome_analyze::{AnalyzerConfiguration, AnalyzerRules};
 use rome_deserialize::json::deserialize_from_json_str;
 use rome_deserialize::Deserialized;
@@ -38,58 +39,65 @@ use rome_json_formatter::context::JsonFormatOptions;
 use rome_json_parser::parse_json;
 
 /// The configuration that is contained inside the file `rome.json`
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone, Bpaf)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(deny_unknown_fields, rename_all = "camelCase")]
-pub struct Configuration {
+pub struct RomeConfiguration {
     /// A field for the [JSON schema](https://json-schema.org/) specification
     #[serde(rename(serialize = "$schema", deserialize = "$schema"))]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(hide)]
     pub schema: Option<String>,
 
     /// The configuration of the filesystem
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub vcs: Option<VcsConfiguration>,
+    #[bpaf(external, optional, hide_usage)]
+    pub vcs_configuration: Option<VcsConfiguration>,
 
     /// The configuration of the filesystem
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub files: Option<FilesConfiguration>,
+    #[bpaf(external, optional, hide_usage)]
+    pub files_configuration: Option<FilesConfiguration>,
 
     /// The configuration of the formatter
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub formatter: Option<FormatterConfiguration>,
+    #[bpaf(external, optional)]
+    pub formatter_configuration: Option<FormatterConfiguration>,
 
     /// The configuration of the import sorting
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external, optional)]
     pub organize_imports: Option<OrganizeImports>,
 
     /// The configuration for the linter
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub linter: Option<LinterConfiguration>,
+    #[bpaf(external, optional)]
+    pub linter_configuration: Option<LinterConfiguration>,
 
     /// Specific configuration for the JavaScript language
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub javascript: Option<JavascriptConfiguration>,
+    #[bpaf(external, optional)]
+    pub javascript_configuration: Option<JavascriptConfiguration>,
 }
 
-impl Default for Configuration {
+impl Default for RomeConfiguration {
     fn default() -> Self {
         Self {
-            files: None,
-            linter: Some(LinterConfiguration {
+            files_configuration: None,
+            linter_configuration: Some(LinterConfiguration {
                 enabled: true,
                 ..LinterConfiguration::default()
             }),
             organize_imports: Some(OrganizeImports::default()),
-            formatter: None,
-            javascript: None,
+            formatter_configuration: None,
+            javascript_configuration: None,
             schema: None,
-            vcs: None,
+            vcs_configuration: None,
         }
     }
 }
 
-impl Configuration {
+impl RomeConfiguration {
     const KNOWN_KEYS: &'static [&'static str] = &[
         "vcs",
         "files",
@@ -101,13 +109,19 @@ impl Configuration {
     ];
 }
 
-impl Configuration {
+impl RomeConfiguration {
     pub fn is_formatter_disabled(&self) -> bool {
-        self.formatter.as_ref().map(|f| !f.enabled).unwrap_or(false)
+        self.formatter_configuration
+            .as_ref()
+            .map(|f| !f.enabled)
+            .unwrap_or(false)
     }
 
     pub fn is_linter_disabled(&self) -> bool {
-        self.linter.as_ref().map(|f| !f.enabled).unwrap_or(false)
+        self.linter_configuration
+            .as_ref()
+            .map(|f| !f.enabled)
+            .unwrap_or(false)
     }
 
     pub fn is_organize_imports_disabled(&self) -> bool {
@@ -118,22 +132,27 @@ impl Configuration {
     }
 
     pub fn is_vcs_disabled(&self) -> bool {
-        self.vcs.as_ref().map(|f| !f.enabled).unwrap_or(true)
+        self.vcs_configuration
+            .as_ref()
+            .map(|f| matches!(f.enabled, Some(false)))
+            .unwrap_or(true)
     }
 }
 
 /// The configuration of the filesystem
-#[derive(Default, Debug, Deserialize, Serialize)]
+#[derive(Default, Debug, Deserialize, Serialize, Clone, Bpaf)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "camelCase", default, deny_unknown_fields)]
 pub struct FilesConfiguration {
     /// The maximum allowed size for source code files in bytes. Files above
     /// this limit will be ignored for performance reason. Defaults to 1 MiB
+    #[bpaf(long("files-max-size"), argument("NUMBER"))]
     pub max_size: Option<NonZeroU64>,
 
     /// A list of Unix shell style patterns. Rome tools will ignore files/folders that will
     /// match these patterns.
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(hide)]
     pub ignore: Option<StringSet>,
 }
 
@@ -144,9 +163,9 @@ impl FilesConfiguration {
 /// - [Result]: if an error occurred while loading the configuration file.
 /// - [Option]: sometimes not having a configuration file should not be an error, so we need this type.
 /// - [Deserialized]: result of the deserialization of the configuration.
-/// - [Configuration]: the type needed to [Deserialized] to infer the return type.
+/// - [RomeConfiguration]: the type needed to [Deserialized] to infer the return type.
 /// - [PathBuf]: the path of where the first `rome.json` path was found
-type LoadConfig = Result<Option<(Deserialized<Configuration>, PathBuf)>, WorkspaceError>;
+type LoadConfig = Result<Option<(Deserialized<RomeConfiguration>, PathBuf)>, WorkspaceError>;
 
 #[derive(Debug, Default, PartialEq)]
 pub enum ConfigurationBasePath {
@@ -196,7 +215,7 @@ pub fn load_config(
     let result = file_system.auto_search(configuration_directory, config_name, should_error)?;
 
     if let Some((buffer, configuration_path)) = result {
-        let deserialized = deserialize_from_json_str::<Configuration>(&buffer)
+        let deserialized = deserialize_from_json_str::<RomeConfiguration>(&buffer)
             .with_file_path(&configuration_file_path.display().to_string());
         Ok(Some((deserialized, configuration_path)))
     } else {
@@ -213,7 +232,7 @@ pub fn load_config(
 /// - the program doesn't have the write rights
 pub fn create_config(
     fs: &mut DynRef<dyn FileSystem>,
-    mut configuration: Configuration,
+    mut configuration: RomeConfiguration,
 ) -> Result<(), WorkspaceError> {
     let path = PathBuf::from(fs.config_name());
 

@@ -4,21 +4,21 @@ use rome_console::{markup, ConsoleExt};
 use rome_diagnostics::PrintDiagnostic;
 use rome_service::configuration::vcs::{VcsClientKind, VcsConfiguration};
 use rome_service::configuration::{FilesConfiguration, StringSet};
-use rome_service::{Configuration, WorkspaceError};
+use rome_service::{RomeConfiguration, WorkspaceError};
 use std::path::PathBuf;
 
 /// This function will check if the configuration is set to use the VCS integration and try to
 /// read the ignored files.
 pub(crate) fn store_path_to_ignore_from_vcs(
     session: &mut CliSession,
-    configuration: &mut Configuration,
+    configuration: &mut RomeConfiguration,
     vcs_base_path: Option<PathBuf>,
 ) -> Result<(), CliDiagnostic> {
     let verbose = session.args.contains("--verbose");
-    let Some(vcs) = &configuration.vcs else {
+    let Some(vcs) = &configuration.vcs_configuration else {
 		return Ok(())
 	};
-    if vcs.enabled {
+    if vcs.is_enabled() {
         let vcs_base_path = match (vcs_base_path, &vcs.root) {
             (Some(vcs_base_path), Some(root)) => vcs_base_path.join(root),
             (None, Some(root)) => PathBuf::from(root),
@@ -37,7 +37,7 @@ pub(crate) fn store_path_to_ignore_from_vcs(
 
         if !files_to_ignore.is_empty() {
             let files = configuration
-                .files
+                .files_configuration
                 .get_or_insert_with(FilesConfiguration::default);
             let ignored_files = files.ignore.get_or_insert_with(StringSet::default);
             ignored_files.extend(files_to_ignore.into_iter());
@@ -51,7 +51,7 @@ pub(crate) fn read_vcs_ignore_file(
     current_directory: PathBuf,
     configuration: &VcsConfiguration,
 ) -> Result<Vec<String>, CliDiagnostic> {
-    if !configuration.enabled {
+    if configuration.is_disabled() {
         return Ok(vec![]);
     }
     let file_system = &session.app.fs;

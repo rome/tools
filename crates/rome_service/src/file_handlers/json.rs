@@ -10,7 +10,7 @@ use crate::settings::{
 use crate::workspace::{
     FixFileResult, GetSyntaxTreeResult, OrganizeImportsResult, PullActionsResult,
 };
-use crate::{Configuration, Rules, WorkspaceError};
+use crate::{RomeConfiguration, Rules, WorkspaceError};
 use rome_deserialize::json::deserialize_from_json_ast;
 use rome_diagnostics::{Diagnostic, Severity};
 use rome_formatter::{FormatError, Printed};
@@ -186,7 +186,7 @@ fn lint(params: LintParams) -> LintResults {
     // if we're parsing the `rome.json` file, we deserialize it, so we can emit diagnostics for
     // malformed configuration
     if params.path.ends_with(CONFIG_NAME) {
-        let deserialized = deserialize_from_json_ast::<Configuration>(root);
+        let deserialized = deserialize_from_json_ast::<RomeConfiguration>(root);
         diagnostics.extend(
             deserialized
                 .into_diagnostics()

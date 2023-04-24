@@ -2,24 +2,30 @@ use std::path::PathBuf;
 
 use crate::{CliDiagnostic, CliSession};
 use rome_deserialize::Deserialized;
-use rome_service::{load_config, Configuration, ConfigurationBasePath};
+use rome_service::{load_config, ConfigurationBasePath, RomeConfiguration};
 
 #[derive(Default)]
 pub struct LoadedConfiguration {
-    deserialized: Deserialized<Configuration>,
+    deserialized: Deserialized<RomeConfiguration>,
     path: Option<PathBuf>,
 }
 
 impl LoadedConfiguration {
-    pub fn consume(self) -> (Configuration, Vec<rome_diagnostics::Error>, Option<PathBuf>) {
+    pub fn consume(
+        self,
+    ) -> (
+        RomeConfiguration,
+        Vec<rome_diagnostics::Error>,
+        Option<PathBuf>,
+    ) {
         let path = self.path;
         let (configuration, diagnostics) = self.deserialized.consume();
         (configuration, diagnostics, path)
     }
 }
 
-impl From<Option<(Deserialized<Configuration>, PathBuf)>> for LoadedConfiguration {
-    fn from(value: Option<(Deserialized<Configuration>, PathBuf)>) -> Self {
+impl From<Option<(Deserialized<RomeConfiguration>, PathBuf)>> for LoadedConfiguration {
+    fn from(value: Option<(Deserialized<RomeConfiguration>, PathBuf)>) -> Self {
         if let Some((deserialized, path)) = value {
             LoadedConfiguration {
                 deserialized,

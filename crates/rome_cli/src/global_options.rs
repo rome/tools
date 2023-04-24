@@ -1,4 +1,5 @@
 use bpaf::Bpaf;
+use rome_diagnostics::MAXIMUM_DISPLAYABLE_DIAGNOSTICS;
 use std::str::FromStr;
 
 #[derive(Debug, Clone, Bpaf)]
@@ -9,15 +10,27 @@ pub(crate) struct GlobalOptions {
 
     /// Connect to a running instance of the Rome daemon server.
     #[bpaf(long("use-server"), switch)]
-    use_server: Option<bool>,
+    use_server: bool,
 
     /// Print additional verbose advices on diagnostics
     #[bpaf(long("verbose"), switch)]
-    verbose: Option<bool>,
+    verbose: bool,
 
     /// Set the filesystem path to the directory of the rome.json configuration file
-    #[bpaf(long("config-path"), argument("PATH"))]
+    #[bpaf(long("config-path"), argument("PATH"), optional)]
     config_path: Option<String>,
+
+    /// Cap the amount of diagnostics displayed (default: 20)
+    #[bpaf(
+        long("max-diagnostics"),
+        argument("NUMBER"),
+        guard(
+            check_max_diagnostics,
+            "The value of the argument is too high, maximum accepted: 500"
+        ),
+        fallback(20)
+    )]
+    max_diagnostics: u16,
 }
 
 #[derive(Debug, Clone)]
@@ -38,4 +51,8 @@ impl FromStr for ColorsArg {
             )),
         }
     }
+}
+
+fn check_max_diagnostics(number: &u16) -> bool {
+    *number > MAXIMUM_DISPLAYABLE_DIAGNOSTICS
 }

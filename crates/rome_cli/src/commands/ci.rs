@@ -45,7 +45,7 @@ pub(crate) fn ci(mut session: CliSession) -> Result<(), CliDiagnostic> {
         .map_err(|source| CliDiagnostic::parse_error("--organize-imports-enabled", source))?;
 
     let formatter = configuration
-        .formatter
+        .formatter_configuration
         .get_or_insert_with(FormatterConfiguration::default);
 
     if let Some(formatter_enabled) = formatter_enabled {
@@ -53,7 +53,7 @@ pub(crate) fn ci(mut session: CliSession) -> Result<(), CliDiagnostic> {
     }
 
     let linter = configuration
-        .linter
+        .linter_configuration
         .get_or_insert_with(LinterConfiguration::default);
 
     if let Some(linter_enabled) = linter_enabled {

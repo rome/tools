@@ -4,16 +4,16 @@ use rome_service::configuration::vcs::{VcsClientKind, VcsConfiguration};
 use rome_service::configuration::{
     FormatterConfiguration, JavascriptConfiguration, JavascriptFormatter, PlainIndentStyle,
 };
-use rome_service::Configuration;
+use rome_service::RomeConfiguration;
 
 /// Read the formatting options for the command line arguments and inject them
 /// into the workspace settings
 pub(crate) fn apply_format_settings_from_cli(
     session: &mut CliSession,
-    configuration: &mut Configuration,
+    configuration: &mut RomeConfiguration,
 ) -> Result<(), CliDiagnostic> {
     let formatter = configuration
-        .formatter
+        .formatter_configuration
         .get_or_insert_with(FormatterConfiguration::default);
 
     let size = session
@@ -67,10 +67,10 @@ pub(crate) fn apply_format_settings_from_cli(
         .map_err(|source| CliDiagnostic::parse_error("--semicolons", source))?;
 
     let javascript = configuration
-        .javascript
+        .javascript_configuration
         .get_or_insert_with(JavascriptConfiguration::default);
     let javascript_formatter = javascript
-        .formatter
+        .javascript_formatter
         .get_or_insert_with(JavascriptFormatter::default);
 
     if let Some(quote_properties) = quote_properties {
@@ -94,7 +94,7 @@ pub(crate) fn apply_format_settings_from_cli(
 
 pub(crate) fn apply_files_settings_from_cli(
     session: &mut CliSession,
-    configuration: &mut Configuration,
+    configuration: &mut RomeConfiguration,
 ) -> Result<(), CliDiagnostic> {
     let files_max_size = session
         .args
@@ -102,7 +102,9 @@ pub(crate) fn apply_files_settings_from_cli(
         .map_err(|source| CliDiagnostic::parse_error("--files-max-size", source))?;
 
     if let Some(files_max_size) = files_max_size {
-        let files = configuration.files.get_or_insert_with(Default::default);
+        let files = configuration
+            .files_configuration
+            .get_or_insert_with(Default::default);
         files.max_size = Some(files_max_size);
     }
 
@@ -111,10 +113,10 @@ pub(crate) fn apply_files_settings_from_cli(
 
 pub(crate) fn apply_vcs_settings_from_cli(
     session: &mut CliSession,
-    configuration: &mut Configuration,
+    configuration: &mut RomeConfiguration,
 ) -> Result<(), CliDiagnostic> {
     let vcs = configuration
-        .vcs
+        .vcs_configuration
         .get_or_insert_with(VcsConfiguration::default);
 
     let enabled = session
@@ -135,9 +137,9 @@ pub(crate) fn apply_vcs_settings_from_cli(
         .opt_value_from_str("--vcs-root")
         .map_err(|source| CliDiagnostic::parse_error("--vcs-root", source))?;
 
-    if let Some(enabled) = enabled {
-        vcs.enabled = enabled;
-    }
+    // if let Some(enabled) = enabled {
+    vcs.enabled = enabled;
+    // }
 
     match client_kind {
         None => {}

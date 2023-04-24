@@ -32,7 +32,7 @@ impl VisitNode<JsonLanguage> for JavascriptConfiguration {
             "formatter" => {
                 let mut javascript_formatter = JavascriptFormatter::default();
                 self.map_to_object(&value, name_text, &mut javascript_formatter, diagnostics)?;
-                self.formatter = Some(javascript_formatter);
+                self.javascript_formatter = Some(javascript_formatter);
             }
             "globals" => {
                 self.globals = self
@@ -47,7 +47,7 @@ impl VisitNode<JsonLanguage> for JavascriptConfiguration {
                     &mut javascript_organize_imports,
                     diagnostics,
                 )?;
-                self.organize_imports = Some(javascript_organize_imports);
+                self.javascript_organize_imports = Some(javascript_organize_imports);
             }
             _ => {}
         }

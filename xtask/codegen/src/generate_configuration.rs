@@ -68,6 +68,7 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
         push_rule_list.push(generate_push_to_analyzer_rules(group));
         line_groups.push(quote! {
             #[serde(skip_serializing_if = "Option::is_none")]
+            #[bpaf(external, hide, optional)]
             pub #property_group_name: Option<#group_struct_name>
         });
         default_for_groups.push(quote! {
@@ -132,20 +133,24 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
         #[cfg(feature = "schemars")]
         use schemars::JsonSchema;
         use crate::RuleConfiguration;
+        use crate::configuration::linter::rule_configuration;
         use rome_analyze::RuleFilter;
         use indexmap::IndexSet;
+        use bpaf::Bpaf;
         use rome_diagnostics::{Category, Severity};
 
-        #[derive(Deserialize, Serialize, Debug, Clone)]
+        #[derive(Deserialize, Serialize, Debug, Clone, Bpaf)]
         #[cfg_attr(feature = "schemars", derive(JsonSchema))]
         #[serde(rename_all = "camelCase", deny_unknown_fields)]
         pub struct Rules {
             /// It enables the lint rules recommended by Rome. `true` by default.
             #[serde(skip_serializing_if = "Option::is_none")]
+            #[bpaf(hide)]
             pub recommended: Option<bool>,
 
             /// It enables ALL rules. The rules that belong to `nursery` won't be enabled.
             #[serde(skip_serializing_if = "Option::is_none")]
+            #[bpaf(hide)]
             pub all: Option<bool>,
 
             #( #line_groups ),*
@@ -409,6 +414,7 @@ fn generate_struct(group: &str, rules: &BTreeMap<&'static str, RuleMetadata>) ->
         schema_lines_rules.push(quote! {
             #[doc = #summary]
             #[serde(skip_serializing_if = "Option::is_none")]
+            #[bpaf(external(rule_configuration), optional, hide)]
             pub #rule_identifier: Option<RuleConfiguration>
         });
 
@@ -443,17 +449,19 @@ fn generate_struct(group: &str, rules: &BTreeMap<&'static str, RuleMetadata>) ->
     let number_of_recommended_rules = Literal::u8_unsuffixed(number_of_recommended_rules);
 
     quote! {
-        #[derive(Deserialize, Default, Serialize, Debug, Clone)]
+        #[derive(Deserialize, Default, Serialize, Debug, Clone, Bpaf)]
         #[cfg_attr(feature = "schemars", derive(JsonSchema))]
         #[serde(rename_all = "camelCase", default)]
         /// A list of rules that belong to this group
         pub struct #group_struct_name {
             /// It enables the recommended rules for this group
             #[serde(skip_serializing_if = "Option::is_none")]
+            #[bpaf(hide)]
             pub recommended: Option<bool>,
 
             /// It enables ALL rules for this group.
             #[serde(skip_serializing_if = "Option::is_none")]
+            #[bpaf(hide)]
             pub all: Option<bool>,
 
             #( #schema_lines_rules ),*

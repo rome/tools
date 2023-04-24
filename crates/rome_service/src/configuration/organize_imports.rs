@@ -1,18 +1,21 @@
 use crate::configuration::string_set::StringSet;
 use crate::settings::OrganizeImportsSettings;
 use crate::{ConfigurationDiagnostic, MatchOptions, Matcher, WorkspaceError};
+use bpaf::Bpaf;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Default, Serialize, Deserialize, Eq, PartialEq)]
+#[derive(Debug, Default, Serialize, Deserialize, Eq, PartialEq, Clone, Bpaf)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "camelCase", default, deny_unknown_fields)]
 pub struct OrganizeImports {
     /// Enables the organization of imports
+    #[bpaf(hide)]
     pub enabled: bool,
 
     /// A list of Unix shell style patterns. The formatter will ignore files/folders that will
     /// match these patterns.
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(hide)]
     pub ignore: Option<StringSet>,
 }
 

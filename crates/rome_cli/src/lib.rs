@@ -28,6 +28,7 @@ mod reports;
 mod service;
 mod vcs;
 
+use crate::commands::check::CheckCommandPayload;
 use crate::commands::{parse_command, Command};
 pub use diagnostics::CliDiagnostic;
 pub(crate) use execute::{execute_mode, Execution, TraversalMode};
@@ -93,8 +94,24 @@ impl<'app> CliSession<'app> {
                 Command::Rage => {}
                 Command::Start => return commands::daemon::start(self),
                 Command::Stop => return commands::daemon::stop(self),
-                Command::Check => {}
-                Command::Ci => {}
+                Command::Check {
+                    apply,
+                    apply_unsafe,
+                    global_options,
+                    rome_configuration,
+                    paths,
+                } => {
+                    return commands::check::check(
+                        self,
+                        CheckCommandPayload {
+                            apply_unsafe,
+                            apply,
+                            global_options,
+                            configuration: rome_configuration,
+                        },
+                    )
+                }
+                Command::Ci { .. } => {}
                 Command::Format { .. } => {}
                 Command::Init => {}
                 Command::Help => {}
@@ -113,7 +130,7 @@ impl<'app> CliSession<'app> {
             // Print the help for the subcommand if it was called with `--help`
             Some(cmd) if has_help => commands::help::help(self, Some(cmd)),
 
-            Some("check") if !is_empty => commands::check::check(self),
+            // Some("check") if !is_empty => commands::check::check(self),
             Some("ci") if !is_empty => commands::ci::ci(self),
             Some("format") if !is_empty => commands::format::format(self),
 

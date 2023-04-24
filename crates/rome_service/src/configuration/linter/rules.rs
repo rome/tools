@@ -1,37 +1,49 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
+use crate::configuration::linter::rule_configuration;
 use crate::RuleConfiguration;
+use bpaf::Bpaf;
 use indexmap::IndexSet;
 use rome_analyze::RuleFilter;
 use rome_diagnostics::{Category, Severity};
 #[cfg(feature = "schemars")]
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
-#[derive(Deserialize, Serialize, Debug, Clone)]
+#[derive(Deserialize, Serialize, Debug, Clone, Bpaf)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct Rules {
     #[doc = r" It enables the lint rules recommended by Rome. `true` by default."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(hide)]
     pub recommended: Option<bool>,
     #[doc = r" It enables ALL rules. The rules that belong to `nursery` won't be enabled."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(hide)]
     pub all: Option<bool>,
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external, hide, optional)]
     pub a11y: Option<A11y>,
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external, hide, optional)]
     pub complexity: Option<Complexity>,
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external, hide, optional)]
     pub correctness: Option<Correctness>,
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external, hide, optional)]
     pub nursery: Option<Nursery>,
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external, hide, optional)]
     pub performance: Option<Performance>,
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external, hide, optional)]
     pub security: Option<Security>,
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external, hide, optional)]
     pub style: Option<Style>,
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external, hide, optional)]
     pub suspicious: Option<Suspicious>,
 }
 impl Default for Rules {
@@ -323,55 +335,70 @@ impl Rules {
         enabled_rules.difference(&disabled_rules).cloned().collect()
     }
 }
-#[derive(Deserialize, Default, Serialize, Debug, Clone)]
+#[derive(Deserialize, Default, Serialize, Debug, Clone, Bpaf)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", default)]
 #[doc = r" A list of rules that belong to this group"]
 pub struct A11y {
     #[doc = r" It enables the recommended rules for this group"]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(hide)]
     pub recommended: Option<bool>,
     #[doc = r" It enables ALL rules for this group."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(hide)]
     pub all: Option<bool>,
     #[doc = "Enforce that the accessKey attribute is not used on any HTML element."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_access_key: Option<RuleConfiguration>,
     #[doc = "Enforce that autoFocus prop is not used on elements."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_autofocus: Option<RuleConfiguration>,
     #[doc = "Disallow target=\"_blank\" attribute without rel=\"noreferrer\""]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_blank_target: Option<RuleConfiguration>,
     #[doc = "Enforces that no distracting elements are used."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_distracting_elements: Option<RuleConfiguration>,
     #[doc = "The scope prop should be used only on <th> elements."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_header_scope: Option<RuleConfiguration>,
     #[doc = "Prevent the usage of positive integers on tabIndex property"]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_positive_tabindex: Option<RuleConfiguration>,
     #[doc = "It asserts that alternative text to images or areas, help to rely on to screen readers to understand the purpose and the context of the image."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub use_alt_text: Option<RuleConfiguration>,
     #[doc = "Enforce that anchor elements have content and that the content is accessible to screen readers."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub use_anchor_content: Option<RuleConfiguration>,
     #[doc = "Enforces the usage of the attribute type for the element button"]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub use_button_type: Option<RuleConfiguration>,
     #[doc = "Enforce that html element has lang attribute. This allows users to choose a language other than the default."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub use_html_lang: Option<RuleConfiguration>,
     #[doc = "Enforce to have the onClick mouse event with the onKeyUp, the onKeyDown, or the onKeyPress keyboard event."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub use_key_with_click_events: Option<RuleConfiguration>,
     #[doc = "Enforce that onMouseOver/onMouseOut are accompanied by onFocus/onBlur for keyboard-only users. It is important to take into account users with physical disabilities who cannot use a mouse, who use assistive technology or screenreader."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub use_key_with_mouse_events: Option<RuleConfiguration>,
     #[doc = "Enforce that all anchors are valid, and they are navigable elements."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub use_valid_anchor: Option<RuleConfiguration>,
 }
 impl A11y {
@@ -624,34 +651,42 @@ impl A11y {
         }
     }
 }
-#[derive(Deserialize, Default, Serialize, Debug, Clone)]
+#[derive(Deserialize, Default, Serialize, Debug, Clone, Bpaf)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", default)]
 #[doc = r" A list of rules that belong to this group"]
 pub struct Complexity {
     #[doc = r" It enables the recommended rules for this group"]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(hide)]
     pub recommended: Option<bool>,
     #[doc = r" It enables ALL rules for this group."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(hide)]
     pub all: Option<bool>,
     #[doc = "Disallow unnecessary boolean casts"]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_extra_boolean_cast: Option<RuleConfiguration>,
     #[doc = "Disallow unclear usage of multiple space characters in regular expression literals"]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_multiple_spaces_in_regular_expression_literals: Option<RuleConfiguration>,
     #[doc = "Disallow unnecessary fragments"]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_useless_fragments: Option<RuleConfiguration>,
     #[doc = "Promotes the use of .flatMap() when map().flat() are used together."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub use_flat_map: Option<RuleConfiguration>,
     #[doc = "Enforce using concise optional chain instead of chained logical expressions."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub use_optional_chain: Option<RuleConfiguration>,
     #[doc = "Discard redundant terms from logical expressions."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub use_simplified_logic_expression: Option<RuleConfiguration>,
 }
 impl Complexity {
@@ -805,67 +840,86 @@ impl Complexity {
         }
     }
 }
-#[derive(Deserialize, Default, Serialize, Debug, Clone)]
+#[derive(Deserialize, Default, Serialize, Debug, Clone, Bpaf)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", default)]
 #[doc = r" A list of rules that belong to this group"]
 pub struct Correctness {
     #[doc = r" It enables the recommended rules for this group"]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(hide)]
     pub recommended: Option<bool>,
     #[doc = r" It enables ALL rules for this group."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(hide)]
     pub all: Option<bool>,
     #[doc = "Prevent passing of children as props."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_children_prop: Option<RuleConfiguration>,
     #[doc = "Prevents from having const variables being re-assigned."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_const_assign: Option<RuleConfiguration>,
     #[doc = "Disallow returning a value from a constructor."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_constructor_return: Option<RuleConfiguration>,
     #[doc = "Disallows empty destructuring patterns."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_empty_pattern: Option<RuleConfiguration>,
     #[doc = "Disallow new operators with the Symbol object"]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_new_symbol: Option<RuleConfiguration>,
     #[doc = "Disallow literal numbers that lose precision"]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_precision_loss: Option<RuleConfiguration>,
     #[doc = "Prevent the usage of the return value of React.render."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_render_return_value: Option<RuleConfiguration>,
     #[doc = "Disallow returning a value from a setter"]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_setter_return: Option<RuleConfiguration>,
     #[doc = "Disallow comparison of expressions modifying the string case with non-compliant value."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_string_case_mismatch: Option<RuleConfiguration>,
     #[doc = "Prevents the usage of variables that haven't been declared inside the document"]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_undeclared_variables: Option<RuleConfiguration>,
     #[doc = "Avoid using unnecessary continue."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_unnecessary_continue: Option<RuleConfiguration>,
     #[doc = "Disallow unreachable code"]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_unreachable: Option<RuleConfiguration>,
     #[doc = "Disallow control flow statements in finally blocks."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_unsafe_finally: Option<RuleConfiguration>,
     #[doc = "Disallow unused variables."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_unused_variables: Option<RuleConfiguration>,
     #[doc = "This rules prevents void elements (AKA self-closing elements) from having children."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_void_elements_with_children: Option<RuleConfiguration>,
     #[doc = "Disallow returning a value from a function with the return type 'void'"]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_void_type_return: Option<RuleConfiguration>,
     #[doc = "Enforce \"for\" loop update clause moving the counter in the right direction."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub use_valid_for_direction: Option<RuleConfiguration>,
 }
 impl Correctness {
@@ -1176,178 +1230,234 @@ impl Correctness {
         }
     }
 }
-#[derive(Deserialize, Default, Serialize, Debug, Clone)]
+#[derive(Deserialize, Default, Serialize, Debug, Clone, Bpaf)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", default)]
 #[doc = r" A list of rules that belong to this group"]
 pub struct Nursery {
     #[doc = r" It enables the recommended rules for this group"]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(hide)]
     pub recommended: Option<bool>,
     #[doc = r" It enables ALL rules for this group."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(hide)]
     pub all: Option<bool>,
     #[doc = "Enforce that elements that do not support ARIA roles, states, and properties do not have those attributes."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_aria_unsupported_elements: Option<RuleConfiguration>,
     #[doc = "Disallow assignments in expressions."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_assign_in_expressions: Option<RuleConfiguration>,
     #[doc = "Disallow certain types."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_banned_types: Option<RuleConfiguration>,
     #[doc = "Disallow reassigning class members."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_class_assign: Option<RuleConfiguration>,
     #[doc = "Disallow comma operator."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_comma_operator: Option<RuleConfiguration>,
     #[doc = "Disallow arrow functions where they could be confused with comparisons."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_confusing_arrow: Option<RuleConfiguration>,
     #[doc = "Disallow labeled statements that are not loops."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_confusing_labels: Option<RuleConfiguration>,
     #[doc = "Disallow the use of console.log"]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_console_log: Option<RuleConfiguration>,
     #[doc = "Disallow constant expressions in conditions"]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_constant_condition: Option<RuleConfiguration>,
     #[doc = "Disallow duplicate case labels. If a switch statement has duplicate test expressions in case clauses, it is likely that a programmer copied a case clause but forgot to change the test expression."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_duplicate_case: Option<RuleConfiguration>,
     #[doc = "Disallow duplicate class members."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_duplicate_class_members: Option<RuleConfiguration>,
     #[doc = "Prevents JSX properties to be assigned multiple times."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_duplicate_jsx_props: Option<RuleConfiguration>,
     #[doc = "Disallow unnecessary labels."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_extra_labels: Option<RuleConfiguration>,
     #[doc = "Typing mistakes and misunderstandings about where semicolons are required can lead to semicolons that are unnecessary. While not technically an error, extra semicolons can cause confusion when reading code."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_extra_semicolons: Option<RuleConfiguration>,
     #[doc = "Prefer for...of statement instead of Array.forEach."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_for_each: Option<RuleConfiguration>,
     #[doc = "Disallow calling global object properties as functions"]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_global_object_calls: Option<RuleConfiguration>,
     #[doc = "Disallow type annotations for variables, parameters, and class properties initialized with a literal expression."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_inferrable_types: Option<RuleConfiguration>,
     #[doc = "Disallow function and var declarations in nested blocks."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_inner_declarations: Option<RuleConfiguration>,
     #[doc = "Prevents the incorrect use of super() inside classes. It also checks whether a call super() is missing from classes that extends other constructors."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_invalid_constructor_super: Option<RuleConfiguration>,
     #[doc = "Disallow the use of TypeScript's namespaces."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_namespace: Option<RuleConfiguration>,
     #[doc = "Enforce that interactive ARIA roles are not assigned to non-interactive HTML elements."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_noninteractive_element_to_interactive_role: Option<RuleConfiguration>,
     #[doc = "Enforce that tabIndex is not assigned to non-interactive HTML elements."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_noninteractive_tabindex: Option<RuleConfiguration>,
     #[doc = "Disallow reassigning function parameters."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_parameter_assign: Option<RuleConfiguration>,
     #[doc = "Disallow the use of parameter properties in class constructors."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_parameter_properties: Option<RuleConfiguration>,
     #[doc = "Disallow direct use of Object.prototype builtins."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_prototype_builtins: Option<RuleConfiguration>,
     #[doc = "Disallow variable, function, class, and type redeclarations in the same scope."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_redeclare: Option<RuleConfiguration>,
     #[doc = "Enforce img alt prop does not contain the word \"image\", \"picture\", or \"photo\"."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_redundant_alt: Option<RuleConfiguration>,
     #[doc = "Enforce explicit role property is not the same as implicit/default role property on an element."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_redundant_roles: Option<RuleConfiguration>,
     #[doc = "This rule allows you to specify global variable names that you don’t want to use in your application."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_restricted_globals: Option<RuleConfiguration>,
     #[doc = "Disallow assignments where both sides are exactly the same."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_self_assign: Option<RuleConfiguration>,
     #[doc = "Disallow comparisons where both sides are exactly the same."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_self_compare: Option<RuleConfiguration>,
     #[doc = "Enforces the usage of the title element for the svg element."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_svg_without_title: Option<RuleConfiguration>,
     #[doc = "Disallow lexical declarations in switch clauses."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_switch_declarations: Option<RuleConfiguration>,
     #[doc = "Ensures the super() constructor is called exactly once on every code path in a class constructor before this is accessed if the class has a superclass"]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_unreachable_super: Option<RuleConfiguration>,
     #[doc = "Disallow the use of optional chaining in contexts where the undefined value is not allowed."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_unsafe_optional_chaining: Option<RuleConfiguration>,
     #[doc = "Disallow unused labels."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_unused_labels: Option<RuleConfiguration>,
     #[doc = "Disallow unnecessary catch clauses."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_useless_catch: Option<RuleConfiguration>,
     #[doc = "Disallow unnecessary constructors."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_useless_constructor: Option<RuleConfiguration>,
     #[doc = "Disallow renaming import, export, and destructured assignments to the same name."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_useless_rename: Option<RuleConfiguration>,
     #[doc = "Disallow useless case in switch statements."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_useless_switch_case: Option<RuleConfiguration>,
     #[doc = "Disallow with statements in non-strict contexts."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_with: Option<RuleConfiguration>,
     #[doc = "Enforce that ARIA state and property values are valid."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub use_aria_prop_types: Option<RuleConfiguration>,
     #[doc = "Enforce that elements with ARIA roles must have all required ARIA attributes for that role."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub use_aria_props_for_role: Option<RuleConfiguration>,
     #[doc = "Enforce camel case naming convention."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub use_camel_case: Option<RuleConfiguration>,
     #[doc = "Enforce all dependencies are correctly specified."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub use_exhaustive_dependencies: Option<RuleConfiguration>,
     #[doc = "Enforce that all React hooks are being called from the Top Level component functions."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub use_hook_at_top_level: Option<RuleConfiguration>,
     #[doc = "Enforces the usage of the attribute title for the element iframe"]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub use_iframe_title: Option<RuleConfiguration>,
     #[doc = "Require calls to isNaN() when checking for NaN."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub use_is_nan: Option<RuleConfiguration>,
     #[doc = "Enforce the usage of a literal access to properties over computed property access."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub use_literal_keys: Option<RuleConfiguration>,
     #[doc = "Enforces that audio and video elements must have a track for captions."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub use_media_caption: Option<RuleConfiguration>,
     #[doc = "Require using the namespace keyword over the module keyword to declare TypeScript namespaces."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub use_namespace_keyword: Option<RuleConfiguration>,
     #[doc = "Ensures that ARIA properties aria-* are all valid."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub use_valid_aria_props: Option<RuleConfiguration>,
     #[doc = "Ensure that the attribute passed to the lang attribute is a correct ISO language and/or country."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub use_valid_lang: Option<RuleConfiguration>,
     #[doc = "Require generator functions to contain yield."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub use_yield: Option<RuleConfiguration>,
 }
 impl Nursery {
@@ -2197,19 +2307,22 @@ impl Nursery {
         }
     }
 }
-#[derive(Deserialize, Default, Serialize, Debug, Clone)]
+#[derive(Deserialize, Default, Serialize, Debug, Clone, Bpaf)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", default)]
 #[doc = r" A list of rules that belong to this group"]
 pub struct Performance {
     #[doc = r" It enables the recommended rules for this group"]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(hide)]
     pub recommended: Option<bool>,
     #[doc = r" It enables ALL rules for this group."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(hide)]
     pub all: Option<bool>,
     #[doc = "Disallow the use of the delete operator."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_delete: Option<RuleConfiguration>,
 }
 impl Performance {
@@ -2278,22 +2391,26 @@ impl Performance {
         }
     }
 }
-#[derive(Deserialize, Default, Serialize, Debug, Clone)]
+#[derive(Deserialize, Default, Serialize, Debug, Clone, Bpaf)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", default)]
 #[doc = r" A list of rules that belong to this group"]
 pub struct Security {
     #[doc = r" It enables the recommended rules for this group"]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(hide)]
     pub recommended: Option<bool>,
     #[doc = r" It enables ALL rules for this group."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(hide)]
     pub all: Option<bool>,
     #[doc = "Prevent the usage of dangerous JSX props"]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_dangerously_set_inner_html: Option<RuleConfiguration>,
     #[doc = "Report when a DOM element or a component uses both children and dangerouslySetInnerHTML prop."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_dangerously_set_inner_html_with_children: Option<RuleConfiguration>,
 }
 impl Security {
@@ -2385,76 +2502,98 @@ impl Security {
         }
     }
 }
-#[derive(Deserialize, Default, Serialize, Debug, Clone)]
+#[derive(Deserialize, Default, Serialize, Debug, Clone, Bpaf)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", default)]
 #[doc = r" A list of rules that belong to this group"]
 pub struct Style {
     #[doc = r" It enables the recommended rules for this group"]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(hide)]
     pub recommended: Option<bool>,
     #[doc = r" It enables ALL rules for this group."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(hide)]
     pub all: Option<bool>,
     #[doc = "Disallow the use of arguments"]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_arguments: Option<RuleConfiguration>,
     #[doc = "Disallow implicit true values on JSX boolean attributes"]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_implicit_boolean: Option<RuleConfiguration>,
     #[doc = "Disallow negation in the condition of an if statement if it has an else clause"]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_negation_else: Option<RuleConfiguration>,
     #[doc = "Disallow non-null assertions using the ! postfix operator."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_non_null_assertion: Option<RuleConfiguration>,
     #[doc = "Disallow the use of constants which its value is the upper-case version of its name."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_shouty_constants: Option<RuleConfiguration>,
     #[doc = "Disallow template literals if interpolation and special-character handling are not needed"]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_unused_template_literal: Option<RuleConfiguration>,
     #[doc = "Disallow the use of var"]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_var: Option<RuleConfiguration>,
     #[doc = "Requires following curly brace conventions. JavaScript allows the omission of curly braces when a block contains only one statement. However, it is considered by many to be best practice to never omit curly braces around blocks, even when they are optional, because it can lead to bugs and reduces code clarity."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub use_block_statements: Option<RuleConfiguration>,
     #[doc = "Require const declarations for variables that are never reassigned after declared."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub use_const: Option<RuleConfiguration>,
     #[doc = "Enforce default function parameters and optional parameters to be last."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub use_default_parameter_last: Option<RuleConfiguration>,
     #[doc = "Require that each enum member value be explicitly initialized."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub use_enum_initializers: Option<RuleConfiguration>,
     #[doc = "Disallow the use of Math.pow in favor of the ** operator."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub use_exponentiation_operator: Option<RuleConfiguration>,
     #[doc = "This rule enforces the use of <>...</> over <Fragment>...</Fragment>."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub use_fragment_syntax: Option<RuleConfiguration>,
     #[doc = "Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals"]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub use_numeric_literals: Option<RuleConfiguration>,
     #[doc = "Prevent extra closing tags for components without children"]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub use_self_closing_elements: Option<RuleConfiguration>,
     #[doc = "When expressing array types, this rule promotes the usage of T[] shorthand instead of Array<T>."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub use_shorthand_array_type: Option<RuleConfiguration>,
     #[doc = "Enforces switch clauses have a single statement, emits a quick fix wrapping the statements in a block."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub use_single_case_statement: Option<RuleConfiguration>,
     #[doc = "Disallow multiple variable declarations in the same variable statement"]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub use_single_var_declarator: Option<RuleConfiguration>,
     #[doc = "Template literals are preferred over string concatenation."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub use_template: Option<RuleConfiguration>,
     #[doc = "Enforce the use of while loops instead of for loops when the initializer and update expressions are not needed"]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub use_while: Option<RuleConfiguration>,
 }
 impl Style {
@@ -2798,82 +2937,106 @@ impl Style {
         }
     }
 }
-#[derive(Deserialize, Default, Serialize, Debug, Clone)]
+#[derive(Deserialize, Default, Serialize, Debug, Clone, Bpaf)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", default)]
 #[doc = r" A list of rules that belong to this group"]
 pub struct Suspicious {
     #[doc = r" It enables the recommended rules for this group"]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(hide)]
     pub recommended: Option<bool>,
     #[doc = r" It enables ALL rules for this group."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(hide)]
     pub all: Option<bool>,
     #[doc = "Discourage the usage of Array index in keys."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_array_index_key: Option<RuleConfiguration>,
     #[doc = "Disallows using an async function as a Promise executor."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_async_promise_executor: Option<RuleConfiguration>,
     #[doc = "Disallow reassigning exceptions in catch clauses."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_catch_assign: Option<RuleConfiguration>,
     #[doc = "Prevent comments from being inserted as text nodes"]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_comment_text: Option<RuleConfiguration>,
     #[doc = "Disallow comparing against -0"]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_compare_neg_zero: Option<RuleConfiguration>,
     #[doc = "Disallow TypeScript const enum"]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_const_enum: Option<RuleConfiguration>,
     #[doc = "Disallow the use of debugger"]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_debugger: Option<RuleConfiguration>,
     #[doc = "Require the use of === and !=="]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_double_equals: Option<RuleConfiguration>,
     #[doc = "Prevents object literals having more than one property declaration for the same name. If an object property with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored, which is likely a mistake."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_duplicate_object_keys: Option<RuleConfiguration>,
     #[doc = "Disallow duplicate function parameter name."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_duplicate_parameters: Option<RuleConfiguration>,
     #[doc = "Disallow the declaration of empty interfaces."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_empty_interface: Option<RuleConfiguration>,
     #[doc = "Disallow the any type usage."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_explicit_any: Option<RuleConfiguration>,
     #[doc = "Prevents the wrong usage of the non-null assertion operator (!) in TypeScript files."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_extra_non_null_assertion: Option<RuleConfiguration>,
     #[doc = "Disallow reassigning function declarations."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_function_assign: Option<RuleConfiguration>,
     #[doc = "Disallow assigning to imported bindings"]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_import_assign: Option<RuleConfiguration>,
     #[doc = "Disallow labels that share a name with a variable"]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_label_var: Option<RuleConfiguration>,
     #[doc = "Prevents from having redundant \"use strict\"."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_redundant_use_strict: Option<RuleConfiguration>,
     #[doc = "Disallow identifiers from shadowing restricted names."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_shadow_restricted_names: Option<RuleConfiguration>,
     #[doc = "Disallow sparse arrays"]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_sparse_array: Option<RuleConfiguration>,
     #[doc = "Disallow using unsafe negation."]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub no_unsafe_negation: Option<RuleConfiguration>,
     #[doc = "Enforce default clauses in switch statements to be last"]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub use_default_switch_clause_last: Option<RuleConfiguration>,
     #[doc = "This rule verifies the result of typeof $expr unary expressions is being compared to valid values, either string literals containing valid type names or other typeof expressions"]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(rule_configuration), optional, hide)]
     pub use_valid_typeof: Option<RuleConfiguration>,
 }
 impl Suspicious {
