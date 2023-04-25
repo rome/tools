@@ -1153,7 +1153,7 @@ decorator.ts:3:2 parse ━━━━━━━━━━━━━━━━━━━
 --
 decorator.ts:3:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Decorators are not valid here.
+  × Decorators are not valid here
   
     1 │ @'dsads' class MyClass {}
     2 │ @1 class MyClass {}
@@ -1161,6 +1161,8 @@ decorator.ts:3:1 parse ━━━━━━━━━━━━━━━━━━━
       │ ^
     4 │ @[] in 1 class MyClass {}
     5 │ @[] class MyClass {}
+  
+  i Decorators are only valid on class declarations, class expressions, and class methods
   
 --
 decorator.ts:3:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1221,7 +1223,7 @@ decorator.ts:4:2 parse ━━━━━━━━━━━━━━━━━━━
 --
 decorator.ts:4:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Decorators are not valid here.
+  × Decorators are not valid here
   
     2 │ @1 class MyClass {}
     3 │ @++1 class MyClass {}
@@ -1229,6 +1231,8 @@ decorator.ts:4:1 parse ━━━━━━━━━━━━━━━━━━━
       │ ^^^
     5 │ @[] class MyClass {}
     6 │ @() => {} class MyClass {}
+  
+  i Decorators are only valid on class declarations, class expressions, and class methods
   
 --
 decorator.ts:4:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1280,7 +1284,7 @@ decorator.ts:6:3 parse ━━━━━━━━━━━━━━━━━━━
 --
 decorator.ts:6:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Decorators are not valid here.
+  × Decorators are not valid here
   
     4 │ @[] in 1 class MyClass {}
     5 │ @[] class MyClass {}
@@ -1288,6 +1292,8 @@ decorator.ts:6:1 parse ━━━━━━━━━━━━━━━━━━━
       │ ^^^
     7 │ @1 == 2 ? true : false class MyClass {}
     8 │ @await fn class MyClass {}
+  
+  i Decorators are only valid on class declarations, class expressions, and class methods
   
 --
 decorator.ts:6:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1325,7 +1331,7 @@ decorator.ts:7:2 parse ━━━━━━━━━━━━━━━━━━━
 --
 decorator.ts:7:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Decorators are not valid here.
+  × Decorators are not valid here
   
     5 │ @[] class MyClass {}
     6 │ @() => {} class MyClass {}
@@ -1333,6 +1339,8 @@ decorator.ts:7:1 parse ━━━━━━━━━━━━━━━━━━━
       │ ^^
     8 │ @await fn class MyClass {}
     9 │ @function(){} class MyClass {}
+  
+  i Decorators are only valid on class declarations, class expressions, and class methods
   
 --
 decorator.ts:7:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1370,7 +1378,7 @@ decorator.ts:8:2 parse ━━━━━━━━━━━━━━━━━━━
 --
 decorator.ts:8:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Decorators are not valid here.
+  × Decorators are not valid here
   
      6 │ @() => {} class MyClass {}
      7 │ @1 == 2 ? true : false class MyClass {}
@@ -1378,6 +1386,8 @@ decorator.ts:8:1 parse ━━━━━━━━━━━━━━━━━━━
        │ ^^^^^^
      9 │ @function(){} class MyClass {}
     10 │ @obj instanceof Object class MyClass {}
+  
+  i Decorators are only valid on class declarations, class expressions, and class methods
   
 --
 decorator.ts:8:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1424,7 +1434,7 @@ decorator.ts:9:2 parse ━━━━━━━━━━━━━━━━━━━
 --
 decorator.ts:10:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Decorators are not valid here.
+  × Decorators are not valid here
   
      8 │ @await fn class MyClass {}
      9 │ @function(){} class MyClass {}
@@ -1432,6 +1442,8 @@ decorator.ts:10:1 parse ━━━━━━━━━━━━━━━━━━�
        │ ^^^^
     11 │ @1 === 2 class MyClass {}
     12 │ @new Object() class MyClass {}
+  
+  i Decorators are only valid on class declarations, class expressions, and class methods
   
 --
 decorator.ts:10:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1469,7 +1481,7 @@ decorator.ts:11:2 parse ━━━━━━━━━━━━━━━━━━�
 --
 decorator.ts:11:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Decorators are not valid here.
+  × Decorators are not valid here
   
      9 │ @function(){} class MyClass {}
     10 │ @obj instanceof Object class MyClass {}
@@ -1477,6 +1489,8 @@ decorator.ts:11:1 parse ━━━━━━━━━━━━━━━━━━�
        │ ^^
     12 │ @new Object() class MyClass {}
     13 │ @{} class MyClass {}
+  
+  i Decorators are only valid on class declarations, class expressions, and class methods
   
 --
 decorator.ts:11:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1526,7 +1540,7 @@ decorator.ts:13:2 parse ━━━━━━━━━━━━━━━━━━�
 --
 decorator.ts:14:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Decorators are not valid here.
+  × Decorators are not valid here
   
     12 │ @new Object() class MyClass {}
     13 │ @{} class MyClass {}
@@ -1534,6 +1548,8 @@ decorator.ts:14:1 parse ━━━━━━━━━━━━━━━━━━�
        │ ^^
     15 │ @a,b class MyClass {}
     16 │ @`${d}foo` class MyClass {}
+  
+  i Decorators are only valid on class declarations, class expressions, and class methods
   
 --
 decorator.ts:14:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1552,7 +1568,7 @@ decorator.ts:14:6 parse ━━━━━━━━━━━━━━━━━━�
 --
 decorator.ts:15:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Decorators are not valid here.
+  × Decorators are not valid here
   
     13 │ @{} class MyClass {}
     14 │ @a++ class MyClass {}
@@ -1560,6 +1576,8 @@ decorator.ts:15:1 parse ━━━━━━━━━━━━━━━━━━�
        │ ^^
     16 │ @`${d}foo` class MyClass {}
     17 │ @obj as MyType class MyClass {}
+  
+  i Decorators are only valid on class declarations, class expressions, and class methods
   
 --
 decorator.ts:15:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1597,7 +1615,7 @@ decorator.ts:16:2 parse ━━━━━━━━━━━━━━━━━━�
 --
 decorator.ts:17:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Decorators are not valid here.
+  × Decorators are not valid here
   
     15 │ @a,b class MyClass {}
     16 │ @`${d}foo` class MyClass {}
@@ -1605,6 +1623,8 @@ decorator.ts:17:1 parse ━━━━━━━━━━━━━━━━━━�
        │ ^^^^
     18 │ @<MyType>obj class MyClass {}
     19 │ @obj satisfies MyType class MyClass {}
+  
+  i Decorators are only valid on class declarations, class expressions, and class methods
   
 --
 decorator.ts:17:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1690,7 +1710,7 @@ decorator.ts:18:2 parse ━━━━━━━━━━━━━━━━━━�
 --
 decorator.ts:18:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Decorators are not valid here.
+  × Decorators are not valid here
   
     16 │ @`${d}foo` class MyClass {}
     17 │ @obj as MyType class MyClass {}
@@ -1698,6 +1718,8 @@ decorator.ts:18:1 parse ━━━━━━━━━━━━━━━━━━�
        │ ^
     19 │ @obj satisfies MyType class MyClass {}
     20 │ @obj! class MyClass {}
+  
+  i Decorators are only valid on class declarations, class expressions, and class methods
   
 --
 decorator.ts:18:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1732,7 +1754,7 @@ decorator.ts:18:14 parse ━━━━━━━━━━━━━━━━━━�
 --
 decorator.ts:19:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Decorators are not valid here.
+  × Decorators are not valid here
   
     17 │ @obj as MyType class MyClass {}
     18 │ @<MyType>obj class MyClass {}
@@ -1740,6 +1762,8 @@ decorator.ts:19:1 parse ━━━━━━━━━━━━━━━━━━�
        │ ^^^^
     20 │ @obj! class MyClass {}
     21 │ 
+  
+  i Decorators are only valid on class declarations, class expressions, and class methods
   
 --
 decorator.ts:19:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

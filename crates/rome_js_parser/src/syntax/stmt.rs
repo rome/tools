@@ -22,7 +22,7 @@ use crate::syntax::expr::{
 };
 use crate::syntax::function::{is_at_async_function, parse_function_declaration, LineBreak};
 use crate::syntax::js_parse_error;
-use crate::syntax::js_parse_error::{expected_binding, expected_statement};
+use crate::syntax::js_parse_error::{decorators_not_allowed, expected_binding, expected_statement};
 use crate::syntax::module::parse_import_or_import_equals_declaration;
 use crate::syntax::typescript::ts_parse_error::{expected_ts_type, ts_only_syntax_error};
 
@@ -270,9 +270,7 @@ pub(crate) fn parse_statement(p: &mut JsParser, context: StatementContext) -> Pa
                     //      function Foo() { }
                     // }
                     decorator_list
-                        .add_diagnostic_if_present(p, |p, range| {
-                            p.err_builder("Decorators are not valid here.", range)
-                        })
+                        .add_diagnostic_if_present(p, decorators_not_allowed)
                         .map(|mut marker| {
                             marker.change_kind(p, JS_BOGUS_STATEMENT);
                             marker

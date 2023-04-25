@@ -1,2 +1,2 @@
 @decorator
-export default async function foo { }
+export default async function foo() { }

@@ -54,12 +54,14 @@ JsModule {
 --
 decorator_export_default_expression_clause.ts:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Decorators are not valid here.
+  × Decorators are not valid here
   
   > 1 │ @decorator
       │ ^^^^^^^^^^
     2 │ export default a;
     3 │ 
+  
+  i Decorators are only valid on class declarations, class expressions, and class methods
   
 --
 @decorator

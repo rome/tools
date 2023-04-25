@@ -1,6 +1,7 @@
 use crate::prelude::*;
 use crate::syntax::class::{parse_class_declaration, parse_decorators};
 use crate::syntax::function::parse_function_declaration;
+use crate::syntax::js_parse_error::decorators_not_allowed;
 use crate::syntax::module::parse_import_or_import_equals_declaration;
 use crate::syntax::stmt::{
     is_nth_at_variable_declarations, parse_variable_declaration, semi, StatementContext,
@@ -101,9 +102,7 @@ pub(crate) fn parse_declaration_clause(p: &mut JsParser, stmt_start_pos: TextSiz
                     // @decorator1 @decorator2
                     // export function Foo() { }
                     decorator_list
-                        .add_diagnostic_if_present(p, |p, range| {
-                            p.err_builder("Decorators are not valid here.", range)
-                        })
+                        .add_diagnostic_if_present(p, decorators_not_allowed)
                         .map(|mut marker| {
                             marker.change_kind(p, JS_BOGUS_STATEMENT);
                             marker

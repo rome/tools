@@ -18,7 +18,7 @@ use crate::syntax::function::{
     is_at_async_function, parse_arrow_function_expression, parse_function_expression, LineBreak,
 };
 use crate::syntax::js_parse_error;
-use crate::syntax::js_parse_error::expected_simple_assignment_target;
+use crate::syntax::js_parse_error::{decorators_not_allowed, expected_simple_assignment_target};
 use crate::syntax::js_parse_error::{
     expected_expression, expected_identifier, invalid_assignment_error,
     private_names_only_allowed_on_left_side_of_in_expression,
@@ -1292,12 +1292,10 @@ fn parse_primary_expression(p: &mut JsParser, context: ExpressionContext) -> Par
                 _ => {
                     // test_err decorator_expression_class
                     // let a = @decorator () => {};
-                    // let b = @first @second function foo {}
+                    // let b = @first @second function foo() {}
                     // let a = @decorator ( () => {} )
                     decorator_list
-                        .add_diagnostic_if_present(p, |p, range| {
-                            p.err_builder("Decorators are not valid here.", range)
-                        })
+                        .add_diagnostic_if_present(p, decorators_not_allowed)
                         .map(|mut marker| {
                             marker.change_kind(p, JS_BOGUS_EXPRESSION);
                             marker

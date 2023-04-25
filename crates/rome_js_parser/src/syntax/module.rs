@@ -15,9 +15,9 @@ use crate::syntax::expr::{
 };
 use crate::syntax::function::{parse_function_export_default_declaration, LineBreak};
 use crate::syntax::js_parse_error::{
-    duplicate_assertion_keys_error, expected_binding, expected_declaration, expected_export_clause,
-    expected_export_default_declaration, expected_export_name_specifier, expected_expression,
-    expected_identifier, expected_literal_export_name, expected_module_source,
+    decorators_not_allowed, duplicate_assertion_keys_error, expected_binding, expected_declaration,
+    expected_export_clause, expected_export_default_declaration, expected_export_name_specifier,
+    expected_expression, expected_identifier, expected_literal_export_name, expected_module_source,
     expected_named_import, expected_named_import_specifier, expected_statement,
 };
 use crate::syntax::stmt::{parse_statement, semi, StatementContext, STMT_RECOVERY_SET};
@@ -193,9 +193,7 @@ fn parse_module_item(p: &mut JsParser) -> ParsedSyntax {
                     // @decorator1 @decorator2
                     // function Foo() { }
                     decorator_list
-                        .add_diagnostic_if_present(p, |p, range| {
-                            p.err_builder("Decorators are not valid here.", range)
-                        })
+                        .add_diagnostic_if_present(p, decorators_not_allowed)
                         .map(|mut marker| {
                             marker.change_kind(p, JS_BOGUS_STATEMENT);
                             marker
@@ -1203,9 +1201,7 @@ fn parse_export_default_clause(p: &mut JsParser) -> ParsedSyntax {
                 }
                 _ => {
                     decorator_list
-                        .add_diagnostic_if_present(p, |p, range| {
-                            p.err_builder("Decorators are not valid here.", range)
-                        })
+                        .add_diagnostic_if_present(p, decorators_not_allowed)
                         .map(|mut marker| {
                             marker.change_kind(p, JS_BOGUS_STATEMENT);
                             marker
@@ -1214,11 +1210,11 @@ fn parse_export_default_clause(p: &mut JsParser) -> ParsedSyntax {
                     match p.cur() {
                         // test_err ts decorator_function_export_default_declaration_clause
                         // @decorator
-                        // export default function foo { }
+                        // export default function foo() { }
                         T![function] => parse_function_export_default_declaration_clause(p, m),
                         // test_err ts decorator_async_function_export_default_declaration_clause
                         // @decorator
-                        // export default async function foo { }
+                        // export default async function foo() { }
                         T![async] if p.nth_at(1, T![function]) => {
                             parse_function_export_default_declaration_clause(p, m)
                         }

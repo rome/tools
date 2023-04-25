@@ -165,7 +165,7 @@ JsModule {
 --
 decorator_class_declaration.js:2:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Decorators are not valid here.
+  × Decorators are not valid here
   
     1 │ function bar() {
   > 2 │      @decorator
@@ -173,10 +173,12 @@ decorator_class_declaration.js:2:6 parse ━━━━━━━━━━━━━
     3 │      let a;
     4 │      @decorator @decorator2
   
+  i Decorators are only valid on class declarations, class expressions, and class methods
+  
 --
 decorator_class_declaration.js:4:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Decorators are not valid here.
+  × Decorators are not valid here
   
     2 │      @decorator
     3 │      let a;
@@ -184,6 +186,8 @@ decorator_class_declaration.js:4:6 parse ━━━━━━━━━━━━━
       │      ^^^^^^^^^^^^^^^^^^^^^^
     5 │      function Foo() { }
     6 │ }
+  
+  i Decorators are only valid on class declarations, class expressions, and class methods
   
 --
 function bar() {

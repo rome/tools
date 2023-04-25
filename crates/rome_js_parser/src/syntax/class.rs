@@ -2497,13 +2497,6 @@ fn parse_decorator(p: &mut JsParser) -> ParsedSyntax {
     Present(m.complete(p, JS_DECORATOR))
 }
 
-// test ts ts_class_decorator
-// function test() {}
-// @test
-// class Test {}
-// @test.a?.c @test @test
-// class Test2{}
-
 /// Skips over any TypeScript decorator syntax.
 pub(crate) fn skip_ts_decorators(p: &mut JsParser) {
     if !p.at(T![@]) {
