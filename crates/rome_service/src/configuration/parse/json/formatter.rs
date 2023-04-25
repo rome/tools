@@ -1,3 +1,4 @@
+use crate::configuration::string_set::StringSet;
 use crate::configuration::{FormatterConfiguration, PlainIndentStyle};
 use rome_console::markup;
 use rome_deserialize::json::{has_only_known_keys, with_only_known_variants, VisitJsonNode};
@@ -33,7 +34,9 @@ impl VisitNode<JsonLanguage> for FormatterConfiguration {
                 self.enabled = self.map_to_boolean(&value, name_text, diagnostics)?;
             }
             "ignore" => {
-                self.ignore = self.map_to_index_set_string(&value, name_text, diagnostics);
+                self.ignore = self
+                    .map_to_index_set_string(&value, name_text, diagnostics)
+                    .map(StringSet::new);
             }
             "indentStyle" => {
                 let mut indent_style = PlainIndentStyle::default();

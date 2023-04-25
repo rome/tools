@@ -1,6 +1,7 @@
 use crate::{
     AnyJsMethodModifier, AnyJsPropertyModifier, AnyTsIndexSignatureModifier,
     AnyTsMethodSignatureModifier, AnyTsPropertyParameterModifier, AnyTsPropertySignatureModifier,
+    JsSyntaxKind, TsAccessibilityModifier,
 };
 
 /// Helpful data structure to make the order modifiers predictable inside the formatter
@@ -78,6 +79,68 @@ impl From<&AnyTsPropertySignatureModifier> for Modifiers {
             AnyTsPropertySignatureModifier::TsAbstractModifier(_) => Modifiers::Abstract,
             AnyTsPropertySignatureModifier::TsOverrideModifier(_) => Modifiers::Override,
             AnyTsPropertySignatureModifier::TsReadonlyModifier(_) => Modifiers::Readonly,
+        }
+    }
+}
+
+impl TsAccessibilityModifier {
+    /// Is `self` the `private` accessibility modifier?
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use rome_js_factory::make;
+    /// use rome_js_syntax::T;
+    ///
+    /// let modifier = make::ts_accessibility_modifier(make::token(T![private]));
+    ///
+    /// assert!(modifier.is_private());
+    /// ```
+    pub fn is_private(&self) -> bool {
+        if let Ok(modifier_token) = self.modifier_token() {
+            modifier_token.kind() == JsSyntaxKind::PRIVATE_KW
+        } else {
+            false
+        }
+    }
+
+    /// Is `self` the `protected` accessibility modifier?
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use rome_js_factory::make;
+    /// use rome_js_syntax::T;
+    ///
+    /// let modifier = make::ts_accessibility_modifier(make::token(T![protected]));
+    ///
+    /// assert!(modifier.is_protected());
+    /// ```
+    pub fn is_protected(&self) -> bool {
+        if let Ok(modifier_token) = self.modifier_token() {
+            modifier_token.kind() == JsSyntaxKind::PROTECTED_KW
+        } else {
+            false
+        }
+    }
+
+    /// Is `self` the `public` accessibility modifier?
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use rome_js_factory::make;
+    /// use rome_js_syntax::T;
+    ///
+    /// let modifier = make::ts_accessibility_modifier(make::token(T![public]));
+    ///
+    /// assert!(modifier.is_public());
+    /// ```
+    pub fn is_public(&self) -> bool {
+        if let Ok(modifier_token) = self.modifier_token() {
+            modifier_token.kind() == JsSyntaxKind::PUBLIC_KW
+        } else {
+            false
         }
     }
 }

@@ -106,7 +106,7 @@ impl Eq for SemanticModelData {}
 /// - Declarations: [declaration]
 ///
 /// See [SemanticModelData] for more information about the internals.
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct SemanticModel {
     pub(crate) data: Arc<SemanticModelData>,
 }

@@ -350,9 +350,7 @@
 			"properties": {
 				"ignore": {
 					"description": "A list of Unix shell style patterns. Rome tools will ignore files/folders that will match these patterns.",
-					"type": ["array", "null"],
-					"items": { "type": "string" },
-					"uniqueItems": true
+					"anyOf": [{ "$ref": "#/definitions/StringSet" }, { "type": "null" }]
 				},
 				"maxSize": {
 					"description": "The maximum allowed size for source code files in bytes. Files above this limit will be ignored for performance reason. Defaults to 1 MiB",
@@ -375,9 +373,7 @@
 				},
 				"ignore": {
 					"description": "A list of Unix shell style patterns. The formatter will ignore files/folders that will match these patterns.",
-					"type": ["array", "null"],
-					"items": { "type": "string" },
-					"uniqueItems": true
+					"anyOf": [{ "$ref": "#/definitions/StringSet" }, { "type": "null" }]
 				},
 				"indentSize": {
 					"description": "The size of the indentation, 2 by default",
@@ -410,9 +406,7 @@
 				},
 				"globals": {
 					"description": "A list of global bindings that should be ignored by the analyzers\n\nIf defined here, they should not emit diagnostics.",
-					"type": ["array", "null"],
-					"items": { "type": "string" },
-					"uniqueItems": true
+					"anyOf": [{ "$ref": "#/definitions/StringSet" }, { "type": "null" }]
 				},
 				"organize_imports": {
 					"anyOf": [
@@ -469,9 +463,7 @@
 				},
 				"ignore": {
 					"description": "A list of Unix shell style patterns. The formatter will ignore files/folders that will match these patterns.",
-					"type": ["array", "null"],
-					"items": { "type": "string" },
-					"uniqueItems": true
+					"anyOf": [{ "$ref": "#/definitions/StringSet" }, { "type": "null" }]
 				},
 				"rules": {
 					"description": "List of rules",
@@ -540,6 +532,13 @@
 				},
 				"noConsoleLog": {
 					"description": "Disallow the use of console.log",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
+				"noConstantCondition": {
+					"description": "Disallow constant expressions in conditions",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }
@@ -741,6 +740,13 @@
 						{ "type": "null" }
 					]
 				},
+				"noUselessConstructor": {
+					"description": "Disallow unnecessary constructors.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"noUselessRename": {
 					"description": "Disallow renaming import, export, and destructured assignments to the same name.",
 					"anyOf": [
@@ -869,9 +875,7 @@
 				},
 				"ignore": {
 					"description": "A list of Unix shell style patterns. The formatter will ignore files/folders that will match these patterns.",
-					"type": ["array", "null"],
-					"items": { "type": "string" },
-					"uniqueItems": true
+					"anyOf": [{ "$ref": "#/definitions/StringSet" }, { "type": "null" }]
 				}
 			},
 			"additionalProperties": false
@@ -991,6 +995,11 @@
 			}
 		},
 		"Semicolons": { "type": "string", "enum": ["always", "asNeeded"] },
+		"StringSet": {
+			"type": "array",
+			"items": { "type": "string" },
+			"uniqueItems": true
+		},
 		"Style": {
 			"description": "A list of rules that belong to this group",
 			"type": "object",
@@ -1313,7 +1322,26 @@
 				}
 			}
 		},
-		"TrailingComma": { "type": "string", "enum": ["all", "es5", "none"] },
+		"TrailingComma": {
+			"description": "Print trailing commas wherever possible in multi-line comma-separated syntactic structures.",
+			"oneOf": [
+				{
+					"description": "Trailing commas wherever possible (including function parameters and calls).",
+					"type": "string",
+					"enum": ["all"]
+				},
+				{
+					"description": "Trailing commas where valid in ES5 (objects, arrays, etc.). No trailing commas in type parameters in TypeScript.",
+					"type": "string",
+					"enum": ["es5"]
+				},
+				{
+					"description": "No trailing commas.",
+					"type": "string",
+					"enum": ["none"]
+				}
+			]
+		},
 		"VcsClientKind": {
 			"oneOf": [
 				{

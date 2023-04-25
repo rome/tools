@@ -1,10 +1,9 @@
 use crate::diagnostics::{DisabledVcs, NoVcsFolderFound};
 use crate::{CliDiagnostic, CliSession};
-use indexmap::IndexSet;
 use rome_console::{markup, ConsoleExt};
 use rome_diagnostics::PrintDiagnostic;
 use rome_service::configuration::vcs::{VcsClientKind, VcsConfiguration};
-use rome_service::configuration::FilesConfiguration;
+use rome_service::configuration::{FilesConfiguration, StringSet};
 use rome_service::{Configuration, WorkspaceError};
 use std::path::PathBuf;
 
@@ -40,7 +39,7 @@ pub(crate) fn store_path_to_ignore_from_vcs(
             let files = configuration
                 .files
                 .get_or_insert_with(FilesConfiguration::default);
-            let ignored_files = files.ignore.get_or_insert_with(IndexSet::new);
+            let ignored_files = files.ignore.get_or_insert_with(StringSet::default);
             ignored_files.extend(files_to_ignore.into_iter());
         }
     }

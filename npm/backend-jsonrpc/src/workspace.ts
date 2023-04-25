@@ -58,7 +58,7 @@ export interface FilesConfiguration {
 	/**
 	 * A list of Unix shell style patterns. Rome tools will ignore files/folders that will match these patterns.
 	 */
-	ignore?: string[];
+	ignore?: StringSet;
 	/**
 	 * The maximum allowed size for source code files in bytes. Files above this limit will be ignored for performance reason. Defaults to 1 MiB
 	 */
@@ -73,7 +73,7 @@ export interface FormatterConfiguration {
 	/**
 	 * A list of Unix shell style patterns. The formatter will ignore files/folders that will match these patterns.
 	 */
-	ignore?: string[];
+	ignore?: StringSet;
 	/**
 	 * The size of the indentation, 2 by default
 	 */
@@ -94,7 +94,7 @@ export interface JavascriptConfiguration {
 
 If defined here, they should not emit diagnostics. 
 	 */
-	globals?: string[];
+	globals?: StringSet;
 	organize_imports?: JavascriptOrganizeImports;
 }
 export interface LinterConfiguration {
@@ -105,7 +105,7 @@ export interface LinterConfiguration {
 	/**
 	 * A list of Unix shell style patterns. The formatter will ignore files/folders that will match these patterns.
 	 */
-	ignore?: string[];
+	ignore?: StringSet;
 	/**
 	 * List of rules
 	 */
@@ -119,7 +119,7 @@ export interface OrganizeImports {
 	/**
 	 * A list of Unix shell style patterns. The formatter will ignore files/folders that will match these patterns.
 	 */
-	ignore?: string[];
+	ignore?: StringSet;
 }
 /**
  * Set
@@ -144,6 +144,7 @@ If Rome can't fine the configuration, it will attempt to use the current working
 	 */
 	useIgnoreFile?: boolean;
 }
+export type StringSet = string[];
 export type PlainIndentStyle = "tab" | "space";
 /**
 	* Validated value for the `line_width` formatter options
@@ -192,6 +193,9 @@ export type VcsClientKind = "git";
 export type QuoteProperties = "asNeeded" | "preserve";
 export type QuoteStyle = "double" | "single";
 export type Semicolons = "always" | "asNeeded";
+/**
+ * Print trailing commas wherever possible in multi-line comma-separated syntactic structures.
+ */
 export type TrailingComma = "all" | "es5" | "none";
 /**
  * A list of rules that belong to this group
@@ -417,6 +421,10 @@ export interface Nursery {
 	 */
 	noConsoleLog?: RuleConfiguration;
 	/**
+	 * Disallow constant expressions in conditions
+	 */
+	noConstantCondition?: RuleConfiguration;
+	/**
 	 * Disallow duplicate case labels. If a switch statement has duplicate test expressions in case clauses, it is likely that a programmer copied a case clause but forgot to change the test expression.
 	 */
 	noDuplicateCase?: RuleConfiguration;
@@ -528,6 +536,10 @@ export interface Nursery {
 	 * Disallow unnecessary catch clauses.
 	 */
 	noUselessCatch?: RuleConfiguration;
+	/**
+	 * Disallow unnecessary constructors.
+	 */
+	noUselessConstructor?: RuleConfiguration;
 	/**
 	 * Disallow renaming import, export, and destructured assignments to the same name.
 	 */
@@ -998,9 +1010,11 @@ export type Category =
 	| "lint/nursery/noConsoleLog"
 	| "lint/nursery/noForEach"
 	| "lint/nursery/useLiteralKeys"
+	| "lint/nursery/noUselessConstructor"
 	| "lint/nursery/noRedeclare"
 	| "lint/nursery/useNamespaceKeyword"
 	| "lint/nursery/noRedundantRoles"
+	| "lint/nursery/noConstantCondition"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"

@@ -4,6 +4,9 @@ _default:
 codegen:
   cargo codegen all
   cargo codegen-configuration
+  just codegen-bindings
+
+codegen-bindings:
   cargo codegen-schema
   cargo codegen-bindings
 
@@ -11,8 +14,7 @@ codegen:
 codegen-linter:
   cargo codegen analyzer
   cargo codegen-configuration
-  cargo codegen-schema
-  cargo codegen-bindings
+  just codegen-bindings
   cargo lintdoc
 
 # Generates the documentation

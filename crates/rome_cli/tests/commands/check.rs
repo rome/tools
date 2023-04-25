@@ -151,8 +151,6 @@ fn maximum_diagnostics() {
         Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
     );
 
-    println!("{console:#?}");
-
     assert!(result.is_err(), "run_cli returned {result:?}");
 
     let messages = &console.out_buffer;
@@ -172,7 +170,7 @@ fn maximum_diagnostics() {
             let content = format!("{:?}", m.content);
             content.contains("The number of diagnostics exceeds the number allowed by Rome")
                 && content.contains("Diagnostics not shown")
-                && content.contains("28")
+                && content.contains("76")
         }));
 
     assert_cli_snapshot(SnapshotPayload::new(
@@ -1160,7 +1158,9 @@ fn max_diagnostics_default() {
     for msg in console.out_buffer {
         let MarkupBuf(nodes) = &msg.content;
         let is_diagnostic = nodes.iter().any(|node| {
-            node.content.contains("useWhile") || node.content.contains("useBlockStatements")
+            node.content.contains("useWhile")
+                || node.content.contains("useBlockStatements")
+                || node.content.contains("noConstantCondition")
         });
 
         if is_diagnostic {
@@ -1179,7 +1179,6 @@ fn max_diagnostics_default() {
         console,
         result,
     ));
-
     assert_eq!(diagnostic_count, 20);
 }
 
@@ -1211,7 +1210,9 @@ fn max_diagnostics() {
     for msg in console.out_buffer {
         let MarkupBuf(nodes) = &msg.content;
         let is_diagnostic = nodes.iter().any(|node| {
-            node.content.contains("useWhile") || node.content.contains("useBlockStatements")
+            node.content.contains("useWhile")
+                || node.content.contains("useBlockStatements")
+                || node.content.contains("noConstantCondition")
         });
 
         if is_diagnostic {

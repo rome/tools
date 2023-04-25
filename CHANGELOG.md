@@ -4,6 +4,12 @@
 
 ### CLI
 
+### Linter
+
+#### New rules
+
+- [`noUselessConstructor`](https://docs.rome.tools/lint/rules/noUselessConstructor/)
+
 #### Other changes
 - Add new command `rome migrate` the transform the configuration file `rome.json`
 when there are breaking changes.
@@ -40,6 +46,7 @@ the code action is not formatted.
 - [`noConsoleLog`](https://docs.rome.tools/lint/rules/noConsoleLog/)
 - [`noForEach`](https://docs.rome.tools/lint/rules/noForEach/)
 - [`useLiteralKeys`](https://docs.rome.tools/lint/rules/useLiteralKeys/)
+- [`noConstantCondition`](https://docs.rome.tools/lint/rules/noConstantCondition/)
 
 ### Parser
 

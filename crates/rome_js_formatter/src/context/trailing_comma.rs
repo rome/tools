@@ -1,9 +1,13 @@
 use crate::prelude::*;
 use crate::{JsFormatContext, JsFormatOptions};
+use rome_deserialize::json::with_only_known_variants;
+use rome_deserialize::{DeserializationDiagnostic, VisitNode};
 use rome_formatter::formatter::Formatter;
 use rome_formatter::prelude::{if_group_breaks, text};
 use rome_formatter::write;
 use rome_formatter::{Format, FormatResult};
+use rome_json_syntax::JsonLanguage;
+use rome_rowan::SyntaxNode;
 use std::fmt;
 use std::str::FromStr;
 
@@ -12,7 +16,7 @@ use std::str::FromStr;
 pub(crate) enum FormatTrailingComma {
     /// Print trailing comma if the option is [TrailingComma::All].
     All,
-    /// Print trailing comma if the option is [TrailingComma::All] or [TrailingComma::ES5].
+    /// Print trailing comma if the option is [TrailingComma::All] or [TrailingComma::Es5].
     ES5,
 }
 
@@ -54,21 +58,24 @@ impl Format<JsFormatContext> for FormatTrailingComma {
 #[derive(Default, Debug, Eq, PartialEq, Clone, Copy)]
 #[cfg_attr(
     feature = "serde",
-    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema),
+    serde(rename_all = "camelCase")
 )]
 pub enum TrailingComma {
     /// Trailing commas wherever possible (including function parameters and calls).
     #[default]
     All,
     /// Trailing commas where valid in ES5 (objects, arrays, etc.). No trailing commas in type parameters in TypeScript.
-    ES5,
+    Es5,
     /// No trailing commas.
     None,
 }
 
 impl TrailingComma {
+    pub(crate) const KNOWN_VALUES: &'static [&'static str] = &["all", "es5", "none"];
+
     pub const fn is_es5(&self) -> bool {
-        matches!(self, TrailingComma::ES5)
+        matches!(self, TrailingComma::Es5)
     }
     pub const fn is_all(&self) -> bool {
         matches!(self, TrailingComma::All)
@@ -83,7 +90,7 @@ impl FromStr for TrailingComma {
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s {
-            "es5" | "ES5" => Ok(Self::ES5),
+            "es5" | "ES5" => Ok(Self::Es5),
             "all" | "All" => Ok(Self::All),
             "none" | "None" => Ok(Self::None),
             // TODO: replace this error with a diagnostic
@@ -95,9 +102,32 @@ impl FromStr for TrailingComma {
 impl fmt::Display for TrailingComma {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            TrailingComma::ES5 => std::write!(f, "ES5"),
+            TrailingComma::Es5 => std::write!(f, "ES5"),
             TrailingComma::All => std::write!(f, "All"),
             TrailingComma::None => std::write!(f, "None"),
         }
+    }
+}
+
+impl VisitNode<JsonLanguage> for TrailingComma {
+    fn visit_member_value(
+        &mut self,
+        node: &SyntaxNode<JsonLanguage>,
+        diagnostics: &mut Vec<DeserializationDiagnostic>,
+    ) -> Option<()> {
+        let node = with_only_known_variants(node, TrailingComma::KNOWN_VALUES, diagnostics)?;
+        match node.inner_string_text().ok()?.text() {
+            "all" => {
+                *self = TrailingComma::All;
+            }
+            "es5" => {
+                *self = TrailingComma::Es5;
+            }
+            "none" => {
+                *self = TrailingComma::None;
+            }
+            _ => {}
+        }
+        Some(())
     }
 }
