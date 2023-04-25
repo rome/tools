@@ -7,7 +7,8 @@ use crate::{
     JsComputedMemberExpression, JsLiteralMemberName, JsLogicalExpression, JsNewExpression,
     JsNumberLiteralExpression, JsObjectExpression, JsPostUpdateExpression, JsReferenceIdentifier,
     JsRegexLiteralExpression, JsStaticMemberExpression, JsStringLiteralExpression, JsSyntaxKind,
-    JsSyntaxToken, JsTemplateExpression, JsUnaryExpression, OperatorPrecedence, T,
+    JsSyntaxToken, JsTemplateChunkElement, JsTemplateExpression, JsUnaryExpression,
+    OperatorPrecedence, T,
 };
 use crate::{JsPreUpdateExpression, JsSyntaxKind::*};
 use core::iter;
@@ -515,6 +516,70 @@ impl JsStringLiteralExpression {
 }
 
 impl JsTemplateExpression {
+    /// Returns true if `self` is a template expression without a tag and without template elements.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rome_js_factory::make;
+    /// use rome_js_syntax::{AnyJsExpression, AnyJsTemplateElement, JsSyntaxKind, JsSyntaxToken};
+    /// use std::iter;
+    ///
+    /// let tick = make::token(JsSyntaxKind::BACKTICK);
+    /// let empty_str = make::js_template_expression(
+    ///     tick.clone(),
+    ///     make::js_template_element_list(iter::empty()),
+    ///     tick.clone(),
+    /// ).build();
+    ///
+    /// let chunk = AnyJsTemplateElement::JsTemplateChunkElement(
+    ///     make::js_template_chunk_element(
+    ///         JsSyntaxToken::new_detached(JsSyntaxKind::TEMPLATE_CHUNK, "text", [], [])
+    ///     )
+    /// );
+    /// let constant_str = make::js_template_expression(
+    ///     tick.clone(),
+    ///     make::js_template_element_list(iter::once(chunk.clone())),
+    ///     tick.clone(),
+    /// ).build();
+    ///
+    /// let constant_str2 = make::js_template_expression(
+    ///     tick.clone(),
+    ///     make::js_template_element_list([chunk.clone(), chunk]),
+    ///     tick.clone(),
+    /// ).build();
+    ///
+    /// let template_elt = AnyJsTemplateElement::JsTemplateElement(
+    ///     make::js_template_element(
+    ///         JsSyntaxToken::new_detached(JsSyntaxKind::DOLLAR_CURLY, "${", [], []),
+    ///         AnyJsExpression::JsIdentifierExpression(
+    ///             make::js_identifier_expression(
+    ///                 make::js_reference_identifier(make::ident("var")),
+    ///             ),
+    ///         ),
+    ///         make::token(JsSyntaxKind::R_CURLY),
+    ///     )
+    /// );
+    /// let template_str = make::js_template_expression(
+    ///     tick.clone(),
+    ///     make::js_template_element_list(iter::once(template_elt)),
+    ///     tick,
+    /// ).build();
+    ///
+    /// assert!(empty_str.is_constant());
+    /// assert!(constant_str.is_constant());
+    /// assert!(constant_str2.is_constant());
+    /// assert!(!template_str.is_constant());
+    /// ```
+    ///
+    pub fn is_constant(&self) -> bool {
+        self.tag().is_none()
+            && self
+                .elements()
+                .into_iter()
+                .all(|e| JsTemplateChunkElement::can_cast(e.syntax().kind()))
+    }
+
     /// The string chunks of the template. aka:
     /// `foo ${bar} foo` breaks down into:
     /// `QUASIS ELEMENT{EXPR} QUASIS`

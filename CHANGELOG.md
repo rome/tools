@@ -9,6 +9,7 @@
 #### New rules
 
 - [`noUselessConstructor`](https://docs.rome.tools/lint/rules/noUselessConstructor/)
+- [`useLiteralEnumMembers`](https://docs.rome.tools/lint/rules/useLiteralEnumMembers/)
 
 #### Other changes
 - Add new command `rome migrate` the transform the configuration file `rome.json`
