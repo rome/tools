@@ -24,7 +24,6 @@ impl LabelledItem {
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
 pub(crate) enum ExportDefaultItemKind {
-    Unknown,
     Expression,
     FunctionOverload,
     FunctionDeclaration,

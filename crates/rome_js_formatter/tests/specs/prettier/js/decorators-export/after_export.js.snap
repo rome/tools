@@ -26,9 +26,8 @@ export default @decorator class {}
  
 -export default
 -@decorator
--class {}
-+export default (@decorator
-+class {});
++export default @decorator
+ class {}
 ```
 
 # Output
@@ -37,8 +36,8 @@ export default @decorator class {}
 export @decorator
 class Foo {}
 
-export default (@decorator
-class {});
+export default @decorator
+class {}
 ```
 
 

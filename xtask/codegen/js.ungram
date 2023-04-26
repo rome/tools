@@ -1347,6 +1347,7 @@ JsModuleSource = value: 'js_string_literal'
 
 
 JsExport =
+	decorators: JsDecoratorList
 	'export'
 	export_clause: AnyJsExportClause
 

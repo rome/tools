@@ -14,3 +14,11 @@ let c = @first @second class Foo {}
 export @decorator class Foo {};
 export @decorator @functionDecorator(1,2,3) class Bar {};
 export @first @second class Baz {}
+@decorator
+export class Foo { }
+@first.field @second @(() => decorator)()
+export class Bar {}
+@before
+export @after class Foo { }
+@before.field @before @(() => decorator)()
+export @after.field @after @(() => decorator)() class Bar {}

@@ -25,10 +25,9 @@ export class HeroButtonComponent {
 +++ Rome
 @@ -1,6 +1,6 @@
  @Component({
--  selector: "toh-hero-button",
+   selector: "toh-hero-button",
 -  template: `<button>{{ label }}</button>`,
-+  selector: 'toh-hero-button',
-+  template: `<button>{{label}}</button>`
++  template: `<button>{{label}}</button>`,
  })
  export class HeroButtonComponent {
    @Output() change = new EventEmitter<any>();
@@ -38,31 +37,13 @@ export class HeroButtonComponent {
 
 ```ts
 @Component({
-  selector: 'toh-hero-button',
-  template: `<button>{{label}}</button>`
+  selector: "toh-hero-button",
+  template: `<button>{{label}}</button>`,
 })
 export class HeroButtonComponent {
   @Output() change = new EventEmitter<any>();
   @Input() label: string;
 }
-```
-
-# Errors
-```
-angular.ts:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × Decorators are not valid here.
-  
-  > 1 │ @Component({
-      │ ^^^^^^^^^^^^
-  > 2 │   selector: 'toh-hero-button',
-  > 3 │   template: `<button>{{label}}</button>`
-  > 4 │ })
-      │ ^^
-    5 │ export class HeroButtonComponent {
-    6 │   @Output() change = new EventEmitter<any>();
-  
-
 ```
 
 

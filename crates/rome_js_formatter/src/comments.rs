@@ -9,6 +9,7 @@ use rome_formatter::{
     write,
 };
 use rome_js_syntax::suppression::parse_suppression_comment;
+use rome_js_syntax::JsSyntaxKind::JS_EXPORT;
 use rome_js_syntax::{
     AnyJsClass, AnyJsName, AnyJsRoot, AnyJsStatement, JsArrayHole, JsArrowFunctionExpression,
     JsBlockStatement, JsCallArguments, JsCatchClause, JsEmptyStatement, JsFinallyClause,
@@ -367,6 +368,29 @@ fn handle_class_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlaceme
         }
 
         return CommentPlacement::Default(comment);
+    }
+
+    // ```javascript
+    // @decorator
+    // // comment
+    // class Foo {}
+    // ```
+    if (AnyJsClass::can_cast(comment.enclosing_node().kind())
+        && comment
+            .following_token()
+            .map_or(false, |token| token.kind() == JsSyntaxKind::CLASS_KW))
+        // ```javascript
+        // @decorator
+        // // comment
+        // export class Foo {}
+        // ```
+        || comment.enclosing_node().kind() == JS_EXPORT
+    {
+        if let Some(preceding) = comment.preceding_node() {
+            if preceding.kind() == JsSyntaxKind::JS_DECORATOR {
+                return CommentPlacement::trailing(preceding.clone(), comment);
+            }
+        }
     }
 
     let first_member = if let Some(class) = AnyJsClass::cast_ref(comment.enclosing_node()) {

@@ -13,7 +13,14 @@ mod language {
 // use this test check if your snippet prints as you wish, without using a snapshot
 fn quick_test() {
     let src = r#"
-const foo = @deco class {}
+const bar =
+  (
+    @deco
+    class {
+      //
+    }
+  );
+
 "#;
     let syntax = SourceType::tsx();
     let tree = parse(src, syntax);
@@ -31,11 +38,14 @@ const foo = @deco class {}
 
     assert_eq!(
         result.as_code(),
-        r#"[
-	5,
-	7234932436,
-    // comment 3
-];
+        r#"
+        // A
+@Foo()
+// B
+@Bar()
+// C
+export class Bar{}
+
 "#
     );
 }

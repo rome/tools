@@ -123,6 +123,8 @@ ts_declare_const_initializer.ts:1:9 parse ━━━━━━━━━━━━�
     2 │ declare @decorator abstract class D {}
     3 │ 
   
+  i Decorators are only valid on class declarations, class expressions, and class methods.
+  
 --
 ts_declare_const_initializer.ts:2:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -132,6 +134,8 @@ ts_declare_const_initializer.ts:2:9 parse ━━━━━━━━━━━━�
   > 2 │ declare @decorator abstract class D {}
       │         ^^^^^^^^^^
     3 │ 
+  
+  i Decorators are only valid on class declarations, class expressions, and class methods.
   
 --
 declare @decorator class D {}

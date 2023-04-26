@@ -92,7 +92,7 @@ class Class6 {
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,12 +1,14 @@
+@@ -1,5 +1,7 @@
  export class TestTextFileService {
 -  constructor(@ILifecycleService lifecycleService) {}
 +  constructor(
@@ -101,14 +101,6 @@ class Class6 {
  }
  
  @commonEditorContribution
- export class TabCompletionController {}
- 
- @Component({
--  selector: "angular-component",
-+  selector: 'angular-component',
- })
- class AngularComponent {
-   @Input() myInput: string;
 @@ -50,12 +52,24 @@
  }
  
@@ -154,7 +146,7 @@ export class TestTextFileService {
 export class TabCompletionController {}
 
 @Component({
-  selector: 'angular-component',
+  selector: "angular-component",
 })
 class AngularComponent {
   @Input() myInput: string;
@@ -219,22 +211,6 @@ class Class6 {
       []) { prop1 }: Type,
   ) {}
 }
-```
-
-# Errors
-```
-decorators.ts:8:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × Decorators are not valid here.
-  
-     6 │ }
-     7 │ 
-   > 8 │ @commonEditorContribution
-       │ ^^^^^^^^^^^^^^^^^^^^^^^^^
-     9 │ export class TabCompletionController {
-    10 │ }
-  
-
 ```
 
 
