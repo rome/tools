@@ -38,7 +38,7 @@ impl VisitNode<JsonLanguage> for FormatterConfiguration {
             "indentStyle" => {
                 let mut indent_style = PlainIndentStyle::default();
                 self.map_to_known_string(&value, name_text, &mut indent_style, diagnostics);
-                self.indent_style = indent_style;
+                self.indent_style = Some(indent_style);
             }
             "indentSize" => {
                 self.indent_size = self.map_to_u8(&value, name_text, u8::MAX, diagnostics);
@@ -46,7 +46,7 @@ impl VisitNode<JsonLanguage> for FormatterConfiguration {
             "lineWidth" => {
                 let line_width = self.map_to_u16(&value, name_text, LineWidth::MAX, diagnostics);
 
-                self.line_width = match LineWidth::try_from(line_width) {
+                 self.line_width = Some(match LineWidth::try_from() {
                     Ok(result) => result,
                     Err(err) => {
                         diagnostics.push(
@@ -58,7 +58,7 @@ impl VisitNode<JsonLanguage> for FormatterConfiguration {
                         );
                         LineWidth::default()
                     }
-                };
+                });
             }
             _ => {}
         }

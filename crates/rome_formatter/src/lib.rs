@@ -83,7 +83,7 @@ pub enum IndentStyle {
     #[default]
     Tab,
     /// Space, with its quantity
-    Space(u8),
+    Space(Option<u8>),
 }
 
 impl IndentStyle {

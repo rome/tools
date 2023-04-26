@@ -9,16 +9,20 @@ use serde::{Deserialize, Serialize};
 #[serde(rename_all = "camelCase", default, deny_unknown_fields)]
 pub struct FormatterConfiguration {
     // if `false`, it disables the feature. `true` by default
+	#[serde(skip_serializing_if = "Option::is_none")]
     pub enabled: Option<bool>,
 
     /// Stores whether formatting should be allowed to proceed if a given file
     /// has syntax errors
+	#[serde(skip_serializing_if = "Option::is_none")]
     pub format_with_errors: Option<bool>,
 
     /// The indent style.
+	#[serde(skip_serializing_if = "Option::is_none")]
     pub indent_style: Option<PlainIndentStyle>,
 
     /// The size of the indentation, 2 by default
+	#[serde(skip_serializing_if = "Option::is_none")]
     pub indent_size: Option<u8>,
 
     /// What's the max width of a line. Defaults to 80.
@@ -26,6 +30,7 @@ pub struct FormatterConfiguration {
         deserialize_with = "deserialize_line_width",
         serialize_with = "serialize_line_width"
     )]
+	#[serde(skip_serializing_if = "Option::is_none")]
     pub line_width: Option<LineWidth>,
 
     /// A list of Unix shell style patterns. The formatter will ignore files/folders that will
@@ -52,11 +57,11 @@ impl FormatterConfiguration {
 impl Default for FormatterConfiguration {
     fn default() -> Self {
         Self {
-            enabled: true,
-            format_with_errors: false,
-            indent_size: 2,
-            indent_style: PlainIndentStyle::default(),
-            line_width: LineWidth::default(),
+            enabled: Some(true),
+            format_with_errors: Some(false),
+            indent_size: Some(2),
+            indent_style: Some(PlainIndentStyle::default()),
+            line_width: Some(LineWidth::default()),
             ignore: None,
         }
     }
@@ -67,8 +72,8 @@ impl TryFrom<FormatterConfiguration> for FormatSettings {
 
     fn try_from(conf: FormatterConfiguration) -> Result<Self, Self::Error> {
         let indent_style = match conf.indent_style {
-            PlainIndentStyle::Tab => IndentStyle::Tab,
-            PlainIndentStyle::Space => IndentStyle::Space(conf.indent_size),
+            Some(PlainIndentStyle::Tab) => IndentStyle::Tab,
+            Some(PlainIndentStyle::Space) => IndentStyle::Space(conf.indent_size),
         };
         let mut matcher = Matcher::new(MatchOptions {
             case_sensitive: true,
@@ -97,15 +102,15 @@ impl TryFrom<FormatterConfiguration> for FormatSettings {
     }
 }
 
-fn deserialize_line_width<'de, D>(deserializer: D) -> Result<LineWidth, D::Error>
+fn deserialize_line_width<'de, D>(deserializer: D) -> Result<Option<LineWidth>, D::Error>
 where
     D: serde::de::Deserializer<'de>,
 {
     let value: u16 = Deserialize::deserialize(deserializer)?;
-    LineWidth::try_from(value).map_err(serde::de::Error::custom)
+    Option::<LineWidth>::try_from(value).map_err(serde::de::Error::custom)
 }
 
-pub fn serialize_line_width<S>(line_width: &LineWidth, s: S) -> Result<S::Ok, S::Error>
+pub fn serialize_line_width<S>(line_width: &Option<LineWidth>, s: S) -> Result<S::Ok, S::Error>
 where
     S: serde::ser::Serializer,
 {

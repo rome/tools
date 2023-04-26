@@ -153,7 +153,7 @@ struct IrFormatOptions;
 
 impl FormatOptions for IrFormatOptions {
     fn indent_style(&self) -> IndentStyle {
-        IndentStyle::Space(2)
+        IndentStyle::Space(Some(2))
     }
 
     fn line_width(&self) -> LineWidth {
@@ -165,7 +165,7 @@ impl FormatOptions for IrFormatOptions {
             tab_width: 2,
             print_width: self.line_width().into(),
             line_ending: LineEnding::LineFeed,
-            indent_style: IndentStyle::Space(2),
+            indent_style: IndentStyle::Space(Some(2)),
         }
     }
 }
