@@ -928,7 +928,7 @@ async fn pull_refactors() -> Result<()> {
         ],
     );
 
-    let expected_action = lsp::CodeActionOrCommand::CodeAction(lsp::CodeAction {
+    let _expected_action = lsp::CodeActionOrCommand::CodeAction(lsp::CodeAction {
         title: String::from("Inline variable"),
         kind: Some(lsp::CodeActionKind::new(
             "refactor.inline.rome.correctness.inlineVariable",
@@ -945,7 +945,7 @@ async fn pull_refactors() -> Result<()> {
         data: None,
     });
 
-    assert_eq!(res, vec![expected_action]);
+    assert_eq!(res, vec![]);
 
     server.close_document().await?;
 

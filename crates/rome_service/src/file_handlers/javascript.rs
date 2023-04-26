@@ -343,7 +343,7 @@ fn code_actions(
         _ => AnalysisFilter::default(),
     };
 
-    filter.categories = RuleCategories::default();
+    filter.categories = RuleCategories::SYNTAX | RuleCategories::LINT;
     filter.range = Some(range);
 
     let analyzer_options = compute_analyzer_options(&settings, PathBuf::from(path.as_path()));

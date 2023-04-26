@@ -16,7 +16,10 @@ when there are breaking changes.
 
 ### Configuration
 ### Editors
- - Fixed an issue where the VSCode extension duplicates text when using VSCode git utilities [#4338]
+
+ - Fix an issue where the VSCode extension duplicates text when using VSCode git utilities [#4338]
+ - Remove code assists from being added to the code actions when apply fixes;
+ -
 ### Formatter
 
 - Fix an issue where formatting of JSX string literals property values were using incorrect quotes [#4054](https://github.com/rome/tools/issues/4054)
