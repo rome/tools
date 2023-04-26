@@ -74,7 +74,8 @@ impl TryFrom<FormatterConfiguration> for FormatSettings {
         let indent_style = match conf.indent_style {
             Some(PlainIndentStyle::Tab) => IndentStyle::Tab,
             Some(PlainIndentStyle::Space) => IndentStyle::Space(conf.indent_size),
-        };
+			None => IndentStyle::Tab
+		};
         let mut matcher = Matcher::new(MatchOptions {
             case_sensitive: true,
             require_literal_leading_dot: false,
@@ -107,7 +108,8 @@ where
     D: serde::de::Deserializer<'de>,
 {
     let value: u16 = Deserialize::deserialize(deserializer)?;
-    Option::<LineWidth>::try_from(value).map_err(serde::de::Error::custom)
+    let line_width = LineWidth::try_from(value).map_err(serde::de::Error::custom)?;
+	Ok(Some(line_width))
 }
 
 pub fn serialize_line_width<S>(line_width: &Option<LineWidth>, s: S) -> Result<S::Ok, S::Error>

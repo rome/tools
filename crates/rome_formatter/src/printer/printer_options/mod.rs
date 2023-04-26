@@ -74,7 +74,7 @@ impl PrinterOptions {
     pub(super) const fn indent_width(&self) -> u8 {
         match self.indent_style {
             IndentStyle::Tab => self.tab_width,
-            IndentStyle::Space(Option<count>) => count,
+            IndentStyle::Space(count) => count,
         }
     }
 }
