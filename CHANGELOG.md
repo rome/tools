@@ -56,7 +56,7 @@ the code action is not formatted.
 - import "module" assert {}
 + import "module" with {}
 ```
-
+- Allow decorators before `export` and `export default`. [#4252](https://github.com/rome/tools/issues/4252)
 
 ### VSCode
 ### JavaScript APIs
