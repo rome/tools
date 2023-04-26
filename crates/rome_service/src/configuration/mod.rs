@@ -17,6 +17,7 @@ pub mod formatter;
 mod generated;
 pub mod javascript;
 pub mod linter;
+mod merge;
 pub mod organize_imports;
 mod parse;
 pub mod string_set;
@@ -24,6 +25,7 @@ pub mod vcs;
 
 pub use crate::configuration::diagnostics::ConfigurationDiagnostic;
 use crate::configuration::generated::push_to_analyzer_rules;
+pub use crate::configuration::merge::MergeWith;
 use crate::configuration::organize_imports::{organize_imports, OrganizeImports};
 pub use crate::configuration::string_set::StringSet;
 use crate::configuration::vcs::{vcs_configuration, VcsConfiguration};
@@ -107,9 +109,6 @@ impl RomeConfiguration {
         "$schema",
         "organizeImports",
     ];
-}
-
-impl RomeConfiguration {
     pub fn is_formatter_disabled(&self) -> bool {
         self.formatter_configuration
             .as_ref()
@@ -127,7 +126,7 @@ impl RomeConfiguration {
     pub fn is_organize_imports_disabled(&self) -> bool {
         self.organize_imports
             .as_ref()
-            .map(|f| !f.enabled)
+            .map(|f| f.is_disabled())
             .unwrap_or(false)
     }
 
@@ -136,6 +135,95 @@ impl RomeConfiguration {
             .as_ref()
             .map(|f| matches!(f.enabled, Some(false)))
             .unwrap_or(true)
+    }
+}
+
+impl MergeWith<RomeConfiguration> for RomeConfiguration {
+    fn merge_with(&mut self, other_configuration: RomeConfiguration) {
+        // files
+        self.merge_with(other_configuration.files_configuration);
+        // formatter
+        self.merge_with(other_configuration.formatter_configuration);
+        // javascript
+        self.merge_with(other_configuration.javascript_configuration);
+        // linter
+        self.merge_with(other_configuration.linter_configuration);
+        // organize imports
+        self.merge_with(other_configuration.organize_imports);
+        // VCS
+        self.merge_with(other_configuration.vcs_configuration);
+    }
+}
+
+impl MergeWith<Option<VcsConfiguration>> for RomeConfiguration {
+    fn merge_with(&mut self, other: Option<VcsConfiguration>) {
+        if let Some(other_vcs) = other {
+            let vcs = self
+                .vcs_configuration
+                .get_or_insert_with(VcsConfiguration::default);
+            vcs.merge_with(other_vcs);
+        }
+    }
+}
+
+impl MergeWith<Option<OrganizeImports>> for RomeConfiguration {
+    fn merge_with(&mut self, other: Option<OrganizeImports>) {
+        if let Some(other_organize_imports) = other {
+            let organize_imports = self
+                .organize_imports
+                .get_or_insert_with(OrganizeImports::default);
+            organize_imports.merge_with(other_organize_imports);
+        }
+    }
+}
+
+impl MergeWith<Option<LinterConfiguration>> for RomeConfiguration {
+    fn merge_with(&mut self, other: Option<LinterConfiguration>) {
+        if let Some(other_linter) = other {
+            let linter = self
+                .linter_configuration
+                .get_or_insert_with(LinterConfiguration::default);
+            linter.merge_with(other_linter);
+        }
+    }
+}
+impl MergeWith<Option<FilesConfiguration>> for RomeConfiguration {
+    fn merge_with(&mut self, other: Option<FilesConfiguration>) {
+        if let Some(files_configuration) = other {
+            let files = self
+                .files_configuration
+                .get_or_insert_with(FilesConfiguration::default);
+            files.merge_with(files_configuration);
+        };
+    }
+}
+impl MergeWith<Option<JavascriptConfiguration>> for RomeConfiguration {
+    fn merge_with(&mut self, other: Option<JavascriptConfiguration>) {
+        if let Some(other) = other {
+            let js_configuration = self
+                .javascript_configuration
+                .get_or_insert_with(JavascriptConfiguration::default);
+            js_configuration.merge_with(other);
+        }
+    }
+}
+impl MergeWith<Option<FormatterConfiguration>> for RomeConfiguration {
+    fn merge_with(&mut self, other: Option<FormatterConfiguration>) {
+        if let Some(other_formatter) = other {
+            let formatter = self
+                .formatter_configuration
+                .get_or_insert_with(FormatterConfiguration::default);
+            formatter.merge_with(other_formatter);
+        }
+    }
+}
+
+impl MergeWith<Option<JavascriptFormatter>> for RomeConfiguration {
+    fn merge_with(&mut self, other: Option<JavascriptFormatter>) {
+        let javascript_configuration = self
+            .javascript_configuration
+            .get_or_insert_with(JavascriptConfiguration::default);
+        javascript_configuration.merge_with(other);
     }
 }
 
@@ -158,6 +246,17 @@ pub struct FilesConfiguration {
 
 impl FilesConfiguration {
     const KNOWN_KEYS: &'static [&'static str] = &["maxSize", "ignore"];
+}
+
+impl MergeWith<FilesConfiguration> for FilesConfiguration {
+    fn merge_with(&mut self, other: FilesConfiguration) {
+        if let Some(ignore) = other.ignore {
+            self.ignore = Some(ignore)
+        }
+        if let Some(max_size) = other.max_size {
+            self.max_size = Some(max_size)
+        }
+    }
 }
 
 /// - [Result]: if an error occurred while loading the configuration file.

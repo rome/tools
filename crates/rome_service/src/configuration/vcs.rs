@@ -1,3 +1,4 @@
+use crate::configuration::merge::MergeWith;
 use bpaf::Bpaf;
 use serde::{Deserialize, Serialize};
 use std::str::FromStr;
@@ -37,12 +38,28 @@ impl VcsConfiguration {
     pub const fn is_enabled(&self) -> bool {
         !self.is_disabled()
     }
-
     pub const fn is_disabled(&self) -> bool {
         matches!(self.enabled, Some(false))
     }
     pub const fn ignore_file_disabled(&self) -> bool {
         matches!(self.use_ignore_file, Some(false))
+    }
+}
+
+impl MergeWith<VcsConfiguration> for VcsConfiguration {
+    fn merge_with(&mut self, other: VcsConfiguration) {
+        if let Some(enabled) = other.enabled {
+            self.enabled = Some(enabled);
+        }
+        if let Some(client_kind) = other.client_kind {
+            self.client_kind = Some(client_kind);
+        }
+        if let Some(use_ignore_file) = other.use_ignore_file {
+            self.use_ignore_file = Some(use_ignore_file);
+        }
+        if let Some(root) = other.root {
+            self.root = Some(root);
+        }
     }
 }
 

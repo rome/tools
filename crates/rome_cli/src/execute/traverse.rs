@@ -1,4 +1,5 @@
 use super::process_file::{process_file, DiffKind, FileStatus, Message};
+use crate::cli_options::{cli_options, CliOptions};
 use crate::execute::diagnostics::{
     CIFormatDiffDiagnostic, CIOrganizeImportsDiffDiagnostic, ContentDiffAdvice,
     FormatDiffDiagnostic, OrganizeImportsDiffDiagnostic, PanicDiagnostic,
@@ -53,31 +54,17 @@ impl fmt::Display for CheckResult {
     }
 }
 
-pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<(), CliDiagnostic> {
+///
+pub(crate) fn traverse(
+    execution: Execution,
+    mut session: CliSession,
+    cli_options: &CliOptions,
+    inputs: Vec<PathBuf>,
+) -> Result<(), CliDiagnostic> {
     init_thread_pool();
-
-    let verbose = session.args.contains("--verbose");
 
     // Check that at least one input file / directory was specified in the command line
     let mut inputs = vec![];
-
-    for input in session.args.finish() {
-        if let Some(maybe_arg) = input.to_str() {
-            let without_dashes = maybe_arg.trim_start_matches('-');
-            if without_dashes.is_empty() {
-                // `-` or `--`
-                continue;
-            }
-            // `--<some character>` or `-<some character>`
-            if without_dashes != input {
-                return Err(CliDiagnostic::unexpected_argument(
-                    format!("{:?}", input),
-                    execution.traversal_mode_subcommand(),
-                ));
-            }
-        }
-        inputs.push(input);
-    }
 
     if inputs.is_empty() && execution.as_stdin_file().is_none() {
         return Err(CliDiagnostic::missing_argument(
@@ -117,7 +104,7 @@ pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<
                     remaining_diagnostics: &remaining_diagnostics,
                     errors: &mut errors,
                     report: &mut report,
-                    verbose,
+                    verbose: cli_options.verbose,
                 });
             })
             .expect("failed to spawn console thread");

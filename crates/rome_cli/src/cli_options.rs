@@ -3,38 +3,34 @@ use rome_diagnostics::MAXIMUM_DISPLAYABLE_DIAGNOSTICS;
 use std::str::FromStr;
 
 #[derive(Debug, Clone, Bpaf)]
-pub(crate) struct GlobalOptions {
+pub struct CliOptions {
     /// Set the formatting mode for markup: "off" prints everything as plain text, "force" forces the formatting of markup using ANSI even if the console output is determined to be incompatible
     #[bpaf(long("colors"), argument("off|force"))]
-    colors: Option<ColorsArg>,
+    pub colors: Option<ColorsArg>,
 
     /// Connect to a running instance of the Rome daemon server.
     #[bpaf(long("use-server"), switch)]
-    use_server: bool,
+    pub use_server: bool,
 
     /// Print additional verbose advices on diagnostics
     #[bpaf(long("verbose"), switch)]
-    verbose: bool,
+    pub verbose: bool,
 
     /// Set the filesystem path to the directory of the rome.json configuration file
     #[bpaf(long("config-path"), argument("PATH"), optional)]
-    config_path: Option<String>,
+    pub config_path: Option<String>,
 
     /// Cap the amount of diagnostics displayed (default: 20)
-    #[bpaf(
-        long("max-diagnostics"),
-        argument("NUMBER"),
-        guard(
-            check_max_diagnostics,
-            "The value of the argument is too high, maximum accepted: 500"
-        ),
-        fallback(20)
-    )]
-    max_diagnostics: u16,
+    #[bpaf(long("max-diagnostics"), argument("NUMBER"), optional)]
+    pub max_diagnostics: Option<u16>,
+
+    /// Skip over files containing syntax errors instead of emitting an error diagnostic.
+    #[bpaf(long("skip-errors"), switch)]
+    pub skip_errors: bool,
 }
 
 #[derive(Debug, Clone)]
-pub(crate) enum ColorsArg {
+pub enum ColorsArg {
     Off,
     Force,
 }

@@ -60,32 +60,6 @@ pub(crate) fn stop(session: CliSession) -> Result<(), CliDiagnostic> {
     Ok(())
 }
 
-pub(crate) fn run_server(mut session: CliSession) -> Result<(), CliDiagnostic> {
-    setup_tracing_subscriber();
-
-    let stop_on_disconnect = session.args.contains("--stop-on-disconnect");
-
-    let rt = Runtime::new()?;
-    let factory = ServerFactory::new(stop_on_disconnect);
-    let cancellation = factory.cancellation();
-    let span = debug_span!("Running Server", pid = std::process::id());
-
-    rt.block_on(async move {
-        tokio::select! {
-            res = run_daemon(factory).instrument(span) => {
-                match res {
-                    Ok(never) => match never {},
-                    Err(err) => Err(err.into()),
-                }
-            }
-            _ = cancellation.notified() => {
-                tracing::info!("Received shutdown signal");
-                Ok(())
-            }
-        }
-    })
-}
-
 pub(crate) fn print_socket() -> Result<(), CliDiagnostic> {
     let rt = Runtime::new()?;
     rt.block_on(service::print_socket())?;

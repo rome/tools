@@ -1,8 +1,9 @@
 use rome_console::fmt::{Display, Formatter};
 use rome_console::markup;
-use rome_diagnostics::adapters::{IoError, PicoArgsError};
+use rome_diagnostics::adapters::{BpafError, IoError, PicoArgsError};
 use rome_diagnostics::{
-    Advices, Category, Diagnostic, DiagnosticTags, Error, Location, LogCategory, Severity, Visit,
+    Advices, Category, Diagnostic, DiagnosticTags, Error, Location, LogCategory,
+    MessageAndDescription, Severity, Visit,
 };
 use rome_service::WorkspaceError;
 use std::process::{ExitCode, Termination};
@@ -88,13 +89,11 @@ pub struct UnknownCommandHelp {
 #[diagnostic(
     category = "flags/invalid",
     severity = Error,
-    message(
-        description = "Cannot parse the argument {argument}",
-        message("Cannot parse the argument "<Emphasis>{self.argument}</Emphasis>)
-    ),
 )]
 pub struct ParseDiagnostic {
-    argument: String,
+    #[message]
+    #[description]
+    message: MessageAndDescription,
     #[source]
     source: Option<Error>,
 }
@@ -345,7 +344,15 @@ impl CliDiagnostic {
     pub fn parse_error(argument: impl Into<String>, source: pico_args::Error) -> Self {
         Self::ParseError(ParseDiagnostic {
             source: Some(Error::from(PicoArgsError::from(source))),
-            argument: argument.into(),
+            message: MessageAndDescription::from(argument.into()),
+        })
+    }
+
+    /// To throw when there's been an error while parsing an argument
+    pub fn parse_error_bpaf(message: impl Into<String>, source: bpaf::ParseFailure) -> Self {
+        Self::ParseError(ParseDiagnostic {
+            source: Some(Error::from(BpafError::from(source))),
+            message: MessageAndDescription::from("".to_string()),
         })
     }
 

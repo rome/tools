@@ -1,3 +1,4 @@
+use crate::configuration::merge::MergeWith;
 use crate::configuration::string_set::StringSet;
 use crate::settings::OrganizeImportsSettings;
 use crate::{ConfigurationDiagnostic, MatchOptions, Matcher, WorkspaceError};
@@ -9,14 +10,29 @@ use serde::{Deserialize, Serialize};
 #[serde(rename_all = "camelCase", default, deny_unknown_fields)]
 pub struct OrganizeImports {
     /// Enables the organization of imports
+    #[serde(skip_serializing_if = "Option::is_none")]
     #[bpaf(hide)]
-    pub enabled: bool,
+    pub enabled: Option<bool>,
 
     /// A list of Unix shell style patterns. The formatter will ignore files/folders that will
     /// match these patterns.
     #[serde(skip_serializing_if = "Option::is_none")]
     #[bpaf(hide)]
     pub ignore: Option<StringSet>,
+}
+
+impl OrganizeImports {
+    pub const fn is_disabled(&self) -> bool {
+        matches!(self.enabled, Some(false))
+    }
+}
+
+impl MergeWith<OrganizeImports> for OrganizeImports {
+    fn merge_with(&mut self, other: OrganizeImports) {
+        if let Some(enabled) = other.enabled {
+            self.enabled = Some(enabled)
+        }
+    }
 }
 
 impl TryFrom<OrganizeImports> for OrganizeImportsSettings {
@@ -28,6 +44,7 @@ impl TryFrom<OrganizeImports> for OrganizeImportsSettings {
             require_literal_leading_dot: false,
             require_literal_separator: false,
         });
+        let is_disabled = organize_imports.is_disabled();
         if let Some(ignore) = organize_imports.ignore {
             for pattern in ignore.index_set() {
                 matcher.add_pattern(pattern).map_err(|err| {
@@ -41,7 +58,7 @@ impl TryFrom<OrganizeImports> for OrganizeImportsSettings {
             }
         }
         Ok(Self {
-            enabled: organize_imports.enabled,
+            enabled: !is_disabled,
             ignored_files: matcher,
         })
     }

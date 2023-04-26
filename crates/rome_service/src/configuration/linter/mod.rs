@@ -2,6 +2,7 @@
 mod rules;
 
 pub use crate::configuration::linter::rules::{rules, Rules};
+use crate::configuration::merge::MergeWith;
 use crate::configuration::string_set::StringSet;
 use crate::settings::LinterSettings;
 use crate::{ConfigurationDiagnostic, MatchOptions, Matcher, WorkspaceError};
@@ -30,6 +31,12 @@ pub struct LinterConfiguration {
     /// match these patterns.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub ignore: Option<StringSet>,
+}
+
+impl MergeWith<LinterConfiguration> for LinterConfiguration {
+    fn merge_with(&mut self, other: LinterConfiguration) {
+        self.enabled = other.enabled;
+    }
 }
 
 impl LinterConfiguration {

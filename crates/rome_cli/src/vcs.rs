@@ -1,3 +1,4 @@
+use crate::cli_options::CliOptions;
 use crate::diagnostics::{DisabledVcs, NoVcsFolderFound};
 use crate::{CliDiagnostic, CliSession};
 use rome_console::{markup, ConsoleExt};
@@ -13,8 +14,8 @@ pub(crate) fn store_path_to_ignore_from_vcs(
     session: &mut CliSession,
     configuration: &mut RomeConfiguration,
     vcs_base_path: Option<PathBuf>,
+    cli_options: &CliOptions,
 ) -> Result<(), CliDiagnostic> {
-    let verbose = session.args.contains("--verbose");
     let Some(vcs) = &configuration.vcs_configuration else {
 		return Ok(())
 	};
@@ -27,7 +28,7 @@ pub(crate) fn store_path_to_ignore_from_vcs(
                 let console = &mut session.app.console;
                 let diagnostic = DisabledVcs {};
                 console.error(markup! {
-					{if verbose { PrintDiagnostic::verbose(&diagnostic) } else { PrintDiagnostic::simple(&diagnostic) }}
+					{if cli_options.verbose { PrintDiagnostic::verbose(&diagnostic) } else { PrintDiagnostic::simple(&diagnostic) }}
                 });
                 return Ok(());
             }

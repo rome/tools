@@ -1,3 +1,4 @@
+use crate::configuration::merge::MergeWith;
 use crate::configuration::string_set::StringSet;
 use bpaf::Bpaf;
 use rome_js_formatter::context::{
@@ -25,12 +26,32 @@ pub struct JavascriptConfiguration {
     pub javascript_organize_imports: Option<JavascriptOrganizeImports>,
 }
 
-impl JavascriptConfiguration {
-    pub(crate) const KNOWN_KEYS: &'static [&'static str] =
-        &["formatter", "globals", "organizeImports"];
+impl MergeWith<JavascriptConfiguration> for JavascriptConfiguration {
+    fn merge_with(&mut self, other: JavascriptConfiguration) {
+        if let Some(other_formatter) = other.javascript_formatter {
+            let formatter = self
+                .javascript_formatter
+                .get_or_insert_with(JavascriptFormatter::default);
+            formatter.merge_with(other_formatter);
+        }
+    }
+}
+
+impl MergeWith<Option<JavascriptFormatter>> for JavascriptConfiguration {
+    fn merge_with(&mut self, other: Option<JavascriptFormatter>) {
+        if let Some(other_formatter) = other {
+            let formatter = self
+                .javascript_formatter
+                .get_or_insert_with(JavascriptFormatter::default);
+            formatter.merge_with(other_formatter);
+        }
+    }
 }
 
 impl JavascriptConfiguration {
+    pub(crate) const KNOWN_KEYS: &'static [&'static str] =
+        &["formatter", "globals", "organizeImports"];
+
     pub fn with_formatter() -> Self {
         Self {
             javascript_formatter: Some(JavascriptFormatter::default()),
@@ -64,6 +85,15 @@ impl JavascriptFormatter {
         "trailingComma",
         "semicolons",
     ];
+}
+
+impl MergeWith<JavascriptFormatter> for JavascriptFormatter {
+    fn merge_with(&mut self, other: JavascriptFormatter) {
+        self.quote_properties = other.quote_properties;
+        self.quote_style = other.quote_style;
+        self.trailing_comma = other.trailing_comma;
+        self.semicolons = other.semicolons;
+    }
 }
 
 #[derive(Debug, Default, Deserialize, Serialize, Eq, PartialEq, Clone, Bpaf)]

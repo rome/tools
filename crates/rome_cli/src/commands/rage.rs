@@ -8,6 +8,7 @@ use rome_service::{load_config, ConfigurationBasePath, DynRef, Workspace};
 use std::{env, io, ops::Deref};
 use tokio::runtime::Runtime;
 
+use crate::cli_options::CliOptions;
 use crate::commands::daemon::read_most_recent_log_file;
 use crate::service::enumerate_pipes;
 use crate::{service, CliDiagnostic, CliSession, VERSION};

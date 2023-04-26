@@ -1,20 +1,19 @@
+use crate::cli_options::CliOptions;
 use crate::configuration::load_configuration;
-use crate::global_options::GlobalOptions;
-use crate::parse_arguments::{
-    apply_files_settings_from_cli, apply_format_settings_from_cli, apply_vcs_settings_from_cli,
-};
 use crate::vcs::store_path_to_ignore_from_vcs;
 use crate::{execute_mode, CliDiagnostic, CliSession, Execution, TraversalMode};
 use rome_console::{markup, ConsoleExt};
 use rome_diagnostics::{DiagnosticExt, PrintDiagnostic, Severity};
 use rome_service::workspace::{FixFileMode, UpdateSettingsParams};
-use rome_service::RomeConfiguration;
+use rome_service::{MergeWith, RomeConfiguration};
+use std::path::PathBuf;
 
 pub(crate) struct CheckCommandPayload {
     pub(crate) apply: bool,
     pub(crate) apply_unsafe: bool,
-    pub(crate) global_options: GlobalOptions,
+    pub(crate) cli_options: CliOptions,
     pub(crate) configuration: RomeConfiguration,
+    pub(crate) paths: Vec<PathBuf>,
 }
 
 /// Handler for the "check" command of the Rome CLI
@@ -25,8 +24,9 @@ pub(crate) fn check(
     let CheckCommandPayload {
         apply,
         apply_unsafe,
-        global_options,
+        cli_options,
         configuration,
+        paths,
     } = payload;
 
     let fix_file_mode = if apply && apply_unsafe {
@@ -42,8 +42,8 @@ pub(crate) fn check(
         Some(FixFileMode::SafeAndUnsafeFixes)
     };
 
-    let (mut configuration, diagnostics, configuration_path) =
-        load_configuration(&mut session)?.consume();
+    let (mut fs_configuration, diagnostics, configuration_path) =
+        load_configuration(&mut session, &cli_options)?.consume();
     if !diagnostics.is_empty() {
         let console = &mut session.app.console;
         console.log(markup!{
@@ -56,24 +56,28 @@ pub(crate) fn check(
             })
         }
     }
-    apply_files_settings_from_cli(&mut session, &mut configuration)?;
-    apply_format_settings_from_cli(&mut session, &mut configuration)?;
-    apply_vcs_settings_from_cli(&mut session, &mut configuration)?;
+    fs_configuration.merge_with(configuration);
 
     // check if support of git ignore files is enabled
     let vcs_base_path = configuration_path.or(session.app.fs.working_directory());
-    store_path_to_ignore_from_vcs(&mut session, &mut configuration, vcs_base_path)?;
+    store_path_to_ignore_from_vcs(
+        &mut session,
+        &mut fs_configuration,
+        vcs_base_path,
+        &cli_options,
+    )?;
 
     session
         .app
         .workspace
-        .update_settings(UpdateSettingsParams { configuration })?;
-
-    let apply = session.args.contains("--apply");
-    let apply_suggested = session.args.contains("--apply-unsafe");
+        .update_settings(UpdateSettingsParams {
+            configuration: fs_configuration,
+        })?;
 
     execute_mode(
         Execution::new(TraversalMode::Check { fix_file_mode }),
         session,
+        &cli_options,
+        paths,
     )
 }

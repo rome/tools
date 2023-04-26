@@ -1,9 +1,10 @@
-use crate::global_options::{global_options, GlobalOptions};
+use crate::cli_options::{cli_options, CliOptions, ColorsArg};
 use crate::VERSION;
 use bpaf::{Bpaf, OptionParser};
+use rome_service::configuration::vcs::VcsConfiguration;
 use rome_service::configuration::{
     formatter_configuration, javascript::javascript_formatter, rome_configuration,
-    FormatterConfiguration, JavascriptFormatter,
+    vcs::vcs_configuration, FormatterConfiguration, JavascriptFormatter,
 };
 use rome_service::RomeConfiguration;
 use std::path::PathBuf;
@@ -20,14 +21,14 @@ pub(crate) mod version;
 
 #[derive(Debug, Clone, Bpaf)]
 #[bpaf(options, version(VERSION))]
-pub(crate) enum Command {
+pub enum RomeCommand {
     /// Shows the Rome version information and quit
     #[bpaf(command)]
-    Version,
+    Version(#[bpaf(external(cli_options), hide_usage)] CliOptions),
 
     #[bpaf(command)]
     /// Prints information for debugging
-    Rage,
+    Rage(#[bpaf(external(cli_options), hide_usage)] CliOptions),
     /// Start the Rome daemon server process
     #[bpaf(command)]
     Start,
@@ -49,7 +50,7 @@ pub(crate) enum Command {
         #[bpaf(external, hide_usage)]
         rome_configuration: RomeConfiguration,
         #[bpaf(external, hide_usage)]
-        global_options: GlobalOptions,
+        cli_options: CliOptions,
 
         /// Single file, single path or list of paths
         #[bpaf(positional::<PathBuf>("PATH"), many)]
@@ -75,7 +76,7 @@ pub(crate) enum Command {
         #[bpaf(external, hide_usage)]
         rome_configuration: RomeConfiguration,
         #[bpaf(external, hide_usage)]
-        global_options: GlobalOptions,
+        cli_options: CliOptions,
 
         /// Single file, single path or list of paths
         #[bpaf(positional::<PathBuf>("PATH"), many)]
@@ -90,12 +91,15 @@ pub(crate) enum Command {
         #[bpaf(external, optional, hide_usage)]
         javascript_formatter: Option<JavascriptFormatter>,
 
+        #[bpaf(external, optional, hide_usage)]
+        vcs_configuration: Option<VcsConfiguration>,
+
         /// A file name with its extension to pass when reading from standard in, e.g. echo 'let a;' | rome format --stdin-file-path=file.js"
         #[bpaf(long("stdin-file-path"), argument("PATH"), hide_usage)]
         stdin_file_path: Option<String>,
 
         #[bpaf(external, hide_usage)]
-        global_options: GlobalOptions,
+        cli_options: CliOptions,
 
         #[bpaf(switch)]
         write: bool,
@@ -107,24 +111,59 @@ pub(crate) enum Command {
     /// Bootstraps a new rome project
     #[bpaf(command)]
     Init,
-    /// Prints this help message
-    #[bpaf(command)]
-    Help,
     /// Acts as a server for the Language Server Protocol over stdin/stdout
     #[bpaf(command)]
     LspProxy,
     /// It updates the configuration when there are breaking changes
     #[bpaf(command)]
     Migrate(
-        #[bpaf(external(global_options), hide_usage)] GlobalOptions,
+        #[bpaf(external(cli_options), hide_usage)] CliOptions,
         /// Writes the new configuration file to disk
         #[bpaf(long("write"), switch)]
         bool,
     ),
 }
 
-pub(crate) fn parse_command() -> OptionParser<Command> {
-    command().header("Rome CLI").usage("rome COMMAND [ARG]")
+impl RomeCommand {
+    pub const fn get_color(&self) -> Option<&ColorsArg> {
+        match self {
+            RomeCommand::Version(cli_options) => cli_options.colors.as_ref(),
+            RomeCommand::Rage(cli_options) => cli_options.colors.as_ref(),
+            RomeCommand::Start => None,
+            RomeCommand::Stop => None,
+            RomeCommand::Check { cli_options, .. } => cli_options.colors.as_ref(),
+            RomeCommand::Ci { cli_options, .. } => cli_options.colors.as_ref(),
+            RomeCommand::Format { cli_options, .. } => cli_options.colors.as_ref(),
+            RomeCommand::Init => None,
+            RomeCommand::LspProxy => None,
+            RomeCommand::Migrate(cli_options, _) => cli_options.colors.as_ref(),
+        }
+    }
+
+    pub const fn should_use_server(&self) -> bool {
+        match self {
+            RomeCommand::Version(cli_options) => cli_options.use_server,
+            RomeCommand::Rage(cli_options) => cli_options.use_server,
+            RomeCommand::Start => false,
+            RomeCommand::Stop => false,
+            RomeCommand::Check { cli_options, .. } => cli_options.use_server,
+            RomeCommand::Ci { cli_options, .. } => cli_options.use_server,
+            RomeCommand::Format { cli_options, .. } => cli_options.use_server,
+            RomeCommand::Init => false,
+            RomeCommand::LspProxy => false,
+            RomeCommand::Migrate(cli_options, _) => cli_options.use_server,
+        }
+    }
+
+    pub const fn has_metrics(&self) -> bool {
+        false
+    }
+}
+
+pub fn parse_command() -> OptionParser<RomeCommand> {
+    rome_command()
+        .header("Rome CLI")
+        .usage("rome COMMAND [ARG]")
 }
 
 #[cfg(test)]
@@ -135,7 +174,7 @@ mod test {
     #[test]
     fn version() {
         let result = parse_command().run_inner(Args::from(&["migrate", "--write"]));
-        let help = parse_command().run_inner(Args::from(&["ci", "--help"]));
+        let help = parse_command().run_inner(Args::from(&["--help"]));
 
         // let result = result.unwrap_err().unwrap_stdout();
 

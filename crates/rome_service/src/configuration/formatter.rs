@@ -1,4 +1,6 @@
+use crate::configuration::merge::MergeWith;
 use crate::configuration::string_set::StringSet;
+use crate::configuration::FilesConfiguration;
 use crate::settings::FormatSettings;
 use crate::{ConfigurationDiagnostic, MatchOptions, Matcher, WorkspaceError};
 use bpaf::Bpaf;
@@ -62,6 +64,19 @@ impl Default for FormatterConfiguration {
             indent_style: PlainIndentStyle::default(),
             line_width: LineWidth::default(),
             ignore: None,
+        }
+    }
+}
+
+impl MergeWith<FormatterConfiguration> for FormatterConfiguration {
+    fn merge_with(&mut self, other: FormatterConfiguration) {
+        self.enabled = other.enabled;
+        self.format_with_errors = other.format_with_errors;
+        self.indent_size = other.indent_size;
+        self.line_width = other.line_width;
+        self.indent_style = other.indent_style;
+        if let Some(ignore) = other.ignore {
+            self.ignore = Some(ignore)
         }
     }
 }

@@ -1,5 +1,6 @@
 use std::path::PathBuf;
 
+use crate::cli_options::CliOptions;
 use crate::{CliDiagnostic, CliSession};
 use rome_deserialize::Deserialized;
 use rome_service::{load_config, ConfigurationBasePath, RomeConfiguration};
@@ -41,15 +42,11 @@ impl From<Option<(Deserialized<RomeConfiguration>, PathBuf)>> for LoadedConfigur
 /// the `rome.json` file if it exists on disk with common command line options
 pub(crate) fn load_configuration(
     session: &mut CliSession,
+    cli_options: &CliOptions,
 ) -> Result<LoadedConfiguration, CliDiagnostic> {
-    let config_path: Option<PathBuf> = session
-        .args
-        .opt_value_from_str("--config-path")
-        .map_err(|source| CliDiagnostic::parse_error("--config-path", source))?;
-
-    let base_path = match config_path {
+    let base_path = match &cli_options.config_path {
         None => ConfigurationBasePath::default(),
-        Some(path) => ConfigurationBasePath::FromUser(path),
+        Some(path) => ConfigurationBasePath::FromUser(PathBuf::from(path)),
     };
 
     let config = load_config(&session.app.fs, base_path)?;

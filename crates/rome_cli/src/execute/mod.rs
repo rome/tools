@@ -4,6 +4,7 @@ mod process_file;
 mod std_in;
 mod traverse;
 
+use crate::cli_options::CliOptions;
 use crate::execute::traverse::traverse;
 use crate::{CliDiagnostic, CliSession};
 use rome_diagnostics::MAXIMUM_DISPLAYABLE_DIAGNOSTICS;
@@ -78,6 +79,11 @@ impl Execution {
             traversal_mode: mode,
             max_diagnostics: MAXIMUM_DISPLAYABLE_DIAGNOSTICS,
         }
+    }
+
+    pub(crate) fn with_max_diagnostics(mut self, max_diagnostics: u16) -> Self {
+        self.max_diagnostics = max_diagnostics;
+        self
     }
 
     /// Creates an instance of [Execution] by passing [traversal mode](TraversalMode) and [report mode](ReportMode)
@@ -174,13 +180,10 @@ impl Execution {
 pub(crate) fn execute_mode(
     mut mode: Execution,
     mut session: CliSession,
+    cli_options: &CliOptions,
+    paths: Vec<PathBuf>,
 ) -> Result<(), CliDiagnostic> {
-    let max_diagnostics: Option<u16> = session
-        .args
-        .opt_value_from_str("--max-diagnostics")
-        .map_err(|source| CliDiagnostic::parse_error("--max-diagnostics", source))?;
-
-    mode.max_diagnostics = if let Some(max_diagnostics) = max_diagnostics {
+    mode.max_diagnostics = if let Some(max_diagnostics) = cli_options.max_diagnostics {
         if max_diagnostics > MAXIMUM_DISPLAYABLE_DIAGNOSTICS {
             return Err(CliDiagnostic::overflown_argument(
                 "--max-diagnostics",
@@ -207,10 +210,8 @@ pub(crate) fn execute_mode(
         configuration_path,
     } = mode.traversal_mode
     {
-        let verbose = session.args.contains("--verbose");
-
-        migrate::run(session, write, configuration_path, verbose)
+        migrate::run(session, write, configuration_path, cli_options.verbose)
     } else {
-        traverse(mode, session)
+        traverse(mode, session, cli_options, paths)
     }
 }
