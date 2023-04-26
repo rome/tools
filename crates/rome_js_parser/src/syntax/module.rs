@@ -214,7 +214,7 @@ pub(crate) fn parse_import_or_import_equals_declaration(p: &mut JsParser) -> Par
 
     let start = p.cur_range().start();
     let import = p.start();
-    p.expect(T![import]);
+    p.bump(T![import]);
 
     debug_assert!(p.state().name_map.is_empty());
     p.state_mut().duplicate_binding_parent = Some("import");
@@ -1182,7 +1182,7 @@ fn parse_export_default_clause(p: &mut JsParser) -> ParsedSyntax {
 
     let start = p.cur_range().start();
     let m = p.start();
-    p.expect(T![default]);
+    p.bump(T![default]);
 
     let (clause, default_item_kind) = match p.cur() {
         T![@] => {

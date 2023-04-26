@@ -101,14 +101,14 @@ JsModule {
 --
 decorator_enum_export_default_declaration_clause.ts:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Decorators are not valid here
+  × Decorators are not valid here.
   
   > 1 │ @decorator
       │ ^^^^^^^^^^
     2 │ export default enum A { X, Y, Z }
     3 │ 
   
-  i Decorators are only valid on class declarations, class expressions, and class methods
+  i Decorators are only valid on class declarations, class expressions, and class methods.
   
 --
 decorator_enum_export_default_declaration_clause.ts:2:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

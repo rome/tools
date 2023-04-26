@@ -305,14 +305,14 @@ JsModule {
 --
 decorator_expression_class.js:1:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Decorators are not valid here
+  × Decorators are not valid here.
   
   > 1 │ let a = @decorator () => {};
       │         ^^^^^^^^^^^^^
     2 │ let b = @first @second function foo() {}
     3 │ let a = @decorator ( () => {} )
   
-  i Decorators are only valid on class declarations, class expressions, and class methods
+  i Decorators are only valid on class declarations, class expressions, and class methods.
   
 --
 decorator_expression_class.js:1:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -334,7 +334,7 @@ decorator_expression_class.js:1:23 parse ━━━━━━━━━━━━━
 --
 decorator_expression_class.js:2:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Decorators are not valid here
+  × Decorators are not valid here.
   
     1 │ let a = @decorator () => {};
   > 2 │ let b = @first @second function foo() {}
@@ -342,12 +342,12 @@ decorator_expression_class.js:2:9 parse ━━━━━━━━━━━━━�
     3 │ let a = @decorator ( () => {} )
     4 │ 
   
-  i Decorators are only valid on class declarations, class expressions, and class methods
+  i Decorators are only valid on class declarations, class expressions, and class methods.
   
 --
 decorator_expression_class.js:3:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Decorators are not valid here
+  × Decorators are not valid here.
   
     1 │ let a = @decorator () => {};
     2 │ let b = @first @second function foo() {}
@@ -355,7 +355,7 @@ decorator_expression_class.js:3:9 parse ━━━━━━━━━━━━━�
       │         ^^^^^^^^^^^^^^^^^^^^^^^
     4 │ 
   
-  i Decorators are only valid on class declarations, class expressions, and class methods
+  i Decorators are only valid on class declarations, class expressions, and class methods.
   
 --
 decorator_expression_class.js:4:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

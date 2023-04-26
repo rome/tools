@@ -284,7 +284,7 @@ pub(crate) fn invalid_decorator_error(p: &JsParser, range: TextRange) -> ParseDi
 }
 
 pub(crate) fn decorators_not_allowed(p: &JsParser, range: TextRange) -> ParseDiagnostic {
-    p.err_builder("Decorators are not valid here", range).hint(
-        "Decorators are only valid on class declarations, class expressions, and class methods",
+    p.err_builder("Decorators are not valid here.", range).hint(
+        "Decorators are only valid on class declarations, class expressions, and class methods.",
     )
 }

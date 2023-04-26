@@ -140,19 +140,19 @@ JsModule {
 --
 decorator_export_class_clause.js:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Decorators are not valid here
+  × Decorators are not valid here.
   
   > 1 │ @decorator
       │ ^^^^^^^^^^
     2 │ export let a;
     3 │ @decorator1 @decorator2
   
-  i Decorators are only valid on class declarations, class expressions, and class methods
+  i Decorators are only valid on class declarations, class expressions, and class methods.
   
 --
 decorator_export_class_clause.js:3:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Decorators are not valid here
+  × Decorators are not valid here.
   
     1 │ @decorator
     2 │ export let a;
@@ -161,7 +161,7 @@ decorator_export_class_clause.js:3:1 parse ━━━━━━━━━━━━�
     4 │ export function Foo() { }
     5 │ 
   
-  i Decorators are only valid on class declarations, class expressions, and class methods
+  i Decorators are only valid on class declarations, class expressions, and class methods.
   
 --
 @decorator
