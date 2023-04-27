@@ -16,12 +16,12 @@ export type UnsupportedReason =
 	| "FeatureNotEnabled"
 	| "FileNotSupported";
 export interface UpdateSettingsParams {
-	configuration: Configuration;
+	configuration: RomeConfiguration;
 }
 /**
  * The configuration that is contained inside the file `rome.json`
  */
-export interface Configuration {
+export interface RomeConfiguration {
 	/**
 	 * A field for the [JSON schema](https://json-schema.org/) specification
 	 */
@@ -88,14 +88,14 @@ export interface FormatterConfiguration {
 	lineWidth?: LineWidth;
 }
 export interface JavascriptConfiguration {
-	formatter?: JavascriptFormatter;
 	/**
 	* A list of global bindings that should be ignored by the analyzers
 
 If defined here, they should not emit diagnostics. 
 	 */
 	globals?: StringSet;
-	organize_imports?: JavascriptOrganizeImports;
+	javascript_formatter?: JavascriptFormatter;
+	javascript_organize_imports?: JavascriptOrganizeImports;
 }
 export interface LinterConfiguration {
 	/**
@@ -122,7 +122,7 @@ export interface OrganizeImports {
 	ignore?: StringSet;
 }
 /**
- * Set
+ * Set of properties to configure the integration with the VCS
  */
 export interface VcsConfiguration {
 	/**
@@ -132,7 +132,7 @@ export interface VcsConfiguration {
 	/**
 	 * Whether Rome should integrate itself with the VCS client
 	 */
-	enabled: boolean;
+	enabled?: boolean;
 	/**
 	* The folder where Rome should check for VCS files. By default, Rome will use the same folder where `rome.json` was found.
 
