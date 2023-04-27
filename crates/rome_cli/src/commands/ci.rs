@@ -9,7 +9,7 @@ use rome_diagnostics::PrintDiagnostic;
 use rome_service::configuration::organize_imports::OrganizeImports;
 use rome_service::configuration::{FormatterConfiguration, LinterConfiguration};
 use rome_service::workspace::UpdateSettingsParams;
-use rome_service::{MergeWith, RomeConfiguration};
+use rome_service::{Configuration, MergeWith};
 use std::ffi::OsString;
 
 pub(crate) struct CiCommandPayload {
@@ -17,7 +17,7 @@ pub(crate) struct CiCommandPayload {
     pub(crate) linter_enabled: Option<bool>,
     pub(crate) organize_imports_enabled: Option<bool>,
     pub(crate) paths: Vec<OsString>,
-    pub(crate) rome_configuration: RomeConfiguration,
+    pub(crate) rome_configuration: Configuration,
     pub(crate) cli_options: CliOptions,
 }
 
@@ -73,8 +73,8 @@ pub(crate) fn ci(mut session: CliSession, payload: CiCommandPayload) -> Result<(
     configuration.merge_with(payload.rome_configuration.files);
     configuration.merge_with(payload.rome_configuration.vcs);
     configuration.merge_with_if(
-		payload.rome_configuration.formatter,
-		!configuration.is_formatter_disabled(),
+        payload.rome_configuration.formatter,
+        !configuration.is_formatter_disabled(),
     );
     configuration.merge_with_if(
         payload.rome_configuration.organize_imports,

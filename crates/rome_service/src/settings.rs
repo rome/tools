@@ -1,6 +1,6 @@
 use crate::{
-    configuration::FilesConfiguration, ConfigurationDiagnostic, MatchOptions, Matcher,
-    RomeConfiguration, Rules, WorkspaceError,
+    configuration::FilesConfiguration, Configuration, ConfigurationDiagnostic, MatchOptions,
+    Matcher, Rules, WorkspaceError,
 };
 use indexmap::IndexSet;
 use rome_diagnostics::Category;
@@ -44,11 +44,11 @@ impl WorkspaceSettings {
         &self.organize_imports
     }
 
-    /// The (configuration)[RomeConfiguration] is merged into the workspace
+    /// The (configuration)[Configuration] is merged into the workspace
     #[tracing::instrument(level = "debug", skip(self))]
     pub fn merge_with_configuration(
         &mut self,
-        configuration: RomeConfiguration,
+        configuration: Configuration,
     ) -> Result<(), WorkspaceError> {
         // formatter part
         if let Some(formatter) = configuration.formatter {

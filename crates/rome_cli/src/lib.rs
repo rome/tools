@@ -78,7 +78,7 @@ impl<'app> CliSession<'app> {
                 apply,
                 apply_unsafe,
                 cli_options,
-                rome_configuration,
+                configuration: rome_configuration,
                 paths,
             } => commands::check::check(
                 self,
@@ -94,7 +94,7 @@ impl<'app> CliSession<'app> {
                 linter_enabled,
                 formatter_enabled,
                 organize_imports_enabled,
-                rome_configuration,
+                configuration: rome_configuration,
                 paths,
                 cli_options,
             } => commands::ci::ci(

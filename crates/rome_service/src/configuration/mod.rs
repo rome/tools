@@ -44,7 +44,7 @@ use rome_json_parser::parse_json;
 #[derive(Debug, Deserialize, Serialize, Clone, Bpaf)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(deny_unknown_fields, rename_all = "camelCase")]
-pub struct RomeConfiguration {
+pub struct Configuration {
     /// A field for the [JSON schema](https://json-schema.org/) specification
     #[serde(rename(serialize = "$schema", deserialize = "$schema"))]
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -82,7 +82,7 @@ pub struct RomeConfiguration {
     pub javascript: Option<JavascriptConfiguration>,
 }
 
-impl Default for RomeConfiguration {
+impl Default for Configuration {
     fn default() -> Self {
         Self {
             files: None,
@@ -99,7 +99,7 @@ impl Default for RomeConfiguration {
     }
 }
 
-impl RomeConfiguration {
+impl Configuration {
     const KNOWN_KEYS: &'static [&'static str] = &[
         "vcs",
         "files",
@@ -138,8 +138,8 @@ impl RomeConfiguration {
     }
 }
 
-impl MergeWith<RomeConfiguration> for RomeConfiguration {
-    fn merge_with(&mut self, other_configuration: RomeConfiguration) {
+impl MergeWith<Configuration> for Configuration {
+    fn merge_with(&mut self, other_configuration: Configuration) {
         // files
         self.merge_with(other_configuration.files);
         // formatter
@@ -155,15 +155,15 @@ impl MergeWith<RomeConfiguration> for RomeConfiguration {
     }
 }
 
-impl MergeWith<Option<RomeConfiguration>> for RomeConfiguration {
-    fn merge_with(&mut self, other_configuration: Option<RomeConfiguration>) {
+impl MergeWith<Option<Configuration>> for Configuration {
+    fn merge_with(&mut self, other_configuration: Option<Configuration>) {
         if let Some(other_configuration) = other_configuration {
             self.merge_with(other_configuration);
         }
     }
 }
 
-impl MergeWith<Option<VcsConfiguration>> for RomeConfiguration {
+impl MergeWith<Option<VcsConfiguration>> for Configuration {
     fn merge_with(&mut self, other: Option<VcsConfiguration>) {
         if let Some(other_vcs) = other {
             let vcs = self.vcs.get_or_insert_with(VcsConfiguration::default);
@@ -172,7 +172,7 @@ impl MergeWith<Option<VcsConfiguration>> for RomeConfiguration {
     }
 }
 
-impl MergeWith<Option<OrganizeImports>> for RomeConfiguration {
+impl MergeWith<Option<OrganizeImports>> for Configuration {
     fn merge_with(&mut self, other: Option<OrganizeImports>) {
         if let Some(other_organize_imports) = other {
             let organize_imports = self
@@ -183,7 +183,7 @@ impl MergeWith<Option<OrganizeImports>> for RomeConfiguration {
     }
 }
 
-impl MergeWith<Option<LinterConfiguration>> for RomeConfiguration {
+impl MergeWith<Option<LinterConfiguration>> for Configuration {
     fn merge_with(&mut self, other: Option<LinterConfiguration>) {
         if let Some(other_linter) = other {
             let linter = self.linter.get_or_insert_with(LinterConfiguration::default);
@@ -191,7 +191,7 @@ impl MergeWith<Option<LinterConfiguration>> for RomeConfiguration {
         }
     }
 }
-impl MergeWith<Option<FilesConfiguration>> for RomeConfiguration {
+impl MergeWith<Option<FilesConfiguration>> for Configuration {
     fn merge_with(&mut self, other: Option<FilesConfiguration>) {
         if let Some(files_configuration) = other {
             let files = self.files.get_or_insert_with(FilesConfiguration::default);
@@ -199,7 +199,7 @@ impl MergeWith<Option<FilesConfiguration>> for RomeConfiguration {
         };
     }
 }
-impl MergeWith<Option<JavascriptConfiguration>> for RomeConfiguration {
+impl MergeWith<Option<JavascriptConfiguration>> for Configuration {
     fn merge_with(&mut self, other: Option<JavascriptConfiguration>) {
         if let Some(other) = other {
             let js_configuration = self
@@ -209,7 +209,7 @@ impl MergeWith<Option<JavascriptConfiguration>> for RomeConfiguration {
         }
     }
 }
-impl MergeWith<Option<FormatterConfiguration>> for RomeConfiguration {
+impl MergeWith<Option<FormatterConfiguration>> for Configuration {
     fn merge_with(&mut self, other: Option<FormatterConfiguration>) {
         if let Some(other_formatter) = other {
             let formatter = self
@@ -220,7 +220,7 @@ impl MergeWith<Option<FormatterConfiguration>> for RomeConfiguration {
     }
 }
 
-impl MergeWith<Option<JavascriptFormatter>> for RomeConfiguration {
+impl MergeWith<Option<JavascriptFormatter>> for Configuration {
     fn merge_with(&mut self, other: Option<JavascriptFormatter>) {
         let javascript_configuration = self
             .javascript
@@ -264,9 +264,9 @@ impl MergeWith<FilesConfiguration> for FilesConfiguration {
 /// - [Result]: if an error occurred while loading the configuration file.
 /// - [Option]: sometimes not having a configuration file should not be an error, so we need this type.
 /// - [Deserialized]: result of the deserialization of the configuration.
-/// - [RomeConfiguration]: the type needed to [Deserialized] to infer the return type.
+/// - [Configuration]: the type needed to [Deserialized] to infer the return type.
 /// - [PathBuf]: the path of where the first `rome.json` path was found
-type LoadConfig = Result<Option<(Deserialized<RomeConfiguration>, PathBuf)>, WorkspaceError>;
+type LoadConfig = Result<Option<(Deserialized<Configuration>, PathBuf)>, WorkspaceError>;
 
 #[derive(Debug, Default, PartialEq)]
 pub enum ConfigurationBasePath {
@@ -316,7 +316,7 @@ pub fn load_config(
     let result = file_system.auto_search(configuration_directory, config_name, should_error)?;
 
     if let Some((buffer, configuration_path)) = result {
-        let deserialized = deserialize_from_json_str::<RomeConfiguration>(&buffer)
+        let deserialized = deserialize_from_json_str::<Configuration>(&buffer)
             .with_file_path(&configuration_file_path.display().to_string());
         Ok(Some((deserialized, configuration_path)))
     } else {
@@ -333,7 +333,7 @@ pub fn load_config(
 /// - the program doesn't have the write rights
 pub fn create_config(
     fs: &mut DynRef<dyn FileSystem>,
-    mut configuration: RomeConfiguration,
+    mut configuration: Configuration,
 ) -> Result<(), WorkspaceError> {
     let path = PathBuf::from(fs.config_name());
 

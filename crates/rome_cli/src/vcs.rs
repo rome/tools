@@ -5,14 +5,14 @@ use rome_console::{markup, ConsoleExt};
 use rome_diagnostics::PrintDiagnostic;
 use rome_service::configuration::vcs::{VcsClientKind, VcsConfiguration};
 use rome_service::configuration::{FilesConfiguration, StringSet};
-use rome_service::{RomeConfiguration, WorkspaceError};
+use rome_service::{Configuration, WorkspaceError};
 use std::path::PathBuf;
 
 /// This function will check if the configuration is set to use the VCS integration and try to
 /// read the ignored files.
 pub(crate) fn store_path_to_ignore_from_vcs(
     session: &mut CliSession,
-    configuration: &mut RomeConfiguration,
+    configuration: &mut Configuration,
     vcs_base_path: Option<PathBuf>,
     cli_options: &CliOptions,
 ) -> Result<(), CliDiagnostic> {

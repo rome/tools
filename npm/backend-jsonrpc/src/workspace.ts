@@ -16,12 +16,12 @@ export type UnsupportedReason =
 	| "FeatureNotEnabled"
 	| "FileNotSupported";
 export interface UpdateSettingsParams {
-	configuration: RomeConfiguration;
+	configuration: Configuration;
 }
 /**
  * The configuration that is contained inside the file `rome.json`
  */
-export interface RomeConfiguration {
+export interface Configuration {
 	/**
 	 * A field for the [JSON schema](https://json-schema.org/) specification
 	 */

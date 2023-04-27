@@ -1,6 +1,6 @@
 {
 	"$schema": "http://json-schema.org/draft-07/schema#",
-	"title": "RomeConfiguration",
+	"title": "Configuration",
 	"description": "The configuration that is contained inside the file `rome.json`",
 	"type": "object",
 	"properties": {

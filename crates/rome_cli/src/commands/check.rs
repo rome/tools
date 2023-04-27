@@ -5,14 +5,14 @@ use crate::{execute_mode, CliDiagnostic, CliSession, Execution, TraversalMode};
 use rome_console::{markup, ConsoleExt};
 use rome_diagnostics::{DiagnosticExt, PrintDiagnostic, Severity};
 use rome_service::workspace::{FixFileMode, UpdateSettingsParams};
-use rome_service::{MergeWith, RomeConfiguration};
+use rome_service::{Configuration, MergeWith};
 use std::ffi::OsString;
 
 pub(crate) struct CheckCommandPayload {
     pub(crate) apply: bool,
     pub(crate) apply_unsafe: bool,
     pub(crate) cli_options: CliOptions,
-    pub(crate) configuration: Option<RomeConfiguration>,
+    pub(crate) configuration: Option<Configuration>,
     pub(crate) paths: Vec<OsString>,
 }
 

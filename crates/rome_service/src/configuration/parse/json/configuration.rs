@@ -4,21 +4,21 @@ use crate::configuration::vcs::VcsConfiguration;
 use crate::configuration::{
     FilesConfiguration, FormatterConfiguration, JavascriptConfiguration, LinterConfiguration,
 };
-use crate::RomeConfiguration;
+use crate::Configuration;
 use rome_deserialize::json::{has_only_known_keys, VisitJsonNode};
 use rome_deserialize::{DeserializationDiagnostic, VisitNode};
 use rome_json_syntax::{JsonLanguage, JsonSyntaxNode};
 use rome_rowan::SyntaxNode;
 
-impl VisitJsonNode for RomeConfiguration {}
+impl VisitJsonNode for Configuration {}
 
-impl VisitNode<JsonLanguage> for RomeConfiguration {
+impl VisitNode<JsonLanguage> for Configuration {
     fn visit_member_name(
         &mut self,
         node: &JsonSyntaxNode,
         diagnostics: &mut Vec<DeserializationDiagnostic>,
     ) -> Option<()> {
-        has_only_known_keys(node, RomeConfiguration::KNOWN_KEYS, diagnostics)
+        has_only_known_keys(node, Configuration::KNOWN_KEYS, diagnostics)
     }
 
     fn visit_map(

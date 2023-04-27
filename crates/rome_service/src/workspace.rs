@@ -51,7 +51,7 @@
 //! document does not implement the required capability: for instance trying to
 //! format a file with a language that does not have a formatter
 
-use crate::{Deserialize, RomeConfiguration, Serialize, WorkspaceError};
+use crate::{Configuration, Deserialize, Serialize, WorkspaceError};
 use rome_analyze::ActionCategory;
 pub use rome_analyze::RuleCategories;
 use rome_console::{markup, Markup, MarkupBuf};
@@ -141,7 +141,7 @@ pub enum FeatureName {
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct UpdateSettingsParams {
-    pub configuration: RomeConfiguration,
+    pub configuration: Configuration,
 }
 
 #[derive(Debug, serde::Serialize, serde::Deserialize)]

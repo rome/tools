@@ -214,7 +214,7 @@ pub struct InvalidIgnorePattern {
 #[cfg(test)]
 mod test {
     use crate::configuration::diagnostics::ConfigurationDiagnostic;
-    use crate::{MatchOptions, Matcher, RomeConfiguration};
+    use crate::{Configuration, MatchOptions, Matcher};
     use rome_deserialize::json::deserialize_from_json_str;
     use rome_diagnostics::{print_diagnostic_to_string, DiagnosticExt, Error};
 
@@ -268,7 +268,7 @@ mod test {
     #[test]
     fn deserialization_error() {
         let content = "{ \n\n\"formatter\" }";
-        let result = deserialize_from_json_str::<RomeConfiguration>(content);
+        let result = deserialize_from_json_str::<Configuration>(content);
 
         assert!(result.has_errors());
         for diagnostic in result.into_diagnostics() {
@@ -291,6 +291,6 @@ mod test {
     }
   }
 }"#;
-        let _result = deserialize_from_json_str::<RomeConfiguration>(content).into_deserialized();
+        let _result = deserialize_from_json_str::<Configuration>(content).into_deserialized();
     }
 }

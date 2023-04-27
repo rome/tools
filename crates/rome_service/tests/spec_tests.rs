@@ -1,6 +1,6 @@
 use rome_deserialize::json::deserialize_from_json_str;
 use rome_diagnostics::{print_diagnostic_to_string, DiagnosticExt};
-use rome_service::RomeConfiguration;
+use rome_service::Configuration;
 use std::ffi::OsStr;
 use std::fs::read_to_string;
 use std::path::Path;
@@ -14,7 +14,7 @@ fn run_invalid_configurations(input: &'static str, _: &str, _: &str, _: &str) {
         .unwrap_or_else(|err| panic!("failed to read {:?}: {:?}", input_file, err));
 
     let result = match extension {
-        "json" => deserialize_from_json_str::<RomeConfiguration>(input_code.as_str()),
+        "json" => deserialize_from_json_str::<Configuration>(input_code.as_str()),
         _ => {
             panic!("Extension not supported");
         }

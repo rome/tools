@@ -3,11 +3,10 @@ use crate::VERSION;
 use bpaf::{Bpaf, OptionParser};
 use rome_service::configuration::vcs::VcsConfiguration;
 use rome_service::configuration::{
-    files_configuration, formatter_configuration, javascript::javascript_formatter,
-    rome_configuration, vcs::vcs_configuration, FilesConfiguration, FormatterConfiguration,
-    JavascriptFormatter,
+    configuration, files_configuration, formatter_configuration, javascript::javascript_formatter,
+    vcs::vcs_configuration, FilesConfiguration, FormatterConfiguration, JavascriptFormatter,
 };
-use rome_service::RomeConfiguration;
+use rome_service::Configuration;
 use std::ffi::OsString;
 
 pub(crate) mod check;
@@ -47,7 +46,7 @@ pub enum RomeCommand {
         #[bpaf(long("apply-unsafe"), switch)]
         apply_unsafe: bool,
         #[bpaf(external, hide_usage, optional)]
-        rome_configuration: Option<RomeConfiguration>,
+        configuration: Option<Configuration>,
         #[bpaf(external, hide_usage)]
         cli_options: CliOptions,
         /// Single file, single path or list of paths
@@ -97,7 +96,7 @@ pub enum RomeCommand {
         organize_imports_enabled: Option<bool>,
 
         #[bpaf(external, hide_usage)]
-        rome_configuration: RomeConfiguration,
+        configuration: Configuration,
         #[bpaf(external, hide_usage)]
         cli_options: CliOptions,
 
