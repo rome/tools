@@ -11,8 +11,8 @@ use serde::{Deserialize, Serialize};
 #[serde(default, deny_unknown_fields)]
 pub struct JavascriptConfiguration {
     #[serde(skip_serializing_if = "Option::is_none")]
-    #[bpaf(external, optional)]
-    pub javascript_formatter: Option<JavascriptFormatter>,
+    #[bpaf(external(javascript_formatter), optional)]
+    pub formatter: Option<JavascriptFormatter>,
 
     /// A list of global bindings that should be ignored by the analyzers
     ///
@@ -22,15 +22,15 @@ pub struct JavascriptConfiguration {
     pub globals: Option<StringSet>,
     //
     #[serde(skip_serializing_if = "Option::is_none")]
-    #[bpaf(external, optional)]
-    pub javascript_organize_imports: Option<JavascriptOrganizeImports>,
+    #[bpaf(external(javascript_organize_imports), optional)]
+    pub organize_imports: Option<JavascriptOrganizeImports>,
 }
 
 impl MergeWith<JavascriptConfiguration> for JavascriptConfiguration {
     fn merge_with(&mut self, other: JavascriptConfiguration) {
-        if let Some(other_formatter) = other.javascript_formatter {
+        if let Some(other_formatter) = other.formatter {
             let formatter = self
-                .javascript_formatter
+                .formatter
                 .get_or_insert_with(JavascriptFormatter::default);
             formatter.merge_with(other_formatter);
         }
@@ -41,7 +41,7 @@ impl MergeWith<Option<JavascriptFormatter>> for JavascriptConfiguration {
     fn merge_with(&mut self, other: Option<JavascriptFormatter>) {
         if let Some(other_formatter) = other {
             let formatter = self
-                .javascript_formatter
+                .formatter
                 .get_or_insert_with(JavascriptFormatter::default);
             formatter.merge_with(other_formatter);
         }
@@ -54,7 +54,7 @@ impl JavascriptConfiguration {
 
     pub fn with_formatter() -> Self {
         Self {
-            javascript_formatter: Some(JavascriptFormatter::default()),
+            formatter: Some(JavascriptFormatter::default()),
             ..JavascriptConfiguration::default()
         }
     }

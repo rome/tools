@@ -120,12 +120,12 @@ pub enum RomeCommand {
         bool,
     ),
 
-    #[bpaf(command, hide)]
+    #[bpaf(command("__run_server"), hide)]
     RunServer {
         #[bpaf(long("stop-on-disconnect"), hide_usage)]
         stop_on_disconnect: bool,
     },
-    #[bpaf(command, hide)]
+    #[bpaf(command("__print_socket"), hide)]
     PrintSocket,
 }
 

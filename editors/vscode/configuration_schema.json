@@ -401,17 +401,17 @@
 		"JavascriptConfiguration": {
 			"type": "object",
 			"properties": {
-				"globals": {
-					"description": "A list of global bindings that should be ignored by the analyzers\n\nIf defined here, they should not emit diagnostics.",
-					"anyOf": [{ "$ref": "#/definitions/StringSet" }, { "type": "null" }]
-				},
-				"javascript_formatter": {
+				"formatter": {
 					"anyOf": [
 						{ "$ref": "#/definitions/JavascriptFormatter" },
 						{ "type": "null" }
 					]
 				},
-				"javascript_organize_imports": {
+				"globals": {
+					"description": "A list of global bindings that should be ignored by the analyzers\n\nIf defined here, they should not emit diagnostics.",
+					"anyOf": [{ "$ref": "#/definitions/StringSet" }, { "type": "null" }]
+				},
+				"organize_imports": {
 					"anyOf": [
 						{ "$ref": "#/definitions/JavascriptOrganizeImports" },
 						{ "type": "null" }

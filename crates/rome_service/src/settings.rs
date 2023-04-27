@@ -73,7 +73,7 @@ impl WorkspaceSettings {
         let javascript = configuration.javascript;
         if let Some(javascript) = javascript {
             self.languages.javascript.globals = javascript.globals.map(|g| g.into_index_set());
-            let formatter = javascript.javascript_formatter;
+            let formatter = javascript.formatter;
             if let Some(formatter) = formatter {
                 self.languages.javascript.formatter.quote_style = formatter.quote_style;
                 self.languages.javascript.formatter.quote_properties = formatter.quote_properties;
@@ -81,7 +81,7 @@ impl WorkspaceSettings {
                 self.languages.javascript.formatter.semicolons = formatter.semicolons;
             }
 
-            let organize_imports = javascript.javascript_organize_imports;
+            let organize_imports = javascript.organize_imports;
             if let Some(_organize_imports) = organize_imports {}
         }
 

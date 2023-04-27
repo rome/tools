@@ -88,14 +88,14 @@ export interface FormatterConfiguration {
 	lineWidth?: LineWidth;
 }
 export interface JavascriptConfiguration {
+	formatter?: JavascriptFormatter;
 	/**
 	* A list of global bindings that should be ignored by the analyzers
 
 If defined here, they should not emit diagnostics. 
 	 */
 	globals?: StringSet;
-	javascript_formatter?: JavascriptFormatter;
-	javascript_organize_imports?: JavascriptOrganizeImports;
+	organize_imports?: JavascriptOrganizeImports;
 }
 export interface LinterConfiguration {
 	/**
