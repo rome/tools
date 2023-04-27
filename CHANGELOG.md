@@ -8,6 +8,7 @@
 
 #### New rules
 
+- [`useGroupedTypeImport`](https://docs.rome.tools/lint/rules/useGroupedTypeImport/)
 - [`noUselessConstructor`](https://docs.rome.tools/lint/rules/noUselessConstructor/)
 - [`useLiteralEnumMembers`](https://docs.rome.tools/lint/rules/useLiteralEnumMembers/)
 

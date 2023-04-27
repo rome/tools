@@ -573,6 +573,10 @@ export interface Nursery {
 	 */
 	useExhaustiveDependencies?: RuleConfiguration;
 	/**
+	 * Enforce the use of import type when an import only has specifiers with type qualifier.
+	 */
+	useGroupedTypeImport?: RuleConfiguration;
+	/**
 	 * Enforce that all React hooks are being called from the Top Level component functions.
 	 */
 	useHookAtTopLevel?: RuleConfiguration;
@@ -1016,6 +1020,7 @@ export type Category =
 	| "lint/nursery/useLiteralKeys"
 	| "lint/nursery/noUselessConstructor"
 	| "lint/nursery/useLiteralEnumMembers"
+	| "lint/nursery/useGroupedTypeImport"
 	| "lint/nursery/noRedeclare"
 	| "lint/nursery/useNamespaceKeyword"
 	| "lint/nursery/noRedundantRoles"
