@@ -45,13 +45,13 @@ fn main() -> ExitCode {
             }
         }
         Err(failure) => {
-            if let ParseFailure::Stdout(help) = &failure {
+            return if let ParseFailure::Stdout(help) = &failure {
                 console.log(markup! {{help}});
-                return ExitCode::SUCCESS;
+                ExitCode::SUCCESS
             } else {
                 let diagnostic = CliDiagnostic::parse_error_bpaf(failure);
                 console.error(markup! { {PrintDiagnostic::simple(&diagnostic)}});
-                return ExitCode::FAILURE;
+                ExitCode::FAILURE
             }
         }
     }

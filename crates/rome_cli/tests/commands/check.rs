@@ -772,9 +772,9 @@ fn fs_error_dereferenced_symlink() {
 
     #[allow(unused_must_use)]
     {
-        remove_dir_all(root_path.clone().display().to_string().as_str());
+        remove_dir_all(root_path.display().to_string().as_str());
     }
-    create_dir(root_path.clone().display().to_string().as_str()).unwrap();
+    create_dir(root_path.display().to_string().as_str()).unwrap();
     create_dir(subdir_path).unwrap();
 
     #[cfg(target_family = "unix")]
@@ -793,7 +793,7 @@ fn fs_error_dereferenced_symlink() {
     let result = run_cli(
         DynRef::Owned(Box::new(OsFileSystem)),
         &mut console,
-        Args::from(&[("check"), root_path.clone().display().to_string().as_str()]),
+        Args::from(&[("check"), root_path.display().to_string().as_str()]),
     );
 
     remove_dir_all(root_path).unwrap();
@@ -820,9 +820,9 @@ fn fs_error_infinite_symlink_exapansion() {
 
     #[allow(unused_must_use)]
     {
-        remove_dir_all(root_path.clone().display().to_string().as_str());
+        remove_dir_all(root_path.display().to_string().as_str());
     }
-    create_dir(root_path.clone().display().to_string().as_str()).unwrap();
+    create_dir(root_path.display().to_string().as_str()).unwrap();
     create_dir(subdir1_path.clone()).unwrap();
 
     create_dir_all(subdir2_path.clone()).unwrap();
@@ -848,10 +848,7 @@ fn fs_error_infinite_symlink_exapansion() {
     let result = run_cli(
         DynRef::Owned(Box::new(OsFileSystem)),
         &mut console,
-        Args::from(&[
-            ("check"),
-            (root_path.clone().display().to_string().as_str()),
-        ]),
+        Args::from(&[("check"), (root_path.display().to_string().as_str())]),
     );
 
     remove_dir_all(root_path).unwrap();
@@ -958,9 +955,9 @@ fn fs_files_ignore_symlink() {
 
     #[allow(unused_must_use)]
     {
-        remove_dir_all(root_path.clone().display().to_string().as_str());
+        remove_dir_all(root_path.display().to_string().as_str());
     }
-    create_dir(root_path.clone().display().to_string().as_str()).unwrap();
+    create_dir(root_path.display().to_string().as_str()).unwrap();
     create_dir(src_path.clone()).unwrap();
     create_dir_all(testcase1_sub_path.clone()).unwrap();
     create_dir(testcase2_path.clone()).unwrap();
@@ -1017,7 +1014,7 @@ fn fs_files_ignore_symlink() {
         Args::from(&[
             ("check"),
             ("--config-path"),
-            (root_path.clone().display().to_string().as_str()),
+            (root_path.display().to_string().as_str()),
             ("--apply-unsafe"),
             (src_path.display().to_string().as_str()),
         ]),

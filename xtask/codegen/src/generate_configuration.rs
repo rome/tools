@@ -413,13 +413,8 @@ fn generate_struct(group: &str, rules: &BTreeMap<&'static str, RuleMetadata>) ->
         });
         schema_lines_rules.push(quote! {
             #[doc = #summary]
+            #[bpaf(long(#rule_cli_identifier), argument("on|off|warn"), optional, hide)]
             #[serde(skip_serializing_if = "Option::is_none")]
-            #[bpaf(
-                long(#rule_cli_identifier),
-                argument("on|off|warn"),
-                optional,
-                hide
-            )]
             pub #rule_identifier: Option<RuleConfiguration>
         });
 
