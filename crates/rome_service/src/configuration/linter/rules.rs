@@ -1565,6 +1565,12 @@ pub struct Nursery {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub use_is_nan: Option<RuleConfiguration>,
     #[doc = "Require all enum members to be literal values."]
+    #[bpaf(
+        long("use-literal-enum-members"),
+        argument("on|off|warn"),
+        optional,
+        hide
+    )]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub use_literal_enum_members: Option<RuleConfiguration>,
     #[doc = "Enforce the usage of a literal access to properties over computed property access."]
