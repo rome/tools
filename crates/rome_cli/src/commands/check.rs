@@ -67,7 +67,6 @@ pub(crate) fn check(
         &cli_options,
     )?;
 
-    dbg!(&fs_configuration);
     session
         .app
         .workspace
