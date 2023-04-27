@@ -7,10 +7,10 @@ expression: content
 ```block
 flags/invalid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Cannot parse the argument --semicolons
+  × Failed to parse CLI arguments.
     
     Caused by:
-      failed to parse 'asneed': Value not supported for Semicolons. Supported values are 'as-needed' and 'always'.
+      Couldn't parse "asneed": Value not supported for Semicolons. Supported values are 'as-needed' and 'always'.
   
 
 

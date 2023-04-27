@@ -20,33 +20,39 @@ use std::str::FromStr;
 pub struct LinterConfiguration {
     /// if `false`, it disables the feature and the linter won't be executed. `true` by default
     #[bpaf(hide)]
-    pub enabled: bool,
+    pub enabled: Option<bool>,
 
     /// List of rules
     #[serde(skip_serializing_if = "Option::is_none")]
-    #[bpaf(external, optional)]
+    #[bpaf(external, optional, hide)]
     pub rules: Option<Rules>,
 
     /// A list of Unix shell style patterns. The formatter will ignore files/folders that will
     /// match these patterns.
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(hide)]
     pub ignore: Option<StringSet>,
 }
 
 impl MergeWith<LinterConfiguration> for LinterConfiguration {
     fn merge_with(&mut self, other: LinterConfiguration) {
-        self.enabled = other.enabled;
+        if let Some(enabled) = other.enabled {
+            self.enabled = Some(enabled);
+        }
     }
 }
 
 impl LinterConfiguration {
+    pub const fn is_disabled(&self) -> bool {
+        matches!(self.enabled, Some(false))
+    }
     pub(crate) const KNOWN_KEYS: &'static [&'static str] = &["enabled", "rules", "ignore"];
 }
 
 impl Default for LinterConfiguration {
     fn default() -> Self {
         Self {
-            enabled: true,
+            enabled: Some(true),
             rules: Some(Rules::default()),
             ignore: None,
         }
@@ -75,7 +81,7 @@ impl TryFrom<LinterConfiguration> for LinterSettings {
             }
         }
         Ok(Self {
-            enabled: conf.enabled,
+            enabled: conf.enabled.unwrap_or_default(),
             rules: conf.rules,
             ignored_files: matcher,
         })
@@ -89,6 +95,16 @@ pub enum RuleConfiguration {
     Plain(RulePlainConfiguration),
     WithOptions(RuleWithOptions),
 }
+
+impl FromStr for RuleConfiguration {
+    type Err = String;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let result = RulePlainConfiguration::from_str(s)?;
+        Ok(Self::Plain(result))
+    }
+}
+
 impl RuleConfiguration {
     pub fn is_err(&self) -> bool {
         if let Self::WithOptions(rule) = self {

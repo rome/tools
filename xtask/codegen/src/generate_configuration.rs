@@ -133,7 +133,6 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
         #[cfg(feature = "schemars")]
         use schemars::JsonSchema;
         use crate::RuleConfiguration;
-        use crate::configuration::linter::rule_configuration;
         use rome_analyze::RuleFilter;
         use indexmap::IndexSet;
         use bpaf::Bpaf;
@@ -390,6 +389,7 @@ fn generate_struct(group: &str, rules: &BTreeMap<&'static str, RuleMetadata>) ->
 
         let rule_position = Literal::u8_unsuffixed(index as u8);
         let rule_identifier = Ident::new(&to_lower_snake_case(rule), Span::call_site());
+        let rule_cli_identifier = Literal::string(&to_lower_snake_case(rule).to_dashed());
         let declaration = quote! {
             #[serde(skip_serializing_if = "RuleConfiguration::is_err")]
             pub #rule_identifier: RuleConfiguration
@@ -414,7 +414,12 @@ fn generate_struct(group: &str, rules: &BTreeMap<&'static str, RuleMetadata>) ->
         schema_lines_rules.push(quote! {
             #[doc = #summary]
             #[serde(skip_serializing_if = "Option::is_none")]
-            #[bpaf(external(rule_configuration), optional, hide)]
+            #[bpaf(
+                long(#rule_cli_identifier),
+                argument("on|off|warn"),
+                optional,
+                hide
+            )]
             pub #rule_identifier: Option<RuleConfiguration>
         });
 

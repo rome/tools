@@ -6,19 +6,21 @@ use crate::{execute_mode, CliDiagnostic, CliSession, Execution, TraversalMode};
 use rome_console::{markup, ConsoleExt};
 use rome_diagnostics::{DiagnosticExt, PrintDiagnostic, Severity};
 use rome_service::configuration::vcs::VcsConfiguration;
-use rome_service::configuration::FormatterConfiguration;
+use rome_service::configuration::{FilesConfiguration, FormatterConfiguration};
 use rome_service::workspace::UpdateSettingsParams;
 use rome_service::{JavascriptFormatter, MergeWith};
+use std::ffi::OsString;
 use std::path::PathBuf;
 
 pub(crate) struct FormatCommandPayload {
     pub(crate) javascript_formatter: Option<JavascriptFormatter>,
     pub(crate) formatter_configuration: Option<FormatterConfiguration>,
     pub(crate) vcs_configuration: Option<VcsConfiguration>,
+    pub(crate) files_configuration: Option<FilesConfiguration>,
     pub(crate) stdin_file_path: Option<String>,
     pub(crate) write: bool,
     pub(crate) cli_options: CliOptions,
-    pub(crate) paths: Vec<PathBuf>,
+    pub(crate) paths: Vec<OsString>,
 }
 
 /// Handler for the "format" command of the Rome CLI
@@ -33,6 +35,7 @@ pub(crate) fn format(
         paths,
         cli_options,
         stdin_file_path,
+        files_configuration,
         write,
     } = payload;
     let (mut configuration, diagnostics, configuration_path) =
@@ -49,9 +52,11 @@ pub(crate) fn format(
             })
         }
     }
+
     configuration.merge_with(javascript_formatter);
     configuration.merge_with(formatter_configuration);
     configuration.merge_with(vcs_configuration);
+    configuration.merge_with(files_configuration);
 
     // check if support of git ignore files is enabled
     let vcs_base_path = configuration_path.or(session.app.fs.working_directory());
@@ -80,23 +85,22 @@ pub(crate) fn format(
         None
     };
 
-    let execution =
-	// 	cli_options.json {
-    //     Execution::with_report(
-    //         TraversalMode::Format {
-    //             ignore_errors: cli_options.skip_errors,
-    //             write,
-    //             stdin,
-    //         },
-    //         ReportMode::Json,
-    //     )
-    // } else {
+    let execution = if cli_options.json {
+        Execution::with_report(
+            TraversalMode::Format {
+                ignore_errors: cli_options.skip_errors,
+                write,
+                stdin,
+            },
+            ReportMode::Json,
+        )
+    } else {
         Execution::new(TraversalMode::Format {
             ignore_errors: cli_options.skip_errors,
             write,
             stdin,
-        });
-    // };
+        })
+    };
 
     execute_mode(execution, session, &cli_options, paths)
 }

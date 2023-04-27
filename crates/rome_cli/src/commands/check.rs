@@ -6,14 +6,14 @@ use rome_console::{markup, ConsoleExt};
 use rome_diagnostics::{DiagnosticExt, PrintDiagnostic, Severity};
 use rome_service::workspace::{FixFileMode, UpdateSettingsParams};
 use rome_service::{MergeWith, RomeConfiguration};
-use std::path::PathBuf;
+use std::ffi::OsString;
 
 pub(crate) struct CheckCommandPayload {
     pub(crate) apply: bool,
     pub(crate) apply_unsafe: bool,
     pub(crate) cli_options: CliOptions,
-    pub(crate) configuration: RomeConfiguration,
-    pub(crate) paths: Vec<PathBuf>,
+    pub(crate) configuration: Option<RomeConfiguration>,
+    pub(crate) paths: Vec<OsString>,
 }
 
 /// Handler for the "check" command of the Rome CLI
@@ -67,6 +67,7 @@ pub(crate) fn check(
         &cli_options,
     )?;
 
+    dbg!(&fs_configuration);
     session
         .app
         .workspace

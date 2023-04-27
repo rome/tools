@@ -7,11 +7,10 @@ use crate::snap_test::{markup_to_string, SnapshotPayload};
 use crate::{
     assert_cli_snapshot, run_cli, CUSTOM_FORMAT_BEFORE, FORMATTED, LINT_ERROR, UNFORMATTED,
 };
-use pico_args::Arguments;
+use bpaf::Args;
 use rome_console::{markup, BufferConsole, MarkupBuf};
 use rome_fs::{FileSystemExt, MemoryFileSystem};
 use rome_service::DynRef;
-use std::ffi::OsString;
 use std::path::{Path, PathBuf};
 
 // six spaces
@@ -76,7 +75,7 @@ fn print() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![OsString::from("format"), file_path.as_os_str().into()]),
+        Args::from(&[("format"), file_path.as_os_str().to_str().unwrap()]),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -112,10 +111,10 @@ fn write() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("format"),
-            OsString::from("--write"),
-            file_path.as_os_str().into(),
+        Args::from(&[
+            ("format"),
+            ("--write"),
+            file_path.as_os_str().to_str().unwrap(),
         ]),
     );
 
@@ -160,11 +159,7 @@ fn write_only_files_in_correct_base() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("format"),
-            OsString::from("--write"),
-            OsString::from("./src"),
-        ]),
+        Args::from(&[("format"), ("--write"), ("./src")]),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -210,7 +205,7 @@ fn lint_warning() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![OsString::from("format"), file_path.as_os_str().into()]),
+        Args::from(&[("format"), file_path.as_os_str().to_str().unwrap()]),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -264,12 +259,15 @@ fn custom_config_file_path() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("format"),
-            OsString::from("--config-path"),
-            OsString::from(config_path),
-            OsString::from("--write"),
-            file_path.as_os_str().into(),
+        Args::from(&[
+            ("format"),
+            format!(
+                "--config-path={}",
+                config_path.display().to_string().as_str()
+            )
+            .as_str(),
+            ("--write"),
+            file_path.as_os_str().to_str().unwrap(),
         ]),
     );
 
@@ -310,12 +308,12 @@ fn invalid_config_file_path() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("format"),
-            OsString::from("--config-path"),
-            OsString::from(config_path),
-            OsString::from("--write"),
-            file_path.as_os_str().into(),
+        Args::from(&[
+            ("format"),
+            ("--config-path"),
+            (config_path.display().to_string().as_str()),
+            ("--write"),
+            file_path.as_os_str().to_str().unwrap(),
         ]),
     );
 
@@ -341,16 +339,16 @@ fn applies_custom_configuration() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("format"),
-            OsString::from("--line-width"),
-            OsString::from("10"),
-            OsString::from("--indent-style"),
-            OsString::from("space"),
-            OsString::from("--indent-size"),
-            OsString::from("8"),
-            OsString::from("--write"),
-            file_path.as_os_str().into(),
+        Args::from(&[
+            ("format"),
+            ("--line-width"),
+            ("10"),
+            ("--indent-style"),
+            ("space"),
+            ("--indent-size"),
+            ("8"),
+            ("--write"),
+            file_path.as_os_str().to_str().unwrap(),
         ]),
     );
 
@@ -390,16 +388,16 @@ fn applies_custom_configuration_over_config_file() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("format"),
-            OsString::from("--line-width"),
-            OsString::from("10"),
-            OsString::from("--indent-style"),
-            OsString::from("space"),
-            OsString::from("--indent-size"),
-            OsString::from("8"),
-            OsString::from("--write"),
-            file_path.as_os_str().into(),
+        Args::from(&[
+            ("format"),
+            ("--line-width"),
+            ("10"),
+            ("--indent-style"),
+            ("space"),
+            ("--indent-size"),
+            ("8"),
+            ("--write"),
+            file_path.as_os_str().to_str().unwrap(),
         ]),
     );
 
@@ -439,11 +437,11 @@ fn applies_custom_configuration_over_config_file_issue_3175_v1() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("format"),
-            OsString::from("--quote-style"),
-            OsString::from("single"),
-            file_path.as_os_str().into(),
+        Args::from(&[
+            ("format"),
+            ("--quote-style"),
+            ("single"),
+            file_path.as_os_str().to_str().unwrap(),
         ]),
     );
 
@@ -488,11 +486,11 @@ fn applies_custom_configuration_over_config_file_issue_3175_v2() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("format"),
-            OsString::from("--indent-style"),
-            OsString::from("space"),
-            file_path.as_os_str().into(),
+        Args::from(&[
+            ("format"),
+            ("--indent-style"),
+            ("space"),
+            file_path.as_os_str().to_str().unwrap(),
         ]),
     );
 
@@ -529,14 +527,14 @@ fn applies_custom_quote_style() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("format"),
-            OsString::from("--quote-style"),
-            OsString::from("single"),
-            OsString::from("--quote-properties"),
-            OsString::from("preserve"),
-            OsString::from("--write"),
-            file_path.as_os_str().into(),
+        Args::from(&[
+            ("format"),
+            ("--quote-style"),
+            ("single"),
+            ("--quote-properties"),
+            ("preserve"),
+            ("--write"),
+            file_path.as_os_str().to_str().unwrap(),
         ]),
     );
 
@@ -573,12 +571,12 @@ fn applies_custom_trailing_comma() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("format"),
-            OsString::from("--trailing-comma"),
-            OsString::from("none"),
-            OsString::from("--write"),
-            file_path.as_os_str().into(),
+        Args::from(&[
+            ("format"),
+            ("--trailing-comma"),
+            ("none"),
+            ("--write"),
+            file_path.as_os_str().to_str().unwrap(),
         ]),
     );
 
@@ -612,12 +610,7 @@ fn trailing_comma_parse_errors() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("format"),
-            OsString::from("--trailing-comma"),
-            OsString::from("NONE"),
-            OsString::from("file.js"),
-        ]),
+        Args::from(&[("format"), ("--trailing-comma"), ("NONE"), ("file.js")]),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -642,12 +635,11 @@ fn with_semicolons_options() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("format"),
-            OsString::from("--semicolons"),
-            OsString::from("as-needed"),
-            OsString::from("--write"),
-            file_path.as_os_str().into(),
+        Args::from(&[
+            ("format"),
+            ("--semicolons=as-needed"),
+            ("--write"),
+            file_path.as_os_str().to_str().unwrap(),
         ]),
     );
 
@@ -681,12 +673,7 @@ fn with_invalid_semicolons_option() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("format"),
-            OsString::from("--semicolons"),
-            OsString::from("asneed"),
-            OsString::from("file.js"),
-        ]),
+        Args::from(&[("format"), ("--semicolons"), ("asneed"), ("file.js")]),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -708,12 +695,7 @@ fn indent_style_parse_errors() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("format"),
-            OsString::from("--indent-style"),
-            OsString::from("invalid"),
-            OsString::from("file.js"),
-        ]),
+        Args::from(&[("format"), ("--indent-style"), ("invalid"), ("file.js")]),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -735,12 +717,7 @@ fn indent_size_parse_errors_negative() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("format"),
-            OsString::from("--indent-size"),
-            OsString::from("-1"),
-            OsString::from("file.js"),
-        ]),
+        Args::from(&[("format"), ("--indent-size=-1"), ("file.js")]),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -762,12 +739,7 @@ fn indent_size_parse_errors_overflow() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("format"),
-            OsString::from("--indent-size"),
-            OsString::from("257"),
-            OsString::from("file.js"),
-        ]),
+        Args::from(&[("format"), ("--indent-size=257"), ("file.js")]),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -789,12 +761,7 @@ fn line_width_parse_errors_negative() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("format"),
-            OsString::from("--line-width"),
-            OsString::from("-1"),
-            OsString::from("file.js"),
-        ]),
+        Args::from(&["format", "--line-width=-1", "file.js"]),
     );
     assert!(result.is_err(), "run_cli returned {result:?}");
 
@@ -815,12 +782,7 @@ fn line_width_parse_errors_overflow() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("format"),
-            OsString::from("--line-width"),
-            OsString::from("321"),
-            OsString::from("file.js"),
-        ]),
+        Args::from(&[("format"), ("--line-width"), ("321"), ("file.js")]),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -842,11 +804,11 @@ fn quote_properties_parse_errors_letter_case() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("format"),
-            OsString::from("--quote-properties"),
-            OsString::from("As-needed"),
-            OsString::from("file.js"),
+        Args::from(&[
+            ("format"),
+            ("--quote-properties"),
+            ("As-needed"),
+            ("file.js"),
         ]),
     );
 
@@ -874,11 +836,7 @@ fn format_with_configuration() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("format"),
-            OsString::from("file.js"),
-            OsString::from("--write"),
-        ]),
+        Args::from(&[("format"), ("file.js"), ("--write")]),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -916,11 +874,7 @@ fn format_is_disabled() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("format"),
-            OsString::from("file.js"),
-            OsString::from("--write"),
-        ]),
+        Args::from(&[("format"), ("file.js"), ("--write")]),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -957,11 +911,7 @@ fn format_stdin_successfully() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("format"),
-            OsString::from("--stdin-file-path"),
-            OsString::from("mock.js"),
-        ]),
+        Args::from(&[("format"), ("--stdin-file-path"), ("mock.js")]),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -994,11 +944,7 @@ fn format_stdin_with_errors() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("format"),
-            OsString::from("--stdin-file-path"),
-            OsString::from("mock.js"),
-        ]),
+        Args::from(&[("format"), ("--stdin-file-path"), ("mock.js")]),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1027,11 +973,7 @@ fn does_not_format_if_disabled() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("format"),
-            OsString::from("--stdin-file-path"),
-            OsString::from("mock.js"),
-        ]),
+        Args::from(&[("format"), ("--stdin-file-path"), ("mock.js")]),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -1069,11 +1011,7 @@ fn does_not_format_ignored_files() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("format"),
-            OsString::from("test.js"),
-            OsString::from("--write"),
-        ]),
+        Args::from(&[("format"), ("test.js"), ("--write")]),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1118,11 +1056,11 @@ fn does_not_format_if_files_are_listed_in_ignore_option() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("format"),
-            file_path_test1.as_os_str().into(),
-            file_path_test2.as_os_str().into(),
-            OsString::from("--write"),
+        Args::from(&[
+            ("format"),
+            file_path_test1.as_os_str().to_str().unwrap(),
+            file_path_test2.as_os_str().to_str().unwrap(),
+            ("--write"),
         ]),
     );
 
@@ -1184,11 +1122,7 @@ fn does_not_format_ignored_directories() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("format"),
-            OsString::from("./"),
-            OsString::from("--write"),
-        ]),
+        Args::from(&[("format"), ("./"), ("--write")]),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -1234,10 +1168,10 @@ fn fs_error_read_only() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("format"),
-            OsString::from("--write"),
-            file_path.as_os_str().into(),
+        Args::from(&[
+            ("format"),
+            ("--write"),
+            file_path.as_os_str().to_str().unwrap(),
         ]),
     );
 
@@ -1266,10 +1200,10 @@ fn file_too_large() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("format"),
-            file_path.as_os_str().into(),
-            OsString::from("--write"),
+        Args::from(&[
+            ("format"),
+            file_path.as_os_str().to_str().unwrap(),
+            ("--write"),
         ]),
     );
 
@@ -1300,7 +1234,7 @@ fn file_too_large_config_limit() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![OsString::from("format"), file_path.as_os_str().into()]),
+        Args::from(&[("format"), file_path.as_os_str().to_str().unwrap()]),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1325,11 +1259,10 @@ fn file_too_large_cli_limit() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("format"),
-            OsString::from("--files-max-size"),
-            OsString::from("16"),
-            file_path.as_os_str().into(),
+        Args::from(&[
+            ("format"),
+            ("--files-max-size=16"),
+            file_path.as_os_str().to_str().unwrap(),
         ]),
     );
 
@@ -1355,11 +1288,10 @@ fn files_max_size_parse_error() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("format"),
-            OsString::from("--files-max-size"),
-            OsString::from("-1"),
-            file_path.as_os_str().into(),
+        Args::from(&[
+            ("format"),
+            ("--files-max-size=-1"),
+            file_path.as_os_str().to_str().unwrap(),
         ]),
     );
 
@@ -1387,7 +1319,7 @@ fn max_diagnostics_default() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![OsString::from("format"), OsString::from("src")]),
+        Args::from(&[("format"), ("src")]),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -1440,12 +1372,7 @@ fn max_diagnostics() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("format"),
-            OsString::from("--max-diagnostics"),
-            OsString::from("10"),
-            OsString::from("src"),
-        ]),
+        Args::from(&[("format"), ("--max-diagnostics"), ("10"), ("src")]),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -1493,7 +1420,7 @@ fn no_supported_file_found() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![std::ffi::OsString::from("check"), ".".into()]),
+        Args::from(&[("check"), "."]),
     );
 
     eprintln!("{:?}", console.out_buffer);
@@ -1518,10 +1445,10 @@ fn print_verbose() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("format"),
-            OsString::from("--verbose"),
-            file_path.as_os_str().into(),
+        Args::from(&[
+            ("format"),
+            ("--verbose"),
+            file_path.as_os_str().to_str().unwrap(),
         ]),
     );
 
@@ -1583,11 +1510,11 @@ file2.js
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("format"),
-            OsString::from("--write"),
-            file_path1.as_os_str().into(),
-            file_path2.as_os_str().into(),
+        Args::from(&[
+            ("format"),
+            ("--write"),
+            file_path1.as_os_str().to_str().unwrap(),
+            file_path2.as_os_str().to_str().unwrap(),
         ]),
     );
 
@@ -1637,15 +1564,15 @@ file2.js
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("format"),
-            OsString::from("--vcs-enabled=true"),
-            OsString::from("--vcs-client-kind=git"),
-            OsString::from("--vcs-use-ignore-file=true"),
-            OsString::from("--vcs-root=."),
-            OsString::from("--write"),
-            file_path1.as_os_str().into(),
-            file_path2.as_os_str().into(),
+        Args::from(&[
+            ("format"),
+            ("--vcs-enabled=true"),
+            ("--vcs-client-kind=git"),
+            ("--vcs-use-ignore-file=true"),
+            ("--vcs-root=."),
+            ("--write"),
+            file_path1.as_os_str().to_str().unwrap(),
+            file_path2.as_os_str().to_str().unwrap(),
         ]),
     );
 

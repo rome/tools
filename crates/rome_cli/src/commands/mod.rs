@@ -3,17 +3,17 @@ use crate::VERSION;
 use bpaf::{Bpaf, OptionParser};
 use rome_service::configuration::vcs::VcsConfiguration;
 use rome_service::configuration::{
-    formatter_configuration, javascript::javascript_formatter, rome_configuration,
-    vcs::vcs_configuration, FormatterConfiguration, JavascriptFormatter,
+    files_configuration, formatter_configuration, javascript::javascript_formatter,
+    rome_configuration, vcs::vcs_configuration, FilesConfiguration, FormatterConfiguration,
+    JavascriptFormatter,
 };
 use rome_service::RomeConfiguration;
-use std::path::PathBuf;
+use std::ffi::OsString;
 
 pub(crate) mod check;
 pub(crate) mod ci;
 pub(crate) mod daemon;
 pub(crate) mod format;
-pub(crate) mod help;
 pub(crate) mod init;
 pub(crate) mod migrate;
 pub(crate) mod rage;
@@ -46,15 +46,42 @@ pub enum RomeCommand {
         /// Apply safe fixes and unsafe fixes, formatting and import sorting
         #[bpaf(long("apply-unsafe"), switch)]
         apply_unsafe: bool,
-
+        #[bpaf(external, hide_usage, optional)]
+        rome_configuration: Option<RomeConfiguration>,
         #[bpaf(external, hide_usage)]
-        rome_configuration: RomeConfiguration,
+        cli_options: CliOptions,
+        /// Single file, single path or list of paths
+        #[bpaf(positional("PATH"), many)]
+        paths: Vec<OsString>,
+    },
+    /// Run the formatter on a set of files
+    #[bpaf(command)]
+    Format {
+        #[bpaf(external, optional, hide_usage)]
+        formatter_configuration: Option<FormatterConfiguration>,
+
+        #[bpaf(external, optional, hide_usage)]
+        javascript_formatter: Option<JavascriptFormatter>,
+
+        #[bpaf(external, optional, hide_usage)]
+        vcs_configuration: Option<VcsConfiguration>,
+
+        #[bpaf(external, optional, hide_usage)]
+        files_configuration: Option<FilesConfiguration>,
+
+        /// A file name with its extension to pass when reading from standard in, e.g. echo 'let a;' | rome format --stdin-file-path=file.js"
+        #[bpaf(long("stdin-file-path"), argument("PATH"), hide_usage)]
+        stdin_file_path: Option<String>,
+
         #[bpaf(external, hide_usage)]
         cli_options: CliOptions,
 
+        #[bpaf(switch)]
+        write: bool,
+
         /// Single file, single path or list of paths
-        #[bpaf(positional::<PathBuf>("PATH"), many)]
-        paths: Vec<PathBuf>,
+        #[bpaf(positional("PATH"), many)]
+        paths: Vec<OsString>,
     },
     /// Run the linter and check the formatting of a set of files
     #[bpaf(command)]
@@ -79,35 +106,10 @@ pub enum RomeCommand {
         cli_options: CliOptions,
 
         /// Single file, single path or list of paths
-        #[bpaf(positional::<PathBuf>("PATH"), many)]
-        paths: Vec<PathBuf>,
+        #[bpaf(positional("PATH"), many)]
+        paths: Vec<OsString>,
     },
-    /// Run the formatter on a set of files
-    #[bpaf(command)]
-    Format {
-        #[bpaf(external, optional, hide_usage)]
-        formatter_configuration: Option<FormatterConfiguration>,
 
-        #[bpaf(external, optional, hide_usage)]
-        javascript_formatter: Option<JavascriptFormatter>,
-
-        #[bpaf(external, optional, hide_usage)]
-        vcs_configuration: Option<VcsConfiguration>,
-
-        /// A file name with its extension to pass when reading from standard in, e.g. echo 'let a;' | rome format --stdin-file-path=file.js"
-        #[bpaf(long("stdin-file-path"), argument("PATH"), hide_usage)]
-        stdin_file_path: Option<String>,
-
-        #[bpaf(external, hide_usage)]
-        cli_options: CliOptions,
-
-        #[bpaf(switch)]
-        write: bool,
-
-        /// Single file, single path or list of paths
-        #[bpaf(positional::<PathBuf>("PATH"), many)]
-        paths: Vec<PathBuf>,
-    },
     /// Bootstraps a new rome project
     #[bpaf(command)]
     Init,
@@ -122,6 +124,14 @@ pub enum RomeCommand {
         #[bpaf(long("write"), switch)]
         bool,
     ),
+
+    #[bpaf(command, hide)]
+    RunServer {
+        #[bpaf(long("stop-on-disconnect"), hide_usage)]
+        stop_on_disconnect: bool,
+    },
+    #[bpaf(command, hide)]
+    PrintSocket,
 }
 
 impl RomeCommand {
@@ -137,6 +147,8 @@ impl RomeCommand {
             RomeCommand::Init => None,
             RomeCommand::LspProxy => None,
             RomeCommand::Migrate(cli_options, _) => cli_options.colors.as_ref(),
+            RomeCommand::RunServer { .. } => None,
+            RomeCommand::PrintSocket => None,
         }
     }
 
@@ -152,6 +164,8 @@ impl RomeCommand {
             RomeCommand::Init => false,
             RomeCommand::LspProxy => false,
             RomeCommand::Migrate(cli_options, _) => cli_options.use_server,
+            RomeCommand::RunServer { .. } => false,
+            RomeCommand::PrintSocket => false,
         }
     }
 
@@ -173,12 +187,13 @@ mod test {
 
     #[test]
     fn version() {
-        let result = parse_command().run_inner(Args::from(&["migrate", "--write"]));
+        let result =
+            parse_command().run_inner(Args::from(&["check", "--verbose", "./path", "./path"]));
         let help = parse_command().run_inner(Args::from(&["--help"]));
 
         // let result = result.unwrap_err().unwrap_stdout();
 
         println!("{:?}", result);
-        println!("{}", help.unwrap_err().unwrap_stdout());
+        // println!("{}", help.unwrap_err().unwrap_stdout());
     }
 }

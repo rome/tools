@@ -21,7 +21,7 @@ pub struct VcsConfiguration {
 
     /// Whether Rome should use the VCS ignore file. When [true], Rome will ignore the files
     /// specified in the ignore file.
-    #[bpaf(long("vcs-use-ignore-file"), switch)]
+    #[bpaf(long("vcs-use-ignore-file"), argument("true|false"))]
     pub use_ignore_file: Option<bool>,
 
     /// The folder where Rome should check for VCS files. By default, Rome will use the same
@@ -30,16 +30,16 @@ pub struct VcsConfiguration {
     /// If Rome can't fine the configuration, it will attempt to use the current working directory.
     /// If no current working directory can't be found, Rome won't use the VCS integration.
     #[serde(skip_serializing_if = "Option::is_none")]
-    #[bpaf(long("vcs-root"), argument("PATH"))]
+    #[bpaf(long("vcs-root"), argument("PATH"), optional)]
     pub root: Option<String>,
 }
 
 impl VcsConfiguration {
     pub const fn is_enabled(&self) -> bool {
-        !self.is_disabled()
+        matches!(self.enabled, Some(true))
     }
     pub const fn is_disabled(&self) -> bool {
-        matches!(self.enabled, Some(false))
+        !self.is_enabled()
     }
     pub const fn ignore_file_disabled(&self) -> bool {
         matches!(self.use_ignore_file, Some(false))

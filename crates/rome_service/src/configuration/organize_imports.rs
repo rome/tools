@@ -23,7 +23,11 @@ pub struct OrganizeImports {
 
 impl OrganizeImports {
     pub const fn is_disabled(&self) -> bool {
-        matches!(self.enabled, Some(false))
+        !self.is_enabled()
+    }
+
+    pub const fn is_enabled(&self) -> bool {
+        matches!(self.enabled, Some(true))
     }
 }
 

@@ -1,5 +1,5 @@
 use super::process_file::{process_file, DiffKind, FileStatus, Message};
-use crate::cli_options::{cli_options, CliOptions};
+use crate::cli_options::CliOptions;
 use crate::execute::diagnostics::{
     CIFormatDiffDiagnostic, CIOrganizeImportsDiffDiagnostic, ContentDiffAdvice,
     FormatDiffDiagnostic, OrganizeImportsDiffDiagnostic, PanicDiagnostic,
@@ -57,14 +57,11 @@ impl fmt::Display for CheckResult {
 ///
 pub(crate) fn traverse(
     execution: Execution,
-    mut session: CliSession,
+    session: CliSession,
     cli_options: &CliOptions,
-    inputs: Vec<PathBuf>,
+    inputs: Vec<OsString>,
 ) -> Result<(), CliDiagnostic> {
     init_thread_pool();
-
-    // Check that at least one input file / directory was specified in the command line
-    let mut inputs = vec![];
 
     if inputs.is_empty() && execution.as_stdin_file().is_none() {
         return Err(CliDiagnostic::missing_argument(

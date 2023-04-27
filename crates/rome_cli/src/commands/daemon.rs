@@ -1,3 +1,8 @@
+use crate::{
+    open_transport,
+    service::{self, ensure_daemon, open_socket, run_daemon},
+    CliDiagnostic, CliSession,
+};
 use rome_console::{markup, ConsoleExt};
 use rome_lsp::ServerFactory;
 use rome_service::{workspace::WorkspaceClient, TransportError, WorkspaceError};
@@ -12,12 +17,6 @@ use tracing_subscriber::{
     registry, Layer,
 };
 use tracing_tree::HierarchicalLayer;
-
-use crate::{
-    open_transport,
-    service::{self, ensure_daemon, open_socket, run_daemon},
-    CliDiagnostic, CliSession,
-};
 
 pub(crate) fn start(session: CliSession) -> Result<(), CliDiagnostic> {
     let rt = Runtime::new()?;
@@ -58,6 +57,30 @@ pub(crate) fn stop(session: CliSession) -> Result<(), CliDiagnostic> {
     }
 
     Ok(())
+}
+
+pub(crate) fn run_server(stop_on_disconnect: bool) -> Result<(), CliDiagnostic> {
+    setup_tracing_subscriber();
+
+    let rt = Runtime::new()?;
+    let factory = ServerFactory::new(stop_on_disconnect);
+    let cancellation = factory.cancellation();
+    let span = debug_span!("Running Server", pid = std::process::id());
+
+    rt.block_on(async move {
+        tokio::select! {
+            res = run_daemon(factory).instrument(span) => {
+                match res {
+                    Ok(never) => match never {},
+                    Err(err) => Err(err.into()),
+                }
+            }
+            _ = cancellation.notified() => {
+                tracing::info!("Received shutdown signal");
+                Ok(())
+            }
+        }
+    })
 }
 
 pub(crate) fn print_socket() -> Result<(), CliDiagnostic> {

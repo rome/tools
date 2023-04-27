@@ -34,7 +34,7 @@ impl VisitNode<JsonLanguage> for LinterConfiguration {
                     .map(StringSet::new);
             }
             "enabled" => {
-                self.enabled = self.map_to_boolean(&value, name_text, diagnostics)?;
+                self.enabled = self.map_to_boolean(&value, name_text, diagnostics);
             }
             "rules" => {
                 let mut rules = Rules::default();

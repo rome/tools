@@ -10,6 +10,7 @@ use crate::{CliDiagnostic, CliSession};
 use rome_diagnostics::MAXIMUM_DISPLAYABLE_DIAGNOSTICS;
 use rome_fs::RomePath;
 use rome_service::workspace::{FeatureName, FixFileMode};
+use std::ffi::OsString;
 use std::path::PathBuf;
 
 /// Useful information during the traversal of files and virtual content
@@ -79,11 +80,6 @@ impl Execution {
             traversal_mode: mode,
             max_diagnostics: MAXIMUM_DISPLAYABLE_DIAGNOSTICS,
         }
-    }
-
-    pub(crate) fn with_max_diagnostics(mut self, max_diagnostics: u16) -> Self {
-        self.max_diagnostics = max_diagnostics;
-        self
     }
 
     /// Creates an instance of [Execution] by passing [traversal mode](TraversalMode) and [report mode](ReportMode)
@@ -179,9 +175,9 @@ impl Execution {
 /// or handles the stdin file.
 pub(crate) fn execute_mode(
     mut mode: Execution,
-    mut session: CliSession,
+    session: CliSession,
     cli_options: &CliOptions,
-    paths: Vec<PathBuf>,
+    paths: Vec<OsString>,
 ) -> Result<(), CliDiagnostic> {
     mode.max_diagnostics = if let Some(max_diagnostics) = cli_options.max_diagnostics {
         if max_diagnostics > MAXIMUM_DISPLAYABLE_DIAGNOSTICS {

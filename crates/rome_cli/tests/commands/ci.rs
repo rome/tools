@@ -4,11 +4,10 @@ use crate::{
     assert_cli_snapshot, run_cli, CUSTOM_FORMAT_BEFORE, FORMATTED, LINT_ERROR, PARSE_ERROR,
     UNFORMATTED,
 };
-use pico_args::Arguments;
+use bpaf::Args;
 use rome_console::{BufferConsole, MarkupBuf};
 use rome_fs::{FileSystemExt, MemoryFileSystem};
 use rome_service::DynRef;
-use std::ffi::OsString;
 use std::path::{Path, PathBuf};
 
 const INCORRECT_CODE: &str = "let a = !b || !c";
@@ -40,7 +39,7 @@ fn ok() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
+        Args::from(&[("ci"), file_path.as_os_str().to_str().unwrap()]),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -81,7 +80,7 @@ fn formatting_error() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
+        Args::from(&[("ci"), file_path.as_os_str().to_str().unwrap()]),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -106,7 +105,7 @@ fn ci_parse_error() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
+        Args::from(&[("ci"), file_path.as_os_str().to_str().unwrap()]),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -130,7 +129,7 @@ fn ci_lint_error() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
+        Args::from(&[("ci"), file_path.as_os_str().to_str().unwrap()]),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -161,7 +160,7 @@ fn ci_does_not_run_formatter() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![OsString::from("ci"), input_file.as_os_str().into()]),
+        Args::from(&[("ci"), input_file.as_os_str().to_str().unwrap()]),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -197,10 +196,10 @@ fn ci_does_not_run_formatter_via_cli() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("ci"),
-            OsString::from("--formatter-enabled=false"),
-            input_file.as_os_str().into(),
+        Args::from(&[
+            ("ci"),
+            ("--formatter-enabled=false"),
+            input_file.as_os_str().to_str().unwrap(),
         ]),
     );
 
@@ -242,7 +241,7 @@ fn ci_does_not_run_linter() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
+        Args::from(&[("ci"), file_path.as_os_str().to_str().unwrap()]),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -278,10 +277,10 @@ fn ci_does_not_run_linter_via_cli() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("ci"),
-            OsString::from("--linter-enabled=false"),
-            file_path.as_os_str().into(),
+        Args::from(&[
+            ("ci"),
+            ("--linter-enabled=false"),
+            file_path.as_os_str().to_str().unwrap(),
         ]),
     );
 
@@ -322,10 +321,10 @@ import * as something from "../something";
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("ci"),
-            OsString::from("--organize-imports-enabled=false"),
-            file_path.as_os_str().into(),
+        Args::from(&[
+            ("ci"),
+            ("--organize-imports-enabled=false"),
+            file_path.as_os_str().to_str().unwrap(),
         ]),
     );
 
@@ -365,12 +364,12 @@ fn ci_errors_for_all_disabled_checks() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("ci"),
-            OsString::from("--linter-enabled=false"),
-            OsString::from("--formatter-enabled=false"),
-            OsString::from("--organize-imports-enabled=false"),
-            file_path.as_os_str().into(),
+        Args::from(&[
+            ("ci"),
+            ("--linter-enabled=false"),
+            ("--formatter-enabled=false"),
+            ("--organize-imports-enabled=false"),
+            file_path.as_os_str().to_str().unwrap(),
         ]),
     );
 
@@ -407,7 +406,7 @@ fn file_too_large() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
+        Args::from(&[("ci"), file_path.as_os_str().to_str().unwrap()]),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -437,7 +436,7 @@ fn file_too_large_config_limit() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
+        Args::from(&[("ci"), file_path.as_os_str().to_str().unwrap()]),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -462,11 +461,11 @@ fn file_too_large_cli_limit() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("ci"),
-            OsString::from("--files-max-size"),
-            OsString::from("16"),
-            file_path.as_os_str().into(),
+        Args::from(&[
+            ("ci"),
+            ("--files-max-size"),
+            ("16"),
+            file_path.as_os_str().to_str().unwrap(),
         ]),
     );
 
@@ -492,11 +491,11 @@ fn files_max_size_parse_error() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("ci"),
-            OsString::from("--files-max-size"),
-            OsString::from("-1"),
-            file_path.as_os_str().into(),
+        Args::from(&[
+            ("ci"),
+            ("--files-max-size"),
+            ("-1"),
+            file_path.as_os_str().to_str().unwrap(),
         ]),
     );
 
@@ -525,7 +524,7 @@ fn ci_runs_linter_not_formatter_issue_3495() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
+        Args::from(&[("ci"), file_path.as_os_str().to_str().unwrap()]),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -561,7 +560,7 @@ fn max_diagnostics_default() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![OsString::from("ci"), OsString::from("src")]),
+        Args::from(&[("ci"), ("src")]),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -614,12 +613,7 @@ fn max_diagnostics() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("ci"),
-            OsString::from("--max-diagnostics"),
-            OsString::from("10"),
-            OsString::from("src"),
-        ]),
+        Args::from(&[("ci"), ("--max-diagnostics"), ("10"), ("src")]),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -670,10 +664,10 @@ fn print_verbose() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("ci"),
-            OsString::from("--verbose"),
-            file_path.as_os_str().into(),
+        Args::from(&[
+            ("ci"),
+            ("--verbose"),
+            file_path.as_os_str().to_str().unwrap(),
         ]),
     );
 
@@ -722,7 +716,7 @@ something( )
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
+        Args::from(&[("ci"), file_path.as_os_str().to_str().unwrap()]),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -786,10 +780,10 @@ file2.js
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("ci"),
-            file_path1.as_os_str().into(),
-            file_path2.as_os_str().into(),
+        Args::from(&[
+            ("ci"),
+            file_path1.as_os_str().to_str().unwrap(),
+            file_path2.as_os_str().to_str().unwrap(),
         ]),
     );
 
@@ -836,14 +830,14 @@ file2.js
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("ci"),
-            OsString::from("--vcs-enabled=true"),
-            OsString::from("--vcs-client-kind=git"),
-            OsString::from("--vcs-use-ignore-file=true"),
-            OsString::from("--vcs-root=."),
-            file_path1.as_os_str().into(),
-            file_path2.as_os_str().into(),
+        Args::from(&[
+            ("ci"),
+            ("--vcs-enabled=true"),
+            ("--vcs-client-kind=git"),
+            ("--vcs-use-ignore-file=true"),
+            ("--vcs-root=."),
+            file_path1.as_os_str().to_str().unwrap(),
+            file_path2.as_os_str().to_str().unwrap(),
         ]),
     );
 

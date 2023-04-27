@@ -1,5 +1,4 @@
 use bpaf::Bpaf;
-use rome_diagnostics::MAXIMUM_DISPLAYABLE_DIAGNOSTICS;
 use std::str::FromStr;
 
 #[derive(Debug, Clone, Bpaf)]
@@ -9,11 +8,11 @@ pub struct CliOptions {
     pub colors: Option<ColorsArg>,
 
     /// Connect to a running instance of the Rome daemon server.
-    #[bpaf(long("use-server"), switch)]
+    #[bpaf(long("use-server"), switch, fallback(false))]
     pub use_server: bool,
 
     /// Print additional verbose advices on diagnostics
-    #[bpaf(long("verbose"), switch)]
+    #[bpaf(long("verbose"), switch, fallback(false))]
     pub verbose: bool,
 
     /// Set the filesystem path to the directory of the rome.json configuration file
@@ -27,6 +26,10 @@ pub struct CliOptions {
     /// Skip over files containing syntax errors instead of emitting an error diagnostic.
     #[bpaf(long("skip-errors"), switch)]
     pub skip_errors: bool,
+
+    /// Reports information using the JSON format
+    #[bpaf(long("json"), switch, hide_usage)]
+    pub json: bool,
 }
 
 #[derive(Debug, Clone)]
@@ -47,8 +50,4 @@ impl FromStr for ColorsArg {
             )),
         }
     }
-}
-
-fn check_max_diagnostics(number: &u16) -> bool {
-    *number > MAXIMUM_DISPLAYABLE_DIAGNOSTICS
 }

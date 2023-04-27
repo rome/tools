@@ -65,17 +65,17 @@ impl JavascriptConfiguration {
 #[serde(rename_all = "camelCase", default, deny_unknown_fields)]
 pub struct JavascriptFormatter {
     /// The style for quotes. Defaults to double.
-    #[bpaf(long("quote-style"), argument("double|single"))]
-    pub quote_style: QuoteStyle,
+    #[bpaf(long("quote-style"), argument("double|single"), optional)]
+    pub quote_style: Option<QuoteStyle>,
     /// When properties in objects are quoted. Defaults to asNeeded.
-    #[bpaf(long("quote-properties"), argument("preserve|as-needed"))]
-    pub quote_properties: QuoteProperties,
+    #[bpaf(long("quote-properties"), argument("preserve|as-needed"), optional)]
+    pub quote_properties: Option<QuoteProperties>,
     /// Print trailing commas wherever possible in multi-line comma-separated syntactic structures. Defaults to "all".
-    #[bpaf(long("trailing-comma"), argument("all|es5|none"))]
-    pub trailing_comma: TrailingComma,
+    #[bpaf(long("trailing-comma"), argument("all|es5|none"), optional)]
+    pub trailing_comma: Option<TrailingComma>,
     /// Whether the formatter prints semicolons for all statements or only in for statements where it is necessary because of ASI.
-    #[bpaf(long("semicolons"), argument("always|as-needed"))]
-    pub semicolons: Semicolons,
+    #[bpaf(long("semicolons"), argument("always|as-needed"), optional)]
+    pub semicolons: Option<Semicolons>,
 }
 
 impl JavascriptFormatter {
@@ -89,10 +89,18 @@ impl JavascriptFormatter {
 
 impl MergeWith<JavascriptFormatter> for JavascriptFormatter {
     fn merge_with(&mut self, other: JavascriptFormatter) {
-        self.quote_properties = other.quote_properties;
-        self.quote_style = other.quote_style;
-        self.trailing_comma = other.trailing_comma;
-        self.semicolons = other.semicolons;
+        if let Some(quote_properties) = other.quote_properties {
+            self.quote_properties = Some(quote_properties);
+        }
+        if let Some(quote_style) = other.quote_style {
+            self.quote_style = Some(quote_style);
+        }
+        if let Some(semicolons) = other.semicolons {
+            self.semicolons = Some(semicolons);
+        }
+        if let Some(trailing_comma) = other.trailing_comma {
+            self.trailing_comma = Some(trailing_comma);
+        }
     }
 }
 

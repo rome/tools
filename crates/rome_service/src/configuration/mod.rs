@@ -87,7 +87,7 @@ impl Default for RomeConfiguration {
         Self {
             files_configuration: None,
             linter_configuration: Some(LinterConfiguration {
-                enabled: true,
+                enabled: Some(true),
                 ..LinterConfiguration::default()
             }),
             organize_imports: Some(OrganizeImports::default()),
@@ -112,14 +112,14 @@ impl RomeConfiguration {
     pub fn is_formatter_disabled(&self) -> bool {
         self.formatter_configuration
             .as_ref()
-            .map(|f| !f.enabled)
+            .map(|f| f.is_disabled())
             .unwrap_or(false)
     }
 
     pub fn is_linter_disabled(&self) -> bool {
         self.linter_configuration
             .as_ref()
-            .map(|f| !f.enabled)
+            .map(|f| !f.is_disabled())
             .unwrap_or(false)
     }
 
@@ -152,6 +152,14 @@ impl MergeWith<RomeConfiguration> for RomeConfiguration {
         self.merge_with(other_configuration.organize_imports);
         // VCS
         self.merge_with(other_configuration.vcs_configuration);
+    }
+}
+
+impl MergeWith<Option<RomeConfiguration>> for RomeConfiguration {
+    fn merge_with(&mut self, other_configuration: Option<RomeConfiguration>) {
+        if let Some(other_configuration) = other_configuration {
+            self.merge_with(other_configuration);
+        }
     }
 }
 

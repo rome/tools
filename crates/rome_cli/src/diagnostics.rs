@@ -349,10 +349,10 @@ impl CliDiagnostic {
     }
 
     /// To throw when there's been an error while parsing an argument
-    pub fn parse_error_bpaf(message: impl Into<String>, source: bpaf::ParseFailure) -> Self {
+    pub fn parse_error_bpaf(source: bpaf::ParseFailure) -> Self {
         Self::ParseError(ParseDiagnostic {
             source: Some(Error::from(BpafError::from(source))),
-            message: MessageAndDescription::from("".to_string()),
+            message: MessageAndDescription::from("Failed to parse CLI arguments.".to_string()),
         })
     }
 

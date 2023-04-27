@@ -52,7 +52,7 @@ pub(crate) fn read_vcs_ignore_file(
     current_directory: PathBuf,
     configuration: &VcsConfiguration,
 ) -> Result<Vec<String>, CliDiagnostic> {
-    if configuration.is_disabled() {
+    if !configuration.is_enabled() {
         return Ok(vec![]);
     }
     let file_system = &session.app.fs;

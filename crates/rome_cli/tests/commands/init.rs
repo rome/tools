@@ -1,13 +1,12 @@
 use crate::configs::{CONFIG_INIT_DEFAULT, CONFIG_INIT_DEFAULT_WHEN_INSTALLED};
 use crate::run_cli;
 use crate::snap_test::{assert_cli_snapshot, SnapshotPayload};
-use pico_args::Arguments;
+use bpaf::Args;
 use rome_console::BufferConsole;
 use rome_fs::{FileSystemExt, MemoryFileSystem};
 use rome_json_formatter::context::JsonFormatOptions;
 use rome_json_parser::parse_json;
 use rome_service::DynRef;
-use std::ffi::OsString;
 use std::path::Path;
 
 #[test]
@@ -18,7 +17,7 @@ fn creates_config_file() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![OsString::from("init")]),
+        Args::from(&[("init")]),
     );
     assert!(result.is_ok(), "run_cli returned {result:?}");
 
@@ -61,7 +60,7 @@ fn creates_config_file_when_rome_installed_via_package_manager() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![OsString::from("init")]),
+        Args::from(&[("init")]),
     );
     assert!(result.is_ok(), "run_cli returned {result:?}");
 

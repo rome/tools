@@ -1,4 +1,4 @@
-use crate::cli_options::{cli_options, CliOptions};
+use crate::cli_options::CliOptions;
 use crate::vcs::store_path_to_ignore_from_vcs;
 use crate::{
     configuration::load_configuration, execute_mode, CliDiagnostic, CliSession, Execution,
@@ -10,13 +10,13 @@ use rome_service::configuration::organize_imports::OrganizeImports;
 use rome_service::configuration::{FormatterConfiguration, LinterConfiguration};
 use rome_service::workspace::UpdateSettingsParams;
 use rome_service::{MergeWith, RomeConfiguration};
-use std::path::PathBuf;
+use std::ffi::OsString;
 
 pub(crate) struct CiCommandPayload {
     pub(crate) formatter_enabled: bool,
     pub(crate) linter_enabled: bool,
     pub(crate) organize_imports_enabled: bool,
-    pub(crate) paths: Vec<PathBuf>,
+    pub(crate) paths: Vec<OsString>,
     pub(crate) rome_configuration: RomeConfiguration,
     pub(crate) cli_options: CliOptions,
 }
@@ -42,13 +42,13 @@ pub(crate) fn ci(mut session: CliSession, payload: CiCommandPayload) -> Result<(
         .formatter_configuration
         .get_or_insert_with(FormatterConfiguration::default);
 
-    formatter.enabled = payload.formatter_enabled;
+    formatter.enabled = Some(payload.formatter_enabled);
 
     let linter = configuration
         .linter_configuration
         .get_or_insert_with(LinterConfiguration::default);
 
-    linter.enabled = payload.linter_enabled;
+    linter.enabled = Some(payload.linter_enabled);
 
     let organize_imports = configuration
         .organize_imports

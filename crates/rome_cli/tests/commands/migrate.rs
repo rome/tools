@@ -1,10 +1,9 @@
 use crate::run_cli;
 use crate::snap_test::{assert_cli_snapshot, SnapshotPayload};
-use pico_args::Arguments;
+use bpaf::Args;
 use rome_console::BufferConsole;
 use rome_fs::{FileSystemExt, MemoryFileSystem};
 use rome_service::DynRef;
-use std::ffi::OsString;
 use std::path::Path;
 
 #[test]
@@ -20,7 +19,7 @@ fn migrate_config_up_to_date() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![OsString::from("migrate")]),
+        Args::from(&[("migrate")]),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -51,7 +50,7 @@ fn missing_configuration_file() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![OsString::from("migrate")]),
+        Args::from(&[("migrate")]),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
