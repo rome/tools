@@ -168,6 +168,7 @@ impl Display for RageConfiguration<'_, '_> {
             Ok(Some(deserialized)) => {
                 let (deserialized, _) = deserialized;
                 let (configuration, diagnostics) = deserialized.consume();
+                dbg!(&configuration);
                 let status = if !diagnostics.is_empty() {
                     for diagnostic in diagnostics {
                         (markup! {

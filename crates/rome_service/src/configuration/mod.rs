@@ -119,7 +119,7 @@ impl RomeConfiguration {
     pub fn is_linter_disabled(&self) -> bool {
         self.linter_configuration
             .as_ref()
-            .map(|f| !f.is_disabled())
+            .map(|f| f.is_disabled())
             .unwrap_or(false)
     }
 
