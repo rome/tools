@@ -830,6 +830,13 @@
 						{ "type": "null" }
 					]
 				},
+				"useLiteralEnumMembers": {
+					"description": "Require all enum members to be literal values.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"useLiteralKeys": {
 					"description": "Enforce the usage of a literal access to properties over computed property access.",
 					"anyOf": [

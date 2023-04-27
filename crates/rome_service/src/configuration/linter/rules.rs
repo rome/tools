@@ -1564,6 +1564,9 @@ pub struct Nursery {
     #[bpaf(long("use-is-nan"), argument("on|off|warn"), optional, hide)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub use_is_nan: Option<RuleConfiguration>,
+    #[doc = "Require all enum members to be literal values."]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub use_literal_enum_members: Option<RuleConfiguration>,
     #[doc = "Enforce the usage of a literal access to properties over computed property access."]
     #[bpaf(long("use-literal-keys"), argument("on|off|warn"), optional, hide)]
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -1591,7 +1594,7 @@ pub struct Nursery {
 }
 impl Nursery {
     const GROUP_NAME: &'static str = "nursery";
-    pub(crate) const GROUP_RULES: [&'static str; 54] = [
+    pub(crate) const GROUP_RULES: [&'static str; 55] = [
         "noAriaUnsupportedElements",
         "noAssignInExpressions",
         "noBannedTypes",
@@ -1640,6 +1643,7 @@ impl Nursery {
         "useHookAtTopLevel",
         "useIframeTitle",
         "useIsNan",
+        "useLiteralEnumMembers",
         "useLiteralKeys",
         "useMediaCaption",
         "useNamespaceKeyword",
@@ -1647,7 +1651,7 @@ impl Nursery {
         "useValidLang",
         "useYield",
     ];
-    const RECOMMENDED_RULES: [&'static str; 43] = [
+    const RECOMMENDED_RULES: [&'static str; 44] = [
         "noAriaUnsupportedElements",
         "noAssignInExpressions",
         "noBannedTypes",
@@ -1686,13 +1690,14 @@ impl Nursery {
         "useExhaustiveDependencies",
         "useIframeTitle",
         "useIsNan",
+        "useLiteralEnumMembers",
         "useLiteralKeys",
         "useMediaCaption",
         "useValidAriaProps",
         "useValidLang",
         "useYield",
     ];
-    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 43] = [
+    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 44] = [
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[0]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[1]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[2]),
@@ -1733,11 +1738,12 @@ impl Nursery {
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[47]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[48]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[49]),
-        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[51]),
+        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[50]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[52]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[53]),
+        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[54]),
     ];
-    const ALL_RULES_AS_FILTERS: [RuleFilter<'static>; 54] = [
+    const ALL_RULES_AS_FILTERS: [RuleFilter<'static>; 55] = [
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[0]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[1]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[2]),
@@ -1792,6 +1798,7 @@ impl Nursery {
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[51]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[52]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[53]),
+        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[54]),
     ];
     pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     pub(crate) const fn is_not_recommended(&self) -> bool {
@@ -2041,34 +2048,39 @@ impl Nursery {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[47]));
             }
         }
-        if let Some(rule) = self.use_literal_keys.as_ref() {
+        if let Some(rule) = self.use_literal_enum_members.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[48]));
             }
         }
-        if let Some(rule) = self.use_media_caption.as_ref() {
+        if let Some(rule) = self.use_literal_keys.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[49]));
             }
         }
-        if let Some(rule) = self.use_namespace_keyword.as_ref() {
+        if let Some(rule) = self.use_media_caption.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[50]));
             }
         }
-        if let Some(rule) = self.use_valid_aria_props.as_ref() {
+        if let Some(rule) = self.use_namespace_keyword.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[51]));
             }
         }
-        if let Some(rule) = self.use_valid_lang.as_ref() {
+        if let Some(rule) = self.use_valid_aria_props.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[52]));
             }
         }
-        if let Some(rule) = self.use_yield.as_ref() {
+        if let Some(rule) = self.use_valid_lang.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[53]));
+            }
+        }
+        if let Some(rule) = self.use_yield.as_ref() {
+            if rule.is_enabled() {
+                index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[54]));
             }
         }
         index_set
@@ -2315,34 +2327,39 @@ impl Nursery {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[47]));
             }
         }
-        if let Some(rule) = self.use_literal_keys.as_ref() {
+        if let Some(rule) = self.use_literal_enum_members.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[48]));
             }
         }
-        if let Some(rule) = self.use_media_caption.as_ref() {
+        if let Some(rule) = self.use_literal_keys.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[49]));
             }
         }
-        if let Some(rule) = self.use_namespace_keyword.as_ref() {
+        if let Some(rule) = self.use_media_caption.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[50]));
             }
         }
-        if let Some(rule) = self.use_valid_aria_props.as_ref() {
+        if let Some(rule) = self.use_namespace_keyword.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[51]));
             }
         }
-        if let Some(rule) = self.use_valid_lang.as_ref() {
+        if let Some(rule) = self.use_valid_aria_props.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[52]));
             }
         }
-        if let Some(rule) = self.use_yield.as_ref() {
+        if let Some(rule) = self.use_valid_lang.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[53]));
+            }
+        }
+        if let Some(rule) = self.use_yield.as_ref() {
+            if rule.is_disabled() {
+                index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[54]));
             }
         }
         index_set
@@ -2353,10 +2370,10 @@ impl Nursery {
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
     }
-    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 43] {
+    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 44] {
         Self::RECOMMENDED_RULES_AS_FILTERS
     }
-    pub(crate) fn all_rules_as_filters() -> [RuleFilter<'static>; 54] { Self::ALL_RULES_AS_FILTERS }
+    pub(crate) fn all_rules_as_filters() -> [RuleFilter<'static>; 55] { Self::ALL_RULES_AS_FILTERS }
     #[doc = r" Select preset rules"]
     pub(crate) fn collect_preset_rules(
         &self,
@@ -2426,6 +2443,7 @@ impl Nursery {
             "useHookAtTopLevel" => self.use_hook_at_top_level.as_ref(),
             "useIframeTitle" => self.use_iframe_title.as_ref(),
             "useIsNan" => self.use_is_nan.as_ref(),
+            "useLiteralEnumMembers" => self.use_literal_enum_members.as_ref(),
             "useLiteralKeys" => self.use_literal_keys.as_ref(),
             "useMediaCaption" => self.use_media_caption.as_ref(),
             "useNamespaceKeyword" => self.use_namespace_keyword.as_ref(),

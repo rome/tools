@@ -4,6 +4,7 @@ JsModule {
     items: JsModuleItemList [
         JsBogusStatement {
             items: [
+                JsDecoratorList [],
                 EXPORT_KW@0..7 "export" [] [Whitespace(" ")],
                 JsBogus {
                     items: [
@@ -52,8 +53,9 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..33
     0: JS_BOGUS_STATEMENT@0..33
-      0: EXPORT_KW@0..7 "export" [] [Whitespace(" ")]
-      1: JS_BOGUS@7..33
+      0: JS_DECORATOR_LIST@0..0
+      1: EXPORT_KW@0..7 "export" [] [Whitespace(" ")]
+      2: JS_BOGUS@7..33
         0: DEFAULT_KW@7..15 "default" [] [Whitespace(" ")]
         1: TS_ENUM_DECLARATION@15..33
           0: (empty)

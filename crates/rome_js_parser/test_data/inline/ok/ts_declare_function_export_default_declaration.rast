@@ -13,6 +13,7 @@ JsModule {
                     l_curly_token: L_CURLY@19..20 "{" [] [],
                     items: JsModuleItemList [
                         JsExport {
+                            decorators: JsDecoratorList [],
                             export_token: EXPORT_KW@20..30 "export" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
                             export_clause: JsExportDefaultDeclarationClause {
                                 default_token: DEFAULT_KW@30..38 "default" [] [Whitespace(" ")],
@@ -67,6 +68,7 @@ JsModule {
                     l_curly_token: L_CURLY@87..88 "{" [] [],
                     items: JsModuleItemList [
                         JsExport {
+                            decorators: JsDecoratorList [],
                             export_token: EXPORT_KW@88..98 "export" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
                             export_clause: JsExportDefaultDeclarationClause {
                                 default_token: DEFAULT_KW@98..106 "default" [] [Whitespace(" ")],
@@ -130,8 +132,9 @@ JsModule {
           0: L_CURLY@19..20 "{" [] []
           1: JS_MODULE_ITEM_LIST@20..65
             0: JS_EXPORT@20..65
-              0: EXPORT_KW@20..30 "export" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
-              1: JS_EXPORT_DEFAULT_DECLARATION_CLAUSE@30..65
+              0: JS_DECORATOR_LIST@20..20
+              1: EXPORT_KW@20..30 "export" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
+              2: JS_EXPORT_DEFAULT_DECLARATION_CLAUSE@30..65
                 0: DEFAULT_KW@30..38 "default" [] [Whitespace(" ")]
                 1: TS_DECLARE_FUNCTION_EXPORT_DEFAULT_DECLARATION@38..65
                   0: (empty)
@@ -168,8 +171,9 @@ JsModule {
           0: L_CURLY@87..88 "{" [] []
           1: JS_MODULE_ITEM_LIST@88..138
             0: JS_EXPORT@88..138
-              0: EXPORT_KW@88..98 "export" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
-              1: JS_EXPORT_DEFAULT_DECLARATION_CLAUSE@98..138
+              0: JS_DECORATOR_LIST@88..88
+              1: EXPORT_KW@88..98 "export" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
+              2: JS_EXPORT_DEFAULT_DECLARATION_CLAUSE@98..138
                 0: DEFAULT_KW@98..106 "default" [] [Whitespace(" ")]
                 1: TS_DECLARE_FUNCTION_EXPORT_DEFAULT_DECLARATION@106..138
                   0: (empty)

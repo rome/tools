@@ -72,18 +72,4 @@ export class Board {
 }
 ```
 
-# Errors
-```
-typeorm.ts:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × Decorators are not valid here.
-  
-  > 1 │ @Entity()
-      │ ^^^^^^^^^
-    2 │ export class Board {
-    3 │ 
-  
-
-```
-
 

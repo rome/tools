@@ -918,10 +918,15 @@ pub fn js_empty_statement(semicolon_token: SyntaxToken) -> JsEmptyStatement {
         [Some(SyntaxElement::Token(semicolon_token))],
     ))
 }
-pub fn js_export(export_token: SyntaxToken, export_clause: AnyJsExportClause) -> JsExport {
+pub fn js_export(
+    decorators: JsDecoratorList,
+    export_token: SyntaxToken,
+    export_clause: AnyJsExportClause,
+) -> JsExport {
     JsExport::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_EXPORT,
         [
+            Some(SyntaxElement::Node(decorators.into_syntax())),
             Some(SyntaxElement::Token(export_token)),
             Some(SyntaxElement::Node(export_clause.into_syntax())),
         ],

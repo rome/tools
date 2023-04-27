@@ -22,7 +22,7 @@ use crate::syntax::expr::{
 };
 use crate::syntax::function::{is_at_async_function, parse_function_declaration, LineBreak};
 use crate::syntax::js_parse_error;
-use crate::syntax::js_parse_error::{expected_binding, expected_statement};
+use crate::syntax::js_parse_error::{decorators_not_allowed, expected_binding, expected_statement};
 use crate::syntax::module::parse_import_or_import_equals_declaration;
 use crate::syntax::typescript::ts_parse_error::{expected_ts_type, ts_only_syntax_error};
 
@@ -191,7 +191,7 @@ pub(crate) fn parse_statement(p: &mut JsParser, context: StatementContext) -> Pa
         // {
         //  export { pain } from "life";
         // }
-        T![export] => parse_non_top_level_export(p),
+        T![export] => parse_non_top_level_export(p, Absent),
         T![;] => parse_empty_statement(p),
         T!['{'] => parse_block_stmt(p),
         T![if] => parse_if_statement(p),
@@ -226,6 +226,16 @@ pub(crate) fn parse_statement(p: &mut JsParser, context: StatementContext) -> Pa
             let decorator_list = parse_decorators(p);
 
             match p.cur() {
+                T![export] if p.nth_at(1, T![class]) => {
+                    // test_err decorator_export
+                    // function foo() {
+                    //      @decorator
+                    //      export class Foo { }
+                    //      @first.field @second @(() => decorator)()
+                    //      export class Bar {}
+                    // }
+                    parse_non_top_level_export(p, decorator_list)
+                }
                 T![class] => {
                     // test decorator_class_declaration
                     // function foo() {
@@ -260,9 +270,7 @@ pub(crate) fn parse_statement(p: &mut JsParser, context: StatementContext) -> Pa
                     //      function Foo() { }
                     // }
                     decorator_list
-                        .add_diagnostic_if_present(p, |p, range| {
-                            p.err_builder("Decorators are not valid here.", range)
-                        })
+                        .add_diagnostic_if_present(p, decorators_not_allowed)
                         .map(|mut marker| {
                             marker.change_kind(p, JS_BOGUS_STATEMENT);
                             marker
@@ -357,8 +365,11 @@ pub(crate) fn parse_statement(p: &mut JsParser, context: StatementContext) -> Pa
     }
 }
 
-pub(crate) fn parse_non_top_level_export(p: &mut JsParser) -> ParsedSyntax {
-    parse_export(p).map(|mut export| {
+pub(crate) fn parse_non_top_level_export(
+    p: &mut JsParser,
+    decorator_list: ParsedSyntax,
+) -> ParsedSyntax {
+    parse_export(p, decorator_list).map(|mut export| {
         let error = match p.source_type().module_kind() {
             ModuleKind::Module => p
                 .err_builder(

@@ -3,6 +3,7 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsExport {
+            decorators: JsDecoratorList [],
             export_token: EXPORT_KW@0..7 "export" [] [Whitespace(" ")],
             export_clause: JsExportNamedFromClause {
                 type_token: missing (optional),
@@ -31,6 +32,7 @@ JsModule {
             },
         },
         JsExport {
+            decorators: JsDecoratorList [],
             export_token: EXPORT_KW@37..45 "export" [Newline("\n")] [Whitespace(" ")],
             export_clause: JsExportNamedFromClause {
                 type_token: missing (optional),
@@ -59,6 +61,7 @@ JsModule {
             },
         },
         JsExport {
+            decorators: JsDecoratorList [],
             export_token: EXPORT_KW@71..79 "export" [Newline("\n")] [Whitespace(" ")],
             export_clause: JsExportFromClause {
                 type_token: missing (optional),
@@ -73,6 +76,7 @@ JsModule {
             },
         },
         JsExport {
+            decorators: JsDecoratorList [],
             export_token: EXPORT_KW@90..98 "export" [Newline("\n")] [Whitespace(" ")],
             export_clause: JsExportFromClause {
                 type_token: missing (optional),
@@ -92,6 +96,7 @@ JsModule {
             },
         },
         JsExport {
+            decorators: JsDecoratorList [],
             export_token: EXPORT_KW@114..122 "export" [Newline("\n")] [Whitespace(" ")],
             export_clause: JsExportFromClause {
                 type_token: missing (optional),
@@ -111,6 +116,7 @@ JsModule {
             },
         },
         JsExport {
+            decorators: JsDecoratorList [],
             export_token: EXPORT_KW@143..151 "export" [Newline("\n")] [Whitespace(" ")],
             export_clause: JsExportFromClause {
                 type_token: missing (optional),
@@ -136,6 +142,7 @@ JsModule {
             },
         },
         JsExport {
+            decorators: JsDecoratorList [],
             export_token: EXPORT_KW@185..193 "export" [Newline("\n")] [Whitespace(" ")],
             export_clause: JsExportFromClause {
                 type_token: TYPE_KW@193..198 "type" [] [Whitespace(" ")],
@@ -150,6 +157,7 @@ JsModule {
             },
         },
         JsExport {
+            decorators: JsDecoratorList [],
             export_token: EXPORT_KW@213..221 "export" [Newline("\n")] [Whitespace(" ")],
             export_clause: JsExportFromClause {
                 type_token: TYPE_KW@221..226 "type" [] [Whitespace(" ")],
@@ -177,8 +185,9 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..250
     0: JS_EXPORT@0..37
-      0: EXPORT_KW@0..7 "export" [] [Whitespace(" ")]
-      1: JS_EXPORT_NAMED_FROM_CLAUSE@7..37
+      0: JS_DECORATOR_LIST@0..0
+      1: EXPORT_KW@0..7 "export" [] [Whitespace(" ")]
+      2: JS_EXPORT_NAMED_FROM_CLAUSE@7..37
         0: (empty)
         1: L_CURLY@7..8 "{" [] []
         2: JS_EXPORT_NAMED_FROM_SPECIFIER_LIST@8..26
@@ -197,8 +206,9 @@ JsModule {
         6: (empty)
         7: SEMICOLON@36..37 ";" [] []
     1: JS_EXPORT@37..71
-      0: EXPORT_KW@37..45 "export" [Newline("\n")] [Whitespace(" ")]
-      1: JS_EXPORT_NAMED_FROM_CLAUSE@45..71
+      0: JS_DECORATOR_LIST@37..37
+      1: EXPORT_KW@37..45 "export" [Newline("\n")] [Whitespace(" ")]
+      2: JS_EXPORT_NAMED_FROM_CLAUSE@45..71
         0: (empty)
         1: L_CURLY@45..47 "{" [] [Whitespace(" ")]
         2: JS_EXPORT_NAMED_FROM_SPECIFIER_LIST@47..60
@@ -217,8 +227,9 @@ JsModule {
         6: (empty)
         7: SEMICOLON@70..71 ";" [] []
     2: JS_EXPORT@71..90
-      0: EXPORT_KW@71..79 "export" [Newline("\n")] [Whitespace(" ")]
-      1: JS_EXPORT_FROM_CLAUSE@79..90
+      0: JS_DECORATOR_LIST@71..71
+      1: EXPORT_KW@71..79 "export" [Newline("\n")] [Whitespace(" ")]
+      2: JS_EXPORT_FROM_CLAUSE@79..90
         0: (empty)
         1: STAR@79..81 "*" [] [Whitespace(" ")]
         2: (empty)
@@ -228,8 +239,9 @@ JsModule {
         5: (empty)
         6: SEMICOLON@89..90 ";" [] []
     3: JS_EXPORT@90..114
-      0: EXPORT_KW@90..98 "export" [Newline("\n")] [Whitespace(" ")]
-      1: JS_EXPORT_FROM_CLAUSE@98..114
+      0: JS_DECORATOR_LIST@90..90
+      1: EXPORT_KW@90..98 "export" [Newline("\n")] [Whitespace(" ")]
+      2: JS_EXPORT_FROM_CLAUSE@98..114
         0: (empty)
         1: STAR@98..100 "*" [] [Whitespace(" ")]
         2: JS_EXPORT_AS_CLAUSE@100..105
@@ -242,8 +254,9 @@ JsModule {
         5: (empty)
         6: SEMICOLON@113..114 ";" [] []
     4: JS_EXPORT@114..143
-      0: EXPORT_KW@114..122 "export" [Newline("\n")] [Whitespace(" ")]
-      1: JS_EXPORT_FROM_CLAUSE@122..143
+      0: JS_DECORATOR_LIST@114..114
+      1: EXPORT_KW@114..122 "export" [Newline("\n")] [Whitespace(" ")]
+      2: JS_EXPORT_FROM_CLAUSE@122..143
         0: (empty)
         1: STAR@122..124 "*" [] [Whitespace(" ")]
         2: JS_EXPORT_AS_CLAUSE@124..135
@@ -256,8 +269,9 @@ JsModule {
         5: (empty)
         6: (empty)
     5: JS_EXPORT@143..185
-      0: EXPORT_KW@143..151 "export" [Newline("\n")] [Whitespace(" ")]
-      1: JS_EXPORT_FROM_CLAUSE@151..185
+      0: JS_DECORATOR_LIST@143..143
+      1: EXPORT_KW@143..151 "export" [Newline("\n")] [Whitespace(" ")]
+      2: JS_EXPORT_FROM_CLAUSE@151..185
         0: (empty)
         1: STAR@151..153 "*" [] [Whitespace(" ")]
         2: (empty)
@@ -275,8 +289,9 @@ JsModule {
           3: R_CURLY@184..185 "}" [] []
         6: (empty)
     6: JS_EXPORT@185..213
-      0: EXPORT_KW@185..193 "export" [Newline("\n")] [Whitespace(" ")]
-      1: JS_EXPORT_FROM_CLAUSE@193..213
+      0: JS_DECORATOR_LIST@185..185
+      1: EXPORT_KW@185..193 "export" [Newline("\n")] [Whitespace(" ")]
+      2: JS_EXPORT_FROM_CLAUSE@193..213
         0: TYPE_KW@193..198 "type" [] [Whitespace(" ")]
         1: STAR@198..200 "*" [] [Whitespace(" ")]
         2: (empty)
@@ -286,8 +301,9 @@ JsModule {
         5: (empty)
         6: SEMICOLON@212..213 ";" [] []
     7: JS_EXPORT@213..250
-      0: EXPORT_KW@213..221 "export" [Newline("\n")] [Whitespace(" ")]
-      1: JS_EXPORT_FROM_CLAUSE@221..250
+      0: JS_DECORATOR_LIST@213..213
+      1: EXPORT_KW@213..221 "export" [Newline("\n")] [Whitespace(" ")]
+      2: JS_EXPORT_FROM_CLAUSE@221..250
         0: TYPE_KW@221..226 "type" [] [Whitespace(" ")]
         1: STAR@226..228 "*" [] [Whitespace(" ")]
         2: JS_EXPORT_AS_CLAUSE@228..237

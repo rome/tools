@@ -3,6 +3,7 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsExport {
+            decorators: JsDecoratorList [],
             export_token: EXPORT_KW@0..7 "export" [] [Whitespace(" ")],
             export_clause: JsExportDefaultDeclarationClause {
                 default_token: DEFAULT_KW@7..15 "default" [] [Whitespace(" ")],
@@ -44,6 +45,7 @@ JsModule {
             },
         },
         JsExport {
+            decorators: JsDecoratorList [],
             export_token: EXPORT_KW@48..56 "export" [Newline("\n")] [Whitespace(" ")],
             export_clause: JsExportDefaultDeclarationClause {
                 default_token: DEFAULT_KW@56..64 "default" [] [Whitespace(" ")],
@@ -116,8 +118,9 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..127
     0: JS_EXPORT@0..48
-      0: EXPORT_KW@0..7 "export" [] [Whitespace(" ")]
-      1: JS_EXPORT_DEFAULT_DECLARATION_CLAUSE@7..48
+      0: JS_DECORATOR_LIST@0..0
+      1: EXPORT_KW@0..7 "export" [] [Whitespace(" ")]
+      2: JS_EXPORT_DEFAULT_DECLARATION_CLAUSE@7..48
         0: DEFAULT_KW@7..15 "default" [] [Whitespace(" ")]
         1: TS_DECLARE_FUNCTION_EXPORT_DEFAULT_DECLARATION@15..48
           0: (empty)
@@ -145,8 +148,9 @@ JsModule {
           6: SEMICOLON@47..48 ";" [] []
         2: (empty)
     1: JS_EXPORT@48..127
-      0: EXPORT_KW@48..56 "export" [Newline("\n")] [Whitespace(" ")]
-      1: JS_EXPORT_DEFAULT_DECLARATION_CLAUSE@56..127
+      0: JS_DECORATOR_LIST@48..48
+      1: EXPORT_KW@48..56 "export" [Newline("\n")] [Whitespace(" ")]
+      2: JS_EXPORT_DEFAULT_DECLARATION_CLAUSE@56..127
         0: DEFAULT_KW@56..64 "default" [] [Whitespace(" ")]
         1: JS_FUNCTION_EXPORT_DEFAULT_DECLARATION@64..127
           0: (empty)

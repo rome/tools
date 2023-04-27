@@ -9,6 +9,7 @@
 #### New rules
 
 - [`noUselessConstructor`](https://docs.rome.tools/lint/rules/noUselessConstructor/)
+- [`useLiteralEnumMembers`](https://docs.rome.tools/lint/rules/useLiteralEnumMembers/)
 
 #### Other changes
 - Add new command `rome migrate` the transform the configuration file `rome.json`
@@ -16,7 +17,10 @@ when there are breaking changes.
 
 ### Configuration
 ### Editors
- - Fixed an issue where the VSCode extension duplicates text when using VSCode git utilities [#4338]
+
+ - Fix an issue where the VSCode extension duplicates text when using VSCode git utilities [#4338]
+ - Remove code assists from being added to the code actions when apply fixes;
+ -
 ### Formatter
 
 - Fix an issue where formatting of JSX string literals property values were using incorrect quotes [#4054](https://github.com/rome/tools/issues/4054)
@@ -56,7 +60,7 @@ the code action is not formatted.
 - import "module" assert {}
 + import "module" with {}
 ```
-
+- Allow decorators before `export` and `export default`. [#4252](https://github.com/rome/tools/issues/4252)
 
 ### VSCode
 ### JavaScript APIs

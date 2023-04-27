@@ -201,6 +201,7 @@ pub(crate) fn generate_workspace_bindings(mode: Mode) -> Result<()> {
             export = export.with_leading_trivia(trivia);
         }
         AnyJsModuleItem::JsExport(make::js_export(
+            make::js_decorator_list(std::iter::empty()),
             export,
             AnyJsExportClause::AnyJsDeclarationClause(match decl {
                 AnyJsDeclaration::JsClassDeclaration(decl) => {
@@ -306,6 +307,7 @@ pub(crate) fn generate_workspace_bindings(mode: Mode) -> Result<()> {
     ));
 
     items.push(AnyJsModuleItem::JsExport(make::js_export(
+        make::js_decorator_list(std::iter::empty()),
         make::token(T![export]),
         AnyJsExportClause::AnyJsDeclarationClause(AnyJsDeclarationClause::TsInterfaceDeclaration(
             make::ts_interface_declaration(
@@ -322,6 +324,7 @@ pub(crate) fn generate_workspace_bindings(mode: Mode) -> Result<()> {
     let member_separators = (0..member_declarations.len()).map(|_| make::token(T![,]));
 
     items.push(AnyJsModuleItem::JsExport(make::js_export(
+        make::js_decorator_list(std::iter::empty()),
         make::token(T![export]),
         AnyJsExportClause::AnyJsDeclarationClause(AnyJsDeclarationClause::JsFunctionDeclaration(
             make::js_function_declaration(

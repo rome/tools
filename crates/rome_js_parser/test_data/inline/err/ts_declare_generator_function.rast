@@ -40,6 +40,7 @@ JsModule {
                     items: JsModuleItemList [
                         JsBogusStatement {
                             items: [
+                                JsDecoratorList [],
                                 EXPORT_KW@52..62 "export" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
                                 JsBogus {
                                     items: [
@@ -107,8 +108,9 @@ JsModule {
           0: L_CURLY@51..52 "{" [] []
           1: JS_MODULE_ITEM_LIST@52..92
             0: JS_BOGUS_STATEMENT@52..92
-              0: EXPORT_KW@52..62 "export" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
-              1: JS_BOGUS@62..92
+              0: JS_DECORATOR_LIST@52..52
+              1: EXPORT_KW@52..62 "export" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
+              2: JS_BOGUS@62..92
                 0: DEFAULT_KW@62..70 "default" [] [Whitespace(" ")]
                 1: JS_BOGUS@70..92
                   0: FUNCTION_KW@70..78 "function" [] []

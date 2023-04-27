@@ -585,6 +585,10 @@ export interface Nursery {
 	 */
 	useIsNan?: RuleConfiguration;
 	/**
+	 * Require all enum members to be literal values.
+	 */
+	useLiteralEnumMembers?: RuleConfiguration;
+	/**
 	 * Enforce the usage of a literal access to properties over computed property access.
 	 */
 	useLiteralKeys?: RuleConfiguration;
@@ -1011,6 +1015,7 @@ export type Category =
 	| "lint/nursery/noForEach"
 	| "lint/nursery/useLiteralKeys"
 	| "lint/nursery/noUselessConstructor"
+	| "lint/nursery/useLiteralEnumMembers"
 	| "lint/nursery/noRedeclare"
 	| "lint/nursery/useNamespaceKeyword"
 	| "lint/nursery/noRedundantRoles"

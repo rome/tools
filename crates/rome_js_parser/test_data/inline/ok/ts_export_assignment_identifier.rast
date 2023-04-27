@@ -43,6 +43,7 @@ JsModule {
             },
         },
         JsExport {
+            decorators: JsDecoratorList [],
             export_token: EXPORT_KW@30..38 "export" [Newline("\n")] [Whitespace(" ")],
             export_clause: TsExportAssignmentClause {
                 eq_token: EQ@38..40 "=" [] [Whitespace(" ")],
@@ -55,6 +56,7 @@ JsModule {
             },
         },
         JsExport {
+            decorators: JsDecoratorList [],
             export_token: EXPORT_KW@42..50 "export" [Newline("\n")] [Whitespace(" ")],
             export_clause: TsExportAssignmentClause {
                 eq_token: EQ@50..52 "=" [] [Whitespace(" ")],
@@ -73,6 +75,7 @@ JsModule {
             },
         },
         JsExport {
+            decorators: JsDecoratorList [],
             export_token: EXPORT_KW@60..68 "export" [Newline("\n")] [Whitespace(" ")],
             export_clause: TsExportAssignmentClause {
                 eq_token: EQ@68..70 "=" [] [Whitespace(" ")],
@@ -99,6 +102,7 @@ JsModule {
             },
         },
         JsExport {
+            decorators: JsDecoratorList [],
             export_token: EXPORT_KW@84..92 "export" [Newline("\n")] [Whitespace(" ")],
             export_clause: TsExportAssignmentClause {
                 eq_token: EQ@92..94 "=" [] [Whitespace(" ")],
@@ -158,16 +162,18 @@ JsModule {
               2: (empty)
         1: (empty)
     1: JS_EXPORT@30..42
-      0: EXPORT_KW@30..38 "export" [Newline("\n")] [Whitespace(" ")]
-      1: TS_EXPORT_ASSIGNMENT_CLAUSE@38..42
+      0: JS_DECORATOR_LIST@30..30
+      1: EXPORT_KW@30..38 "export" [Newline("\n")] [Whitespace(" ")]
+      2: TS_EXPORT_ASSIGNMENT_CLAUSE@38..42
         0: EQ@38..40 "=" [] [Whitespace(" ")]
         1: JS_IDENTIFIER_EXPRESSION@40..41
           0: JS_REFERENCE_IDENTIFIER@40..41
             0: IDENT@40..41 "a" [] []
         2: SEMICOLON@41..42 ";" [] []
     2: JS_EXPORT@42..60
-      0: EXPORT_KW@42..50 "export" [Newline("\n")] [Whitespace(" ")]
-      1: TS_EXPORT_ASSIGNMENT_CLAUSE@50..60
+      0: JS_DECORATOR_LIST@42..42
+      1: EXPORT_KW@42..50 "export" [Newline("\n")] [Whitespace(" ")]
+      2: TS_EXPORT_ASSIGNMENT_CLAUSE@50..60
         0: EQ@50..52 "=" [] [Whitespace(" ")]
         1: JS_CLASS_EXPRESSION@52..60
           0: JS_DECORATOR_LIST@52..52
@@ -181,8 +187,9 @@ JsModule {
           8: R_CURLY@59..60 "}" [] []
         2: (empty)
     3: JS_EXPORT@60..84
-      0: EXPORT_KW@60..68 "export" [Newline("\n")] [Whitespace(" ")]
-      1: TS_EXPORT_ASSIGNMENT_CLAUSE@68..84
+      0: JS_DECORATOR_LIST@60..60
+      1: EXPORT_KW@60..68 "export" [Newline("\n")] [Whitespace(" ")]
+      2: TS_EXPORT_ASSIGNMENT_CLAUSE@68..84
         0: EQ@68..70 "=" [] [Whitespace(" ")]
         1: JS_FUNCTION_EXPRESSION@70..84
           0: (empty)
@@ -202,8 +209,9 @@ JsModule {
             3: R_CURLY@83..84 "}" [] []
         2: (empty)
     4: JS_EXPORT@84..104
-      0: EXPORT_KW@84..92 "export" [Newline("\n")] [Whitespace(" ")]
-      1: TS_EXPORT_ASSIGNMENT_CLAUSE@92..104
+      0: JS_DECORATOR_LIST@84..84
+      1: EXPORT_KW@84..92 "export" [Newline("\n")] [Whitespace(" ")]
+      2: TS_EXPORT_ASSIGNMENT_CLAUSE@92..104
         0: EQ@92..94 "=" [] [Whitespace(" ")]
         1: JS_BINARY_EXPRESSION@94..103
           0: JS_BINARY_EXPRESSION@94..100

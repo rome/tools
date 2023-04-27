@@ -13,6 +13,7 @@ JsModule {
                     l_curly_token: L_CURLY@19..20 "{" [] [],
                     items: JsModuleItemList [
                         JsExport {
+                            decorators: JsDecoratorList [],
                             export_token: EXPORT_KW@20..30 "export" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
                             export_clause: TsDeclareFunctionDeclaration {
                                 async_token: missing (optional),
@@ -72,8 +73,9 @@ JsModule {
           0: L_CURLY@19..20 "{" [] []
           1: JS_MODULE_ITEM_LIST@20..62
             0: JS_EXPORT@20..62
-              0: EXPORT_KW@20..30 "export" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
-              1: TS_DECLARE_FUNCTION_DECLARATION@30..62
+              0: JS_DECORATOR_LIST@20..20
+              1: EXPORT_KW@20..30 "export" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
+              2: TS_DECLARE_FUNCTION_DECLARATION@30..62
                 0: (empty)
                 1: FUNCTION_KW@30..39 "function" [] [Whitespace(" ")]
                 2: JS_IDENTIFIER_BINDING@39..43
