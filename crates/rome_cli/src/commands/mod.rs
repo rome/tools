@@ -37,7 +37,7 @@ pub enum RomeCommand {
     #[bpaf(command)]
     Stop,
 
-    /// Run various checks on a set of files
+    /// Run various checks on a set of files.
     #[bpaf(command)]
     Check {
         /// Apply safe fixes, formatting
@@ -54,7 +54,7 @@ pub enum RomeCommand {
         #[bpaf(positional("PATH"), many)]
         paths: Vec<OsString>,
     },
-    /// Run the formatter on a set of files
+    /// Run the formatter on a set of files.
     #[bpaf(command)]
     Format {
         #[bpaf(external, optional, hide_usage)]
@@ -83,22 +83,18 @@ pub enum RomeCommand {
         #[bpaf(positional("PATH"), many)]
         paths: Vec<OsString>,
     },
-    /// Run the linter and check the formatting of a set of files
+    /// Command to use in CI environments. Run various checks of a set of files.
     #[bpaf(command)]
     Ci {
         /// Allow to enable or disable the formatter check.
-        #[bpaf(long("formatter-enabled"), argument("true|false"), fallback(true))]
-        formatter_enabled: bool,
+        #[bpaf(long("formatter-enabled"), argument("true|false"), optional)]
+        formatter_enabled: Option<bool>,
         /// Allow to enable or disable the linter check.
-        #[bpaf(long("linter-enabled"), argument("true|false"), fallback(true))]
-        linter_enabled: bool,
+        #[bpaf(long("linter-enabled"), argument("true|false"), optional)]
+        linter_enabled: Option<bool>,
         /// Allow to enable or disable the organize imports.
-        #[bpaf(
-            long("organize-imports-enabled"),
-            argument("true|false"),
-            fallback(true)
-        )]
-        organize_imports_enabled: bool,
+        #[bpaf(long("organize-imports-enabled"), argument("true|false"), optional)]
+        organize_imports_enabled: Option<bool>,
 
         #[bpaf(external, hide_usage)]
         rome_configuration: RomeConfiguration,
@@ -110,7 +106,7 @@ pub enum RomeCommand {
         paths: Vec<OsString>,
     },
 
-    /// Bootstraps a new rome project
+    /// Bootstraps a new rome project. Creates a configuration file with some defaults.
     #[bpaf(command)]
     Init,
     /// Acts as a server for the Language Server Protocol over stdin/stdout
@@ -178,22 +174,6 @@ pub fn parse_command() -> OptionParser<RomeCommand> {
     rome_command()
         .header("Rome CLI")
         .usage("rome COMMAND [ARG]")
-}
-
-#[cfg(test)]
-mod test {
-    use crate::commands::parse_command;
-    use bpaf::Args;
-
-    #[test]
-    fn version() {
-        let result =
-            parse_command().run_inner(Args::from(&["check", "--verbose", "./path", "./path"]));
-        let help = parse_command().run_inner(Args::from(&["--help"]));
-
-        // let result = result.unwrap_err().unwrap_stdout();
-
-        println!("{:?}", result);
-        // println!("{}", help.unwrap_err().unwrap_stdout());
-    }
+		.version(VERSION)
+		.descr("Rome official CLI. Use it to check the health of your project or run ti to check single files!")
 }

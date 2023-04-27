@@ -51,17 +51,17 @@ impl WorkspaceSettings {
         configuration: RomeConfiguration,
     ) -> Result<(), WorkspaceError> {
         // formatter part
-        if let Some(formatter) = configuration.formatter_configuration {
+        if let Some(formatter) = configuration.formatter {
             self.formatter = FormatSettings::try_from(formatter)?;
         }
 
         // linter part
-        if let Some(linter) = configuration.linter_configuration {
+        if let Some(linter) = configuration.linter {
             self.linter = LinterSettings::try_from(linter)?;
         }
 
         // Filesystem settings
-        if let Some(files) = configuration.files_configuration {
+        if let Some(files) = configuration.files {
             self.files = FilesSettings::try_from(files)?;
         }
 
@@ -70,7 +70,7 @@ impl WorkspaceSettings {
         }
 
         // javascript settings
-        let javascript = configuration.javascript_configuration;
+        let javascript = configuration.javascript;
         if let Some(javascript) = javascript {
             self.languages.javascript.globals = javascript.globals.map(|g| g.into_index_set());
             let formatter = javascript.javascript_formatter;

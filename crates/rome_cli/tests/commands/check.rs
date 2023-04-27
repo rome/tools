@@ -55,6 +55,28 @@ const UPGRADE_SEVERITY_CODE: &str = r#"if(!cond) { exprA(); } else { exprB() }"#
 const NURSERY_UNSTABLE: &str = r#"if(a = b) {}"#;
 
 #[test]
+fn check_help() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Args::from(&[("check"), "--help"]),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "check_help",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
 fn ok() {
     let mut fs = MemoryFileSystem::default();
     let mut console = BufferConsole::default();

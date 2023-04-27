@@ -36,28 +36,28 @@ impl VisitNode<JsonLanguage> for RomeConfiguration {
             "files" => {
                 let mut files = FilesConfiguration::default();
                 self.map_to_object(&value, name_text, &mut files, diagnostics)?;
-                self.files_configuration = Some(files);
+                self.files = Some(files);
             }
             "vcs" => {
                 let mut vcs = VcsConfiguration::default();
                 self.map_to_object(&value, name_text, &mut vcs, diagnostics)?;
                 validate_vcs_configuration(&value, &mut vcs, diagnostics);
-                self.vcs_configuration = Some(vcs);
+                self.vcs = Some(vcs);
             }
             "formatter" => {
                 let mut formatter = FormatterConfiguration::default();
                 self.map_to_object(&value, name_text, &mut formatter, diagnostics)?;
-                self.formatter_configuration = Some(formatter);
+                self.formatter = Some(formatter);
             }
             "linter" => {
                 let mut linter = LinterConfiguration::default();
                 self.map_to_object(&value, name_text, &mut linter, diagnostics)?;
-                self.linter_configuration = Some(linter);
+                self.linter = Some(linter);
             }
             "javascript" => {
                 let mut javascript = JavascriptConfiguration::default();
                 self.map_to_object(&value, name_text, &mut javascript, diagnostics)?;
-                self.javascript_configuration = Some(javascript);
+                self.javascript = Some(javascript);
             }
             "organizeImports" => {
                 let mut organize_imports = OrganizeImports::default();

@@ -5,7 +5,7 @@ use crate::{ConfigurationDiagnostic, MatchOptions, Matcher, WorkspaceError};
 use bpaf::Bpaf;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Default, Serialize, Deserialize, Eq, PartialEq, Clone, Bpaf)]
+#[derive(Debug, Serialize, Deserialize, Eq, PartialEq, Clone, Bpaf)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "camelCase", default, deny_unknown_fields)]
 pub struct OrganizeImports {
@@ -19,6 +19,15 @@ pub struct OrganizeImports {
     #[serde(skip_serializing_if = "Option::is_none")]
     #[bpaf(hide)]
     pub ignore: Option<StringSet>,
+}
+
+impl Default for OrganizeImports {
+    fn default() -> Self {
+        Self {
+            enabled: Some(false),
+            ignore: None,
+        }
+    }
 }
 
 impl OrganizeImports {

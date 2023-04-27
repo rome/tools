@@ -65,6 +65,28 @@ const CUSTOM_CONFIGURATION_AFTER: &str = "function f() {
 ";
 
 #[test]
+fn format_help() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Args::from(&[("format"), "--help"]),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "format_help",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
 fn print() {
     let mut fs = MemoryFileSystem::default();
     let mut console = BufferConsole::default();

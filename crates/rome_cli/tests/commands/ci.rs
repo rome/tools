@@ -29,6 +29,28 @@ const CI_CONFIGURATION: &str = r#"
 "#;
 
 #[test]
+fn ci_help() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Args::from(&[("ci"), "--help"]),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "ci_help",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
 fn ok() {
     let mut fs = MemoryFileSystem::default();
     let mut console = BufferConsole::default();
@@ -463,8 +485,7 @@ fn file_too_large_cli_limit() {
         &mut console,
         Args::from(&[
             ("ci"),
-            ("--files-max-size"),
-            ("16"),
+            ("--files-max-size=16"),
             file_path.as_os_str().to_str().unwrap(),
         ]),
     );
@@ -493,8 +514,7 @@ fn files_max_size_parse_error() {
         &mut console,
         Args::from(&[
             ("ci"),
-            ("--files-max-size"),
-            ("-1"),
+            ("--files-max-size=-1"),
             file_path.as_os_str().to_str().unwrap(),
         ]),
     );

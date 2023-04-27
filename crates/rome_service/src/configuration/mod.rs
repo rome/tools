@@ -53,18 +53,18 @@ pub struct RomeConfiguration {
 
     /// The configuration of the filesystem
     #[serde(skip_serializing_if = "Option::is_none")]
-    #[bpaf(external, optional, hide_usage)]
-    pub vcs_configuration: Option<VcsConfiguration>,
+    #[bpaf(external(vcs_configuration), optional, hide_usage)]
+    pub vcs: Option<VcsConfiguration>,
 
     /// The configuration of the filesystem
     #[serde(skip_serializing_if = "Option::is_none")]
-    #[bpaf(external, optional, hide_usage)]
-    pub files_configuration: Option<FilesConfiguration>,
+    #[bpaf(external(files_configuration), optional, hide_usage)]
+    pub files: Option<FilesConfiguration>,
 
     /// The configuration of the formatter
     #[serde(skip_serializing_if = "Option::is_none")]
-    #[bpaf(external, optional)]
-    pub formatter_configuration: Option<FormatterConfiguration>,
+    #[bpaf(external(formatter_configuration), optional)]
+    pub formatter: Option<FormatterConfiguration>,
 
     /// The configuration of the import sorting
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -73,28 +73,28 @@ pub struct RomeConfiguration {
 
     /// The configuration for the linter
     #[serde(skip_serializing_if = "Option::is_none")]
-    #[bpaf(external, optional)]
-    pub linter_configuration: Option<LinterConfiguration>,
+    #[bpaf(external(linter_configuration), optional)]
+    pub linter: Option<LinterConfiguration>,
 
     /// Specific configuration for the JavaScript language
     #[serde(skip_serializing_if = "Option::is_none")]
-    #[bpaf(external, optional)]
-    pub javascript_configuration: Option<JavascriptConfiguration>,
+    #[bpaf(external(javascript_configuration), optional)]
+    pub javascript: Option<JavascriptConfiguration>,
 }
 
 impl Default for RomeConfiguration {
     fn default() -> Self {
         Self {
-            files_configuration: None,
-            linter_configuration: Some(LinterConfiguration {
+            files: None,
+            linter: Some(LinterConfiguration {
                 enabled: Some(true),
                 ..LinterConfiguration::default()
             }),
             organize_imports: Some(OrganizeImports::default()),
-            formatter_configuration: None,
-            javascript_configuration: None,
+            formatter: None,
+            javascript: None,
             schema: None,
-            vcs_configuration: None,
+            vcs: None,
         }
     }
 }
@@ -110,14 +110,14 @@ impl RomeConfiguration {
         "organizeImports",
     ];
     pub fn is_formatter_disabled(&self) -> bool {
-        self.formatter_configuration
+        self.formatter
             .as_ref()
             .map(|f| f.is_disabled())
             .unwrap_or(false)
     }
 
     pub fn is_linter_disabled(&self) -> bool {
-        self.linter_configuration
+        self.linter
             .as_ref()
             .map(|f| f.is_disabled())
             .unwrap_or(false)
@@ -131,7 +131,7 @@ impl RomeConfiguration {
     }
 
     pub fn is_vcs_disabled(&self) -> bool {
-        self.vcs_configuration
+        self.vcs
             .as_ref()
             .map(|f| matches!(f.enabled, Some(false)))
             .unwrap_or(true)
@@ -141,17 +141,17 @@ impl RomeConfiguration {
 impl MergeWith<RomeConfiguration> for RomeConfiguration {
     fn merge_with(&mut self, other_configuration: RomeConfiguration) {
         // files
-        self.merge_with(other_configuration.files_configuration);
+        self.merge_with(other_configuration.files);
         // formatter
-        self.merge_with(other_configuration.formatter_configuration);
+        self.merge_with(other_configuration.formatter);
         // javascript
-        self.merge_with(other_configuration.javascript_configuration);
+        self.merge_with(other_configuration.javascript);
         // linter
-        self.merge_with(other_configuration.linter_configuration);
+        self.merge_with(other_configuration.linter);
         // organize imports
         self.merge_with(other_configuration.organize_imports);
         // VCS
-        self.merge_with(other_configuration.vcs_configuration);
+        self.merge_with(other_configuration.vcs);
     }
 }
 
@@ -166,9 +166,7 @@ impl MergeWith<Option<RomeConfiguration>> for RomeConfiguration {
 impl MergeWith<Option<VcsConfiguration>> for RomeConfiguration {
     fn merge_with(&mut self, other: Option<VcsConfiguration>) {
         if let Some(other_vcs) = other {
-            let vcs = self
-                .vcs_configuration
-                .get_or_insert_with(VcsConfiguration::default);
+            let vcs = self.vcs.get_or_insert_with(VcsConfiguration::default);
             vcs.merge_with(other_vcs);
         }
     }
@@ -188,9 +186,7 @@ impl MergeWith<Option<OrganizeImports>> for RomeConfiguration {
 impl MergeWith<Option<LinterConfiguration>> for RomeConfiguration {
     fn merge_with(&mut self, other: Option<LinterConfiguration>) {
         if let Some(other_linter) = other {
-            let linter = self
-                .linter_configuration
-                .get_or_insert_with(LinterConfiguration::default);
+            let linter = self.linter.get_or_insert_with(LinterConfiguration::default);
             linter.merge_with(other_linter);
         }
     }
@@ -198,9 +194,7 @@ impl MergeWith<Option<LinterConfiguration>> for RomeConfiguration {
 impl MergeWith<Option<FilesConfiguration>> for RomeConfiguration {
     fn merge_with(&mut self, other: Option<FilesConfiguration>) {
         if let Some(files_configuration) = other {
-            let files = self
-                .files_configuration
-                .get_or_insert_with(FilesConfiguration::default);
+            let files = self.files.get_or_insert_with(FilesConfiguration::default);
             files.merge_with(files_configuration);
         };
     }
@@ -209,7 +203,7 @@ impl MergeWith<Option<JavascriptConfiguration>> for RomeConfiguration {
     fn merge_with(&mut self, other: Option<JavascriptConfiguration>) {
         if let Some(other) = other {
             let js_configuration = self
-                .javascript_configuration
+                .javascript
                 .get_or_insert_with(JavascriptConfiguration::default);
             js_configuration.merge_with(other);
         }
@@ -219,7 +213,7 @@ impl MergeWith<Option<FormatterConfiguration>> for RomeConfiguration {
     fn merge_with(&mut self, other: Option<FormatterConfiguration>) {
         if let Some(other_formatter) = other {
             let formatter = self
-                .formatter_configuration
+                .formatter
                 .get_or_insert_with(FormatterConfiguration::default);
             formatter.merge_with(other_formatter);
         }
@@ -229,7 +223,7 @@ impl MergeWith<Option<FormatterConfiguration>> for RomeConfiguration {
 impl MergeWith<Option<JavascriptFormatter>> for RomeConfiguration {
     fn merge_with(&mut self, other: Option<JavascriptFormatter>) {
         let javascript_configuration = self
-            .javascript_configuration
+            .javascript
             .get_or_insert_with(JavascriptConfiguration::default);
         javascript_configuration.merge_with(other);
     }

@@ -69,7 +69,6 @@ impl<'app> CliSession<'app> {
             crate::metrics::init_metrics();
         }
 
-        dbg!(&command);
         let result = match command {
             RomeCommand::Version(_) => commands::version::full_version(self),
             RomeCommand::Rage(_) => commands::rage::rage(self),

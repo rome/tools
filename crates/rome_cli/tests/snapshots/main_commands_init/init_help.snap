@@ -1,0 +1,16 @@
+---
+source: crates/rome_cli/tests/snap_test.rs
+expression: content
+---
+# Emitted Messages
+
+```block
+Bootstraps a new rome project. Creates a configuration file with some defaults.
+
+
+Available options:
+    -h, --help  Prints help information
+
+```
+
+
