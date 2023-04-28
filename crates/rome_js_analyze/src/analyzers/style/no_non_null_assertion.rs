@@ -4,7 +4,7 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    AnyJsExpression, JsSyntaxKind, TsNonNullAssertionAssignment, TsNonNullAssertionExpression,
+    AnyJsExpression, TsNonNullAssertionAssignment, TsNonNullAssertionExpression, T,
 };
 use rome_rowan::{declare_node_union, AstNode, BatchMutationExt};
 
@@ -70,7 +70,7 @@ impl Rule for NoNonNullAssertion {
         }
     }
 
-    fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
         Some(RuleDiagnostic::new(
             rule_category!(),
             ctx.query().range(),
@@ -80,62 +80,66 @@ impl Rule for NoNonNullAssertion {
         ))
     }
 
-    fn action(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
         let node = ctx.query();
         match node {
             AnyTsNonNullAssertion::TsNonNullAssertionAssignment(_) => None,
             AnyTsNonNullAssertion::TsNonNullAssertionExpression(node) => {
-                if !can_replace_with_optional_chain(node) {
-                    return None;
-                }
                 let mut mutation = ctx.root().begin();
 
-                let assertions =
-                    std::iter::successors(node.expression().ok(), |expression| match expression {
-                        AnyJsExpression::TsNonNullAssertionExpression(assertion) => {
-                            assertion.expression().ok()
-                        }
-                        _ => None,
-                    });
-
-                for assertion in assertions {
-                    if let Some(non_null_expr) = assertion.as_ts_non_null_assertion_expression() {
-                        mutation.remove_token(non_null_expr.excl_token().ok()?);
-                    }
+                // get the expression without assertion marker
+                // the loop handles repetitive (useless) assertion marker such as `expr!!!`.
+                let mut expr = node.expression();
+                while let Ok(AnyJsExpression::TsNonNullAssertionExpression(assertion)) = expr {
+                    expr = assertion.expression()
                 }
+                let assertion_less_expr = expr.ok()?;
+                let old_node = AnyJsExpression::TsNonNullAssertionExpression(node.clone());
 
                 match node.parent::<AnyJsExpression>()? {
                     AnyJsExpression::JsComputedMemberExpression(parent) => {
                         if parent.is_optional() {
-                            mutation.remove_token(node.excl_token().ok()?);
+                            // object!?["prop"] --> object?.["prop"]
+                            mutation.replace_node(old_node, assertion_less_expr);
                         } else {
-                            mutation.replace_token(
-                                node.excl_token().ok()?,
-                                make::token(JsSyntaxKind::QUESTIONDOT),
-                            );
+                            // object!["prop"] --> object?["prop"]
+                            let new_parent = parent
+                                .clone()
+                                .with_optional_chain_token(Some(make::token(T![?.])))
+                                .with_object(assertion_less_expr);
+                            mutation.replace_node(parent, new_parent);
                         }
                     }
                     AnyJsExpression::JsCallExpression(parent) => {
                         if parent.is_optional() {
-                            mutation.remove_token(node.excl_token().ok()?);
+                            // f!?() --> f?()
+                            mutation.replace_node(old_node, assertion_less_expr);
                         } else {
-                            mutation.replace_token(
-                                node.excl_token().ok()?,
-                                make::token(JsSyntaxKind::QUESTIONDOT),
-                            );
+                            // f!() --> f?.()
+                            let new_parent = parent
+                                .clone()
+                                .with_optional_chain_token(Some(make::token(T![?.])))
+                                .with_callee(assertion_less_expr);
+                            mutation.replace_node(parent, new_parent);
                         }
                     }
                     AnyJsExpression::JsStaticMemberExpression(parent) => {
                         if parent.is_optional() {
-                            mutation.remove_token(node.excl_token().ok()?);
+                            // object!?.prop --> object?.prop
+                            mutation.replace_node(old_node, assertion_less_expr);
                         } else {
-                            mutation.replace_token(
-                                node.excl_token().ok()?,
-                                make::token(JsSyntaxKind::QUESTION),
-                            );
+                            // object!.prop --> object?.prop
+                            let new_parent = parent
+                                .clone()
+                                .with_operator_token_token(make::token(T![?.]))
+                                .with_object(assertion_less_expr);
+                            mutation.replace_node(parent, new_parent);
                         }
                     }
-                    _ => {}
+                    _ => {
+                        // unsupported
+                        return None;
+                    }
                 };
 
                 Some(JsRuleAction {
@@ -148,13 +152,4 @@ impl Rule for NoNonNullAssertion {
             }
         }
     }
-}
-
-fn can_replace_with_optional_chain(node: &TsNonNullAssertionExpression) -> bool {
-    use AnyJsExpression::*;
-
-    matches!(
-        node.parent::<AnyJsExpression>(),
-        Some(JsStaticMemberExpression(_) | JsComputedMemberExpression(_) | JsCallExpression(_))
-    )
 }
