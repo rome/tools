@@ -145,6 +145,28 @@ impl StaticValue {
         }
     }
 
+    /// Return `true` if the static value doesn't match the given string value and it is
+    /// 1. A string literal
+    /// 2. A template literal with no substitutions
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use rome_js_syntax::static_value::{StaticValue, QuotedString};
+    /// use rome_js_factory::make::{js_string_literal_expression, ident};
+    /// use rome_rowan::TriviaPieceKind;
+    ///
+    /// let ident = ident("\"foo\"").with_leading_trivia(vec![(TriviaPieceKind::Whitespace, " ")]);
+    /// let quoted_string = QuotedString::new(ident);
+    /// assert!(StaticValue::String(quoted_string).is_not_string_constant("bar"));
+    /// ```
+    pub fn is_not_string_constant(&self, text: &str) -> bool {
+        match self {
+            StaticValue::String(_) | StaticValue::TemplateChunk(_) => self.text() != text,
+            _ => false,
+        }
+    }
+
     /// Return a string if the static value is
     /// 1. A string literal
     /// 2. A template literal with no substitutions
