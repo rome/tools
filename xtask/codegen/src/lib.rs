@@ -14,8 +14,10 @@ mod generate_syntax_kinds;
 mod json_kinds_src;
 mod kinds_src;
 mod parser_tests;
+pub mod promote_rule;
 mod termcolorful;
 mod unicode;
+
 use proc_macro2::{Ident, Span, TokenStream};
 use quote::quote;
 use std::path::Path;

@@ -77,7 +77,7 @@ Let's say we want to create a new rule called `myRuleName`, which uses the seman
 1. Run the command
 
    ```shell
-   > just new-lintrule crates/rome_js_analyze/src/semantic_analyzers/nursery myRuleName
+   just new-lintrule crates/rome_js_analyze/src/semantic_analyzers/nursery myRuleName
    ```
 
    Rules go in different folders, and the folder depend on the type of query system your rule
@@ -88,7 +88,7 @@ Let's say we want to create a new rule called `myRuleName`, which uses the seman
    - `type Query = SemanticServices` -> `semantic_analyzers/` folder
    - `type Query = Aria<>` -> `aria_analyzers` folder
    - `type Query = ControlFlowGraph` -> `analyzers/` folder
- 
+
    The core team will help you out if you don't get the folder right.
    Using the incorrect folder won't break any code.
 
@@ -166,11 +166,31 @@ For instance, for the rule `noVar`, the file `invalidScript.jsonc` contains:
 Note that code in a file ending with the extension `.jsonc` are in a _script environment_.
 This means that you cannot use syntax that belongs to _ECMAScript modules_ such as `import` and `export`.
 
-Run the command `just test-lintrule myRuleName` and if you've done everything correctly,
+Run the command
+```shell
+just test-lintrule myRuleName
+```
+ and if you've done everything correctly,
 you should see some snapshots emitted with diagnostics and code actions.
 
 Check our main [contribution document](https://github.com/rome/tools/blob/main/CONTRIBUTING.md#snapshot-tests)
 to know how to deal with the snapshot tests.
+
+### Promote a rule
+
+Promoting a rule when is stable can be a tedious work. Internally, we have a script
+that does that for you:
+
+```shell
+just promote-rule noConsoleLog style
+```
+
+The first argument is the name of the rule, in camel case. The second argument
+is the name of the group where you're promoting the rule to.
+
+The script will run some checks and some other script for you.
+
+You're now ready to commit the changes [using `git`](#commit-your-work)!
 
 ### Document the rule
 
@@ -245,7 +265,7 @@ diagnostic in the resulting documentation page.
 
 ### Code generation
 
-For simplicity, use [`just`](#using-just) to run all the commands with:
+For simplicity, use `just` to run all the commands with:
 
 ```shell
 just codegen-linter
