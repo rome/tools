@@ -1,0 +1,6 @@
+[
+	// "foo.reduce((acc, bar) => {acc.push(bar); return acc;}, [])",
+	// "foo.reduce((acc, bar) => {acc.push(...bar); return acc;}, [])",
+	"foo.reduce((acc, bar) => {acc[bar.key] = bar.value; return acc;}, {})"
+	// "foo.reduce((acc, bar) => {acc[...bar] = bar; return acc;}, {})"
+]

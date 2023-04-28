@@ -490,6 +490,13 @@
 					"description": "It enables ALL rules for this group.",
 					"type": ["boolean", "null"]
 				},
+				"noAccumulatingSpread": {
+					"description": "Disallow the use of spread (...) syntax on accumulators.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"noAriaUnsupportedElements": {
 					"description": "Enforce that elements that do not support ARIA roles, states, and properties do not have those attributes.",
 					"anyOf": [
