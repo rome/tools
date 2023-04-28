@@ -1,6 +1,6 @@
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_syntax::JsSpread;
+use rome_js_syntax::{JsCallExpression, JsSpread};
 use rome_rowan::AstNode;
 
 declare_rule! {
@@ -55,7 +55,8 @@ impl Rule for NoAccumulatingSpread {
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
-        is_spread_accumulating(node)?.then_some(())
+
+        is_known_accumulator(node)?.then_some(())
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
@@ -75,9 +76,29 @@ impl Rule for NoAccumulatingSpread {
     }
 }
 
-fn is_spread_accumulating(node: &JsSpread) -> Option<bool> {
-    println!("----- is_spread_accumulating -----");
-    println!("text: {:#?}", node.text());
-    println!("argument: {:#?}", node.argument());
-    None
+fn is_known_accumulator(node: &JsSpread) -> Option<bool> {
+    println!("----- is_known_accumulator -----");
+    let call_expression = node.syntax().ancestors().find_map(JsCallExpression::cast)?;
+    println!("call_expression: {:#?}", call_expression);
+
+    let name = call_expression
+        .callee()
+        .ok()?
+        .as_js_static_member_expression()?
+        .member()
+        .ok()?
+        .as_js_name()?
+        .value_token()
+        .ok()?;
+    let name = name.text_trimmed();
+    println!("name: {:#?}", name);
+    if matches!(name, "reduce" | "reduceRight") {
+        // Check if node is the same variable as the first argument to the
+        // function declaration.
+        println!("node: {:#?}", node);
+        println!("node.text: {:#?}", node.text());
+        Some(true)
+    } else {
+        None
+    }
 }

@@ -8,4 +8,18 @@ expression: invalid.jsonc
 foo.reduce((acc, bar) => ({...acc, [bar.key]: bar.value}), {})
 ```
 
+# Diagnostics
+```
+invalid.jsonc:1:28 lint/nursery/noAccumulatingSpread ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid the use of spread (`...`) syntax on accumulators.
+  
+  > 1 │ foo.reduce((acc, bar) => ({...acc, [bar.key]: bar.value}), {})
+      │                            ^^^^^^
+  
+  i Spread syntax should be avoided on accumulators (like those in `.reduce`) because it causes a time complexity of `O(n^2)`.
+  
+
+```
+
 
