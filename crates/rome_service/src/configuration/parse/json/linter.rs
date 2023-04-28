@@ -1,4 +1,5 @@
 use crate::configuration::linter::{RulePlainConfiguration, RuleWithOptions};
+use crate::configuration::string_set::StringSet;
 use crate::configuration::LinterConfiguration;
 use crate::{RuleConfiguration, Rules};
 use rome_console::markup;
@@ -28,10 +29,12 @@ impl VisitNode<JsonLanguage> for LinterConfiguration {
         let name_text = name.text();
         match name_text {
             "ignore" => {
-                self.ignore = self.map_to_index_set_string(&value, name_text, diagnostics);
+                self.ignore = self
+                    .map_to_index_set_string(&value, name_text, diagnostics)
+                    .map(StringSet::new);
             }
             "enabled" => {
-                self.enabled = self.map_to_boolean(&value, name_text, diagnostics)?;
+                self.enabled = self.map_to_boolean(&value, name_text, diagnostics);
             }
             "rules" => {
                 let mut rules = Rules::default();

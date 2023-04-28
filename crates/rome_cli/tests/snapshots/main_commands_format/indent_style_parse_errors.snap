@@ -7,10 +7,10 @@ expression: content
 ```block
 flags/invalid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Cannot parse the argument --indent-style
+  × Failed to parse CLI arguments.
     
     Caused by:
-      failed to parse 'invalid': Value not supported for IndentStyle
+      Couldn't parse "invalid": Unsupported value for this option
   
 
 

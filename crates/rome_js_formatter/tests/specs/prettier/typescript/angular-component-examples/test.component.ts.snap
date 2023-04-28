@@ -34,12 +34,15 @@ class     TestComponent {}
 +++ Rome
 @@ -1,17 +1,17 @@
  @Component({
--  selector: "app-test",
+   selector: "app-test",
 -  template: `<ul>
 -    <li>test</li>
 -  </ul> `,
--  styles: [
--    `
++  template: `<ul>   <li>test</li>
++  </ul>
++  `,
+   styles: [
+     `
 -      :host {
 -        color: red;
 -      }
@@ -47,21 +50,14 @@ class     TestComponent {}
 -        background: blue;
 -      }
 -    `,
--  ],
-+       selector: 'app-test',
-+  template: `<ul>   <li>test</li>
-+  </ul>
-+  `,
-+  styles: [   `
 +  
 + :host {
 +   color: red;
 + } 
 + div { background: blue
 + }
-+`
-+
-+]
++`,
+   ],
  })
  class TestComponent {}
 ```
@@ -70,20 +66,20 @@ class     TestComponent {}
 
 ```ts
 @Component({
-       selector: 'app-test',
+  selector: "app-test",
   template: `<ul>   <li>test</li>
   </ul>
   `,
-  styles: [   `
+  styles: [
+    `
   
  :host {
    color: red;
  } 
  div { background: blue
  }
-`
-
-]
+`,
+  ],
 })
 class TestComponent {}
 ```

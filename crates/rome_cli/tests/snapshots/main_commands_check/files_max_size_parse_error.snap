@@ -14,10 +14,10 @@ statement2();
 ```block
 flags/invalid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Cannot parse the argument --files-max-size
+  × Failed to parse CLI arguments.
     
     Caused by:
-      failed to parse '-1': invalid digit found in string
+      Couldn't parse "-1": invalid digit found in string
   
 
 

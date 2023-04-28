@@ -3,6 +3,7 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsExport {
+            decorators: JsDecoratorList [],
             export_token: EXPORT_KW@0..7 "export" [] [Whitespace(" ")],
             export_clause: JsExportNamedClause {
                 type_token: missing (optional),
@@ -30,8 +31,9 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..15
     0: JS_EXPORT@0..15
-      0: EXPORT_KW@0..7 "export" [] [Whitespace(" ")]
-      1: JS_EXPORT_NAMED_CLAUSE@7..15
+      0: JS_DECORATOR_LIST@0..0
+      1: EXPORT_KW@0..7 "export" [] [Whitespace(" ")]
+      2: JS_EXPORT_NAMED_CLAUSE@7..15
         0: (empty)
         1: L_CURLY@7..9 "{" [] [Whitespace(" ")]
         2: JS_EXPORT_NAMED_SPECIFIER_LIST@9..14

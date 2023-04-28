@@ -183,10 +183,14 @@ export default function SettingsTab({
 	return (
 		<div className="settings-tab">
 			<section className="settings-tab-buttons">
-				<button onClick={onReset} onKeyDown={onReset}>
+				<button type="button" onClick={onReset} onKeyDown={onReset}>
 					Reset
 				</button>
-				<button onClick={toggleSingleFileMode} onKeyDown={toggleSingleFileMode}>
+				<button
+					type="button"
+					onClick={toggleSingleFileMode}
+					onKeyDown={toggleSingleFileMode}
+				>
 					{singleFileMode ? "Multi-file mode" : "Single-file mode"}
 				</button>
 			</section>
@@ -249,7 +253,7 @@ function FileView({
 		<div className="file-view">
 			<h2 className="files-heading">
 				Files
-				<button onClick={() => setCreatingFile(true)}>
+				<button type="button" onClick={() => setCreatingFile(true)}>
 					<span className="sr-only">New</span>
 					<span aria-hidden={true}>+</span>
 				</button>
@@ -342,12 +346,12 @@ function FileViewItem({
 		<li className={className} onClick={onClick} onKeyDown={onClick}>
 			{filename}
 
-			<button onClick={onRenameClick} onKeyDown={onRenameClick}>
+			<button type="button" onClick={onRenameClick} onKeyDown={onRenameClick}>
 				Rename
 			</button>
 
 			{canDelete && (
-				<button onClick={onDeleteClick} onKeyDown={onDeleteClick}>
+				<button type="button" onClick={onDeleteClick} onKeyDown={onDeleteClick}>
 					<span className="sr-only">Delete</span>
 					<span aria-hidden={true}>X</span>
 				</button>
@@ -667,6 +671,7 @@ function LineWidthInput({
 				<div className="input-container">
 					<div className="button-group">
 						<button
+							type="button"
 							aria-label="Set line width to 80 characters"
 							onClick={() => {
 								setLineWidth(80);
@@ -682,6 +687,7 @@ function LineWidthInput({
 						</button>
 
 						<button
+							type="button"
 							aria-label="Set line width to 120 characters"
 							onClick={() => {
 								setLineWidth(120);
@@ -697,6 +703,7 @@ function LineWidthInput({
 						</button>
 
 						<button
+							type="button"
 							aria-label="Set a custom line width"
 							onClick={() => setShowCustom(!showCustom)}
 							onKeyDown={() => setShowCustom(!showCustom)}

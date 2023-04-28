@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 use std::ops::{Deref, DerefMut};
 
 pub mod configuration;
-mod file_handlers;
+pub mod file_handlers;
 pub mod matcher;
 pub mod settings;
 pub mod workspace;
@@ -14,18 +14,17 @@ mod diagnostics;
 pub mod workspace_types;
 
 pub use crate::configuration::{
-    create_config, load_config, Configuration, ConfigurationBasePath, ConfigurationDiagnostic,
+    create_config, load_config,
+    string_set::{deserialize_string_set, serialize_string_set},
+    Configuration, ConfigurationBasePath, ConfigurationDiagnostic, JavascriptFormatter, MergeWith,
     RuleConfiguration, Rules,
 };
 pub use crate::matcher::{MatchOptions, Matcher, Pattern};
 
+pub use crate::diagnostics::{TransportError, WorkspaceError};
 /// Exports only for this crate
-pub(crate) use crate::configuration::{deserialize_set_of_strings, serialize_set_of_strings};
 pub use crate::file_handlers::JsFormatterSettings;
 pub use crate::workspace::Workspace;
-
-pub use crate::diagnostics::{TransportError, WorkspaceError};
-
 pub const VERSION: &str = match option_env!("ROME_VERSION") {
     Some(version) => version,
     None => env!("CARGO_PKG_VERSION"),

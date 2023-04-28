@@ -1,3 +1,8 @@
+use crate::{
+    open_transport,
+    service::{self, ensure_daemon, open_socket, run_daemon},
+    CliDiagnostic, CliSession,
+};
 use rome_console::{markup, ConsoleExt};
 use rome_lsp::ServerFactory;
 use rome_service::{workspace::WorkspaceClient, TransportError, WorkspaceError};
@@ -12,12 +17,6 @@ use tracing_subscriber::{
     registry, Layer,
 };
 use tracing_tree::HierarchicalLayer;
-
-use crate::{
-    open_transport,
-    service::{self, ensure_daemon, open_socket, run_daemon},
-    CliDiagnostic, CliSession,
-};
 
 pub(crate) fn start(session: CliSession) -> Result<(), CliDiagnostic> {
     let rt = Runtime::new()?;
@@ -60,10 +59,8 @@ pub(crate) fn stop(session: CliSession) -> Result<(), CliDiagnostic> {
     Ok(())
 }
 
-pub(crate) fn run_server(mut session: CliSession) -> Result<(), CliDiagnostic> {
+pub(crate) fn run_server(stop_on_disconnect: bool) -> Result<(), CliDiagnostic> {
     setup_tracing_subscriber();
-
-    let stop_on_disconnect = session.args.contains("--stop-on-disconnect");
 
     let rt = Runtime::new()?;
     let factory = ServerFactory::new(stop_on_disconnect);

@@ -115,6 +115,8 @@ multiple.js:7:3 parse ━━━━━━━━━━━━━━━━━━━�
     10 │   eyes: 2
     11 │ };
   
+  i Decorators are only valid on class declarations, class expressions, and class methods.
+  
 multiple.js:10:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none

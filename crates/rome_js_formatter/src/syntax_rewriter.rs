@@ -143,6 +143,8 @@ impl JsFormatSyntaxRewriter {
 
                 // Keep parentheses around unknown expressions. Rome can't know the precedence.
                 if inner.kind().is_bogus()
+                    // Don't remove parentheses if the expression is a decorator
+                    || inner.grand_parent().map_or(false, |node| node.kind() == JsSyntaxKind::JS_DECORATOR)
                     // Don't remove parentheses if they have skipped trivia. We don't know for certain what the intended syntax is.
                     // Nor if there's a leading type cast comment
                     || has_type_cast_comment_or_skipped(&l_paren.leading_trivia())

@@ -1,36 +1,57 @@
-use indexmap::IndexSet;
+use crate::configuration::merge::MergeWith;
+use crate::configuration::string_set::StringSet;
+use bpaf::Bpaf;
 use rome_js_formatter::context::{
     trailing_comma::TrailingComma, QuoteProperties, QuoteStyle, Semicolons,
 };
 use serde::{Deserialize, Serialize};
 
-#[derive(Default, Debug, Deserialize, Serialize, Eq, PartialEq)]
+#[derive(Default, Debug, Deserialize, Serialize, Eq, PartialEq, Clone, Bpaf)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(default, deny_unknown_fields)]
 pub struct JavascriptConfiguration {
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(javascript_formatter), optional)]
     pub formatter: Option<JavascriptFormatter>,
 
     /// A list of global bindings that should be ignored by the analyzers
     ///
     /// If defined here, they should not emit diagnostics.
-    #[serde(
-        skip_serializing_if = "Option::is_none",
-        deserialize_with = "crate::deserialize_set_of_strings",
-        serialize_with = "crate::serialize_set_of_strings"
-    )]
-    pub globals: Option<IndexSet<String>>,
-
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(hide)]
+    pub globals: Option<StringSet>,
+    //
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(javascript_organize_imports), optional)]
     pub organize_imports: Option<JavascriptOrganizeImports>,
+}
+
+impl MergeWith<JavascriptConfiguration> for JavascriptConfiguration {
+    fn merge_with(&mut self, other: JavascriptConfiguration) {
+        if let Some(other_formatter) = other.formatter {
+            let formatter = self
+                .formatter
+                .get_or_insert_with(JavascriptFormatter::default);
+            formatter.merge_with(other_formatter);
+        }
+    }
+}
+
+impl MergeWith<Option<JavascriptFormatter>> for JavascriptConfiguration {
+    fn merge_with(&mut self, other: Option<JavascriptFormatter>) {
+        if let Some(other_formatter) = other {
+            let formatter = self
+                .formatter
+                .get_or_insert_with(JavascriptFormatter::default);
+            formatter.merge_with(other_formatter);
+        }
+    }
 }
 
 impl JavascriptConfiguration {
     pub(crate) const KNOWN_KEYS: &'static [&'static str] =
         &["formatter", "globals", "organizeImports"];
-}
 
-impl JavascriptConfiguration {
     pub fn with_formatter() -> Self {
         Self {
             formatter: Some(JavascriptFormatter::default()),
@@ -39,22 +60,22 @@ impl JavascriptConfiguration {
     }
 }
 
-#[derive(Default, Debug, Deserialize, Serialize, Eq, PartialEq)]
+#[derive(Default, Debug, Deserialize, Serialize, Eq, PartialEq, Clone, Bpaf)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "camelCase", default, deny_unknown_fields)]
 pub struct JavascriptFormatter {
     /// The style for quotes. Defaults to double.
-    #[serde(with = "PlainQuoteStyle")]
-    pub quote_style: QuoteStyle,
+    #[bpaf(long("quote-style"), argument("double|single"), optional)]
+    pub quote_style: Option<QuoteStyle>,
     /// When properties in objects are quoted. Defaults to asNeeded.
-    #[serde(with = "PlainQuoteProperties")]
-    pub quote_properties: QuoteProperties,
+    #[bpaf(long("quote-properties"), argument("preserve|as-needed"), optional)]
+    pub quote_properties: Option<QuoteProperties>,
     /// Print trailing commas wherever possible in multi-line comma-separated syntactic structures. Defaults to "all".
-    #[serde(with = "PlainTrailingComma")]
-    pub trailing_comma: TrailingComma,
+    #[bpaf(long("trailing-comma"), argument("all|es5|none"), optional)]
+    pub trailing_comma: Option<TrailingComma>,
     /// Whether the formatter prints semicolons for all statements or only in for statements where it is necessary because of ASI.
-    #[serde(with = "PlainSemicolons")]
-    pub semicolons: Semicolons,
+    #[bpaf(long("semicolons"), argument("always|as-needed"), optional)]
+    pub semicolons: Option<Semicolons>,
 }
 
 impl JavascriptFormatter {
@@ -66,97 +87,24 @@ impl JavascriptFormatter {
     ];
 }
 
-#[derive(Deserialize, Serialize, Debug, Eq, PartialEq, Default)]
-#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
-#[serde(rename_all = "camelCase", remote = "QuoteStyle")]
-pub enum PlainQuoteStyle {
-    #[default]
-    Double,
-    Single,
-}
-
-impl From<PlainQuoteStyle> for QuoteStyle {
-    fn from(variant: PlainQuoteStyle) -> Self {
-        match variant {
-            PlainQuoteStyle::Double => QuoteStyle::Double,
-            PlainQuoteStyle::Single => QuoteStyle::Single,
+impl MergeWith<JavascriptFormatter> for JavascriptFormatter {
+    fn merge_with(&mut self, other: JavascriptFormatter) {
+        if let Some(quote_properties) = other.quote_properties {
+            self.quote_properties = Some(quote_properties);
+        }
+        if let Some(quote_style) = other.quote_style {
+            self.quote_style = Some(quote_style);
+        }
+        if let Some(semicolons) = other.semicolons {
+            self.semicolons = Some(semicolons);
+        }
+        if let Some(trailing_comma) = other.trailing_comma {
+            self.trailing_comma = Some(trailing_comma);
         }
     }
 }
 
-impl PlainQuoteStyle {
-    pub(crate) const KNOWN_VALUES: &'static [&'static str] = &["double", "single"];
-}
-
-#[derive(Deserialize, Default, Serialize, Debug, Eq, PartialEq)]
-#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
-#[serde(rename_all = "camelCase", remote = "QuoteProperties")]
-pub enum PlainQuoteProperties {
-    #[default]
-    AsNeeded,
-    Preserve,
-}
-
-impl From<PlainQuoteProperties> for QuoteProperties {
-    fn from(variant: PlainQuoteProperties) -> Self {
-        match variant {
-            PlainQuoteProperties::AsNeeded => QuoteProperties::AsNeeded,
-            PlainQuoteProperties::Preserve => QuoteProperties::Preserve,
-        }
-    }
-}
-
-impl PlainQuoteProperties {
-    pub(crate) const KNOWN_VALUES: &'static [&'static str] = &["preserve", "asNeeded"];
-}
-
-#[derive(Deserialize, Default, Serialize, Debug, Eq, PartialEq)]
-#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
-#[serde(rename_all = "lowercase", remote = "TrailingComma")]
-pub enum PlainTrailingComma {
-    #[default]
-    All,
-    ES5,
-    None,
-}
-
-impl From<PlainTrailingComma> for TrailingComma {
-    fn from(variant: PlainTrailingComma) -> Self {
-        match variant {
-            PlainTrailingComma::All => TrailingComma::All,
-            PlainTrailingComma::ES5 => TrailingComma::ES5,
-            PlainTrailingComma::None => TrailingComma::None,
-        }
-    }
-}
-
-impl PlainTrailingComma {
-    pub(crate) const KNOWN_VALUES: &'static [&'static str] = &["all", "es5", "none"];
-}
-
-#[derive(Deserialize, Default, Serialize, Debug, Eq, PartialEq)]
-#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
-#[serde(rename_all = "camelCase", remote = "Semicolons")]
-pub enum PlainSemicolons {
-    #[default]
-    Always,
-    AsNeeded,
-}
-
-impl From<PlainSemicolons> for Semicolons {
-    fn from(variant: PlainSemicolons) -> Self {
-        match variant {
-            PlainSemicolons::Always => Semicolons::Always,
-            PlainSemicolons::AsNeeded => Semicolons::AsNeeded,
-        }
-    }
-}
-
-impl PlainSemicolons {
-    pub(crate) const KNOWN_VALUES: &'static [&'static str] = &["always", "asNeeded"];
-}
-
-#[derive(Debug, Default, Deserialize, Serialize, Eq, PartialEq)]
+#[derive(Debug, Default, Deserialize, Serialize, Eq, PartialEq, Clone, Bpaf)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(default, deny_unknown_fields)]
 pub struct JavascriptOrganizeImports {}

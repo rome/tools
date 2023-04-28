@@ -4,34 +4,35 @@
 //! by language. The language might further options divided by tool.
 
 use crate::{DynRef, WorkspaceError};
-use indexmap::IndexSet;
+use bpaf::Bpaf;
 use rome_fs::{FileSystem, OpenOptions};
-use serde::de::{SeqAccess, Visitor};
-use serde::ser::SerializeSeq;
 use serde::{Deserialize, Serialize};
 use std::fmt::Debug;
 use std::io::ErrorKind;
-use std::marker::PhantomData;
 use std::num::NonZeroU64;
 use std::path::{Path, PathBuf};
 
 pub mod diagnostics;
-mod formatter;
+pub mod formatter;
 mod generated;
-mod javascript;
+pub mod javascript;
 pub mod linter;
+mod merge;
 pub mod organize_imports;
 mod parse;
+pub mod string_set;
 pub mod vcs;
 
 pub use crate::configuration::diagnostics::ConfigurationDiagnostic;
 use crate::configuration::generated::push_to_analyzer_rules;
-use crate::configuration::organize_imports::OrganizeImports;
-use crate::configuration::vcs::VcsConfiguration;
+pub use crate::configuration::merge::MergeWith;
+use crate::configuration::organize_imports::{organize_imports, OrganizeImports};
+pub use crate::configuration::string_set::StringSet;
+use crate::configuration::vcs::{vcs_configuration, VcsConfiguration};
 use crate::settings::{LanguagesSettings, LinterSettings};
-pub use formatter::{FormatterConfiguration, PlainIndentStyle};
-pub use javascript::{JavascriptConfiguration, JavascriptFormatter};
-pub use linter::{LinterConfiguration, RuleConfiguration, Rules};
+pub use formatter::{formatter_configuration, FormatterConfiguration, PlainIndentStyle};
+pub use javascript::{javascript_configuration, JavascriptConfiguration, JavascriptFormatter};
+pub use linter::{linter_configuration, LinterConfiguration, RuleConfiguration, Rules};
 use rome_analyze::{AnalyzerConfiguration, AnalyzerRules};
 use rome_deserialize::json::deserialize_from_json_str;
 use rome_deserialize::Deserialized;
@@ -40,37 +41,44 @@ use rome_json_formatter::context::JsonFormatOptions;
 use rome_json_parser::parse_json;
 
 /// The configuration that is contained inside the file `rome.json`
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone, Bpaf)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(deny_unknown_fields, rename_all = "camelCase")]
 pub struct Configuration {
     /// A field for the [JSON schema](https://json-schema.org/) specification
     #[serde(rename(serialize = "$schema", deserialize = "$schema"))]
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(hide)]
     pub schema: Option<String>,
 
     /// The configuration of the filesystem
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(vcs_configuration), optional, hide_usage)]
     pub vcs: Option<VcsConfiguration>,
 
     /// The configuration of the filesystem
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(files_configuration), optional, hide_usage)]
     pub files: Option<FilesConfiguration>,
 
     /// The configuration of the formatter
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(formatter_configuration), optional)]
     pub formatter: Option<FormatterConfiguration>,
 
     /// The configuration of the import sorting
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external, optional)]
     pub organize_imports: Option<OrganizeImports>,
 
     /// The configuration for the linter
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(linter_configuration), optional)]
     pub linter: Option<LinterConfiguration>,
 
     /// Specific configuration for the JavaScript language
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(javascript_configuration), optional)]
     pub javascript: Option<JavascriptConfiguration>,
 }
 
@@ -79,7 +87,7 @@ impl Default for Configuration {
         Self {
             files: None,
             linter: Some(LinterConfiguration {
-                enabled: true,
+                enabled: Some(true),
                 ..LinterConfiguration::default()
             }),
             organize_imports: Some(OrganizeImports::default()),
@@ -101,50 +109,156 @@ impl Configuration {
         "$schema",
         "organizeImports",
     ];
-}
-
-impl Configuration {
     pub fn is_formatter_disabled(&self) -> bool {
-        self.formatter.as_ref().map(|f| !f.enabled).unwrap_or(false)
+        self.formatter
+            .as_ref()
+            .map(|f| f.is_disabled())
+            .unwrap_or(false)
     }
 
     pub fn is_linter_disabled(&self) -> bool {
-        self.linter.as_ref().map(|f| !f.enabled).unwrap_or(false)
+        self.linter
+            .as_ref()
+            .map(|f| f.is_disabled())
+            .unwrap_or(false)
     }
 
     pub fn is_organize_imports_disabled(&self) -> bool {
         self.organize_imports
             .as_ref()
-            .map(|f| !f.enabled)
+            .map(|f| f.is_disabled())
             .unwrap_or(false)
     }
 
     pub fn is_vcs_disabled(&self) -> bool {
-        self.vcs.as_ref().map(|f| !f.enabled).unwrap_or(true)
+        self.vcs
+            .as_ref()
+            .map(|f| matches!(f.enabled, Some(false)))
+            .unwrap_or(true)
+    }
+}
+
+impl MergeWith<Configuration> for Configuration {
+    fn merge_with(&mut self, other_configuration: Configuration) {
+        // files
+        self.merge_with(other_configuration.files);
+        // formatter
+        self.merge_with(other_configuration.formatter);
+        // javascript
+        self.merge_with(other_configuration.javascript);
+        // linter
+        self.merge_with(other_configuration.linter);
+        // organize imports
+        self.merge_with(other_configuration.organize_imports);
+        // VCS
+        self.merge_with(other_configuration.vcs);
+    }
+}
+
+impl MergeWith<Option<Configuration>> for Configuration {
+    fn merge_with(&mut self, other_configuration: Option<Configuration>) {
+        if let Some(other_configuration) = other_configuration {
+            self.merge_with(other_configuration);
+        }
+    }
+}
+
+impl MergeWith<Option<VcsConfiguration>> for Configuration {
+    fn merge_with(&mut self, other: Option<VcsConfiguration>) {
+        if let Some(other_vcs) = other {
+            let vcs = self.vcs.get_or_insert_with(VcsConfiguration::default);
+            vcs.merge_with(other_vcs);
+        }
+    }
+}
+
+impl MergeWith<Option<OrganizeImports>> for Configuration {
+    fn merge_with(&mut self, other: Option<OrganizeImports>) {
+        if let Some(other_organize_imports) = other {
+            let organize_imports = self
+                .organize_imports
+                .get_or_insert_with(OrganizeImports::default);
+            organize_imports.merge_with(other_organize_imports);
+        }
+    }
+}
+
+impl MergeWith<Option<LinterConfiguration>> for Configuration {
+    fn merge_with(&mut self, other: Option<LinterConfiguration>) {
+        if let Some(other_linter) = other {
+            let linter = self.linter.get_or_insert_with(LinterConfiguration::default);
+            linter.merge_with(other_linter);
+        }
+    }
+}
+impl MergeWith<Option<FilesConfiguration>> for Configuration {
+    fn merge_with(&mut self, other: Option<FilesConfiguration>) {
+        if let Some(files_configuration) = other {
+            let files = self.files.get_or_insert_with(FilesConfiguration::default);
+            files.merge_with(files_configuration);
+        };
+    }
+}
+impl MergeWith<Option<JavascriptConfiguration>> for Configuration {
+    fn merge_with(&mut self, other: Option<JavascriptConfiguration>) {
+        if let Some(other) = other {
+            let js_configuration = self
+                .javascript
+                .get_or_insert_with(JavascriptConfiguration::default);
+            js_configuration.merge_with(other);
+        }
+    }
+}
+impl MergeWith<Option<FormatterConfiguration>> for Configuration {
+    fn merge_with(&mut self, other: Option<FormatterConfiguration>) {
+        if let Some(other_formatter) = other {
+            let formatter = self
+                .formatter
+                .get_or_insert_with(FormatterConfiguration::default);
+            formatter.merge_with(other_formatter);
+        }
+    }
+}
+
+impl MergeWith<Option<JavascriptFormatter>> for Configuration {
+    fn merge_with(&mut self, other: Option<JavascriptFormatter>) {
+        let javascript_configuration = self
+            .javascript
+            .get_or_insert_with(JavascriptConfiguration::default);
+        javascript_configuration.merge_with(other);
     }
 }
 
 /// The configuration of the filesystem
-#[derive(Default, Debug, Deserialize, Serialize)]
+#[derive(Default, Debug, Deserialize, Serialize, Clone, Bpaf)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "camelCase", default, deny_unknown_fields)]
 pub struct FilesConfiguration {
     /// The maximum allowed size for source code files in bytes. Files above
     /// this limit will be ignored for performance reason. Defaults to 1 MiB
+    #[bpaf(long("files-max-size"), argument("NUMBER"))]
     pub max_size: Option<NonZeroU64>,
 
     /// A list of Unix shell style patterns. Rome tools will ignore files/folders that will
     /// match these patterns.
-    #[serde(
-        skip_serializing_if = "Option::is_none",
-        deserialize_with = "crate::deserialize_set_of_strings",
-        serialize_with = "crate::serialize_set_of_strings"
-    )]
-    pub ignore: Option<IndexSet<String>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(hide)]
+    pub ignore: Option<StringSet>,
 }
 
 impl FilesConfiguration {
     const KNOWN_KEYS: &'static [&'static str] = &["maxSize", "ignore"];
+}
+
+impl MergeWith<FilesConfiguration> for FilesConfiguration {
+    fn merge_with(&mut self, other: FilesConfiguration) {
+        if let Some(ignore) = other.ignore {
+            self.ignore = Some(ignore)
+        }
+        if let Some(max_size) = other.max_size {
+            self.max_size = Some(max_size)
+        }
+    }
 }
 
 /// - [Result]: if an error occurred while loading the configuration file.
@@ -255,70 +369,6 @@ pub fn create_config(
         .map_err(|_| WorkspaceError::cant_read_file(format!("{}", path.display())))?;
 
     Ok(())
-}
-
-/// Some documentation
-pub fn deserialize_set_of_strings<'de, D>(
-    deserializer: D,
-) -> Result<Option<IndexSet<String>>, D::Error>
-where
-    D: serde::de::Deserializer<'de>,
-{
-    struct IndexVisitor {
-        marker: PhantomData<fn() -> Option<IndexSet<String>>>,
-    }
-
-    impl IndexVisitor {
-        fn new() -> Self {
-            IndexVisitor {
-                marker: PhantomData,
-            }
-        }
-    }
-
-    impl<'de> Visitor<'de> for IndexVisitor {
-        type Value = Option<IndexSet<String>>;
-
-        // Format a message stating what data this Visitor expects to receive.
-        fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
-            formatter.write_str("expecting a sequence")
-        }
-
-        fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error>
-        where
-            A: SeqAccess<'de>,
-        {
-            let mut index_set = IndexSet::with_capacity(seq.size_hint().unwrap_or(0));
-
-            while let Some(value) = seq.next_element()? {
-                index_set.insert(value);
-            }
-
-            Ok(Some(index_set))
-        }
-    }
-
-    deserializer.deserialize_seq(IndexVisitor::new())
-}
-
-pub fn serialize_set_of_strings<S>(
-    set_of_strings: &Option<IndexSet<String>>,
-    s: S,
-) -> Result<S::Ok, S::Error>
-where
-    S: serde::ser::Serializer,
-{
-    if let Some(set_of_strings) = set_of_strings {
-        let mut sequence = s.serialize_seq(Some(set_of_strings.len()))?;
-        let iter = set_of_strings.into_iter();
-        for global in iter {
-            sequence.serialize_element(global)?;
-        }
-
-        sequence.end()
-    } else {
-        s.serialize_none()
-    }
 }
 
 /// Converts a [WorkspaceSettings] into a suited [configuration for the analyzer].

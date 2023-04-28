@@ -3,6 +3,7 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsExport {
+            decorators: JsDecoratorList [],
             export_token: EXPORT_KW@0..7 "export" [] [Whitespace(" ")],
             export_clause: TsEnumDeclaration {
                 const_token: missing (optional),
@@ -30,6 +31,7 @@ JsModule {
             },
         },
         JsExport {
+            decorators: JsDecoratorList [],
             export_token: EXPORT_KW@22..30 "export" [Newline("\n")] [Whitespace(" ")],
             export_clause: TsEnumDeclaration {
                 const_token: CONST_KW@30..36 "const" [] [Whitespace(" ")],
@@ -65,8 +67,9 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..51
     0: JS_EXPORT@0..22
-      0: EXPORT_KW@0..7 "export" [] [Whitespace(" ")]
-      1: TS_ENUM_DECLARATION@7..22
+      0: JS_DECORATOR_LIST@0..0
+      1: EXPORT_KW@0..7 "export" [] [Whitespace(" ")]
+      2: TS_ENUM_DECLARATION@7..22
         0: (empty)
         1: ENUM_KW@7..12 "enum" [] [Whitespace(" ")]
         2: JS_IDENTIFIER_BINDING@12..14
@@ -84,8 +87,9 @@ JsModule {
             1: (empty)
         5: R_CURLY@21..22 "}" [] []
     1: JS_EXPORT@22..51
-      0: EXPORT_KW@22..30 "export" [Newline("\n")] [Whitespace(" ")]
-      1: TS_ENUM_DECLARATION@30..51
+      0: JS_DECORATOR_LIST@22..22
+      1: EXPORT_KW@22..30 "export" [Newline("\n")] [Whitespace(" ")]
+      2: TS_ENUM_DECLARATION@30..51
         0: CONST_KW@30..36 "const" [] [Whitespace(" ")]
         1: ENUM_KW@36..41 "enum" [] [Whitespace(" ")]
         2: JS_IDENTIFIER_BINDING@41..43

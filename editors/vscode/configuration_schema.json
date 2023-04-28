@@ -350,9 +350,7 @@
 			"properties": {
 				"ignore": {
 					"description": "A list of Unix shell style patterns. Rome tools will ignore files/folders that will match these patterns.",
-					"type": ["array", "null"],
-					"items": { "type": "string" },
-					"uniqueItems": true
+					"anyOf": [{ "$ref": "#/definitions/StringSet" }, { "type": "null" }]
 				},
 				"maxSize": {
 					"description": "The maximum allowed size for source code files in bytes. Files above this limit will be ignored for performance reason. Defaults to 1 MiB",
@@ -367,34 +365,35 @@
 		"FormatterConfiguration": {
 			"type": "object",
 			"properties": {
-				"enabled": { "default": true, "type": "boolean" },
+				"enabled": { "default": true, "type": ["boolean", "null"] },
 				"formatWithErrors": {
 					"description": "Stores whether formatting should be allowed to proceed if a given file has syntax errors",
 					"default": false,
-					"type": "boolean"
+					"type": ["boolean", "null"]
 				},
 				"ignore": {
 					"description": "A list of Unix shell style patterns. The formatter will ignore files/folders that will match these patterns.",
-					"type": ["array", "null"],
-					"items": { "type": "string" },
-					"uniqueItems": true
+					"anyOf": [{ "$ref": "#/definitions/StringSet" }, { "type": "null" }]
 				},
 				"indentSize": {
 					"description": "The size of the indentation, 2 by default",
 					"default": 2,
-					"type": "integer",
+					"type": ["integer", "null"],
 					"format": "uint8",
 					"minimum": 0.0
 				},
 				"indentStyle": {
 					"description": "The indent style.",
 					"default": "tab",
-					"allOf": [{ "$ref": "#/definitions/PlainIndentStyle" }]
+					"anyOf": [
+						{ "$ref": "#/definitions/PlainIndentStyle" },
+						{ "type": "null" }
+					]
 				},
 				"lineWidth": {
 					"description": "What's the max width of a line. Defaults to 80.",
 					"default": 80,
-					"allOf": [{ "$ref": "#/definitions/LineWidth" }]
+					"anyOf": [{ "$ref": "#/definitions/LineWidth" }, { "type": "null" }]
 				}
 			},
 			"additionalProperties": false
@@ -410,9 +409,7 @@
 				},
 				"globals": {
 					"description": "A list of global bindings that should be ignored by the analyzers\n\nIf defined here, they should not emit diagnostics.",
-					"type": ["array", "null"],
-					"items": { "type": "string" },
-					"uniqueItems": true
+					"anyOf": [{ "$ref": "#/definitions/StringSet" }, { "type": "null" }]
 				},
 				"organize_imports": {
 					"anyOf": [
@@ -428,23 +425,29 @@
 			"properties": {
 				"quoteProperties": {
 					"description": "When properties in objects are quoted. Defaults to asNeeded.",
-					"default": "asNeeded",
-					"allOf": [{ "$ref": "#/definitions/QuoteProperties" }]
+					"default": null,
+					"anyOf": [
+						{ "$ref": "#/definitions/QuoteProperties" },
+						{ "type": "null" }
+					]
 				},
 				"quoteStyle": {
 					"description": "The style for quotes. Defaults to double.",
-					"default": "double",
-					"allOf": [{ "$ref": "#/definitions/QuoteStyle" }]
+					"default": null,
+					"anyOf": [{ "$ref": "#/definitions/QuoteStyle" }, { "type": "null" }]
 				},
 				"semicolons": {
 					"description": "Whether the formatter prints semicolons for all statements or only in for statements where it is necessary because of ASI.",
-					"default": "always",
-					"allOf": [{ "$ref": "#/definitions/Semicolons" }]
+					"default": null,
+					"anyOf": [{ "$ref": "#/definitions/Semicolons" }, { "type": "null" }]
 				},
 				"trailingComma": {
 					"description": "Print trailing commas wherever possible in multi-line comma-separated syntactic structures. Defaults to \"all\".",
-					"default": "all",
-					"allOf": [{ "$ref": "#/definitions/TrailingComma" }]
+					"default": null,
+					"anyOf": [
+						{ "$ref": "#/definitions/TrailingComma" },
+						{ "type": "null" }
+					]
 				}
 			},
 			"additionalProperties": false
@@ -465,13 +468,11 @@
 				"enabled": {
 					"description": "if `false`, it disables the feature and the linter won't be executed. `true` by default",
 					"default": true,
-					"type": "boolean"
+					"type": ["boolean", "null"]
 				},
 				"ignore": {
 					"description": "A list of Unix shell style patterns. The formatter will ignore files/folders that will match these patterns.",
-					"type": ["array", "null"],
-					"items": { "type": "string" },
-					"uniqueItems": true
+					"anyOf": [{ "$ref": "#/definitions/StringSet" }, { "type": "null" }]
 				},
 				"rules": {
 					"description": "List of rules",
@@ -808,6 +809,13 @@
 						{ "type": "null" }
 					]
 				},
+				"useGroupedTypeImport": {
+					"description": "Enforce the use of import type when an import only has specifiers with type qualifier.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"useHookAtTopLevel": {
 					"description": "Enforce that all React hooks are being called from the Top Level component functions.",
 					"anyOf": [
@@ -824,6 +832,13 @@
 				},
 				"useIsNan": {
 					"description": "Require calls to isNaN() when checking for NaN.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
+				"useLiteralEnumMembers": {
+					"description": "Require all enum members to be literal values.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }
@@ -879,13 +894,11 @@
 				"enabled": {
 					"description": "Enables the organization of imports",
 					"default": false,
-					"type": "boolean"
+					"type": ["boolean", "null"]
 				},
 				"ignore": {
 					"description": "A list of Unix shell style patterns. The formatter will ignore files/folders that will match these patterns.",
-					"type": ["array", "null"],
-					"items": { "type": "string" },
-					"uniqueItems": true
+					"anyOf": [{ "$ref": "#/definitions/StringSet" }, { "type": "null" }]
 				}
 			},
 			"additionalProperties": false
@@ -1005,6 +1018,11 @@
 			}
 		},
 		"Semicolons": { "type": "string", "enum": ["always", "asNeeded"] },
+		"StringSet": {
+			"type": "array",
+			"items": { "type": "string" },
+			"uniqueItems": true
+		},
 		"Style": {
 			"description": "A list of rules that belong to this group",
 			"type": "object",
@@ -1327,7 +1345,26 @@
 				}
 			}
 		},
-		"TrailingComma": { "type": "string", "enum": ["all", "es5", "none"] },
+		"TrailingComma": {
+			"description": "Print trailing commas wherever possible in multi-line comma-separated syntactic structures.",
+			"oneOf": [
+				{
+					"description": "Trailing commas wherever possible (including function parameters and calls).",
+					"type": "string",
+					"enum": ["all"]
+				},
+				{
+					"description": "Trailing commas where valid in ES5 (objects, arrays, etc.). No trailing commas in type parameters in TypeScript.",
+					"type": "string",
+					"enum": ["es5"]
+				},
+				{
+					"description": "No trailing commas.",
+					"type": "string",
+					"enum": ["none"]
+				}
+			]
+		},
 		"VcsClientKind": {
 			"oneOf": [
 				{
@@ -1338,9 +1375,8 @@
 			]
 		},
 		"VcsConfiguration": {
-			"description": "Set",
+			"description": "Set of properties to configure the integration with the VCS",
 			"type": "object",
-			"required": ["enabled"],
 			"properties": {
 				"clientKind": {
 					"description": "The kind of client.",
@@ -1351,7 +1387,7 @@
 				},
 				"enabled": {
 					"description": "Whether Rome should integrate itself with the VCS client",
-					"type": "boolean"
+					"type": ["boolean", "null"]
 				},
 				"root": {
 					"description": "The folder where Rome should check for VCS files. By default, Rome will use the same folder where `rome.json` was found.\n\nIf Rome can't fine the configuration, it will attempt to use the current working directory. If no current working directory can't be found, Rome won't use the VCS integration.",

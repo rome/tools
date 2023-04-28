@@ -58,7 +58,7 @@ export interface FilesConfiguration {
 	/**
 	 * A list of Unix shell style patterns. Rome tools will ignore files/folders that will match these patterns.
 	 */
-	ignore?: string[];
+	ignore?: StringSet;
 	/**
 	 * The maximum allowed size for source code files in bytes. Files above this limit will be ignored for performance reason. Defaults to 1 MiB
 	 */
@@ -73,7 +73,7 @@ export interface FormatterConfiguration {
 	/**
 	 * A list of Unix shell style patterns. The formatter will ignore files/folders that will match these patterns.
 	 */
-	ignore?: string[];
+	ignore?: StringSet;
 	/**
 	 * The size of the indentation, 2 by default
 	 */
@@ -94,7 +94,7 @@ export interface JavascriptConfiguration {
 
 If defined here, they should not emit diagnostics. 
 	 */
-	globals?: string[];
+	globals?: StringSet;
 	organize_imports?: JavascriptOrganizeImports;
 }
 export interface LinterConfiguration {
@@ -105,7 +105,7 @@ export interface LinterConfiguration {
 	/**
 	 * A list of Unix shell style patterns. The formatter will ignore files/folders that will match these patterns.
 	 */
-	ignore?: string[];
+	ignore?: StringSet;
 	/**
 	 * List of rules
 	 */
@@ -119,10 +119,10 @@ export interface OrganizeImports {
 	/**
 	 * A list of Unix shell style patterns. The formatter will ignore files/folders that will match these patterns.
 	 */
-	ignore?: string[];
+	ignore?: StringSet;
 }
 /**
- * Set
+ * Set of properties to configure the integration with the VCS
  */
 export interface VcsConfiguration {
 	/**
@@ -132,7 +132,7 @@ export interface VcsConfiguration {
 	/**
 	 * Whether Rome should integrate itself with the VCS client
 	 */
-	enabled: boolean;
+	enabled?: boolean;
 	/**
 	* The folder where Rome should check for VCS files. By default, Rome will use the same folder where `rome.json` was found.
 
@@ -144,6 +144,7 @@ If Rome can't fine the configuration, it will attempt to use the current working
 	 */
 	useIgnoreFile?: boolean;
 }
+export type StringSet = string[];
 export type PlainIndentStyle = "tab" | "space";
 /**
 	* Validated value for the `line_width` formatter options
@@ -192,6 +193,9 @@ export type VcsClientKind = "git";
 export type QuoteProperties = "asNeeded" | "preserve";
 export type QuoteStyle = "double" | "single";
 export type Semicolons = "always" | "asNeeded";
+/**
+ * Print trailing commas wherever possible in multi-line comma-separated syntactic structures.
+ */
 export type TrailingComma = "all" | "es5" | "none";
 /**
  * A list of rules that belong to this group
@@ -569,6 +573,10 @@ export interface Nursery {
 	 */
 	useExhaustiveDependencies?: RuleConfiguration;
 	/**
+	 * Enforce the use of import type when an import only has specifiers with type qualifier.
+	 */
+	useGroupedTypeImport?: RuleConfiguration;
+	/**
 	 * Enforce that all React hooks are being called from the Top Level component functions.
 	 */
 	useHookAtTopLevel?: RuleConfiguration;
@@ -580,6 +588,10 @@ export interface Nursery {
 	 * Require calls to isNaN() when checking for NaN.
 	 */
 	useIsNan?: RuleConfiguration;
+	/**
+	 * Require all enum members to be literal values.
+	 */
+	useLiteralEnumMembers?: RuleConfiguration;
 	/**
 	 * Enforce the usage of a literal access to properties over computed property access.
 	 */
@@ -1007,6 +1019,8 @@ export type Category =
 	| "lint/nursery/noForEach"
 	| "lint/nursery/useLiteralKeys"
 	| "lint/nursery/noUselessConstructor"
+	| "lint/nursery/useLiteralEnumMembers"
+	| "lint/nursery/useGroupedTypeImport"
 	| "lint/nursery/noRedeclare"
 	| "lint/nursery/useNamespaceKeyword"
 	| "lint/nursery/noRedundantRoles"

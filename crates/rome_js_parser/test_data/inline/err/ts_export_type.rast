@@ -3,6 +3,7 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsExport {
+            decorators: JsDecoratorList [],
             export_token: EXPORT_KW@0..7 "export" [] [Whitespace(" ")],
             export_clause: missing (required),
         },
@@ -23,8 +24,9 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..11
     0: JS_EXPORT@0..7
-      0: EXPORT_KW@0..7 "export" [] [Whitespace(" ")]
-      1: (empty)
+      0: JS_DECORATOR_LIST@0..0
+      1: EXPORT_KW@0..7 "export" [] [Whitespace(" ")]
+      2: (empty)
     1: JS_EXPRESSION_STATEMENT@7..11
       0: JS_IDENTIFIER_EXPRESSION@7..11
         0: JS_REFERENCE_IDENTIFIER@7..11

@@ -13,6 +13,7 @@ JsModule {
                     l_curly_token: L_CURLY@20..21 "{" [] [],
                     items: JsModuleItemList [
                         JsExport {
+                            decorators: JsDecoratorList [],
                             export_token: EXPORT_KW@21..31 "export" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
                             export_clause: JsClassDeclaration {
                                 decorators: JsDecoratorList [],
@@ -138,8 +139,9 @@ JsModule {
           0: L_CURLY@20..21 "{" [] []
           1: JS_MODULE_ITEM_LIST@21..152
             0: JS_EXPORT@21..152
-              0: EXPORT_KW@21..31 "export" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
-              1: JS_CLASS_DECLARATION@31..152
+              0: JS_DECORATOR_LIST@21..21
+              1: EXPORT_KW@21..31 "export" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
+              2: JS_CLASS_DECLARATION@31..152
                 0: JS_DECORATOR_LIST@31..31
                 1: (empty)
                 2: CLASS_KW@31..37 "class" [] [Whitespace(" ")]

@@ -114,7 +114,6 @@ impl<'scope> TraversalScope<'scope> for OsTraversalScope<'scope> {
                 return;
             }
         };
-
         if file_type.is_symlink() {
             tracing::info!("Translating symlink: {:?}", path);
             let path = match fs::read_link(&path) {

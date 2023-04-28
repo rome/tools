@@ -1,4 +1,5 @@
 use crate::configuration::organize_imports::OrganizeImports;
+use crate::configuration::string_set::StringSet;
 use rome_deserialize::json::{has_only_known_keys, VisitJsonNode};
 use rome_deserialize::{DeserializationDiagnostic, VisitNode};
 use rome_json_syntax::{JsonLanguage, JsonSyntaxNode};
@@ -25,10 +26,12 @@ impl VisitNode<JsonLanguage> for OrganizeImports {
         let name_text = name.text();
         match name_text {
             "enabled" => {
-                self.enabled = self.map_to_boolean(&value, name_text, diagnostics)?;
+                self.enabled = self.map_to_boolean(&value, name_text, diagnostics);
             }
             "ignore" => {
-                self.ignore = self.map_to_index_set_string(&value, name_text, diagnostics);
+                self.ignore = self
+                    .map_to_index_set_string(&value, name_text, diagnostics)
+                    .map(StringSet::new);
             }
             _ => {}
         }

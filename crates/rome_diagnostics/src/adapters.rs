@@ -101,3 +101,40 @@ impl Diagnostic for PicoArgsError {
         fmt.write_str(&error)
     }
 }
+
+/// Implements [Diagnostic] over for [pico_args::Error].
+#[derive(Debug)]
+pub struct BpafError {
+    error: bpaf::ParseFailure,
+}
+
+impl From<bpaf::ParseFailure> for BpafError {
+    fn from(error: bpaf::ParseFailure) -> Self {
+        Self { error }
+    }
+}
+
+impl Diagnostic for BpafError {
+    fn category(&self) -> Option<&'static Category> {
+        Some(category!("flags/invalid"))
+    }
+
+    fn tags(&self) -> DiagnosticTags {
+        DiagnosticTags::FIXABLE
+    }
+
+    fn description(&self, fmt: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        if let bpaf::ParseFailure::Stderr(reason) = &self.error {
+            write!(fmt, "{}", reason)?;
+        }
+        Ok(())
+    }
+
+    fn message(&self, fmt: &mut fmt::Formatter<'_>) -> io::Result<()> {
+        if let bpaf::ParseFailure::Stderr(reason) = &self.error {
+            let error = reason.to_string();
+            fmt.write_str(&error)?;
+        }
+        Ok(())
+    }
+}

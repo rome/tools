@@ -49,7 +49,7 @@ pub enum SemanticEvent {
     },
 
     /// Tracks where a symbol is written, but only if its declaration
-    /// is before this refence.
+    /// is before this reference.
     /// Generated for:
     /// - All identifier assignments
     Write {

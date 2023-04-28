@@ -4,8 +4,10 @@
 //!
 //! [website]: https://rome.tools
 
+use bpaf::{Args, ParseFailure};
 use rome_cli::{
-    color_from_arguments, open_transport, setup_panic_handler, Arguments, CliDiagnostic, CliSession,
+    open_transport, parse_command, setup_panic_handler, to_color_mode, CliDiagnostic, CliSession,
+    RomeCommand,
 };
 use rome_console::{markup, ConsoleExt, EnvConsole};
 use rome_diagnostics::{set_bottom_frame, PrintDiagnostic};
@@ -25,27 +27,40 @@ fn main() -> ExitCode {
     setup_panic_handler();
     set_bottom_frame(main as usize);
 
-    let args = Arguments::from_env();
     let mut console = EnvConsole::default();
-
-    let result = run_workspace(args, &mut console);
-    match result {
-        Err(termination) => {
-            console.error(markup! {
-                {PrintDiagnostic::verbose(&termination)}
-            });
-            termination.report()
+    let command = parse_command().run_inner(Args::current_args());
+    match command {
+        Ok(command) => {
+            let color_mode = to_color_mode(command.get_color());
+            console.set_color(color_mode);
+            let result = run_workspace(&mut console, command);
+            match result {
+                Err(termination) => {
+                    console.error(markup! {
+                        {PrintDiagnostic::verbose(&termination)}
+                    });
+                    termination.report()
+                }
+                Ok(_) => ExitCode::SUCCESS,
+            }
         }
-        Ok(_) => ExitCode::SUCCESS,
+        Err(failure) => {
+            return if let ParseFailure::Stdout(help) = &failure {
+                console.log(markup! {{help}});
+                ExitCode::SUCCESS
+            } else {
+                let diagnostic = CliDiagnostic::parse_error_bpaf(failure);
+                console.error(markup! { {PrintDiagnostic::simple(&diagnostic)}});
+                ExitCode::FAILURE
+            }
+        }
     }
 }
 
-fn run_workspace(mut args: Arguments, console: &mut EnvConsole) -> Result<(), CliDiagnostic> {
-    let colors = color_from_arguments(&mut args)?;
-    console.set_color(colors);
+fn run_workspace(console: &mut EnvConsole, command: RomeCommand) -> Result<(), CliDiagnostic> {
     // If the `--use-server` CLI flag is set, try to open a connection to an
     // existing Rome server socket
-    let workspace = if args.contains("--use-server") {
+    let workspace = if command.should_use_server() {
         let runtime = Runtime::new()?;
         match open_transport(runtime)? {
             Some(transport) => workspace::client(transport)?,
@@ -55,6 +70,6 @@ fn run_workspace(mut args: Arguments, console: &mut EnvConsole) -> Result<(), Cl
         workspace::server()
     };
 
-    let session = CliSession::new(&*workspace, args, console)?;
-    session.run()
+    let session = CliSession::new(&*workspace, console)?;
+    session.run(command)
 }

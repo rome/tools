@@ -4,19 +4,32 @@
 
 ### CLI
 
+#### Other changes
+
+- Refactored the underling argument parsing logic. Changed the look and feel of the help
+output. [#4405](https://github.com/rome/tools/pull/4405)
+
 ### Linter
 
 #### New rules
 
+- [`useGroupedTypeImport`](https://docs.rome.tools/lint/rules/useGroupedTypeImport/)
 - [`noUselessConstructor`](https://docs.rome.tools/lint/rules/noUselessConstructor/)
+- [`useLiteralEnumMembers`](https://docs.rome.tools/lint/rules/useLiteralEnumMembers/)
 
 #### Other changes
+
 - Add new command `rome migrate` the transform the configuration file `rome.json`
 when there are breaking changes.
+- Fix [#4348](https://github.com/rome/tools/issues/4348) that caused [`noNonNullAssertion`](https://docs.rome.tools/lint/rules/nononnullassertion/) to emit incorrect code action
+- Fix [#4410](https://github.com/rome/tools/issues/4410) that caused [`useButtonType`](https://docs.rome.tools/lint/rules/usebuttontype/) to miss some cases
 
 ### Configuration
 ### Editors
- - Fixed an issue where the VSCode extension duplicates text when using VSCode git utilities [#4338]
+
+ - Fix an issue where the VSCode extension duplicates text when using VSCode git utilities [#4338]
+ - Remove code assists from being added to the code actions when apply fixes;
+ -
 ### Formatter
 
 - Fix an issue where formatting of JSX string literals property values were using incorrect quotes [#4054](https://github.com/rome/tools/issues/4054)
@@ -56,7 +69,7 @@ the code action is not formatted.
 - import "module" assert {}
 + import "module" with {}
 ```
-
+- Allow decorators before `export` and `export default`. [#4252](https://github.com/rome/tools/issues/4252)
 
 ### VSCode
 ### JavaScript APIs

@@ -7,6 +7,7 @@ JsModule {
             statements: JsStatementList [
                 JsBogusStatement {
                     items: [
+                        JsDecoratorList [],
                         EXPORT_KW@1..10 "export" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")],
                         JsExportNamedFromClause {
                             type_token: missing (optional),
@@ -45,8 +46,9 @@ JsModule {
       0: L_CURLY@0..1 "{" [] []
       1: JS_STATEMENT_LIST@1..31
         0: JS_BOGUS_STATEMENT@1..31
-          0: EXPORT_KW@1..10 "export" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")]
-          1: JS_EXPORT_NAMED_FROM_CLAUSE@10..31
+          0: JS_DECORATOR_LIST@1..1
+          1: EXPORT_KW@1..10 "export" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")]
+          2: JS_EXPORT_NAMED_FROM_CLAUSE@10..31
             0: (empty)
             1: L_CURLY@10..12 "{" [] [Whitespace(" ")]
             2: JS_EXPORT_NAMED_FROM_SPECIFIER_LIST@12..17
