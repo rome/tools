@@ -1553,6 +1553,12 @@ pub struct Nursery {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub use_exhaustive_dependencies: Option<RuleConfiguration>,
     #[doc = "Enforce the use of import type when an import only has specifiers with type qualifier."]
+    #[bpaf(
+        long("use-grouped-type-import"),
+        argument("on|off|warn"),
+        optional,
+        hide
+    )]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub use_grouped_type_import: Option<RuleConfiguration>,
     #[doc = "Enforce that all React hooks are being called from the Top Level component functions."]
