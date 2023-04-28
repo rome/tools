@@ -7,10 +7,10 @@ expression: content
 ```block
 flags/invalid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Cannot parse the argument --trailing-comma
+  × Failed to parse CLI arguments.
     
     Caused by:
-      failed to parse 'NONE': Value not supported for TrailingComma
+      Couldn't parse "NONE": Value not supported for TrailingComma
   
 
 

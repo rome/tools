@@ -78,22 +78,22 @@ impl VisitNode<JsonLanguage> for JavascriptFormatter {
             "quoteStyle" => {
                 let mut quote_style = QuoteStyle::default();
                 self.map_to_known_string(&value, name_text, &mut quote_style, diagnostics)?;
-                self.quote_style = quote_style;
+                self.quote_style = Some(quote_style);
             }
             "trailingComma" => {
                 let mut trailing_comma = TrailingComma::default();
                 self.map_to_known_string(&value, name_text, &mut trailing_comma, diagnostics)?;
-                self.trailing_comma = trailing_comma;
+                self.trailing_comma = Some(trailing_comma);
             }
             "quoteProperties" => {
                 let mut quote_properties = QuoteProperties::default();
                 self.map_to_known_string(&value, name_text, &mut quote_properties, diagnostics)?;
-                self.quote_properties = quote_properties;
+                self.quote_properties = Some(quote_properties);
             }
             "semicolons" => {
                 let mut semicolons = Semicolons::default();
                 self.map_to_known_string(&value, name_text, &mut semicolons, diagnostics)?;
-                self.semicolons = semicolons;
+                self.semicolons = Some(semicolons);
             }
             _ => {}
         }

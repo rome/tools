@@ -3,8 +3,9 @@ use serde::de::{SeqAccess, Visitor};
 use serde::ser::SerializeSeq;
 use serde::{Deserialize, Serialize};
 use std::marker::PhantomData;
+use std::str::FromStr;
 
-#[derive(Default, Debug, Deserialize, Serialize, Eq, PartialEq)]
+#[derive(Default, Debug, Deserialize, Serialize, Clone, Eq, PartialEq)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct StringSet(
@@ -94,4 +95,12 @@ where
     }
 
     sequence.end()
+}
+
+impl FromStr for StringSet {
+    type Err = String;
+
+    fn from_str(_s: &str) -> Result<Self, Self::Err> {
+        Ok(StringSet::default())
+    }
 }

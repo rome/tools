@@ -7,10 +7,10 @@ expression: content
 ```block
 flags/invalid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Cannot parse the argument --indent-size
+  × Failed to parse CLI arguments.
     
     Caused by:
-      failed to parse '257': number too large to fit in target type
+      Couldn't parse "257": number too large to fit in target type
   
 
 

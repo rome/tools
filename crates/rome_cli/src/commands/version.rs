@@ -4,16 +4,6 @@ use rome_service::workspace::ServerInfo;
 
 use crate::{CliDiagnostic, CliSession, VERSION};
 
-/// Handler for the `--version` argument. Prints a brief rome version.
-pub(crate) fn brief_version(session: CliSession) -> Result<(), CliDiagnostic> {
-    session
-        .app
-        .console
-        .log(markup!("Rome CLI version "{VERSION}));
-
-    Ok(())
-}
-
 /// Handle of the `version` command. Prints a more in detail version of rome.
 pub(crate) fn full_version(session: CliSession) -> Result<(), CliDiagnostic> {
     session.app.console.log(markup! {

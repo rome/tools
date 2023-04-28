@@ -26,7 +26,7 @@ impl VisitNode<JsonLanguage> for OrganizeImports {
         let name_text = name.text();
         match name_text {
             "enabled" => {
-                self.enabled = self.map_to_boolean(&value, name_text, diagnostics)?;
+                self.enabled = self.map_to_boolean(&value, name_text, diagnostics);
             }
             "ignore" => {
                 self.ignore = self

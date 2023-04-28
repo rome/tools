@@ -122,7 +122,7 @@ export interface OrganizeImports {
 	ignore?: StringSet;
 }
 /**
- * Set
+ * Set of properties to configure the integration with the VCS
  */
 export interface VcsConfiguration {
 	/**
@@ -132,7 +132,7 @@ export interface VcsConfiguration {
 	/**
 	 * Whether Rome should integrate itself with the VCS client
 	 */
-	enabled: boolean;
+	enabled?: boolean;
 	/**
 	* The folder where Rome should check for VCS files. By default, Rome will use the same folder where `rome.json` was found.
 

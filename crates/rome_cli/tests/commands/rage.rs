@@ -1,11 +1,10 @@
 use crate::run_cli;
 use crate::snap_test::{CliSnapshot, SnapshotPayload};
-use pico_args::Arguments;
+use bpaf::Args;
 use rome_cli::CliDiagnostic;
 use rome_console::{BufferConsole, Console};
 use rome_fs::{FileSystem, MemoryFileSystem};
 use rome_service::DynRef;
-use std::ffi::OsString;
 use std::path::{Path, PathBuf};
 use std::sync::{Mutex, MutexGuard};
 use std::{env, fs};
@@ -18,7 +17,7 @@ fn ok() {
     let result = run_rage(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![OsString::from("rage")]),
+        Args::from(&[("rage")]),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -48,7 +47,7 @@ fn with_configuration() {
     let result = run_rage(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![OsString::from("rage")]),
+        Args::from(&[("rage")]),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -78,7 +77,7 @@ fn with_malformed_configuration() {
     let result = run_rage(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![OsString::from("rage")]),
+        Args::from(&[("rage")]),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -145,7 +144,7 @@ Not most recent log file
         run_cli(
             DynRef::Borrowed(&mut fs),
             &mut console,
-            Arguments::from_vec(vec![OsString::from("rage")]),
+            Args::from(&[("rage")]),
         )
     };
 
@@ -164,7 +163,7 @@ Not most recent log file
 fn run_rage<'app>(
     fs: DynRef<'app, dyn FileSystem>,
     console: &'app mut dyn Console,
-    args: Arguments,
+    args: Args,
 ) -> Result<(), CliDiagnostic> {
     let _test_dir = TestLogDir::new("rome-rage-test");
     run_cli(fs, console, args)

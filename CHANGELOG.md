@@ -4,6 +4,11 @@
 
 ### CLI
 
+#### Other changes
+
+- Refactored the underling argument parsing logic. Changed the look and feel of the help
+output. [#4405](https://github.com/rome/tools/pull/4405)
+
 ### Linter
 
 #### New rules

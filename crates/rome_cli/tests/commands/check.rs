@@ -1,6 +1,5 @@
-use pico_args::Arguments;
+use bpaf::Args;
 use std::env::temp_dir;
-use std::ffi::OsString;
 use std::fs::{create_dir, create_dir_all, remove_dir_all, File};
 use std::io::Write;
 #[cfg(target_family = "unix")]
@@ -56,6 +55,28 @@ const UPGRADE_SEVERITY_CODE: &str = r#"if(!cond) { exprA(); } else { exprB() }"#
 const NURSERY_UNSTABLE: &str = r#"if(a = b) {}"#;
 
 #[test]
+fn check_help() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Args::from(&[("check"), "--help"]),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "check_help",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
 fn ok() {
     let mut fs = MemoryFileSystem::default();
     let mut console = BufferConsole::default();
@@ -66,7 +87,7 @@ fn ok() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -83,7 +104,7 @@ fn ok_read_only() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -100,7 +121,7 @@ fn parse_error() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
     );
     assert!(result.is_err(), "run_cli returned {result:?}");
 
@@ -124,7 +145,7 @@ fn lint_error() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -148,7 +169,7 @@ fn maximum_diagnostics() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -193,10 +214,10 @@ fn apply_ok() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("check"),
-            OsString::from("--apply"),
-            file_path.as_os_str().into(),
+        Args::from(&[
+            ("check"),
+            ("--apply"),
+            file_path.as_os_str().to_str().unwrap(),
         ]),
     );
 
@@ -230,10 +251,10 @@ fn apply_noop() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("check"),
-            OsString::from("--apply"),
-            file_path.as_os_str().into(),
+        Args::from(&[
+            ("check"),
+            ("--apply"),
+            file_path.as_os_str().to_str().unwrap(),
         ]),
     );
 
@@ -259,11 +280,11 @@ fn apply_suggested_error() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("check"),
-            OsString::from("--apply-unsafe"),
-            OsString::from("--apply"),
-            file_path.as_os_str().into(),
+        Args::from(&[
+            ("check"),
+            ("--apply-unsafe"),
+            ("--apply"),
+            file_path.as_os_str().to_str().unwrap(),
         ]),
     );
 
@@ -289,10 +310,10 @@ fn apply_suggested() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("check"),
-            OsString::from("--apply-unsafe"),
-            file_path.as_os_str().into(),
+        Args::from(&[
+            ("check"),
+            ("--apply-unsafe"),
+            file_path.as_os_str().to_str().unwrap(),
         ]),
     );
 
@@ -341,11 +362,11 @@ function f() {\n\targuments;\n}
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("check"),
-            OsString::from("--apply-unsafe"),
-            test1.as_os_str().into(),
-            test2.as_os_str().into(),
+        Args::from(&[
+            ("check"),
+            ("--apply-unsafe"),
+            test1.as_os_str().to_str().unwrap(),
+            test2.as_os_str().to_str().unwrap(),
         ]),
     );
 
@@ -396,10 +417,10 @@ fn no_lint_if_linter_is_disabled_when_run_apply() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("check"),
-            OsString::from("--apply"),
-            file_path.as_os_str().into(),
+        Args::from(&[
+            ("check"),
+            ("--apply"),
+            file_path.as_os_str().to_str().unwrap(),
         ]),
     );
 
@@ -436,7 +457,7 @@ fn no_lint_if_linter_is_disabled() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -472,10 +493,10 @@ fn should_disable_a_rule() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("check"),
-            OsString::from("--apply"),
-            file_path.as_os_str().into(),
+        Args::from(&[
+            ("check"),
+            ("--apply"),
+            file_path.as_os_str().to_str().unwrap(),
         ]),
     );
 
@@ -515,10 +536,10 @@ fn should_disable_a_rule_group() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("check"),
-            OsString::from("--apply"),
-            file_path.as_os_str().into(),
+        Args::from(&[
+            ("check"),
+            ("--apply"),
+            file_path.as_os_str().to_str().unwrap(),
         ]),
     );
 
@@ -557,7 +578,7 @@ fn downgrade_severity() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
     );
 
     println!("{console:?}");
@@ -603,7 +624,7 @@ fn upgrade_severity() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -648,10 +669,10 @@ fn no_lint_when_file_is_ignored() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("check"),
-            OsString::from("--apply"),
-            file_path.as_os_str().into(),
+        Args::from(&[
+            ("check"),
+            ("--apply"),
+            file_path.as_os_str().to_str().unwrap(),
         ]),
     );
 
@@ -691,11 +712,11 @@ fn no_lint_if_files_are_listed_in_ignore_option() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("check"),
-            OsString::from("--apply"),
-            file_path_test1.as_os_str().into(),
-            file_path_test2.as_os_str().into(),
+        Args::from(&[
+            ("check"),
+            ("--apply"),
+            file_path_test1.as_os_str().to_str().unwrap(),
+            file_path_test2.as_os_str().to_str().unwrap(),
         ]),
     );
 
@@ -751,9 +772,9 @@ fn fs_error_dereferenced_symlink() {
 
     #[allow(unused_must_use)]
     {
-        remove_dir_all(root_path.clone());
+        remove_dir_all(root_path.display().to_string().as_str());
     }
-    create_dir(root_path.clone()).unwrap();
+    create_dir(root_path.display().to_string().as_str()).unwrap();
     create_dir(subdir_path).unwrap();
 
     #[cfg(target_family = "unix")]
@@ -772,10 +793,7 @@ fn fs_error_dereferenced_symlink() {
     let result = run_cli(
         DynRef::Owned(Box::new(OsFileSystem)),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("check"),
-            OsString::from(root_path.clone()),
-        ]),
+        Args::from(&[("check"), root_path.display().to_string().as_str()]),
     );
 
     remove_dir_all(root_path).unwrap();
@@ -802,9 +820,9 @@ fn fs_error_infinite_symlink_exapansion() {
 
     #[allow(unused_must_use)]
     {
-        remove_dir_all(root_path.clone());
+        remove_dir_all(root_path.display().to_string().as_str());
     }
-    create_dir(root_path.clone()).unwrap();
+    create_dir(root_path.display().to_string().as_str()).unwrap();
     create_dir(subdir1_path.clone()).unwrap();
 
     create_dir_all(subdir2_path.clone()).unwrap();
@@ -830,10 +848,7 @@ fn fs_error_infinite_symlink_exapansion() {
     let result = run_cli(
         DynRef::Owned(Box::new(OsFileSystem)),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("check"),
-            OsString::from(root_path.clone()),
-        ]),
+        Args::from(&[("check"), (root_path.display().to_string().as_str())]),
     );
 
     remove_dir_all(root_path).unwrap();
@@ -860,10 +875,10 @@ fn fs_error_read_only() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("check"),
-            OsString::from("--apply"),
-            file_path.as_os_str().into(),
+        Args::from(&[
+            ("check"),
+            ("--apply"),
+            file_path.as_os_str().to_str().unwrap(),
         ]),
     );
 
@@ -891,7 +906,7 @@ fn fs_error_unknown() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![OsString::from("check"), OsString::from("prefix")]),
+        Args::from(&[("check"), ("prefix")]),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -940,9 +955,9 @@ fn fs_files_ignore_symlink() {
 
     #[allow(unused_must_use)]
     {
-        remove_dir_all(root_path.clone());
+        remove_dir_all(root_path.display().to_string().as_str());
     }
-    create_dir(root_path.clone()).unwrap();
+    create_dir(root_path.display().to_string().as_str()).unwrap();
     create_dir(src_path.clone()).unwrap();
     create_dir_all(testcase1_sub_path.clone()).unwrap();
     create_dir(testcase2_path.clone()).unwrap();
@@ -996,12 +1011,12 @@ fn fs_files_ignore_symlink() {
     let result = run_cli(
         DynRef::Owned(Box::new(OsFileSystem)),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("check"),
-            OsString::from("--config-path"),
-            OsString::from(root_path.clone()),
-            OsString::from("--apply-unsafe"),
-            OsString::from(src_path),
+        Args::from(&[
+            ("check"),
+            ("--config-path"),
+            (root_path.display().to_string().as_str()),
+            ("--apply-unsafe"),
+            (src_path.display().to_string().as_str()),
         ]),
     );
 
@@ -1029,7 +1044,7 @@ fn file_too_large() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1059,7 +1074,7 @@ fn file_too_large_config_limit() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1084,11 +1099,10 @@ fn file_too_large_cli_limit() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("check"),
-            OsString::from("--files-max-size"),
-            OsString::from("16"),
-            file_path.as_os_str().into(),
+        Args::from(&[
+            ("check"),
+            ("--files-max-size=16"),
+            file_path.as_os_str().to_str().unwrap(),
         ]),
     );
 
@@ -1114,11 +1128,10 @@ fn files_max_size_parse_error() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("check"),
-            OsString::from("--files-max-size"),
-            OsString::from("-1"),
-            file_path.as_os_str().into(),
+        Args::from(&[
+            ("check"),
+            ("--files-max-size=-1"),
+            file_path.as_os_str().to_str().unwrap(),
         ]),
     );
 
@@ -1147,7 +1160,7 @@ fn max_diagnostics_default() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![OsString::from("check"), OsString::from("src")]),
+        Args::from(&[("check"), ("src")]),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1195,11 +1208,11 @@ fn max_diagnostics() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("check"),
-            OsString::from("--max-diagnostics"),
-            OsString::from("10"),
-            Path::new("src").as_os_str().into(),
+        Args::from(&[
+            ("check"),
+            ("--max-diagnostics"),
+            ("10"),
+            Path::new("src").as_os_str().to_str().unwrap(),
         ]),
     );
 
@@ -1243,7 +1256,7 @@ fn no_supported_file_found() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![std::ffi::OsString::from("check"), ".".into()]),
+        Args::from(&[("check"), "."]),
     );
 
     eprintln!("{:?}", console.out_buffer);
@@ -1272,10 +1285,7 @@ a == b;",
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            std::ffi::OsString::from("check"),
-            file_path.as_os_str().into(),
-        ]),
+        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -1300,10 +1310,10 @@ fn print_verbose() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("check"),
-            OsString::from("--verbose"),
-            file_path.as_os_str().into(),
+        Args::from(&[
+            ("check"),
+            ("--verbose"),
+            file_path.as_os_str().to_str().unwrap(),
         ]),
     );
 
@@ -1329,7 +1339,7 @@ fn unsupported_file() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
     );
     assert!(result.is_err(), "run_cli returned {result:?}");
 
@@ -1353,7 +1363,7 @@ fn suppression_syntax_error() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1381,7 +1391,7 @@ fn config_recommended_group() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
     );
     assert!(result.is_err(), "run_cli returned {result:?}");
     assert_cli_snapshot(SnapshotPayload::new(
@@ -1404,7 +1414,7 @@ fn nursery_unstable() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1439,10 +1449,10 @@ import { bar, foom, lorem } from "foo";
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("check"),
-            OsString::from("--apply-unsafe"),
-            file_path.as_os_str().into(),
+        Args::from(&[
+            ("check"),
+            ("--apply-unsafe"),
+            file_path.as_os_str().to_str().unwrap(),
         ]),
     );
 
@@ -1488,7 +1498,7 @@ import * as something from "../something";
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1533,10 +1543,10 @@ import * as something from "../something";
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("check"),
-            OsString::from("--apply"),
-            file_path.as_os_str().into(),
+        Args::from(&[
+            ("check"),
+            ("--apply"),
+            file_path.as_os_str().to_str().unwrap(),
         ]),
     );
 
@@ -1582,10 +1592,10 @@ import * as something from "../something";
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("check"),
-            OsString::from("--apply-unsafe"),
-            file_path.as_os_str().into(),
+        Args::from(&[
+            ("check"),
+            ("--apply-unsafe"),
+            file_path.as_os_str().to_str().unwrap(),
         ]),
     );
 
@@ -1632,7 +1642,7 @@ fn all_rules() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1680,7 +1690,7 @@ fn top_level_all_down_level_not_all() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -1728,7 +1738,7 @@ fn top_level_not_all_down_level_all() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1765,7 +1775,7 @@ fn ignore_configured_globals() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -1820,10 +1830,10 @@ file2.js
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("check"),
-            file_path1.as_os_str().into(),
-            file_path2.as_os_str().into(),
+        Args::from(&[
+            ("check"),
+            file_path1.as_os_str().to_str().unwrap(),
+            file_path2.as_os_str().to_str().unwrap(),
         ]),
     );
 
@@ -1867,14 +1877,14 @@ file2.js
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Arguments::from_vec(vec![
-            OsString::from("check"),
-            OsString::from("--vcs-enabled=true"),
-            OsString::from("--vcs-client-kind=git"),
-            OsString::from("--vcs-use-ignore-file=true"),
-            OsString::from("--vcs-root=."),
-            file_path1.as_os_str().into(),
-            file_path2.as_os_str().into(),
+        Args::from(&[
+            ("check"),
+            ("--vcs-enabled=true"),
+            ("--vcs-client-kind=git"),
+            ("--vcs-use-ignore-file=true"),
+            ("--vcs-root=."),
+            file_path1.as_os_str().to_str().unwrap(),
+            file_path2.as_os_str().to_str().unwrap(),
         ]),
     );
 

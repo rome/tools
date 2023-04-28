@@ -1,3 +1,4 @@
+use crate::cli_options::CliOptions;
 use crate::diagnostics::{DisabledVcs, NoVcsFolderFound};
 use crate::{CliDiagnostic, CliSession};
 use rome_console::{markup, ConsoleExt};
@@ -13,12 +14,12 @@ pub(crate) fn store_path_to_ignore_from_vcs(
     session: &mut CliSession,
     configuration: &mut Configuration,
     vcs_base_path: Option<PathBuf>,
+    cli_options: &CliOptions,
 ) -> Result<(), CliDiagnostic> {
-    let verbose = session.args.contains("--verbose");
     let Some(vcs) = &configuration.vcs else {
 		return Ok(())
 	};
-    if vcs.enabled {
+    if vcs.is_enabled() {
         let vcs_base_path = match (vcs_base_path, &vcs.root) {
             (Some(vcs_base_path), Some(root)) => vcs_base_path.join(root),
             (None, Some(root)) => PathBuf::from(root),
@@ -27,7 +28,7 @@ pub(crate) fn store_path_to_ignore_from_vcs(
                 let console = &mut session.app.console;
                 let diagnostic = DisabledVcs {};
                 console.error(markup! {
-					{if verbose { PrintDiagnostic::verbose(&diagnostic) } else { PrintDiagnostic::simple(&diagnostic) }}
+					{if cli_options.verbose { PrintDiagnostic::verbose(&diagnostic) } else { PrintDiagnostic::simple(&diagnostic) }}
                 });
                 return Ok(());
             }
@@ -51,7 +52,7 @@ pub(crate) fn read_vcs_ignore_file(
     current_directory: PathBuf,
     configuration: &VcsConfiguration,
 ) -> Result<Vec<String>, CliDiagnostic> {
-    if !configuration.enabled {
+    if !configuration.is_enabled() {
         return Ok(vec![]);
     }
     let file_system = &session.app.fs;
