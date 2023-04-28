@@ -51,11 +51,11 @@ declare_rule! {
     /// <a href={`https://www.javascript.com`}>navigate here</a>
     /// ```
     ///
-    /// ```
+    /// ```jsx
     /// <a href={somewhere}>navigate here</a>
     /// ```
     ///
-    /// ```
+    /// ```jsx
     /// <a {...spread}>navigate here</a>
     /// ```
     ///
