@@ -8,3 +8,7 @@ React.createElement('button', {
 createElement('button', {
     "type": "bar"
 });
+
+createElement('button', {
+    "type": 1
+});

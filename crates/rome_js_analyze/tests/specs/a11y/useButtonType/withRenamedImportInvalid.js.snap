@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 96
 expression: withRenamedImportInvalid.js
 ---
 # Input
@@ -13,6 +14,10 @@ AwesomeReact.createElement('button', {
 
 awesomeCreateElement('button', {
     "type": "awesomeCreateElement"
+});
+
+awesomeCreateElement('button', {
+    "type": 1
 });
 ```
 
@@ -64,6 +69,24 @@ withRenamedImportInvalid.js:9:13 lint/a11y/useButtonType ━━━━━━━�
    > 9 │     "type": "awesomeCreateElement"
        │             ^^^^^^^^^^^^^^^^^^^^^^
     10 │ });
+    11 │ 
+  
+  i The default  type of a button is submit, which causes the submission of a form when placed inside a `form` element. This is likely not the behaviour that you want inside a React application.
+  
+  i Allowed button types are: submit, button or reset
+  
+
+```
+
+```
+withRenamedImportInvalid.js:13:13 lint/a11y/useButtonType ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide a valid type prop for the button element.
+  
+    12 │ awesomeCreateElement('button', {
+  > 13 │     "type": 1
+       │             ^
+    14 │ });
   
   i The default  type of a button is submit, which causes the submission of a form when placed inside a `form` element. This is likely not the behaviour that you want inside a React application.
   
