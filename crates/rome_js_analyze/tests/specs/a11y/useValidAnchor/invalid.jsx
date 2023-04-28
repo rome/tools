@@ -1,15 +1,18 @@
 <>
-    <a />
-    <a href/>
-    <a href={null}/>
-    <a href={undefined}/>
-    <a href="specs/a11y/useValidAnchor#"/>
-    <a href={"#"}/>
-    <a href={`#`}/>
-    <a href="javascript:void(0)"/>
-    <a href={"javascript:void(0)"}/>
-    <a href={`javascript:void(0)`}/>
-    <a onClick={}/>
-    <a onClick={} href={}/>
-    <a href={<span><span className="token string">javascript:void(0)</span></span>}/>
-</>
+	<a />
+	<a href />
+	<a href={null} />
+	<a href={undefined} />
+	<a href="" />
+	<a href="#" />
+	<a href={"#"} />
+	<a href={`#`} />
+	<a href="javascript:void(0)" />
+	<a href={"javascript:void(0)"} />
+	<a href={`javascript:void(0)`} />
+	<a href={<span className="token string">javascript:void(0)</span>} />
+	<a onClick={() => void 0} />
+	<a href="#" onClick={() => void 0} />
+	<a href="javascript:void(0)" onClick={() => void 0} />
+	<a href={"javascript:void(0)"} onClick={() => void 0} />
+</>;

@@ -75,8 +75,7 @@ declare_node_union! {
 
 /// Representation of the various states
 ///
-/// The `TextRange` of each variant represents the range of where the issue
-/// is found.
+/// The `TextRange` of each variant represents the range of where the issue is found.
 pub(crate) enum UseValidAnchorState {
     /// The anchor element has not `href` attribute
     MissingHrefAttribute(TextRange),
