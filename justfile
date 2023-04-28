@@ -28,6 +28,14 @@ new-lintrule path name:
   just codegen-linter
   just documentation
 
+# Promotes a rule from the nursery group to a new group
+promote-rule rule group:
+	cargo run -p xtask_codegen -- promoterule --rule={{rule}} --group={{group}}
+	just codegen-linter
+	just documentation
+	-cargo test -p rome_js_analyze -- {{snakecase(rule)}}
+	cargo insta accept
+
 [unix]
 _touch file:
   touch {{file}}

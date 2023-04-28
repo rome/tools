@@ -334,12 +334,12 @@ Available recipes:
 
 All the necessary `codegen` can be called using
 
-```ignore
-> just codegen
+```shell
+just codegen
 ```
 
 After all changes are done, the code can be checked if is ready to be pushed with
 
-```ignore
-> just check-ready
+```shell
+just check-ready
 ```
