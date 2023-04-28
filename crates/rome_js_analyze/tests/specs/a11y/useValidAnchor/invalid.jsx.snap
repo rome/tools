@@ -16,7 +16,6 @@ expression: invalid.jsx
 	<a href="javascript:void(0)" />
 	<a href={"javascript:void(0)"} />
 	<a href={`javascript:void(0)`} />
-	<a href={<span className="token string">javascript:void(0)</span>} />
 	<a onClick={() => void 0} />
 	<a href="#" onClick={() => void 0} />
 	<a href="javascript:void(0)" onClick={() => void 0} />
@@ -47,12 +46,12 @@ invalid.jsx:2:2 lint/a11y/useValidAnchor ━━━━━━━━━━━━━
 ```
 invalid.jsx:3:5 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! The attribute href has to be assigned to a valid value.
+  ! Provide a valid value for the attribute href.
   
     1 │ <>
     2 │ 	<a />
   > 3 │ 	<a href />
-      │ 	   ^^^^^
+      │ 	   ^^^^
     4 │ 	<a href={null} />
     5 │ 	<a href={undefined} />
   
@@ -64,14 +63,14 @@ invalid.jsx:3:5 lint/a11y/useValidAnchor ━━━━━━━━━━━━━
 ```
 
 ```
-invalid.jsx:4:11 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:4:5 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Provide a valid value for the attribute href.
   
     2 │ 	<a />
     3 │ 	<a href />
   > 4 │ 	<a href={null} />
-      │ 	         ^^^^
+      │ 	   ^^^^^^^^^^^
     5 │ 	<a href={undefined} />
     6 │ 	<a href="" />
   
@@ -83,14 +82,14 @@ invalid.jsx:4:11 lint/a11y/useValidAnchor ━━━━━━━━━━━━�
 ```
 
 ```
-invalid.jsx:5:11 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:5:5 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Provide a valid value for the attribute href.
   
     3 │ 	<a href />
     4 │ 	<a href={null} />
   > 5 │ 	<a href={undefined} />
-      │ 	         ^^^^^^^^^
+      │ 	   ^^^^^^^^^^^^^^^^
     6 │ 	<a href="" />
     7 │ 	<a href="#" />
   
@@ -102,14 +101,33 @@ invalid.jsx:5:11 lint/a11y/useValidAnchor ━━━━━━━━━━━━�
 ```
 
 ```
-invalid.jsx:7:10 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:6:5 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide a valid value for the attribute href.
+  
+    4 │ 	<a href={null} />
+    5 │ 	<a href={undefined} />
+  > 6 │ 	<a href="" />
+      │ 	   ^^^^^^^
+    7 │ 	<a href="#" />
+    8 │ 	<a href={"#"} />
+  
+  i The href attribute should be a valid a URL
+  
+  i Check this thorough explanation to better understand the context.
+  
+
+```
+
+```
+invalid.jsx:7:5 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Provide a valid value for the attribute href.
   
     5 │ 	<a href={undefined} />
     6 │ 	<a href="" />
   > 7 │ 	<a href="#" />
-      │ 	        ^^^
+      │ 	   ^^^^^^^^
     8 │ 	<a href={"#"} />
     9 │ 	<a href={`#`} />
   
@@ -121,14 +139,14 @@ invalid.jsx:7:10 lint/a11y/useValidAnchor ━━━━━━━━━━━━�
 ```
 
 ```
-invalid.jsx:8:11 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:8:5 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Provide a valid value for the attribute href.
   
      6 │ 	<a href="" />
      7 │ 	<a href="#" />
    > 8 │ 	<a href={"#"} />
-       │ 	         ^^^
+       │ 	   ^^^^^^^^^^
      9 │ 	<a href={`#`} />
     10 │ 	<a href="javascript:void(0)" />
   
@@ -140,14 +158,14 @@ invalid.jsx:8:11 lint/a11y/useValidAnchor ━━━━━━━━━━━━�
 ```
 
 ```
-invalid.jsx:9:12 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:9:5 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Provide a valid value for the attribute href.
   
      7 │ 	<a href="#" />
      8 │ 	<a href={"#"} />
    > 9 │ 	<a href={`#`} />
-       │ 	          ^
+       │ 	   ^^^^^^^^^^
     10 │ 	<a href="javascript:void(0)" />
     11 │ 	<a href={"javascript:void(0)"} />
   
@@ -159,14 +177,14 @@ invalid.jsx:9:12 lint/a11y/useValidAnchor ━━━━━━━━━━━━�
 ```
 
 ```
-invalid.jsx:10:10 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:10:5 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Provide a valid value for the attribute href.
   
      8 │ 	<a href={"#"} />
      9 │ 	<a href={`#`} />
   > 10 │ 	<a href="javascript:void(0)" />
-       │ 	        ^^^^^^^^^^^^^^^^^^^^
+       │ 	   ^^^^^^^^^^^^^^^^^^^^^^^^^
     11 │ 	<a href={"javascript:void(0)"} />
     12 │ 	<a href={`javascript:void(0)`} />
   
@@ -178,16 +196,35 @@ invalid.jsx:10:10 lint/a11y/useValidAnchor ━━━━━━━━━━━━�
 ```
 
 ```
-invalid.jsx:12:12 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:11:5 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide a valid value for the attribute href.
+  
+     9 │ 	<a href={`#`} />
+    10 │ 	<a href="javascript:void(0)" />
+  > 11 │ 	<a href={"javascript:void(0)"} />
+       │ 	   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    12 │ 	<a href={`javascript:void(0)`} />
+    13 │ 	<a onClick={() => void 0} />
+  
+  i The href attribute should be a valid a URL
+  
+  i Check this thorough explanation to better understand the context.
+  
+
+```
+
+```
+invalid.jsx:12:5 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Provide a valid value for the attribute href.
   
     10 │ 	<a href="javascript:void(0)" />
     11 │ 	<a href={"javascript:void(0)"} />
   > 12 │ 	<a href={`javascript:void(0)`} />
-       │ 	          ^^^^^^^^^^^^^^^^^^
-    13 │ 	<a href={<span className="token string">javascript:void(0)</span>} />
-    14 │ 	<a onClick={() => void 0} />
+       │ 	   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    13 │ 	<a onClick={() => void 0} />
+    14 │ 	<a href="#" onClick={() => void 0} />
   
   i The href attribute should be a valid a URL
   
@@ -197,18 +234,18 @@ invalid.jsx:12:12 lint/a11y/useValidAnchor ━━━━━━━━━━━━�
 ```
 
 ```
-invalid.jsx:13:11 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:13:5 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Provide a valid value for the attribute href.
+  ! Use a button element instead of an a element.
   
     11 │ 	<a href={"javascript:void(0)"} />
     12 │ 	<a href={`javascript:void(0)`} />
-  > 13 │ 	<a href={<span className="token string">javascript:void(0)</span>} />
-       │ 	         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    14 │ 	<a onClick={() => void 0} />
-    15 │ 	<a href="#" onClick={() => void 0} />
+  > 13 │ 	<a onClick={() => void 0} />
+       │ 	   ^^^^^^^^^^^^^^^^^^^^^^
+    14 │ 	<a href="#" onClick={() => void 0} />
+    15 │ 	<a href="javascript:void(0)" onClick={() => void 0} />
   
-  i The href attribute should be a valid a URL
+  i Anchor elements should only be used for default sections or page navigation
   
   i Check this thorough explanation to better understand the context.
   
@@ -216,16 +253,16 @@ invalid.jsx:13:11 lint/a11y/useValidAnchor ━━━━━━━━━━━━�
 ```
 
 ```
-invalid.jsx:14:5 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:14:2 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Use a button element instead of an a element.
   
     12 │ 	<a href={`javascript:void(0)`} />
-    13 │ 	<a href={<span className="token string">javascript:void(0)</span>} />
-  > 14 │ 	<a onClick={() => void 0} />
-       │ 	   ^^^^^^^^^^^^^^^^^^^^^^
-    15 │ 	<a href="#" onClick={() => void 0} />
-    16 │ 	<a href="javascript:void(0)" onClick={() => void 0} />
+    13 │ 	<a onClick={() => void 0} />
+  > 14 │ 	<a href="#" onClick={() => void 0} />
+       │ 	^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    15 │ 	<a href="javascript:void(0)" onClick={() => void 0} />
+    16 │ 	<a href={"javascript:void(0)"} onClick={() => void 0} />
   
   i Anchor elements should only be used for default sections or page navigation
   
@@ -239,12 +276,12 @@ invalid.jsx:15:2 lint/a11y/useValidAnchor ━━━━━━━━━━━━�
 
   ! Use a button element instead of an a element.
   
-    13 │ 	<a href={<span className="token string">javascript:void(0)</span>} />
-    14 │ 	<a onClick={() => void 0} />
-  > 15 │ 	<a href="#" onClick={() => void 0} />
-       │ 	^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    16 │ 	<a href="javascript:void(0)" onClick={() => void 0} />
-    17 │ 	<a href={"javascript:void(0)"} onClick={() => void 0} />
+    13 │ 	<a onClick={() => void 0} />
+    14 │ 	<a href="#" onClick={() => void 0} />
+  > 15 │ 	<a href="javascript:void(0)" onClick={() => void 0} />
+       │ 	^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    16 │ 	<a href={"javascript:void(0)"} onClick={() => void 0} />
+    17 │ </>;
   
   i Anchor elements should only be used for default sections or page navigation
   
@@ -258,31 +295,12 @@ invalid.jsx:16:2 lint/a11y/useValidAnchor ━━━━━━━━━━━━�
 
   ! Use a button element instead of an a element.
   
-    14 │ 	<a onClick={() => void 0} />
-    15 │ 	<a href="#" onClick={() => void 0} />
-  > 16 │ 	<a href="javascript:void(0)" onClick={() => void 0} />
-       │ 	^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    17 │ 	<a href={"javascript:void(0)"} onClick={() => void 0} />
-    18 │ </>;
-  
-  i Anchor elements should only be used for default sections or page navigation
-  
-  i Check this thorough explanation to better understand the context.
-  
-
-```
-
-```
-invalid.jsx:17:2 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! Use a button element instead of an a element.
-  
-    15 │ 	<a href="#" onClick={() => void 0} />
-    16 │ 	<a href="javascript:void(0)" onClick={() => void 0} />
-  > 17 │ 	<a href={"javascript:void(0)"} onClick={() => void 0} />
+    14 │ 	<a href="#" onClick={() => void 0} />
+    15 │ 	<a href="javascript:void(0)" onClick={() => void 0} />
+  > 16 │ 	<a href={"javascript:void(0)"} onClick={() => void 0} />
        │ 	^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    18 │ </>;
-    19 │ 
+    17 │ </>;
+    18 │ 
   
   i Anchor elements should only be used for default sections or page navigation
   
