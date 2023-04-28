@@ -1,10 +1,10 @@
 [
-	// "foo.reduce((acc, bar) => [...acc, bar], [])",
-	// "foo.reduce((acc, bar) => [...acc, ...bar], [])",
-	// "foo.reduce((acc, bar) => {return [...acc, bar];}, [])",
-	// "foo.reduce((acc, bar) => {return [...acc, ...bar];}, [])",
-	"foo.reduce((acc, bar) => ({...acc, [bar.key]: bar.value}), {})"
-	// "foo.reduce((acc, bar) => ({...acc, ...bar}), {})"
-	// "foo.reduce((acc, bar) => {return {...acc, [bar.key]: bar.value};}, {})",
-	// "foo.reduce((acc, bar) => {return {...acc, ...bar};}, {})"
+	"foo.reduce((acc, bar) => [...acc, bar], [])",
+	"foo.reduce((acc, bar) => [...acc, ...bar], [])",
+	"foo.reduce((acc, bar) => {return [...acc, bar];}, [])",
+	"foo.reduce((acc, bar) => {return [...acc, ...bar];}, [])",
+	"foo.reduce((acc, bar) => ({...acc, [bar.key]: bar.value}), {})",
+	"foo.reduce((acc, bar) => ({...acc, ...bar}), {})",
+	"foo.reduce((acc, bar) => {return {...acc, [bar.key]: bar.value};}, {})",
+	"foo.reduce((acc, bar) => {return {...acc, ...bar};}, {})"
 ]
