@@ -78,10 +78,8 @@ impl Rule for UseHtmlLang {
                 {
                     return Some(element.syntax().text_trimmed_range());
                 }
-            } else {
-                if !element.has_spread_prop() {
-                    return Some(element.syntax().text_trimmed_range());
-                }
+            } else if !element.has_spread_prop() {
+                return Some(element.syntax().text_trimmed_range());
             }
         }
 
