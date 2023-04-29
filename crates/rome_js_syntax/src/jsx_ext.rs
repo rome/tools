@@ -2,8 +2,9 @@ use std::collections::HashSet;
 
 use crate::{
     static_value::{QuotedString, StaticValue},
-    AnyJsxAttribute, AnyJsxAttributeName, AnyJsxAttributeValue, AnyJsxElementName, JsSyntaxToken,
-    JsxAttribute, JsxAttributeList, JsxName, JsxOpeningElement, JsxSelfClosingElement, JsxString,
+    AnyJsxAttribute, AnyJsxAttributeName, AnyJsxAttributeValue, AnyJsxChild, AnyJsxElementName,
+    JsSyntaxToken, JsxAttribute, JsxAttributeList, JsxName, JsxOpeningElement,
+    JsxSelfClosingElement, JsxString,
 };
 use rome_rowan::{declare_node_union, AstNode, AstNodeList, SyntaxResult};
 
@@ -380,6 +381,16 @@ impl AnyJsxElement {
             }
         }
     }
+
+    pub fn has_truthy_attribute(&self, name_to_lookup: &str) -> bool {
+        self.find_attribute_by_name(name_to_lookup)
+            .map_or(false, |attribute| {
+                attribute
+                    .as_static_value()
+                    .map_or(true, |value| !value.is_falsy())
+                    && !self.has_trailing_spread_prop(attribute)
+            })
+    }
 }
 
 impl JsxAttribute {
@@ -416,5 +427,42 @@ impl AnyJsxAttributeValue {
                 Some(StaticValue::String(string.inner_string_text().ok()?))
             }
         }
+    }
+}
+
+impl AnyJsxChild {
+    /// Check if jsx child node is accessible for screen readers
+    pub fn is_accessible_node(&self) -> Option<bool> {
+        Some(match self {
+            AnyJsxChild::JsxText(text) => {
+                let value_token = text.value_token().ok()?;
+                value_token.text_trimmed().trim() != ""
+            }
+            AnyJsxChild::JsxExpressionChild(expression) => {
+                let expression = expression.expression()?;
+                expression
+                    .as_static_value()
+                    .map_or(true, |value| !value.is_falsy())
+            }
+            AnyJsxChild::JsxElement(element) => {
+                let opening_element = element.opening_element().ok()?;
+                let jsx_element = AnyJsxElement::cast(opening_element.syntax().clone())?;
+
+                // We don't check if a component (e.g. <Text aria-hidden />) is using the `aria-hidden` property,
+                // since we don't have enough information about how the property is used.
+                jsx_element.is_custom_component()
+                    || !jsx_element.has_truthy_attribute("aria-hidden")
+            }
+            AnyJsxChild::JsxSelfClosingElement(element) => {
+                let jsx_element = AnyJsxElement::cast(element.syntax().clone())?;
+                jsx_element.is_custom_component()
+                    || !jsx_element.has_truthy_attribute("aria-hidden")
+            }
+            AnyJsxChild::JsxFragment(fragment) => fragment
+                .children()
+                .into_iter()
+                .any(|child| child.is_accessible_node().unwrap_or(true)),
+            _ => true,
+        })
     }
 }
