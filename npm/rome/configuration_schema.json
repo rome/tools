@@ -112,7 +112,7 @@
 					]
 				},
 				"useAnchorContent": {
-					"description": "Enforce that anchor elements have content and that the content is accessible to screen readers.",
+					"description": "Enforce that anchors have content and that the content is accessible to screen readers.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }

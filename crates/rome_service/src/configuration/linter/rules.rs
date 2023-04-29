@@ -380,7 +380,7 @@ pub struct A11y {
     #[bpaf(long("use-alt-text"), argument("on|off|warn"), optional, hide)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub use_alt_text: Option<RuleConfiguration>,
-    #[doc = "Enforce that anchor elements have content and that the content is accessible to screen readers."]
+    #[doc = "Enforce that anchors have content and that the content is accessible to screen readers."]
     #[bpaf(long("use-anchor-content"), argument("on|off|warn"), optional, hide)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub use_anchor_content: Option<RuleConfiguration>,

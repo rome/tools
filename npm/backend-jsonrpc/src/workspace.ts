@@ -238,7 +238,7 @@ export interface A11y {
 	 */
 	useAltText?: RuleConfiguration;
 	/**
-	 * Enforce that anchor elements have content and that the content is accessible to screen readers.
+	 * Enforce that anchors have content and that the content is accessible to screen readers.
 	 */
 	useAnchorContent?: RuleConfiguration;
 	/**

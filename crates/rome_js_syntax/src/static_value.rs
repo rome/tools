@@ -1,7 +1,4 @@
-use crate::{
-    JsSyntaxKind::{IDENT, JSX_IDENT, JSX_STRING_LITERAL, JS_STRING_LITERAL},
-    JsSyntaxToken,
-};
+use crate::JsSyntaxToken;
 
 use std::ops::Deref;
 
@@ -11,11 +8,6 @@ pub struct QuotedString(JsSyntaxToken);
 /// A string literal that is wrapped in quotes
 impl QuotedString {
     pub fn new(token: JsSyntaxToken) -> Self {
-        assert!(matches!(
-            token.kind(),
-            IDENT | JSX_IDENT | JS_STRING_LITERAL | JSX_STRING_LITERAL
-        ));
-
         Self(token)
     }
 

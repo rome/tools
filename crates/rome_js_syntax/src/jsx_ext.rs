@@ -385,10 +385,9 @@ impl AnyJsxElement {
     pub fn has_truthy_attribute(&self, name_to_lookup: &str) -> bool {
         self.find_attribute_by_name(name_to_lookup)
             .map_or(false, |attribute| {
-                attribute
-                    .as_static_value()
-                    .map_or(true, |value| !value.is_falsy())
-                    && !self.has_trailing_spread_prop(attribute)
+                attribute.as_static_value().map_or(true, |value| {
+                    !(value.is_falsy() || value.is_string_constant("false"))
+                }) && !self.has_trailing_spread_prop(attribute)
             })
     }
 }
