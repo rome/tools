@@ -55,6 +55,11 @@ declare_rule! {
     /// ```js
     /// /foo /
     ///```
+    ///
+    /// ## Corresponding ESLint rules
+    ///
+    /// - [no-regex-spaces](https://github.com/eslint/eslint/blob/main/docs/src/rules/no-regex-spaces.md)
+    ///
     pub(crate) NoMultipleSpacesInRegularExpressionLiterals {
         version: "0.7.0",
         name: "noMultipleSpacesInRegularExpressionLiterals",

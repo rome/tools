@@ -32,6 +32,11 @@ declare_rule! {
     /// const a1 = <div>{/** comment */}</div>;
     /// const a2 = <div className={"cls" /* comment */}></div>;
     /// ```
+    ///
+    /// ## Corresponding ESLint rules
+    ///
+    /// - [react/jsx-no-comment-textnodes(https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-no-comment-textnodes.md)
+    ///
     pub(crate) NoCommentText {
         version: "0.7.0",
         name: "noCommentText",

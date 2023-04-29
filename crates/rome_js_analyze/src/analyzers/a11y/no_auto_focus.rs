@@ -54,6 +54,10 @@ declare_rule! {
     /// - [WHATWG HTML Standard, The autofocus attribute](https://html.spec.whatwg.org/multipage/interaction.html#attr-fe-autofocus)
     /// - [The accessibility of HTML 5 autofocus](https://brucelawson.co.uk/2009/the-accessibility-of-html-5-autofocus/)
     ///
+    /// ## Corresponding ESLint rules
+    ///
+    /// - [jsx-a11y/no-autofocus](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/main/docs/rules/no-autofocus.md)
+    ///
     pub(crate) NoAutoFocus {
         version: "10.0.0",
         name: "noAutofocus",

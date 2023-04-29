@@ -62,6 +62,10 @@ declare_rule! {
     /// - [WCAG 2.4.4](https://www.w3.org/WAI/WCAG21/Understanding/link-purpose-in-context)
     /// - [WCAG 4.1.2](https://www.w3.org/WAI/WCAG21/Understanding/name-role-value)
     ///
+    /// ## Corresponding ESLint rules
+    ///
+    /// - [jsx-a11y/anchor-has-content](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/main/docs/rules/anchor-has-content.md)
+    ///
     pub(crate) UseAnchorContent {
         version: "10.0.0",
         name: "useAnchorContent",

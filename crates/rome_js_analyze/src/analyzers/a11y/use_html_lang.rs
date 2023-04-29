@@ -52,6 +52,10 @@ declare_rule! {
     ///
     /// - [WCAG 3.1.1](https://www.w3.org/WAI/WCAG21/Understanding/language-of-page)
     ///
+    /// ## Corresponding ESLint rules
+    ///
+    /// - [jsx-a11y/html-has-lang](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/main/docs/rules/html-has-lang.md)
+    ///
     pub(crate) UseHtmlLang {
         version: "12.0.0",
         name: "useHtmlLang",

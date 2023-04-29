@@ -65,7 +65,10 @@ declare_rule! {
     /// }
     /// ```
     ///
-    /// ```
+    /// ## Corresponding ESLint rules
+    ///
+    /// - [no-loss-of-precision](https://github.com/eslint/eslint/blob/main/docs/src/rules/no-loss-of-precision.md)
+    ///
     pub(crate) NoSetterReturn {
         version: "11.0.0",
         name: "noSetterReturn",

@@ -44,6 +44,11 @@ declare_rule! {
     /// ```js
     /// null != foo
     ///```
+    ///
+    /// ## Corresponding ESLint rules
+    ///
+    /// - [no-debugger](https://github.com/eslint/eslint/blob/main/docs/src/rules/no-debugger.md)
+    ///
     pub(crate) NoDoubleEquals {
         version: "0.7.0",
         name: "noDoubleEquals",

@@ -46,6 +46,10 @@ declare_rule! {
     ///
     /// - [WCAG 1.1.1](https://www.w3.org/WAI/WCAG21/Understanding/non-text-content.html)
     ///
+    /// ## Corresponding ESLint rules
+    ///
+    /// - [jsx-a11y/alt-text](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/main/docs/rules/alt-text.md)
+    ///
     pub(crate) UseAltText {
         version: "10.0.0",
         name: "useAltText",

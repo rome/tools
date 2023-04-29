@@ -44,7 +44,10 @@ declare_rule! {
     /// }
     /// ```
     ///
-    /// ```
+    /// ## Corresponding ESLint rules
+    ///
+    /// - [no-constructor-return](https://github.com/eslint/eslint/blob/main/docs/src/rules/no-constructor-pattern.md)
+    ///
     pub(crate) NoConstructorReturn {
         version: "11.0.0",
         name: "noConstructorReturn",

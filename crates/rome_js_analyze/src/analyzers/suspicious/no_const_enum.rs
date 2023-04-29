@@ -35,6 +35,7 @@ declare_rule! {
     ///   Close,
     /// }
     /// ```
+    ///
     pub(crate) NoConstEnum {
         version: "11.0.0",
         name: "noConstEnum",

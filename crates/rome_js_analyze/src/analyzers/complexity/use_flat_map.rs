@@ -32,6 +32,10 @@ declare_rule! {
     /// array.map(sentence => sentence.split(' ')).flat(2);
     /// ```
     ///
+    /// ## Corresponding ESLint rules
+    ///
+    /// - [unicorn/prefer-array-flat-map](https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-array-flat-map.md)
+    ///
     pub(crate) UseFlatMap {
         version: "10.0.0",
         name: "useFlatMap",

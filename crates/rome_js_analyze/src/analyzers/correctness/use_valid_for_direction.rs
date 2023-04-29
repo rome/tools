@@ -39,6 +39,11 @@ declare_rule! {
     /// for (var i = 0; i < 10; i++) {
     /// }
     /// ```
+    ///
+    /// ## Corresponding ESLint rules
+    ///
+    /// - [for-direction](https://github.com/eslint/eslint/blob/main/docs/src/rules/for-direction.md)
+    ///
     pub(crate) UseValidForDirection {
         version: "10.0.0",
         name: "useValidForDirection",

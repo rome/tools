@@ -34,6 +34,11 @@ declare_rule! {
     ///   new Foo(async (resolve, reject) => {})
     ///   new Foo((( (resolve, reject) => {} )))
     /// ```
+    ///
+    /// ## Corresponding ESLint rules
+    ///
+    /// - [no-async-promise-executor(https://github.com/eslint/eslint/blob/main/docs/src/rules/no-async-promise-executor.md)
+    ///
     pub(crate) NoAsyncPromiseExecutor {
         version: "0.7.0",
         name: "noAsyncPromiseExecutor",

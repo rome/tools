@@ -23,6 +23,11 @@ declare_rule! {
     /// const test = { debugger: 1 };
     /// test.debugger;
     ///```
+    ///
+    /// ## Corresponding ESLint rules
+    ///
+    /// - [no-debugger](https://github.com/eslint/eslint/blob/main/docs/src/rules/no-debugger.md)
+    ///
     pub(crate) NoDebugger {
         version: "0.7.0",
         name: "noDebugger",

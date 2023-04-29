@@ -48,6 +48,11 @@ declare_rule! {
     /// ```jsx
     /// <a href='http://external.link' target='_blank' rel="noopener" {...props}>child</a>
     /// ```
+    ///
+    /// ## Corresponding ESLint rules
+    ///
+    /// - [react/jsx-no-target-blank](https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-no-target-blank.md)
+    ///
     pub(crate) NoBlankTarget {
         version: "10.0.0",
         name: "noBlankTarget",

@@ -26,6 +26,11 @@ declare_rule! {
     ///     new Symbol();
     /// }
     /// ```
+    ///
+    /// ## Corresponding ESLint rules
+    ///
+    /// - [no-new-symbol](https://github.com/eslint/eslint/blob/main/docs/src/rules/no-new-symbol.md)
+    ///
     pub(crate) NoNewSymbol {
         version: "0.10.0",
         name: "noNewSymbol",

@@ -32,6 +32,11 @@ declare_rule! {
     /// function foo({a = []}) {}
     /// var [a] = foo;
     /// ```
+    ///
+    /// ## Corresponding ESLint rules
+    ///
+    /// - [no-empty-return](https://github.com/eslint/eslint/blob/main/docs/src/rules/no-empty-pattern.md)
+    ///
     pub(crate) NoEmptyPattern {
         version: "0.7.0",
         name: "noEmptyPattern",

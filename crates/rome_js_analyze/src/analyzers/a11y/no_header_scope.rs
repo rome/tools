@@ -38,6 +38,10 @@ declare_rule! {
     /// - [WCAG 1.3.1](https://www.w3.org/WAI/WCAG21/Understanding/info-and-relationships)
     /// - [WCAG 4.1.1](https://www.w3.org/WAI/WCAG21/Understanding/parsing)
     ///
+    /// ## Corresponding ESLint rules
+    ///
+    /// - [jsx-a11y/scope](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/main/docs/rules/scope.md)
+    ///
     pub(crate) NoHeaderScope {
         version: "11.0.0",
         name: "noHeaderScope",

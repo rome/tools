@@ -124,6 +124,10 @@ declare_rule! {
     /// };
     /// ```
     ///
+    /// ## Corresponding ESLint rules
+    ///
+    /// - [no-unsafe-finally](https://github.com/eslint/eslint/blob/main/docs/src/rules/no-unsafe-finally.md)
+    ///
     pub(crate) NoUnsafeFinally {
         version: "11.0.0",
         name: "noUnsafeFinally",

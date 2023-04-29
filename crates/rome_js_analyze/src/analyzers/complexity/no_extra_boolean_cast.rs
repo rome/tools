@@ -16,6 +16,7 @@ pub enum ExtraBooleanCastType {
     /// Boolean(x)
     BooleanCall,
 }
+
 declare_rule! {
     /// Disallow unnecessary boolean casts
     ///
@@ -53,7 +54,11 @@ declare_rule! {
     /// !x;
     /// !!x;
     /// ```
-
+    ///
+    /// ## Corresponding ESLint rules
+    ///
+    /// - [no-extra-boolean-cast](https://github.com/eslint/eslint/blob/main/docs/src/rules/no-extra-boolean-cast.md)
+    ///
     pub(crate) NoExtraBooleanCast {
         version: "0.9.0",
         name: "noExtraBooleanCast",

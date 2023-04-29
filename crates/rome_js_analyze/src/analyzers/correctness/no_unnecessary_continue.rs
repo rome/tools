@@ -69,6 +69,11 @@ declare_rule! {
     ///   }
     /// }
     /// ```
+    ///
+    /// ## Corresponding ESLint rules
+    ///
+    /// - [no-continue](https://github.com/eslint/eslint/blob/main/docs/src/rules/no-continue.md)
+    ///
     pub(crate) NoUnnecessaryContinue {
         version: "0.7.0",
         name: "noUnnecessaryContinue",

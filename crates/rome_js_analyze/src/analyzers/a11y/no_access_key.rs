@@ -34,6 +34,10 @@ declare_rule! {
     /// - [WebAIM: Keyboard Accessibility - Accesskey](https://webaim.org/techniques/keyboard/accesskey#spec)
     /// - [MDN `accesskey` documentation](https://developer.mozilla.org/docs/Web/HTML/Global_attributes/accesskey)
     ///
+    /// ## Corresponding ESLint rules
+    ///
+    /// - [jsx-a11y/no-access-key](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/main/docs/rules/no-access-key.md)
+    ///
     pub(crate) NoAccessKey {
         version: "11.0.0",
         name: "noAccessKey",

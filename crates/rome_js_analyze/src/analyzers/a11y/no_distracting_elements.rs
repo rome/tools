@@ -37,6 +37,10 @@ declare_rule! {
     ///
     /// - [WCAG 2.2.2](https://www.w3.org/WAI/WCAG21/Understanding/pause-stop-hide)
     ///
+    /// ## Corresponding ESLint rules
+    ///
+    /// - [jsx-a11y/no-distracting-elements](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/main/docs/rules/no-distracting-elements.md)
+    ///
     pub(crate) NoDistractingElements {
         version: "11.0.0",
         name: "noDistractingElements",

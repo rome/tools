@@ -46,6 +46,11 @@ declare_rule! {
     ///     }
     /// }
     /// ```
+    ///
+    /// ## Corresponding ESLint rules
+    ///
+    /// - [no-unreachable](https://github.com/eslint/eslint/blob/main/docs/src/rules/no-unreachable.md)
+    ///
     pub(crate) NoUnreachable {
         version: "0.7.0",
         name: "noUnreachable",

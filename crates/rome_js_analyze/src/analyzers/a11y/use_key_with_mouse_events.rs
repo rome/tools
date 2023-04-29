@@ -39,6 +39,10 @@ declare_rule! {
     ///
     /// - [WCAG 2.1.1](https://www.w3.org/WAI/WCAG21/Understanding/keyboard)
     ///
+    /// ## Corresponding ESLint rules
+    ///
+    /// - [jsx-a11y/mouse-events-have-key-events](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/main/docs/rules/mouse-events-have-key-events.md)
+    ///
     pub(crate) UseKeyWithMouseEvents {
         version: "10.0.0",
         name: "useKeyWithMouseEvents",

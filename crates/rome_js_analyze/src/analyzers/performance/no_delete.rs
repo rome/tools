@@ -56,6 +56,10 @@ declare_rule! {
     /// delete f(); // uncovered by this rule.
     ///```
     ///
+    /// ## Corresponding ESLint rules
+    ///
+    /// - [no-delete-var](https://github.com/eslint/eslint/blob/main/docs/src/rules/no-delete-var.md)
+    ///
     pub(crate) NoDelete {
         version: "0.7.0",
         name: "noDelete",

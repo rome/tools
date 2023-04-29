@@ -70,6 +70,10 @@ declare_rule! {
     /// foo["some long"] && foo["some long string"].baz
     ///```
     ///
+    /// ## Corresponding ESLint rules
+    ///
+    /// - [typescript-eslint/prefer-optional-chain](https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/prefer-optional-chain.md)
+    ///
     pub(crate) UseOptionalChain {
         version: "0.10.0",
         name: "useOptionalChain",

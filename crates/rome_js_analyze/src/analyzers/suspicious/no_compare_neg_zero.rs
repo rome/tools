@@ -31,6 +31,11 @@ declare_rule! {
     /// ```js
     /// (1 >= 0)
     ///```
+    ///
+    /// ## Corresponding ESLint rules
+    ///
+    /// - [no-compare-neg-zero](https://github.com/eslint/eslint/blob/main/docs/src/rules/no-compare-neg-zero.md)
+    ///
     pub(crate) NoCompareNegZero {
         version: "0.7.0",
         name: "noCompareNegZero",
