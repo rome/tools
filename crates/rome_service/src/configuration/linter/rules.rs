@@ -376,7 +376,7 @@ pub struct A11y {
     #[bpaf(long("no-positive-tabindex"), argument("on|off|warn"), optional, hide)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub no_positive_tabindex: Option<RuleConfiguration>,
-    #[doc = "It asserts that alternative text to images or areas, help to rely on to screen readers to understand the purpose and the context of the image."]
+    #[doc = "Enforce that all elements that require alternative text have meaningful information to relay back to the end user."]
     #[bpaf(long("use-alt-text"), argument("on|off|warn"), optional, hide)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub use_alt_text: Option<RuleConfiguration>,
@@ -388,11 +388,11 @@ pub struct A11y {
     #[bpaf(long("use-button-type"), argument("on|off|warn"), optional, hide)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub use_button_type: Option<RuleConfiguration>,
-    #[doc = "Enforce that html element has lang attribute. This allows users to choose a language other than the default."]
+    #[doc = "Enforce that html element has lang attribute."]
     #[bpaf(long("use-html-lang"), argument("on|off|warn"), optional, hide)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub use_html_lang: Option<RuleConfiguration>,
-    #[doc = "Enforce to have the onClick mouse event with the onKeyUp, the onKeyDown, or the onKeyPress keyboard event."]
+    #[doc = "Enforce onClick is accompanied by at least one of the following: onKeyUp, onKeyDown, onKeyPress."]
     #[bpaf(
         long("use-key-with-click-events"),
         argument("on|off|warn"),
@@ -401,7 +401,7 @@ pub struct A11y {
     )]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub use_key_with_click_events: Option<RuleConfiguration>,
-    #[doc = "Enforce that onMouseOver/onMouseOut are accompanied by onFocus/onBlur for keyboard-only users. It is important to take into account users with physical disabilities who cannot use a mouse, who use assistive technology or screenreader."]
+    #[doc = "Enforce onMouseOver / onMouseOut are accompanied by onFocus / onBlur."]
     #[bpaf(
         long("use-key-with-mouse-events"),
         argument("on|off|warn"),

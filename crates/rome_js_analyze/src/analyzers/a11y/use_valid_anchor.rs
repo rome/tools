@@ -1,11 +1,8 @@
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::{markup, MarkupBuf};
-use rome_js_syntax::{
-    AnyJsExpression, AnyJsLiteralExpression, AnyJsTemplateElement, AnyJsxAttributeValue,
-    JsxAttribute, JsxElement, JsxSelfClosingElement,
-};
-use rome_rowan::{declare_node_union, AstNode, AstNodeList, TextRange};
+use rome_js_syntax::jsx_ext::AnyJsxElement;
+use rome_rowan::{AstNode, TextRange};
 
 declare_rule! {
     /// Enforce that all anchors are valid, and they are navigable elements.
@@ -25,9 +22,9 @@ declare_rule! {
     ///
     /// There are **many reasons** why an anchor should not have a logic and have a correct `href` attribute:
     /// - it can disrupt the correct flow of the user navigation e.g. a user that wants to open the link
-    /// in another tab, but the default "click" behaviour is prevented;
-    /// - it can source of invalid links, and [crawlers] can't navigate the website, risking to penalise
-    /// [SEO] ranking
+    /// in another tab, but the default "click" behaviour is prevented
+    /// - it can source of invalid links, and crawlers can't navigate the website, risking to penalise
+    /// SEO ranking
     ///
     /// ## Examples
     ///
@@ -51,29 +48,21 @@ declare_rule! {
     /// ### Valid
     ///
     /// ```jsx
-    /// <>
-    ///     <a href={`https://www.javascript.com`}>navigate here</a>
-    ///     <a href={somewhere}>navigate here</a>
-    ///     <a {...spread}>navigate here</a>
-    /// </>
+    /// <a href={`https://www.javascript.com`}>navigate here</a>
+    /// ```
+    ///
+    /// ```jsx
+    /// <a href={somewhere}>navigate here</a>
+    /// ```
+    ///
+    /// ```jsx
+    /// <a {...spread}>navigate here</a>
     /// ```
     ///
     /// ## Accessibility guidelines
     ///
-    /// [WCAG 2.1.1]
+    /// - [WCAG 2.1.1](https://www.w3.org/WAI/WCAG21/Understanding/keyboard)
     ///
-    /// ## Resources
-    ///
-    /// - [WebAIM - Introduction to Links and Hypertext]
-    /// - [Links vs. Buttons in Modern Web Applications]
-    /// - [Using ARIA - Notes on ARIA use in HTML]
-    ///
-    /// [SEO]: https://en.wikipedia.org/wiki/Search_engine_optimization
-    /// [crawlers]: https://en.wikipedia.org/wiki/Web_crawler
-    /// [WCAG 2.1.1]: https://www.w3.org/WAI/WCAG21/Understanding/keyboard
-    /// [WebAIM - Introduction to Links and Hypertext]: https://webaim.org/techniques/hypertext/
-    /// [Links vs. Buttons in Modern Web Applications]: https://marcysutton.com/links-vs-buttons-in-modern-web-applications/
-    /// [Using ARIA - Notes on ARIA use in HTML]: https://www.w3.org/TR/using-aria/#NOTES
     pub(crate) UseValidAnchor {
         version: "10.0.0",
         name: "useValidAnchor",
@@ -81,19 +70,12 @@ declare_rule! {
     }
 }
 
-declare_node_union! {
-    pub(crate) UseValidAnchorQuery = JsxElement | JsxSelfClosingElement
-}
-
 /// Representation of the various states
 ///
-/// The `TextRange` of each variant represents the range of where the issue
-/// is found.
+/// The `TextRange` of each variant represents the range of where the issue is found.
 pub(crate) enum UseValidAnchorState {
     /// The anchor element has not `href` attribute
     MissingHrefAttribute(TextRange),
-    /// The `href` attribute has not value
-    HrefNotInitialized(TextRange),
     /// The value assigned to attribute `href` is not valid
     IncorrectHref(TextRange),
     /// The element has `href` and `onClick`
@@ -113,11 +95,6 @@ impl UseValidAnchorState {
                     "Provide a valid value for the attribute "<Emphasis>"href"</Emphasis>"."
                 }).to_owned()
             }
-            UseValidAnchorState::HrefNotInitialized(_) => {
-                (markup! {
-                    "The attribute "<Emphasis>"href"</Emphasis>" has to be assigned to a valid value."
-                }).to_owned()
-            }
             UseValidAnchorState::CantBeAnchor(_) => {
                 (markup! {
                     "Use a "<Emphasis>"button"</Emphasis>" element instead of an "<Emphasis>"a"</Emphasis>" element."
@@ -132,12 +109,10 @@ impl UseValidAnchorState {
                 "An anchor element should always have a "<Emphasis>"href"</Emphasis>""
             })
             .to_owned(),
-            UseValidAnchorState::IncorrectHref(_) | UseValidAnchorState::HrefNotInitialized(_) => {
-                (markup! {
-                    "The href attribute should be a valid a URL"
-                })
-                .to_owned()
-            }
+            UseValidAnchorState::IncorrectHref(_) => (markup! {
+                "The href attribute should be a valid a URL"
+            })
+            .to_owned(),
             UseValidAnchorState::CantBeAnchor(_) => (markup! {
                 "Anchor elements should only be used for default sections or page navigation"
             })
@@ -148,98 +123,66 @@ impl UseValidAnchorState {
     fn range(&self) -> &TextRange {
         match self {
             UseValidAnchorState::MissingHrefAttribute(range)
-            | UseValidAnchorState::HrefNotInitialized(range)
             | UseValidAnchorState::CantBeAnchor(range)
             | UseValidAnchorState::IncorrectHref(range) => range,
         }
     }
 }
 
-impl UseValidAnchorQuery {
-    /// Checks if the current element is anchor
-    fn is_anchor(&self) -> Option<bool> {
-        Some(match self {
-            UseValidAnchorQuery::JsxElement(element) => {
-                element.opening_element().ok()?.name().ok()?.text() == "a"
-            }
-            UseValidAnchorQuery::JsxSelfClosingElement(element) => {
-                element.name().ok()?.text() == "a"
-            }
-        })
-    }
-
-    /// Finds the `href` attribute
-    fn find_href_attribute(&self) -> Option<JsxAttribute> {
-        match self {
-            UseValidAnchorQuery::JsxElement(element) => element
-                .opening_element()
-                .ok()?
-                .find_attribute_by_name("href")
-                .ok()?,
-            UseValidAnchorQuery::JsxSelfClosingElement(element) => {
-                element.find_attribute_by_name("href").ok()?
-            }
-        }
-    }
-
-    /// Finds the `onClick` attribute
-    fn find_on_click_attribute(&self) -> Option<JsxAttribute> {
-        match self {
-            UseValidAnchorQuery::JsxElement(element) => element
-                .opening_element()
-                .ok()?
-                .find_attribute_by_name("onClick")
-                .ok()?,
-            UseValidAnchorQuery::JsxSelfClosingElement(element) => {
-                element.find_attribute_by_name("onClick").ok()?
-            }
-        }
-    }
-
-    fn has_spread_attribute(&self) -> Option<bool> {
-        Some(match self {
-            UseValidAnchorQuery::JsxElement(element) => element
-                .opening_element()
-                .ok()?
-                .attributes()
-                .iter()
-                .any(|attribute| attribute.as_jsx_spread_attribute().is_some()),
-            UseValidAnchorQuery::JsxSelfClosingElement(element) => element
-                .attributes()
-                .iter()
-                .any(|attribute| attribute.as_jsx_spread_attribute().is_some()),
-        })
-    }
-}
-
 impl Rule for UseValidAnchor {
-    type Query = Ast<UseValidAnchorQuery>;
+    type Query = Ast<AnyJsxElement>;
     type State = UseValidAnchorState;
     type Signals = Option<Self::State>;
     type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
-        if !node.is_anchor()? {
-            return None;
+        let name = node.name().ok()?.name_value_token()?;
+
+        if name.text_trimmed() == "a" {
+            let anchor_attribute = node.find_attribute_by_name("href");
+            let on_click_attribute = node.find_attribute_by_name("onClick");
+
+            match (anchor_attribute, on_click_attribute) {
+                (Some(_), Some(_)) => {
+                    return Some(UseValidAnchorState::CantBeAnchor(
+                        node.syntax().text_trimmed_range(),
+                    ))
+                }
+                (Some(anchor_attribute), _) => {
+                    if anchor_attribute.initializer().is_none() {
+                        return Some(UseValidAnchorState::IncorrectHref(
+                            anchor_attribute.syntax().text_trimmed_range(),
+                        ));
+                    }
+
+                    let static_value = anchor_attribute.as_static_value()?;
+                    if static_value.as_string_constant().map_or(true, |const_str| {
+                        const_str.is_empty()
+                            || const_str == "#"
+                            || const_str.contains("javascript:")
+                    }) {
+                        return Some(UseValidAnchorState::IncorrectHref(
+                            anchor_attribute.syntax().text_trimmed_range(),
+                        ));
+                    }
+                }
+                (None, Some(on_click_attribute)) => {
+                    return Some(UseValidAnchorState::CantBeAnchor(
+                        on_click_attribute.syntax().text_trimmed_range(),
+                    ))
+                }
+                (None, None) => {
+                    if !node.has_spread_prop() {
+                        return Some(UseValidAnchorState::MissingHrefAttribute(
+                            node.syntax().text_trimmed_range(),
+                        ));
+                    }
+                }
+            };
         }
 
-        let anchor_attribute = node.find_href_attribute();
-        let on_click_attribute = node.find_on_click_attribute();
-
-        match (anchor_attribute, on_click_attribute) {
-            (Some(_), Some(_)) => Some(UseValidAnchorState::CantBeAnchor(
-                node.syntax().text_trimmed_range(),
-            )),
-            (Some(anchor_attribute), _) => is_invalid_anchor(&anchor_attribute),
-            (None, Some(on_click_attribute)) => Some(UseValidAnchorState::CantBeAnchor(
-                on_click_attribute.syntax().text_trimmed_range(),
-            )),
-            (None, None) if !node.has_spread_attribute()? => Some(
-                UseValidAnchorState::MissingHrefAttribute(node.syntax().text_trimmed_range()),
-            ),
-            _ => None,
-        }
+        None
     }
 
     fn diagnostic(_ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
@@ -253,91 +196,4 @@ impl Rule for UseValidAnchor {
 
         Some(diagnostic)
     }
-}
-
-fn is_invalid_anchor(anchor_attribute: &JsxAttribute) -> Option<UseValidAnchorState> {
-    let initializer = anchor_attribute.initializer();
-    if initializer.is_none() {
-        return Some(UseValidAnchorState::HrefNotInitialized(
-            anchor_attribute.syntax().text_range(),
-        ));
-    }
-
-    let attribute_value = initializer?.value().ok()?;
-
-    match attribute_value {
-        AnyJsxAttributeValue::JsxExpressionAttributeValue(attribute_value) => {
-            let expression = attribute_value.expression().ok()?;
-
-            match expression {
-                // href={null}
-                AnyJsExpression::AnyJsLiteralExpression(
-                    AnyJsLiteralExpression::JsNullLiteralExpression(null),
-                ) => {
-                    return Some(UseValidAnchorState::IncorrectHref(
-                        null.syntax().text_trimmed_range(),
-                    ));
-                }
-                AnyJsExpression::JsIdentifierExpression(identifier) => {
-                    let text = identifier.name().ok()?.value_token().ok()?;
-                    // href={undefined}
-                    if text.text_trimmed() == "undefined" {
-                        return Some(UseValidAnchorState::IncorrectHref(
-                            text.text_trimmed_range(),
-                        ));
-                    }
-                }
-                AnyJsExpression::AnyJsLiteralExpression(
-                    AnyJsLiteralExpression::JsStringLiteralExpression(string_literal),
-                ) => {
-                    let quoted_string = string_literal.inner_string_text().ok()?;
-                    if quoted_string.text() == "#" {
-                        return Some(UseValidAnchorState::IncorrectHref(
-                            string_literal.syntax().text_trimmed_range(),
-                        ));
-                    }
-                }
-                AnyJsExpression::JsTemplateExpression(template) => {
-                    let mut iter = template.elements().iter();
-                    if let Some(AnyJsTemplateElement::JsTemplateChunkElement(element)) = iter.next()
-                    {
-                        let template_token = element.template_chunk_token().ok()?;
-                        let text = template_token.text_trimmed();
-                        if text == "#" || text.contains("javascript:") {
-                            return Some(UseValidAnchorState::IncorrectHref(
-                                template_token.text_trimmed_range(),
-                            ));
-                        }
-                    }
-                }
-                AnyJsExpression::JsImportMetaExpression(_)
-                | AnyJsExpression::JsClassExpression(_)
-                | AnyJsExpression::JsImportCallExpression(_)
-                | AnyJsExpression::JsObjectExpression(_)
-                | AnyJsExpression::JsSuperExpression(_)
-                | AnyJsExpression::JsUnaryExpression(_)
-                | AnyJsExpression::JsxTagExpression(_)
-                | AnyJsExpression::JsNewTargetExpression(_) => {
-                    return Some(UseValidAnchorState::IncorrectHref(
-                        expression.syntax().text_trimmed_range(),
-                    ));
-                }
-                _ => {}
-            }
-        }
-        AnyJsxAttributeValue::AnyJsxTag(_) => {}
-        AnyJsxAttributeValue::JsxString(href_string) => {
-            let quoted_string = href_string.inner_string_text().ok()?;
-            let href_value = quoted_string.text();
-
-            // href="#" or href="javascript:void(0)"
-            if href_value == "#" || href_value.contains("javascript:") {
-                return Some(UseValidAnchorState::IncorrectHref(
-                    href_string.syntax().text_trimmed_range(),
-                ));
-            }
-        }
-    }
-
-    None
 }

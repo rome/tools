@@ -120,7 +120,7 @@ function html() {
 ## Accessibility guidelines
 
 - [WCAG 2.4.4](https://www.w3.org/WAI/WCAG21/Understanding/link-purpose-in-context)
-- [WCAG 4.1.6](https://www.w3.org/WAI/WCAG21/Understanding/name-role-value)
+- [WCAG 4.1.2](https://www.w3.org/WAI/WCAG21/Understanding/name-role-value)
 
 ## Related links
 
