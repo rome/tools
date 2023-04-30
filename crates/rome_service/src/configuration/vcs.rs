@@ -10,12 +10,12 @@ const GIT_IGNORE_FILE_NAME: &str = ".gitignore";
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(deny_unknown_fields, rename_all = "camelCase")]
 pub struct VcsConfiguration {
-    /// The kind of client.
+    /// The kind of VCS client rome should support.
     #[serde(skip_serializing_if = "Option::is_none")]
     #[bpaf(long("vcs-client-kind"), argument("git"), optional)]
     pub client_kind: Option<VcsClientKind>,
 
-    /// Whether Rome should integrate itself with the VCS client
+    /// Whether Rome should integrate itself with the VCS client.
     #[bpaf(long("vcs-enabled"), argument("true|false"))]
     pub enabled: Option<bool>,
 
