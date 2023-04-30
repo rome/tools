@@ -1,74 +1,60 @@
-use rome_analyze::context::RuleContext;
-use rome_analyze::{declare_rule, Ast, Rule, RuleDiagnostic};
+use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_syntax::jsx_ext::AnyJsxElement;
-use rome_js_syntax::JsxElement;
+use rome_js_syntax::{jsx_ext::AnyJsxElement, JsxElement};
 use rome_rowan::AstNode;
 
 declare_rule! {
-    /// Enforce that anchors have content and that the content is accessible to screen readers.
-    ///
-    /// Accessible means the content is not hidden using the `aria-hidden` attribute.
-    /// Refer to the references to learn about why this is important.
+    /// Enforce that heading elements (h1, h2, etc.) have content and that the content is accessible to screen readers.
+    /// Accessible means that it is not hidden using the aria-hidden prop.
     ///
     /// ## Examples
     ///
     /// ### Invalid
     ///
     /// ```jsx,expect_diagnostic
-    /// <a />
+    /// <h1 />
     /// ```
     ///
     /// ```jsx,expect_diagnostic
-    /// <a></a>
+    /// <h1><div aria-hidden /></h1>
     /// ```
     ///
     /// ```jsx,expect_diagnostic
-    /// <a>    </a>
-    /// ```
-    ///
-    /// ```jsx,expect_diagnostic
-    /// <a aria-hidden>content</a>
-    /// ```
-    ///
-    /// ```jsx,expect_diagnostic
-    /// <a><span aria-hidden="true">content</span></a>
+    /// <h1></h1>
     /// ```
     ///
     /// ## Valid
     ///
     /// ```jsx
-    /// <a>content</a>
+    /// <h1>heading</h1>
     /// ```
     ///
     /// ```jsx
-    /// function html() {
-    ///     return { __html: "foo" }
-    /// }
-    /// <a dangerouslySetInnerHTML={html()} />
+    /// <h1><div aria-hidden="true"></div>visible content</h1>
     /// ```
     ///
     /// ```jsx
-    /// <a><TextWrapper aria-hidden={true} />content</a>
+    /// <h1 dangerouslySetInnerHTML={{ __html: "heading" }} />
     /// ```
     ///
     /// ```jsx
-    /// <a><div aria-hidden="true"></div>content</a>
+    /// <h1><div aria-hidden />visible content</h1>
     /// ```
     ///
     /// ## Accessibility guidelines
     ///
-    /// - [WCAG 2.4.4](https://www.w3.org/WAI/WCAG21/Understanding/link-purpose-in-context)
-    /// - [WCAG 4.1.2](https://www.w3.org/WAI/WCAG21/Understanding/name-role-value)
+    /// - [WCAG 2.4.6](https://www.w3.org/TR/UNDERSTANDING-WCAG20/navigation-mechanisms-descriptive.html)
     ///
-    pub(crate) UseAnchorContent {
-        version: "10.0.0",
-        name: "useAnchorContent",
-        recommended: true,
+    pub(crate) UseHeadingContent {
+        version: "next",
+        name: "useHeadingContent",
+        recommended: false,
     }
 }
 
-impl Rule for UseAnchorContent {
+const HEADING_ELEMENTS: [&str; 6] = ["h1", "h2", "h3", "h4", "h5", "h6"];
+
+impl Rule for UseHeadingContent {
     type Query = Ast<AnyJsxElement>;
     type State = ();
     type Signals = Option<Self::State>;
@@ -78,12 +64,12 @@ impl Rule for UseAnchorContent {
         let node = ctx.query();
         let name = node.name().ok()?.name_value_token()?;
 
-        if name.text_trimmed() == "a" {
+        if HEADING_ELEMENTS.contains(&name.text_trimmed()) {
             if node.has_truthy_attribute("aria-hidden") {
                 return Some(());
             }
 
-            if has_valid_anchor_content(node) {
+            if has_valid_heading_content(node) {
                 return None;
             }
 
@@ -104,7 +90,7 @@ impl Rule for UseAnchorContent {
         None
     }
 
-    fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
         let range = match ctx.query() {
             AnyJsxElement::JsxOpeningElement(node) => {
                 node.parent::<JsxElement>()?.syntax().text_range()
@@ -115,18 +101,16 @@ impl Rule for UseAnchorContent {
             rule_category!(),
             range,
             markup! {
-                "Provide screen reader accessible content when using "<Emphasis>"`a`"</Emphasis>" elements."
-            }
+                "Provide screen reader accessible content when using "<Emphasis>"heading"</Emphasis>"  elements."
+            },
         ).note(
-            markup! {
-                "All links on a page should have content that is accessible to screen readers."
-            }
+            "All headings on a page should have content that is accessible to screen readers."
         ))
     }
 }
 
-/// check if the node has a valid anchor attribute
-fn has_valid_anchor_content(node: &AnyJsxElement) -> bool {
+/// check if the node has a valid heading attribute
+fn has_valid_heading_content(node: &AnyJsxElement) -> bool {
     node.find_attribute_by_name("dangerouslySetInnerHTML")
         .is_some()
         || node

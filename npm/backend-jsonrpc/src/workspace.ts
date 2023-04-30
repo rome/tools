@@ -577,6 +577,10 @@ export interface Nursery {
 	 */
 	useGroupedTypeImport?: RuleConfiguration;
 	/**
+	 * Enforce that heading elements (h1, h2, etc.) have content and that the content is accessible to screen readers. Accessible means that it is not hidden using the aria-hidden prop.
+	 */
+	useHeadingContent?: RuleConfiguration;
+	/**
 	 * Enforce that all React hooks are being called from the Top Level component functions.
 	 */
 	useHookAtTopLevel?: RuleConfiguration;
@@ -1021,6 +1025,7 @@ export type Category =
 	| "lint/nursery/noUselessConstructor"
 	| "lint/nursery/useLiteralEnumMembers"
 	| "lint/nursery/useGroupedTypeImport"
+	| "lint/nursery/useHeadingContent"
 	| "lint/nursery/noRedeclare"
 	| "lint/nursery/useNamespaceKeyword"
 	| "lint/nursery/noRedundantRoles"
