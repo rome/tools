@@ -1,9 +1,13 @@
-use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
+use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
+use rome_js_semantic::SemanticModel;
 use rome_js_syntax::{
-    AnyJsBindingPattern, AnyJsFormalParameter, AnyJsParameter, JsCallExpression, JsSpread,
+    AnyJsFunction, JsCallArgumentList, JsCallArguments, JsCallExpression, JsFormalParameter,
+    JsParameterList, JsParameters, JsSpread,
 };
-use rome_rowan::{AstNode, AstSeparatedList};
+use rome_rowan::AstNode;
+
+use crate::semantic_services::Semantic;
 
 declare_rule! {
     /// Disallow the use of spread (`...`) syntax on accumulators.
@@ -50,15 +54,16 @@ declare_rule! {
 }
 
 impl Rule for NoAccumulatingSpread {
-    type Query = Ast<JsSpread>;
+    type Query = Semantic<JsSpread>;
     type State = ();
     type Signals = Option<Self::State>;
     type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
+        let model = ctx.model();
 
-        is_known_accumulator(node)?.then_some(())
+        is_known_accumulator(node, model)?.then_some(())
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
@@ -78,12 +83,28 @@ impl Rule for NoAccumulatingSpread {
     }
 }
 
-fn is_known_accumulator(node: &JsSpread) -> Option<bool> {
-    let node_name = node.argument().ok()?.text();
+fn is_known_accumulator(node: &JsSpread, model: &SemanticModel) -> Option<bool> {
+    let reference = node
+        .argument()
+        .ok()?
+        .as_js_identifier_expression()?
+        .name()
+        .ok()?;
 
-    let call_expression = node.syntax().ancestors().find_map(JsCallExpression::cast)?;
+    let parameter = model
+        .binding(&reference)
+        .and_then(|declaration| declaration.syntax().parent())
+        .and_then(JsFormalParameter::cast)?;
+    let function = parameter
+        .parent::<JsParameterList>()
+        .and_then(|list| list.parent::<JsParameters>())
+        .and_then(|parameters| parameters.parent::<AnyJsFunction>())?;
+    let call_expression = function
+        .parent::<JsCallArgumentList>()
+        .and_then(|arguments| arguments.parent::<JsCallArguments>())
+        .and_then(|arguments| arguments.parent::<JsCallExpression>())?;
 
-    let expression_name = call_expression
+    let name = call_expression
         .callee()
         .ok()?
         .as_js_static_member_expression()?
@@ -92,53 +113,11 @@ fn is_known_accumulator(node: &JsSpread) -> Option<bool> {
         .as_js_name()?
         .value_token()
         .ok()?;
-    let expression_name = expression_name.text_trimmed();
-    if matches!(expression_name, "reduce" | "reduceRight") {
-        // Get the callback function of the reduce call
-        let first_arg = call_expression
-            .arguments()
-            .ok()?
-            .args()
-            .iter()
-            .next()?
-            .ok()?;
+    let name = name.text_trimmed();
 
-        // check if first_arg is a JsFunction
-        let callback = first_arg
-            .as_any_js_expression()?
-            .as_js_arrow_function_expression()?;
-
-        let param = callback
-            .parameters()
-            .ok()?
-            .as_js_parameters()?
-            .clone()
-            .items()
-            .iter()
-            .next()?
-            .ok()?;
-
-        if let Some(binding) = binding_of(&param) {
-            if let Some(binding) = binding.as_any_js_binding() {
-                // TODO: figure out how to check if the spread operator (node) is part of the param binding
-                if binding.text() == node_name {
-                    return Some(true);
-                }
-            }
-        }
-        None
+    if matches!(name, "reduce" | "reduceRight") {
+        Some(parameter.syntax().index() == 0)
     } else {
         None
-    }
-}
-
-fn binding_of(param: &AnyJsParameter) -> Option<AnyJsBindingPattern> {
-    match param {
-        AnyJsParameter::AnyJsFormalParameter(formal_param) => match &formal_param {
-            AnyJsFormalParameter::JsBogusParameter(_) => None,
-            AnyJsFormalParameter::JsFormalParameter(param) => param.binding().ok(),
-        },
-        AnyJsParameter::JsRestParameter(param) => param.binding().ok(),
-        AnyJsParameter::TsThisParameter(_) => None,
     }
 }
