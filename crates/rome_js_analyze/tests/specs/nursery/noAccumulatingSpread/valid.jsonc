@@ -1,6 +1,17 @@
 [
+	// Array - Allow pushing to accumulator
 	"foo.reduce((acc, bar) => {acc.push(bar); return acc;}, [])",
+	"foo.reduceRight((acc, bar) => {acc.push(bar); return acc;}, [])",
+
+	// Array - Allow spreading the item into the accumulator
 	"foo.reduce((acc, bar) => {acc.push(...bar); return acc;}, [])",
+	"foo.reduceRight((acc, bar) => {acc.push(...bar); return acc;}, [])",
+
+	// Object - Allow setting an attribute on the accumulator
 	"foo.reduce((acc, bar) => {acc[bar.key] = bar.value; return acc;}, {})",
-	"foo.reduce((acc, bar) => {acc[...bar] = bar; return acc;}, {})"
+	"foo.reduceRight((acc, bar) => {acc[bar.key] = bar.value; return acc;}, {})",
+
+	// Object - Allow spreading the item into the accumulator
+	"foo.reduce((acc, bar) => {acc[bar.key] = { ...bar.value }; return acc;}, {})",
+	"foo.reduceRight((acc, bar) => {acc[bar.key] = { ...bar.value }; return acc;}, {})"
 ]

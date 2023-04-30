@@ -9,7 +9,17 @@ foo.reduce((acc, bar) => {acc.push(bar); return acc;}, [])
 
 # Input
 ```js
+foo.reduceRight((acc, bar) => {acc.push(bar); return acc;}, [])
+```
+
+# Input
+```js
 foo.reduce((acc, bar) => {acc.push(...bar); return acc;}, [])
+```
+
+# Input
+```js
+foo.reduceRight((acc, bar) => {acc.push(...bar); return acc;}, [])
 ```
 
 # Input
@@ -19,7 +29,17 @@ foo.reduce((acc, bar) => {acc[bar.key] = bar.value; return acc;}, {})
 
 # Input
 ```js
-foo.reduce((acc, bar) => {acc[...bar] = bar; return acc;}, {})
+foo.reduceRight((acc, bar) => {acc[bar.key] = bar.value; return acc;}, {})
+```
+
+# Input
+```js
+foo.reduce((acc, bar) => {acc[bar.key] = { ...bar.value }; return acc;}, {})
+```
+
+# Input
+```js
+foo.reduceRight((acc, bar) => {acc[bar.key] = { ...bar.value }; return acc;}, {})
 ```
 
 

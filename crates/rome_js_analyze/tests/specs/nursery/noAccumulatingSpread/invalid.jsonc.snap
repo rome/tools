@@ -23,17 +23,17 @@ invalid.jsonc:1:27 lint/nursery/noAccumulatingSpread ━━━━━━━━━
 
 # Input
 ```js
-foo.reduce((acc, bar) => [...acc, ...bar], [])
+foo.reduceRight((acc, bar) => [...acc, bar], [])
 ```
 
 # Diagnostics
 ```
-invalid.jsonc:1:27 lint/nursery/noAccumulatingSpread ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsonc:1:32 lint/nursery/noAccumulatingSpread ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Avoid the use of spread (`...`) syntax on accumulators.
   
-  > 1 │ foo.reduce((acc, bar) => [...acc, ...bar], [])
-      │                           ^^^^^^
+  > 1 │ foo.reduceRight((acc, bar) => [...acc, bar], [])
+      │                                ^^^^^^
   
   i Spread syntax should be avoided on accumulators (like those in `.reduce`) because it causes a time complexity of `O(n^2)`.
   
@@ -61,6 +61,63 @@ invalid.jsonc:1:35 lint/nursery/noAccumulatingSpread ━━━━━━━━━
 
 # Input
 ```js
+foo.reduceRight((acc, bar) => {return [...acc, bar];}, [])
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:40 lint/nursery/noAccumulatingSpread ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid the use of spread (`...`) syntax on accumulators.
+  
+  > 1 │ foo.reduceRight((acc, bar) => {return [...acc, bar];}, [])
+      │                                        ^^^^^^
+  
+  i Spread syntax should be avoided on accumulators (like those in `.reduce`) because it causes a time complexity of `O(n^2)`.
+  
+
+```
+
+# Input
+```js
+foo.reduce((acc, bar) => [...acc, ...bar], [])
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:27 lint/nursery/noAccumulatingSpread ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid the use of spread (`...`) syntax on accumulators.
+  
+  > 1 │ foo.reduce((acc, bar) => [...acc, ...bar], [])
+      │                           ^^^^^^
+  
+  i Spread syntax should be avoided on accumulators (like those in `.reduce`) because it causes a time complexity of `O(n^2)`.
+  
+
+```
+
+# Input
+```js
+foo.reduceRight((acc, bar) => [...acc, ...bar], [])
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:32 lint/nursery/noAccumulatingSpread ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid the use of spread (`...`) syntax on accumulators.
+  
+  > 1 │ foo.reduceRight((acc, bar) => [...acc, ...bar], [])
+      │                                ^^^^^^
+  
+  i Spread syntax should be avoided on accumulators (like those in `.reduce`) because it causes a time complexity of `O(n^2)`.
+  
+
+```
+
+# Input
+```js
 foo.reduce((acc, bar) => {return [...acc, ...bar];}, [])
 ```
 
@@ -72,6 +129,25 @@ invalid.jsonc:1:35 lint/nursery/noAccumulatingSpread ━━━━━━━━━
   
   > 1 │ foo.reduce((acc, bar) => {return [...acc, ...bar];}, [])
       │                                   ^^^^^^
+  
+  i Spread syntax should be avoided on accumulators (like those in `.reduce`) because it causes a time complexity of `O(n^2)`.
+  
+
+```
+
+# Input
+```js
+foo.reduceRight((acc, bar) => {return [...acc, ...bar];}, [])
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:40 lint/nursery/noAccumulatingSpread ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid the use of spread (`...`) syntax on accumulators.
+  
+  > 1 │ foo.reduceRight((acc, bar) => {return [...acc, ...bar];}, [])
+      │                                        ^^^^^^
   
   i Spread syntax should be avoided on accumulators (like those in `.reduce`) because it causes a time complexity of `O(n^2)`.
   
@@ -99,17 +175,17 @@ invalid.jsonc:1:28 lint/nursery/noAccumulatingSpread ━━━━━━━━━
 
 # Input
 ```js
-foo.reduce((acc, bar) => ({...acc, ...bar}), {})
+foo.reduceRight((acc, bar) => ({...acc, [bar.key]: bar.value}), {})
 ```
 
 # Diagnostics
 ```
-invalid.jsonc:1:28 lint/nursery/noAccumulatingSpread ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsonc:1:33 lint/nursery/noAccumulatingSpread ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Avoid the use of spread (`...`) syntax on accumulators.
   
-  > 1 │ foo.reduce((acc, bar) => ({...acc, ...bar}), {})
-      │                            ^^^^^^
+  > 1 │ foo.reduceRight((acc, bar) => ({...acc, [bar.key]: bar.value}), {})
+      │                                 ^^^^^^
   
   i Spread syntax should be avoided on accumulators (like those in `.reduce`) because it causes a time complexity of `O(n^2)`.
   
@@ -137,6 +213,63 @@ invalid.jsonc:1:35 lint/nursery/noAccumulatingSpread ━━━━━━━━━
 
 # Input
 ```js
+foo.reduceRight((acc, bar) => {return {...acc, [bar.key]: bar.value};}, {})
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:40 lint/nursery/noAccumulatingSpread ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid the use of spread (`...`) syntax on accumulators.
+  
+  > 1 │ foo.reduceRight((acc, bar) => {return {...acc, [bar.key]: bar.value};}, {})
+      │                                        ^^^^^^
+  
+  i Spread syntax should be avoided on accumulators (like those in `.reduce`) because it causes a time complexity of `O(n^2)`.
+  
+
+```
+
+# Input
+```js
+foo.reduce((acc, bar) => ({...acc, ...bar}), {})
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:28 lint/nursery/noAccumulatingSpread ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid the use of spread (`...`) syntax on accumulators.
+  
+  > 1 │ foo.reduce((acc, bar) => ({...acc, ...bar}), {})
+      │                            ^^^^^^
+  
+  i Spread syntax should be avoided on accumulators (like those in `.reduce`) because it causes a time complexity of `O(n^2)`.
+  
+
+```
+
+# Input
+```js
+foo.reduceRight((acc, bar) => ({...acc, ...bar}), {})
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:33 lint/nursery/noAccumulatingSpread ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid the use of spread (`...`) syntax on accumulators.
+  
+  > 1 │ foo.reduceRight((acc, bar) => ({...acc, ...bar}), {})
+      │                                 ^^^^^^
+  
+  i Spread syntax should be avoided on accumulators (like those in `.reduce`) because it causes a time complexity of `O(n^2)`.
+  
+
+```
+
+# Input
+```js
 foo.reduce((acc, bar) => {return {...acc, ...bar};}, {})
 ```
 
@@ -148,6 +281,25 @@ invalid.jsonc:1:35 lint/nursery/noAccumulatingSpread ━━━━━━━━━
   
   > 1 │ foo.reduce((acc, bar) => {return {...acc, ...bar};}, {})
       │                                   ^^^^^^
+  
+  i Spread syntax should be avoided on accumulators (like those in `.reduce`) because it causes a time complexity of `O(n^2)`.
+  
+
+```
+
+# Input
+```js
+foo.reduceRight((acc, bar) => {return {...acc, ...bar};}, {})
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:40 lint/nursery/noAccumulatingSpread ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid the use of spread (`...`) syntax on accumulators.
+  
+  > 1 │ foo.reduceRight((acc, bar) => {return {...acc, ...bar};}, {})
+      │                                        ^^^^^^
   
   i Spread syntax should be avoided on accumulators (like those in `.reduce`) because it causes a time complexity of `O(n^2)`.
   
