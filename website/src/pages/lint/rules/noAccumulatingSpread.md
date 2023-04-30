@@ -84,8 +84,6 @@ var a = ['a', 'b', 'c'];
 a.reduce((acc, val) => {acc.push(val); return acc}, []);
 ```
 
-@link: https://astexplorer.net/
-
 ## Related links
 
 - [Disable a rule](/linter/#disable-a-lint-rule)

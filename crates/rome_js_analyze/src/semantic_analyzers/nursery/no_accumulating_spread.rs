@@ -45,7 +45,6 @@ declare_rule! {
     /// a.reduce((acc, val) => {acc.push(val); return acc}, []);
     /// ```
     ///
-    /// @link: https://astexplorer.net/
     pub(crate) NoAccumulatingSpread {
         version: "next",
         name: "noAccumulatingSpread",
