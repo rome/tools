@@ -108,7 +108,7 @@
 				},
 				"rome.requireConfiguration": {
 					"type": "boolean",
-					"default": false,
+					"default": true,
 					"markdownDescription": "Require a Rome configuration file to enable syntax errors, formatting and linting. Requires Rome 12 or newer."
 				}
 			}
