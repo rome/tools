@@ -24,6 +24,7 @@ output. [#4405](https://github.com/rome/tools/pull/4405)
 when there are breaking changes.
 - Fix [#4348](https://github.com/rome/tools/issues/4348) that caused [`noNonNullAssertion`](https://docs.rome.tools/lint/rules/nononnullassertion/) to emit incorrect code action
 - Fix [#4410](https://github.com/rome/tools/issues/4410) that caused [`useButtonType`](https://docs.rome.tools/lint/rules/usebuttontype/) to miss some cases
+- Fix false positive diagnostics that [`useCamelCase`](https://docs.rome.tools/lint/rules/usecamelcase/) caused to default exported components 
 
 ### Configuration
 ### Editors
