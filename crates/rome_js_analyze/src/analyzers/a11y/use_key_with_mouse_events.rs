@@ -6,42 +6,39 @@ use rome_js_syntax::jsx_ext::AnyJsxElement;
 use rome_rowan::AstNode;
 
 declare_rule! {
-    /// Enforce that `onMouseOver`/`onMouseOut` are accompanied by `onFocus`/`onBlur` for keyboard-only users.
-    /// It is important to take into account users with physical disabilities who cannot use a mouse,
-    /// who use assistive technology or screenreader.
+    /// Enforce `onMouseOver` / `onMouseOut` are accompanied by `onFocus` / `onBlur`.
+    ///
+    /// Coding for the keyboard is important for users with physical disabilities who cannot use a mouse, AT compatibility, and screenreader users.
     ///
     /// ## Examples
     ///
     /// ### Invalid
     ///
     /// ```jsx,expect_diagnostic
-    ///    <div onMouseOver={() => {}} />
+    /// <div onMouseOver={() => {}} />
     /// ```
     ///
     /// ```jsx,expect_diagnostic
-    ///    <div onMouseOut={() => {}} />
+    /// <div onMouseOut={() => {}} />
     /// ```
     ///
     /// ### Valid
     ///
     /// ```jsx
     /// <>
-    ///     <div onMouseOver={() => {}} onFocus={() => {}} />
-    ///     <div onMouseOut={() => {}} onBlur={() => {}} />
-    ///     <div onMouseOver={() => {}} {...otherProps} />
-    ///     <div onMouseOut={() => {}} {...otherProps} />
-    ///     <div onMouseOver={() => {}} onFocus={() => {}} {...otherProps} />
-    ///     <div onMouseOut={() => {}} onBlur={() => {}} {...otherProps} />
+    ///   <div onMouseOver={() => {}} onFocus={() => {}} />
+    ///   <div onMouseOut={() => {}} onBlur={() => {}} />
+    ///   <div onMouseOver={() => {}} {...otherProps} />
+    ///   <div onMouseOut={() => {}} {...otherProps} />
+    ///   <div onMouseOver={() => {}} onFocus={() => {}} {...otherProps} />
+    ///   <div onMouseOut={() => {}} onBlur={() => {}} {...otherProps} />
     /// </>
     /// ```
     ///
     /// ## Accessibility guidelines
     ///
-    /// [WCAG 2.1.1](https://www.w3.org/WAI/WCAG21/Understanding/keyboard)
+    /// - [WCAG 2.1.1](https://www.w3.org/WAI/WCAG21/Understanding/keyboard)
     ///
-    /// ## Resources
-    ///
-    /// - [WebAIM - JavaScript event handlers](https://webaim.org/techniques/javascript/eventhandlers)
     pub(crate) UseKeyWithMouseEvents {
         version: "10.0.0",
         name: "useKeyWithMouseEvents",

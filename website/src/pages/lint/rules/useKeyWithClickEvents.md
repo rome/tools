@@ -7,7 +7,10 @@ parent: lint/rules/index
 
 > This rule is recommended by Rome.
 
-Enforce to have the `onClick` mouse event with the `onKeyUp`, the `onKeyDown`, or the `onKeyPress` keyboard event.
+Enforce onClick is accompanied by at least one of the following: `onKeyUp`, `onKeyDown`, `onKeyPress`.
+
+Coding for the keyboard is important for users with physical disabilities who cannot use a mouse, AT compatibility, and screenreader users.
+This does not apply for interactive or hidden elements.
 
 ## Examples
 
@@ -75,6 +78,10 @@ Enforce to have the `onClick` mouse event with the `onKeyUp`, the `onKeyDown`, o
 ```jsx
 <button onClick={() => console.log("test")}>Submit</button>
 ```
+
+## Accessibility guidelines
+
+- [WCAG 2.1.1](https://www.w3.org/WAI/WCAG21/Understanding/keyboard)
 
 ## Related links
 

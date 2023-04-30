@@ -234,11 +234,11 @@ export interface A11y {
 	 */
 	recommended?: boolean;
 	/**
-	 * It asserts that alternative text to images or areas, help to rely on to screen readers to understand the purpose and the context of the image.
+	 * Enforce that all elements that require alternative text have meaningful information to relay back to the end user.
 	 */
 	useAltText?: RuleConfiguration;
 	/**
-	 * Enforce that anchor elements have content and that the content is accessible to screen readers.
+	 * Enforce that anchors have content and that the content is accessible to screen readers.
 	 */
 	useAnchorContent?: RuleConfiguration;
 	/**
@@ -246,15 +246,15 @@ export interface A11y {
 	 */
 	useButtonType?: RuleConfiguration;
 	/**
-	 * Enforce that html element has lang attribute. This allows users to choose a language other than the default.
+	 * Enforce that html element has lang attribute.
 	 */
 	useHtmlLang?: RuleConfiguration;
 	/**
-	 * Enforce to have the onClick mouse event with the onKeyUp, the onKeyDown, or the onKeyPress keyboard event.
+	 * Enforce onClick is accompanied by at least one of the following: onKeyUp, onKeyDown, onKeyPress.
 	 */
 	useKeyWithClickEvents?: RuleConfiguration;
 	/**
-	 * Enforce that onMouseOver/onMouseOut are accompanied by onFocus/onBlur for keyboard-only users. It is important to take into account users with physical disabilities who cannot use a mouse, who use assistive technology or screenreader.
+	 * Enforce onMouseOver / onMouseOut are accompanied by onFocus / onBlur.
 	 */
 	useKeyWithMouseEvents?: RuleConfiguration;
 	/**

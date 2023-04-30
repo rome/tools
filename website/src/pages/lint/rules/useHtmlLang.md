@@ -8,7 +8,6 @@ parent: lint/rules/index
 > This rule is recommended by Rome.
 
 Enforce that `html` element has `lang` attribute.
-This allows users to choose a language other than the default.
 
 ## Examples
 
@@ -26,8 +25,7 @@ This allows users to choose a language other than the default.
    <strong>   │ </strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
     <strong>2 │ </strong>
   
-<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Setting a </span><span style="color: rgb(38, 148, 255);"><strong>lang</strong></span><span style="color: rgb(38, 148, 255);"> attribute on HTML document elements configures the language
-</span><span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">used by screen readers when no user default is specified.</span>
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Setting a </span><span style="color: rgb(38, 148, 255);"><strong>lang</strong></span><span style="color: rgb(38, 148, 255);"> attribute on HTML document elements configures the languageused by screen readers when no user default is specified.</span>
   
 </code></pre>
 
@@ -43,8 +41,7 @@ This allows users to choose a language other than the default.
    <strong>   │ </strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
     <strong>2 │ </strong>
   
-<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Setting a </span><span style="color: rgb(38, 148, 255);"><strong>lang</strong></span><span style="color: rgb(38, 148, 255);"> attribute on HTML document elements configures the language
-</span><span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">used by screen readers when no user default is specified.</span>
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Setting a </span><span style="color: rgb(38, 148, 255);"><strong>lang</strong></span><span style="color: rgb(38, 148, 255);"> attribute on HTML document elements configures the languageused by screen readers when no user default is specified.</span>
   
 </code></pre>
 
@@ -60,8 +57,7 @@ This allows users to choose a language other than the default.
    <strong>   │ </strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
     <strong>2 │ </strong>
   
-<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Setting a </span><span style="color: rgb(38, 148, 255);"><strong>lang</strong></span><span style="color: rgb(38, 148, 255);"> attribute on HTML document elements configures the language
-</span><span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">used by screen readers when no user default is specified.</span>
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Setting a </span><span style="color: rgb(38, 148, 255);"><strong>lang</strong></span><span style="color: rgb(38, 148, 255);"> attribute on HTML document elements configures the languageused by screen readers when no user default is specified.</span>
   
 </code></pre>
 
@@ -77,8 +73,7 @@ This allows users to choose a language other than the default.
    <strong>   │ </strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
     <strong>2 │ </strong>
   
-<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Setting a </span><span style="color: rgb(38, 148, 255);"><strong>lang</strong></span><span style="color: rgb(38, 148, 255);"> attribute on HTML document elements configures the language
-</span><span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">used by screen readers when no user default is specified.</span>
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Setting a </span><span style="color: rgb(38, 148, 255);"><strong>lang</strong></span><span style="color: rgb(38, 148, 255);"> attribute on HTML document elements configures the languageused by screen readers when no user default is specified.</span>
   
 </code></pre>
 
@@ -94,8 +89,7 @@ This allows users to choose a language other than the default.
    <strong>   │ </strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
     <strong>2 │ </strong>
   
-<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Setting a </span><span style="color: rgb(38, 148, 255);"><strong>lang</strong></span><span style="color: rgb(38, 148, 255);"> attribute on HTML document elements configures the language
-</span><span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">used by screen readers when no user default is specified.</span>
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Setting a </span><span style="color: rgb(38, 148, 255);"><strong>lang</strong></span><span style="color: rgb(38, 148, 255);"> attribute on HTML document elements configures the languageused by screen readers when no user default is specified.</span>
   
 </code></pre>
 
@@ -119,7 +113,7 @@ This allows users to choose a language other than the default.
 
 ## Accessibility guidelines
 
-[WCAG 3.1.1](https://www.w3.org/WAI/WCAG21/Understanding/language-of-page)
+- [WCAG 3.1.1](https://www.w3.org/WAI/WCAG21/Understanding/language-of-page)
 
 ## Related links
 

@@ -105,14 +105,14 @@
 					"type": ["boolean", "null"]
 				},
 				"useAltText": {
-					"description": "It asserts that alternative text to images or areas, help to rely on to screen readers to understand the purpose and the context of the image.",
+					"description": "Enforce that all elements that require alternative text have meaningful information to relay back to the end user.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }
 					]
 				},
 				"useAnchorContent": {
-					"description": "Enforce that anchor elements have content and that the content is accessible to screen readers.",
+					"description": "Enforce that anchors have content and that the content is accessible to screen readers.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }
@@ -126,21 +126,21 @@
 					]
 				},
 				"useHtmlLang": {
-					"description": "Enforce that html element has lang attribute. This allows users to choose a language other than the default.",
+					"description": "Enforce that html element has lang attribute.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }
 					]
 				},
 				"useKeyWithClickEvents": {
-					"description": "Enforce to have the onClick mouse event with the onKeyUp, the onKeyDown, or the onKeyPress keyboard event.",
+					"description": "Enforce onClick is accompanied by at least one of the following: onKeyUp, onKeyDown, onKeyPress.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }
 					]
 				},
 				"useKeyWithMouseEvents": {
-					"description": "Enforce that onMouseOver/onMouseOut are accompanied by onFocus/onBlur for keyboard-only users. It is important to take into account users with physical disabilities who cannot use a mouse, who use assistive technology or screenreader.",
+					"description": "Enforce onMouseOver / onMouseOut are accompanied by onFocus / onBlur.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }

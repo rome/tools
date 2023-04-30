@@ -7,9 +7,9 @@ parent: lint/rules/index
 
 > This rule is recommended by Rome.
 
-Enforce that anchor elements have content and that the content is accessible to screen readers.
+Enforce that anchors have content and that the content is accessible to screen readers.
 
-Accessible means that the content is not hidden using the `aria-hidden` attribute.
+Accessible means that it is not hidden using the aria-hidden prop. Refer to the references to learn about why this is important.
 
 ## Examples
 
@@ -115,6 +115,11 @@ function html() {
 ```jsx
 <a><div aria-hidden="true"></div>content</a>
 ```
+
+## Accessibility guidelines
+
+- [WCAG 2.4.4](https://www.w3.org/WAI/WCAG21/Understanding/link-purpose-in-context)
+- [WCAG 4.1.2](https://www.w3.org/WAI/WCAG21/Understanding/name-role-value)
 
 ## Related links
 
