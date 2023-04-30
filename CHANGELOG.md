@@ -16,6 +16,7 @@ output. [#4405](https://github.com/rome/tools/pull/4405)
 - [`useGroupedTypeImport`](https://docs.rome.tools/lint/rules/useGroupedTypeImport/)
 - [`noUselessConstructor`](https://docs.rome.tools/lint/rules/noUselessConstructor/)
 - [`useLiteralEnumMembers`](https://docs.rome.tools/lint/rules/useLiteralEnumMembers/)
+- [`useHeadingContent`](https://docs.rome.tools/lint/rules/useHeadingContent/)
 
 #### Other changes
 
