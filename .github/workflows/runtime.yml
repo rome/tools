@@ -41,10 +41,8 @@ jobs:
       - uses: pnpm/action-setup@v2.1.0
         with:
           version: 7
-      - name: Cache
-        uses: Swatinem/rust-cache@v2
-        with:
-          shared-key: "wasm"
+      - name: Install toolchain
+        uses: moonrepo/setup-rust@v0
       - name: Install libraries
         working-directory: npm/js-api
         run: pnpm i
