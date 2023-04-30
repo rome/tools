@@ -109,8 +109,10 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Install Rust toolchain
-        run: rustup target add ${{ matrix.target }}
+      - name: Install toolchain
+        uses: moonrepo/setup-rust@v0
+        with:
+          targets: ${{ matrix.target }}
 
       - name: Install arm64 toolchain
         if: matrix.code-target == 'linux-arm64'

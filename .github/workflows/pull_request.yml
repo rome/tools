@@ -28,7 +28,7 @@ jobs:
         with:
           components: rustfmt
       - name: Run rustfmt
-        run: cargo fmt --all --verbose -- --check
+        run: cargo fmt --all --check
 
   lint:
     name: Lint Rust Files
@@ -76,8 +76,8 @@ jobs:
         uses: actions/checkout@v3
       - name: Install toolchain
         uses: moonrepo/setup-rust@v0
-      - name: Install latest nextest release
-        uses: taiki-e/install-action@nextest
+        with:
+          bins: nextest
       - name: Compile for tests
         run: cargo test --no-run --workspace --verbose
       - name: Run tests

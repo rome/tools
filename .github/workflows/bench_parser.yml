@@ -32,12 +32,7 @@ jobs:
           ref: ${{ steps.sha.outputs.result }}
 
       - name: Install toolchain
-        run: rustup show
-
-      - name: Cache
-        uses: Swatinem/rust-cache@v2
-        with:
-          shared-key: "xtask-release"
+        uses: moonrepo/setup-rust@v0
 
       - name: Install critcmp
         run: cargo install critcmp
