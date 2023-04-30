@@ -76,7 +76,7 @@ fn is_non_camel_ok(binding: &JsIdentifierBinding, model: &SemanticModel) -> Opti
             };
             Some(is_ok)
         }
-        JS_FUNCTION_DECLARATION => {
+        JS_FUNCTION_DECLARATION | JS_FUNCTION_EXPORT_DEFAULT_DECLARATION => {
             if binding.is_exported(model) {
                 return Some(true);
             }
