@@ -51,6 +51,10 @@ Start the Rome [daemon](/internals/architecture#daemon) server
 
 Stop the Rome [daemon](/internals/architecture#deamon) server
 
+### `rome migrate`
+
+Automatically updates the configuration file to use the latest version, in case there were breaking changes among versions.
+
 ## Global Options
 
 ### `--colors`
@@ -79,10 +83,29 @@ Tell Rome in which path to find the configuration file `rome.json`.
 
 If Rome doesn't find a `rome.json`, it will abort the operation and exit with and error code.
 
+### `--vcs-enabled`
 
-## Global Options
+Whether Rome should integrate itself with the VCS client.
 
-Use these flags to get information about the Rome CLI.
+### `--vcs-client-kind`
+
+The kind of VCS client rome should support.
+
+Options available:
+- `git`
+
+### `--vcs-use-ignore-file`
+
+Whether Rome should use the VCS ignore file. When [true], Rome will ignore the files specified in the ignore file.
+
+### `--vcs-root`
+
+The folder where Rome should check for VCS files. By default, Rome will use the same
+folder where `rome.json` was found.
+
+If Rome can't fine the configuration, it will attempt to use the current working directory.
+If no current working directory can't be found, Rome won't use the VCS integration.
+
 
 ### `--version`
 
