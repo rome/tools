@@ -29,6 +29,8 @@ jobs:
         uses: actions/checkout@v3
       - name: Install toolchain
         uses: moonrepo/setup-rust@v0
+        with:
+          components: rustfmt
       - name: Run rustfmt
         run: cargo fmt --all --verbose -- --check
 
@@ -40,6 +42,8 @@ jobs:
         uses: actions/checkout@v3
       - name: Install toolchain
         uses: moonrepo/setup-rust@v0
+        with:
+          components: clippy
       - name: Run cargo check
         run: cargo check --workspace --all-targets --release
       - name: Run clippy
