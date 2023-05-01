@@ -71,9 +71,9 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: windows-2022
-          - os: ubuntu-20.04
-          - os: macos-11
+          - os: windows-latest
+          - os: ubuntu-latest
+          - os: macos-latest
 
     name: Test
     runs-on: ${{ matrix.os }}
