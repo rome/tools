@@ -5,6 +5,8 @@ parent: lint/rules/index
 
 # noUselessCatch (since v12.0.0)
 
+> This rule is recommended by Rome.
+
 Disallow unnecessary `catch` clauses.
 
 A `catch` clause that only rethrows the original error is redundant,
@@ -26,7 +28,7 @@ try {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noUselessCatch.js:4:5 <a href="https://docs.rome.tools/lint/rules/noUselessCatch">lint/nursery/noUselessCatch</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">complexity/noUselessCatch.js:4:5 <a href="https://docs.rome.tools/lint/rules/noUselessCatch">lint/complexity/noUselessCatch</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The </span><span style="color: Tomato;"><strong>catch</strong></span><span style="color: Tomato;"> clause that only rethrows the original error is redundant.</span>
   
@@ -51,7 +53,7 @@ try {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noUselessCatch.js:4:5 <a href="https://docs.rome.tools/lint/rules/noUselessCatch">lint/nursery/noUselessCatch</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">complexity/noUselessCatch.js:4:5 <a href="https://docs.rome.tools/lint/rules/noUselessCatch">lint/complexity/noUselessCatch</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The </span><span style="color: Tomato;"><strong>catch</strong></span><span style="color: Tomato;"> clause that only rethrows the original error is redundant.</span>
   

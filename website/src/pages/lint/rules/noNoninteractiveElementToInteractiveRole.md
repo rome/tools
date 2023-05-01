@@ -5,6 +5,8 @@ parent: lint/rules/index
 
 # noNoninteractiveElementToInteractiveRole (since v12.0.0)
 
+> This rule is recommended by Rome.
+
 Enforce that interactive ARIA roles are not assigned to non-interactive HTML elements.
 
 Non-interactive HTML elements indicate _content_ and _containers_ in the user interface.
@@ -24,7 +26,7 @@ Interactive ARIA roles include `button`, `link`, `checkbox`, `menuitem`, `menuit
 <h1 role="button">Some text</h1>
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noNoninteractiveElementToInteractiveRole.js:1:5 <a href="https://docs.rome.tools/lint/rules/noNoninteractiveElementToInteractiveRole">lint/nursery/noNoninteractiveElementToInteractiveRole</a> ━━━━━━━━━━
+<pre class="language-text"><code class="language-text">a11y/noNoninteractiveElementToInteractiveRole.js:1:5 <a href="https://docs.rome.tools/lint/rules/noNoninteractiveElementToInteractiveRole">lint/a11y/noNoninteractiveElementToInteractiveRole</a> ━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The HTML element </span><span style="color: Tomato;"><strong>h1</strong></span><span style="color: Tomato;"> is non-interactive and should not have an interactive role.</span>
   

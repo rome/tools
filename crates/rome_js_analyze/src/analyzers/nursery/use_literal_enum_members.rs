@@ -72,7 +72,7 @@ declare_rule! {
     /// }
     /// ```
     pub(crate) UseLiteralEnumMembers {
-        version: "next",
+        version: "12.1.0",
         name: "useLiteralEnumMembers",
         recommended: true,
     }

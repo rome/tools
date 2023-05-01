@@ -24,6 +24,51 @@ output. [#4405](https://github.com/rome/tools/pull/4405).
 - [`useHeadingContent`](https://docs.rome.tools/lint/rules/useHeadingContent/)
 - [`noAccumulatingSpread`](https://docs.rome.tools/lint/rules/noAccumulatingSpread/)
 
+#### Promoted rules
+
+New rules are promoted, please check [#4431](https://github.com/rome/tools/pull/4431) for more details.
+
+- [lint/a11y/noNoninteractiveElementToInteractiveRole](https://docs.rome.tools/lint/rules/noNoninteractiveElementToInteractiveRole)
+- [lint/a11y/noRedundantAlt](https://docs.rome.tools/lint/rules/noRedundantAlt)
+- [lint/a11y/noSvgWithoutTitle](https://docs.rome.tools/lint/rules/noSvgWithoutTitle)
+- [lint/a11y/useAriaPropsForRole](https://docs.rome.tools/lint/rules/useAriaPropsForRole)
+- [lint/a11y/useIframeTitle](https://docs.rome.tools/lint/rules/useIframeTitle)
+- [lint/a11y/useMediaCaption](https://docs.rome.tools/lint/rules/useMediaCaption)
+- [lint/a11y/useValidAriaProps](ttps://docs.rome.tools/lint/rules/useValidAriaProps)
+- [lint/a11y/useValidLang](ttps://docs.rome.tools/lint/rules/useValidLang)
+- [lint/complexity/noExtraSemicolon](https://docs.rome.tools/lint/rules/noExtraSemicolon)
+- [lint/complexity/noUselessCatch](https://docs.rome.tools/lint/rules/noUselessCatch)
+- [lint/complexity/noUselessConstructor](https://docs.rome.tools/lint/rules/noUselessConstructor)
+- [lint/complexity/noUselessLabel](ttps://docs.rome.tools/lint/rules/noUselessLabel)
+- [lint/complexity/noUselessRename](https://docs.rome.tools/lint/rules/noUselessRename)
+- [lint/complexity/noUselessSwitchCase](https://docs.rome.tools/lint/rules/noUselessSwitchCase)
+- [lint/complexity/noWith](https://docs.rome.tools/lint/rules/noWith)
+- [lint/correctness/noGlobalObjectCalls](https://docs.rome.tools/lint/rules/noGlobalObjectCalls)
+- [lint/correctness/noInnerDeclarations](https://docs.rome.tools/lint/rules/noInnerDeclarations)
+- [lint/correctness/noInvalidConstructorSuper](https://docs.rome.tools/lint/rules/noInvalidConstructorSuper)
+- [lint/correctness/noSwitchDeclarations](https://docs.rome.tools/lint/rules/noSwitchDeclarations)
+- [lint/correctness/noUnreachableSuper](https://rome.tools/docs/lint/rules/noUnreachableSuper)
+- [lint/correctness/noUnsafeOptionalChaining](https://docs.rome.tools/lint/rules/noUnsafeOptionalChaining)
+- [lint/correctness/noUnusedLabels](https://docs.rome.tools/lint/rules/noUnusedLabels)
+- [lint/correctness/useYield](https://docs.rome.tools/lint/rules/useYield)
+- [lint/style/noCommaOperator](https://docs.rome.tools/lint/rules/noCommaOperator)
+- [lint/style/noInferrableTypes](https://docs.rome.tools/lint/rules/noInferrableTypes)
+- [lint/style/noNamespace](https://docs.rome.tools/lint/rules/noNamespace)
+- [lint/style/noParameterAssign](https://docs.rome.tools/lint/rules/noParameterAssign)
+- [lint/style/noParameterProperties](https://docs.rome.tools/lint/rules/noParameterProperties)
+- [lint/style/noRestrictedGlobals](https://docs.rome.tools/lint/rules/noRestrictedGlobals)
+- [lint/suspicious/noAssignInExpressions](https://docs.rome.tools/lint/rules/noAssignInExpressions)
+- [lint/suspicious/noClassAssign](https://docs.rome.tools/lint/rules/noClassAssign)
+- [lint/suspicious/noConfusingLabels](https://docs.rome.tools/lint/rules/noConfusingLabels)
+- [lint/suspicious/noDuplicateCase](https://docs.rome.tools/lint/rules/noDuplicateCase)
+- [lint/suspicious/noDuplicateClassMembers](https://docs.rome.tools/lint/rules/noDuplicateClassMembers)
+- [lint/suspicious/noPrototypeBuiltins](https://docs.rome.tools/lint/rules/noPrototypeBuiltins)
+- [lint/suspicious/noRedeclare](https://docs.rome.tools/lint/rules/noRedeclare)
+- [lint/suspicious/noSelfCompare](https://docs.rome.tools/lint/rules/noSelfCompare)
+- [lint/suspicious/useNamespaceKeyword](https://docs.rome.tools/lint/rules/useNamespaceKeyword)
+
+Note that, `noExtraSemicolons` and `noExtraLabels` are renamed to `noExtraSemicolon` and `noUselessLabel`.
+
 #### Other changes
 
 - Add new command `rome migrate` the transform the configuration file `rome.json`

@@ -46,7 +46,7 @@ declare_rule! {
     /// ```
     ///
     pub(crate) NoAccumulatingSpread {
-        version: "next",
+        version: "12.1.0",
         name: "noAccumulatingSpread",
         recommended: false,
     }

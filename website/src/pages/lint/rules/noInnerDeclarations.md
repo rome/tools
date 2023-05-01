@@ -5,6 +5,8 @@ parent: lint/rules/index
 
 # noInnerDeclarations (since v12.0.0)
 
+> This rule is recommended by Rome.
+
 Disallow `function` and `var` declarations in nested blocks.
 
 A `function` and a `var` are accessible in the whole body of the
@@ -30,7 +32,7 @@ if (test) {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noInnerDeclarations.js:2:5 <a href="https://docs.rome.tools/lint/rules/noInnerDeclarations">lint/nursery/noInnerDeclarations</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">correctness/noInnerDeclarations.js:2:5 <a href="https://docs.rome.tools/lint/rules/noInnerDeclarations">lint/correctness/noInnerDeclarations</a> ━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This </span><span style="color: Tomato;"><strong>function</strong></span><span style="color: Tomato;"> should be declared at the root of the </span><span style="color: Tomato;"><strong>module</strong></span><span style="color: Tomato;">.</span>
   
@@ -51,7 +53,7 @@ if (test) {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noInnerDeclarations.js:2:5 <a href="https://docs.rome.tools/lint/rules/noInnerDeclarations">lint/nursery/noInnerDeclarations</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">correctness/noInnerDeclarations.js:2:5 <a href="https://docs.rome.tools/lint/rules/noInnerDeclarations">lint/correctness/noInnerDeclarations</a> ━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This </span><span style="color: Tomato;"><strong>var</strong></span><span style="color: Tomato;"> should be declared at the root of the </span><span style="color: Tomato;"><strong>module</strong></span><span style="color: Tomato;">.</span>
   
@@ -74,7 +76,7 @@ function f() {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noInnerDeclarations.js:3:9 <a href="https://docs.rome.tools/lint/rules/noInnerDeclarations">lint/nursery/noInnerDeclarations</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">correctness/noInnerDeclarations.js:3:9 <a href="https://docs.rome.tools/lint/rules/noInnerDeclarations">lint/correctness/noInnerDeclarations</a> ━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This </span><span style="color: Tomato;"><strong>function</strong></span><span style="color: Tomato;"> should be declared at the root of the </span><span style="color: Tomato;"><strong>enclosing function</strong></span><span style="color: Tomato;">.</span>
   
@@ -98,7 +100,7 @@ function f() {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noInnerDeclarations.js:3:9 <a href="https://docs.rome.tools/lint/rules/noInnerDeclarations">lint/nursery/noInnerDeclarations</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">correctness/noInnerDeclarations.js:3:9 <a href="https://docs.rome.tools/lint/rules/noInnerDeclarations">lint/correctness/noInnerDeclarations</a> ━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This </span><span style="color: Tomato;"><strong>var</strong></span><span style="color: Tomato;"> should be declared at the root of the </span><span style="color: Tomato;"><strong>enclosing function</strong></span><span style="color: Tomato;">.</span>
   

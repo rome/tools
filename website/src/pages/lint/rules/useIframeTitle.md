@@ -5,6 +5,8 @@ parent: lint/rules/index
 
 # useIframeTitle (since v12.0.0)
 
+> This rule is recommended by Rome.
+
 Enforces the usage of the attribute `title` for the element `iframe`
 
 ## Examples
@@ -15,7 +17,7 @@ Enforces the usage of the attribute `title` for the element `iframe`
     <iframe />
 ```
 
-<pre class="language-text"><code class="language-text">nursery/useIframeTitle.js:1:5 <a href="https://docs.rome.tools/lint/rules/useIframeTitle">lint/nursery/useIframeTitle</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">a11y/useIframeTitle.js:1:5 <a href="https://docs.rome.tools/lint/rules/useIframeTitle">lint/a11y/useIframeTitle</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Provide a </span><span style="color: Tomato;"><strong>title</strong></span><span style="color: Tomato;"> attribute when using </span><span style="color: Tomato;"><strong>iframe</strong></span><span style="color: Tomato;"> elements.</span>
   
@@ -31,7 +33,7 @@ Enforces the usage of the attribute `title` for the element `iframe`
     <iframe></iframe>
 ```
 
-<pre class="language-text"><code class="language-text">nursery/useIframeTitle.js:1:5 <a href="https://docs.rome.tools/lint/rules/useIframeTitle">lint/nursery/useIframeTitle</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">a11y/useIframeTitle.js:1:5 <a href="https://docs.rome.tools/lint/rules/useIframeTitle">lint/a11y/useIframeTitle</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Provide a </span><span style="color: Tomato;"><strong>title</strong></span><span style="color: Tomato;"> attribute when using </span><span style="color: Tomato;"><strong>iframe</strong></span><span style="color: Tomato;"> elements.</span>
   
@@ -47,7 +49,7 @@ Enforces the usage of the attribute `title` for the element `iframe`
     <iframe title="" />
 ```
 
-<pre class="language-text"><code class="language-text">nursery/useIframeTitle.js:1:5 <a href="https://docs.rome.tools/lint/rules/useIframeTitle">lint/nursery/useIframeTitle</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">a11y/useIframeTitle.js:1:5 <a href="https://docs.rome.tools/lint/rules/useIframeTitle">lint/a11y/useIframeTitle</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Provide a </span><span style="color: Tomato;"><strong>title</strong></span><span style="color: Tomato;"> attribute when using </span><span style="color: Tomato;"><strong>iframe</strong></span><span style="color: Tomato;"> elements.</span>
   
@@ -63,7 +65,7 @@ Enforces the usage of the attribute `title` for the element `iframe`
     <iframe title={""} />
 ```
 
-<pre class="language-text"><code class="language-text">nursery/useIframeTitle.js:1:5 <a href="https://docs.rome.tools/lint/rules/useIframeTitle">lint/nursery/useIframeTitle</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">a11y/useIframeTitle.js:1:5 <a href="https://docs.rome.tools/lint/rules/useIframeTitle">lint/a11y/useIframeTitle</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Provide a </span><span style="color: Tomato;"><strong>title</strong></span><span style="color: Tomato;"> attribute when using </span><span style="color: Tomato;"><strong>iframe</strong></span><span style="color: Tomato;"> elements.</span>
   
@@ -79,7 +81,7 @@ Enforces the usage of the attribute `title` for the element `iframe`
     <iframe title={<span className={"token string"}></span>}></iframe>
 ```
 
-<pre class="language-text"><code class="language-text">nursery/useIframeTitle.js:1:5 <a href="https://docs.rome.tools/lint/rules/useIframeTitle">lint/nursery/useIframeTitle</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">a11y/useIframeTitle.js:1:5 <a href="https://docs.rome.tools/lint/rules/useIframeTitle">lint/a11y/useIframeTitle</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Provide a </span><span style="color: Tomato;"><strong>title</strong></span><span style="color: Tomato;"> attribute when using </span><span style="color: Tomato;"><strong>iframe</strong></span><span style="color: Tomato;"> elements.</span>
   
@@ -95,7 +97,7 @@ Enforces the usage of the attribute `title` for the element `iframe`
     <iframe title={undefined} />
 ```
 
-<pre class="language-text"><code class="language-text">nursery/useIframeTitle.js:1:5 <a href="https://docs.rome.tools/lint/rules/useIframeTitle">lint/nursery/useIframeTitle</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">a11y/useIframeTitle.js:1:5 <a href="https://docs.rome.tools/lint/rules/useIframeTitle">lint/a11y/useIframeTitle</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Provide a </span><span style="color: Tomato;"><strong>title</strong></span><span style="color: Tomato;"> attribute when using </span><span style="color: Tomato;"><strong>iframe</strong></span><span style="color: Tomato;"> elements.</span>
   
@@ -111,7 +113,7 @@ Enforces the usage of the attribute `title` for the element `iframe`
     <iframe title={false} />
 ```
 
-<pre class="language-text"><code class="language-text">nursery/useIframeTitle.js:1:5 <a href="https://docs.rome.tools/lint/rules/useIframeTitle">lint/nursery/useIframeTitle</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">a11y/useIframeTitle.js:1:5 <a href="https://docs.rome.tools/lint/rules/useIframeTitle">lint/a11y/useIframeTitle</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Provide a </span><span style="color: Tomato;"><strong>title</strong></span><span style="color: Tomato;"> attribute when using </span><span style="color: Tomato;"><strong>iframe</strong></span><span style="color: Tomato;"> elements.</span>
   
@@ -127,7 +129,7 @@ Enforces the usage of the attribute `title` for the element `iframe`
     <iframe title={true} />
 ```
 
-<pre class="language-text"><code class="language-text">nursery/useIframeTitle.js:1:5 <a href="https://docs.rome.tools/lint/rules/useIframeTitle">lint/nursery/useIframeTitle</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">a11y/useIframeTitle.js:1:5 <a href="https://docs.rome.tools/lint/rules/useIframeTitle">lint/a11y/useIframeTitle</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Provide a </span><span style="color: Tomato;"><strong>title</strong></span><span style="color: Tomato;"> attribute when using </span><span style="color: Tomato;"><strong>iframe</strong></span><span style="color: Tomato;"> elements.</span>
   
@@ -143,7 +145,7 @@ Enforces the usage of the attribute `title` for the element `iframe`
     <iframe title={42} />
 ```
 
-<pre class="language-text"><code class="language-text">nursery/useIframeTitle.js:1:5 <a href="https://docs.rome.tools/lint/rules/useIframeTitle">lint/nursery/useIframeTitle</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">a11y/useIframeTitle.js:1:5 <a href="https://docs.rome.tools/lint/rules/useIframeTitle">lint/a11y/useIframeTitle</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Provide a </span><span style="color: Tomato;"><strong>title</strong></span><span style="color: Tomato;"> attribute when using </span><span style="color: Tomato;"><strong>iframe</strong></span><span style="color: Tomato;"> elements.</span>
   

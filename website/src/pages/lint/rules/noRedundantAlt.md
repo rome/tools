@@ -5,6 +5,8 @@ parent: lint/rules/index
 
 # noRedundantAlt (since v12.0.0)
 
+> This rule is recommended by Rome.
+
 Enforce `img` alt prop does not contain the word "image", "picture", or "photo".
 
 The rule will first check if `aria-hidden` is truthy to determine whether to enforce the rule. If the image is
@@ -18,7 +20,7 @@ hidden, then the rule will always succeed.
 <img src="src" alt="photo content" />;
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noRedundantAlt.js:1:20 <a href="https://docs.rome.tools/lint/rules/noRedundantAlt">lint/nursery/noRedundantAlt</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">a11y/noRedundantAlt.js:1:20 <a href="https://docs.rome.tools/lint/rules/noRedundantAlt">lint/a11y/noRedundantAlt</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Avoid the words &quot;image&quot;, &quot;picture&quot;, or &quot;photo&quot; in </span><span style="color: Tomato;"><strong>img</strong></span><span style="color: Tomato;"> element alt text.</span>
   
@@ -34,7 +36,7 @@ hidden, then the rule will always succeed.
 <img alt={`picture doing ${things}`} {...this.props} />;
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noRedundantAlt.js:1:10 <a href="https://docs.rome.tools/lint/rules/noRedundantAlt">lint/nursery/noRedundantAlt</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">a11y/noRedundantAlt.js:1:10 <a href="https://docs.rome.tools/lint/rules/noRedundantAlt">lint/a11y/noRedundantAlt</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Avoid the words &quot;image&quot;, &quot;picture&quot;, or &quot;photo&quot; in </span><span style="color: Tomato;"><strong>img</strong></span><span style="color: Tomato;"> element alt text.</span>
   
@@ -50,7 +52,7 @@ hidden, then the rule will always succeed.
 <img alt="picture of cool person" aria-hidden={false} />;
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noRedundantAlt.js:1:10 <a href="https://docs.rome.tools/lint/rules/noRedundantAlt">lint/nursery/noRedundantAlt</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">a11y/noRedundantAlt.js:1:10 <a href="https://docs.rome.tools/lint/rules/noRedundantAlt">lint/a11y/noRedundantAlt</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Avoid the words &quot;image&quot;, &quot;picture&quot;, or &quot;photo&quot; in </span><span style="color: Tomato;"><strong>img</strong></span><span style="color: Tomato;"> element alt text.</span>
   

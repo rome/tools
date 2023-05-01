@@ -61,7 +61,7 @@ declare_rule! {
     /// import { A, type B } from "mod";
     /// ```
     pub(crate) UseGroupedTypeImport {
-        version: "next",
+        version: "12.1.0",
         name: "useGroupedTypeImport",
         recommended: true,
     }

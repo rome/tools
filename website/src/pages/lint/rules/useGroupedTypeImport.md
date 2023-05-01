@@ -3,7 +3,7 @@ title: Lint Rule useGroupedTypeImport
 parent: lint/rules/index
 ---
 
-# useGroupedTypeImport (since vnext)
+# useGroupedTypeImport (since v12.1.0)
 
 Enforce the use of `import type` when an `import` only has specifiers with `type` qualifier.
 

@@ -5,6 +5,8 @@ parent: lint/rules/index
 
 # noSvgWithoutTitle (since v12.0.0)
 
+> This rule is recommended by Rome.
+
 Enforces the usage of the `title` element for the `svg` element.
 
 It is not possible to specify the `alt` attribute for the `svg` as for the `img`.
@@ -21,7 +23,7 @@ To make svg accessible, the following methods are available:
 <svg>foo</svg>
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noSvgWithoutTitle.js:1:1 <a href="https://docs.rome.tools/lint/rules/noSvgWithoutTitle">lint/nursery/noSvgWithoutTitle</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">a11y/noSvgWithoutTitle.js:1:1 <a href="https://docs.rome.tools/lint/rules/noSvgWithoutTitle">lint/a11y/noSvgWithoutTitle</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Alternative text </span><span style="color: Tomato;"><strong>title</strong></span><span style="color: Tomato;"> element cannot be empty</span>
   
@@ -45,7 +47,7 @@ To make svg accessible, the following methods are available:
 <svg>foo</svg>
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noSvgWithoutTitle.js:7:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">a11y/noSvgWithoutTitle.js:7:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">unterminated template literal</span>
   

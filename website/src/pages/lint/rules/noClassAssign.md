@@ -5,6 +5,8 @@ parent: lint/rules/index
 
 # noClassAssign (since v12.0.0)
 
+> This rule is recommended by Rome.
+
 Disallow reassigning class members.
 
 A class declaration creates a variable that we can modify, however, the modification is a mistake in most cases.
@@ -18,7 +20,7 @@ class A {}
 A = 0;
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noClassAssign.js:2:1 <a href="https://docs.rome.tools/lint/rules/noClassAssign">lint/nursery/noClassAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">suspicious/noClassAssign.js:2:1 <a href="https://docs.rome.tools/lint/rules/noClassAssign">lint/suspicious/noClassAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">'A' is a class.</span>
   
@@ -41,7 +43,7 @@ A = 0;
 class A {}
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noClassAssign.js:1:1 <a href="https://docs.rome.tools/lint/rules/noClassAssign">lint/nursery/noClassAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">suspicious/noClassAssign.js:1:1 <a href="https://docs.rome.tools/lint/rules/noClassAssign">lint/suspicious/noClassAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">'A' is a class.</span>
   
@@ -67,7 +69,7 @@ class A {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noClassAssign.js:3:3 <a href="https://docs.rome.tools/lint/rules/noClassAssign">lint/nursery/noClassAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">suspicious/noClassAssign.js:3:3 <a href="https://docs.rome.tools/lint/rules/noClassAssign">lint/suspicious/noClassAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">'A' is a class.</span>
   
@@ -96,7 +98,7 @@ let A = class A {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noClassAssign.js:3:3 <a href="https://docs.rome.tools/lint/rules/noClassAssign">lint/nursery/noClassAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">suspicious/noClassAssign.js:3:3 <a href="https://docs.rome.tools/lint/rules/noClassAssign">lint/suspicious/noClassAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">'A' is a class.</span>
   
