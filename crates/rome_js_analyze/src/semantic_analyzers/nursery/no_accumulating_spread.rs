@@ -35,7 +35,7 @@ declare_rule! {
     ///
     /// ```js,expect_diagnostic
     /// var a = ['a', 'b', 'c'];
-    /// a.reduce((acc, val) => {...acc, [val]: val}, {});
+    /// a.reduce((acc, val) => ({...acc, [val]: val}), {});
     /// ```
     ///
     /// ## Valid
