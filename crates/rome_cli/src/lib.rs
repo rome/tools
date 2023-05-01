@@ -80,6 +80,7 @@ impl<'app> CliSession<'app> {
                 cli_options,
                 configuration: rome_configuration,
                 paths,
+                stdin_file_path,
             } => commands::check::check(
                 self,
                 CheckCommandPayload {
@@ -88,6 +89,7 @@ impl<'app> CliSession<'app> {
                     cli_options,
                     configuration: rome_configuration,
                     paths,
+                    stdin_file_path,
                 },
             ),
             RomeCommand::Ci {

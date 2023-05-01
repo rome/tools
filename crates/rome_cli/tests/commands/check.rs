@@ -14,9 +14,9 @@ use crate::configs::{
     CONFIG_LINTER_SUPPRESSED_GROUP, CONFIG_LINTER_SUPPRESSED_RULE,
     CONFIG_LINTER_UPGRADE_DIAGNOSTIC, CONFIG_RECOMMENDED_GROUP,
 };
-use crate::snap_test::SnapshotPayload;
+use crate::snap_test::{markup_to_string, SnapshotPayload};
 use crate::{assert_cli_snapshot, run_cli, FORMATTED, LINT_ERROR, PARSE_ERROR};
-use rome_console::{BufferConsole, LogLevel, MarkupBuf};
+use rome_console::{markup, BufferConsole, LogLevel, MarkupBuf};
 use rome_fs::{ErrorEntry, FileSystemExt, MemoryFileSystem, OsFileSystem};
 use rome_service::DynRef;
 
@@ -1893,6 +1893,43 @@ file2.js
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
         "ignore_vcs_ignored_file_via_cli",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn check_stdin_successfully() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    console
+        .in_buffer
+        .push("function f() {return{}}".to_string());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Args::from(&[("check"), "--apply", ("--stdin-file-path"), ("mock.js")]),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    let message = console
+        .out_buffer
+        .get(0)
+        .expect("Console should have written a message");
+
+    let content = markup_to_string(markup! {
+        {message.content}
+    });
+
+    assert_eq!(content, "function f() {\n\treturn {};\n}\n");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "check_stdin_successfully",
         fs,
         console,
         result,
