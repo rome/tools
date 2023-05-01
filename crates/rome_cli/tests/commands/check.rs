@@ -1900,13 +1900,13 @@ file2.js
 }
 
 #[test]
-fn check_stdin_successfully() {
+fn check_stdin_apply_successfully() {
     let mut fs = MemoryFileSystem::default();
     let mut console = BufferConsole::default();
 
     console
         .in_buffer
-        .push("function f() {return{}}".to_string());
+        .push("function f() {return{}} class Foo { constructor() {} }".to_string());
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
@@ -1925,11 +1925,107 @@ fn check_stdin_successfully() {
         {message.content}
     });
 
-    assert_eq!(content, "function f() {\n\treturn {};\n}\n");
+    assert_eq!(content, "function f() {\n\treturn {};\n}\nclass Foo {}\n");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
-        "check_stdin_successfully",
+        "check_stdin_apply_successfully",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn check_stdin_apply_unsafe_successfully() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    console.in_buffer.push(
+        "import 'zod'; import 'lodash'; function f() {return{}} class Foo { constructor() {} }"
+            .to_string(),
+    );
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Args::from(&[
+            ("check"),
+            "--organize-imports-enabled=true",
+            "--apply-unsafe",
+            ("--stdin-file-path"),
+            ("mock.js"),
+        ]),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    let message = console
+        .out_buffer
+        .get(0)
+        .expect("Console should have written a message");
+
+    let content = markup_to_string(markup! {
+        {message.content}
+    });
+
+    assert_eq!(
+        content,
+        "import \"lodash\";\nimport \"zod\";\nfunction f() {\n\treturn {};\n}\nclass Foo {}\n"
+    );
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "check_stdin_apply_unsafe_successfully",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn check_stdin_apply_unsafe_only_organize_imports() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    console.in_buffer.push(
+        "import 'zod'; import 'lodash'; function f() {return{}} class Foo { constructor() {} }"
+            .to_string(),
+    );
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Args::from(&[
+            ("check"),
+            "--organize-imports-enabled=true",
+            "--linter-enabled=false",
+            "--formatter-enabled=false",
+            "--apply-unsafe",
+            ("--stdin-file-path"),
+            ("mock.js"),
+        ]),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    let message = console
+        .out_buffer
+        .get(0)
+        .expect("Console should have written a message");
+
+    let content = markup_to_string(markup! {
+        {message.content}
+    });
+
+    assert_eq!(
+        content,
+        "import 'lodash'; import 'zod'; function f() {return{}} class Foo { constructor() {} }"
+    );
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "check_stdin_apply_unsafe_only_organize_imports",
         fs,
         console,
         result,
