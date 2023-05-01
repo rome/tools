@@ -78,8 +78,6 @@ jobs:
         uses: moonrepo/setup-rust@v0
         with:
           bins: nextest
-      - name: Compile for tests
-        run: cargo test --no-run --workspace --verbose
       - name: Run tests
         run: cargo nextest run --workspace --verbose
       - name: Run doctests
