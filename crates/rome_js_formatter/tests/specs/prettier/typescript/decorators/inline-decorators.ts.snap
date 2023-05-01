@@ -64,20 +64,32 @@ class MyContainerComponent {
 ```diff
 --- Prettier
 +++ Rome
-@@ -6,9 +6,9 @@
+@@ -5,20 +5,13 @@
+ class Class1 {}
  
  class Class2 {
-   @d1
+-  @d1
 -  @d2(foo)
 -  @d3.bar
 -  @d4.baz()
-+    @d2(foo)
-+    @d3.bar
-+    @d4.baz()
-   method1() {}
+-  method1() {}
++  @d1 @d2(foo) @d3.bar @d4.baz() method1() {}
  
-   @d1
-@@ -30,11 +30,10 @@
+-  @d1
+-  method2() {}
++  @d1 method2() {}
+ 
+-  @d2(foo)
+-  method3() {}
++  @d2(foo) method3() {}
+ 
+-  @d3.bar
+-  method4() {}
++  @d3.bar method4() {}
+ }
+ 
+ class Class3 {
+@@ -30,11 +23,10 @@
    constructor(
      @d1 private x: number,
      @d2(foo) private y: number,
@@ -92,13 +104,15 @@ class MyContainerComponent {
    ) {}
  }
  
-@@ -46,6 +45,5 @@
+@@ -46,6 +38,7 @@
  }
  
  class MyContainerComponent {
 -  @ContentChildren(MyComponent)
 -  components: QueryListSomeBigName<MyComponentThat>;
-+  @ContentChildren(MyComponent) components: QueryListSomeBigName<MyComponentThat>;
++  @ContentChildren(
++    MyComponent,
++  ) components: QueryListSomeBigName<MyComponentThat>;
  }
 ```
 
@@ -112,20 +126,13 @@ class MyContainerComponent {
 class Class1 {}
 
 class Class2 {
-  @d1
-    @d2(foo)
-    @d3.bar
-    @d4.baz()
-  method1() {}
+  @d1 @d2(foo) @d3.bar @d4.baz() method1() {}
 
-  @d1
-  method2() {}
+  @d1 method2() {}
 
-  @d2(foo)
-  method3() {}
+  @d2(foo) method3() {}
 
-  @d3.bar
-  method4() {}
+  @d3.bar method4() {}
 }
 
 class Class3 {
@@ -152,13 +159,10 @@ class Bar {
 }
 
 class MyContainerComponent {
-  @ContentChildren(MyComponent) components: QueryListSomeBigName<MyComponentThat>;
+  @ContentChildren(
+    MyComponent,
+  ) components: QueryListSomeBigName<MyComponentThat>;
 }
-```
-
-# Lines exceeding max width of 80 characters
-```
-   48:   @ContentChildren(MyComponent) components: QueryListSomeBigName<MyComponentThat>;
 ```
 
 

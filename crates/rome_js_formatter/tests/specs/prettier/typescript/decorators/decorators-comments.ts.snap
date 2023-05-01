@@ -1,6 +1,5 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-assertion_line: 212
 info: typescript/decorators/decorators-comments.ts
 ---
 
@@ -58,7 +57,44 @@ class Something3 {
 ```diff
 --- Prettier
 +++ Rome
-@@ -30,12 +30,12 @@
+@@ -1,41 +1,36 @@
+ class Foo1 {
+-  @foo
+-  // comment
+-  async method() {}
++  @foo async // comment
++  method() {}
+ }
+ 
+ class Foo2 {
+-  @foo
+-  // comment
++  @foo // comment
+   private method() {}
+ }
+ 
+ class Foo3 {
+-  @foo
+-  // comment
+-  *method() {}
++  @foo *// comment
++  method() {}
+ }
+ 
+ class Foo4 {
+-  @foo
+-  // comment
+-  async *method() {}
++  @foo async *// comment
++  method() {}
+ }
+ 
+ class Something {
+-  @foo()
+-  // comment
++  @foo() // comment
+   readonly property: Array<string>;
+ }
  
  class Something2 {
    @foo()
@@ -81,32 +117,27 @@ class Something3 {
 
 ```ts
 class Foo1 {
-  @foo
-  // comment
-  async method() {}
+  @foo async // comment
+  method() {}
 }
 
 class Foo2 {
-  @foo
-  // comment
+  @foo // comment
   private method() {}
 }
 
 class Foo3 {
-  @foo
-  // comment
-  *method() {}
+  @foo *// comment
+  method() {}
 }
 
 class Foo4 {
-  @foo
-  // comment
-  async *method() {}
+  @foo async *// comment
+  method() {}
 }
 
 class Something {
-  @foo()
-  // comment
+  @foo() // comment
   readonly property: Array<string>;
 }
 
@@ -146,6 +177,18 @@ decorators-comments.ts:41:5 parse ━━━━━━━━━━━━━━━�
        │     ^^^^^^^^
     42 │ }
     43 │ 
+  
+decorators-comments.ts:39:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Decorators are not valid here.
+  
+    38 │ class Something3 {
+  > 39 │     @foo()
+       │     ^^^^^^
+    40 │     // comment
+    41 │     abstract method(): Array<string>
+  
+  i Decorators are only valid on class declarations, class expressions, and class methods.
   
 
 ```

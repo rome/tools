@@ -1,0 +1,46 @@
+---
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info: js/decorators/mixed.js
+---
+
+# Input
+
+```js
+// https://github.com/prettier/prettier/issues/6747
+
+@foo
+export default class MyComponent {
+  @task
+  *foo() {
+  }
+}
+```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -2,6 +2,5 @@
+ 
+ @foo
+ export default class MyComponent {
+-  @task
+-  *foo() {}
++  @task *foo() {}
+ }
+```
+
+# Output
+
+```js
+// https://github.com/prettier/prettier/issues/6747
+
+@foo
+export default class MyComponent {
+  @task *foo() {}
+}
+```
+
+

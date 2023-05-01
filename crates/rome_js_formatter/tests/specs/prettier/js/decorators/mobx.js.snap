@@ -62,7 +62,19 @@ import {observable} from "mobx";
  
    constructor(price) {
      this.price = price;
-@@ -27,20 +27,11 @@
+@@ -17,30 +17,19 @@
+     this.price = price;
+   }
+ 
+-  @computed
+-  get total() {
++  @computed get total() {
+     return this.price * this.amount;
+   }
+ 
+-  @action.bound
+-  setPrice(price) {
++  @action.bound setPrice(price) {
      this.price = price;
    }
  
@@ -110,13 +122,11 @@ class OrderLine {
     this.price = price;
   }
 
-  @computed
-  get total() {
+  @computed get total() {
     return this.price * this.amount;
   }
 
-  @action.bound
-  setPrice(price) {
+  @action.bound setPrice(price) {
     this.price = price;
   }
 
@@ -188,9 +198,9 @@ mobx.js:35:35 parse ━━━━━━━━━━━━━━━━━━━━
 
 # Lines exceeding max width of 80 characters
 ```
-   30:   @computed @computed @computed @computed @computed @computed @computed get total() {
-   34:   @action handleDecrease = (event: React.ChangeEvent<HTMLInputElement>) => this.count--;
-   36:   @action handleSomething = (event: React.ChangeEvent<HTMLInputElement>) => doSomething();
+   28:   @computed @computed @computed @computed @computed @computed @computed get total() {
+   32:   @action handleDecrease = (event: React.ChangeEvent<HTMLInputElement>) => this.count--;
+   34:   @action handleSomething = (event: React.ChangeEvent<HTMLInputElement>) => doSomething();
 ```
 
 
