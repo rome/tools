@@ -5,6 +5,7 @@
   # - runs the coverage and prints in the command line
 name: CI on main
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -27,12 +28,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: Install toolchain
-        run: rustup show
+        uses: moonrepo/setup-rust@v0
       - name: Run rustfmt
-        uses: actions-rs/cargo@v1
-        with:
-          command: fmt
-          args: --all --verbose -- --check
+        run: cargo fmt --all --verbose -- --check
 
   lint:
     name: Lint Rust Files
@@ -41,20 +39,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: Install toolchain
-        run: rustup show
-      - name: Cache
-        uses: Swatinem/rust-cache@v2
-        with:
-          shared-key: check
+        uses: moonrepo/setup-rust@v0
       - name: Run cargo check
-        uses: actions-rs/cargo@v1
-        with:
-          command: check
-          args: --workspace --all-targets --release
+        run: cargo check --workspace --all-targets --release
       - name: Run clippy
-        uses: actions-rs/cargo@v1
-        with:
-          command: lint
+        run: cargo lint
 
   check-dependencies:
     name: Check Dependencies
@@ -64,12 +53,10 @@ jobs:
         uses: actions/checkout@v3
         with:
           submodules: false
-      - name: Cache
-        uses: Swatinem/rust-cache@v2
-        with:
-          shared-key: "dependencies"
       - name: Install toolchain
-        run:  rustup toolchain install nightly
+        uses: moonrepo/setup-rust@v0
+        with:
+          channel: nightly
       - name: Install udeps
         run: cargo install cargo-udeps --locked
       - name: Run udeps
@@ -90,21 +77,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: Install toolchain
-        run: rustup show
-      - name: Cache
-        uses: Swatinem/rust-cache@v2
+        uses: moonrepo/setup-rust@v0
         with:
-          shared-key: test
-      - name: Compile for tests
-        uses: actions-rs/cargo@v1
-        with:
-          command: test
-          args: --no-run --workspace --verbose
+          bins: nextest
       - name: Run tests on ${{ matrix.os }}
-        uses: actions-rs/cargo@v1
-        with:
-          command: test
-          args: --workspace --verbose
+        run: cargo nextest run --workspace --verbose
       - name: Clean cache
         run: cargo install cargo-cache --no-default-features --features ci-autoclean && cargo-cache
 
@@ -118,15 +95,9 @@ jobs:
       - name: Install netlify-cli
         run: npm i -g netlify-cli
       - name: Install toolchain
-        run: rustup show
-      - name: Cache
-        uses: Swatinem/rust-cache@v2
-        with:
-          shared-key: doc
+        uses: moonrepo/setup-rust@v0
       - name: Run doc command
-        uses: actions-rs/cargo@v1
-        with:
-          command: documentation
+        run: cargo documentation
       - name: Write index.html
         run: echo '<meta http-equiv="refresh" content="0; url=/rome/index.html">' >target/doc/index.html
       - name: Write _redirects
@@ -154,11 +125,7 @@ jobs:
         with:
           submodules: recursive
       - name: Install toolchain
-        run: rustup show
-      - name: Cache
-        uses: Swatinem/rust-cache@v2
-        with:
-          shared-key: "xtask-release"
+        uses: moonrepo/setup-rust@v0
       - name: Compile
         run: cargo build --release --locked -p xtask_coverage
       - name: Run Test262 suite
