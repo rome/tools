@@ -71,7 +71,7 @@ pub(crate) fn run<'a>(
                     fix_file_mode: *fix_file_mode,
                     path: rome_path.clone(),
                 })?;
-                if &fix_file_result.code != &new_content {
+                if fix_file_result.code != new_content {
                     version += 1;
                     workspace.change_file(ChangeFileParams {
                         content: fix_file_result.code.clone(),
@@ -94,7 +94,7 @@ pub(crate) fn run<'a>(
                 let result = workspace.organize_imports(OrganizeImportsParams {
                     path: rome_path.clone(),
                 })?;
-                if &result.code != &new_content {
+                if result.code != new_content {
                     version += 1;
                     workspace.change_file(ChangeFileParams {
                         content: result.code.clone(),
@@ -115,7 +115,7 @@ pub(crate) fn run<'a>(
 
         if unsupported_format_reason.is_none() {
             let printed = workspace.format_file(FormatFileParams { path: rome_path })?;
-            if printed.as_code() != &new_content {
+            if printed.as_code() != new_content {
                 new_content = Cow::Owned(printed.into_code());
             }
         }

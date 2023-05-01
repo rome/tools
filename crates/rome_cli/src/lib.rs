@@ -81,9 +81,9 @@ impl<'app> CliSession<'app> {
                 configuration: rome_configuration,
                 paths,
                 stdin_file_path,
-				linter_enabled,
-				organize_imports_enabled,
-				formatter_enabled
+                linter_enabled,
+                organize_imports_enabled,
+                formatter_enabled,
             } => commands::check::check(
                 self,
                 CheckCommandPayload {
@@ -93,9 +93,9 @@ impl<'app> CliSession<'app> {
                     configuration: rome_configuration,
                     paths,
                     stdin_file_path,
-					linter_enabled,
-					organize_imports_enabled,
-					formatter_enabled
+                    linter_enabled,
+                    organize_imports_enabled,
+                    formatter_enabled,
                 },
             ),
             RomeCommand::Ci {
