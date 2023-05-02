@@ -389,6 +389,10 @@ export interface Nursery {
 	 */
 	all?: boolean;
 	/**
+	 * Disallow the use of spread (...) syntax on accumulators.
+	 */
+	noAccumulatingSpread?: RuleConfiguration;
+	/**
 	 * Enforce that elements that do not support ARIA roles, states, and properties do not have those attributes.
 	 */
 	noAriaUnsupportedElements?: RuleConfiguration;
@@ -1030,6 +1034,7 @@ export type Category =
 	| "lint/nursery/useNamespaceKeyword"
 	| "lint/nursery/noRedundantRoles"
 	| "lint/nursery/noConstantCondition"
+	| "lint/nursery/noAccumulatingSpread"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"
