@@ -42,6 +42,10 @@ pub(crate) enum TraversalMode {
         /// It's [None] if the `check` command is called without `--apply` or `--apply-suggested`
         /// arguments.
         fix_file_mode: Option<FixFileMode>,
+        /// An optional tuple.
+        /// 1. The virtual path to the file
+        /// 2. The content of the file
+        stdin: Option<(PathBuf, String)>,
     },
     /// This mode is enabled when running the command `rome ci`
     CI,
@@ -125,7 +129,8 @@ impl Execution {
         matches!(
             self.traversal_mode,
             TraversalMode::Check {
-                fix_file_mode: Some(FixFileMode::SafeFixes)
+                fix_file_mode: Some(FixFileMode::SafeFixes),
+                ..
             }
         )
     }
@@ -134,7 +139,8 @@ impl Execution {
         matches!(
             self.traversal_mode,
             TraversalMode::Check {
-                fix_file_mode: Some(FixFileMode::SafeAndUnsafeFixes)
+                fix_file_mode: Some(FixFileMode::SafeAndUnsafeFixes),
+                ..
             }
         )
     }
@@ -146,7 +152,7 @@ impl Execution {
     /// Whether the traversal mode requires write access to files
     pub(crate) const fn requires_write_access(&self) -> bool {
         match self.traversal_mode {
-            TraversalMode::Check { fix_file_mode } => fix_file_mode.is_some(),
+            TraversalMode::Check { fix_file_mode, .. } => fix_file_mode.is_some(),
             TraversalMode::CI => false,
             TraversalMode::Format { write, .. } => write,
             TraversalMode::Migrate { write: dry_run, .. } => dry_run,
@@ -156,6 +162,7 @@ impl Execution {
     pub(crate) fn as_stdin_file(&self) -> Option<&(PathBuf, String)> {
         match &self.traversal_mode {
             TraversalMode::Format { stdin, .. } => stdin.as_ref(),
+            TraversalMode::Check { stdin, .. } => stdin.as_ref(),
             _ => None,
         }
     }

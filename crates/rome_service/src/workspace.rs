@@ -354,7 +354,7 @@ pub struct OrganizeImportsParams {
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct OrganizeImportsResult {
-    pub code: Option<String>,
+    pub code: String,
 }
 
 impl RageEntry {

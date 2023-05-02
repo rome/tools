@@ -15,6 +15,9 @@ Available positional items:
 Available options:
         --apply         Apply safe fixes, formatting
         --apply-unsafe  Apply safe fixes and unsafe fixes, formatting and import sorting
+        --formatter-enabled <true|false>  Allow to enable or disable the formatter check.
+        --linter-enabled <true|false>  Allow to enable or disable the linter check.
+        --organize-imports-enabled <true|false>  Allow to enable or disable the organize imports.
         --vcs-client-kind <git>  The kind of client.
         --vcs-enabled <true|false>  Whether Rome should integrate itself with the VCS client
         --vcs-use-ignore-file <true|false>  Whether Rome should use the VCS ignore file. When [true],
@@ -46,6 +49,8 @@ Available options:
         --skip-errors   Skip over files containing syntax errors instead of emitting an error
                         diagnostic.
         --json          Reports information using the JSON format
+        --stdin-file-path <PATH>  A file name with its extension to pass when reading from standard
+                        in, e.g. echo 'let a;' | rome check --stdin-file-path=file.js"
     -h, --help          Prints help information
 
 ```

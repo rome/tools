@@ -45,10 +45,32 @@ pub enum RomeCommand {
         /// Apply safe fixes and unsafe fixes, formatting and import sorting
         #[bpaf(long("apply-unsafe"), switch)]
         apply_unsafe: bool,
+        /// Allow to enable or disable the formatter check.
+        #[bpaf(
+            long("formatter-enabled"),
+            argument("true|false"),
+            optional,
+            hide_usage
+        )]
+        formatter_enabled: Option<bool>,
+        /// Allow to enable or disable the linter check.
+        #[bpaf(long("linter-enabled"), argument("true|false"), optional, hide_usage)]
+        linter_enabled: Option<bool>,
+        /// Allow to enable or disable the organize imports.
+        #[bpaf(
+            long("organize-imports-enabled"),
+            argument("true|false"),
+            optional,
+            hide_usage
+        )]
+        organize_imports_enabled: Option<bool>,
         #[bpaf(external, hide_usage, optional)]
         configuration: Option<Configuration>,
         #[bpaf(external, hide_usage)]
         cli_options: CliOptions,
+        /// A file name with its extension to pass when reading from standard in, e.g. echo 'let a;' | rome check --stdin-file-path=file.js"
+        #[bpaf(long("stdin-file-path"), argument("PATH"), hide_usage)]
+        stdin_file_path: Option<String>,
         /// Single file, single path or list of paths
         #[bpaf(positional("PATH"), many)]
         paths: Vec<OsString>,
