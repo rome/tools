@@ -26,7 +26,8 @@ use xtask::{glue::fs2, *};
 fn main() -> Result<()> {
     let root = project_root().join("website/src/pages/lint/rules");
     let reference_groups = project_root().join("website/src/components/reference/Groups.astro");
-
+    let reference_number_of_rules =
+        project_root().join("website/src/components/reference/NumberOfRules.astro");
     // Clear the rules directory ignoring "not found" errors
     if let Err(err) = fs2::remove_dir_all(&root) {
         let is_not_found = err
@@ -64,6 +65,7 @@ fn main() -> Result<()> {
     #[derive(Default)]
     struct LintRulesVisitor {
         groups: BTreeMap<&'static str, BTreeMap<&'static str, RuleMetadata>>,
+        number_or_rules: u16,
     }
 
     impl RegistryVisitor<JsLanguage> for LintRulesVisitor {
@@ -79,6 +81,7 @@ fn main() -> Result<()> {
             R::Query: Queryable<Language = JsLanguage>,
             <R::Query as Queryable>::Output: Clone,
         {
+            self.number_or_rules += 1;
             self.groups
                 .entry(<R::Group as RuleGroup>::NAME)
                 .or_insert_with(BTreeMap::new)
@@ -89,7 +92,10 @@ fn main() -> Result<()> {
     let mut visitor = LintRulesVisitor::default();
     visit_registry(&mut visitor);
 
-    let LintRulesVisitor { mut groups } = visitor;
+    let LintRulesVisitor {
+        mut groups,
+        number_or_rules,
+    } = visitor;
 
     let nursery_rules = groups
         .remove("nursery")
@@ -118,8 +124,14 @@ fn main() -> Result<()> {
         );
     }
 
+    let number_of_rules_buffer = format!(
+        "<!-- this file is auto generated, use `cargo lintdoc` to update it -->\n \
+    <p>Rome's linter has a total of <strong><a href='/lint/rules'>{} rules</a></strong><p>",
+        number_or_rules
+    );
     fs2::write(root.join("index.mdx"), index)?;
     fs2::write(reference_groups, reference_buffer)?;
+    fs2::write(reference_number_of_rules, number_of_rules_buffer)?;
 
     Ok(())
 }

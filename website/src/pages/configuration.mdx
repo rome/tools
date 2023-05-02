@@ -77,6 +77,37 @@ match these patterns.
 }
 ```
 
+## `vcs`
+
+Set of properties to integrate Rome with a VCS software.
+
+### `vcs.enabled`
+
+Whether Rome should integrate itself with the VCS client
+
+> Default: false
+
+### `vcs.clientKind`
+
+The kind of client.
+
+Values:
+- `"git"`
+
+### `vcs.useIgnoreFile`
+
+Whether Rome should use the VCS ignore file. When `true`, Rome will ignore the files
+specified in the ignore file.
+
+### `vcs.root`
+
+The folder where Rome should check for VCS files. By default, Rome will use the same
+folder where `rome.json` was found.
+
+If Rome can't find the configuration, it will attempt to use the current working directory.
+If no current working directory can't be found, Rome won't use the VCS integration, and a diagnostic
+will be emitted
+
 ## `linter`
 
 ### `linter.enabled`
