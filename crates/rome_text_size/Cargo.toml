@@ -9,7 +9,7 @@ authors = [
 ]
 description = "Fork of the crate text_size"
 license = "MIT OR Apache-2.0"
-repository = { workspace = true }
+repository.workspace = true
 documentation = "https://rustdocs.rome.tools/rome_text_size/index.html"
 
 

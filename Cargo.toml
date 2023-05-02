@@ -17,6 +17,7 @@ edition = "2021"
 authors = ["Rome Tools Developers and Contributors"]
 license = "MIT"
 repository = "https://github.com/rome/tools"
+homepage = "https://rome.tools"
 
 [profile.release-with-debug]
 inherits = "release"

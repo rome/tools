@@ -1,9 +1,9 @@
 [package]
 name = "rome_diagnostics"
 version = "0.0.1"
-authors = { workspace = true }
-edition = { workspace = true }
-license = { workspace = true }
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
 description = "Pretty error reporting library"
 documentation = "https://rustdocs.rome.tools/rome_diagnostics/index.html"
 categories = ["development-tools"]
