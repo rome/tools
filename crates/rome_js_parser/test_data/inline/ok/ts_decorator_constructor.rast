@@ -1,0 +1,104 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsClassDeclaration {
+            decorators: JsDecoratorList [],
+            abstract_token: missing (optional),
+            class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
+            id: JsIdentifierBinding {
+                name_token: IDENT@6..8 "C" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (optional),
+            extends_clause: missing (optional),
+            implements_clause: missing (optional),
+            l_curly_token: L_CURLY@8..9 "{" [] [],
+            members: JsClassMemberList [
+                JsConstructorClassMember {
+                    modifiers: JsConstructorModifierList [],
+                    name: JsLiteralMemberName {
+                        value: IDENT@9..25 "constructor" [Newline("\n"), Whitespace("    ")] [],
+                    },
+                    parameters: JsConstructorParameters {
+                        l_paren_token: L_PAREN@25..26 "(" [] [],
+                        parameters: JsConstructorParameterList [
+                            TsPropertyParameter {
+                                modifiers: TsPropertyParameterModifierList [
+                                    TsReadonlyModifier {
+                                        modifier_token: READONLY_KW@26..40 "readonly" [Skipped("@"), Skipped("foo"), Whitespace(" ")] [Whitespace(" ")],
+                                    },
+                                ],
+                                formal_parameter: JsFormalParameter {
+                                    binding: JsIdentifierBinding {
+                                        name_token: IDENT@40..41 "x" [] [],
+                                    },
+                                    question_mark_token: missing (optional),
+                                    type_annotation: TsTypeAnnotation {
+                                        colon_token: COLON@41..43 ":" [] [Whitespace(" ")],
+                                        ty: TsNumberType {
+                                            number_token: NUMBER_KW@43..49 "number" [] [],
+                                        },
+                                    },
+                                    initializer: missing (optional),
+                                },
+                            },
+                        ],
+                        r_paren_token: R_PAREN@49..51 ")" [] [Whitespace(" ")],
+                    },
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@51..52 "{" [] [],
+                        directives: JsDirectiveList [],
+                        statements: JsStatementList [],
+                        r_curly_token: R_CURLY@52..53 "}" [] [],
+                    },
+                },
+            ],
+            r_curly_token: R_CURLY@53..55 "}" [Newline("\n")] [],
+        },
+    ],
+    eof_token: EOF@55..56 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..56
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..55
+    0: JS_CLASS_DECLARATION@0..55
+      0: JS_DECORATOR_LIST@0..0
+      1: (empty)
+      2: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@6..8
+        0: IDENT@6..8 "C" [] [Whitespace(" ")]
+      4: (empty)
+      5: (empty)
+      6: (empty)
+      7: L_CURLY@8..9 "{" [] []
+      8: JS_CLASS_MEMBER_LIST@9..53
+        0: JS_CONSTRUCTOR_CLASS_MEMBER@9..53
+          0: JS_CONSTRUCTOR_MODIFIER_LIST@9..9
+          1: JS_LITERAL_MEMBER_NAME@9..25
+            0: IDENT@9..25 "constructor" [Newline("\n"), Whitespace("    ")] []
+          2: JS_CONSTRUCTOR_PARAMETERS@25..51
+            0: L_PAREN@25..26 "(" [] []
+            1: JS_CONSTRUCTOR_PARAMETER_LIST@26..49
+              0: TS_PROPERTY_PARAMETER@26..49
+                0: TS_PROPERTY_PARAMETER_MODIFIER_LIST@26..40
+                  0: TS_READONLY_MODIFIER@26..40
+                    0: READONLY_KW@26..40 "readonly" [Skipped("@"), Skipped("foo"), Whitespace(" ")] [Whitespace(" ")]
+                1: JS_FORMAL_PARAMETER@40..49
+                  0: JS_IDENTIFIER_BINDING@40..41
+                    0: IDENT@40..41 "x" [] []
+                  1: (empty)
+                  2: TS_TYPE_ANNOTATION@41..49
+                    0: COLON@41..43 ":" [] [Whitespace(" ")]
+                    1: TS_NUMBER_TYPE@43..49
+                      0: NUMBER_KW@43..49 "number" [] []
+                  3: (empty)
+            2: R_PAREN@49..51 ")" [] [Whitespace(" ")]
+          3: JS_FUNCTION_BODY@51..53
+            0: L_CURLY@51..52 "{" [] []
+            1: JS_DIRECTIVE_LIST@52..52
+            2: JS_STATEMENT_LIST@52..52
+            3: R_CURLY@52..53 "}" [] []
+      9: R_CURLY@53..55 "}" [Newline("\n")] []
+  3: EOF@55..56 "" [Newline("\n")] []

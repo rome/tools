@@ -1024,7 +1024,14 @@ pub(crate) fn parse_formal_parameter(
     parameter_context: ParameterContext,
     expression_context: ExpressionContext,
 ) -> ParsedSyntax {
+    // test ts ts_formal_parameter_decorator
+    // function a(@dec x) {}
+    // class Foo {
+    //    constructor(@dec x) {}
+    //    method(@dec x) {}
+    // }
     skip_ts_decorators(p);
+
     parse_binding_pattern(p, expression_context).map(|binding| {
         let binding_kind = binding.kind(p);
         let binding_range = binding.range(p);

@@ -1,0 +1,92 @@
+---
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info: js/babel-plugins/decorators.js
+---
+
+# Input
+
+```js
+// https://babeljs.io/docs/en/babel-plugin-proposal-decorators
+
+@annotation
+class MyClass { }
+
+function annotation(target) {
+   target.annotated = true;
+}
+
+@isTestable(true)
+class MyClass { }
+
+function isTestable(value) {
+   return function decorator(target) {
+      target.isTestable = value;
+   }
+}
+
+class C {
+  @enumerable(false)
+  method() { }
+}
+
+function enumerable(value) {
+  return function (target, key, descriptor) {
+     descriptor.enumerable = value;
+     return descriptor;
+  }
+}
+
+```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -17,8 +17,7 @@
+ }
+ 
+ class C {
+-  @enumerable(false)
+-  method() {}
++  @enumerable(false) method() {}
+ }
+ 
+ function enumerable(value) {
+```
+
+# Output
+
+```js
+// https://babeljs.io/docs/en/babel-plugin-proposal-decorators
+
+@annotation
+class MyClass {}
+
+function annotation(target) {
+  target.annotated = true;
+}
+
+@isTestable(true)
+class MyClass {}
+
+function isTestable(value) {
+  return function decorator(target) {
+    target.isTestable = value;
+  };
+}
+
+class C {
+  @enumerable(false) method() {}
+}
+
+function enumerable(value) {
+  return function (target, key, descriptor) {
+    descriptor.enumerable = value;
+    return descriptor;
+  };
+}
+```
+
+

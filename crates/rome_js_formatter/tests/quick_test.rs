@@ -13,13 +13,11 @@ mod language {
 // use this test check if your snippet prints as you wish, without using a snapshot
 fn quick_test() {
     let src = r#"
-const bar =
-  (
-    @deco
-    class {
-      //
-    }
-  );
+class Test2 {
+	@anotherDecorator() // leading comment
+	prop: string;
+}
+
 
 "#;
     let syntax = SourceType::tsx();

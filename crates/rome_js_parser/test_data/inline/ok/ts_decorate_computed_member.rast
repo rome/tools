@@ -15,9 +15,18 @@ JsModule {
             l_curly_token: L_CURLY@11..12 "{" [] [],
             members: JsClassMemberList [
                 JsPropertyClassMember {
-                    modifiers: JsPropertyModifierList [],
+                    modifiers: JsPropertyModifierList [
+                        JsDecorator {
+                            at_token: AT@12..14 "@" [Newline("\n")] [],
+                            expression: JsIdentifierExpression {
+                                name: JsReferenceIdentifier {
+                                    value_token: IDENT@14..18 "test" [] [],
+                                },
+                            },
+                        },
+                    ],
                     name: JsComputedMemberName {
-                        l_brack_token: L_BRACK@12..20 "[" [Newline("\n"), Skipped("@"), Skipped("test"), Newline("\n")] [],
+                        l_brack_token: L_BRACK@18..20 "[" [Newline("\n")] [],
                         expression: JsStringLiteralExpression {
                             value_token: JS_STRING_LITERAL@20..23 "'a'" [] [],
                         },
@@ -55,9 +64,14 @@ JsModule {
       7: L_CURLY@11..12 "{" [] []
       8: JS_CLASS_MEMBER_LIST@12..33
         0: JS_PROPERTY_CLASS_MEMBER@12..33
-          0: JS_PROPERTY_MODIFIER_LIST@12..12
-          1: JS_COMPUTED_MEMBER_NAME@12..24
-            0: L_BRACK@12..20 "[" [Newline("\n"), Skipped("@"), Skipped("test"), Newline("\n")] []
+          0: JS_PROPERTY_MODIFIER_LIST@12..18
+            0: JS_DECORATOR@12..18
+              0: AT@12..14 "@" [Newline("\n")] []
+              1: JS_IDENTIFIER_EXPRESSION@14..18
+                0: JS_REFERENCE_IDENTIFIER@14..18
+                  0: IDENT@14..18 "test" [] []
+          1: JS_COMPUTED_MEMBER_NAME@18..24
+            0: L_BRACK@18..20 "[" [Newline("\n")] []
             1: JS_STRING_LITERAL_EXPRESSION@20..23
               0: JS_STRING_LITERAL@20..23 "'a'" [] []
             2: R_BRACK@23..24 "]" [] []

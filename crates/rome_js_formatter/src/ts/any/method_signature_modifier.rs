@@ -9,6 +9,7 @@ impl FormatRule<AnyTsMethodSignatureModifier> for FormatAnyTsMethodSignatureModi
     fn fmt(&self, node: &AnyTsMethodSignatureModifier, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             AnyTsMethodSignatureModifier::TsAccessibilityModifier(node) => node.format().fmt(f),
+            AnyTsMethodSignatureModifier::JsDecorator(node) => node.format().fmt(f),
             AnyTsMethodSignatureModifier::JsStaticModifier(node) => node.format().fmt(f),
             AnyTsMethodSignatureModifier::TsOverrideModifier(node) => node.format().fmt(f),
             AnyTsMethodSignatureModifier::TsAbstractModifier(node) => node.format().fmt(f),

@@ -1,6 +1,5 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-assertion_line: 212
 info: js/decorators/methods.js
 ---
 
@@ -26,13 +25,23 @@ class Yo {
 ```diff
 --- Prettier
 +++ Rome
-@@ -5,6 +5,5 @@
-   @anotherDecoratorWithALongName("and a very long string as a first argument")
-   async plip() {}
+@@ -1,10 +1,11 @@
+ class Yo {
+-  @foo("hello")
+-  async plop() {}
++  @foo("hello") async plop() {}
+ 
+-  @anotherDecoratorWithALongName("and a very long string as a first argument")
+-  async plip() {}
++  @anotherDecoratorWithALongName(
++    "and a very long string as a first argument",
++  ) async plip() {}
  
 -  @anotherDecoratorWithALongName("another very long string, but now inline")
 -  async plip() {}
-+  @anotherDecoratorWithALongName("another very long string, but now inline") async plip() {}
++  @anotherDecoratorWithALongName(
++    "another very long string, but now inline",
++  ) async plip() {}
  }
 ```
 
@@ -40,19 +49,16 @@ class Yo {
 
 ```js
 class Yo {
-  @foo("hello")
-  async plop() {}
+  @foo("hello") async plop() {}
 
-  @anotherDecoratorWithALongName("and a very long string as a first argument")
-  async plip() {}
+  @anotherDecoratorWithALongName(
+    "and a very long string as a first argument",
+  ) async plip() {}
 
-  @anotherDecoratorWithALongName("another very long string, but now inline") async plip() {}
+  @anotherDecoratorWithALongName(
+    "another very long string, but now inline",
+  ) async plip() {}
 }
-```
-
-# Lines exceeding max width of 80 characters
-```
-    8:   @anotherDecoratorWithALongName("another very long string, but now inline") async plip() {}
 ```
 
 

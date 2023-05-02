@@ -1,0 +1,73 @@
+---
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info: typescript/decorators-ts/parameter-decorator.ts
+---
+
+# Input
+
+```ts
+class Greeter {
+  greeting: string;
+
+  constructor(message: string) {
+    this.greeting = message;
+  }
+
+  @validate
+  greet(@required name: string) {
+    return "Hello " + name + ", " + this.greeting;
+  }
+
+  @validate
+  destructured(@required { toString }: Object) {
+    return Function.prototype.toString.apply(toString);
+  }
+}
+
+```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -5,13 +5,11 @@
+     this.greeting = message;
+   }
+ 
+-  @validate
+-  greet(@required name: string) {
++  @validate greet(@required name: string) {
+     return "Hello " + name + ", " + this.greeting;
+   }
+ 
+-  @validate
+-  destructured(@required { toString }: Object) {
++  @validate destructured(@required { toString }: Object) {
+     return Function.prototype.toString.apply(toString);
+   }
+ }
+```
+
+# Output
+
+```ts
+class Greeter {
+  greeting: string;
+
+  constructor(message: string) {
+    this.greeting = message;
+  }
+
+  @validate greet(@required name: string) {
+    return "Hello " + name + ", " + this.greeting;
+  }
+
+  @validate destructured(@required { toString }: Object) {
+    return Function.prototype.toString.apply(toString);
+  }
+}
+```
+
+
