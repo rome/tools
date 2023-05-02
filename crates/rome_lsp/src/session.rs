@@ -397,8 +397,8 @@ impl Session {
         let status = match load_config(&self.fs, base_path) {
             Ok(Some((deserialized, _))) => {
                 let (configuration, diagnostics) = deserialized.consume();
-                if diagnostics.is_empty() {
-                    warn!("The deserialization of the configuration resulted in errors. Rome will its defaults where possible.");
+                if !diagnostics.is_empty() {
+                    warn!("The deserialization of the configuration resulted in errors. Rome will use its defaults where possible.");
                 }
 
                 info!("Loaded workspace settings: {configuration:#?}");
