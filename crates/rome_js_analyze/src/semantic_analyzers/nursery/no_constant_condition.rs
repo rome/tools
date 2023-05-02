@@ -74,7 +74,7 @@ declare_rule! {
     /// ```
     ///
     pub(crate) NoConstantCondition    {
-        version: "next",
+        version: "12.1.0",
         name: "noConstantCondition",
         recommended: true,
     }

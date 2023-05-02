@@ -3,7 +3,7 @@ title: Lint Rule noAccumulatingSpread
 parent: lint/rules/index
 ---
 
-# noAccumulatingSpread (since vnext)
+# noAccumulatingSpread (since v12.1.0)
 
 Disallow the use of spread (`...`) syntax on accumulators.
 

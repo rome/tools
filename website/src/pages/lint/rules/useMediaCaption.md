@@ -5,6 +5,8 @@ parent: lint/rules/index
 
 # useMediaCaption (since v12.0.0)
 
+> This rule is recommended by Rome.
+
 Enforces that `audio` and `video` elements must have a `track` for captions.
 
 **ESLint Equivalent:** [media-has-caption](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/main/docs/rules/media-has-caption.md)
@@ -17,7 +19,7 @@ Enforces that `audio` and `video` elements must have a `track` for captions.
 	<video />
 ```
 
-<pre class="language-text"><code class="language-text">nursery/useMediaCaption.js:1:2 <a href="https://docs.rome.tools/lint/rules/useMediaCaption">lint/nursery/useMediaCaption</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">a11y/useMediaCaption.js:1:2 <a href="https://docs.rome.tools/lint/rules/useMediaCaption">lint/a11y/useMediaCaption</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Provide a </span><span style="color: Tomato;"><strong>track</strong></span><span style="color: Tomato;"> for captions when using </span><span style="color: Tomato;"><strong>audio</strong></span><span style="color: Tomato;"> or </span><span style="color: Tomato;"><strong>video</strong></span><span style="color: Tomato;"> elements.</span>
   
@@ -33,7 +35,7 @@ Enforces that `audio` and `video` elements must have a `track` for captions.
 	<audio>child</audio>
 ```
 
-<pre class="language-text"><code class="language-text">nursery/useMediaCaption.js:1:2 <a href="https://docs.rome.tools/lint/rules/useMediaCaption">lint/nursery/useMediaCaption</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">a11y/useMediaCaption.js:1:2 <a href="https://docs.rome.tools/lint/rules/useMediaCaption">lint/a11y/useMediaCaption</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Provide a </span><span style="color: Tomato;"><strong>track</strong></span><span style="color: Tomato;"> for captions when using </span><span style="color: Tomato;"><strong>audio</strong></span><span style="color: Tomato;"> or </span><span style="color: Tomato;"><strong>video</strong></span><span style="color: Tomato;"> elements.</span>
   

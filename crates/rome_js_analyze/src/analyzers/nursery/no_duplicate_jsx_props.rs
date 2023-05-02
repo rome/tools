@@ -31,7 +31,7 @@ declare_rule! {
     /// <label xml:lang="en-US" lang="en-US"></label>
     /// ```
  pub(crate) NoDuplicateJsxProps {
-     version: "13.0.0",
+     version: "12.1.0",
      name: "noDuplicateJsxProps",
      recommended: true,
     }

@@ -5,6 +5,8 @@ parent: lint/rules/index
 
 # noCommaOperator (since v12.0.0)
 
+> This rule is recommended by Rome.
+
 Disallow comma operator.
 
 The comma operator includes multiple expressions where only one is expected.
@@ -23,7 +25,7 @@ Source: https://eslint.org/docs/latest/rules/no-sequences
 const foo = doSomething(), 0;
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noCommaOperator.js:1:28 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">style/noCommaOperator.js:1:28 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">expected an identifier, an array pattern, or an object pattern but instead found '0'</span>
   
@@ -43,7 +45,7 @@ const foo = doSomething(), 0;
 for (; doSomething(), !!test; ) {}
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noCommaOperator.js:1:21 <a href="https://docs.rome.tools/lint/rules/noCommaOperator">lint/nursery/noCommaOperator</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">style/noCommaOperator.js:1:21 <a href="https://docs.rome.tools/lint/rules/noCommaOperator">lint/style/noCommaOperator</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The comma operator is disallowed.</span>
   
@@ -61,7 +63,7 @@ let a, b;
 a = 1, b = 2;
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noCommaOperator.js:3:6 <a href="https://docs.rome.tools/lint/rules/noCommaOperator">lint/nursery/noCommaOperator</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">style/noCommaOperator.js:3:6 <a href="https://docs.rome.tools/lint/rules/noCommaOperator">lint/style/noCommaOperator</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The comma operator is disallowed.</span>
   

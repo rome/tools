@@ -3,7 +3,7 @@ title: Lint Rule noDuplicateJsxProps
 parent: lint/rules/index
 ---
 
-# noDuplicateJsxProps (since v13.0.0)
+# noDuplicateJsxProps (since v12.1.0)
 
 Prevents JSX properties to be assigned multiple times.
 

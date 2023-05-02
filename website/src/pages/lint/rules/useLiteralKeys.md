@@ -3,7 +3,7 @@ title: Lint Rule useLiteralKeys
 parent: lint/rules/index
 ---
 
-# useLiteralKeys (since vnext)
+# useLiteralKeys (since v12.1.0)
 
 Enforce the usage of a literal access to properties over computed property access.
 

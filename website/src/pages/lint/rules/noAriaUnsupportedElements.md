@@ -3,7 +3,7 @@ title: Lint Rule noAriaUnsupportedElements
 parent: lint/rules/index
 ---
 
-# noAriaUnsupportedElements (since vnext)
+# noAriaUnsupportedElements (since v12.1.0)
 
 Enforce that elements that do not support ARIA roles, states, and properties do not have those attributes.
 

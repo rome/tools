@@ -3,7 +3,7 @@ title: Lint Rule noConstantCondition
 parent: lint/rules/index
 ---
 
-# noConstantCondition (since vnext)
+# noConstantCondition (since v12.1.0)
 
 Disallow constant expressions in conditions
 

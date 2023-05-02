@@ -28,7 +28,7 @@ declare_rule! {
     /// ```
     ///
     pub(crate) NoConsoleLog {
-        version: "next",
+        version: "12.1.0",
         name: "noConsoleLog",
         recommended: false,
     }

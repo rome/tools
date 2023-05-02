@@ -5,6 +5,8 @@ parent: lint/rules/index
 
 # noUnreachableSuper (since v12.0.0)
 
+> This rule is recommended by Rome.
+
 Ensures the `super()` constructor is called exactly once on every code
 path in a class constructor before `this` is accessed if the class has
 a superclass
@@ -19,7 +21,7 @@ class A extends B {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noUnreachableSuper.js:2:5 <a href="https://rome.tools/docs/lint/rules/noUnreachableSuper">lint/nursery/noUnreachableSuper</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">correctness/noUnreachableSuper.js:2:5 <a href="https://rome.tools/docs/lint/rules/noUnreachableSuper">lint/correctness/noUnreachableSuper</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This constructor has code paths that return without calling `</span><span style="color: Tomato;"><strong>super()</strong></span><span style="color: Tomato;">`.</span>
   
@@ -42,7 +44,7 @@ class A extends B {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noUnreachableSuper.js:2:5 <a href="https://rome.tools/docs/lint/rules/noUnreachableSuper">lint/nursery/noUnreachableSuper</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">correctness/noUnreachableSuper.js:2:5 <a href="https://rome.tools/docs/lint/rules/noUnreachableSuper">lint/correctness/noUnreachableSuper</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This constructor has code paths accessing `</span><span style="color: Tomato;"><strong>this</strong></span><span style="color: Tomato;">` before `</span><span style="color: Tomato;"><strong>super()</strong></span><span style="color: Tomato;">` is called.</span>
   
@@ -88,7 +90,7 @@ class A extends B {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noUnreachableSuper.js:2:5 <a href="https://rome.tools/docs/lint/rules/noUnreachableSuper">lint/nursery/noUnreachableSuper</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">correctness/noUnreachableSuper.js:2:5 <a href="https://rome.tools/docs/lint/rules/noUnreachableSuper">lint/correctness/noUnreachableSuper</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This constructor has code paths that return without calling `</span><span style="color: Tomato;"><strong>super()</strong></span><span style="color: Tomato;">`.</span>
   

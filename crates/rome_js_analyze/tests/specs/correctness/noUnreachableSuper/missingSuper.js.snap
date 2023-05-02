@@ -1,0 +1,160 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 96
+expression: missingSuper.js
+---
+# Input
+```js
+// valid
+class A {
+    constructor() {}
+}
+
+// valid
+class B extends A {
+    constructor(cond) {
+        if (cond) {
+            super(true);
+        } else {
+            super(false);
+        }
+    }
+}
+
+// invalid
+class C extends A {
+    constructor(cond) {
+        if (cond) {
+            super(true);
+        }
+    }
+}
+
+// invalid
+class D extends A {
+    constructor(variant) {
+        switch (variant) {
+            case 0:
+                break;
+            default:
+                super();
+                break;
+        }
+    }
+}
+
+// invalid
+class E extends A {
+    constructor(cond) {
+        if (cond) {
+            return;
+        }
+
+        super(true);
+    }
+}
+
+// valid
+class F extends A {
+    constructor(variant) {
+        switch (variant) {
+            case 0:
+            default:
+                super();
+                break;
+        }
+    }
+}
+
+// valid
+class G extends A {
+    constructor(cond) {
+        if (cond) {
+            super(true);
+        } else {
+            throw new Error();
+        }
+
+        this.field = "value";
+    }
+}
+
+```
+
+# Diagnostics
+```
+missingSuper.js:19:5 lint/correctness/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This constructor has code paths that return without calling `super()`.
+  
+    17 │ // invalid
+    18 │ class C extends A {
+  > 19 │     constructor(cond) {
+       │     ^^^^^^^^^^^^^^^^^^^
+  > 20 │         if (cond) {
+  > 21 │             super(true);
+  > 22 │         }
+  > 23 │     }
+       │     ^
+    24 │ }
+    25 │ 
+  
+  i If this is intentional, add an explicit throw statement in unsupported paths.
+  
+
+```
+
+```
+missingSuper.js:28:5 lint/correctness/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This constructor has code paths that return without calling `super()`.
+  
+    26 │ // invalid
+    27 │ class D extends A {
+  > 28 │     constructor(variant) {
+       │     ^^^^^^^^^^^^^^^^^^^^^^
+  > 29 │         switch (variant) {
+        ...
+  > 35 │         }
+  > 36 │     }
+       │     ^
+    37 │ }
+    38 │ 
+  
+  i If this is intentional, add an explicit throw statement in unsupported paths.
+  
+
+```
+
+```
+missingSuper.js:41:5 lint/correctness/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This constructor has code paths that return without calling `super()` first.
+  
+    39 │ // invalid
+    40 │ class E extends A {
+  > 41 │     constructor(cond) {
+       │     ^^^^^^^^^^^^^^^^^^^
+  > 42 │         if (cond) {
+        ...
+  > 46 │         super(true);
+  > 47 │     }
+       │     ^
+    48 │ }
+    49 │ 
+  
+  i This statement returns from the constructor before `super()` has been called:
+  
+    41 │     constructor(cond) {
+    42 │         if (cond) {
+  > 43 │             return;
+       │             ^^^^^^^
+    44 │         }
+    45 │ 
+  
+  i If this is intentional, add an explicit throw statement in unsupported paths.
+  
+
+```
+
+

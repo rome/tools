@@ -48,7 +48,7 @@ declare_rule! {
     /// ```
     ///
     pub(crate) NoNoninteractiveTabindex {
-        version: "next",
+        version: "12.1.0",
         name: "noNoninteractiveTabindex",
         recommended: false,
     }

@@ -5,6 +5,8 @@ parent: lint/rules/index
 
 # useYield (since v12.0.0)
 
+> This rule is recommended by Rome.
+
 Require generator functions to contain `yield`.
 
 This rule generates warnings for generator functions that do not have the `yield` keyword.
@@ -21,7 +23,7 @@ function* foo() {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/useYield.js:1:1 <a href="https://docs.rome.tools/lint/rules/useYield">lint/nursery/useYield</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">correctness/useYield.js:1:1 <a href="https://docs.rome.tools/lint/rules/useYield">lint/correctness/useYield</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This generator function doesn't contain </span><span style="color: Tomato;"><strong>yield</strong></span><span style="color: Tomato;">.</span>
   
