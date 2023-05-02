@@ -646,10 +646,12 @@ fn organize_imports(parse: AnyParse) -> Result<OrganizeImportsResult, WorkspaceE
         };
 
         Ok(OrganizeImportsResult {
-            code: Some(tree.syntax().to_string()),
+            code: tree.syntax().to_string(),
         })
     } else {
-        Ok(OrganizeImportsResult { code: None })
+        Ok(OrganizeImportsResult {
+            code: tree.syntax().to_string(),
+        })
     }
 }
 

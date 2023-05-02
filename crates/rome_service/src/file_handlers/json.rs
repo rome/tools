@@ -233,6 +233,8 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, WorkspaceError> {
     })
 }
 
-fn organize_imports(_: AnyParse) -> Result<OrganizeImportsResult, WorkspaceError> {
-    Ok(OrganizeImportsResult { code: None })
+fn organize_imports(parse: AnyParse) -> Result<OrganizeImportsResult, WorkspaceError> {
+    Ok(OrganizeImportsResult {
+        code: parse.syntax::<JsonLanguage>().to_string(),
+    })
 }

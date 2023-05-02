@@ -7,7 +7,12 @@
 #### Other changes
 
 - Refactored the underling argument parsing logic. Changed the look and feel of the help
-output. [#4405](https://github.com/rome/tools/pull/4405)
+output. [#4405](https://github.com/rome/tools/pull/4405).
+- The command `rome check` can accept input from `stdin`.
+- Add the argument `--stdin-file-path` to use when running `rome check` via `stdin`.
+- Add the argument `--formatter-enabled` to control the formatter via CLI.
+- Add the argument `--linter-enabled` to control the linter via CLI.
+- Add the argument `--organize-imports-enabled` to control the import sorting via CLI.
 
 ### Linter
 
@@ -24,7 +29,7 @@ output. [#4405](https://github.com/rome/tools/pull/4405)
 when there are breaking changes.
 - Fix [#4348](https://github.com/rome/tools/issues/4348) that caused [`noNonNullAssertion`](https://docs.rome.tools/lint/rules/nononnullassertion/) to emit incorrect code action
 - Fix [#4410](https://github.com/rome/tools/issues/4410) that caused [`useButtonType`](https://docs.rome.tools/lint/rules/usebuttontype/) to miss some cases
-- Fix false positive diagnostics that [`useCamelCase`](https://docs.rome.tools/lint/rules/usecamelcase/) caused to default exported components 
+- Fix false positive diagnostics that [`useCamelCase`](https://docs.rome.tools/lint/rules/usecamelcase/) caused to default exported components
 
 ### Configuration
 ### Editors

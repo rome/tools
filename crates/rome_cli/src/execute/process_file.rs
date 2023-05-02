@@ -163,23 +163,21 @@ pub(crate) fn process_file(ctx: &TraversalOptions, path: &Path) -> FileResult {
                 category!("organizeImports"),
             )?;
 
-            if let Some(output) = sorted.code {
-                if output != input {
-                    if ctx.execution.is_check_apply_unsafe() {
-                        file.set_content(output.as_bytes())
-                            .with_file_path(path.display().to_string())?;
-                        file_guard.change_file(file.file_version(), output)?;
-                    } else {
-                        errors += 1;
-                        ctx.messages
-                            .send(Message::Diff {
-                                file_name: path.display().to_string(),
-                                old: input.clone(),
-                                new: output,
-                                diff_kind: DiffKind::OrganizeImports,
-                            })
-                            .ok();
-                    }
+            if sorted.code != input {
+                if ctx.execution.is_check_apply_unsafe() {
+                    file.set_content(sorted.code.as_bytes())
+                        .with_file_path(path.display().to_string())?;
+                    file_guard.change_file(file.file_version(), sorted.code)?;
+                } else {
+                    errors += 1;
+                    ctx.messages
+                        .send(Message::Diff {
+                            file_name: path.display().to_string(),
+                            old: input.clone(),
+                            new: sorted.code,
+                            diff_kind: DiffKind::OrganizeImports,
+                        })
+                        .ok();
                 }
             }
         }
@@ -258,17 +256,15 @@ pub(crate) fn process_file(ctx: &TraversalOptions, path: &Path) -> FileResult {
                 category!("organizeImports"),
             )?;
 
-            if let Some(output) = sorted.code {
-                if output != input {
-                    ctx.messages
-                        .send(Message::Diff {
-                            file_name: path.display().to_string(),
-                            old: input.clone(),
-                            new: output,
-                            diff_kind: DiffKind::OrganizeImports,
-                        })
-                        .ok();
-                }
+            if sorted.code != input {
+                ctx.messages
+                    .send(Message::Diff {
+                        file_name: path.display().to_string(),
+                        old: input.clone(),
+                        new: sorted.code,
+                        diff_kind: DiffKind::OrganizeImports,
+                    })
+                    .ok();
             }
         }
 
