@@ -22,6 +22,7 @@ use crate::promote_rule::promote_rule;
 use generate_new_lintrule::*;
 use xtask_codegen::{
     generate_analyzer, generate_ast, generate_formatters, generate_parser_tests, generate_tables,
+    generate_website,
 };
 
 fn main() -> Result<()> {
@@ -77,12 +78,18 @@ fn main() -> Result<()> {
             generate_workspace_bindings(Mode::Overwrite)?;
             Ok(())
         }
+        #[cfg(feature = "website")]
+        "website" => {
+            generate_website()?;
+            Ok(())
+        }
         "all" => {
             generate_tables()?;
             generate_grammar(args);
             generate_parser_tests(Mode::Overwrite)?;
             generate_formatters();
             generate_analyzer()?;
+            generate_website()?;
             #[cfg(feature = "configuration")]
             generate_rules_configuration(Mode::Overwrite)?;
             #[cfg(feature = "schema")]

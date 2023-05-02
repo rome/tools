@@ -11,6 +11,7 @@ mod generate_nodes;
 mod generate_nodes_mut;
 mod generate_syntax_factory;
 mod generate_syntax_kinds;
+pub mod generate_website;
 mod json_kinds_src;
 mod kinds_src;
 mod parser_tests;
@@ -28,6 +29,7 @@ use xtask::{glue::fs2, Mode, Result};
 pub use self::ast::generate_ast;
 pub use self::formatter::generate_formatters;
 pub use self::generate_analyzer::generate_analyzer;
+pub use self::generate_website::generate_website;
 pub use self::parser_tests::generate_parser_tests;
 pub use self::unicode::generate_tables;
 

@@ -2,6 +2,17 @@
 
 ## [Unreleased]
 
+## CLI
+## Configuration
+## Editors
+## Formatter
+## Linter
+## Parser
+## VSCode
+## JavaScript APIs
+
+## 12.1.0
+
 ### CLI
 
 #### Other changes
@@ -83,6 +94,13 @@ when there are breaking changes.
 - Fix false negative diagnostics that [`noNoninteractiveElementToInteractiveRole`](https://docs.rome.tools/lint/rules/nononinteractiveelementtointeractiverole/) and [`noNoninteractiveTabindex`](https://docs.rome.tools/lint/rules/nononinteractivetabindex/) caused to non-interactive elements.
 
 ### Configuration
+
+- Add `vcs` property, to opt-in the VCS integration:
+  - `vcs.enabled`, to enable or not the integration;
+  - `vcs.clientKind`, the supported clients;
+  - `vcs.useIgnoreFile`, to ignore the files/paths inside the file;
+  - `vcs.root`, an optional path to the root of the VCS;
+
 ### Editors
 
 #### Other changes
