@@ -1,13 +1,13 @@
 ---
-import BaseLayout from "/BaseLayout.astro";
-import NavigationSidebar from "/components/NavigationSidebar.astro";
-import "/playground/styles/index.scss";
+import BaseLayout from "@src/layouts/BaseLayout.astro";
+import "@src/styles/playground/index.scss";
+
+export const prerender = true;
 ---
 
 <BaseLayout title="Rome Playground" bodyClass="playground-body">
-  <NavigationSidebar />
   <div id="root"></div>
-  
+
   <script>
     import "/src/playground/main.tsx";
   </script>

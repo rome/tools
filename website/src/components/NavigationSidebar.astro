@@ -1,9 +1,9 @@
 ---
-import ExternalLinks from "./ExternalLinks.astro";
-import ActiveLink from "./ActiveLink.astro";
-import navigation from "/navigation.json";
+import ExternalLinks from "@src/components/ExternalLinks.astro";
+import ActiveLink from "@src/components/ActiveLink.astro";
+import navigation from "@src/navigation.json";
 
-import {buildGetPages, buildTOC} from "/navigation-utils";
+import {buildGetPages, buildTOC} from "@src/navigation-utils";
 
 const {props} = Astro;
 const {frontmatter = {}} = props;
