@@ -13639,11 +13639,18 @@ impl AnyJsLiteralExpression {
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub enum AnyJsMethodModifier {
+    JsDecorator(JsDecorator),
     JsStaticModifier(JsStaticModifier),
     TsAccessibilityModifier(TsAccessibilityModifier),
     TsOverrideModifier(TsOverrideModifier),
 }
 impl AnyJsMethodModifier {
+    pub fn as_js_decorator(&self) -> Option<&JsDecorator> {
+        match &self {
+            AnyJsMethodModifier::JsDecorator(item) => Some(item),
+            _ => None,
+        }
+    }
     pub fn as_js_static_modifier(&self) -> Option<&JsStaticModifier> {
         match &self {
             AnyJsMethodModifier::JsStaticModifier(item) => Some(item),
@@ -13947,6 +13954,7 @@ impl AnyJsParameter {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub enum AnyJsPropertyModifier {
     JsAccessorModifier(JsAccessorModifier),
+    JsDecorator(JsDecorator),
     JsStaticModifier(JsStaticModifier),
     TsAccessibilityModifier(TsAccessibilityModifier),
     TsOverrideModifier(TsOverrideModifier),
@@ -13956,6 +13964,12 @@ impl AnyJsPropertyModifier {
     pub fn as_js_accessor_modifier(&self) -> Option<&JsAccessorModifier> {
         match &self {
             AnyJsPropertyModifier::JsAccessorModifier(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_decorator(&self) -> Option<&JsDecorator> {
+        match &self {
+            AnyJsPropertyModifier::JsDecorator(item) => Some(item),
             _ => None,
         }
     }
@@ -14551,12 +14565,19 @@ impl AnyTsIndexSignatureModifier {
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub enum AnyTsMethodSignatureModifier {
+    JsDecorator(JsDecorator),
     JsStaticModifier(JsStaticModifier),
     TsAbstractModifier(TsAbstractModifier),
     TsAccessibilityModifier(TsAccessibilityModifier),
     TsOverrideModifier(TsOverrideModifier),
 }
 impl AnyTsMethodSignatureModifier {
+    pub fn as_js_decorator(&self) -> Option<&JsDecorator> {
+        match &self {
+            AnyTsMethodSignatureModifier::JsDecorator(item) => Some(item),
+            _ => None,
+        }
+    }
     pub fn as_js_static_modifier(&self) -> Option<&JsStaticModifier> {
         match &self {
             AnyTsMethodSignatureModifier::JsStaticModifier(item) => Some(item),
@@ -14720,6 +14741,7 @@ impl AnyTsPropertySignatureAnnotation {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub enum AnyTsPropertySignatureModifier {
     JsAccessorModifier(JsAccessorModifier),
+    JsDecorator(JsDecorator),
     JsStaticModifier(JsStaticModifier),
     TsAbstractModifier(TsAbstractModifier),
     TsAccessibilityModifier(TsAccessibilityModifier),
@@ -14731,6 +14753,12 @@ impl AnyTsPropertySignatureModifier {
     pub fn as_js_accessor_modifier(&self) -> Option<&JsAccessorModifier> {
         match &self {
             AnyTsPropertySignatureModifier::JsAccessorModifier(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_decorator(&self) -> Option<&JsDecorator> {
+        match &self {
+            AnyTsPropertySignatureModifier::JsDecorator(item) => Some(item),
             _ => None,
         }
     }
@@ -28709,6 +28737,9 @@ impl From<AnyJsLiteralExpression> for SyntaxElement {
         node.into()
     }
 }
+impl From<JsDecorator> for AnyJsMethodModifier {
+    fn from(node: JsDecorator) -> AnyJsMethodModifier { AnyJsMethodModifier::JsDecorator(node) }
+}
 impl From<JsStaticModifier> for AnyJsMethodModifier {
     fn from(node: JsStaticModifier) -> AnyJsMethodModifier {
         AnyJsMethodModifier::JsStaticModifier(node)
@@ -28726,17 +28757,19 @@ impl From<TsOverrideModifier> for AnyJsMethodModifier {
 }
 impl AstNode for AnyJsMethodModifier {
     type Language = Language;
-    const KIND_SET: SyntaxKindSet<Language> = JsStaticModifier::KIND_SET
+    const KIND_SET: SyntaxKindSet<Language> = JsDecorator::KIND_SET
+        .union(JsStaticModifier::KIND_SET)
         .union(TsAccessibilityModifier::KIND_SET)
         .union(TsOverrideModifier::KIND_SET);
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
-            JS_STATIC_MODIFIER | TS_ACCESSIBILITY_MODIFIER | TS_OVERRIDE_MODIFIER
+            JS_DECORATOR | JS_STATIC_MODIFIER | TS_ACCESSIBILITY_MODIFIER | TS_OVERRIDE_MODIFIER
         )
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
+            JS_DECORATOR => AnyJsMethodModifier::JsDecorator(JsDecorator { syntax }),
             JS_STATIC_MODIFIER => {
                 AnyJsMethodModifier::JsStaticModifier(JsStaticModifier { syntax })
             }
@@ -28752,6 +28785,7 @@ impl AstNode for AnyJsMethodModifier {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
+            AnyJsMethodModifier::JsDecorator(it) => &it.syntax,
             AnyJsMethodModifier::JsStaticModifier(it) => &it.syntax,
             AnyJsMethodModifier::TsAccessibilityModifier(it) => &it.syntax,
             AnyJsMethodModifier::TsOverrideModifier(it) => &it.syntax,
@@ -28759,6 +28793,7 @@ impl AstNode for AnyJsMethodModifier {
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
+            AnyJsMethodModifier::JsDecorator(it) => it.syntax,
             AnyJsMethodModifier::JsStaticModifier(it) => it.syntax,
             AnyJsMethodModifier::TsAccessibilityModifier(it) => it.syntax,
             AnyJsMethodModifier::TsOverrideModifier(it) => it.syntax,
@@ -28768,6 +28803,7 @@ impl AstNode for AnyJsMethodModifier {
 impl std::fmt::Debug for AnyJsMethodModifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
+            AnyJsMethodModifier::JsDecorator(it) => std::fmt::Debug::fmt(it, f),
             AnyJsMethodModifier::JsStaticModifier(it) => std::fmt::Debug::fmt(it, f),
             AnyJsMethodModifier::TsAccessibilityModifier(it) => std::fmt::Debug::fmt(it, f),
             AnyJsMethodModifier::TsOverrideModifier(it) => std::fmt::Debug::fmt(it, f),
@@ -28777,6 +28813,7 @@ impl std::fmt::Debug for AnyJsMethodModifier {
 impl From<AnyJsMethodModifier> for SyntaxNode {
     fn from(n: AnyJsMethodModifier) -> SyntaxNode {
         match n {
+            AnyJsMethodModifier::JsDecorator(it) => it.into(),
             AnyJsMethodModifier::JsStaticModifier(it) => it.into(),
             AnyJsMethodModifier::TsAccessibilityModifier(it) => it.into(),
             AnyJsMethodModifier::TsOverrideModifier(it) => it.into(),
@@ -29574,6 +29611,9 @@ impl From<JsAccessorModifier> for AnyJsPropertyModifier {
         AnyJsPropertyModifier::JsAccessorModifier(node)
     }
 }
+impl From<JsDecorator> for AnyJsPropertyModifier {
+    fn from(node: JsDecorator) -> AnyJsPropertyModifier { AnyJsPropertyModifier::JsDecorator(node) }
+}
 impl From<JsStaticModifier> for AnyJsPropertyModifier {
     fn from(node: JsStaticModifier) -> AnyJsPropertyModifier {
         AnyJsPropertyModifier::JsStaticModifier(node)
@@ -29597,6 +29637,7 @@ impl From<TsReadonlyModifier> for AnyJsPropertyModifier {
 impl AstNode for AnyJsPropertyModifier {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> = JsAccessorModifier::KIND_SET
+        .union(JsDecorator::KIND_SET)
         .union(JsStaticModifier::KIND_SET)
         .union(TsAccessibilityModifier::KIND_SET)
         .union(TsOverrideModifier::KIND_SET)
@@ -29605,6 +29646,7 @@ impl AstNode for AnyJsPropertyModifier {
         matches!(
             kind,
             JS_ACCESSOR_MODIFIER
+                | JS_DECORATOR
                 | JS_STATIC_MODIFIER
                 | TS_ACCESSIBILITY_MODIFIER
                 | TS_OVERRIDE_MODIFIER
@@ -29616,6 +29658,7 @@ impl AstNode for AnyJsPropertyModifier {
             JS_ACCESSOR_MODIFIER => {
                 AnyJsPropertyModifier::JsAccessorModifier(JsAccessorModifier { syntax })
             }
+            JS_DECORATOR => AnyJsPropertyModifier::JsDecorator(JsDecorator { syntax }),
             JS_STATIC_MODIFIER => {
                 AnyJsPropertyModifier::JsStaticModifier(JsStaticModifier { syntax })
             }
@@ -29635,6 +29678,7 @@ impl AstNode for AnyJsPropertyModifier {
     fn syntax(&self) -> &SyntaxNode {
         match self {
             AnyJsPropertyModifier::JsAccessorModifier(it) => &it.syntax,
+            AnyJsPropertyModifier::JsDecorator(it) => &it.syntax,
             AnyJsPropertyModifier::JsStaticModifier(it) => &it.syntax,
             AnyJsPropertyModifier::TsAccessibilityModifier(it) => &it.syntax,
             AnyJsPropertyModifier::TsOverrideModifier(it) => &it.syntax,
@@ -29644,6 +29688,7 @@ impl AstNode for AnyJsPropertyModifier {
     fn into_syntax(self) -> SyntaxNode {
         match self {
             AnyJsPropertyModifier::JsAccessorModifier(it) => it.syntax,
+            AnyJsPropertyModifier::JsDecorator(it) => it.syntax,
             AnyJsPropertyModifier::JsStaticModifier(it) => it.syntax,
             AnyJsPropertyModifier::TsAccessibilityModifier(it) => it.syntax,
             AnyJsPropertyModifier::TsOverrideModifier(it) => it.syntax,
@@ -29655,6 +29700,7 @@ impl std::fmt::Debug for AnyJsPropertyModifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             AnyJsPropertyModifier::JsAccessorModifier(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsPropertyModifier::JsDecorator(it) => std::fmt::Debug::fmt(it, f),
             AnyJsPropertyModifier::JsStaticModifier(it) => std::fmt::Debug::fmt(it, f),
             AnyJsPropertyModifier::TsAccessibilityModifier(it) => std::fmt::Debug::fmt(it, f),
             AnyJsPropertyModifier::TsOverrideModifier(it) => std::fmt::Debug::fmt(it, f),
@@ -29666,6 +29712,7 @@ impl From<AnyJsPropertyModifier> for SyntaxNode {
     fn from(n: AnyJsPropertyModifier) -> SyntaxNode {
         match n {
             AnyJsPropertyModifier::JsAccessorModifier(it) => it.into(),
+            AnyJsPropertyModifier::JsDecorator(it) => it.into(),
             AnyJsPropertyModifier::JsStaticModifier(it) => it.into(),
             AnyJsPropertyModifier::TsAccessibilityModifier(it) => it.into(),
             AnyJsPropertyModifier::TsOverrideModifier(it) => it.into(),
@@ -30993,6 +31040,11 @@ impl From<AnyTsIndexSignatureModifier> for SyntaxElement {
         node.into()
     }
 }
+impl From<JsDecorator> for AnyTsMethodSignatureModifier {
+    fn from(node: JsDecorator) -> AnyTsMethodSignatureModifier {
+        AnyTsMethodSignatureModifier::JsDecorator(node)
+    }
+}
 impl From<JsStaticModifier> for AnyTsMethodSignatureModifier {
     fn from(node: JsStaticModifier) -> AnyTsMethodSignatureModifier {
         AnyTsMethodSignatureModifier::JsStaticModifier(node)
@@ -31015,14 +31067,16 @@ impl From<TsOverrideModifier> for AnyTsMethodSignatureModifier {
 }
 impl AstNode for AnyTsMethodSignatureModifier {
     type Language = Language;
-    const KIND_SET: SyntaxKindSet<Language> = JsStaticModifier::KIND_SET
+    const KIND_SET: SyntaxKindSet<Language> = JsDecorator::KIND_SET
+        .union(JsStaticModifier::KIND_SET)
         .union(TsAbstractModifier::KIND_SET)
         .union(TsAccessibilityModifier::KIND_SET)
         .union(TsOverrideModifier::KIND_SET);
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
-            JS_STATIC_MODIFIER
+            JS_DECORATOR
+                | JS_STATIC_MODIFIER
                 | TS_ABSTRACT_MODIFIER
                 | TS_ACCESSIBILITY_MODIFIER
                 | TS_OVERRIDE_MODIFIER
@@ -31030,6 +31084,7 @@ impl AstNode for AnyTsMethodSignatureModifier {
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
+            JS_DECORATOR => AnyTsMethodSignatureModifier::JsDecorator(JsDecorator { syntax }),
             JS_STATIC_MODIFIER => {
                 AnyTsMethodSignatureModifier::JsStaticModifier(JsStaticModifier { syntax })
             }
@@ -31050,6 +31105,7 @@ impl AstNode for AnyTsMethodSignatureModifier {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
+            AnyTsMethodSignatureModifier::JsDecorator(it) => &it.syntax,
             AnyTsMethodSignatureModifier::JsStaticModifier(it) => &it.syntax,
             AnyTsMethodSignatureModifier::TsAbstractModifier(it) => &it.syntax,
             AnyTsMethodSignatureModifier::TsAccessibilityModifier(it) => &it.syntax,
@@ -31058,6 +31114,7 @@ impl AstNode for AnyTsMethodSignatureModifier {
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
+            AnyTsMethodSignatureModifier::JsDecorator(it) => it.syntax,
             AnyTsMethodSignatureModifier::JsStaticModifier(it) => it.syntax,
             AnyTsMethodSignatureModifier::TsAbstractModifier(it) => it.syntax,
             AnyTsMethodSignatureModifier::TsAccessibilityModifier(it) => it.syntax,
@@ -31068,6 +31125,7 @@ impl AstNode for AnyTsMethodSignatureModifier {
 impl std::fmt::Debug for AnyTsMethodSignatureModifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
+            AnyTsMethodSignatureModifier::JsDecorator(it) => std::fmt::Debug::fmt(it, f),
             AnyTsMethodSignatureModifier::JsStaticModifier(it) => std::fmt::Debug::fmt(it, f),
             AnyTsMethodSignatureModifier::TsAbstractModifier(it) => std::fmt::Debug::fmt(it, f),
             AnyTsMethodSignatureModifier::TsAccessibilityModifier(it) => {
@@ -31080,6 +31138,7 @@ impl std::fmt::Debug for AnyTsMethodSignatureModifier {
 impl From<AnyTsMethodSignatureModifier> for SyntaxNode {
     fn from(n: AnyTsMethodSignatureModifier) -> SyntaxNode {
         match n {
+            AnyTsMethodSignatureModifier::JsDecorator(it) => it.into(),
             AnyTsMethodSignatureModifier::JsStaticModifier(it) => it.into(),
             AnyTsMethodSignatureModifier::TsAbstractModifier(it) => it.into(),
             AnyTsMethodSignatureModifier::TsAccessibilityModifier(it) => it.into(),
@@ -31527,6 +31586,11 @@ impl From<JsAccessorModifier> for AnyTsPropertySignatureModifier {
         AnyTsPropertySignatureModifier::JsAccessorModifier(node)
     }
 }
+impl From<JsDecorator> for AnyTsPropertySignatureModifier {
+    fn from(node: JsDecorator) -> AnyTsPropertySignatureModifier {
+        AnyTsPropertySignatureModifier::JsDecorator(node)
+    }
+}
 impl From<JsStaticModifier> for AnyTsPropertySignatureModifier {
     fn from(node: JsStaticModifier) -> AnyTsPropertySignatureModifier {
         AnyTsPropertySignatureModifier::JsStaticModifier(node)
@@ -31560,6 +31624,7 @@ impl From<TsReadonlyModifier> for AnyTsPropertySignatureModifier {
 impl AstNode for AnyTsPropertySignatureModifier {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> = JsAccessorModifier::KIND_SET
+        .union(JsDecorator::KIND_SET)
         .union(JsStaticModifier::KIND_SET)
         .union(TsAbstractModifier::KIND_SET)
         .union(TsAccessibilityModifier::KIND_SET)
@@ -31570,6 +31635,7 @@ impl AstNode for AnyTsPropertySignatureModifier {
         matches!(
             kind,
             JS_ACCESSOR_MODIFIER
+                | JS_DECORATOR
                 | JS_STATIC_MODIFIER
                 | TS_ABSTRACT_MODIFIER
                 | TS_ACCESSIBILITY_MODIFIER
@@ -31583,6 +31649,7 @@ impl AstNode for AnyTsPropertySignatureModifier {
             JS_ACCESSOR_MODIFIER => {
                 AnyTsPropertySignatureModifier::JsAccessorModifier(JsAccessorModifier { syntax })
             }
+            JS_DECORATOR => AnyTsPropertySignatureModifier::JsDecorator(JsDecorator { syntax }),
             JS_STATIC_MODIFIER => {
                 AnyTsPropertySignatureModifier::JsStaticModifier(JsStaticModifier { syntax })
             }
@@ -31610,6 +31677,7 @@ impl AstNode for AnyTsPropertySignatureModifier {
     fn syntax(&self) -> &SyntaxNode {
         match self {
             AnyTsPropertySignatureModifier::JsAccessorModifier(it) => &it.syntax,
+            AnyTsPropertySignatureModifier::JsDecorator(it) => &it.syntax,
             AnyTsPropertySignatureModifier::JsStaticModifier(it) => &it.syntax,
             AnyTsPropertySignatureModifier::TsAbstractModifier(it) => &it.syntax,
             AnyTsPropertySignatureModifier::TsAccessibilityModifier(it) => &it.syntax,
@@ -31621,6 +31689,7 @@ impl AstNode for AnyTsPropertySignatureModifier {
     fn into_syntax(self) -> SyntaxNode {
         match self {
             AnyTsPropertySignatureModifier::JsAccessorModifier(it) => it.syntax,
+            AnyTsPropertySignatureModifier::JsDecorator(it) => it.syntax,
             AnyTsPropertySignatureModifier::JsStaticModifier(it) => it.syntax,
             AnyTsPropertySignatureModifier::TsAbstractModifier(it) => it.syntax,
             AnyTsPropertySignatureModifier::TsAccessibilityModifier(it) => it.syntax,
@@ -31634,6 +31703,7 @@ impl std::fmt::Debug for AnyTsPropertySignatureModifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             AnyTsPropertySignatureModifier::JsAccessorModifier(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsPropertySignatureModifier::JsDecorator(it) => std::fmt::Debug::fmt(it, f),
             AnyTsPropertySignatureModifier::JsStaticModifier(it) => std::fmt::Debug::fmt(it, f),
             AnyTsPropertySignatureModifier::TsAbstractModifier(it) => std::fmt::Debug::fmt(it, f),
             AnyTsPropertySignatureModifier::TsAccessibilityModifier(it) => {
@@ -31649,6 +31719,7 @@ impl From<AnyTsPropertySignatureModifier> for SyntaxNode {
     fn from(n: AnyTsPropertySignatureModifier) -> SyntaxNode {
         match n {
             AnyTsPropertySignatureModifier::JsAccessorModifier(it) => it.into(),
+            AnyTsPropertySignatureModifier::JsDecorator(it) => it.into(),
             AnyTsPropertySignatureModifier::JsStaticModifier(it) => it.into(),
             AnyTsPropertySignatureModifier::TsAbstractModifier(it) => it.into(),
             AnyTsPropertySignatureModifier::TsAccessibilityModifier(it) => it.into(),

@@ -5,6 +5,8 @@ parent: lint/rules/index
 
 # noSwitchDeclarations (since v12.0.0)
 
+> This rule is recommended by Rome.
+
 Disallow lexical declarations in `switch` clauses.
 
 Lexical declarations in `switch` clauses are accessible in the entire `switch`.
@@ -29,7 +31,7 @@ switch (foo) {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noSwitchDeclarations.js:3:9 <a href="https://docs.rome.tools/lint/rules/noSwitchDeclarations">lint/nursery/noSwitchDeclarations</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">correctness/noSwitchDeclarations.js:3:9 <a href="https://docs.rome.tools/lint/rules/noSwitchDeclarations">lint/correctness/noSwitchDeclarations</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Other switch clauses can erroneously access this </span><span style="color: Tomato;"><strong>declaration</strong></span><span style="color: Tomato;">.
 </span><span style="color: Tomato;">  </span><span style="color: Tomato;">  </span><span style="color: Tomato;">Wrap the declaration in a block to restrict its access to the switch clause.</span>
@@ -78,7 +80,7 @@ switch (foo) {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noSwitchDeclarations.js:3:9 <a href="https://docs.rome.tools/lint/rules/noSwitchDeclarations">lint/nursery/noSwitchDeclarations</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">correctness/noSwitchDeclarations.js:3:9 <a href="https://docs.rome.tools/lint/rules/noSwitchDeclarations">lint/correctness/noSwitchDeclarations</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Other switch clauses can erroneously access this </span><span style="color: Tomato;"><strong>declaration</strong></span><span style="color: Tomato;">.
 </span><span style="color: Tomato;">  </span><span style="color: Tomato;">  </span><span style="color: Tomato;">Wrap the declaration in a block to restrict its access to the switch clause.</span>
@@ -127,7 +129,7 @@ switch (foo) {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noSwitchDeclarations.js:3:9 <a href="https://docs.rome.tools/lint/rules/noSwitchDeclarations">lint/nursery/noSwitchDeclarations</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">correctness/noSwitchDeclarations.js:3:9 <a href="https://docs.rome.tools/lint/rules/noSwitchDeclarations">lint/correctness/noSwitchDeclarations</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Other switch clauses can erroneously access this </span><span style="color: Tomato;"><strong>declaration</strong></span><span style="color: Tomato;">.
 </span><span style="color: Tomato;">  </span><span style="color: Tomato;">  </span><span style="color: Tomato;">Wrap the declaration in a block to restrict its access to the switch clause.</span>

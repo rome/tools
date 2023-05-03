@@ -288,3 +288,10 @@ pub(crate) fn decorators_not_allowed(p: &JsParser, range: TextRange) -> ParseDia
         "Decorators are only valid on class declarations, class expressions, and class methods.",
     )
 }
+
+pub(crate) fn decorator_must_precede_modifier(p: &JsParser, range: TextRange) -> ParseDiagnostic {
+    p.err_builder(
+        "Decorators must precede the name and all keywords of property declarations.",
+        range,
+    )
+}

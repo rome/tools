@@ -5,6 +5,8 @@ parent: lint/rules/index
 
 # noWith (since v12.0.0)
 
+> This rule is recommended by Rome.
+
 Disallow `with` statements in non-strict contexts.
 
 The `with` statement is potentially problematic because it adds members of an object to the current
@@ -22,7 +24,7 @@ function f() {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noWith.js:2:3 <a href="https://docs.rome.tools/lint/rules/noWith">lint/nursery/noWith</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">complexity/noWith.js:2:3 <a href="https://docs.rome.tools/lint/rules/noWith">lint/complexity/noWith</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Unexpected use of </span><span style="color: Tomato;"><strong>with</strong></span><span style="color: Tomato;"> statement.</span>
   

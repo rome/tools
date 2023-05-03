@@ -226,9 +226,21 @@ export interface A11y {
 	 */
 	noHeaderScope?: RuleConfiguration;
 	/**
+	 * Enforce that interactive ARIA roles are not assigned to non-interactive HTML elements.
+	 */
+	noNoninteractiveElementToInteractiveRole?: RuleConfiguration;
+	/**
 	 * Prevent the usage of positive integers on tabIndex property
 	 */
 	noPositiveTabindex?: RuleConfiguration;
+	/**
+	 * Enforce img alt prop does not contain the word "image", "picture", or "photo".
+	 */
+	noRedundantAlt?: RuleConfiguration;
+	/**
+	 * Enforces the usage of the title element for the svg element.
+	 */
+	noSvgWithoutTitle?: RuleConfiguration;
 	/**
 	 * It enables the recommended rules for this group
 	 */
@@ -242,6 +254,10 @@ export interface A11y {
 	 */
 	useAnchorContent?: RuleConfiguration;
 	/**
+	 * Enforce that elements with ARIA roles must have all required ARIA attributes for that role.
+	 */
+	useAriaPropsForRole?: RuleConfiguration;
+	/**
 	 * Enforces the usage of the attribute type for the element button
 	 */
 	useButtonType?: RuleConfiguration;
@@ -249,6 +265,10 @@ export interface A11y {
 	 * Enforce that html element has lang attribute.
 	 */
 	useHtmlLang?: RuleConfiguration;
+	/**
+	 * Enforces the usage of the attribute title for the element iframe
+	 */
+	useIframeTitle?: RuleConfiguration;
 	/**
 	 * Enforce onClick is accompanied by at least one of the following: onKeyUp, onKeyDown, onKeyPress.
 	 */
@@ -258,9 +278,21 @@ export interface A11y {
 	 */
 	useKeyWithMouseEvents?: RuleConfiguration;
 	/**
+	 * Enforces that audio and video elements must have a track for captions.
+	 */
+	useMediaCaption?: RuleConfiguration;
+	/**
 	 * Enforce that all anchors are valid, and they are navigable elements.
 	 */
 	useValidAnchor?: RuleConfiguration;
+	/**
+	 * Ensures that ARIA properties aria-* are all valid.
+	 */
+	useValidAriaProps?: RuleConfiguration;
+	/**
+	 * Ensure that the attribute passed to the lang attribute is a correct ISO language and/or country.
+	 */
+	useValidLang?: RuleConfiguration;
 }
 /**
  * A list of rules that belong to this group
@@ -275,13 +307,41 @@ export interface Complexity {
 	 */
 	noExtraBooleanCast?: RuleConfiguration;
 	/**
+	 * Typing mistakes and misunderstandings about where semicolons are required can lead to semicolons that are unnecessary. While not technically an error, extra semicolons can cause confusion when reading code.
+	 */
+	noExtraSemicolon?: RuleConfiguration;
+	/**
 	 * Disallow unclear usage of multiple space characters in regular expression literals
 	 */
 	noMultipleSpacesInRegularExpressionLiterals?: RuleConfiguration;
 	/**
+	 * Disallow unnecessary catch clauses.
+	 */
+	noUselessCatch?: RuleConfiguration;
+	/**
+	 * Disallow unnecessary constructors.
+	 */
+	noUselessConstructor?: RuleConfiguration;
+	/**
 	 * Disallow unnecessary fragments
 	 */
 	noUselessFragments?: RuleConfiguration;
+	/**
+	 * Disallow unnecessary labels.
+	 */
+	noUselessLabel?: RuleConfiguration;
+	/**
+	 * Disallow renaming import, export, and destructured assignments to the same name.
+	 */
+	noUselessRename?: RuleConfiguration;
+	/**
+	 * Disallow useless case in switch statements.
+	 */
+	noUselessSwitchCase?: RuleConfiguration;
+	/**
+	 * Disallow with statements in non-strict contexts.
+	 */
+	noWith?: RuleConfiguration;
 	/**
 	 * It enables the recommended rules for this group
 	 */
@@ -324,6 +384,18 @@ export interface Correctness {
 	 */
 	noEmptyPattern?: RuleConfiguration;
 	/**
+	 * Disallow calling global object properties as functions
+	 */
+	noGlobalObjectCalls?: RuleConfiguration;
+	/**
+	 * Disallow function and var declarations in nested blocks.
+	 */
+	noInnerDeclarations?: RuleConfiguration;
+	/**
+	 * Prevents the incorrect use of super() inside classes. It also checks whether a call super() is missing from classes that extends other constructors.
+	 */
+	noInvalidConstructorSuper?: RuleConfiguration;
+	/**
 	 * Disallow new operators with the Symbol object
 	 */
 	noNewSymbol?: RuleConfiguration;
@@ -344,6 +416,10 @@ export interface Correctness {
 	 */
 	noStringCaseMismatch?: RuleConfiguration;
 	/**
+	 * Disallow lexical declarations in switch clauses.
+	 */
+	noSwitchDeclarations?: RuleConfiguration;
+	/**
 	 * Prevents the usage of variables that haven't been declared inside the document
 	 */
 	noUndeclaredVariables?: RuleConfiguration;
@@ -356,9 +432,21 @@ export interface Correctness {
 	 */
 	noUnreachable?: RuleConfiguration;
 	/**
+	 * Ensures the super() constructor is called exactly once on every code path in a class constructor before this is accessed if the class has a superclass
+	 */
+	noUnreachableSuper?: RuleConfiguration;
+	/**
 	 * Disallow control flow statements in finally blocks.
 	 */
 	noUnsafeFinally?: RuleConfiguration;
+	/**
+	 * Disallow the use of optional chaining in contexts where the undefined value is not allowed.
+	 */
+	noUnsafeOptionalChaining?: RuleConfiguration;
+	/**
+	 * Disallow unused labels.
+	 */
+	noUnusedLabels?: RuleConfiguration;
 	/**
 	 * Disallow unused variables.
 	 */
@@ -379,6 +467,10 @@ export interface Correctness {
 	 * Enforce "for" loop update clause moving the counter in the right direction.
 	 */
 	useValidForDirection?: RuleConfiguration;
+	/**
+	 * Require generator functions to contain yield.
+	 */
+	useYield?: RuleConfiguration;
 }
 /**
  * A list of rules that belong to this group
@@ -389,33 +481,21 @@ export interface Nursery {
 	 */
 	all?: boolean;
 	/**
+	 * Disallow the use of spread (...) syntax on accumulators.
+	 */
+	noAccumulatingSpread?: RuleConfiguration;
+	/**
 	 * Enforce that elements that do not support ARIA roles, states, and properties do not have those attributes.
 	 */
 	noAriaUnsupportedElements?: RuleConfiguration;
-	/**
-	 * Disallow assignments in expressions.
-	 */
-	noAssignInExpressions?: RuleConfiguration;
 	/**
 	 * Disallow certain types.
 	 */
 	noBannedTypes?: RuleConfiguration;
 	/**
-	 * Disallow reassigning class members.
-	 */
-	noClassAssign?: RuleConfiguration;
-	/**
-	 * Disallow comma operator.
-	 */
-	noCommaOperator?: RuleConfiguration;
-	/**
 	 * Disallow arrow functions where they could be confused with comparisons.
 	 */
 	noConfusingArrow?: RuleConfiguration;
-	/**
-	 * Disallow labeled statements that are not loops.
-	 */
-	noConfusingLabels?: RuleConfiguration;
 	/**
 	 * Disallow the use of console.log
 	 */
@@ -425,133 +505,25 @@ export interface Nursery {
 	 */
 	noConstantCondition?: RuleConfiguration;
 	/**
-	 * Disallow duplicate case labels. If a switch statement has duplicate test expressions in case clauses, it is likely that a programmer copied a case clause but forgot to change the test expression.
-	 */
-	noDuplicateCase?: RuleConfiguration;
-	/**
-	 * Disallow duplicate class members.
-	 */
-	noDuplicateClassMembers?: RuleConfiguration;
-	/**
 	 * Prevents JSX properties to be assigned multiple times.
 	 */
 	noDuplicateJsxProps?: RuleConfiguration;
-	/**
-	 * Disallow unnecessary labels.
-	 */
-	noExtraLabels?: RuleConfiguration;
-	/**
-	 * Typing mistakes and misunderstandings about where semicolons are required can lead to semicolons that are unnecessary. While not technically an error, extra semicolons can cause confusion when reading code.
-	 */
-	noExtraSemicolons?: RuleConfiguration;
 	/**
 	 * Prefer for...of statement instead of Array.forEach.
 	 */
 	noForEach?: RuleConfiguration;
 	/**
-	 * Disallow calling global object properties as functions
-	 */
-	noGlobalObjectCalls?: RuleConfiguration;
-	/**
-	 * Disallow type annotations for variables, parameters, and class properties initialized with a literal expression.
-	 */
-	noInferrableTypes?: RuleConfiguration;
-	/**
-	 * Disallow function and var declarations in nested blocks.
-	 */
-	noInnerDeclarations?: RuleConfiguration;
-	/**
-	 * Prevents the incorrect use of super() inside classes. It also checks whether a call super() is missing from classes that extends other constructors.
-	 */
-	noInvalidConstructorSuper?: RuleConfiguration;
-	/**
-	 * Disallow the use of TypeScript's namespaces.
-	 */
-	noNamespace?: RuleConfiguration;
-	/**
-	 * Enforce that interactive ARIA roles are not assigned to non-interactive HTML elements.
-	 */
-	noNoninteractiveElementToInteractiveRole?: RuleConfiguration;
-	/**
 	 * Enforce that tabIndex is not assigned to non-interactive HTML elements.
 	 */
 	noNoninteractiveTabindex?: RuleConfiguration;
-	/**
-	 * Disallow reassigning function parameters.
-	 */
-	noParameterAssign?: RuleConfiguration;
-	/**
-	 * Disallow the use of parameter properties in class constructors.
-	 */
-	noParameterProperties?: RuleConfiguration;
-	/**
-	 * Disallow direct use of Object.prototype builtins.
-	 */
-	noPrototypeBuiltins?: RuleConfiguration;
-	/**
-	 * Disallow variable, function, class, and type redeclarations in the same scope.
-	 */
-	noRedeclare?: RuleConfiguration;
-	/**
-	 * Enforce img alt prop does not contain the word "image", "picture", or "photo".
-	 */
-	noRedundantAlt?: RuleConfiguration;
 	/**
 	 * Enforce explicit role property is not the same as implicit/default role property on an element.
 	 */
 	noRedundantRoles?: RuleConfiguration;
 	/**
-	 * This rule allows you to specify global variable names that you don’t want to use in your application.
-	 */
-	noRestrictedGlobals?: RuleConfiguration;
-	/**
 	 * Disallow assignments where both sides are exactly the same.
 	 */
 	noSelfAssign?: RuleConfiguration;
-	/**
-	 * Disallow comparisons where both sides are exactly the same.
-	 */
-	noSelfCompare?: RuleConfiguration;
-	/**
-	 * Enforces the usage of the title element for the svg element.
-	 */
-	noSvgWithoutTitle?: RuleConfiguration;
-	/**
-	 * Disallow lexical declarations in switch clauses.
-	 */
-	noSwitchDeclarations?: RuleConfiguration;
-	/**
-	 * Ensures the super() constructor is called exactly once on every code path in a class constructor before this is accessed if the class has a superclass
-	 */
-	noUnreachableSuper?: RuleConfiguration;
-	/**
-	 * Disallow the use of optional chaining in contexts where the undefined value is not allowed.
-	 */
-	noUnsafeOptionalChaining?: RuleConfiguration;
-	/**
-	 * Disallow unused labels.
-	 */
-	noUnusedLabels?: RuleConfiguration;
-	/**
-	 * Disallow unnecessary catch clauses.
-	 */
-	noUselessCatch?: RuleConfiguration;
-	/**
-	 * Disallow unnecessary constructors.
-	 */
-	noUselessConstructor?: RuleConfiguration;
-	/**
-	 * Disallow renaming import, export, and destructured assignments to the same name.
-	 */
-	noUselessRename?: RuleConfiguration;
-	/**
-	 * Disallow useless case in switch statements.
-	 */
-	noUselessSwitchCase?: RuleConfiguration;
-	/**
-	 * Disallow with statements in non-strict contexts.
-	 */
-	noWith?: RuleConfiguration;
 	/**
 	 * It enables the recommended rules for this group
 	 */
@@ -560,10 +532,6 @@ export interface Nursery {
 	 * Enforce that ARIA state and property values are valid.
 	 */
 	useAriaPropTypes?: RuleConfiguration;
-	/**
-	 * Enforce that elements with ARIA roles must have all required ARIA attributes for that role.
-	 */
-	useAriaPropsForRole?: RuleConfiguration;
 	/**
 	 * Enforce camel case naming convention.
 	 */
@@ -585,10 +553,6 @@ export interface Nursery {
 	 */
 	useHookAtTopLevel?: RuleConfiguration;
 	/**
-	 * Enforces the usage of the attribute title for the element iframe
-	 */
-	useIframeTitle?: RuleConfiguration;
-	/**
 	 * Require calls to isNaN() when checking for NaN.
 	 */
 	useIsNan?: RuleConfiguration;
@@ -600,26 +564,6 @@ export interface Nursery {
 	 * Enforce the usage of a literal access to properties over computed property access.
 	 */
 	useLiteralKeys?: RuleConfiguration;
-	/**
-	 * Enforces that audio and video elements must have a track for captions.
-	 */
-	useMediaCaption?: RuleConfiguration;
-	/**
-	 * Require using the namespace keyword over the module keyword to declare TypeScript namespaces.
-	 */
-	useNamespaceKeyword?: RuleConfiguration;
-	/**
-	 * Ensures that ARIA properties aria-* are all valid.
-	 */
-	useValidAriaProps?: RuleConfiguration;
-	/**
-	 * Ensure that the attribute passed to the lang attribute is a correct ISO language and/or country.
-	 */
-	useValidLang?: RuleConfiguration;
-	/**
-	 * Require generator functions to contain yield.
-	 */
-	useYield?: RuleConfiguration;
 }
 /**
  * A list of rules that belong to this group
@@ -672,9 +616,21 @@ export interface Style {
 	 */
 	noArguments?: RuleConfiguration;
 	/**
+	 * Disallow comma operator.
+	 */
+	noCommaOperator?: RuleConfiguration;
+	/**
 	 * Disallow implicit true values on JSX boolean attributes
 	 */
 	noImplicitBoolean?: RuleConfiguration;
+	/**
+	 * Disallow type annotations for variables, parameters, and class properties initialized with a literal expression.
+	 */
+	noInferrableTypes?: RuleConfiguration;
+	/**
+	 * Disallow the use of TypeScript's namespaces.
+	 */
+	noNamespace?: RuleConfiguration;
 	/**
 	 * Disallow negation in the condition of an if statement if it has an else clause
 	 */
@@ -683,6 +639,18 @@ export interface Style {
 	 * Disallow non-null assertions using the ! postfix operator.
 	 */
 	noNonNullAssertion?: RuleConfiguration;
+	/**
+	 * Disallow reassigning function parameters.
+	 */
+	noParameterAssign?: RuleConfiguration;
+	/**
+	 * Disallow the use of parameter properties in class constructors.
+	 */
+	noParameterProperties?: RuleConfiguration;
+	/**
+	 * This rule allows you to specify global variable names that you don’t want to use in your application.
+	 */
+	noRestrictedGlobals?: RuleConfiguration;
 	/**
 	 * Disallow the use of constants which its value is the upper-case version of its name.
 	 */
@@ -765,6 +733,10 @@ export interface Suspicious {
 	 */
 	noArrayIndexKey?: RuleConfiguration;
 	/**
+	 * Disallow assignments in expressions.
+	 */
+	noAssignInExpressions?: RuleConfiguration;
+	/**
 	 * Disallows using an async function as a Promise executor.
 	 */
 	noAsyncPromiseExecutor?: RuleConfiguration;
@@ -773,6 +745,10 @@ export interface Suspicious {
 	 */
 	noCatchAssign?: RuleConfiguration;
 	/**
+	 * Disallow reassigning class members.
+	 */
+	noClassAssign?: RuleConfiguration;
+	/**
 	 * Prevent comments from being inserted as text nodes
 	 */
 	noCommentText?: RuleConfiguration;
@@ -780,6 +756,10 @@ export interface Suspicious {
 	 * Disallow comparing against -0
 	 */
 	noCompareNegZero?: RuleConfiguration;
+	/**
+	 * Disallow labeled statements that are not loops.
+	 */
+	noConfusingLabels?: RuleConfiguration;
 	/**
 	 * Disallow TypeScript const enum
 	 */
@@ -792,6 +772,14 @@ export interface Suspicious {
 	 * Require the use of === and !==
 	 */
 	noDoubleEquals?: RuleConfiguration;
+	/**
+	 * Disallow duplicate case labels. If a switch statement has duplicate test expressions in case clauses, it is likely that a programmer copied a case clause but forgot to change the test expression.
+	 */
+	noDuplicateCase?: RuleConfiguration;
+	/**
+	 * Disallow duplicate class members.
+	 */
+	noDuplicateClassMembers?: RuleConfiguration;
 	/**
 	 * Prevents object literals having more than one property declaration for the same name. If an object property with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored, which is likely a mistake.
 	 */
@@ -825,9 +813,21 @@ export interface Suspicious {
 	 */
 	noLabelVar?: RuleConfiguration;
 	/**
+	 * Disallow direct use of Object.prototype builtins.
+	 */
+	noPrototypeBuiltins?: RuleConfiguration;
+	/**
+	 * Disallow variable, function, class, and type redeclarations in the same scope.
+	 */
+	noRedeclare?: RuleConfiguration;
+	/**
 	 * Prevents from having redundant "use strict".
 	 */
 	noRedundantUseStrict?: RuleConfiguration;
+	/**
+	 * Disallow comparisons where both sides are exactly the same.
+	 */
+	noSelfCompare?: RuleConfiguration;
 	/**
 	 * Disallow identifiers from shadowing restricted names.
 	 */
@@ -848,6 +848,10 @@ export interface Suspicious {
 	 * Enforce default clauses in switch statements to be last
 	 */
 	useDefaultSwitchClauseLast?: RuleConfiguration;
+	/**
+	 * Require using the namespace keyword over the module keyword to declare TypeScript namespaces.
+	 */
+	useNamespaceKeyword?: RuleConfiguration;
 	/**
 	 * This rule verifies the result of typeof $expr unary expressions is being compared to valid values, either string literals containing valid type names or other typeof expressions
 	 */
@@ -934,147 +938,145 @@ export interface Advices {
 	advices: Advice[];
 }
 export type Category =
+	| "lint/a11y/noAccessKey"
 	| "lint/a11y/noAutofocus"
 	| "lint/a11y/noBlankTarget"
-	| "lint/a11y/noPositiveTabindex"
-	| "lint/a11y/useAltText"
-	| "lint/a11y/useAnchorContent"
-	| "lint/a11y/useButtonType"
-	| "lint/a11y/useKeyWithClickEvents"
-	| "lint/a11y/useKeyWithMouseEvents"
-	| "lint/a11y/useValidAnchor"
-	| "lint/a11y/useHtmlLang"
 	| "lint/a11y/noDistractingElements"
 	| "lint/a11y/noHeaderScope"
-	| "lint/a11y/noAccessKey"
+	| "lint/a11y/noNoninteractiveElementToInteractiveRole"
+	| "lint/a11y/noPositiveTabindex"
+	| "lint/a11y/noRedundantAlt"
+	| "lint/a11y/noSvgWithoutTitle"
+	| "lint/a11y/useAltText"
+	| "lint/a11y/useAnchorContent"
+	| "lint/a11y/useAriaPropsForRole"
+	| "lint/a11y/useButtonType"
+	| "lint/a11y/useHtmlLang"
+	| "lint/a11y/useIframeTitle"
+	| "lint/a11y/useKeyWithClickEvents"
+	| "lint/a11y/useKeyWithMouseEvents"
+	| "lint/a11y/useMediaCaption"
+	| "lint/a11y/useValidAnchor"
+	| "lint/a11y/useValidAriaProps"
+	| "lint/a11y/useValidLang"
 	| "lint/complexity/noExtraBooleanCast"
+	| "lint/complexity/noExtraSemicolon"
 	| "lint/complexity/noMultipleSpacesInRegularExpressionLiterals"
+	| "lint/complexity/noUselessCatch"
+	| "lint/complexity/noUselessConstructor"
 	| "lint/complexity/noUselessFragments"
+	| "lint/complexity/noUselessLabel"
+	| "lint/complexity/noUselessRename"
+	| "lint/complexity/noUselessSwitchCase"
+	| "lint/complexity/noWith"
 	| "lint/complexity/useFlatMap"
 	| "lint/complexity/useOptionalChain"
 	| "lint/complexity/useSimplifiedLogicExpression"
 	| "lint/correctness/noChildrenProp"
 	| "lint/correctness/noConstAssign"
+	| "lint/correctness/noConstructorReturn"
 	| "lint/correctness/noEmptyPattern"
+	| "lint/correctness/noGlobalObjectCalls"
+	| "lint/correctness/noInnerDeclarations"
+	| "lint/correctness/noInvalidConstructorSuper"
 	| "lint/correctness/noNewSymbol"
+	| "lint/correctness/noPrecisionLoss"
 	| "lint/correctness/noRenderReturnValue"
+	| "lint/correctness/noSetterReturn"
+	| "lint/correctness/noStringCaseMismatch"
+	| "lint/correctness/noSwitchDeclarations"
 	| "lint/correctness/noUndeclaredVariables"
 	| "lint/correctness/noUnnecessaryContinue"
 	| "lint/correctness/noUnreachable"
+	| "lint/correctness/noUnreachableSuper"
+	| "lint/correctness/noUnsafeFinally"
+	| "lint/correctness/noUnsafeOptionalChaining"
+	| "lint/correctness/noUnusedLabels"
 	| "lint/correctness/noUnusedVariables"
 	| "lint/correctness/noVoidElementsWithChildren"
-	| "lint/correctness/useValidForDirection"
-	| "lint/correctness/noUnsafeFinally"
-	| "lint/correctness/noConstructorReturn"
-	| "lint/correctness/noPrecisionLoss"
 	| "lint/correctness/noVoidTypeReturn"
-	| "lint/correctness/noStringCaseMismatch"
-	| "lint/correctness/noSetterReturn"
-	| "lint/nursery/noAssignInExpressions"
-	| "lint/nursery/noWith"
-	| "lint/nursery/noExtraSemicolons"
+	| "lint/correctness/useValidForDirection"
+	| "lint/correctness/useYield"
+	| "lint/nursery/noAccumulatingSpread"
+	| "lint/nursery/noAriaUnsupportedElements"
 	| "lint/nursery/noBannedTypes"
-	| "lint/nursery/noClassAssign"
-	| "lint/nursery/noCommaOperator"
-	| "lint/nursery/noDuplicateCase"
-	| "lint/nursery/noExtraLabels"
-	| "lint/nursery/noInferrableTypes"
-	| "lint/nursery/noInnerDeclarations"
-	| "lint/nursery/noInvalidConstructorSuper"
-	| "lint/nursery/noConfusingLabels"
-	| "lint/nursery/noParameterProperties"
-	| "lint/nursery/noRedundantAlt"
-	| "lint/nursery/noRestrictedGlobals"
-	| "lint/nursery/noSelfCompare"
+	| "lint/nursery/noConfusingArrow"
+	| "lint/nursery/noConsoleLog"
+	| "lint/nursery/noConstantCondition"
+	| "lint/nursery/noDuplicateJsxProps"
+	| "lint/nursery/noForEach"
+	| "lint/nursery/noNoninteractiveTabindex"
+	| "lint/nursery/noRedundantRoles"
 	| "lint/nursery/noSelfAssign"
-	| "lint/nursery/noSetterReturn"
-	| "lint/nursery/noStringCaseMismatch"
-	| "lint/nursery/noSwitchDeclarations"
-	| "lint/nursery/noUnreachableSuper"
-	| "lint/nursery/noUnusedLabels"
-	| "lint/nursery/noUselessSwitchCase"
-	| "lint/nursery/useAriaPropsForRole"
 	| "lint/nursery/useAriaPropTypes"
 	| "lint/nursery/useCamelCase"
-	| "lint/nursery/useValidLang"
-	| "lint/nursery/useValidAriaProps"
 	| "lint/nursery/useExhaustiveDependencies"
-	| "lint/nursery/useIsNan"
-	| "lint/nursery/useMediaCaption"
-	| "lint/nursery/useIframeTitle"
-	| "lint/nursery/noNoninteractiveElementToInteractiveRole"
-	| "lint/nursery/noUselessRename"
-	| "lint/nursery/useValidForDirection"
-	| "lint/nursery/useHookAtTopLevel"
-	| "lint/nursery/noUnsafeOptionalChaining"
-	| "lint/nursery/noDuplicateJsxProps"
-	| "lint/nursery/noDuplicateClassMembers"
-	| "lint/nursery/useYield"
-	| "lint/nursery/noGlobalObjectCalls"
-	| "lint/nursery/noPrototypeBuiltins"
-	| "lint/nursery/noSvgWithoutTitle"
-	| "lint/nursery/noUselessCatch"
-	| "lint/nursery/noParameterAssign"
-	| "lint/nursery/noNamespace"
-	| "lint/nursery/noConfusingArrow"
-	| "lint/nursery/noNoninteractiveTabindex"
-	| "lint/nursery/noAriaUnsupportedElements"
-	| "lint/nursery/noConsoleLog"
-	| "lint/nursery/noForEach"
-	| "lint/nursery/useLiteralKeys"
-	| "lint/nursery/noUselessConstructor"
-	| "lint/nursery/useLiteralEnumMembers"
 	| "lint/nursery/useGroupedTypeImport"
 	| "lint/nursery/useHeadingContent"
-	| "lint/nursery/noRedeclare"
-	| "lint/nursery/useNamespaceKeyword"
-	| "lint/nursery/noRedundantRoles"
-	| "lint/nursery/noConstantCondition"
+	| "lint/nursery/useHookAtTopLevel"
+	| "lint/nursery/useIsNan"
+	| "lint/nursery/useLiteralEnumMembers"
+	| "lint/nursery/useLiteralKeys"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"
 	| "lint/style/noArguments"
+	| "lint/style/noCommaOperator"
 	| "lint/style/noImplicitBoolean"
+	| "lint/style/noInferrableTypes"
+	| "lint/style/noNamespace"
 	| "lint/style/noNegationElse"
+	| "lint/style/noNonNullAssertion"
+	| "lint/style/noParameterAssign"
+	| "lint/style/noParameterProperties"
+	| "lint/style/noRestrictedGlobals"
 	| "lint/style/noShoutyConstants"
 	| "lint/style/noUnusedTemplateLiteral"
+	| "lint/style/noVar"
 	| "lint/style/useBlockStatements"
+	| "lint/style/useConst"
+	| "lint/style/useDefaultParameterLast"
+	| "lint/style/useEnumInitializers"
+	| "lint/style/useExponentiationOperator"
 	| "lint/style/useFragmentSyntax"
+	| "lint/style/useNumericLiterals"
 	| "lint/style/useSelfClosingElements"
 	| "lint/style/useShorthandArrayType"
 	| "lint/style/useSingleCaseStatement"
 	| "lint/style/useSingleVarDeclarator"
 	| "lint/style/useTemplate"
 	| "lint/style/useWhile"
-	| "lint/style/useExponentiationOperator"
-	| "lint/style/useNumericLiterals"
-	| "lint/style/useDefaultParameterLast"
-	| "lint/style/useConst"
-	| "lint/style/noVar"
-	| "lint/style/noNonNullAssertion"
-	| "lint/style/useEnumInitializers"
 	| "lint/suspicious/noArrayIndexKey"
+	| "lint/suspicious/noAssignInExpressions"
 	| "lint/suspicious/noAsyncPromiseExecutor"
 	| "lint/suspicious/noCatchAssign"
+	| "lint/suspicious/noClassAssign"
 	| "lint/suspicious/noCommentText"
 	| "lint/suspicious/noCompareNegZero"
+	| "lint/suspicious/noConfusingLabels"
+	| "lint/suspicious/noConstEnum"
 	| "lint/suspicious/noDebugger"
 	| "lint/suspicious/noDoubleEquals"
+	| "lint/suspicious/noDuplicateCase"
+	| "lint/suspicious/noDuplicateClassMembers"
+	| "lint/suspicious/noDuplicateObjectKeys"
 	| "lint/suspicious/noDuplicateParameters"
+	| "lint/suspicious/noEmptyInterface"
 	| "lint/suspicious/noExplicitAny"
+	| "lint/suspicious/noExtraNonNullAssertion"
 	| "lint/suspicious/noFunctionAssign"
 	| "lint/suspicious/noImportAssign"
 	| "lint/suspicious/noLabelVar"
+	| "lint/suspicious/noPrototypeBuiltins"
+	| "lint/suspicious/noRedeclare"
+	| "lint/suspicious/noRedundantUseStrict"
+	| "lint/suspicious/noSelfCompare"
 	| "lint/suspicious/noShadowRestrictedNames"
 	| "lint/suspicious/noSparseArray"
 	| "lint/suspicious/noUnsafeNegation"
-	| "lint/suspicious/useValidTypeof"
-	| "lint/suspicious/noEmptyInterface"
-	| "lint/suspicious/noExtraNonNullAssertion"
-	| "lint/suspicious/noRedundantUseStrict"
-	| "lint/suspicious/noConstEnum"
 	| "lint/suspicious/useDefaultSwitchClauseLast"
-	| "lint/suspicious/noDuplicateObjectKeys"
+	| "lint/suspicious/useNamespaceKeyword"
+	| "lint/suspicious/useValidTypeof"
 	| "files/missingHandler"
 	| "format"
 	| "configuration"

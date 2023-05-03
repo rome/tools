@@ -5,6 +5,8 @@ parent: lint/rules/index
 
 # noUselessSwitchCase (since v12.0.0)
 
+> This rule is recommended by Rome.
+
 Disallow useless `case` in `switch` statements.
 
 A `switch` statement can optionally have a `default` clause.
@@ -28,7 +30,7 @@ switch (foo) {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noUselessSwitchCase.js:2:5 <a href="https://docs.rome.tools/lint/rules/noUselessSwitchCase">lint/nursery/noUselessSwitchCase</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">complexity/noUselessSwitchCase.js:2:5 <a href="https://docs.rome.tools/lint/rules/noUselessSwitchCase">lint/complexity/noUselessSwitchCase</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Useless </span><span style="color: Tomato;"><strong>case clause</strong></span><span style="color: Tomato;">.</span>
   
@@ -70,7 +72,7 @@ switch (foo) {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noUselessSwitchCase.js:3:5 <a href="https://docs.rome.tools/lint/rules/noUselessSwitchCase">lint/nursery/noUselessSwitchCase</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">complexity/noUselessSwitchCase.js:3:5 <a href="https://docs.rome.tools/lint/rules/noUselessSwitchCase">lint/complexity/noUselessSwitchCase</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Useless </span><span style="color: Tomato;"><strong>case clause</strong></span><span style="color: Tomato;">.</span>
   

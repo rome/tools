@@ -151,7 +151,7 @@ impl Rule for UseCamelCase {
                 let is_property = name.parent::<JsPropertyClassMember>().is_some();
                 if is_property {
                     let name = name.text();
-                    check_is_camel(&name)
+                    check_is_camel(&name[1..])
                 } else {
                     None
                 }

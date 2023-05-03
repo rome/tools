@@ -1,5 +1,6 @@
 ---
 source: crates/rome_cli/tests/snap_test.rs
+assertion_line: 346
 expression: content
 ---
 ## `rome.json`
@@ -57,19 +58,27 @@ rome.json:6:13 deserialize ━━━━━━━━━━━━━━━━━�
   - noConstAssign
   - noConstructorReturn
   - noEmptyPattern
+  - noGlobalObjectCalls
+  - noInnerDeclarations
+  - noInvalidConstructorSuper
   - noNewSymbol
   - noPrecisionLoss
   - noRenderReturnValue
   - noSetterReturn
   - noStringCaseMismatch
+  - noSwitchDeclarations
   - noUndeclaredVariables
   - noUnnecessaryContinue
   - noUnreachable
+  - noUnreachableSuper
   - noUnsafeFinally
+  - noUnsafeOptionalChaining
+  - noUnusedLabels
   - noUnusedVariables
   - noVoidElementsWithChildren
   - noVoidTypeReturn
   - useValidForDirection
+  - useYield
   
 
 ```

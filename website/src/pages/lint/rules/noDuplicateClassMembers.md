@@ -5,6 +5,8 @@ parent: lint/rules/index
 
 # noDuplicateClassMembers (since v12.0.0)
 
+> This rule is recommended by Rome.
+
 Disallow duplicate class members.
 
 If there are declarations of the same name among class members,
@@ -22,7 +24,7 @@ class Foo {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noDuplicateClassMembers.js:3:3 <a href="https://docs.rome.tools/lint/rules/noDuplicateClassMembers">lint/nursery/noDuplicateClassMembers</a> ━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">suspicious/noDuplicateClassMembers.js:3:3 <a href="https://docs.rome.tools/lint/rules/noDuplicateClassMembers">lint/suspicious/noDuplicateClassMembers</a> ━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Duplicate class member name &quot;bar&quot;</span>
   
@@ -42,7 +44,7 @@ class Foo {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noDuplicateClassMembers.js:3:3 <a href="https://docs.rome.tools/lint/rules/noDuplicateClassMembers">lint/nursery/noDuplicateClassMembers</a> ━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">suspicious/noDuplicateClassMembers.js:3:3 <a href="https://docs.rome.tools/lint/rules/noDuplicateClassMembers">lint/suspicious/noDuplicateClassMembers</a> ━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Duplicate class member name &quot;bar&quot;</span>
   
@@ -62,7 +64,7 @@ class Foo {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noDuplicateClassMembers.js:3:3 <a href="https://docs.rome.tools/lint/rules/noDuplicateClassMembers">lint/nursery/noDuplicateClassMembers</a> ━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">suspicious/noDuplicateClassMembers.js:3:3 <a href="https://docs.rome.tools/lint/rules/noDuplicateClassMembers">lint/suspicious/noDuplicateClassMembers</a> ━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Duplicate class member name &quot;bar&quot;</span>
   
@@ -82,7 +84,7 @@ class Foo {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noDuplicateClassMembers.js:3:3 <a href="https://docs.rome.tools/lint/rules/noDuplicateClassMembers">lint/nursery/noDuplicateClassMembers</a> ━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">suspicious/noDuplicateClassMembers.js:3:3 <a href="https://docs.rome.tools/lint/rules/noDuplicateClassMembers">lint/suspicious/noDuplicateClassMembers</a> ━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Duplicate class member name &quot;bar&quot;</span>
   

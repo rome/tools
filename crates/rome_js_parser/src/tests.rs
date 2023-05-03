@@ -393,15 +393,11 @@ fn diagnostics_print_correctly() {
 #[test]
 pub fn quick_test() {
     let code = r#"
-[
-  @(decorators[first])
-  class {
-    method() {}
-  },
-]
-
-
-"#;
+class Foo {
+    @decorator declare a: number;
+    @decorator declare [b]: number;
+}
+    "#;
     let root = parse(code, SourceType::ts());
     let syntax = root.syntax();
 

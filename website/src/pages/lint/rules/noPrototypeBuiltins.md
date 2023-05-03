@@ -5,6 +5,8 @@ parent: lint/rules/index
 
 # noPrototypeBuiltins (since v12.0.0)
 
+> This rule is recommended by Rome.
+
 Disallow direct use of `Object.prototype` builtins.
 
 ECMAScript 5.1 added `Object.create` which allows the creation of an object with a custom prototype.
@@ -24,9 +26,9 @@ As for the `hasOwn` method, `foo.hasOwn("bar")` should be replaced with `Object.
 var invalid = foo.hasOwnProperty("bar");
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noPrototypeBuiltins.js:1:19 <a href="https://docs.rome.tools/lint/rules/noPrototypeBuiltins">lint/nursery/noPrototypeBuiltins</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">suspicious/noPrototypeBuiltins.js:1:19 <a href="https://docs.rome.tools/lint/rules/noPrototypeBuiltins">lint/suspicious/noPrototypeBuiltins</a> ━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Do not access Object.prototype method 'hasOwnProperty' from target object.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Do not access Object.prototype method 'hasOwnProperty' from target object.</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>var invalid = foo.hasOwnProperty(&quot;bar&quot;);
    <strong>   │ </strong>                  <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
@@ -42,9 +44,9 @@ var invalid = foo.hasOwnProperty("bar");
 var invalid = foo.isPrototypeOf(bar);
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noPrototypeBuiltins.js:1:19 <a href="https://docs.rome.tools/lint/rules/noPrototypeBuiltins">lint/nursery/noPrototypeBuiltins</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">suspicious/noPrototypeBuiltins.js:1:19 <a href="https://docs.rome.tools/lint/rules/noPrototypeBuiltins">lint/suspicious/noPrototypeBuiltins</a> ━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Do not access Object.prototype method 'isPrototypeOf' from target object.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Do not access Object.prototype method 'isPrototypeOf' from target object.</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>var invalid = foo.isPrototypeOf(bar);
    <strong>   │ </strong>                  <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
@@ -56,9 +58,9 @@ var invalid = foo.isPrototypeOf(bar);
 var invalid = foo.propertyIsEnumerable("bar");
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noPrototypeBuiltins.js:1:19 <a href="https://docs.rome.tools/lint/rules/noPrototypeBuiltins">lint/nursery/noPrototypeBuiltins</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">suspicious/noPrototypeBuiltins.js:1:19 <a href="https://docs.rome.tools/lint/rules/noPrototypeBuiltins">lint/suspicious/noPrototypeBuiltins</a> ━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Do not access Object.prototype method 'propertyIsEnumerable' from target object.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Do not access Object.prototype method 'propertyIsEnumerable' from target object.</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>var invalid = foo.propertyIsEnumerable(&quot;bar&quot;);
    <strong>   │ </strong>                  <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>

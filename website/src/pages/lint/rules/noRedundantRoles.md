@@ -3,7 +3,7 @@ title: Lint Rule noRedundantRoles
 parent: lint/rules/index
 ---
 
-# noRedundantRoles (since vnext)
+# noRedundantRoles (since v12.1.0)
 
 Enforce explicit `role` property is not the same as implicit/default role property on an element.
 

@@ -8,6 +8,7 @@ use crate::{
 #[derive(Debug, Ord, PartialOrd, Eq, PartialEq)]
 pub enum Modifiers {
     // modifiers must be sorted by precedence.
+    Decorator,
     Accessibility,
     Declare,
     Static,
@@ -29,6 +30,7 @@ impl From<&AnyTsIndexSignatureModifier> for Modifiers {
 impl From<&AnyJsMethodModifier> for Modifiers {
     fn from(modifier: &AnyJsMethodModifier) -> Self {
         match modifier {
+            AnyJsMethodModifier::JsDecorator(_) => Modifiers::Decorator,
             AnyJsMethodModifier::JsStaticModifier(_) => Modifiers::Static,
             AnyJsMethodModifier::TsAccessibilityModifier(_) => Modifiers::Accessibility,
             AnyJsMethodModifier::TsOverrideModifier(_) => Modifiers::Override,
@@ -39,6 +41,7 @@ impl From<&AnyJsMethodModifier> for Modifiers {
 impl From<&AnyTsMethodSignatureModifier> for Modifiers {
     fn from(modifier: &AnyTsMethodSignatureModifier) -> Self {
         match modifier {
+            AnyTsMethodSignatureModifier::JsDecorator(_) => Modifiers::Decorator,
             AnyTsMethodSignatureModifier::JsStaticModifier(_) => Modifiers::Static,
             AnyTsMethodSignatureModifier::TsAbstractModifier(_) => Modifiers::Abstract,
             AnyTsMethodSignatureModifier::TsAccessibilityModifier(_) => Modifiers::Accessibility,
@@ -50,6 +53,7 @@ impl From<&AnyTsMethodSignatureModifier> for Modifiers {
 impl From<&AnyJsPropertyModifier> for Modifiers {
     fn from(modifier: &AnyJsPropertyModifier) -> Self {
         match modifier {
+            AnyJsPropertyModifier::JsDecorator(_) => Modifiers::Decorator,
             AnyJsPropertyModifier::JsStaticModifier(_) => Modifiers::Static,
             AnyJsPropertyModifier::JsAccessorModifier(_) => Modifiers::Accessor,
             AnyJsPropertyModifier::TsAccessibilityModifier(_) => Modifiers::Accessibility,
@@ -72,6 +76,7 @@ impl From<&AnyTsPropertyParameterModifier> for Modifiers {
 impl From<&AnyTsPropertySignatureModifier> for Modifiers {
     fn from(modifier: &AnyTsPropertySignatureModifier) -> Self {
         match modifier {
+            AnyTsPropertySignatureModifier::JsDecorator(_) => Modifiers::Decorator,
             AnyTsPropertySignatureModifier::TsAccessibilityModifier(_) => Modifiers::Accessibility,
             AnyTsPropertySignatureModifier::TsDeclareModifier(_) => Modifiers::Declare,
             AnyTsPropertySignatureModifier::JsStaticModifier(_) => Modifiers::Static,

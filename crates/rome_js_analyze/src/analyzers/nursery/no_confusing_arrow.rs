@@ -33,7 +33,7 @@ declare_rule! {
     /// ```
     ///
     pub(crate) NoConfusingArrow {
-        version: "next",
+        version: "12.1.0",
         name: "noConfusingArrow",
         recommended: false,
     }

@@ -5,6 +5,8 @@ parent: lint/rules/index
 
 # noUselessConstructor (since vnext)
 
+> This rule is recommended by Rome.
+
 Disallow unnecessary constructors.
 
 _ES2015_ provides a default class constructor if one is not specified.
@@ -22,7 +24,7 @@ class A {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noUselessConstructor.js:2:5 <a href="https://docs.rome.tools/lint/rules/noUselessConstructor">lint/nursery/noUselessConstructor</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">complexity/noUselessConstructor.js:2:5 <a href="https://docs.rome.tools/lint/rules/noUselessConstructor">lint/complexity/noUselessConstructor</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This constructor is unnecessary.</span>
   
@@ -49,7 +51,7 @@ class B extends A {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noUselessConstructor.js:2:5 <a href="https://docs.rome.tools/lint/rules/noUselessConstructor">lint/nursery/noUselessConstructor</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">complexity/noUselessConstructor.js:2:5 <a href="https://docs.rome.tools/lint/rules/noUselessConstructor">lint/complexity/noUselessConstructor</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This constructor is unnecessary.</span>
   
@@ -82,7 +84,7 @@ class C {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noUselessConstructor.js:5:5 <a href="https://docs.rome.tools/lint/rules/noUselessConstructor">lint/nursery/noUselessConstructor</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">complexity/noUselessConstructor.js:5:5 <a href="https://docs.rome.tools/lint/rules/noUselessConstructor">lint/complexity/noUselessConstructor</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This constructor is unnecessary.</span>
   

@@ -1,5 +1,6 @@
 ---
 source: crates/rome_cli/tests/snap_test.rs
+assertion_line: 346
 expression: content
 ---
 ## `check.js`
@@ -22,7 +23,7 @@ internalError/io ━━━━━━━━━━━━━━━━━━━━━
 # Emitted Messages
 
 ```block
-check.js:1:4 lint/nursery/noAssignInExpressions  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+check.js:1:4 lint/suspicious/noAssignInExpressions  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × The assignment should not be in an expression.
   
