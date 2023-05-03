@@ -1,9 +1,7 @@
-import CodeMirror from "../CodeMirror";
-import type { Extension } from "@codemirror/state";
-
+import CodeMirror, { RomeExtension } from "../CodeMirror";
 interface Props {
 	code: string;
-	extensions: Extension[];
+	extensions: RomeExtension[];
 }
 
 export default function ImportSortingTab({ code, extensions }: Props) {
