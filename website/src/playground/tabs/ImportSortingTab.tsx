@@ -1,4 +1,4 @@
-import CodeMirror from "@src/playground/CodeMirror";
+import CodeMirror from "../CodeMirror";
 import type {Extension} from "@codemirror/state";
 
 interface Props {

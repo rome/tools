@@ -27,7 +27,7 @@ fn main() -> Result<()> {
     let root = project_root().join("website/src/pages/lint/rules");
     let reference_groups = project_root().join("website/src/components/generated/Groups.astro");
     let reference_number_of_rules =
-        project_root().join("website/src/components/reference/NumberOfRules.astro");
+        project_root().join("website/src/components/generated/NumberOfRules.astro");
     // Clear the rules directory ignoring "not found" errors
     if let Err(err) = fs2::remove_dir_all(&root) {
         let is_not_found = err
