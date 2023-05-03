@@ -1,5 +1,5 @@
 use super::*;
-use rome_js_syntax::{AnyJsRoot, JsFunctionDeclaration};
+use rome_js_syntax::{AnyJsFunction, AnyJsRoot, JsInitializerClause, JsVariableDeclarator};
 
 #[derive(Copy, Clone, Debug)]
 pub(crate) struct BindingIndex(usize);
@@ -336,7 +336,7 @@ impl SemanticModel {
         }
     }
 
-    /// Returns all [Call] of a [JsFunctionDeclaration].
+    /// Returns all [Call] of a [AnyJsFunction].
     ///
     /// ```rust
     /// use rome_rowan::{AstNode, SyntaxNodeCast};
@@ -354,17 +354,26 @@ impl SemanticModel {
     ///     .unwrap();
     ///
     /// let all_calls_to_f = model.all_calls(&f_declaration);
-    /// assert_eq!(2, all_calls_to_f.count());
+    /// assert_eq!(2, all_calls_to_f.unwrap().count());
     /// // or
     /// let all_calls_to_f = f_declaration.all_calls(&model);
-    /// assert_eq!(2, all_calls_to_f.count());
+    /// assert_eq!(2, all_calls_to_f.unwrap().count());
     /// ```
-    pub fn all_calls(&self, function: &JsFunctionDeclaration) -> AllCallsIter {
-        let references = function
-            .id()
-            .map(|id| id.all_reads(self))
-            .unwrap_or_else(|_| std::iter::successors(None, Reference::find_next_read));
+    pub fn all_calls(&self, function: &AnyJsFunction) -> Option<AllCallsIter> {
+        let identifier = match function {
+            AnyJsFunction::JsFunctionDeclaration(declaration) => declaration.id().ok()?,
+            AnyJsFunction::JsFunctionExportDefaultDeclaration(declaration) => declaration.id()?,
+            AnyJsFunction::JsArrowFunctionExpression(_)
+            | AnyJsFunction::JsFunctionExpression(_) => {
+                let parent = function
+                    .parent::<JsInitializerClause>()?
+                    .parent::<JsVariableDeclarator>()?;
+                parent.id().ok()?.as_any_js_binding()?.clone()
+            }
+        };
 
-        AllCallsIter { references }
+        Some(AllCallsIter {
+            references: identifier.all_reads(self),
+        })
     }
 }

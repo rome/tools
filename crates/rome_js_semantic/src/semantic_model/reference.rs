@@ -1,4 +1,4 @@
-use rome_js_syntax::{AnyJsIdentifierUsage, JsCallExpression, JsFunctionDeclaration};
+use rome_js_syntax::{AnyJsFunction, AnyJsIdentifierUsage, JsCallExpression};
 
 use super::*;
 use std::sync::Arc;
@@ -241,11 +241,11 @@ pub trait ReferencesExtensions {
 impl<T: IsBindingAstNode> ReferencesExtensions for T {}
 
 pub trait CallsExtensions {
-    fn all_calls(&self, model: &SemanticModel) -> AllCallsIter;
+    fn all_calls(&self, model: &SemanticModel) -> Option<AllCallsIter>;
 }
 
-impl CallsExtensions for JsFunctionDeclaration {
-    fn all_calls(&self, model: &SemanticModel) -> AllCallsIter {
+impl CallsExtensions for AnyJsFunction {
+    fn all_calls(&self, model: &SemanticModel) -> Option<AllCallsIter> {
         model.all_calls(self)
     }
 }

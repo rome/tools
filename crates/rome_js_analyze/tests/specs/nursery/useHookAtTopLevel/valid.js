@@ -19,3 +19,15 @@ function helper() {
 function Component2({a}) {
     helper();
 }
+
+const Component3 = () => {
+    useEffect();
+};
+
+export function Component4() {
+    useEffect();
+};
+
+export default function Component5() {
+    useEffect();
+};
