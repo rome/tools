@@ -56,6 +56,34 @@ function Component2({a}) {
     }
 }
 
+const Component3 = () => {
+    if (a == 1) {
+        useEffect();
+    }
+};
+
+export function Component4() {
+    if (a == 1) {
+        useEffect();
+    }
+};
+
+export default function Component5() {
+    if (a == 1) {
+        useEffect();
+    }
+};
+
+const Component6 = () => {
+    useEffect();
+};
+
+const Component7 = () => {
+    if (a == 1) {
+        Component6();
+    }
+};
+
 ```
 
 # Diagnostics
@@ -257,6 +285,91 @@ invalid.js:40:5 lint/nursery/useHookAtTopLevel ━━━━━━━━━━━
        │         ^^^^^^^^^^
     50 │     }
     51 │ }
+  
+  i For React to preserve state between calls, hooks needs to be called unconditionally and always in the same order.
+  
+  i See https://reactjs.org/docs/hooks-rules.html#only-call-hooks-at-the-top-level
+  
+
+```
+
+```
+invalid.js:55:9 lint/nursery/useHookAtTopLevel ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This hook is being called conditionally, but all hooks must be called in the exact same order in every component render.
+  
+    53 │ const Component3 = () => {
+    54 │     if (a == 1) {
+  > 55 │         useEffect();
+       │         ^^^^^^^^^
+    56 │     }
+    57 │ };
+  
+  i For React to preserve state between calls, hooks needs to be called unconditionally and always in the same order.
+  
+  i See https://reactjs.org/docs/hooks-rules.html#only-call-hooks-at-the-top-level
+  
+
+```
+
+```
+invalid.js:61:9 lint/nursery/useHookAtTopLevel ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This hook is being called conditionally, but all hooks must be called in the exact same order in every component render.
+  
+    59 │ export function Component4() {
+    60 │     if (a == 1) {
+  > 61 │         useEffect();
+       │         ^^^^^^^^^
+    62 │     }
+    63 │ };
+  
+  i For React to preserve state between calls, hooks needs to be called unconditionally and always in the same order.
+  
+  i See https://reactjs.org/docs/hooks-rules.html#only-call-hooks-at-the-top-level
+  
+
+```
+
+```
+invalid.js:67:9 lint/nursery/useHookAtTopLevel ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This hook is being called conditionally, but all hooks must be called in the exact same order in every component render.
+  
+    65 │ export default function Component5() {
+    66 │     if (a == 1) {
+  > 67 │         useEffect();
+       │         ^^^^^^^^^
+    68 │     }
+    69 │ };
+  
+  i For React to preserve state between calls, hooks needs to be called unconditionally and always in the same order.
+  
+  i See https://reactjs.org/docs/hooks-rules.html#only-call-hooks-at-the-top-level
+  
+
+```
+
+```
+invalid.js:72:5 lint/nursery/useHookAtTopLevel ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This hook is being called indirectly and conditionally, but all hooks must be called in the exact same order in every component render.
+  
+    71 │ const Component6 = () => {
+  > 72 │     useEffect();
+       │     ^^^^^^^^^
+    73 │ };
+    74 │ 
+  
+  i This is the call path until the hook.
+  
+    75 │ const Component7 = () => {
+  > 76 │     if (a == 1) {
+       │                  
+  > 77 │         Component6();
+       │         ^^^^^^^^^^^^
+    78 │     }
+    79 │ };
   
   i For React to preserve state between calls, hooks needs to be called unconditionally and always in the same order.
   

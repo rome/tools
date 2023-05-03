@@ -77,6 +77,7 @@ when there are breaking changes.
 - Fix [#4410](https://github.com/rome/tools/issues/4410) that caused [`useButtonType`](https://docs.rome.tools/lint/rules/usebuttontype/) to miss some cases
 - Fix false positive diagnostics that [`useCamelCase`](https://docs.rome.tools/lint/rules/usecamelcase/) caused to default exported components
 - Fix false positive diagnostics that [`useCamelCase`](https://docs.rome.tools/lint/rules/usecamelcase/) caused to private class members
+- Fix false positive diagnostics that [`useHookAtTopLevel`](https://docs.rome.tools/lint/rules/usehookattoplevel/) caused to arrow functions, export default functions and function expressions.
 
 ### Configuration
 ### Editors

@@ -49,3 +49,31 @@ function Component2({a}) {
         helper2(1);
     }
 }
+
+const Component3 = () => {
+    if (a == 1) {
+        useEffect();
+    }
+};
+
+export function Component4() {
+    if (a == 1) {
+        useEffect();
+    }
+};
+
+export default function Component5() {
+    if (a == 1) {
+        useEffect();
+    }
+};
+
+const Component6 = () => {
+    useEffect();
+};
+
+const Component7 = () => {
+    if (a == 1) {
+        Component6();
+    }
+};

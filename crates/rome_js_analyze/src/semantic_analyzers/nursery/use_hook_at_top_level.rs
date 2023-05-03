@@ -2,9 +2,7 @@ use crate::{react::hooks::react_hook_configuration, semantic_services::Semantic}
 use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_semantic::CallsExtensions;
-use rome_js_syntax::{
-    JsCallExpression, JsFunctionBody, JsFunctionDeclaration, JsSyntaxKind, TextRange,
-};
+use rome_js_syntax::{AnyJsFunction, JsCallExpression, JsFunctionBody, JsSyntaxKind, TextRange};
 use rome_rowan::AstNode;
 
 use super::use_exhaustive_dependencies::{HooksOptions, ReactExtensiveDependenciesOptions};
@@ -51,9 +49,7 @@ pub enum Suggestion {
 
 // Verify if the call expression is at the top level
 // of the component
-fn enclosing_function_if_call_is_at_top_level(
-    call: &JsCallExpression,
-) -> Option<JsFunctionDeclaration> {
+fn enclosing_function_if_call_is_at_top_level(call: &JsCallExpression) -> Option<AnyJsFunction> {
     let next = call.syntax().ancestors().find(|x| {
         !matches!(
             x.kind(),
@@ -70,9 +66,10 @@ fn enclosing_function_if_call_is_at_top_level(
     });
 
     next.and_then(JsFunctionBody::cast)
-        .and_then(|body| body.parent::<JsFunctionDeclaration>())
+        .and_then(|body| body.parent::<AnyJsFunction>())
 }
 
+#[derive(Debug)]
 pub struct CallPath {
     call: JsCallExpression,
     path: Vec<TextRange>,
@@ -107,11 +104,13 @@ impl Rule for UseHookAtTopLevel {
 
                 if let Some(enclosing_function) = enclosing_function_if_call_is_at_top_level(&call)
                 {
-                    for call in enclosing_function.all_calls(model) {
-                        calls.push(CallPath {
-                            call: call.tree(),
-                            path: path.clone(),
-                        });
+                    if let Some(calls_iter) = enclosing_function.all_calls(model) {
+                        for call in calls_iter {
+                            calls.push(CallPath {
+                                call: call.tree(),
+                                path: path.clone(),
+                            });
+                        }
                     }
                 } else {
                     return Some(Suggestion::None {
