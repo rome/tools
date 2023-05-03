@@ -2,7 +2,7 @@ use rome_formatter::{FormatContext, FormatResult, Formatted, IndentStyle, LineWi
 use rome_formatter_test::TestFormatLanguage;
 use rome_json_formatter::context::{JsonFormatContext, JsonFormatOptions};
 use rome_json_formatter::{format_node, format_range, JsonFormatLanguage};
-use rome_json_parser::parse_json;
+use rome_json_parser::{parse_json, JsonParserConfig};
 use rome_json_syntax::JsonLanguage;
 use rome_parser::AnyParse;
 use rome_rowan::{SyntaxNode, TextRange};
@@ -18,7 +18,7 @@ impl TestFormatLanguage for JsonTestFormatLanguage {
     type FormatLanguage = JsonFormatLanguage;
 
     fn parse(&self, text: &str) -> AnyParse {
-        parse_json(text).into()
+        parse_json(text, JsonParserConfig::default()).into()
     }
 
     fn deserialize_format_options(

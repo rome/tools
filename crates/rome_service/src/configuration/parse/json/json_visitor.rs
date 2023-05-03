@@ -27,7 +27,7 @@ impl VisitNode<JsonLanguage> for JsonConfiguration {
 
         if let "allowComments" = name_text {
             let glob_array = self.map_to_index_set_string(&value, name_text, diagnostics)?;
-            self.allow_comments = Some(glob_array);
+            self.allow_comments = Some(glob_array.into());
         }
 
         Some(())

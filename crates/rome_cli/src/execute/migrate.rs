@@ -3,6 +3,7 @@ use crate::{CliDiagnostic, CliSession};
 use rome_console::{markup, ConsoleExt};
 use rome_diagnostics::PrintDiagnostic;
 use rome_fs::OpenOptions;
+use rome_json_parser::JsonParserConfig;
 use rome_json_syntax::JsonRoot;
 use rome_migrate::{migrate_configuration, ControlFlow};
 use rome_rowan::AstNode;
@@ -26,7 +27,7 @@ pub(crate) fn run(
         fs.open_with_options(configuration_path.as_path(), open_options)?;
     let mut configuration_content = String::new();
     configuration_file.read_to_string(&mut configuration_content)?;
-    let parsed = rome_json_parser::parse_json(&configuration_content);
+    let parsed = rome_json_parser::parse_json(&configuration_content, JsonParserConfig::default());
     let mut errors = 0;
     let mut tree = parsed.tree();
     let mut actions = Vec::new();

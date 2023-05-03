@@ -7,7 +7,7 @@ use rome_formatter::IndentStyle;
 use rome_fs::{FileSystemExt, MemoryFileSystem};
 use rome_json_formatter::context::JsonFormatOptions;
 use rome_json_formatter::format_node;
-use rome_json_parser::parse_json;
+use rome_json_parser::{parse_json, JsonParserConfig};
 use std::borrow::Cow;
 use std::collections::BTreeMap;
 use std::env::{current_exe, temp_dir};
@@ -49,7 +49,7 @@ impl CliSnapshot {
         let mut content = String::new();
 
         if let Some(configuration) = &self.configuration {
-            let parsed = parse_json(&redact_snapshot(configuration));
+            let parsed = parse_json(&redact_snapshot(configuration), JsonParserConfig::default());
             let formatted = format_node(
                 JsonFormatOptions::default().with_indent_style(IndentStyle::Space(2)),
                 &parsed.syntax(),

@@ -6,6 +6,7 @@ use rome_js_analyze::analyze;
 use rome_js_formatter::context::{JsFormatContext, JsFormatOptions};
 use rome_js_syntax::{AnyJsRoot, JsSyntaxNode, SourceType};
 use rome_json_formatter::context::{JsonFormatContext, JsonFormatOptions};
+use rome_json_parser::JsonParserConfig;
 use rome_json_syntax::JsonSyntaxNode;
 use rome_parser::prelude::ParseDiagnostic;
 use rome_rowan::NodeCache;
@@ -31,7 +32,10 @@ impl<'a> Parse<'a> {
             Parse::JavaScript(source_type, code) => {
                 Parsed::JavaScript(rome_js_parser::parse(code, *source_type), *source_type)
             }
-            Parse::Json(code) => Parsed::Json(rome_json_parser::parse_json(code)),
+            Parse::Json(code) => Parsed::Json(rome_json_parser::parse_json(
+                code,
+                JsonParserConfig::default(),
+            )),
         }
     }
 
@@ -41,7 +45,11 @@ impl<'a> Parse<'a> {
                 rome_js_parser::parse_js_with_cache(code, *source_type, cache),
                 *source_type,
             ),
-            Parse::Json(code) => Parsed::Json(rome_json_parser::parse_json_with_cache(code, cache)),
+            Parse::Json(code) => Parsed::Json(rome_json_parser::parse_json_with_cache(
+                code,
+                cache,
+                JsonParserConfig::default(),
+            )),
         }
     }
 }

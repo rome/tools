@@ -17,6 +17,7 @@ use rome_formatter::{FormatError, Printed};
 use rome_fs::{RomePath, CONFIG_NAME};
 use rome_json_formatter::context::JsonFormatOptions;
 use rome_json_formatter::format_node;
+use rome_json_parser::JsonParserConfig;
 use rome_json_syntax::{JsonLanguage, JsonRoot, JsonSyntaxNode};
 use rome_parser::AnyParse;
 use rome_rowan::{AstNode, NodeCache};
@@ -84,7 +85,7 @@ impl ExtensionHandler for JsonFileHandler {
 }
 
 fn parse(_: &RomePath, _: LanguageId, text: &str, cache: &mut NodeCache) -> AnyParse {
-    let parse = rome_json_parser::parse_json_with_cache(text, cache);
+    let parse = rome_json_parser::parse_json_with_cache(text, cache, JsonParserConfig::default());
     AnyParse::from(parse)
 }
 

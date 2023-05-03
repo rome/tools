@@ -12,6 +12,7 @@ use rome_diagnostics::termcolor::NoColor;
 use rome_diagnostics::{Diagnostic, DiagnosticExt, PrintDiagnostic};
 use rome_js_analyze::{analyze, visit_registry};
 use rome_js_syntax::{JsLanguage, Language, LanguageVariant, ModuleKind, SourceType};
+use rome_json_parser::JsonParserConfig;
 use rome_service::settings::WorkspaceSettings;
 use std::{
     collections::BTreeMap,
@@ -595,7 +596,7 @@ fn assert_lint(
             }
         }
         BlockType::Json => {
-            let parse = rome_json_parser::parse_json(code);
+            let parse = rome_json_parser::parse_json(code, JsonParserConfig::default());
 
             if parse.has_errors() {
                 for diag in parse.into_diagnostics() {

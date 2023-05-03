@@ -104,3 +104,9 @@ impl FromStr for StringSet {
         Ok(StringSet::default())
     }
 }
+
+impl From<IndexSet<String>> for StringSet {
+    fn from(value: IndexSet<String>) -> Self {
+        Self::new(value)
+    }
+}

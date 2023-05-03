@@ -2,6 +2,7 @@
 
 use crate::parser::JsonParser;
 use crate::syntax::parse_root;
+pub use parser::JsonParserConfig;
 use rome_json_factory::JsonSyntaxFactory;
 use rome_json_syntax::{JsonLanguage, JsonRoot, JsonSyntaxNode};
 pub use rome_parser::prelude::*;
@@ -18,15 +19,19 @@ mod token_source;
 pub(crate) type JsonLosslessTreeSink<'source> =
     LosslessTreeSink<'source, JsonLanguage, JsonSyntaxFactory>;
 
-pub fn parse_json(source: &str) -> JsonParse {
+pub fn parse_json(source: &str, config: JsonParserConfig) -> JsonParse {
     let mut cache = NodeCache::default();
-    parse_json_with_cache(source, &mut cache)
+    parse_json_with_cache(source, &mut cache, config)
 }
 
 /// Parses the provided string as JSON program using the provided node cache.
-pub fn parse_json_with_cache(source: &str, cache: &mut NodeCache) -> JsonParse {
+pub fn parse_json_with_cache(
+    source: &str,
+    cache: &mut NodeCache,
+    config: JsonParserConfig,
+) -> JsonParse {
     tracing::debug_span!("parse").in_scope(move || {
-        let mut parser = JsonParser::new(source);
+        let mut parser = JsonParser::new(source, config);
 
         parse_root(&mut parser);
 
@@ -61,7 +66,8 @@ impl JsonParse {
     ///
     /// # fn main() -> Result<(), SyntaxError> {
     /// use rome_json_syntax::JsonSyntaxKind;
-    /// let parse = parse_json(r#"["a", 1]"#);
+    /// use rome_json_parser::JsonParserConfig;
+    /// let parse = parse_json(r#"["a", 1]"#, JsonParserConfig::default());
     ///
     /// // Get the root value
     /// let root_value = parse.tree().value()?;

@@ -1,7 +1,7 @@
 use rome_formatter_test::check_reformat::CheckReformat;
 use rome_json_formatter::context::JsonFormatOptions;
 use rome_json_formatter::format_node;
-use rome_json_parser::parse_json;
+use rome_json_parser::{parse_json, JsonParse, JsonParserConfig};
 
 mod language {
     include!("language.rs");
@@ -27,7 +27,7 @@ fn quick_test() {
     ]
   }
 "#;
-    let parse = parse_json(src);
+    let parse = parse_json(src, JsonParserConfig::default());
     let options = JsonFormatOptions::default();
     let result = format_node(options.clone(), &parse.syntax())
         .unwrap()

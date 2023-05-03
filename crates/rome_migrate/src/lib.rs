@@ -101,7 +101,7 @@ where
 mod test {
     use crate::migrate_configuration;
     use rome_analyze::{ControlFlow, Never};
-    use rome_json_parser::parse_json;
+    use rome_json_parser::{parse_json, JsonParserConfig};
     use std::path::Path;
 
     #[test]
@@ -109,7 +109,7 @@ mod test {
     fn smoke() {
         let source = r#"{ "something": "else" }"#;
 
-        let parsed = parse_json(source);
+        let parsed = parse_json(source, JsonParserConfig::default());
 
         migrate_configuration(&parsed.tree().value().unwrap(), Path::new(""), |signal| {
             for action in signal.actions() {

@@ -290,9 +290,11 @@ pub fn format_sub_tree(options: JsonFormatOptions, root: &JsonSyntaxNode) -> For
 
 #[cfg(test)]
 mod tests {
+    use std::default;
+
     use crate::context::JsonFormatOptions;
     use crate::format_node;
-    use rome_json_parser::parse_json;
+    use rome_json_parser::{parse_json, JsonParserConfig};
 
     #[test]
     fn smoke_test() {
@@ -305,7 +307,7 @@ mod tests {
     "e": false
 }
 "#;
-        let parse = parse_json(src);
+        let parse = parse_json(src, JsonParserConfig::default());
         let options = JsonFormatOptions::default();
         let formatted = format_node(options, &parse.syntax()).unwrap();
         assert_eq!(

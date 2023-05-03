@@ -491,7 +491,7 @@ where
 {
     let mut output = Output::default();
     let mut diagnostics = vec![];
-    let parse = parse_json(source);
+    let parse = parse_json(source, rome_json_parser::JsonParserConfig::default());
     Output::deserialize_from_ast(parse.tree(), &mut output, &mut diagnostics);
     let mut errors = parse
         .into_diagnostics()
