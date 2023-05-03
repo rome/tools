@@ -340,7 +340,7 @@ impl SemanticModel {
     ///
     /// ```rust
     /// use rome_rowan::{AstNode, SyntaxNodeCast};
-    /// use rome_js_syntax::{SourceType, JsFunctionDeclaration};
+    /// use rome_js_syntax::{SourceType, AnyJsFunction};
     /// use rome_js_semantic::{semantic_model, CallsExtensions, SemanticModelOptions};
     ///
     /// let r = rome_js_parser::parse("function f(){} f() f()", SourceType::js_module());
@@ -349,7 +349,7 @@ impl SemanticModel {
     /// let f_declaration = r
     ///     .syntax()
     ///     .descendants()
-    ///     .filter_map(JsFunctionDeclaration::cast)
+    ///     .filter_map(AnyJsFunction::cast)
     ///     .next()
     ///     .unwrap();
     ///
