@@ -5,7 +5,7 @@ use bpaf::Args;
 use rome_console::BufferConsole;
 use rome_fs::{FileSystemExt, MemoryFileSystem};
 use rome_json_formatter::context::JsonFormatOptions;
-use rome_json_parser::parse_json;
+use rome_json_parser::{parse_json, JsonParserConfig};
 use rome_service::DynRef;
 use std::path::Path;
 
@@ -52,7 +52,7 @@ fn creates_config_file() {
     let mut content = String::new();
     file.read_to_string(&mut content)
         .expect("failed to read file from memory FS");
-    let parsed = parse_json(CONFIG_INIT_DEFAULT);
+    let parsed = parse_json(CONFIG_INIT_DEFAULT, JsonParserConfig::default());
     let formatted =
         rome_json_formatter::format_node(JsonFormatOptions::default(), &parsed.syntax())
             .expect("valid format document")
@@ -95,7 +95,10 @@ fn creates_config_file_when_rome_installed_via_package_manager() {
     let mut content = String::new();
     file.read_to_string(&mut content)
         .expect("failed to read file from memory FS");
-    let parsed = parse_json(CONFIG_INIT_DEFAULT_WHEN_INSTALLED);
+    let parsed = parse_json(
+        CONFIG_INIT_DEFAULT_WHEN_INSTALLED,
+        JsonParserConfig::default(),
+    );
     let formatted =
         rome_json_formatter::format_node(JsonFormatOptions::default(), &parsed.syntax())
             .expect("valid format document")

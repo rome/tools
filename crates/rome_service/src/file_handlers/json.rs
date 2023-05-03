@@ -1,5 +1,4 @@
 use super::{ExtensionHandler, Mime};
-use crate::configuration::to_analyzer_configuration;
 use crate::file_handlers::{
     AnalyzerCapabilities, Capabilities, FixAllParams, FormatterCapabilities, LintParams,
     LintResults, ParserCapabilities,
@@ -12,26 +11,23 @@ use crate::workspace::{
     FixFileResult, GetSyntaxTreeResult, OrganizeImportsResult, PullActionsResult,
 };
 use crate::{Configuration, Rules, WorkspaceError};
-use rome_analyze::{AnalyzerOptions, ControlFlow, Never, RuleCategories};
 use rome_deserialize::json::deserialize_from_json_ast;
-use rome_diagnostics::{category, Diagnostic, DiagnosticExt, Severity};
+use rome_diagnostics::{Diagnostic, Severity};
 use rome_formatter::{FormatError, Printed};
 use rome_fs::{RomePath, CONFIG_NAME};
-use rome_json_analyze::analyze;
 use rome_json_formatter::context::JsonFormatOptions;
 use rome_json_formatter::format_node;
-use rome_json_syntax::{JsonFileSource, JsonLanguage, JsonRoot, JsonSyntaxNode};
+use rome_json_parser::JsonParserConfig;
+use rome_json_syntax::{JsonLanguage, JsonRoot, JsonSyntaxNode};
 use rome_parser::AnyParse;
-use rome_rowan::{AstNode, FileSource, NodeCache};
+use rome_rowan::{AstNode, NodeCache};
 use rome_rowan::{TextRange, TextSize, TokenAtOffset};
-use std::path::PathBuf;
 
 impl Language for JsonLanguage {
     type FormatterSettings = ();
     type LinterSettings = ();
     type FormatOptions = JsonFormatOptions;
     type OrganizeImportsSettings = ();
-    type ParserSettings = ();
 
     fn lookup_settings(language: &LanguagesSettings) -> &LanguageSettings<Self> {
         &language.json
@@ -88,23 +84,9 @@ impl ExtensionHandler for JsonFileHandler {
     }
 }
 
-fn parse(
-    _: &RomePath,
-    _: LanguageId,
-    text: &str,
-    _: SettingsHandle,
-    cache: &mut NodeCache,
-) -> AnyParse {
-    let parse = rome_json_parser::parse_json_with_cache(text, cache);
-    let root = parse.syntax();
-    let diagnostics = parse.into_diagnostics();
-
-    AnyParse::new(
-        // SAFETY: the parser should always return a root node
-        root.as_send().unwrap(),
-        diagnostics,
-        JsonFileSource::json().as_any_file_source(),
-    )
+fn parse(_: &RomePath, _: LanguageId, text: &str, cache: &mut NodeCache) -> AnyParse {
+    let parse = rome_json_parser::parse_json_with_cache(text, cache, JsonParserConfig::default());
+    AnyParse::from(parse)
 }
 
 fn debug_syntax_tree(_rome_path: &RomePath, parse: AnyParse) -> GetSyntaxTreeResult {
@@ -149,7 +131,6 @@ fn format(
     }
 }
 
-#[tracing::instrument(level = "debug", skip(parse))]
 fn format_range(
     rome_path: &RomePath,
     parse: AnyParse,
@@ -163,7 +144,6 @@ fn format_range(
     Ok(printed)
 }
 
-#[tracing::instrument(level = "debug", skip(parse))]
 fn format_on_type(
     rome_path: &RomePath,
     parse: AnyParse,
@@ -201,96 +181,35 @@ fn format_on_type(
 }
 
 fn lint(params: LintParams) -> LintResults {
-    tracing::debug_span!("lint").in_scope(move || {
-        let root: JsonRoot = params.parse.tree();
-        let mut diagnostics = params.parse.into_diagnostics();
+    let root: JsonRoot = params.parse.tree();
+    let mut diagnostics = params.parse.into_diagnostics();
 
-        // if we're parsing the `rome.json` file, we deserialize it, so we can emit diagnostics for
-        // malformed configuration
-        if params.path.ends_with(CONFIG_NAME) {
-            let deserialized = deserialize_from_json_ast::<Configuration>(&root);
-            diagnostics.extend(
-                deserialized
-                    .into_diagnostics()
-                    .into_iter()
-                    .map(rome_diagnostics::serde::Diagnostic::new)
-                    .collect::<Vec<_>>(),
-            );
-        }
-
-        let mut diagnostic_count = diagnostics.len() as u64;
-        let mut errors = diagnostics
-            .iter()
-            .filter(|diag| diag.severity() <= Severity::Error)
-            .count();
-
-        let skipped_diagnostics = diagnostic_count - diagnostics.len() as u64;
-
-        let has_lint = params.filter.categories.contains(RuleCategories::LINT);
-        let analyzer_options =
-            compute_analyzer_options(&params.settings, PathBuf::from(params.path.as_path()));
-
-        let (_, analyze_diagnostics) = analyze(
-            &root.value().unwrap(),
-            params.filter,
-            &analyzer_options,
-            |signal| {
-                if let Some(mut diagnostic) = signal.diagnostic() {
-                    // Do not report unused suppression comment diagnostics if this is a syntax-only analyzer pass
-                    if !has_lint && diagnostic.category() == Some(category!("suppressions/unused"))
-                    {
-                        return ControlFlow::<Never>::Continue(());
-                    }
-
-                    diagnostic_count += 1;
-
-                    // We do now check if the severity of the diagnostics should be changed.
-                    // The configuration allows to change the severity of the diagnostics emitted by rules.
-                    let severity = diagnostic
-                        .category()
-                        .filter(|category| category.name().starts_with("lint/"))
-                        .map(|category| {
-                            params
-                                .rules
-                                .and_then(|rules| rules.get_severity_from_code(category))
-                                .unwrap_or(Severity::Warning)
-                        })
-                        .unwrap_or_else(|| diagnostic.severity());
-
-                    if severity <= Severity::Error {
-                        errors += 1;
-                    }
-
-                    if diagnostic_count <= params.max_diagnostics {
-                        for action in signal.actions() {
-                            if !action.is_suppression() {
-                                diagnostic = diagnostic.add_code_suggestion(action.into());
-                            }
-                        }
-
-                        let error = diagnostic.with_severity(severity);
-
-                        diagnostics.push(rome_diagnostics::serde::Diagnostic::new(error));
-                    }
-                }
-
-                ControlFlow::<Never>::Continue(())
-            },
-        );
-
+    // if we're parsing the `rome.json` file, we deserialize it, so we can emit diagnostics for
+    // malformed configuration
+    if params.path.ends_with(CONFIG_NAME) {
+        let deserialized = deserialize_from_json_ast::<Configuration>(root);
         diagnostics.extend(
-            analyze_diagnostics
+            deserialized
+                .into_diagnostics()
                 .into_iter()
                 .map(rome_diagnostics::serde::Diagnostic::new)
                 .collect::<Vec<_>>(),
         );
+    }
 
-        LintResults {
-            diagnostics,
-            errors,
-            skipped_diagnostics,
-        }
-    })
+    let diagnostic_count = diagnostics.len() as u64;
+    let errors = diagnostics
+        .iter()
+        .filter(|diag| diag.severity() <= Severity::Error)
+        .count();
+
+    let skipped_diagnostics = diagnostic_count - diagnostics.len() as u64;
+
+    LintResults {
+        diagnostics,
+        errors,
+        skipped_diagnostics,
+    }
 }
 
 fn code_actions(
@@ -319,16 +238,4 @@ fn organize_imports(parse: AnyParse) -> Result<OrganizeImportsResult, WorkspaceE
     Ok(OrganizeImportsResult {
         code: parse.syntax::<JsonLanguage>().to_string(),
     })
-}
-
-fn compute_analyzer_options(settings: &SettingsHandle, file_path: PathBuf) -> AnalyzerOptions {
-    let configuration = to_analyzer_configuration(
-        settings.as_ref().linter(),
-        &settings.as_ref().languages,
-        |_| vec![],
-    );
-    AnalyzerOptions {
-        configuration,
-        file_path,
-    }
 }

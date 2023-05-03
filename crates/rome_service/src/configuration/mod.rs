@@ -16,8 +16,6 @@ pub mod diagnostics;
 pub mod formatter;
 mod generated;
 pub mod javascript;
-mod javascript;
-mod javascript;
 mod json;
 pub mod linter;
 mod merge;
@@ -35,15 +33,14 @@ use crate::configuration::vcs::{vcs_configuration, VcsConfiguration};
 use crate::settings::{LanguagesSettings, LinterSettings};
 pub use formatter::{formatter_configuration, FormatterConfiguration, PlainIndentStyle};
 pub use javascript::{javascript_configuration, JavascriptConfiguration, JavascriptFormatter};
+pub use json::{json_configuration, JsonConfiguration};
 pub use linter::{linter_configuration, LinterConfiguration, RuleConfiguration, Rules};
 use rome_analyze::{AnalyzerConfiguration, AnalyzerRules};
 use rome_deserialize::json::deserialize_from_json_str;
 use rome_deserialize::Deserialized;
 use rome_js_analyze::metadata;
 use rome_json_formatter::context::JsonFormatOptions;
-use rome_json_parser::parse_json;
-
-use self::json::JsonConfiguration;
+use rome_json_parser::{parse_json, JsonParserConfig};
 
 /// The configuration that is contained inside the file `rome.json`
 #[derive(Debug, Deserialize, Serialize, Clone, Bpaf)]
@@ -86,8 +83,9 @@ pub struct Configuration {
     #[bpaf(external(javascript_configuration), optional)]
     pub javascript: Option<JavascriptConfiguration>,
 
-    /// Specific configuration for the JavaScript language
+    /// Specific configuration for the Json language
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(json_configuration), optional)]
     pub json: Option<JsonConfiguration>,
 }
 
@@ -368,7 +366,7 @@ pub fn create_config(
         WorkspaceError::Configuration(ConfigurationDiagnostic::new_serialization_error())
     })?;
 
-    let parsed = parse_json(&contents);
+    let parsed = parse_json(&contents, JsonParserConfig::default());
     let formatted =
         rome_json_formatter::format_node(JsonFormatOptions::default(), &parsed.syntax())?
             .print()

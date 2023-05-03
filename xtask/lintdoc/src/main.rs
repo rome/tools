@@ -10,9 +10,9 @@ use rome_console::{
 };
 use rome_diagnostics::termcolor::NoColor;
 use rome_diagnostics::{Diagnostic, DiagnosticExt, PrintDiagnostic};
-use rome_js_parser::JsParserOptions;
-use rome_js_syntax::{JsFileSource, JsLanguage, Language, LanguageVariant, ModuleKind};
-use rome_json_syntax::JsonLanguage;
+use rome_js_analyze::{analyze, visit_registry};
+use rome_js_syntax::{JsLanguage, Language, LanguageVariant, ModuleKind, SourceType};
+use rome_json_parser::JsonParserConfig;
 use rome_service::settings::WorkspaceSettings;
 use std::{
     collections::BTreeMap,
@@ -26,9 +26,8 @@ use xtask::{glue::fs2, *};
 
 fn main() -> Result<()> {
     let root = project_root().join("website/src/pages/lint/rules");
-    let reference_groups = project_root().join("website/src/components/generated/Groups.astro");
-    let reference_number_of_rules =
-        project_root().join("website/src/components/generated/NumberOfRules.astro");
+    let reference_groups = project_root().join("website/src/components/reference/Groups.astro");
+
     // Clear the rules directory ignoring "not found" errors
     if let Err(err) = fs2::remove_dir_all(&root) {
         let is_not_found = err
@@ -66,7 +65,6 @@ fn main() -> Result<()> {
     #[derive(Default)]
     struct LintRulesVisitor {
         groups: BTreeMap<&'static str, BTreeMap<&'static str, RuleMetadata>>,
-        number_or_rules: u16,
     }
 
     impl RegistryVisitor<JsLanguage> for LintRulesVisitor {
@@ -82,28 +80,6 @@ fn main() -> Result<()> {
             R::Query: Queryable<Language = JsLanguage>,
             <R::Query as Queryable>::Output: Clone,
         {
-            self.number_or_rules += 1;
-            self.groups
-                .entry(<R::Group as RuleGroup>::NAME)
-                .or_insert_with(BTreeMap::new)
-                .insert(R::METADATA.name, R::METADATA);
-        }
-    }
-
-    impl RegistryVisitor<JsonLanguage> for LintRulesVisitor {
-        fn record_category<C: GroupCategory<Language = JsonLanguage>>(&mut self) {
-            if matches!(C::CATEGORY, RuleCategory::Lint) {
-                C::record_groups(self);
-            }
-        }
-
-        fn record_rule<R>(&mut self)
-        where
-            R: Rule + 'static,
-            R::Query: Queryable<Language = JsonLanguage>,
-            <R::Query as Queryable>::Output: Clone,
-        {
-            self.number_or_rules += 1;
             self.groups
                 .entry(<R::Group as RuleGroup>::NAME)
                 .or_insert_with(BTreeMap::new)
@@ -112,13 +88,9 @@ fn main() -> Result<()> {
     }
 
     let mut visitor = LintRulesVisitor::default();
-    rome_js_analyze::visit_registry(&mut visitor);
-    rome_json_analyze::visit_registry(&mut visitor);
+    visit_registry(&mut visitor);
 
-    let LintRulesVisitor {
-        mut groups,
-        number_or_rules,
-    } = visitor;
+    let LintRulesVisitor { mut groups } = visitor;
 
     let nursery_rules = groups
         .remove("nursery")
@@ -147,14 +119,8 @@ fn main() -> Result<()> {
         );
     }
 
-    let number_of_rules_buffer = format!(
-        "<!-- this file is auto generated, use `cargo lintdoc` to update it -->\n \
-    <p>Rome's linter has a total of <strong><a href='/lint/rules'>{} rules</a></strong><p>",
-        number_or_rules
-    );
     fs2::write(root.join("index.mdx"), index)?;
     fs2::write(reference_groups, reference_buffer)?;
-    fs2::write(reference_number_of_rules, number_of_rules_buffer)?;
 
     Ok(())
 }
@@ -436,14 +402,13 @@ fn parse_documentation(
 }
 
 enum BlockType {
-    Js(JsFileSource),
+    Js(SourceType),
     Json,
 }
 
 struct CodeBlockTest {
     block_type: BlockType,
     expect_diagnostic: bool,
-    ignore: bool,
 }
 
 impl FromStr for CodeBlockTest {
@@ -458,36 +423,30 @@ impl FromStr for CodeBlockTest {
             .filter(|token| !token.is_empty());
 
         let mut test = CodeBlockTest {
-            block_type: BlockType::Js(JsFileSource::default()),
+            block_type: BlockType::Js(SourceType::default()),
             expect_diagnostic: false,
-            ignore: false,
         };
 
         for token in tokens {
             match token {
                 // Determine the language, using the same list of extensions as `compute_source_type_from_path_or_extension`
                 "cjs" => {
-                    test.block_type = BlockType::Js(
-                        JsFileSource::js_module().with_module_kind(ModuleKind::Script),
-                    );
+                    test.block_type =
+                        BlockType::Js(SourceType::js_module().with_module_kind(ModuleKind::Script));
                 }
                 "js" | "mjs" | "jsx" => {
-                    test.block_type = BlockType::Js(JsFileSource::jsx());
+                    test.block_type = BlockType::Js(SourceType::jsx());
                 }
                 "ts" | "mts" | "cts" => {
-                    test.block_type = BlockType::Js(JsFileSource::ts());
+                    test.block_type = BlockType::Js(SourceType::ts());
                 }
                 "tsx" => {
-                    test.block_type = BlockType::Js(JsFileSource::tsx());
+                    test.block_type = BlockType::Js(SourceType::tsx());
                 }
 
                 // Other attributes
                 "expect_diagnostic" => {
                     test.expect_diagnostic = true;
-                }
-
-                "ignore" => {
-                    test.ignore = true;
                 }
 
                 "json" => {
@@ -523,7 +482,6 @@ fn assert_lint(
 
     let mut write_diagnostic = |code: &str, diag: rome_diagnostics::Error| {
         let category = diag.category().map_or("", |code| code.name());
-
         Formatter::new(&mut write).write_markup(markup! {
             {PrintDiagnostic::verbose(&diag)}
         })?;
@@ -570,12 +528,10 @@ fn assert_lint(
         diagnostic_count += 1;
         Ok(())
     };
-    if test.ignore {
-        return Ok(());
-    }
+
     match test.block_type {
         BlockType::Js(source_type) => {
-            let parse = rome_js_parser::parse(code, source_type, JsParserOptions::default());
+            let parse = rome_js_parser::parse(code, source_type);
 
             if parse.has_errors() {
                 for diag in parse.into_diagnostics() {
@@ -596,39 +552,33 @@ fn assert_lint(
                 };
 
                 let options = AnalyzerOptions::default();
-                let (_, diagnostics) = rome_js_analyze::analyze(
-                    &root,
-                    filter,
-                    &options,
-                    source_type,
-                    |signal| {
-                        if let Some(mut diag) = signal.diagnostic() {
-                            let category = diag.category().expect("linter diagnostic has no code");
-                            let severity = settings.get_severity_from_rule_code(category).expect(
+                let (_, diagnostics) = analyze(&root, filter, &options, source_type, |signal| {
+                    if let Some(mut diag) = signal.diagnostic() {
+                        let category = diag.category().expect("linter diagnostic has no code");
+                        let severity = settings.get_severity_from_rule_code(category).expect(
                             "If you see this error, it means you need to run cargo codegen-configuration",
                         );
 
-                            for action in signal.actions() {
-                                if !action.is_suppression() {
-                                    diag = diag.add_code_suggestion(action.into());
-                                }
-                            }
-
-                            let error = diag
-                                .with_severity(severity)
-                                .with_file_path(file.clone())
-                                .with_file_source_code(code);
-                            let res = write_diagnostic(code, error);
-
-                            // Abort the analysis on error
-                            if let Err(err) = res {
-                                return ControlFlow::Break(err);
+                        for action in signal.actions() {
+                            if !action.is_suppression() {
+                                diag = diag.add_code_suggestion(action.into());
                             }
                         }
 
-                        ControlFlow::Continue(())
-                    },
-                );
+                        let error = diag
+                            .with_severity(severity)
+                            .with_file_path(file.clone())
+                            .with_file_source_code(code);
+                        let res = write_diagnostic(code, error);
+
+                        // Abort the analysis on error
+                        if let Err(err) = res {
+                            return ControlFlow::Break(err);
+                        }
+                    }
+
+                    ControlFlow::Continue(())
+                });
 
                 // Result is Some(_) if analysis aborted with an error
                 for diagnostic in diagnostics {
@@ -646,7 +596,7 @@ fn assert_lint(
             }
         }
         BlockType::Json => {
-            let parse = rome_json_parser::parse_json(code);
+            let parse = rome_json_parser::parse_json(code, JsonParserConfig::default());
 
             if parse.has_errors() {
                 for diag in parse.into_diagnostics() {
@@ -654,55 +604,6 @@ fn assert_lint(
                         .with_file_path(file.clone())
                         .with_file_source_code(code);
                     write_diagnostic(code, error)?;
-                }
-            } else {
-                let root = parse.tree();
-
-                let settings = WorkspaceSettings::default();
-
-                let rule_filter = RuleFilter::Rule(group, rule);
-                let filter = AnalysisFilter {
-                    enabled_rules: Some(slice::from_ref(&rule_filter)),
-                    ..AnalysisFilter::default()
-                };
-
-                let options = AnalyzerOptions::default();
-                let (_, diagnostics) = rome_json_analyze::analyze(
-                    &root.value().unwrap(),
-                    filter,
-                    &options,
-                    |signal| {
-                        if let Some(mut diag) = signal.diagnostic() {
-                            let category = diag.category().expect("linter diagnostic has no code");
-                            let severity = settings.get_severity_from_rule_code(category).expect(
-								"If you see this error, it means you need to run cargo codegen-configuration",
-							);
-
-                            for action in signal.actions() {
-                                if !action.is_suppression() {
-                                    diag = diag.add_code_suggestion(action.into());
-                                }
-                            }
-
-                            let error = diag
-                                .with_severity(severity)
-                                .with_file_path(file.clone())
-                                .with_file_source_code(code);
-                            let res = write_diagnostic(code, error);
-
-                            // Abort the analysis on error
-                            if let Err(err) = res {
-                                return ControlFlow::Break(err);
-                            }
-                        }
-
-                        ControlFlow::Continue(())
-                    },
-                );
-
-                // Result is Some(_) if analysis aborted with an error
-                for diagnostic in diagnostics {
-                    write_diagnostic(code, diagnostic)?;
                 }
             }
         }
