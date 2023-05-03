@@ -9,6 +9,8 @@ use rome_parser::diagnostic::ParseDiagnostic;
 use std::iter::FusedIterator;
 use std::ops::Add;
 
+use crate::JsonParserConfig;
+
 pub struct Token {
     kind: JsonSyntaxKind,
     range: TextRange,
@@ -34,6 +36,7 @@ pub(crate) struct Lexer<'src> {
     position: usize,
 
     diagnostics: Vec<ParseDiagnostic>,
+    config: JsonParserConfig,
 }
 
 impl<'src> Lexer<'src> {
@@ -43,6 +46,7 @@ impl<'src> Lexer<'src> {
             source: string,
             position: 0,
             diagnostics: vec![],
+            config: JsonParserConfig::default(),
         }
     }
 
@@ -695,10 +699,12 @@ impl<'src> Lexer<'src> {
                         b'*' if self.peek_byte() == Some(b'/') => {
                             self.advance(2);
 
-                            self.diagnostics.push(ParseDiagnostic::new(
-                                "JSON standard does not allow comments.",
-                                start..self.text_position(),
-                            ));
+                            if !self.config.allow_comments {
+                                self.diagnostics.push(ParseDiagnostic::new(
+                                    "JSON standard does not allow comments.",
+                                    start..self.text_position(),
+                                ));
+                            }
 
                             if has_newline {
                                 return MULTILINE_COMMENT;
@@ -739,15 +745,22 @@ impl<'src> Lexer<'src> {
                     }
                 }
 
-                self.diagnostics.push(ParseDiagnostic::new(
-                    "JSON standard does not allow comments.",
-                    start..self.text_position(),
-                ));
+                if !self.config.allow_comments {
+                    self.diagnostics.push(ParseDiagnostic::new(
+                        "JSON standard does not allow comments.",
+                        start..self.text_position(),
+                    ));
+                }
 
                 COMMENT
             }
             _ => self.eat_unexpected_character(),
         }
+    }
+
+    pub(crate) fn with_config(mut self, config: JsonParserConfig) -> Self {
+        self.config = config;
+        self
     }
 }
 

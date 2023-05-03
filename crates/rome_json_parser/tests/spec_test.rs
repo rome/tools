@@ -16,12 +16,13 @@ pub enum ExpectedOutcome {
     Undefined,
 }
 
-pub fn run(test_case: &str, _snapshot_name: &str, test_directory: &str, outcome: &str) {
-    let outcome = match outcome {
+pub fn run(test_case: &str, _snapshot_name: &str, test_directory: &str, outcome_str: &str) {
+    let outcome = match outcome_str {
         "ok" => ExpectedOutcome::Pass,
         "error" => ExpectedOutcome::Fail,
         "undefined" => ExpectedOutcome::Undefined,
-        _ => panic!("Invalid expected outcome {outcome}"),
+        "allow_comments" => ExpectedOutcome::Pass,
+        _ => panic!("Invalid expected outcome {outcome_str}"),
     };
 
     let test_case_path = Path::new(test_case);
@@ -35,7 +36,10 @@ pub fn run(test_case: &str, _snapshot_name: &str, test_directory: &str, outcome:
     let content = fs::read_to_string(test_case_path)
         .expect("Expected test path to be a readable file in UTF8 encoding");
 
-    let parsed = parse_json(&content, JsonParserConfig::default());
+    let parse_conifg = JsonParserConfig {
+        allow_comments: outcome_str == "allow_comments",
+    };
+    let parsed = parse_json(&content, parse_conifg);
     let formatted_ast = format!("{:#?}", parsed.tree());
 
     let mut snapshot = String::new();
