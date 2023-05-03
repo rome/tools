@@ -33,6 +33,7 @@ import {
 	useRef,
 	useState,
 } from "react";
+import ImportSortingTab from "@src/playground/tabs/ImportSortingTab";
 
 export default function PlaygroundLoader({
 	setPlaygroundState,
@@ -217,6 +218,13 @@ export default function PlaygroundLoader({
 					title: "Control Flow Graph",
 					children: (
 						<ControlFlowTab graph={romeOutput.analysis.controlFlowGraph} />
+					),
+				},
+				{
+					key: "import-sorting",
+					title: "Import Sorting",
+					children: (
+						<ImportSortingTab code={romeOutput.importSorting.code} extensions={codeMirrorExtensions}/>
 					),
 				},
 				{

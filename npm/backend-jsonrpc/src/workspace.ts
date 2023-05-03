@@ -1333,6 +1333,12 @@ export interface RenameResult {
 	 */
 	range: TextRange;
 }
+export interface OrganizeImportsParams {
+	path: RomePath;
+}
+export interface OrganizeImportsResult {
+	code: string;
+}
 export interface Workspace {
 	fileFeatures(params: SupportsFeatureParams): Promise<SupportsFeatureResult>;
 	updateSettings(params: UpdateSettingsParams): Promise<void>;
@@ -1352,6 +1358,9 @@ export interface Workspace {
 	formatOnType(params: FormatOnTypeParams): Promise<Printed>;
 	fixFile(params: FixFileParams): Promise<FixFileResult>;
 	rename(params: RenameParams): Promise<RenameResult>;
+	organizeImports(
+		params: OrganizeImportsParams,
+	): Promise<OrganizeImportsResult>;
 	destroy(): void;
 }
 export function createWorkspace(transport: Transport): Workspace {
@@ -1403,6 +1412,9 @@ export function createWorkspace(transport: Transport): Workspace {
 		},
 		rename(params) {
 			return transport.request("rome/rename", params);
+		},
+		organizeImports(params) {
+			return transport.request("rome/organize_imports", params);
 		},
 		destroy() {
 			transport.destroy();
