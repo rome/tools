@@ -28,6 +28,13 @@ impl JsonSyntaxKind {
         matches!(self, JsonSyntaxKind::NEWLINE | JsonSyntaxKind::WHITESPACE)
     }
 
+    pub fn is_comments(self) -> bool {
+        matches!(
+            self,
+            JsonSyntaxKind::COMMENT | JsonSyntaxKind::MULTILINE_COMMENT
+        )
+    }
+
     #[inline]
     pub const fn is_keyword(self) -> bool {
         matches!(self, T![null] | T![true] | T![false])

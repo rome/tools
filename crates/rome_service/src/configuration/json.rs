@@ -1,9 +1,5 @@
-use std::str::FromStr;
-
 use bpaf::Bpaf;
-use indexmap::IndexSet;
 use serde::{Deserialize, Serialize};
-use serde_json::from_str;
 
 use super::StringSet;
 #[derive(Default, Debug, Deserialize, Serialize, Eq, PartialEq, Clone, Bpaf)]
