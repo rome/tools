@@ -70,7 +70,7 @@ self.addEventListener("message", async (e) => {
 				enabledLinting,
 				trailingComma,
 				semicolons,
-				importSortingEnabled
+				importSortingEnabled,
 			} = e.data.settings as PlaygroundSettings;
 
 			configuration = {
@@ -87,7 +87,7 @@ self.addEventListener("message", async (e) => {
 				},
 
 				organizeImports: {
-					enabled: importSortingEnabled
+					enabled: importSortingEnabled,
 				},
 
 				javascript: {
@@ -182,8 +182,8 @@ self.addEventListener("message", async (e) => {
 			});
 
 			const importSorting = workspace.organizeImports({
-				path
-			})
+				path,
+			});
 
 			const categories: RuleCategories = [];
 			if (configuration?.formatter?.enabled) {
@@ -226,8 +226,8 @@ self.addEventListener("message", async (e) => {
 					controlFlowGraph,
 				},
 				importSorting: {
-					code: importSorting.code
-				}
+					code: importSorting.code,
+				},
 			};
 
 			self.postMessage({

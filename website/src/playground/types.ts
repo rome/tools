@@ -71,8 +71,8 @@ export interface RomeOutput {
 		controlFlowGraph: string;
 	};
 	importSorting: {
-		code: string
-	}
+		code: string;
+	};
 }
 
 export const emptyRomeOutput: RomeOutput = {
@@ -92,8 +92,8 @@ export const emptyRomeOutput: RomeOutput = {
 		controlFlowGraph: "",
 	},
 	importSorting: {
-		code: ""
-	}
+		code: "",
+	},
 };
 
 export interface PlaygroundSettings {
@@ -106,7 +106,7 @@ export interface PlaygroundSettings {
 	semicolons: Semicolons;
 	lintRules: LintRules;
 	enabledLinting: boolean;
-	importSortingEnabled: boolean
+	importSortingEnabled: boolean;
 }
 
 export interface PlaygroundFileState {
@@ -146,7 +146,7 @@ export const defaultPlaygroundState: PlaygroundState = {
 		semicolons: Semicolons.Always,
 		lintRules: LintRules.Recommended,
 		enabledLinting: true,
-		importSortingEnabled: true
+		importSortingEnabled: true,
 	},
 };
 

@@ -44,7 +44,7 @@ export default function SettingsTab({
 			semicolons,
 			lintRules,
 			enabledLinting,
-			importSortingEnabled
+			importSortingEnabled,
 		},
 	},
 }: SettingsTabProps) {
@@ -233,7 +233,10 @@ export default function SettingsTab({
 				enabledLinting={enabledLinting}
 				setEnabledLinting={setEnabledLinting}
 			/>
-			<ImportSortingSettings importSortingEnabled={importSortingEnabled}  setImportSorting={setImportSorting}/>
+			<ImportSortingSettings
+				importSortingEnabled={importSortingEnabled}
+				setImportSorting={setImportSorting}
+			/>
 			<SyntaxSettings filename={currentFile} setFilename={setCurrentFilename} />
 		</div>
 	);
@@ -659,7 +662,13 @@ function LinterSettings({
 	);
 }
 
-export function ImportSortingSettings({ importSortingEnabled,setImportSorting }: { importSortingEnabled: boolean, setImportSorting: (value: boolean) => void;}) {
+export function ImportSortingSettings({
+	importSortingEnabled,
+	setImportSorting,
+}: {
+	importSortingEnabled: boolean;
+	setImportSorting: (value: boolean) => void;
+}) {
 	return (
 		<>
 			<h2>Import sorting</h2>
@@ -674,7 +683,6 @@ export function ImportSortingSettings({ importSortingEnabled,setImportSorting }:
 					/>
 					<label htmlFor="import-sorting-enabled">Import sorting enabled</label>
 				</div>
-
 			</section>
 		</>
 	);

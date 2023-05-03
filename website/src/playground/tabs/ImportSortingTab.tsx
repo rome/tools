@@ -1,5 +1,5 @@
 import CodeMirror from "../CodeMirror";
-import type {Extension} from "@codemirror/state";
+import type { Extension } from "@codemirror/state";
 
 interface Props {
 	code: string;
@@ -7,11 +7,5 @@ interface Props {
 }
 
 export default function ImportSortingTab({ code, extensions }: Props) {
-	return (
-		<CodeMirror
-			value={code}
-			extensions={extensions}
-			readOnly={true}
-		/>
-	);
+	return <CodeMirror value={code} extensions={extensions} readOnly={true} />;
 }

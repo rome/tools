@@ -23,6 +23,7 @@ import { javascript } from "@codemirror/lang-javascript";
 import { json } from "@codemirror/lang-json";
 import { EditorSelection } from "@codemirror/state";
 import type { ViewUpdate } from "@codemirror/view";
+import ImportSortingTab from "@src/playground/tabs/ImportSortingTab";
 import type { ReactCodeMirrorRef } from "@uiw/react-codemirror";
 import * as codeMirrorLangRomeAST from "codemirror-lang-rome-ast";
 import {
@@ -33,7 +34,6 @@ import {
 	useRef,
 	useState,
 } from "react";
-import ImportSortingTab from "@src/playground/tabs/ImportSortingTab";
 
 export default function PlaygroundLoader({
 	setPlaygroundState,
@@ -224,7 +224,10 @@ export default function PlaygroundLoader({
 					key: "import-sorting",
 					title: "Import Sorting",
 					children: (
-						<ImportSortingTab code={romeOutput.importSorting.code} extensions={codeMirrorExtensions}/>
+						<ImportSortingTab
+							code={romeOutput.importSorting.code}
+							extensions={codeMirrorExtensions}
+						/>
 					),
 				},
 				{
