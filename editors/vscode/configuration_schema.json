@@ -161,7 +161,7 @@
 					]
 				},
 				"useIframeTitle": {
-					"description": "Enforces the usage of the attribute title for the element iframe",
+					"description": "Enforces the usage of the attribute title for the element iframe.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }

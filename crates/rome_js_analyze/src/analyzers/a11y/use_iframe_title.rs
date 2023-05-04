@@ -1,7 +1,7 @@
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_syntax::{jsx_ext::AnyJsxElement, AnyJsExpression, AnyJsxAttributeValue};
-use rome_rowan::{AstNode, AstNodeList};
+use rome_js_syntax::jsx_ext::AnyJsxElement;
+use rome_rowan::AstNode;
 
 declare_rule! {
     /// Enforces the usage of the attribute `title` for the element `iframe`.
@@ -72,10 +72,21 @@ impl Rule for UseIframeTitle {
     type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
-        let node = ctx.query();
+        let element = ctx.query();
+        let name = element.name().ok()?.name_value_token()?;
 
-        if node.name_value_token()?.text_trimmed() == "iframe" && has_valid_title(element) {
-            return Some(());
+        if name.text_trimmed() == "iframe" {
+            if let Some(lang_attribute) = element.find_attribute_by_name("title") {
+                if !lang_attribute
+                    .as_static_value()
+                    .map_or(true, |attribute| attribute.is_not_string_constant(""))
+                    && !element.has_trailing_spread_prop(lang_attribute)
+                {
+                    return Some(());
+                }
+            } else if !element.has_spread_prop() {
+                return Some(());
+            }
         }
 
         None
@@ -96,18 +107,4 @@ impl Rule for UseIframeTitle {
             }),
         )
     }
-}
-
-fn has_valid_title(element: &AnyJsxElement) -> bool {
-    element
-        .find_attribute_by_name("title")
-        .map_or(false, |attribute| {
-            if attribute.initializer().is_none() {
-                return false;
-            }
-
-            attribute.as_static_value().map_or(true, |value| {
-                !value.is_null_or_undefined() && value.is_not_string_constant("")
-            }) && !element.has_trailing_spread_prop(attribute)
-        })
 }

@@ -266,7 +266,7 @@ export interface A11y {
 	 */
 	useHtmlLang?: RuleConfiguration;
 	/**
-	 * Enforces the usage of the attribute title for the element iframe
+	 * Enforces the usage of the attribute title for the element iframe.
 	 */
 	useIframeTitle?: RuleConfiguration;
 	/**

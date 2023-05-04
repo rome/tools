@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 96
 expression: invalid.jsx
 ---
 # Input
@@ -12,7 +11,6 @@ expression: invalid.jsx
 	<iframe title="" />
 	<iframe title={""} />
 	<iframe title={``} />
-	<iframe title={<span className={"token string"}></span>}></iframe>
 	<iframe title={undefined} />
 	<iframe title={false} />
 	<iframe title={true} />
@@ -83,7 +81,7 @@ invalid.jsx:6:2 lint/a11y/useIframeTitle ━━━━━━━━━━━━━
   > 6 │ 	<iframe title={""} />
       │ 	^^^^^^^^^^^^^^^^^^^^^
     7 │ 	<iframe title={``} />
-    8 │ 	<iframe title={<span className={"token string"}></span>}></iframe>
+    8 │ 	<iframe title={undefined} />
   
   i Screen readers rely on the title set on an iframe to describe the content being displayed.
   
@@ -99,8 +97,8 @@ invalid.jsx:7:2 lint/a11y/useIframeTitle ━━━━━━━━━━━━━
     6 │ 	<iframe title={""} />
   > 7 │ 	<iframe title={``} />
       │ 	^^^^^^^^^^^^^^^^^^^^^
-    8 │ 	<iframe title={<span className={"token string"}></span>}></iframe>
-    9 │ 	<iframe title={undefined} />
+    8 │ 	<iframe title={undefined} />
+    9 │ 	<iframe title={false} />
   
   i Screen readers rely on the title set on an iframe to describe the content being displayed.
   
@@ -114,10 +112,10 @@ invalid.jsx:8:2 lint/a11y/useIframeTitle ━━━━━━━━━━━━━
   
      6 │ 	<iframe title={""} />
      7 │ 	<iframe title={``} />
-   > 8 │ 	<iframe title={<span className={"token string"}></span>}></iframe>
-       │ 	^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-     9 │ 	<iframe title={undefined} />
-    10 │ 	<iframe title={false} />
+   > 8 │ 	<iframe title={undefined} />
+       │ 	^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     9 │ 	<iframe title={false} />
+    10 │ 	<iframe title={true} />
   
   i Screen readers rely on the title set on an iframe to describe the content being displayed.
   
@@ -130,11 +128,11 @@ invalid.jsx:9:2 lint/a11y/useIframeTitle ━━━━━━━━━━━━━
   ! Provide a title attribute when using iframe elements.
   
      7 │ 	<iframe title={``} />
-     8 │ 	<iframe title={<span className={"token string"}></span>}></iframe>
-   > 9 │ 	<iframe title={undefined} />
-       │ 	^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    10 │ 	<iframe title={false} />
-    11 │ 	<iframe title={true} />
+     8 │ 	<iframe title={undefined} />
+   > 9 │ 	<iframe title={false} />
+       │ 	^^^^^^^^^^^^^^^^^^^^^^^^
+    10 │ 	<iframe title={true} />
+    11 │ 	<iframe title={42} />
   
   i Screen readers rely on the title set on an iframe to describe the content being displayed.
   
@@ -146,12 +144,12 @@ invalid.jsx:10:2 lint/a11y/useIframeTitle ━━━━━━━━━━━━�
 
   ! Provide a title attribute when using iframe elements.
   
-     8 │ 	<iframe title={<span className={"token string"}></span>}></iframe>
-     9 │ 	<iframe title={undefined} />
-  > 10 │ 	<iframe title={false} />
-       │ 	^^^^^^^^^^^^^^^^^^^^^^^^
-    11 │ 	<iframe title={true} />
-    12 │ 	<iframe title={42} />
+     8 │ 	<iframe title={undefined} />
+     9 │ 	<iframe title={false} />
+  > 10 │ 	<iframe title={true} />
+       │ 	^^^^^^^^^^^^^^^^^^^^^^^
+    11 │ 	<iframe title={42} />
+    12 │ </>;
   
   i Screen readers rely on the title set on an iframe to describe the content being displayed.
   
@@ -163,29 +161,12 @@ invalid.jsx:11:2 lint/a11y/useIframeTitle ━━━━━━━━━━━━�
 
   ! Provide a title attribute when using iframe elements.
   
-     9 │ 	<iframe title={undefined} />
-    10 │ 	<iframe title={false} />
-  > 11 │ 	<iframe title={true} />
-       │ 	^^^^^^^^^^^^^^^^^^^^^^^
-    12 │ 	<iframe title={42} />
-    13 │ </>;
-  
-  i Screen readers rely on the title set on an iframe to describe the content being displayed.
-  
-
-```
-
-```
-invalid.jsx:12:2 lint/a11y/useIframeTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! Provide a title attribute when using iframe elements.
-  
-    10 │ 	<iframe title={false} />
-    11 │ 	<iframe title={true} />
-  > 12 │ 	<iframe title={42} />
+     9 │ 	<iframe title={false} />
+    10 │ 	<iframe title={true} />
+  > 11 │ 	<iframe title={42} />
        │ 	^^^^^^^^^^^^^^^^^^^^^
-    13 │ </>;
-    14 │ 
+    12 │ </>;
+    13 │ 
   
   i Screen readers rely on the title set on an iframe to describe the content being displayed.
   
