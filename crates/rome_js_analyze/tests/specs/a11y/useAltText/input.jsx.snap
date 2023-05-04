@@ -36,7 +36,7 @@ expression: input.jsx
 ```
 input.jsx:3:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Provide the attribute alt when using img, area or input type='image'
+  ! Provide a text alternative through the alt, aria-label or aria-labelledby attribute
   
     1 │ // invalid
     2 │ <>
@@ -53,7 +53,7 @@ input.jsx:3:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━
 ```
 input.jsx:4:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Provide the attribute alt when using img, area or input type='image'
+  ! Provide a text alternative through the alt, aria-label or aria-labelledby attribute
   
     2 │ <>
     3 │   <input type="image" />
@@ -70,7 +70,7 @@ input.jsx:4:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━
 ```
 input.jsx:5:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Provide the attribute alt when using img, area or input type='image'
+  ! Provide a text alternative through the alt, aria-label or aria-labelledby attribute
   
     3 │   <input type="image" />
     4 │   <input type="image" alt />
@@ -87,7 +87,7 @@ input.jsx:5:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━
 ```
 input.jsx:6:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Provide the attribute alt when using img, area or input type='image'
+  ! Provide a text alternative through the alt, aria-label or aria-labelledby attribute
   
     4 │   <input type="image" alt />
     5 │   <input type="image" alt={undefined} />
@@ -104,7 +104,7 @@ input.jsx:6:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━
 ```
 input.jsx:7:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Provide the attribute alt when using img, area or input type='image'
+  ! Provide a text alternative through the alt, aria-label or aria-labelledby attribute
   
     5 │   <input type="image" alt={undefined} />
     6 │   <input type="image">Foo</input>
@@ -121,7 +121,7 @@ input.jsx:7:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━
 ```
 input.jsx:8:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Provide the attribute alt when using img, area or input type='image'
+  ! Provide a text alternative through the alt, aria-label or aria-labelledby attribute
   
      6 │   <input type="image">Foo</input>
      7 │   <input type="image" {...this.props} />
@@ -138,7 +138,7 @@ input.jsx:8:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━
 ```
 input.jsx:9:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Provide the attribute alt when using img, area or input type='image'
+  ! Provide a text alternative through the alt, aria-label or aria-labelledby attribute
   
      7 │   <input type="image" {...this.props} />
      8 │   <input type="image" aria-label="" />
@@ -155,7 +155,7 @@ input.jsx:9:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━
 ```
 input.jsx:10:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Provide the attribute alt when using img, area or input type='image'
+  ! Provide a text alternative through the alt, aria-label or aria-labelledby attribute
   
      8 │   <input type="image" aria-label="" />
      9 │   <input type="image" aria-label={undefined} />
@@ -172,7 +172,7 @@ input.jsx:10:3 lint/a11y/useAltText ━━━━━━━━━━━━━━�
 ```
 input.jsx:11:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Provide the attribute alt when using img, area or input type='image'
+  ! Provide a text alternative through the alt, aria-label or aria-labelledby attribute
   
      9 │   <input type="image" aria-label={undefined} />
     10 │   <input type="image" aria-labelledby="" />
