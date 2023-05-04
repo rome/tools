@@ -290,7 +290,6 @@ pub fn format_sub_tree(options: JsonFormatOptions, root: &JsonSyntaxNode) -> For
 
 #[cfg(test)]
 mod tests {
-    use std::default;
 
     use crate::context::JsonFormatOptions;
     use crate::format_node;

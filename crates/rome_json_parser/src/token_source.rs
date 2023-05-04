@@ -43,7 +43,6 @@ impl<'source> JsonTokenSource<'source> {
             match trivia_kind {
                 Err(_) => {
                     if self.config.allow_comments && token.kind().is_comments() {
-                        dbg!(token.kind());
                         let trivia_kind = match token.kind() {
                             JsonSyntaxKind::COMMENT => TriviaPieceKind::SingleLineComment,
                             JsonSyntaxKind::MULTILINE_COMMENT => TriviaPieceKind::MultiLineComment,
