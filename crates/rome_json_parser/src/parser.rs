@@ -68,9 +68,8 @@ impl<'source> Parser for JsonParser<'source> {
             true
         } else {
             if self.config.allow_comments {
-                println!("something");
                 while matches!(
-                    kind,
+                    self.cur(),
                     JsonSyntaxKind::COMMENT | JsonSyntaxKind::MULTILINE_COMMENT
                 ) {
                     self.bump_any();
