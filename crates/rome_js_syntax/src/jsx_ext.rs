@@ -3,7 +3,7 @@ use std::collections::HashSet;
 use crate::{
     static_value::{QuotedString, StaticValue},
     AnyJsxAttribute, AnyJsxAttributeName, AnyJsxAttributeValue, AnyJsxChild, AnyJsxElementName,
-    JsSyntaxToken, JsxAttribute, JsxAttributeList, JsxName, JsxOpeningElement,
+    JsSyntaxToken, JsxAttribute, JsxAttributeList, JsxElement, JsxName, JsxOpeningElement,
     JsxSelfClosingElement, JsxString,
 };
 use rome_rowan::{declare_node_union, AstNode, AstNodeList, SyntaxResult};
@@ -121,6 +121,16 @@ impl JsxOpeningElement {
     pub fn has_trailing_spread_prop(&self, current_attribute: impl Into<AnyJsxAttribute>) -> bool {
         self.attributes()
             .has_trailing_spread_prop(current_attribute)
+    }
+
+    /// Check if jsx element has a child that is accessible
+    pub fn has_accessible_child(&self) -> bool {
+        self.parent::<JsxElement>().map_or(false, |parent| {
+            parent
+                .children()
+                .into_iter()
+                .any(|child| child.is_accessible_node().unwrap_or(true))
+        })
     }
 }
 

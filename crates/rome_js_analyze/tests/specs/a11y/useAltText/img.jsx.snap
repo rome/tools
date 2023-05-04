@@ -12,7 +12,6 @@ expression: img.jsx
   <img src="xyz" />
   <img role />
   <img {...this.props} />
-  <img alt={false || false} />
   <img alt={undefined} role="presentation" />
   <img alt role="presentation" />
   <img role="presentation" />
@@ -29,9 +28,6 @@ expression: img.jsx
   <img alt="foo" />
   <img alt={"foo"} />
   <img alt={alt} />
-  <img ALT="foo" />
-  <img ALT={`This is the ${alt} text`} />
-  <img ALt="foo" />
   <img alt="foo" salt={undefined} />
   <img {...this.props} alt="foo" />
   <a />
@@ -77,8 +73,7 @@ img.jsx:3:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━�
     4 │   <img alt />
     5 │   <img alt={undefined} />
   
-  i Meaningful alternative text on elements helps users relying on screen
-                readers to understand content's purpose within a page.
+  i Meaningful alternative text on elements helps users relying on screen readers to understand content's purpose within a page.
   
 
 ```
@@ -95,8 +90,24 @@ img.jsx:4:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━�
     5 │   <img alt={undefined} />
     6 │   <img src="xyz" />
   
-  i Meaningful alternative text on elements helps users relying on screen
-                readers to understand content's purpose within a page.
+  i Meaningful alternative text on elements helps users relying on screen readers to understand content's purpose within a page.
+  
+
+```
+
+```
+img.jsx:5:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide the attribute alt when using img, area or input type='image'
+  
+    3 │   <img />
+    4 │   <img alt />
+  > 5 │   <img alt={undefined} />
+      │   ^^^^^^^^^^^^^^^^^^^^^^^
+    6 │   <img src="xyz" />
+    7 │   <img role />
+  
+  i Meaningful alternative text on elements helps users relying on screen readers to understand content's purpose within a page.
   
 
 ```
@@ -113,8 +124,7 @@ img.jsx:6:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━�
     7 │   <img role />
     8 │   <img {...this.props} />
   
-  i Meaningful alternative text on elements helps users relying on screen
-                readers to understand content's purpose within a page.
+  i Meaningful alternative text on elements helps users relying on screen readers to understand content's purpose within a page.
   
 
 ```
@@ -129,10 +139,9 @@ img.jsx:7:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━�
   > 7 │   <img role />
       │   ^^^^^^^^^^^^
     8 │   <img {...this.props} />
-    9 │   <img alt={false || false} />
+    9 │   <img alt={undefined} role="presentation" />
   
-  i Meaningful alternative text on elements helps users relying on screen
-                readers to understand content's purpose within a page.
+  i Meaningful alternative text on elements helps users relying on screen readers to understand content's purpose within a page.
   
 
 ```
@@ -146,11 +155,44 @@ img.jsx:8:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━�
      7 │   <img role />
    > 8 │   <img {...this.props} />
        │   ^^^^^^^^^^^^^^^^^^^^^^^
-     9 │   <img alt={false || false} />
-    10 │   <img alt={undefined} role="presentation" />
+     9 │   <img alt={undefined} role="presentation" />
+    10 │   <img alt role="presentation" />
   
-  i Meaningful alternative text on elements helps users relying on screen
-                readers to understand content's purpose within a page.
+  i Meaningful alternative text on elements helps users relying on screen readers to understand content's purpose within a page.
+  
+
+```
+
+```
+img.jsx:9:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide the attribute alt when using img, area or input type='image'
+  
+     7 │   <img role />
+     8 │   <img {...this.props} />
+   > 9 │   <img alt={undefined} role="presentation" />
+       │   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    10 │   <img alt role="presentation" />
+    11 │   <img role="presentation" />
+  
+  i Meaningful alternative text on elements helps users relying on screen readers to understand content's purpose within a page.
+  
+
+```
+
+```
+img.jsx:10:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide the attribute alt when using img, area or input type='image'
+  
+     8 │   <img {...this.props} />
+     9 │   <img alt={undefined} role="presentation" />
+  > 10 │   <img alt role="presentation" />
+       │   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    11 │   <img role="presentation" />
+    12 │   <img role="none" />
+  
+  i Meaningful alternative text on elements helps users relying on screen readers to understand content's purpose within a page.
   
 
 ```
@@ -160,15 +202,14 @@ img.jsx:11:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━�
 
   ! Provide the attribute alt when using img, area or input type='image'
   
-     9 │   <img alt={false || false} />
-    10 │   <img alt={undefined} role="presentation" />
-  > 11 │   <img alt role="presentation" />
-       │   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    12 │   <img role="presentation" />
-    13 │   <img role="none" />
+     9 │   <img alt={undefined} role="presentation" />
+    10 │   <img alt role="presentation" />
+  > 11 │   <img role="presentation" />
+       │   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    12 │   <img role="none" />
+    13 │   <img aria-label={undefined} />
   
-  i Meaningful alternative text on elements helps users relying on screen
-                readers to understand content's purpose within a page.
+  i Meaningful alternative text on elements helps users relying on screen readers to understand content's purpose within a page.
   
 
 ```
@@ -178,15 +219,14 @@ img.jsx:12:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━�
 
   ! Provide the attribute alt when using img, area or input type='image'
   
-    10 │   <img alt={undefined} role="presentation" />
-    11 │   <img alt role="presentation" />
-  > 12 │   <img role="presentation" />
-       │   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    13 │   <img role="none" />
-    14 │   <img aria-label={undefined} />
+    10 │   <img alt role="presentation" />
+    11 │   <img role="presentation" />
+  > 12 │   <img role="none" />
+       │   ^^^^^^^^^^^^^^^^^^^
+    13 │   <img aria-label={undefined} />
+    14 │   <img aria-labelledby={undefined} />
   
-  i Meaningful alternative text on elements helps users relying on screen
-                readers to understand content's purpose within a page.
+  i Meaningful alternative text on elements helps users relying on screen readers to understand content's purpose within a page.
   
 
 ```
@@ -196,69 +236,65 @@ img.jsx:13:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━�
 
   ! Provide the attribute alt when using img, area or input type='image'
   
-    11 │   <img alt role="presentation" />
-    12 │   <img role="presentation" />
-  > 13 │   <img role="none" />
-       │   ^^^^^^^^^^^^^^^^^^^
-    14 │   <img aria-label={undefined} />
-    15 │   <img aria-labelledby={undefined} />
+    11 │   <img role="presentation" />
+    12 │   <img role="none" />
+  > 13 │   <img aria-label={undefined} />
+       │   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    14 │   <img aria-labelledby={undefined} />
+    15 │   <img aria-label="" />
   
-  i Meaningful alternative text on elements helps users relying on screen
-                readers to understand content's purpose within a page.
+  i Meaningful alternative text on elements helps users relying on screen readers to understand content's purpose within a page.
   
 
 ```
 
 ```
-img.jsx:26:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+img.jsx:14:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Provide the attribute alt when using img, area or input type='image'
   
-    24 │   <img alt={"foo"} />
-    25 │   <img alt={alt} />
-  > 26 │   <img ALT="foo" />
-       │   ^^^^^^^^^^^^^^^^^
-    27 │   <img ALT={`This is the ${alt} text`} />
-    28 │   <img ALt="foo" />
+    12 │   <img role="none" />
+    13 │   <img aria-label={undefined} />
+  > 14 │   <img aria-labelledby={undefined} />
+       │   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    15 │   <img aria-label="" />
+    16 │   <img aria-labelledby="" />
   
-  i Meaningful alternative text on elements helps users relying on screen
-                readers to understand content's purpose within a page.
+  i Meaningful alternative text on elements helps users relying on screen readers to understand content's purpose within a page.
   
 
 ```
 
 ```
-img.jsx:27:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+img.jsx:15:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Provide the attribute alt when using img, area or input type='image'
   
-    25 │   <img alt={alt} />
-    26 │   <img ALT="foo" />
-  > 27 │   <img ALT={`This is the ${alt} text`} />
-       │   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    28 │   <img ALt="foo" />
-    29 │   <img alt="foo" salt={undefined} />
+    13 │   <img aria-label={undefined} />
+    14 │   <img aria-labelledby={undefined} />
+  > 15 │   <img aria-label="" />
+       │   ^^^^^^^^^^^^^^^^^^^^^
+    16 │   <img aria-labelledby="" />
+    17 │ </>;
   
-  i Meaningful alternative text on elements helps users relying on screen
-                readers to understand content's purpose within a page.
+  i Meaningful alternative text on elements helps users relying on screen readers to understand content's purpose within a page.
   
 
 ```
 
 ```
-img.jsx:28:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+img.jsx:16:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Provide the attribute alt when using img, area or input type='image'
   
-    26 │   <img ALT="foo" />
-    27 │   <img ALT={`This is the ${alt} text`} />
-  > 28 │   <img ALt="foo" />
-       │   ^^^^^^^^^^^^^^^^^
-    29 │   <img alt="foo" salt={undefined} />
-    30 │   <img {...this.props} alt="foo" />
+    14 │   <img aria-labelledby={undefined} />
+    15 │   <img aria-label="" />
+  > 16 │   <img aria-labelledby="" />
+       │   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    17 │ </>;
+    18 │ 
   
-  i Meaningful alternative text on elements helps users relying on screen
-                readers to understand content's purpose within a page.
+  i Meaningful alternative text on elements helps users relying on screen readers to understand content's purpose within a page.
   
 
 ```

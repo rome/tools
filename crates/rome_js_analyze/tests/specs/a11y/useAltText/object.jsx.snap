@@ -29,4 +29,123 @@ expression: object.jsx
 
 ```
 
+# Diagnostics
+```
+object.jsx:4:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide the attribute alt when using img, area or input type='image'
+  
+    3 │ <>
+  > 4 │   <object />
+      │   ^^^^^^^^^^
+    5 │   <object><div aria-hidden /></object>
+    6 │   <object title={undefined} />
+  
+  i Meaningful alternative text on elements helps users relying on screen readers to understand content's purpose within a page.
+  
+
+```
+
+```
+object.jsx:5:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide the attribute alt when using img, area or input type='image'
+  
+    3 │ <>
+    4 │   <object />
+  > 5 │   <object><div aria-hidden /></object>
+      │   ^^^^^^^^
+    6 │   <object title={undefined} />
+    7 │   <object aria-label="" />
+  
+  i Meaningful alternative text on elements helps users relying on screen readers to understand content's purpose within a page.
+  
+
+```
+
+```
+object.jsx:6:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide the attribute alt when using img, area or input type='image'
+  
+    4 │   <object />
+    5 │   <object><div aria-hidden /></object>
+  > 6 │   <object title={undefined} />
+      │   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    7 │   <object aria-label="" />
+    8 │   <object aria-labelledby="" />
+  
+  i Meaningful alternative text on elements helps users relying on screen readers to understand content's purpose within a page.
+  
+
+```
+
+```
+object.jsx:7:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide the attribute alt when using img, area or input type='image'
+  
+    5 │   <object><div aria-hidden /></object>
+    6 │   <object title={undefined} />
+  > 7 │   <object aria-label="" />
+      │   ^^^^^^^^^^^^^^^^^^^^^^^^
+    8 │   <object aria-labelledby="" />
+    9 │   <object aria-label={undefined} />
+  
+  i Meaningful alternative text on elements helps users relying on screen readers to understand content's purpose within a page.
+  
+
+```
+
+```
+object.jsx:8:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide the attribute alt when using img, area or input type='image'
+  
+     6 │   <object title={undefined} />
+     7 │   <object aria-label="" />
+   > 8 │   <object aria-labelledby="" />
+       │   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     9 │   <object aria-label={undefined} />
+    10 │   <object aria-labelledby={undefined} />
+  
+  i Meaningful alternative text on elements helps users relying on screen readers to understand content's purpose within a page.
+  
+
+```
+
+```
+object.jsx:9:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide the attribute alt when using img, area or input type='image'
+  
+     7 │   <object aria-label="" />
+     8 │   <object aria-labelledby="" />
+   > 9 │   <object aria-label={undefined} />
+       │   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    10 │   <object aria-labelledby={undefined} />
+    11 │ </>;
+  
+  i Meaningful alternative text on elements helps users relying on screen readers to understand content's purpose within a page.
+  
+
+```
+
+```
+object.jsx:10:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide the attribute alt when using img, area or input type='image'
+  
+     8 │   <object aria-labelledby="" />
+     9 │   <object aria-label={undefined} />
+  > 10 │   <object aria-labelledby={undefined} />
+       │   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    11 │ </>;
+    12 │ 
+  
+  i Meaningful alternative text on elements helps users relying on screen readers to understand content's purpose within a page.
+  
+
+```
+
 

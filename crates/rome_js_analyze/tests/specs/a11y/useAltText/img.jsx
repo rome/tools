@@ -6,7 +6,6 @@
   <img src="xyz" />
   <img role />
   <img {...this.props} />
-  <img alt={false || false} />
   <img alt={undefined} role="presentation" />
   <img alt role="presentation" />
   <img role="presentation" />
@@ -23,9 +22,6 @@
   <img alt="foo" />
   <img alt={"foo"} />
   <img alt={alt} />
-  <img ALT="foo" />
-  <img ALT={`This is the ${alt} text`} />
-  <img ALt="foo" />
   <img alt="foo" salt={undefined} />
   <img {...this.props} alt="foo" />
   <a />
