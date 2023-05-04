@@ -5,43 +5,77 @@ expression: img.jsx
 # Input
 ```js
 // invalid
-
 <>
-	<img src="foo" />
-	<img src="foo" role="presentation" />
-	<img src="foo" role="none" />
-	<img alt />
-	<img alt={null} />
-	<img alt={undefined} />
-</>
+  <img />
+  <img alt />
+  <img alt={undefined} />
+  <img src="xyz" />
+  <img role />
+  <img {...this.props} />
+  <img alt={false || false} />
+  <img alt={undefined} role="presentation" />
+  <img alt role="presentation" />
+  <img role="presentation" />
+  <img role="none" />
+  <img aria-label={undefined} />
+  <img aria-labelledby={undefined} />
+  <img aria-label="" />
+  <img aria-labelledby="" />
+</>;
 
 // valid
 
 <>
-	<img alt={undefined} {...spread} />
-	<img src="foo" {...spread} />
-	<img src="foo" alt="Foo eating a sandwich." />
-	<img src="foo" alt={"Foo eating a sandwich."} />
-	<img src="foo" alt={altText} />
-	<img src="foo" aria-label {...spread} />
-    <img src="foo" alt={<><span class="token punctuation">${</span><span class="token variable">person</span><span class="token punctuation">}</span><span class="token string"> smiling</span><span class="token string"></>} />
-    <img src="foo" alt="" />
-
+  <img alt="foo" />
+  <img alt={"foo"} />
+  <img alt={alt} />
+  <img ALT="foo" />
+  <img ALT={`This is the ${alt} text`} />
+  <img ALt="foo" />
+  <img alt="foo" salt={undefined} />
+  <img {...this.props} alt="foo" />
+  <a />
+  <div />
+  <img alt={function(e) {} } />
+  <div alt={function(e) {} } />
+  <img alt={() => void 0} />
+  <Img />
+  <Component>test</Compoennt>
+  <img alt={alt || "Alt text" } />
+  <img alt={photo.caption} />;
+  <img alt={bar()} />;
+  <img alt={foo.bar || ""} />
+  <img alt={bar() || ""} />
+  <img alt={foo.bar() || ""} />
+  <img alt="" />
+  <img alt={`${undefined}`} />
+  <img alt=" " />
+  <img alt="" role="presentation" />
+  <img alt="" role="none" />
+  <img alt="" role={`presentation`} />
+  <img alt="" role={"presentation"} />
+  <img alt="this is lit..." role="presentation" />
+  <img alt={error ? "not working": "working"} />
+  <img alt={undefined ? "working": "not working"} />
+  <img alt={plugin.name + " Logo"} />
+  <img aria-label="foo" />
+  <img aria-labelledby="id1" />
 </>;
 
 ```
 
 # Diagnostics
 ```
-img.jsx:4:2 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+img.jsx:3:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Provide the attribute alt when using img, area or input type='image'
   
-    3 │ <>
-  > 4 │ 	<img src="foo" />
-      │ 	^^^^^^^^^^^^^^^^^
-    5 │ 	<img src="foo" role="presentation" />
-    6 │ 	<img src="foo" role="none" />
+    1 │ // invalid
+    2 │ <>
+  > 3 │   <img />
+      │   ^^^^^^^
+    4 │   <img alt />
+    5 │   <img alt={undefined} />
   
   i Meaningful alternative text on elements helps users relying on screen
                 readers to understand content's purpose within a page.
@@ -50,16 +84,16 @@ img.jsx:4:2 lint/a11y/useAltText ━━━━━━━━━━━━━━━�
 ```
 
 ```
-img.jsx:5:2 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+img.jsx:4:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Provide the attribute alt when using img, area or input type='image'
   
-    3 │ <>
-    4 │ 	<img src="foo" />
-  > 5 │ 	<img src="foo" role="presentation" />
-      │ 	^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    6 │ 	<img src="foo" role="none" />
-    7 │ 	<img alt />
+    2 │ <>
+    3 │   <img />
+  > 4 │   <img alt />
+      │   ^^^^^^^^^^^
+    5 │   <img alt={undefined} />
+    6 │   <img src="xyz" />
   
   i Meaningful alternative text on elements helps users relying on screen
                 readers to understand content's purpose within a page.
@@ -68,16 +102,16 @@ img.jsx:5:2 lint/a11y/useAltText ━━━━━━━━━━━━━━━�
 ```
 
 ```
-img.jsx:6:2 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+img.jsx:6:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Provide the attribute alt when using img, area or input type='image'
   
-    4 │ 	<img src="foo" />
-    5 │ 	<img src="foo" role="presentation" />
-  > 6 │ 	<img src="foo" role="none" />
-      │ 	^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    7 │ 	<img alt />
-    8 │ 	<img alt={null} />
+    4 │   <img alt />
+    5 │   <img alt={undefined} />
+  > 6 │   <img src="xyz" />
+      │   ^^^^^^^^^^^^^^^^^
+    7 │   <img role />
+    8 │   <img {...this.props} />
   
   i Meaningful alternative text on elements helps users relying on screen
                 readers to understand content's purpose within a page.
@@ -86,16 +120,16 @@ img.jsx:6:2 lint/a11y/useAltText ━━━━━━━━━━━━━━━�
 ```
 
 ```
-img.jsx:7:2 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+img.jsx:7:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Provide the attribute alt when using img, area or input type='image'
   
-    5 │ 	<img src="foo" role="presentation" />
-    6 │ 	<img src="foo" role="none" />
-  > 7 │ 	<img alt />
-      │ 	^^^^^^^^^^^
-    8 │ 	<img alt={null} />
-    9 │ 	<img alt={undefined} />
+    5 │   <img alt={undefined} />
+    6 │   <img src="xyz" />
+  > 7 │   <img role />
+      │   ^^^^^^^^^^^^
+    8 │   <img {...this.props} />
+    9 │   <img alt={false || false} />
   
   i Meaningful alternative text on elements helps users relying on screen
                 readers to understand content's purpose within a page.
@@ -104,16 +138,124 @@ img.jsx:7:2 lint/a11y/useAltText ━━━━━━━━━━━━━━━�
 ```
 
 ```
-img.jsx:8:12 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+img.jsx:8:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Provide the attribute alt when using img, area or input type='image'
   
-     6 │ 	<img src="foo" role="none" />
-     7 │ 	<img alt />
-   > 8 │ 	<img alt={null} />
-       │ 	          ^^^^
-     9 │ 	<img alt={undefined} />
-    10 │ </>
+     6 │   <img src="xyz" />
+     7 │   <img role />
+   > 8 │   <img {...this.props} />
+       │   ^^^^^^^^^^^^^^^^^^^^^^^
+     9 │   <img alt={false || false} />
+    10 │   <img alt={undefined} role="presentation" />
+  
+  i Meaningful alternative text on elements helps users relying on screen
+                readers to understand content's purpose within a page.
+  
+
+```
+
+```
+img.jsx:11:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide the attribute alt when using img, area or input type='image'
+  
+     9 │   <img alt={false || false} />
+    10 │   <img alt={undefined} role="presentation" />
+  > 11 │   <img alt role="presentation" />
+       │   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    12 │   <img role="presentation" />
+    13 │   <img role="none" />
+  
+  i Meaningful alternative text on elements helps users relying on screen
+                readers to understand content's purpose within a page.
+  
+
+```
+
+```
+img.jsx:12:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide the attribute alt when using img, area or input type='image'
+  
+    10 │   <img alt={undefined} role="presentation" />
+    11 │   <img alt role="presentation" />
+  > 12 │   <img role="presentation" />
+       │   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    13 │   <img role="none" />
+    14 │   <img aria-label={undefined} />
+  
+  i Meaningful alternative text on elements helps users relying on screen
+                readers to understand content's purpose within a page.
+  
+
+```
+
+```
+img.jsx:13:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide the attribute alt when using img, area or input type='image'
+  
+    11 │   <img alt role="presentation" />
+    12 │   <img role="presentation" />
+  > 13 │   <img role="none" />
+       │   ^^^^^^^^^^^^^^^^^^^
+    14 │   <img aria-label={undefined} />
+    15 │   <img aria-labelledby={undefined} />
+  
+  i Meaningful alternative text on elements helps users relying on screen
+                readers to understand content's purpose within a page.
+  
+
+```
+
+```
+img.jsx:26:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide the attribute alt when using img, area or input type='image'
+  
+    24 │   <img alt={"foo"} />
+    25 │   <img alt={alt} />
+  > 26 │   <img ALT="foo" />
+       │   ^^^^^^^^^^^^^^^^^
+    27 │   <img ALT={`This is the ${alt} text`} />
+    28 │   <img ALt="foo" />
+  
+  i Meaningful alternative text on elements helps users relying on screen
+                readers to understand content's purpose within a page.
+  
+
+```
+
+```
+img.jsx:27:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide the attribute alt when using img, area or input type='image'
+  
+    25 │   <img alt={alt} />
+    26 │   <img ALT="foo" />
+  > 27 │   <img ALT={`This is the ${alt} text`} />
+       │   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    28 │   <img ALt="foo" />
+    29 │   <img alt="foo" salt={undefined} />
+  
+  i Meaningful alternative text on elements helps users relying on screen
+                readers to understand content's purpose within a page.
+  
+
+```
+
+```
+img.jsx:28:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide the attribute alt when using img, area or input type='image'
+  
+    26 │   <img ALT="foo" />
+    27 │   <img ALT={`This is the ${alt} text`} />
+  > 28 │   <img ALt="foo" />
+       │   ^^^^^^^^^^^^^^^^^
+    29 │   <img alt="foo" salt={undefined} />
+    30 │   <img {...this.props} alt="foo" />
   
   i Meaningful alternative text on elements helps users relying on screen
                 readers to understand content's purpose within a page.

@@ -6,34 +6,44 @@ expression: input.jsx
 ```js
 // invalid
 <>
-	<input type="image" />
-	<input type="image" alt />
-	<input type="image" alt={undefined} />
-	<input type="image" alt={null} />
+  <input type="image" />
+  <input type="image" alt />
+  <input type="image" alt={undefined} />
+  <input type="image">Foo</input>
+  <input type="image" {...this.props} />
+  <input type="image" aria-label="" />
+  <input type="image" aria-label={undefined} />
+  <input type="image" aria-labelledby="" />
+  <input type="image" aria-labelledby={undefined} />
 </>;
 
 // valid
 
 <>
-	<input type="image" alt="This is descriptive!" />
-	<input type="image" aria-label="foo" />
-	<input type="image" aria-labelledby="id1" />
+  <input />
+  <input type="foo" />
+  <input type="image" aria-label="foo" />
+  <input type="image" aria-labelledby="id1" />
+  <input type="image" alt="" />
+  <input type="image" alt="This is descriptive!" />
+  <input type="image" alt={altText} />
+  <Input type="image" />
 </>;
 
 ```
 
 # Diagnostics
 ```
-input.jsx:3:2 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+input.jsx:3:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Provide the attribute alt when using img, area or input type='image'
   
     1 │ // invalid
     2 │ <>
-  > 3 │ 	<input type="image" />
-      │ 	^^^^^^^^^^^^^^^^^^^^^^
-    4 │ 	<input type="image" alt />
-    5 │ 	<input type="image" alt={undefined} />
+  > 3 │   <input type="image" />
+      │   ^^^^^^^^^^^^^^^^^^^^^^
+    4 │   <input type="image" alt />
+    5 │   <input type="image" alt={undefined} />
   
   i Meaningful alternative text on elements helps users relying on screen
                 readers to understand content's purpose within a page.
@@ -42,16 +52,16 @@ input.jsx:3:2 lint/a11y/useAltText ━━━━━━━━━━━━━━━
 ```
 
 ```
-input.jsx:4:2 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+input.jsx:4:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Provide the attribute alt when using img, area or input type='image'
   
     2 │ <>
-    3 │ 	<input type="image" />
-  > 4 │ 	<input type="image" alt />
-      │ 	^^^^^^^^^^^^^^^^^^^^^^^^^^
-    5 │ 	<input type="image" alt={undefined} />
-    6 │ 	<input type="image" alt={null} />
+    3 │   <input type="image" />
+  > 4 │   <input type="image" alt />
+      │   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    5 │   <input type="image" alt={undefined} />
+    6 │   <input type="image">Foo</input>
   
   i Meaningful alternative text on elements helps users relying on screen
                 readers to understand content's purpose within a page.
@@ -60,16 +70,16 @@ input.jsx:4:2 lint/a11y/useAltText ━━━━━━━━━━━━━━━
 ```
 
 ```
-input.jsx:6:27 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+input.jsx:7:3 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Provide the attribute alt when using img, area or input type='image'
   
-    4 │ 	<input type="image" alt />
-    5 │ 	<input type="image" alt={undefined} />
-  > 6 │ 	<input type="image" alt={null} />
-      │ 	                         ^^^^
-    7 │ </>;
-    8 │ 
+    5 │   <input type="image" alt={undefined} />
+    6 │   <input type="image">Foo</input>
+  > 7 │   <input type="image" {...this.props} />
+      │   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    8 │   <input type="image" aria-label="" />
+    9 │   <input type="image" aria-label={undefined} />
   
   i Meaningful alternative text on elements helps users relying on screen
                 readers to understand content's purpose within a page.

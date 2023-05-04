@@ -1,24 +1,57 @@
 // invalid
-
 <>
-	<img src="foo" />
-	<img src="foo" role="presentation" />
-	<img src="foo" role="none" />
-	<img alt />
-	<img alt={null} />
-	<img alt={undefined} />
-</>
+  <img />
+  <img alt />
+  <img alt={undefined} />
+  <img src="xyz" />
+  <img role />
+  <img {...this.props} />
+  <img alt={false || false} />
+  <img alt={undefined} role="presentation" />
+  <img alt role="presentation" />
+  <img role="presentation" />
+  <img role="none" />
+  <img aria-label={undefined} />
+  <img aria-labelledby={undefined} />
+  <img aria-label="" />
+  <img aria-labelledby="" />
+</>;
 
 // valid
 
 <>
-	<img alt={undefined} {...spread} />
-	<img src="foo" {...spread} />
-	<img src="foo" alt="Foo eating a sandwich." />
-	<img src="foo" alt={"Foo eating a sandwich."} />
-	<img src="foo" alt={altText} />
-	<img src="foo" aria-label {...spread} />
-    <img src="foo" alt={<><span class="token punctuation">${</span><span class="token variable">person</span><span class="token punctuation">}</span><span class="token string"> smiling</span><span class="token string"></>} />
-    <img src="foo" alt="" />
-
+  <img alt="foo" />
+  <img alt={"foo"} />
+  <img alt={alt} />
+  <img ALT="foo" />
+  <img ALT={`This is the ${alt} text`} />
+  <img ALt="foo" />
+  <img alt="foo" salt={undefined} />
+  <img {...this.props} alt="foo" />
+  <a />
+  <div />
+  <img alt={function(e) {} } />
+  <div alt={function(e) {} } />
+  <img alt={() => void 0} />
+  <Img />
+  <Component>test</Compoennt>
+  <img alt={alt || "Alt text" } />
+  <img alt={photo.caption} />;
+  <img alt={bar()} />;
+  <img alt={foo.bar || ""} />
+  <img alt={bar() || ""} />
+  <img alt={foo.bar() || ""} />
+  <img alt="" />
+  <img alt={`${undefined}`} />
+  <img alt=" " />
+  <img alt="" role="presentation" />
+  <img alt="" role="none" />
+  <img alt="" role={`presentation`} />
+  <img alt="" role={"presentation"} />
+  <img alt="this is lit..." role="presentation" />
+  <img alt={error ? "not working": "working"} />
+  <img alt={undefined ? "working": "not working"} />
+  <img alt={plugin.name + " Logo"} />
+  <img aria-label="foo" />
+  <img aria-labelledby="id1" />
 </>;
