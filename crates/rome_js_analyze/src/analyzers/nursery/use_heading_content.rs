@@ -74,12 +74,8 @@ impl Rule for UseHeadingContent {
             }
 
             match node {
-                AnyJsxElement::JsxOpeningElement(_) => {
-                    let children = node.parent::<JsxElement>()?.children();
-                    if !children
-                        .into_iter()
-                        .any(|child| child.is_accessible_node().unwrap_or(true))
-                    {
+                AnyJsxElement::JsxOpeningElement(opening_element) => {
+                    if !opening_element.has_accessible_child() {
                         return Some(());
                     }
                 }
