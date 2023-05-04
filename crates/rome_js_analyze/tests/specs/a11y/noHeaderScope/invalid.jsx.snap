@@ -9,6 +9,7 @@ expression: invalid.jsx
 	<div scope={scope}></div>
 	<div scope="col" />
 	<div scope="col"></div>
+	<div scope />
 </>
 
 ```
@@ -61,7 +62,7 @@ invalid.jsx:4:7 lint/a11y/noHeaderScope  FIXABLE  ━━━━━━━━━━
   > 4 │ 	<div scope="col" />
       │ 	     ^^^^^^^^^^^
     5 │ 	<div scope="col"></div>
-    6 │ </>
+    6 │ 	<div scope />
   
   i Suggested fix: Remove the scope attribute.
   
@@ -79,13 +80,32 @@ invalid.jsx:5:7 lint/a11y/noHeaderScope  FIXABLE  ━━━━━━━━━━
     4 │ 	<div scope="col" />
   > 5 │ 	<div scope="col"></div>
       │ 	     ^^^^^^^^^^^
-    6 │ </>
-    7 │ 
+    6 │ 	<div scope />
+    7 │ </>
   
   i Suggested fix: Remove the scope attribute.
   
     5 │ → <div·scope="col"></div>
       │        -----------       
+
+```
+
+```
+invalid.jsx:6:7 lint/a11y/noHeaderScope  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid using the scope attribute on elements other than th elements.
+  
+    4 │ 	<div scope="col" />
+    5 │ 	<div scope="col"></div>
+  > 6 │ 	<div scope />
+      │ 	     ^^^^^
+    7 │ </>
+    8 │ 
+  
+  i Suggested fix: Remove the scope attribute.
+  
+    6 │ → <div·scope·/>
+      │        ------  
 
 ```
 
