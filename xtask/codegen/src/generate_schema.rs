@@ -1,5 +1,5 @@
 use rome_json_formatter::context::JsonFormatOptions;
-use rome_json_parser::parse_json;
+use rome_json_parser::{parse_json, JsonParserConfig};
 use rome_service::Configuration;
 use schemars::schema_for;
 use serde_json::to_string;
@@ -13,7 +13,7 @@ pub(crate) fn generate_configuration_schema(mode: Mode) -> Result<()> {
     let schema = schema_for!(Configuration);
     let json_schema = to_string(&schema)?;
 
-    let parsed = parse_json(&json_schema);
+    let parsed = parse_json(&json_schema, JsonParserConfig::default());
     let formatted =
         rome_json_formatter::format_node(JsonFormatOptions::default(), &parsed.syntax())
             .unwrap()
