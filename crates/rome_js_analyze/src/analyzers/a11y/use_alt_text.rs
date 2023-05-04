@@ -63,12 +63,12 @@ impl Rule for UseAltText {
             return None;
         }
 
-        let has_alt = has_valid_alt_text(&element);
-        let has_aria_label = has_valid_label(&element, "aria-label");
-        let has_aria_labelledby = has_valid_label(&element, "aria-labelledby");
+        let has_alt = has_valid_alt_text(element);
+        let has_aria_label = has_valid_label(element, "aria-label");
+        let has_aria_labelledby = has_valid_label(element, "aria-labelledby");
         match element.name_value_token()?.text_trimmed() {
             "object" => {
-                let has_title = has_valid_label(&element, "title");
+                let has_title = has_valid_label(element, "title");
 
                 if !has_title && !has_aria_label && !has_aria_labelledby {
                     match element {
@@ -89,7 +89,7 @@ impl Rule for UseAltText {
                 }
             }
             "input" => {
-                if has_type_image_attribute(&element)
+                if has_type_image_attribute(element)
                     && !has_alt
                     && !has_aria_label
                     && !has_aria_labelledby
