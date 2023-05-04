@@ -418,7 +418,7 @@ pub struct A11y {
     #[bpaf(long("use-html-lang"), argument("on|off|warn"), optional, hide)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub use_html_lang: Option<RuleConfiguration>,
-    #[doc = "Enforces the usage of the attribute title for the element iframe"]
+    #[doc = "Enforces the usage of the attribute title for the element iframe."]
     #[bpaf(long("use-iframe-title"), argument("on|off|warn"), optional, hide)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub use_iframe_title: Option<RuleConfiguration>,
