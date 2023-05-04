@@ -53,10 +53,11 @@ impl Rule for NoHeaderScope {
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let element = ctx.query();
 
-        if element.is_element() && element.name_value_token()?.text_trimmed() != "th" {
-            if element.has_truthy_attribute("scope") {
-                return Some(());
-            }
+        if element.is_element()
+            && element.name_value_token()?.text_trimmed() != "th"
+            && element.has_truthy_attribute("scope")
+        {
+            return Some(());
         }
 
         None
