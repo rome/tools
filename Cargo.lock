@@ -1680,6 +1680,7 @@ dependencies = [
  "bpaf",
  "crossbeam",
  "dashmap",
+ "globset",
  "hdrhistogram",
  "indexmap",
  "insta",
@@ -2122,6 +2123,7 @@ version = "0.0.0"
 dependencies = [
  "bpaf",
  "dashmap",
+ "globset",
  "indexmap",
  "insta",
  "rome_analyze",

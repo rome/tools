@@ -10,7 +10,7 @@ use crate::settings::{
 use crate::workspace::{
     FixFileResult, GetSyntaxTreeResult, OrganizeImportsResult, PullActionsResult,
 };
-use crate::{Configuration, Rules, WorkspaceError};
+use crate::{Configuration, Matcher, Rules, WorkspaceError};
 use rome_deserialize::json::deserialize_from_json_ast;
 use rome_diagnostics::{Diagnostic, Severity};
 use rome_formatter::{FormatError, Printed};
@@ -28,7 +28,7 @@ impl Language for JsonLanguage {
     type LinterSettings = ();
     type FormatOptions = JsonFormatOptions;
     type OrganizeImportsSettings = ();
-
+    type AllowCommentsOptions = Option<Matcher>;
     fn lookup_settings(language: &LanguagesSettings) -> &LanguageSettings<Self> {
         &language.json
     }
@@ -84,8 +84,24 @@ impl ExtensionHandler for JsonFileHandler {
     }
 }
 
-fn parse(_: &RomePath, _: LanguageId, text: &str, cache: &mut NodeCache) -> AnyParse {
-    let parse = rome_json_parser::parse_json_with_cache(text, cache, JsonParserConfig::default());
+fn parse(
+    path: &RomePath,
+    _: LanguageId,
+    text: &str,
+    cache: &mut NodeCache,
+    settings: SettingsHandle,
+) -> AnyParse {
+    let allow_comment_matcher = &settings.as_ref().languages.json.allow_comments;
+    let parse = rome_json_parser::parse_json_with_cache(
+        text,
+        cache,
+        JsonParserConfig {
+            allow_comments: allow_comment_matcher
+                .as_ref()
+                .map(|matcher| matcher.matches_path(&*path))
+                .unwrap_or(false),
+        },
+    );
     AnyParse::from(parse)
 }
 

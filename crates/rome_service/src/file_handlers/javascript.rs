@@ -64,7 +64,7 @@ impl Language for JsLanguage {
     type LinterSettings = JsLinterSettings;
     type FormatOptions = JsFormatOptions;
     type OrganizeImportsSettings = JsOrganizeImportsSettings;
-
+    type AllowCommentsOptions = ();
     fn lookup_settings(languages: &LanguagesSettings) -> &LanguageSettings<Self> {
         &languages.javascript
     }
@@ -129,6 +129,7 @@ fn parse(
     language_hint: LanguageId,
     text: &str,
     cache: &mut NodeCache,
+    _: SettingsHandle,
 ) -> AnyParse {
     let source_type =
         SourceType::try_from(rome_path.as_path()).unwrap_or_else(|_| match language_hint {

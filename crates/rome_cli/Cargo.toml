@@ -43,6 +43,7 @@ rome_json_syntax = { path = "../rome_json_syntax" }
 rome_migrate = { path = "../rome_migrate" }
 rome_rowan = { path = "../rome_rowan" }
 indexmap = { workspace = true }
+globset = "0.4.10"
 
 [target.'cfg(unix)'.dependencies]
 libc = "0.2.127"

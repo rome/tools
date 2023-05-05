@@ -35,6 +35,7 @@ indexmap = { workspace = true, features = ["serde"] }
 schemars = { version = "0.8.10", features = ["indexmap1"], optional = true }
 tracing = { workspace = true, features = ["attributes"] }
 bpaf = {  workspace = true }
+globset = "0.4.10"
 
 [features]
 schemars = ["dep:schemars", "rome_formatter/serde", "rome_js_factory", "rome_text_edit/schemars"]

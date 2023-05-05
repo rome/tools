@@ -206,6 +206,8 @@ pub trait Language: rome_rowan::Language {
     /// Fully resolved formatter options type for this language
     type FormatOptions: rome_formatter::FormatOptions;
 
+    type AllowCommentsOptions: Default;
+
     /// Read the settings type for this language from the [LanguagesSettings] map
     fn lookup_settings(languages: &LanguagesSettings) -> &LanguageSettings<Self>;
 
@@ -231,6 +233,8 @@ pub struct LanguageSettings<L: Language> {
 
     /// Organize imports settings for this language
     pub organize_imports: L::OrganizeImportsSettings,
+
+    pub allow_comments: L::AllowCommentsOptions,
 }
 
 /// Filesystem settings for the entire workspace
