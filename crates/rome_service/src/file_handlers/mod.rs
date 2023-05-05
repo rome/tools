@@ -16,7 +16,6 @@ use rome_js_syntax::{TextRange, TextSize};
 use rome_parser::AnyParse;
 use rome_rowan::NodeCache;
 use std::ffi::OsStr;
-use std::path::Path;
 
 mod javascript;
 mod json;
@@ -52,14 +51,6 @@ impl Language {
             "json" => Language::Json,
             _ => Language::Unknown,
         }
-    }
-
-    /// Returns the language corresponding to the file path
-    pub fn from_path(path: &Path) -> Self {
-        path.extension()
-            .and_then(|path| path.to_str())
-            .map(Language::from_extension)
-            .unwrap_or(Language::Unknown)
     }
 
     /// Returns the language corresponding to this language ID
@@ -161,17 +152,17 @@ pub struct FixAllParams<'a> {
 
 #[derive(Default)]
 /// The list of capabilities that are available for a language
-pub struct Capabilities {
+pub(crate) struct Capabilities {
     pub(crate) parser: ParserCapabilities,
     pub(crate) debug: DebugCapabilities,
     pub(crate) analyzer: AnalyzerCapabilities,
     pub(crate) formatter: FormatterCapabilities,
 }
 
-type Parse = fn(&RomePath, Language, &str, SettingsHandle, &mut NodeCache) -> AnyParse;
+type Parse = fn(&RomePath, Language, &str, &mut NodeCache, SettingsHandle) -> AnyParse;
 
 #[derive(Default)]
-pub struct ParserCapabilities {
+pub(crate) struct ParserCapabilities {
     /// Parse a file
     pub(crate) parse: Option<Parse>,
 }
@@ -181,7 +172,7 @@ type DebugControlFlow = fn(AnyParse, TextSize) -> String;
 type DebugFormatterIR = fn(&RomePath, AnyParse, SettingsHandle) -> Result<String, WorkspaceError>;
 
 #[derive(Default)]
-pub struct DebugCapabilities {
+pub(crate) struct DebugCapabilities {
     /// Prints the syntax tree
     pub(crate) debug_syntax_tree: Option<DebugSyntaxTree>,
     /// Prints the control flow graph
@@ -213,7 +204,7 @@ type Rename = fn(&RomePath, AnyParse, TextSize, String) -> Result<RenameResult, 
 type OrganizeImports = fn(AnyParse) -> Result<OrganizeImportsResult, WorkspaceError>;
 
 #[derive(Default)]
-pub struct AnalyzerCapabilities {
+pub(crate) struct AnalyzerCapabilities {
     /// It lints a file
     pub(crate) lint: Option<Lint>,
     /// It extracts code actions for a file

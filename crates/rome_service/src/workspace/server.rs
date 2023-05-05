@@ -130,6 +130,7 @@ impl WorkspaceServer {
         &self,
         rome_path: RomePath,
         feature: Option<FeatureName>,
+        // settings: SettingsHandle,
     ) -> Result<AnyParse, WorkspaceError> {
         let ignored = if let Some(feature) = feature {
             self.is_path_ignored(IsPathIgnoredParams {
@@ -187,6 +188,7 @@ impl WorkspaceServer {
                     document.content.as_str(),
                     settings,
                     &mut document.node_cache,
+                    self.settings(),
                 );
 
                 Ok(entry.insert(parsed).clone())
