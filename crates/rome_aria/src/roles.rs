@@ -1042,7 +1042,8 @@ impl<'a> AriaRoles {
             return true;
         }
 
-        // <input type="hidden"> is not interactive
+        // <input type="hidden"> is not interactive.
+        // `type=hidden` is not represented as concept information.
         if element_name == "input"
             && attributes
                 .as_ref()
@@ -1099,20 +1100,9 @@ impl<'a> AriaRoles {
                 "region" => &RegionRole as &dyn AriaRoleDefinitionWithConcepts,
                 _ => return false,
             };
-            if let Some(concepts) = role.concepts_by_element_name(element_name) {
-                for (concept_name, concept_attributes) in concepts {
-                    if *concept_name == element_name && !role.is_interactive() {
-                        if let Some(given_attributes) = attributes {
-                            for (attr_name, attr_value) in *concept_attributes {
-                                if let Some(values) = given_attributes.get(*attr_name) {
-                                    if values.contains(&attr_value.to_string()) {
-                                        return true;
-                                    }
-                                }
-                            }
-                        }
-                        return true;
-                    }
+            if let Some(mut concepts) = role.concepts_by_element_name(element_name) {
+                if concepts.any(|(name, _)| *name == element_name) && !role.is_interactive() {
+                    return true;
                 }
             }
         }
@@ -1142,14 +1132,29 @@ mod test {
     #[test]
     fn should_be_interactive() {
         let aria_roles = AriaRoles {};
-
         assert!(!aria_roles.is_not_interactive_element("header", None));
+        assert!(!aria_roles.is_not_interactive_element("input", {
+            let mut attributes = HashMap::new();
+            attributes.insert("type".to_string(), vec!["search".to_string()]);
+            Some(attributes)
+        }));
+    }
+
+    #[test]
+    fn should_not_be_interactive() {
+        let aria_roles = AriaRoles {};
         assert!(aria_roles.is_not_interactive_element("h1", None));
         assert!(aria_roles.is_not_interactive_element("h2", None));
         assert!(aria_roles.is_not_interactive_element("h3", None));
         assert!(aria_roles.is_not_interactive_element("h4", None));
         assert!(aria_roles.is_not_interactive_element("h5", None));
         assert!(aria_roles.is_not_interactive_element("h6", None));
+        assert!(aria_roles.is_not_interactive_element("body", None));
+        assert!(aria_roles.is_not_interactive_element("input", {
+            let mut attributes = HashMap::new();
+            attributes.insert("type".to_string(), vec!["hidden".to_string()]);
+            Some(attributes)
+        }));
     }
 
     #[test]
