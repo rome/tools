@@ -1618,7 +1618,7 @@ fn ignore_comments_error_when_allow_comments() {
 
 {
   "json": {
-    "allow_comments": ["*.json"]
+    "allowComments": ["*.json"]
   }
 }
 
