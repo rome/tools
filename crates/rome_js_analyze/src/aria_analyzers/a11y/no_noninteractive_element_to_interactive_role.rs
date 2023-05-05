@@ -64,7 +64,6 @@ impl Rule for NoNoninteractiveElementToInteractiveRole {
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
         let aria_roles = ctx.aria_roles();
-
         if node.is_element() {
             let role_attribute = node.find_attribute_by_name("role")?;
             let role_attribute_static_value = role_attribute.as_static_value()?;

@@ -107,8 +107,9 @@ impl Rule for NoNoninteractiveTabindex {
 
         let element_name = node.name().ok()?.as_jsx_name()?.value_token().ok()?;
         let aria_roles = ctx.aria_roles();
+        let attributes = ctx.extract_attributes(&node.attributes());
 
-        if aria_roles.is_not_interactive_element(element_name.text_trimmed(), None) {
+        if aria_roles.is_not_interactive_element(element_name.text_trimmed(), attributes) {
             let tabindex_attribute = node.find_attribute_by_name("tabIndex")?;
             let tabindex_attribute_value = tabindex_attribute.initializer()?.value().ok()?;
             if attribute_has_negative_tabindex(&tabindex_attribute_value)? {
