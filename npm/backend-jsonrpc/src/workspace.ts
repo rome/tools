@@ -44,6 +44,10 @@ export interface Configuration {
 	 */
 	javascript?: JavascriptConfiguration;
 	/**
+	 * Specific configuration for the Json language
+	 */
+	json?: JsonConfiguration;
+	/**
 	 * The configuration for the linter
 	 */
 	linter?: LinterConfiguration;
@@ -110,6 +114,9 @@ If defined here, they should not emit diagnostics.
 	globals?: StringSet;
 	organize_imports?: JavascriptOrganizeImports;
 	parser?: JavascriptParser;
+}
+export interface JsonConfiguration {
+	allow_comments?: StringSet;
 }
 export interface LinterConfiguration {
 	/**

@@ -30,7 +30,7 @@
 			]
 		},
 		"json": {
-			"description": "Specific configuration for the JavaScript language",
+			"description": "Specific configuration for the Json language",
 			"anyOf": [
 				{ "$ref": "#/definitions/JsonConfiguration" },
 				{ "type": "null" }
@@ -628,9 +628,7 @@
 			"type": "object",
 			"properties": {
 				"allow_comments": {
-					"type": ["array", "null"],
-					"items": { "type": "string" },
-					"uniqueItems": true
+					"anyOf": [{ "$ref": "#/definitions/StringSet" }, { "type": "null" }]
 				}
 			},
 			"additionalProperties": false
