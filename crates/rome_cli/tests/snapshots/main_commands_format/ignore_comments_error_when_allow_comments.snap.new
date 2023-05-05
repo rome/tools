@@ -1,0 +1,71 @@
+---
+source: crates/rome_cli/tests/snap_test.rs
+assertion_line: 346
+expression: content
+---
+## `rome.json`
+
+```json
+{
+  "json": {
+    "allow_comments": ["*.json"]
+  }
+}
+```
+
+## `tsconfig.json`
+
+```json
+
+[]
+	
+```
+
+# Emitted Messages
+
+```block
+Found errors in the configuration file, Rome will use its defaults for the sections that are incorrect.
+```
+
+```block
+rome.json:4:3 deserialize ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Found an unknown key `json`.
+  
+    3 │ {
+  > 4 │   "json": {
+      │   ^^^^^^
+    5 │     "allow_comments": ["*.json"]
+    6 │   }
+  
+  i Accepted keys
+  
+  - vcs
+  - files
+  - linter
+  - formatter
+  - javascript
+  - $schema
+  - organizeImports
+  
+
+```
+
+```block
+tsconfig.json format ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Formatter would have printed the following content:
+  
+    1   │ - 
+    2 1 │   []
+    3   │ - → 
+      2 │ + 
+  
+
+```
+
+```block
+Compared 1 file(s) in <TIME>
+```
+
+
