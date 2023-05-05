@@ -85,6 +85,21 @@ impl WorkspaceSettings {
             if let Some(_organize_imports) = organize_imports {}
         }
 
+        if let Some(json) = configuration.json {
+            let string_set = json.allow_comments.unwrap_or_default();
+            if let Some(matcher) = self.languages.json.allow_comments.as_mut() {
+                for item in string_set.index_set().iter() {
+                    matcher.add_pattern(item);
+                }
+            } else {
+                let mut matcher = Matcher::new(MatchOptions::default());
+                for item in string_set.index_set().iter() {
+                    matcher.add_pattern(item);
+                }
+                self.languages.json.allow_comments = Some(matcher);
+            }
+        }
+
         Ok(())
     }
 
