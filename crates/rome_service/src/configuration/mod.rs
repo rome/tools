@@ -116,6 +116,7 @@ impl Configuration {
         "javascript",
         "$schema",
         "organizeImports",
+        "json",
     ];
     pub fn is_formatter_disabled(&self) -> bool {
         self.formatter
