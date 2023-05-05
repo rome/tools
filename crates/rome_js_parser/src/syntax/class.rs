@@ -1793,7 +1793,7 @@ fn parse_modifier(p: &mut JsParser, constructor_parameter: bool) -> Option<Class
 bitflags! {
     /// Bitflag of class member modifiers.
     /// Useful to cheaply track all already seen modifiers of a member (instead of using a HashSet<ModifierKind>).
-    #[derive(Default)]
+    #[derive(Debug, Default, Copy, Clone, Eq, PartialEq)]
     struct ModifierFlags: u16 {
         const DECLARE       = 1 << 0;
         const PRIVATE       = 1 << 1;
@@ -1807,18 +1807,18 @@ bitflags! {
         const ACCESSOR      = 1 << 9;
         const DECORATOR     = 1 << 10;
 
-        const ACCESSIBILITY = ModifierFlags::PRIVATE.bits | ModifierFlags::PROTECTED.bits | ModifierFlags::PUBLIC.bits;
+        const ACCESSIBILITY = ModifierFlags::PRIVATE.bits() | ModifierFlags::PROTECTED.bits() | ModifierFlags::PUBLIC.bits();
 
-        const ALL_MODIFIERS_EXCEPT_DECORATOR = ModifierFlags::DECLARE.bits
-            | ModifierFlags::PRIVATE.bits
-            | ModifierFlags::PROTECTED.bits
-            | ModifierFlags::PUBLIC.bits
-            | ModifierFlags::STATIC.bits
-            | ModifierFlags::READONLY.bits
-            | ModifierFlags::ABSTRACT.bits
-            | ModifierFlags::OVERRIDE.bits
-            | ModifierFlags::PRIVATE_NAME.bits
-            | ModifierFlags::ACCESSOR.bits;
+        const ALL_MODIFIERS_EXCEPT_DECORATOR = ModifierFlags::DECLARE.bits()
+            | ModifierFlags::PRIVATE.bits()
+            | ModifierFlags::PROTECTED.bits()
+            | ModifierFlags::PUBLIC.bits()
+            | ModifierFlags::STATIC.bits()
+            | ModifierFlags::READONLY.bits()
+            | ModifierFlags::ABSTRACT.bits()
+            | ModifierFlags::OVERRIDE.bits()
+            | ModifierFlags::PRIVATE_NAME.bits()
+            | ModifierFlags::ACCESSOR.bits();
 
     }
 }

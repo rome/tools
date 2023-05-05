@@ -19,7 +19,7 @@ use rome_diagnostics::{
 };
 use rome_fs::{FileSystem, PathInterner, RomePath};
 use rome_fs::{TraversalContext, TraversalScope};
-use rome_service::workspace::{IsPathIgnoredParams, SupportsFeatureResult};
+use rome_service::workspace::{FeaturesBuilder, IsPathIgnoredParams};
 use rome_service::{
     workspace::{FeatureName, SupportsFeatureParams},
     Workspace, WorkspaceError,
@@ -608,40 +608,10 @@ impl<'ctx, 'app> TraversalOptions<'ctx, 'app> {
         self.messages.send(msg.into()).ok();
     }
 
-    pub(crate) fn can_format(
-        &self,
-        rome_path: &RomePath,
-    ) -> Result<SupportsFeatureResult, WorkspaceError> {
-        self.workspace.supports_feature(SupportsFeatureParams {
-            path: rome_path.clone(),
-            feature: FeatureName::Format,
-        })
-    }
-
     pub(crate) fn push_format_stat(&self, path: String, stat: FormatterReportFileDetail) {
         self.sender_reports
             .send(ReportKind::Formatter(path, stat))
             .ok();
-    }
-
-    pub(crate) fn can_lint(
-        &self,
-        rome_path: &RomePath,
-    ) -> Result<SupportsFeatureResult, WorkspaceError> {
-        self.workspace.supports_feature(SupportsFeatureParams {
-            path: rome_path.clone(),
-            feature: FeatureName::Lint,
-        })
-    }
-
-    pub(crate) fn can_organize_imports(
-        &self,
-        rome_path: &RomePath,
-    ) -> Result<SupportsFeatureResult, WorkspaceError> {
-        self.workspace.supports_feature(SupportsFeatureParams {
-            path: rome_path.clone(),
-            feature: FeatureName::OrganizeImports,
-        })
     }
 
     pub(crate) fn miss_handler_err(&self, err: WorkspaceError, rome_path: &RomePath) {
@@ -677,35 +647,32 @@ impl<'ctx, 'app> TraversalContext for TraversalOptions<'ctx, 'app> {
             return can_handle;
         }
 
-        let can_lint = self.can_lint(rome_path);
-        let can_format = self.can_format(rome_path);
-        let can_organize_imports = self.can_organize_imports(rome_path);
+        let file_features = self.workspace.file_features(SupportsFeatureParams {
+            path: rome_path.clone(),
+            feature: FeaturesBuilder::new()
+                .with_linter()
+                .with_formatter()
+                .with_organize_imports()
+                .build(),
+        });
+
+        let file_features = match file_features {
+            Ok(file_features) => file_features,
+            Err(err) => {
+                self.miss_handler_err(err, rome_path);
+
+                return false;
+            }
+        };
 
         match self.execution.traversal_mode() {
-            TraversalMode::Check { .. } => can_lint
-                .map(|result| result.reason.is_none())
-                .unwrap_or_else(|err| {
-                    self.miss_handler_err(err, rome_path);
-                    false
-                }),
-            TraversalMode::CI { .. } => match (can_format, can_lint, can_organize_imports) {
-                // the result of the error is the same, rome can't handle the file
-                (Err(err), _, _) | (_, Err(err), _) | (_, _, Err(err)) => {
-                    self.miss_handler_err(err, rome_path);
-                    false
-                }
-                (Ok(can_format), Ok(can_lint), Ok(can_organize_imports)) => {
-                    can_lint.reason.is_none()
-                        || can_format.reason.is_none()
-                        || can_organize_imports.reason.is_none()
-                }
-            },
-            TraversalMode::Format { .. } => can_format
-                .map(|result| result.reason.is_none())
-                .unwrap_or_else(|err| {
-                    self.miss_handler_err(err, rome_path);
-                    false
-                }),
+            TraversalMode::Check { .. } => file_features.supports_for(&FeatureName::Lint),
+            TraversalMode::CI { .. } => {
+                file_features.supports_for(&FeatureName::Lint)
+                    || file_features.supports_for(&FeatureName::Format)
+                    || file_features.supports_for(&FeatureName::OrganizeImports)
+            }
+            TraversalMode::Format { .. } => file_features.supports_for(&FeatureName::Format),
             // Imagine if Rome can't handle its own configuration file...
             TraversalMode::Migrate { .. } => true,
         }

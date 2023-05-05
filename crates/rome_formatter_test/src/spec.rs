@@ -39,9 +39,9 @@ impl<'a> SpecTestFile<'a> {
         let mut input_file = RomePath::new(file_path);
         let can_format = app
             .workspace
-            .supports_feature(SupportsFeatureParams {
+            .file_features(SupportsFeatureParams {
                 path: input_file.clone(),
-                feature: FeatureName::Format,
+                features: FeatureName::Format,
             })
             .unwrap();
 

@@ -111,6 +111,7 @@ pub enum ReLexContext {
 
 bitflags! {
     /// Flags for a lexed token.
+    #[derive(Debug, Copy, Clone, Eq, PartialEq)]
     pub(crate) struct TokenFlags: u8 {
         /// Indicates that there has been a line break between the last non-trivia token
         const PRECEDING_LINE_BREAK = 1 << 0;

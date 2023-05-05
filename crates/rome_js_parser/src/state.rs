@@ -330,6 +330,8 @@ impl ChangeParserState for EnableStrictMode {
 }
 
 bitflags! {
+    #[derive(Debug, Default, Copy, Clone, Eq, PartialEq)]
+
     /// Flags describing the context of a function.
     pub(crate) struct SignatureFlags: u8 {
         /// Is the function in an async context
@@ -369,7 +371,7 @@ bitflags! {
     /// * It's easier to snapshot the previous state. Individual boolean fields would require that a change
     ///   snapshots each individual boolean field to allow restoring the previous state. With bitflags, all that
     ///   is needed is to copy away the flags field and restore it after.
-    #[derive(Default)]
+    #[derive(Debug, Copy, Default, Clone, Eq, PartialEq)]
     pub(crate) struct ParsingContextFlags: u8 {
         /// Whether the parser is in a generator function like `function* a() {}`
         /// Matches the `Yield` parameter in the ECMA spec
@@ -396,13 +398,13 @@ bitflags! {
         /// Whatever the parser is in a TypeScript ambient context
         const AMBIENT_CONTEXT = 1 << 7;
 
-        const LOOP = Self::BREAK_ALLOWED.bits | Self::CONTINUE_ALLOWED.bits;
+        const LOOP = Self::BREAK_ALLOWED.bits() | Self::CONTINUE_ALLOWED.bits();
 
         /// Bitmask of all the flags that must be reset (shouldn't be inherited) when the parser enters a function
-        const FUNCTION_RESET_MASK = Self::BREAK_ALLOWED.bits | Self::CONTINUE_ALLOWED.bits | Self::IN_CONSTRUCTOR.bits | Self::IN_ASYNC.bits | Self::IN_GENERATOR.bits | Self::TOP_LEVEL.bits;
+        const FUNCTION_RESET_MASK = Self::BREAK_ALLOWED.bits() | Self::CONTINUE_ALLOWED.bits() | Self::IN_CONSTRUCTOR.bits() | Self::IN_ASYNC.bits() | Self::IN_GENERATOR.bits() | Self::TOP_LEVEL.bits();
 
         /// Bitmask of all the flags that must be reset (shouldn't be inherited) when entering parameters.
-        const PARAMETER_RESET_MASK = Self::IN_CONSTRUCTOR.bits | Self::IN_FUNCTION.bits | Self::TOP_LEVEL.bits | Self::IN_GENERATOR.bits | Self::IN_ASYNC.bits;
+        const PARAMETER_RESET_MASK = Self::IN_CONSTRUCTOR.bits() | Self::IN_FUNCTION.bits() | Self::TOP_LEVEL.bits() | Self::IN_GENERATOR.bits() | Self::IN_ASYNC.bits();
     }
 }
 

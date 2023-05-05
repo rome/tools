@@ -152,7 +152,7 @@ pub struct FixAllParams<'a> {
 
 #[derive(Default)]
 /// The list of capabilities that are available for a language
-pub(crate) struct Capabilities {
+pub struct Capabilities {
     pub(crate) parser: ParserCapabilities,
     pub(crate) debug: DebugCapabilities,
     pub(crate) analyzer: AnalyzerCapabilities,
@@ -162,7 +162,7 @@ pub(crate) struct Capabilities {
 type Parse = fn(&RomePath, Language, &str, &mut NodeCache) -> AnyParse;
 
 #[derive(Default)]
-pub(crate) struct ParserCapabilities {
+pub struct ParserCapabilities {
     /// Parse a file
     pub(crate) parse: Option<Parse>,
 }
@@ -172,7 +172,7 @@ type DebugControlFlow = fn(AnyParse, TextSize) -> String;
 type DebugFormatterIR = fn(&RomePath, AnyParse, SettingsHandle) -> Result<String, WorkspaceError>;
 
 #[derive(Default)]
-pub(crate) struct DebugCapabilities {
+pub struct DebugCapabilities {
     /// Prints the syntax tree
     pub(crate) debug_syntax_tree: Option<DebugSyntaxTree>,
     /// Prints the control flow graph
@@ -204,7 +204,7 @@ type Rename = fn(&RomePath, AnyParse, TextSize, String) -> Result<RenameResult, 
 type OrganizeImports = fn(AnyParse) -> Result<OrganizeImportsResult, WorkspaceError>;
 
 #[derive(Default)]
-pub(crate) struct AnalyzerCapabilities {
+pub struct AnalyzerCapabilities {
     /// It lints a file
     pub(crate) lint: Option<Lint>,
     /// It extracts code actions for a file
