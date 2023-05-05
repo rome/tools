@@ -92,6 +92,7 @@ fn parse(
     settings: SettingsHandle,
 ) -> AnyParse {
     let allow_comment_matcher = &settings.as_ref().languages.json.allow_comments;
+    dbg!(&allow_comment_matcher);
     let parse = rome_json_parser::parse_json_with_cache(
         text,
         cache,

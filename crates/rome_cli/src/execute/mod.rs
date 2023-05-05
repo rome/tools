@@ -186,6 +186,7 @@ pub(crate) fn execute_mode(
     cli_options: &CliOptions,
     paths: Vec<OsString>,
 ) -> Result<(), CliDiagnostic> {
+    dbg!(&paths);
     mode.max_diagnostics = if let Some(max_diagnostics) = cli_options.max_diagnostics {
         if max_diagnostics > MAXIMUM_DISPLAYABLE_DIAGNOSTICS {
             return Err(CliDiagnostic::overflown_argument(

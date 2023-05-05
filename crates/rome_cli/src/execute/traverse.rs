@@ -62,7 +62,6 @@ pub(crate) fn traverse(
     inputs: Vec<OsString>,
 ) -> Result<(), CliDiagnostic> {
     init_thread_pool();
-
     if inputs.is_empty() && execution.as_stdin_file().is_none() {
         return Err(CliDiagnostic::missing_argument(
             "<INPUT>",

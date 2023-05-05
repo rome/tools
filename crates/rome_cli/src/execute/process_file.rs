@@ -71,6 +71,7 @@ pub(crate) type FileResult = Result<FileStatus, Message>;
 pub(crate) fn process_file(ctx: &TraversalOptions, path: &Path) -> FileResult {
     tracing::trace_span!("process_file", path = ?path).in_scope(move || {
         let rome_path = RomePath::new(path);
+        dbg!(&rome_path);
 
         let supported_format = ctx.can_format(&rome_path).with_file_path_and_code(
             path.display().to_string(),
@@ -204,6 +205,7 @@ pub(crate) fn process_file(ctx: &TraversalOptions, path: &Path) -> FileResult {
 
         // In formatting mode, abort immediately if the file has errors
         errors = result.errors;
+        dbg!(&errors);
         match ctx.execution.traversal_mode() {
             TraversalMode::Format { ignore_errors, .. } if errors > 0 => {
                 return Err(if *ignore_errors {
@@ -284,6 +286,7 @@ pub(crate) fn process_file(ctx: &TraversalOptions, path: &Path) -> FileResult {
                 TraversalMode::Migrate { write: dry_run, .. } => *dry_run,
             };
 
+            dbg!(&"process file");
             let printed = file_guard
                 .format_file()
                 .with_file_path_and_code(path.display().to_string(), category!("format"))?;

@@ -16,7 +16,7 @@ expression: content
 
 ```json
 
-[]
+/*test*/ [1, 2, 3]
 	
 ```
 
@@ -28,8 +28,9 @@ tsconfig.json format ━━━━━━━━━━━━━━━━━━━�
   i Formatter would have printed the following content:
   
     1   │ - 
-    2 1 │   []
+    2   │ - /*test*/·[1,·2,·3]
     3   │ - → 
+      1 │ + [1,·2,·3]
       2 │ + 
   
 
