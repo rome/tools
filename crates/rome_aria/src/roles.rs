@@ -324,7 +324,7 @@ define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#link
     LinkRole {
         PROPS: [("aria-expanded", false)],
-        ROLES: ["command"],
+        ROLES: ["command", "widget"],
         CONCEPTS: &[("a", &[]), ("link", &[])],
     }
 }
@@ -342,7 +342,7 @@ define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#listbox
     ListBoxRole {
         PROPS: [],
-        ROLES: ["select"],
+        ROLES: ["select", "widget"],
         CONCEPTS: &[("select", &[])],
     }
 }
@@ -365,10 +365,11 @@ define_role! {
 }
 
 define_role! {
-    /// https://www.w3.org/TR/wai-aria-1.1/#main
+    /// https://w3c.github.io/aria/#main
     MainRole {
         PROPS: [],
         ROLES: ["landmark"],
+        CONCEPTS: &[("main", &[])],
     }
 }
 
@@ -382,9 +383,17 @@ define_role! {
 
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#menu
-    MenuItem {
+    MenuRole {
         PROPS: [("aria-posinset", false), ("aria-setsize", false)],
-        ROLES: ["command"],
+        ROLES: ["select"],
+    }
+}
+
+define_role! {
+    /// https://www.w3.org/TR/wai-aria-1.1/#menuitem
+    MenuItemRole {
+        PROPS: [("aria-posinset", false), ("aria-setsize", false)],
+        ROLES: ["command", "widget"],
     }
 }
 
@@ -392,7 +401,7 @@ define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#menuitemcheckbox
     MenuItemCheckboxRole {
         PROPS: [("aria-checked", true)],
-        ROLES: ["checkbox", "menuitem"],
+        ROLES: ["checkbox", "menuitem", "widget"],
     }
 }
 
@@ -400,7 +409,7 @@ define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#menuitemradio
     MenuItemRadioRole {
         PROPS: [("aria-checked", true)],
-        ROLES: ["radio", "menuitemcheckbox"],
+        ROLES: ["radio", "menuitemcheckbox", "widget"],
     }
 }
 
@@ -417,7 +426,7 @@ define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#progressbar
     ProgressBarRole {
         PROPS: [("aria-valuenow", true), ("aria-valuemin", true), ("aria-valuemax", true)],
-        ROLES: ["range"],
+        ROLES: ["range", "widget"],
     }
 }
 define_role! {
@@ -466,7 +475,7 @@ define_role! {
             ("aria-readonly", false),
             ("aria-required", false),
         ],
-        ROLES: ["textbox"],
+        ROLES: ["textbox", "widget"],
         CONCEPTS: &[("input", &[("type", "search")])],
     }
 }
@@ -516,7 +525,7 @@ define_role! {
             ("aria-readonly", false),
             ("aria-required", false),
         ],
-        ROLES: ["input"],
+        ROLES: ["input", "widget"],
         CONCEPTS: &[("textarea", &[]), ("input", &[("type", "search")])],
     }
 }
@@ -547,10 +556,11 @@ define_role! {
 }
 
 define_role! {
-    /// https://www.w3.org/TR/wai-aria-1.2/#complementary
+    /// https://w3c.github.io/aria/#complementary
     ComplementaryRole {
         PROPS: [],
         ROLES: ["landmark"],
+        CONCEPTS: &[("aside", &[])],
     }
 }
 
@@ -564,11 +574,11 @@ define_role! {
 }
 
 define_role! {
-    /// https://www.w3.org/TR/wai-aria-1.2/#caption
+    /// https://w3c.github.io/aria/#caption
     CaptionRole {
         PROPS: [],
         ROLES: ["section"],
-        CONCEPTS: &[("caption", &[]), ("figcaption", &[])],
+        CONCEPTS: &[("caption", &[]), ("figcaption", &[]), ("legend", &[])],
     }
 }
 
@@ -683,6 +693,7 @@ define_role! {
     StatusRole {
         PROPS: [],
         ROLES: ["section"],
+        CONCEPTS: &[("output", &[])],
     }
 }
 
@@ -709,6 +720,42 @@ define_role! {
         PROPS: [],
         ROLES: ["landmark"],
         CONCEPTS: &[("section", &[])],
+    }
+}
+
+define_role! {
+    /// https://w3c.github.io/aria/#mark
+    MarkRole {
+        PROPS: [],
+        ROLES: ["section"],
+        CONCEPTS: &[("mark", &[])],
+    }
+}
+
+define_role! {
+    /// https://w3c.github.io/aria/#marquee
+    MarqueeRole {
+        PROPS: [],
+        ROLES: ["section"],
+        CONCEPTS: &[("marquee", &[])],
+    }
+}
+
+define_role! {
+    /// https://w3c.github.io/aria/#associationlist
+    AssociationListRole {
+        PROPS: [],
+        ROLES: ["section"],
+        CONCEPTS: &[("dl", &[])],
+    }
+}
+
+define_role! {
+    /// https://w3c.github.io/aria/#contentinfo
+    ContentInfoRole {
+        PROPS: [],
+        ROLES: ["landmark"],
+        CONCEPTS: &[("footer", &[])],
     }
 }
 
@@ -748,6 +795,16 @@ impl<'a> AriaRoles {
         "term",
         "textbox",
         "generic",
+        "caption",
+        "main",
+        "time",
+        "p",
+        "aside",
+        "blockquote",
+        "associationlist",
+        "status",
+        "contentinfo",
+        "region",
     ];
 
     /// It returns the metadata of a role, if it exits.
@@ -801,7 +858,8 @@ impl<'a> AriaRoles {
             "log" => &LogRole as &dyn AriaRoleDefinition,
             "main" => &MainRole as &dyn AriaRoleDefinition,
             "menubar" => &MenubarRole as &dyn AriaRoleDefinition,
-            "menu" => &MenuItem as &dyn AriaRoleDefinition,
+            "menu" => &MenuRole as &dyn AriaRoleDefinition,
+            "menuitem" => &MenuItemRole as &dyn AriaRoleDefinition,
             "menuitemcheckbox" => &MenuItemCheckboxRole as &dyn AriaRoleDefinition,
             "menuitemradio" => &MenuItemRadioRole as &dyn AriaRoleDefinition,
             "navigation" => &NavigationRole as &dyn AriaRoleDefinition,
@@ -962,7 +1020,11 @@ impl<'a> AriaRoles {
     }
 
     /// Given the name of element, the function tells whether it's interactive
-    pub fn is_not_interactive_element(&self, element_name: &str) -> bool {
+    pub fn is_not_interactive_element(
+        &self,
+        element_name: &str,
+        attributes: Option<HashMap<String, Vec<String>>>,
+    ) -> bool {
         // <header> elements do not technically have semantics, unless the
         // element is a direct descendant of <body>, and this crate cannot
         // reliably test that.
@@ -971,6 +1033,26 @@ impl<'a> AriaRoles {
         if element_name == "header" {
             return false;
         }
+
+        let elements_no_concept_info = [
+            "body", "br", "details", "dir", "frame", "iframe", "label", "mark", "marquee", "menu",
+            "meter", "optgroup", "pre", "progress", "ruby",
+        ];
+        if elements_no_concept_info.contains(&element_name) {
+            return true;
+        }
+
+        // <input type="hidden"> is not interactive.
+        // `type=hidden` is not represented as concept information.
+        if element_name == "input"
+            && attributes
+                .as_ref()
+                .and_then(|attributes| attributes.get("type"))
+                .map_or(false, |values| values.iter().any(|x| x == "hidden"))
+        {
+            return true;
+        }
+
         for element in Self::ROLE_WITH_CONCEPTS {
             let role = match *element {
                 "checkbox" => &CheckboxRole as &dyn AriaRoleDefinitionWithConcepts,
@@ -1006,6 +1088,16 @@ impl<'a> AriaRoles {
                 "term" => &TermRole as &dyn AriaRoleDefinitionWithConcepts,
                 "textbox" => &TextboxRole as &dyn AriaRoleDefinitionWithConcepts,
                 "generic" => &GenericRole as &dyn AriaRoleDefinitionWithConcepts,
+                "caption" => &CaptionRole as &dyn AriaRoleDefinitionWithConcepts,
+                "main" => &MainRole as &dyn AriaRoleDefinitionWithConcepts,
+                "time" => &TimeRole as &dyn AriaRoleDefinitionWithConcepts,
+                "p" => &ParagraphRole as &dyn AriaRoleDefinitionWithConcepts,
+                "aside" => &ComplementaryRole as &dyn AriaRoleDefinitionWithConcepts,
+                "blockquote" => &BlockQuoteRole as &dyn AriaRoleDefinitionWithConcepts,
+                "associationlist" => &AssociationListRole as &dyn AriaRoleDefinitionWithConcepts,
+                "status" => &StatusRole as &dyn AriaRoleDefinitionWithConcepts,
+                "contentinfo" => &ContentInfoRole as &dyn AriaRoleDefinitionWithConcepts,
+                "region" => &RegionRole as &dyn AriaRoleDefinitionWithConcepts,
                 _ => return false,
             };
             if let Some(mut concepts) = role.concepts_by_element_name(element_name) {
@@ -1040,14 +1132,29 @@ mod test {
     #[test]
     fn should_be_interactive() {
         let aria_roles = AriaRoles {};
+        assert!(!aria_roles.is_not_interactive_element("header", None));
+        assert!(!aria_roles.is_not_interactive_element("input", {
+            let mut attributes = HashMap::new();
+            attributes.insert("type".to_string(), vec!["search".to_string()]);
+            Some(attributes)
+        }));
+    }
 
-        assert!(!aria_roles.is_not_interactive_element("header"));
-        assert!(aria_roles.is_not_interactive_element("h1"));
-        assert!(aria_roles.is_not_interactive_element("h2"));
-        assert!(aria_roles.is_not_interactive_element("h3"));
-        assert!(aria_roles.is_not_interactive_element("h4"));
-        assert!(aria_roles.is_not_interactive_element("h5"));
-        assert!(aria_roles.is_not_interactive_element("h6"));
+    #[test]
+    fn should_not_be_interactive() {
+        let aria_roles = AriaRoles {};
+        assert!(aria_roles.is_not_interactive_element("h1", None));
+        assert!(aria_roles.is_not_interactive_element("h2", None));
+        assert!(aria_roles.is_not_interactive_element("h3", None));
+        assert!(aria_roles.is_not_interactive_element("h4", None));
+        assert!(aria_roles.is_not_interactive_element("h5", None));
+        assert!(aria_roles.is_not_interactive_element("h6", None));
+        assert!(aria_roles.is_not_interactive_element("body", None));
+        assert!(aria_roles.is_not_interactive_element("input", {
+            let mut attributes = HashMap::new();
+            attributes.insert("type".to_string(), vec!["hidden".to_string()]);
+            Some(attributes)
+        }));
     }
 
     #[test]

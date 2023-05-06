@@ -69,7 +69,9 @@ impl Rule for NoNoninteractiveElementToInteractiveRole {
             let role_attribute_static_value = role_attribute.as_static_value()?;
             let role_attribute_value = role_attribute_static_value.text();
             let element_name = node.name().ok()?.as_jsx_name()?.value_token().ok()?;
-            if aria_roles.is_not_interactive_element(element_name.text_trimmed())
+
+            let attributes = ctx.extract_attributes(&node.attributes());
+            if aria_roles.is_not_interactive_element(element_name.text_trimmed(), attributes)
                 && aria_roles.is_role_interactive(role_attribute_value)
             {
                 // <div> and <span> are considered neither interactive nor non-interactive, depending on the presence or absence of the role attribute.
@@ -85,7 +87,6 @@ impl Rule for NoNoninteractiveElementToInteractiveRole {
                 });
             }
         }
-
         None
     }
 
