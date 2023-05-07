@@ -65,76 +65,24 @@ info: js/decorators/member-expression.js
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,54 +1,42 @@
- [
-   class {
--    @(decorators[0])
--    method() {}
-+    @(decorators[0]) method() {}
-   },
-   class {
-     @decorators [0];
+@@ -12,7 +12,7 @@
      method() {}
-   },
-   class {
--    @(decorators?.[0])
--    method() {}
-+    @(decorators?.[0]) method() {}
    },
    class {
 -    @decorators.at(0)
--    method() {}
-+    @(decorators.at(0)) method() {}
++    @(decorators.at(0))
+     method() {}
    },
    class {
--    @(decorators?.at(0))
--    method() {}
-+    @(decorators?.at(0)) method() {}
-+  },
-+  class {
-+    @(decorators.first) method() {}
-+  },
-+  class {
-+    @(decorators?.first) method() {}
+@@ -20,7 +20,7 @@
+     method() {}
    },
    class {
 -    @decorators.first
--    method() {}
-+    @(decorators[first]) method() {}
-   },
-   class {
--    @(decorators?.first)
-+    @decorators [first];
++    @(decorators.first)
      method() {}
    },
    class {
--    @(decorators[first])
--    method() {}
-+    @(decorators["first"]) method() {}
-   },
-+  @(decorators[first])
-   class {
--    @decorators [first];
-     method() {}
-   },
-+  @(decorators[0])
-   class {
--    @(decorators["first"])
-     method() {}
-   },
--  (
--    @(decorators[first])
--    class {
--      method() {}
--    }
--  ),
--  (
--    @(decorators[0])
--    class {
--      method() {}
--    }
--  ),
- ];
 ```
 
 # Output
@@ -142,45 +90,57 @@ info: js/decorators/member-expression.js
 ```js
 [
   class {
-    @(decorators[0]) method() {}
+    @(decorators[0])
+    method() {}
   },
   class {
     @decorators [0];
     method() {}
   },
   class {
-    @(decorators?.[0]) method() {}
+    @(decorators?.[0])
+    method() {}
   },
   class {
-    @(decorators.at(0)) method() {}
+    @(decorators.at(0))
+    method() {}
   },
   class {
-    @(decorators?.at(0)) method() {}
+    @(decorators?.at(0))
+    method() {}
   },
   class {
-    @(decorators.first) method() {}
+    @(decorators.first)
+    method() {}
   },
   class {
-    @(decorators?.first) method() {}
+    @(decorators?.first)
+    method() {}
   },
   class {
-    @(decorators[first]) method() {}
+    @(decorators[first])
+    method() {}
   },
   class {
     @decorators [first];
     method() {}
   },
   class {
-    @(decorators["first"]) method() {}
-  },
-  @(decorators[first])
-  class {
+    @(decorators["first"])
     method() {}
   },
-  @(decorators[0])
-  class {
-    method() {}
-  },
+  (
+    @(decorators[first])
+    class {
+      method() {}
+    }
+  ),
+  (
+    @(decorators[0])
+    class {
+      method() {}
+    }
+  ),
 ];
 ```
 

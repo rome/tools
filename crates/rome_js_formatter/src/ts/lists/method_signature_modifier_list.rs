@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use crate::utils::sort_modifiers_by_precedence;
+use crate::utils::format_modifiers::FormatModifiers;
 use rome_js_syntax::TsMethodSignatureModifierList;
 
 #[derive(Debug, Clone, Default)]
@@ -9,8 +9,6 @@ impl FormatRule<TsMethodSignatureModifierList> for FormatTsMethodSignatureModifi
     type Context = JsFormatContext;
 
     fn fmt(&self, node: &TsMethodSignatureModifierList, f: &mut JsFormatter) -> FormatResult<()> {
-        f.join_with(&space())
-            .entries(sort_modifiers_by_precedence(node).into_iter().formatted())
-            .finish()
+        FormatModifiers::from(node.clone()).fmt(f)
     }
 }

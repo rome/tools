@@ -1,0 +1,115 @@
+---
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info: js/module/decorators/expression.js
+---
+
+# Input
+
+```js
+console.log(@deco class Foo {})
+console.log(@deco class {})
+
+const a1 = (@deco class Foo {});
+const a2 = (@deco class {});
+
+(@deco class Foo {});
+(@deco class {});
+
+const b1 = []
+;(@deco class Foo {})
+
+const b2 = []
+;(@deco class {})
+
+(@deco class Foo {}).name;
+(@deco class {}).name;
+
+class Foo extends (@deco class Foo {}){}
+
+class Foo extends (@deco class {}){}
+
+```
+
+
+=============================
+
+# Outputs
+
+## Output 1
+
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+Quote properties: As needed
+Trailing comma: All
+Semicolons: Always
+-----
+
+```js
+console.log(
+	(
+		@deco
+		class Foo {}
+	),
+);
+console.log(
+	(
+		@deco
+		class {}
+	),
+);
+
+const a1 =
+	(
+		@deco
+		class Foo {}
+	);
+const a2 =
+	(
+		@deco
+		class {}
+	);
+
+(
+	@deco
+	class Foo {}
+);
+(
+	@deco
+	class {}
+);
+
+const b1 = [];
+(
+	@deco
+	class Foo {}
+);
+
+const b2 = [];
+(
+	@deco
+	class {}
+)(
+	(
+		@deco
+		class Foo {}
+	),
+).name;
+(
+	@deco
+	class {}
+).name;
+
+class Foo extends (
+	@deco
+	class Foo {}
+) {}
+
+class Foo extends (
+	@deco
+	class {}
+) {}
+```
+
+

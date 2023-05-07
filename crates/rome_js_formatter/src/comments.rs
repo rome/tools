@@ -166,7 +166,6 @@ impl CommentStyle for JsCommentStyle {
                 .or_else(handle_try_comment)
                 .or_else(handle_class_comment)
                 .or_else(handle_method_comment)
-                .or_else(handle_property_comments)
                 .or_else(handle_for_comment)
                 .or_else(handle_root_comments)
                 .or_else(handle_array_hole_comment)
@@ -185,7 +184,6 @@ impl CommentStyle for JsCommentStyle {
                 .or_else(handle_try_comment)
                 .or_else(handle_class_comment)
                 .or_else(handle_method_comment)
-                .or_else(handle_property_comments)
                 .or_else(handle_for_comment)
                 .or_else(handle_root_comments)
                 .or_else(handle_parameter_comment)
@@ -504,28 +502,6 @@ fn handle_method_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlacem
                 None => CommentPlacement::dangling(body.into_syntax(), comment),
                 Some(statement) => CommentPlacement::leading(statement.into_syntax(), comment),
             };
-        }
-    }
-
-    CommentPlacement::Default(comment)
-}
-
-fn handle_property_comments(comment: DecoratedComment<JsLanguage>) -> CommentPlacement<JsLanguage> {
-    let enclosing = comment.enclosing_node();
-
-    let is_property = matches!(
-        enclosing.kind(),
-        JsSyntaxKind::JS_PROPERTY_OBJECT_MEMBER | JsSyntaxKind::JS_PROPERTY_CLASS_MEMBER
-    );
-
-    if !is_property {
-        return CommentPlacement::Default(comment);
-    }
-
-    if let (Some(preceding), Some(following)) = (comment.preceding_node(), comment.following_node())
-    {
-        if preceding.kind() == JsSyntaxKind::JS_DECORATOR {
-            return CommentPlacement::leading(following.clone(), comment);
         }
     }
 

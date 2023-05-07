@@ -74,7 +74,8 @@ Semicolons: Always
 ```ts
 @sealed
 class Test {
-	@readonly prop: string;
+	@readonly
+	prop: string;
 
 	constructor(
 		@param test,
@@ -104,7 +105,9 @@ class Test2 {
 	 */
 
 	@test /* trailing multiline comment
-	 for decorator */ @anotherDecorator() // leading comment
+	 for decorator */
+	@anotherDecorator()
+	// leading comment
 	prop: string;
 }
 ```
@@ -113,9 +116,9 @@ class Test2 {
 
 ## Unimplemented nodes/tokens
 
-"\t\t@par" => 61..67
-"\t\t@readon" => 76..85
-"\t\t@aVeryLongDecoratorNameLetsSeeWhatHappensWith" => 103..150
-"@param" => 174..180
-"@param" => 218..224
+"\t\t@par" => 62..68
+"\t\t@readon" => 77..86
+"\t\t@aVeryLongDecoratorNameLetsSeeWhatHappensWith" => 104..151
+"@param" => 175..181
+"@param" => 219..225
 
