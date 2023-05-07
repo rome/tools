@@ -1,6 +1,6 @@
 [
   class {
-    @decorators[0]
+    @(decorators[0])
     method() {}
   },
   class {
@@ -28,7 +28,7 @@
     method() {}
   },
   class {
-    @decorators[first]
+    @(decorators[first])
     method() {}
   },
   class {
@@ -36,17 +36,17 @@
     method() {}
   },
   class {
-    @decorators["first"]
+    @(decorators["first"])
     method() {}
   },
   (
-    @decorators[first]
+    @(decorators[first])
     class {
       method() {}
     }
   ),
   (
-    @decorators[0]
+    @(decorators[0])
     class {
       method() {}
     }
