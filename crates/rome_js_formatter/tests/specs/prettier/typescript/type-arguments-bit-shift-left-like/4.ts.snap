@@ -1,0 +1,35 @@
+---
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info: typescript/type-arguments-bit-shift-left-like/4.ts
+---
+
+# Input
+
+```ts
+(@f<<T>(v: T) => void>() class {});
+
+```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,4 +1,2 @@
+-(
+-  @f<<T>(v: T) => void>()
+-  class {}
+-);
++(@f<<T>(v: T) => void>()
++class {});
+```
+
+# Output
+
+```ts
+(@f<<T>(v: T) => void>()
+class {});
+```
+
+

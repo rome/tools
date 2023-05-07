@@ -43,12 +43,6 @@ class Something2 {
     abstract property: Array<string>
 }
 
-class Something3 {
-    @foo()
-    // comment
-    abstract method(): Array<string>
-}
-
 ```
 
 
@@ -57,7 +51,7 @@ class Something3 {
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,41 +1,36 @@
+@@ -1,35 +1,30 @@
  class Foo1 {
 -  @foo
 -  // comment
@@ -103,14 +97,6 @@ class Something3 {
 +    // comment
 +    abstract property: Array<string>
  }
- 
- class Something3 {
-   @foo()
--  // comment
--  abstract method(): Array<string>;
-+    // comment
-+    abstract method(): Array<string>
- }
 ```
 
 # Output
@@ -146,12 +132,6 @@ class Something2 {
     // comment
     abstract property: Array<string>
 }
-
-class Something3 {
-  @foo()
-    // comment
-    abstract method(): Array<string>
-}
 ```
 
 # Errors
@@ -166,29 +146,6 @@ decorators-comments.ts:35:5 parse ━━━━━━━━━━━━━━━�
        │     ^^^^^^^^
     36 │ }
     37 │ 
-  
-decorators-comments.ts:41:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × Only abstract classes can have abstract members
-  
-    39 │     @foo()
-    40 │     // comment
-  > 41 │     abstract method(): Array<string>
-       │     ^^^^^^^^
-    42 │ }
-    43 │ 
-  
-decorators-comments.ts:39:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × Decorators are not valid here.
-  
-    38 │ class Something3 {
-  > 39 │     @foo()
-       │     ^^^^^^
-    40 │     // comment
-    41 │     abstract method(): Array<string>
-  
-  i Decorators are only valid on class declarations, class expressions, and class methods.
   
 
 ```

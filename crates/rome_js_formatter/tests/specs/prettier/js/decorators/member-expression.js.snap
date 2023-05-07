@@ -68,7 +68,7 @@ info: js/decorators/member-expression.js
 @@ -1,54 +1,42 @@
  [
    class {
--    @decorators[0]
+-    @(decorators[0])
 -    method() {}
 +    @(decorators[0]) method() {}
    },
@@ -108,7 +108,7 @@ info: js/decorators/member-expression.js
      method() {}
    },
    class {
--    @decorators[first]
+-    @(decorators[first])
 -    method() {}
 +    @(decorators["first"]) method() {}
    },
@@ -119,17 +119,17 @@ info: js/decorators/member-expression.js
    },
 +  @(decorators[0])
    class {
--    @decorators["first"]
+-    @(decorators["first"])
      method() {}
    },
 -  (
--    @decorators[first]
+-    @(decorators[first])
 -    class {
 -      method() {}
 -    }
 -  ),
 -  (
--    @decorators[0]
+-    @(decorators[0])
 -    class {
 -      method() {}
 -    }

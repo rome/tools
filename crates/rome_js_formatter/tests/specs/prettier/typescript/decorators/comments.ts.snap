@@ -1,0 +1,41 @@
+---
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info: typescript/decorators/comments.ts
+---
+
+# Input
+
+```ts
+class Something {
+    @Annotateme()
+    // comment
+    static property: Array<string>;
+}
+
+```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,5 +1,4 @@
+ class Something {
+-  @Annotateme()
+-  // comment
++  @Annotateme() // comment
+   static property: Array<string>;
+ }
+```
+
+# Output
+
+```ts
+class Something {
+  @Annotateme() // comment
+  static property: Array<string>;
+}
+```
+
+
