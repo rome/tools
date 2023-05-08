@@ -12,7 +12,9 @@ pub(crate) struct FormatJsClassExpression;
 
 impl FormatNodeRule<JsClassExpression> for FormatJsClassExpression {
     fn fmt_fields(&self, node: &JsClassExpression, f: &mut JsFormatter) -> FormatResult<()> {
-        if node.decorators().len() > 0 {
+        if node.decorators().is_empty() {
+            FormatClass::from(&node.clone().into()).fmt(f)
+        } else {
             write!(
                 f,
                 [
@@ -23,13 +25,11 @@ impl FormatNodeRule<JsClassExpression> for FormatJsClassExpression {
                     soft_line_break_or_space()
                 ]
             )
-        } else {
-            FormatClass::from(&node.clone().into()).fmt(f)
         }
     }
 
     fn needs_parentheses(&self, item: &JsClassExpression) -> bool {
-        item.decorators().len() > 0 || item.needs_parentheses()
+        !item.decorators().is_empty() || item.needs_parentheses()
     }
 
     fn fmt_dangling_comments(

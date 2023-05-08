@@ -75,7 +75,7 @@ impl FormatRule<JsDecoratorList> for FormatJsDecoratorList {
             let is_export = export.is_some();
 
             let has_decorators_before_export =
-                export.map_or(false, |export| export.decorators().len() > 0);
+                export.map_or(false, |export| !export.decorators().is_empty());
 
             if has_decorators_before_export {
                 return Ok(());

@@ -941,7 +941,7 @@ pub(crate) fn should_break_after_operator(
                 })
         }
 
-        AnyJsExpression::JsClassExpression(class) => class.decorators().len() > 0,
+        AnyJsExpression::JsClassExpression(class) => !class.decorators().is_empty(),
 
         _ => false,
     };
