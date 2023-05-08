@@ -1,5 +1,6 @@
 use crate::prelude::*;
 use crate::utils::format_class::FormatClass;
+use rome_formatter::{format_args, write};
 
 use crate::parentheses::{
     is_callee, is_first_in_statement, FirstInStatementMode, NeedsParentheses,
@@ -11,11 +12,24 @@ pub(crate) struct FormatJsClassExpression;
 
 impl FormatNodeRule<JsClassExpression> for FormatJsClassExpression {
     fn fmt_fields(&self, node: &JsClassExpression, f: &mut JsFormatter) -> FormatResult<()> {
-        FormatClass::from(&node.clone().into()).fmt(f)
+        if node.decorators().is_empty() {
+            FormatClass::from(&node.clone().into()).fmt(f)
+        } else {
+            write!(
+                f,
+                [
+                    indent(&format_args![
+                        soft_line_break_or_space(),
+                        &FormatClass::from(&node.clone().into()),
+                    ]),
+                    soft_line_break_or_space()
+                ]
+            )
+        }
     }
 
     fn needs_parentheses(&self, item: &JsClassExpression) -> bool {
-        item.needs_parentheses()
+        !item.decorators().is_empty() || item.needs_parentheses()
     }
 
     fn fmt_dangling_comments(
