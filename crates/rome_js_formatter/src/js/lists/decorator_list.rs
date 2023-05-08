@@ -15,7 +15,7 @@ impl FormatRule<JsDecoratorList> for FormatJsDecoratorList {
             return Ok(());
         }
 
-        // we need to rearrange decorators to be before export if we have decorators before class
+        // we need to rearrange decorators to be before export if we have decorators before class and after export
         if let Some(export) = node.parent::<JsExport>() {
             let mut join = f.join_nodes_with_hardline();
 
