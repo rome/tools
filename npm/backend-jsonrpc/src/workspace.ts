@@ -564,6 +564,10 @@ export interface Nursery {
 	 * Enforce the usage of a literal access to properties over computed property access.
 	 */
 	useLiteralKeys?: RuleConfiguration;
+	/**
+	 * Disallow number literal object member names which are not base10 or uses underscore as separator
+	 */
+	useSimpleNumberKeys?: RuleConfiguration;
 }
 /**
  * A list of rules that belong to this group
@@ -1017,6 +1021,7 @@ export type Category =
 	| "lint/nursery/useIsNan"
 	| "lint/nursery/useLiteralEnumMembers"
 	| "lint/nursery/useLiteralKeys"
+	| "lint/nursery/useSimpleNumberKeys"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"

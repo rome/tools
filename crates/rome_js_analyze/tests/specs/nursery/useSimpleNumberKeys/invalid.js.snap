@@ -1,0 +1,203 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: invalid.js
+---
+# Input
+```js
+({ 1n: 1 });
+({ 0x1: 1 });
+({ 0o12: 1 });
+({ 0b1: 1 });
+({ 0o1: 1 });
+({ 1_0: 1 });
+({ 0.1e1_2: "ed" });
+({ 11_1.11: "ee" });
+
+```
+
+# Diagnostics
+```
+invalid.js:1:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Bigint is not allowed here.
+  
+  > 1 │ ({ 1n: 1 });
+      │    ^^
+    2 │ ({ 0x1: 1 });
+    3 │ ({ 0o12: 1 });
+  
+  i Safe fix: Replace 1n with 1
+  
+    1   │ - ({·1n:·1·});
+      1 │ + ({·1:·1·});
+    2 2 │   ({ 0x1: 1 });
+    3 3 │   ({ 0o12: 1 });
+  
+
+```
+
+```
+invalid.js:2:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Hexadecimal number literal is not allowed here.
+  
+    1 │ ({ 1n: 1 });
+  > 2 │ ({ 0x1: 1 });
+      │    ^^^
+    3 │ ({ 0o12: 1 });
+    4 │ ({ 0b1: 1 });
+  
+  i Safe fix: Replace 0x1 with 1
+  
+    1 1 │   ({ 1n: 1 });
+    2   │ - ({·0x1:·1·});
+      2 │ + ({·1:·1·});
+    3 3 │   ({ 0o12: 1 });
+    4 4 │   ({ 0b1: 1 });
+  
+
+```
+
+```
+invalid.js:3:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Octal number literal is not allowed here.
+  
+    1 │ ({ 1n: 1 });
+    2 │ ({ 0x1: 1 });
+  > 3 │ ({ 0o12: 1 });
+      │    ^^^^
+    4 │ ({ 0b1: 1 });
+    5 │ ({ 0o1: 1 });
+  
+  i Safe fix: Replace 0o12 with 9
+  
+    1 1 │   ({ 1n: 1 });
+    2 2 │   ({ 0x1: 1 });
+    3   │ - ({·0o12:·1·});
+      3 │ + ({·9:·1·});
+    4 4 │   ({ 0b1: 1 });
+    5 5 │   ({ 0o1: 1 });
+  
+
+```
+
+```
+invalid.js:4:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Binary number literal in is not allowed here.
+  
+    2 │ ({ 0x1: 1 });
+    3 │ ({ 0o12: 1 });
+  > 4 │ ({ 0b1: 1 });
+      │    ^^^
+    5 │ ({ 0o1: 1 });
+    6 │ ({ 1_0: 1 });
+  
+  i Safe fix: Replace 0b1 with 1
+  
+    2 2 │   ({ 0x1: 1 });
+    3 3 │   ({ 0o12: 1 });
+    4   │ - ({·0b1:·1·});
+      4 │ + ({·1:·1·});
+    5 5 │   ({ 0o1: 1 });
+    6 6 │   ({ 1_0: 1 });
+  
+
+```
+
+```
+invalid.js:5:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Octal number literal is not allowed here.
+  
+    3 │ ({ 0o12: 1 });
+    4 │ ({ 0b1: 1 });
+  > 5 │ ({ 0o1: 1 });
+      │    ^^^
+    6 │ ({ 1_0: 1 });
+    7 │ ({ 0.1e1_2: "ed" });
+  
+  i Safe fix: Replace 0o1 with 1
+  
+    3 3 │   ({ 0o12: 1 });
+    4 4 │   ({ 0b1: 1 });
+    5   │ - ({·0o1:·1·});
+      5 │ + ({·1:·1·});
+    6 6 │   ({ 1_0: 1 });
+    7 7 │   ({ 0.1e1_2: "ed" });
+  
+
+```
+
+```
+invalid.js:6:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Number literal with underscore is not allowed here.
+  
+    4 │ ({ 0b1: 1 });
+    5 │ ({ 0o1: 1 });
+  > 6 │ ({ 1_0: 1 });
+      │    ^^^
+    7 │ ({ 0.1e1_2: "ed" });
+    8 │ ({ 11_1.11: "ee" });
+  
+  i Safe fix: Replace 1_0 with 10
+  
+    4 4 │   ({ 0b1: 1 });
+    5 5 │   ({ 0o1: 1 });
+    6   │ - ({·1_0:·1·});
+      6 │ + ({·10:·1·});
+    7 7 │   ({ 0.1e1_2: "ed" });
+    8 8 │   ({ 11_1.11: "ee" });
+  
+
+```
+
+```
+invalid.js:7:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Number literal with underscore is not allowed here.
+  
+    5 │ ({ 0o1: 1 });
+    6 │ ({ 1_0: 1 });
+  > 7 │ ({ 0.1e1_2: "ed" });
+      │    ^^^^^^^
+    8 │ ({ 11_1.11: "ee" });
+    9 │ 
+  
+  i Safe fix: Replace 0.1e1_2 with .1e12
+  
+    5 5 │   ({ 0o1: 1 });
+    6 6 │   ({ 1_0: 1 });
+    7   │ - ({·0.1e1_2:·"ed"·});
+      7 │ + ({·.1e12:·"ed"·});
+    8 8 │   ({ 11_1.11: "ee" });
+    9 9 │   
+  
+
+```
+
+```
+invalid.js:8:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Number literal with underscore is not allowed here.
+  
+    6 │ ({ 1_0: 1 });
+    7 │ ({ 0.1e1_2: "ed" });
+  > 8 │ ({ 11_1.11: "ee" });
+      │    ^^^^^^^
+    9 │ 
+  
+  i Safe fix: Replace 11_1.11 with 111.11
+  
+    6 6 │   ({ 1_0: 1 });
+    7 7 │   ({ 0.1e1_2: "ed" });
+    8   │ - ({·11_1.11:·"ee"·});
+      8 │ + ({·111.11:·"ee"·});
+    9 9 │   
+  
+
+```
+
+
