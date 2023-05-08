@@ -6,7 +6,8 @@ use anyhow::{Context, Result};
 use rome_analyze::{ActionCategory, SourceActionKind};
 use rome_fs::RomePath;
 use rome_service::workspace::{
-    FeatureName, FixFileMode, FixFileParams, PullActionsParams, SupportsFeatureParams,
+    FeatureName, FeaturesBuilder, FixFileMode, FixFileParams, PullActionsParams,
+    SupportsFeatureParams,
 };
 use rome_service::WorkspaceError;
 use std::borrow::Cow;
@@ -35,18 +36,18 @@ pub(crate) fn code_actions(
     let url = params.text_document.uri.clone();
     let rome_path = session.file_path(&url)?;
 
-    let unsupported_lint = &session.workspace.supports_feature(SupportsFeatureParams {
-        path: rome_path.clone(),
-        feature: FeatureName::Lint,
+    let file_features = &session.workspace.file_features(SupportsFeatureParams {
+        path: rome_path,
+        feature: FeaturesBuilder::new()
+            .with_linter()
+            .with_organize_imports()
+            .build(),
     })?;
 
-    let unsupported_organize_imports =
-        &session.workspace.supports_feature(SupportsFeatureParams {
-            path: rome_path,
-            feature: FeatureName::OrganizeImports,
-        })?;
-
-    if unsupported_lint.is_not_supported() && unsupported_organize_imports.is_not_supported() {
+    if !file_features.supports_for(&FeatureName::Lint)
+        && !file_features.supports_for(&FeatureName::OrganizeImports)
+    {
+        debug!("Linter and organize imports are both disabled");
         return Ok(Some(Vec::new()));
     }
 
@@ -78,10 +79,21 @@ pub(crate) fn code_actions(
             )
         })?;
 
-    let result = session.workspace.pull_actions(PullActionsParams {
+    let result = match session.workspace.pull_actions(PullActionsParams {
         path: rome_path.clone(),
         range: cursor_range,
-    })?;
+    }) {
+        Ok(result) => result,
+        Err(err) => {
+            return if matches!(err, WorkspaceError::FileIgnored(_)) {
+                Ok(Some(Vec::new()))
+            } else {
+                Err(err.into())
+            }
+        }
+    };
+
+    debug!("Pull actions result: {:?}", result);
 
     // Generate an additional code action to apply all safe fixes on the
     // document if the action category "source.fixAll" was explicitly requested
@@ -98,7 +110,7 @@ pub(crate) fn code_actions(
         .into_iter()
         .filter_map(|action| {
             if action.category.matches("source.organizeImports.rome")
-                && unsupported_organize_imports.is_not_supported()
+                && !file_features.supports_for(&FeatureName::OrganizeImports)
             {
                 return None;
             }

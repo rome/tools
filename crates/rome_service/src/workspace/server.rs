@@ -7,8 +7,8 @@ use super::{
 };
 use crate::file_handlers::{Capabilities, FixAllParams, Language, LintParams};
 use crate::workspace::{
-    GetFileContentParams, IsPathIgnoredParams, OrganizeImportsParams, OrganizeImportsResult,
-    RageEntry, RageParams, RageResult, ServerInfo, SupportsFeatureResult,
+    FileFeaturesResult, GetFileContentParams, IsPathIgnoredParams, OrganizeImportsParams,
+    OrganizeImportsResult, RageEntry, RageParams, RageResult, ServerInfo,
 };
 use crate::{
     file_handlers::Features,
@@ -25,6 +25,7 @@ use rome_parser::AnyParse;
 use rome_rowan::NodeCache;
 use std::ffi::OsStr;
 use std::{panic::RefUnwindSafe, sync::RwLock};
+use tracing::trace;
 
 pub(super) struct WorkspaceServer {
     /// features available throughout the application
@@ -189,52 +190,27 @@ impl WorkspaceServer {
 }
 
 impl Workspace for WorkspaceServer {
-    fn supports_feature(
+    fn file_features(
         &self,
         params: SupportsFeatureParams,
-    ) -> Result<SupportsFeatureResult, WorkspaceError> {
+    ) -> Result<FileFeaturesResult, WorkspaceError> {
         let capabilities = self.get_capabilities(&params.path);
         let settings = self.settings.read().unwrap();
-        let is_ignored = self.is_path_ignored(IsPathIgnoredParams {
-            rome_path: params.path,
-            feature: params.feature.clone(),
-        })?;
-        let result = match params.feature {
-            FeatureName::Format => {
-                if is_ignored {
-                    SupportsFeatureResult::ignored()
-                } else if capabilities.formatter.format.is_none() {
-                    SupportsFeatureResult::file_not_supported()
-                } else if !settings.formatter().enabled {
-                    SupportsFeatureResult::disabled()
-                } else {
-                    SupportsFeatureResult { reason: None }
-                }
+        let mut file_features = FileFeaturesResult::new()
+            .with_capabilities(&capabilities)
+            .with_settings(&settings);
+
+        for feature in params.feature {
+            let is_ignored = self.is_path_ignored(IsPathIgnoredParams {
+                rome_path: params.path.clone(),
+                feature: feature.clone(),
+            })?;
+
+            if is_ignored {
+                file_features.ignored(feature);
             }
-            FeatureName::Lint => {
-                if is_ignored {
-                    SupportsFeatureResult::ignored()
-                } else if capabilities.analyzer.lint.is_none() {
-                    SupportsFeatureResult::file_not_supported()
-                } else if !settings.linter().enabled {
-                    SupportsFeatureResult::disabled()
-                } else {
-                    SupportsFeatureResult { reason: None }
-                }
-            }
-            FeatureName::OrganizeImports => {
-                if is_ignored {
-                    SupportsFeatureResult::ignored()
-                } else if capabilities.analyzer.organize_imports.is_none() {
-                    SupportsFeatureResult::file_not_supported()
-                } else if !settings.organize_imports().enabled {
-                    SupportsFeatureResult::disabled()
-                } else {
-                    SupportsFeatureResult { reason: None }
-                }
-            }
-        };
-        Ok(result)
+        }
+        Ok(file_features)
     }
 
     fn is_path_ignored(&self, params: IsPathIgnoredParams) -> Result<bool, WorkspaceError> {
@@ -400,9 +376,14 @@ impl Workspace for WorkspaceServer {
             self.get_capabilities(&params.path).analyzer.lint
         {
             let rules = settings.linter().rules.as_ref();
-            let rule_filter_list = self.build_rule_filter_list(rules);
+            let mut rule_filter_list = self.build_rule_filter_list(rules);
+            if settings.organize_imports.enabled {
+                rule_filter_list.push(RuleFilter::Rule("correctness", "organizeImports"));
+            }
             let mut filter = AnalysisFilter::from_enabled_rules(Some(rule_filter_list.as_slice()));
             filter.categories = params.categories;
+
+            trace!("Analyzer filter to apply to lint: {:?}", &filter);
 
             let results = lint(LintParams {
                 parse,

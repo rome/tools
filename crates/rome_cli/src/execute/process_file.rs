@@ -2,14 +2,16 @@ use crate::execute::diagnostics::{ResultExt, ResultIoExt, SkippedDiagnostic, Unh
 use crate::execute::traverse::TraversalOptions;
 use crate::execute::TraversalMode;
 use crate::{CliDiagnostic, FormatterReportFileDetail};
-use rome_diagnostics::{category, DiagnosticExt, Error};
+use rome_diagnostics::{category, Context, DiagnosticExt, Error};
 use rome_fs::{OpenOptions, RomePath};
 use rome_service::workspace::{
-    FileGuard, Language, OpenFileParams, RuleCategories, UnsupportedReason,
+    FeatureName, FeaturesBuilder, FileGuard, Language, OpenFileParams, RuleCategories, SupportKind,
+    SupportsFeatureParams,
 };
 use std::path::Path;
 use std::sync::atomic::Ordering;
 
+#[derive(Debug)]
 pub(crate) enum FileStatus {
     Success,
     Message(Message),
@@ -17,6 +19,7 @@ pub(crate) enum FileStatus {
 }
 
 /// Wrapper type for messages that can be printed during the traversal process
+#[derive(Debug)]
 pub(crate) enum Message {
     SkippedFixes {
         /// Suggested fixes skipped during the lint traversal
@@ -38,6 +41,7 @@ pub(crate) enum Message {
     },
 }
 
+#[derive(Debug)]
 pub(crate) enum DiffKind {
     Format,
     OrganizeImports,
@@ -46,6 +50,7 @@ pub(crate) enum DiffKind {
 impl<D> From<D> for Message
 where
     Error: From<D>,
+    D: std::fmt::Debug,
 {
     fn from(err: D) -> Self {
         Self::Error(Error::from(err))
@@ -72,45 +77,88 @@ pub(crate) fn process_file(ctx: &TraversalOptions, path: &Path) -> FileResult {
     tracing::trace_span!("process_file", path = ?path).in_scope(move || {
         let rome_path = RomePath::new(path);
 
-        let supported_format = ctx.can_format(&rome_path).with_file_path_and_code(
-            path.display().to_string(),
-            category!("files/missingHandler"),
-        )?;
-
-        let supported_lint = ctx.can_lint(&rome_path).with_file_path_and_code(
-            path.display().to_string(),
-            category!("files/missingHandler"),
-        )?;
-
-        let supported_organize_imports = ctx
-            .can_organize_imports(&rome_path)
+        let file_features = ctx
+            .workspace
+            .file_features(SupportsFeatureParams {
+                path: rome_path.clone(),
+                feature: FeaturesBuilder::new()
+                    .with_formatter()
+                    .with_linter()
+                    .with_organize_imports()
+                    .build(),
+            })
             .with_file_path_and_code(
                 path.display().to_string(),
                 category!("files/missingHandler"),
             )?;
 
         let unsupported_reason = match ctx.execution.traversal_mode() {
-            TraversalMode::Check { .. } => supported_lint
-                .reason
-                .as_ref()
-                .and(supported_organize_imports.reason.as_ref()),
-            TraversalMode::CI { .. } => supported_lint
-                .reason
-                .as_ref()
-                .and(supported_format.reason.as_ref())
-                .and(supported_organize_imports.reason.as_ref()),
-            TraversalMode::Format { .. } => supported_format.reason.as_ref(),
+            TraversalMode::Check { .. } => file_features
+                .support_kind_for(&FeatureName::Lint)
+                .and_then(|support_kind| {
+                    if support_kind.is_not_enabled() {
+                        Some(support_kind)
+                    } else {
+                        None
+                    }
+                })
+                .and(
+                    file_features
+                        .support_kind_for(&FeatureName::OrganizeImports)
+                        .and_then(|support_kind| {
+                            if support_kind.is_not_enabled() {
+                                Some(support_kind)
+                            } else {
+                                None
+                            }
+                        }),
+                ),
+            TraversalMode::CI { .. } => file_features
+                .support_kind_for(&FeatureName::Lint)
+                .and_then(|support_kind| {
+                    if support_kind.is_not_enabled() {
+                        Some(support_kind)
+                    } else {
+                        None
+                    }
+                })
+                .and(
+                    file_features
+                        .support_kind_for(&FeatureName::Format)
+                        .and_then(|support_kind| {
+                            if support_kind.is_not_enabled() {
+                                Some(support_kind)
+                            } else {
+                                None
+                            }
+                        }),
+                )
+                .and(
+                    file_features
+                        .support_kind_for(&FeatureName::OrganizeImports)
+                        .and_then(|support_kind| {
+                            if support_kind.is_not_enabled() {
+                                Some(support_kind)
+                            } else {
+                                None
+                            }
+                        }),
+                ),
+            TraversalMode::Format { .. } => file_features.support_kind_for(&FeatureName::Format),
             TraversalMode::Migrate { .. } => None,
         };
 
         if let Some(reason) = unsupported_reason {
-            return match reason {
-                UnsupportedReason::FileNotSupported => Err(Message::from(
-                    UnhandledDiagnostic.with_file_path(path.display().to_string()),
-                )),
-                UnsupportedReason::FeatureNotEnabled | UnsupportedReason::Ignored => {
-                    Ok(FileStatus::Ignored)
+            match reason {
+                SupportKind::FileNotSupported => {
+                    return Err(Message::from(
+                        UnhandledDiagnostic.with_file_path(path.display().to_string()),
+                    ))
                 }
+                SupportKind::FeatureNotEnabled | SupportKind::Ignored => {
+                    return Ok(FileStatus::Ignored)
+                }
+                SupportKind::Supported => {}
             };
         }
 
@@ -156,11 +204,10 @@ pub(crate) fn process_file(ctx: &TraversalOptions, path: &Path) -> FileResult {
             }
             errors = fixed.errors;
         }
-
-        if supported_organize_imports.is_supported() && ctx.execution.is_check() {
+        if file_features.supports_for(&FeatureName::OrganizeImports) && ctx.execution.is_check() {
             let sorted = file_guard.organize_imports().with_file_path_and_code(
                 path.display().to_string(),
-                category!("organizeImports"),
+                category!("internalError/fs"),
             )?;
 
             if sorted.code != input {
@@ -191,11 +238,12 @@ pub(crate) fn process_file(ctx: &TraversalOptions, path: &Path) -> FileResult {
             return Ok(FileStatus::Success);
         }
 
-        let categories = if ctx.execution.is_format() || !supported_lint.is_supported() {
-            RuleCategories::SYNTAX
-        } else {
-            RuleCategories::SYNTAX | RuleCategories::LINT
-        };
+        let categories =
+            if ctx.execution.is_format() || !file_features.supports_for(&FeatureName::Lint) {
+                RuleCategories::SYNTAX
+            } else {
+                RuleCategories::SYNTAX | RuleCategories::LINT
+            };
 
         let max_diagnostics = ctx.remaining_diagnostics.load(Ordering::Relaxed);
         let result = file_guard
@@ -246,15 +294,14 @@ pub(crate) fn process_file(ctx: &TraversalOptions, path: &Path) -> FileResult {
             return Ok(result);
         }
 
-        if supported_organize_imports.is_supported()
+        if file_features.supports_for(&FeatureName::OrganizeImports)
             // we want to print a diff only if we are in CI
             // or we are running "check" or "check --apply"
             && (ctx.execution.is_ci() || !ctx.execution.is_check_apply_unsafe())
         {
-            let sorted = file_guard.organize_imports().with_file_path_and_code(
-                path.display().to_string(),
-                category!("organizeImports"),
-            )?;
+            let sorted = file_guard
+                .organize_imports()
+                .with_file_path(path.display().to_string())?;
 
             if sorted.code != input {
                 ctx.messages
@@ -268,7 +315,7 @@ pub(crate) fn process_file(ctx: &TraversalOptions, path: &Path) -> FileResult {
             }
         }
 
-        if supported_format.is_supported() {
+        if file_features.supports_for(&FeatureName::Format) {
             let should_write = match ctx.execution.traversal_mode() {
                 // In check mode do not run the formatter and return the result immediately,
                 // but only if the argument `--apply` is not passed.

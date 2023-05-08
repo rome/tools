@@ -43,6 +43,7 @@ pub const EXPR_RECOVERY_SET: TokenSet<JsSyntaxKind> =
 pub(crate) struct ExpressionContext(ExpressionContextFlags);
 
 bitflags! {
+    #[derive(Debug, Copy, Clone, Eq, PartialEq)]
     struct ExpressionContextFlags: u8 {
         /// Whether `in` should be counted in a binary expression.
         /// This is for `for...in` statements to prevent ambiguity.

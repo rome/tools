@@ -38,7 +38,7 @@ use rome_rowan::{AstNode, BatchMutationExt, Direction, NodeCache};
 use std::borrow::Cow;
 use std::fmt::Debug;
 use std::path::PathBuf;
-use tracing::debug;
+use tracing::{debug, trace};
 
 #[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
@@ -314,6 +314,7 @@ impl RegistryVisitor<JsLanguage> for ActionsVisitor<'_> {
     }
 }
 
+#[tracing::instrument(level = "debug", skip(parse))]
 fn code_actions(
     parse: AnyParse,
     range: TextRange,
@@ -325,27 +326,36 @@ fn code_actions(
 
     let mut actions = Vec::new();
 
-    let enabled_rules: Option<Vec<RuleFilter>> = if let Some(rules) = rules {
-        let enabled_rules = rules.as_enabled_rules().into_iter().collect();
+    let mut enabled_rules = vec![];
+    if settings.as_ref().organize_imports.enabled {
+        enabled_rules.push(RuleFilter::Rule("correctness", "organizeImports"));
+    }
+    if let Some(rules) = rules {
+        let rules = rules.as_enabled_rules().into_iter().collect();
 
         // The rules in the assist category do not have configuration entries,
         // always add them all to the enabled rules list
-        let mut visitor = ActionsVisitor { enabled_rules };
+        let mut visitor = ActionsVisitor {
+            enabled_rules: rules,
+        };
         visit_registry(&mut visitor);
 
-        Some(visitor.enabled_rules)
-    } else {
-        None
-    };
+        enabled_rules.extend(visitor.enabled_rules);
+    }
 
-    let mut filter = match &enabled_rules {
-        Some(rules) => AnalysisFilter::from_enabled_rules(Some(rules.as_slice())),
-        _ => AnalysisFilter::default(),
+    let mut filter = if !enabled_rules.is_empty() {
+        AnalysisFilter::from_enabled_rules(Some(enabled_rules.as_slice()))
+    } else {
+        AnalysisFilter::default()
     };
 
     filter.categories = RuleCategories::SYNTAX | RuleCategories::LINT;
+    if settings.as_ref().organize_imports.enabled {
+        filter.categories |= RuleCategories::ACTION;
+    }
     filter.range = Some(range);
 
+    trace!("Filter applied for code actions: {:?}", &filter);
     let analyzer_options = compute_analyzer_options(&settings, PathBuf::from(path.as_path()));
 
     analyze(

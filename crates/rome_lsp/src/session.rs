@@ -9,7 +9,9 @@ use futures::StreamExt;
 use rome_analyze::RuleCategories;
 use rome_console::markup;
 use rome_fs::{FileSystem, OsFileSystem, RomePath};
-use rome_service::workspace::{FeatureName, PullDiagnosticsParams, SupportsFeatureParams};
+use rome_service::workspace::{
+    FeatureName, FeaturesBuilder, PullDiagnosticsParams, SupportsFeatureParams,
+};
 use rome_service::workspace::{RageEntry, RageParams, RageResult, UpdateSettingsParams};
 use rome_service::{load_config, ConfigurationBasePath, Workspace};
 use rome_service::{DynRef, WorkspaceError};
@@ -269,22 +271,34 @@ impl Session {
     pub(crate) async fn update_diagnostics(&self, url: lsp_types::Url) -> Result<()> {
         let rome_path = self.file_path(&url)?;
         let doc = self.document(&url)?;
-        let unsupported_lint = self.workspace.supports_feature(SupportsFeatureParams {
-            feature: FeatureName::Lint,
+        let file_features = self.workspace.file_features(SupportsFeatureParams {
+            feature: FeaturesBuilder::new()
+                .with_linter()
+                .with_organize_imports()
+                .build(),
             path: rome_path.clone(),
         })?;
 
         let diagnostics = if self.is_linting_and_formatting_disabled() {
             tracing::trace!("Linting disabled because Rome configuration is missing and `requireConfiguration` is true.");
             vec![]
-        } else if let Some(reason) = unsupported_lint.reason {
-            tracing::trace!("linting not supported: {reason:?}");
+        } else if !file_features.supports_for(&FeatureName::Lint)
+            && !file_features.supports_for(&FeatureName::OrganizeImports)
+        {
+            tracing::trace!("linting and import sorting are not supported: {file_features:?}");
             // Sending empty vector clears published diagnostics
             vec![]
         } else {
+            let mut categories = RuleCategories::SYNTAX;
+            if file_features.supports_for(&FeatureName::Lint) {
+                categories |= RuleCategories::LINT
+            }
+            if file_features.supports_for(&FeatureName::OrganizeImports) {
+                categories |= RuleCategories::ACTION
+            }
             let result = self.workspace.pull_diagnostics(PullDiagnosticsParams {
                 path: rome_path,
-                categories: RuleCategories::SYNTAX | RuleCategories::LINT,
+                categories,
                 max_diagnostics: u64::MAX,
             })?;
 

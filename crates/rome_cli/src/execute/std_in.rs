@@ -4,9 +4,10 @@ use crate::execute::Execution;
 use crate::{CliDiagnostic, CliSession};
 use rome_console::{markup, ConsoleExt};
 use rome_fs::RomePath;
+
 use rome_service::workspace::{
-    ChangeFileParams, FeatureName, FixFileParams, FormatFileParams, Language, OpenFileParams,
-    OrganizeImportsParams, SupportsFeatureParams,
+    ChangeFileParams, FeatureName, FeaturesBuilder, FixFileParams, FormatFileParams, Language,
+    OpenFileParams, OrganizeImportsParams, SupportsFeatureParams,
 };
 use std::borrow::Cow;
 
@@ -21,13 +22,11 @@ pub(crate) fn run<'a>(
     let mut version = 0;
 
     if mode.is_format() {
-        let unsupported_format_reason = workspace
-            .supports_feature(SupportsFeatureParams {
-                path: rome_path.clone(),
-                feature: FeatureName::Format,
-            })?
-            .reason;
-        if unsupported_format_reason.is_none() {
+        let file_features = workspace.file_features(SupportsFeatureParams {
+            path: rome_path.clone(),
+            feature: FeaturesBuilder::new().with_formatter().build(),
+        })?;
+        if file_features.supports_for(&FeatureName::Format) {
             workspace.open_file(OpenFileParams {
                 path: rome_path.clone(),
                 version: 0,
@@ -56,17 +55,17 @@ pub(crate) fn run<'a>(
             content: content.into(),
             language_hint: Language::default(),
         })?;
-
+        // apply fix file of the linter
+        let file_features = workspace.file_features(SupportsFeatureParams {
+            path: rome_path.clone(),
+            feature: FeaturesBuilder::new()
+                .with_linter()
+                .with_organize_imports()
+                .with_formatter()
+                .build(),
+        })?;
         if let Some(fix_file_mode) = mode.as_fix_file_mode() {
-            // apply fix file of the linter
-            let unsupported_lint_reason = workspace
-                .supports_feature(SupportsFeatureParams {
-                    path: rome_path.clone(),
-                    feature: FeatureName::Lint,
-                })?
-                .reason;
-
-            if unsupported_lint_reason.is_none() {
+            if file_features.supports_for(&FeatureName::Lint) {
                 let fix_file_result = workspace.fix_file(FixFileParams {
                     fix_file_mode: *fix_file_mode,
                     path: rome_path.clone(),
@@ -82,15 +81,7 @@ pub(crate) fn run<'a>(
                 }
             }
 
-            // apply organize imports
-            let unsupported_organize_imports_reason = workspace
-                .supports_feature(SupportsFeatureParams {
-                    path: rome_path.clone(),
-                    feature: FeatureName::OrganizeImports,
-                })?
-                .reason;
-
-            if unsupported_organize_imports_reason.is_none() {
+            if file_features.supports_for(&FeatureName::OrganizeImports) {
                 let result = workspace.organize_imports(OrganizeImportsParams {
                     path: rome_path.clone(),
                 })?;
@@ -105,15 +96,7 @@ pub(crate) fn run<'a>(
                 }
             }
         }
-
-        let unsupported_format_reason = workspace
-            .supports_feature(SupportsFeatureParams {
-                path: rome_path.clone(),
-                feature: FeatureName::Format,
-            })?
-            .reason;
-
-        if unsupported_format_reason.is_none() {
+        if file_features.supports_for(&FeatureName::Format) {
             let printed = workspace.format_file(FormatFileParams { path: rome_path })?;
             if printed.as_code() != new_content {
                 new_content = Cow::Owned(printed.into_code());

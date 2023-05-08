@@ -40,7 +40,7 @@ use super::{expect_ts_index_signature_member, is_at_ts_index_signature_member, M
 
 bitflags! {
     /// Context tracking state that applies to the parsing of all types
-    #[derive(Default)]
+    #[derive(Debug, Default, Copy, Clone, Eq, PartialEq)]
     pub(crate) struct TypeContext: u8 {
         /// Whether conditional types `extends string ? string : number` are allowed in the current context.
         ///

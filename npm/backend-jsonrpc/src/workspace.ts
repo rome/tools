@@ -1,7 +1,7 @@
 // Generated file, do not edit by hand, see `xtask/codegen`
 import type { Transport } from "./transport";
 export interface SupportsFeatureParams {
-	feature: FeatureName;
+	feature: FeatureName[];
 	path: RomePath;
 }
 export type FeatureName = "Format" | "Lint" | "OrganizeImports";
@@ -9,9 +9,10 @@ export interface RomePath {
 	path: string;
 }
 export interface SupportsFeatureResult {
-	reason?: UnsupportedReason;
+	reason?: SupportKind;
 }
-export type UnsupportedReason =
+export type SupportKind =
+	| "Supported"
 	| "Ignored"
 	| "FeatureNotEnabled"
 	| "FileNotSupported";
@@ -1333,9 +1334,7 @@ export interface RenameResult {
 	range: TextRange;
 }
 export interface Workspace {
-	supportsFeature(
-		params: SupportsFeatureParams,
-	): Promise<SupportsFeatureResult>;
+	fileFeatures(params: SupportsFeatureParams): Promise<SupportsFeatureResult>;
 	updateSettings(params: UpdateSettingsParams): Promise<void>;
 	openFile(params: OpenFileParams): Promise<void>;
 	changeFile(params: ChangeFileParams): Promise<void>;
@@ -1357,8 +1356,8 @@ export interface Workspace {
 }
 export function createWorkspace(transport: Transport): Workspace {
 	return {
-		supportsFeature(params) {
-			return transport.request("rome/supports_feature", params);
+		fileFeatures(params) {
+			return transport.request("rome/file_features", params);
 		},
 		updateSettings(params) {
 			return transport.request("rome/update_settings", params);

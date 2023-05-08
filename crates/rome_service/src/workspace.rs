@@ -51,6 +51,7 @@
 //! document does not implement the required capability: for instance trying to
 //! format a file with a language that does not have a formatter
 
+use crate::file_handlers::Capabilities;
 use crate::{Configuration, Deserialize, Serialize, WorkspaceError};
 use rome_analyze::ActionCategory;
 pub use rome_analyze::RuleCategories;
@@ -60,10 +61,12 @@ use rome_formatter::Printed;
 use rome_fs::RomePath;
 use rome_js_syntax::{TextRange, TextSize};
 use rome_text_edit::TextEdit;
+use std::collections::HashMap;
 use std::{borrow::Cow, panic::RefUnwindSafe, sync::Arc};
 
 pub use self::client::{TransportRequest, WorkspaceClient, WorkspaceTransport};
 pub use crate::file_handlers::Language;
+use crate::settings::WorkspaceSettings;
 
 mod client;
 mod server;
@@ -72,37 +75,98 @@ mod server;
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct SupportsFeatureParams {
     pub path: RomePath,
-    pub feature: FeatureName,
+    pub feature: Vec<FeatureName>,
 }
 
 #[derive(Debug, serde::Serialize, serde::Deserialize, Default)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct SupportsFeatureResult {
-    pub reason: Option<UnsupportedReason>,
+    pub reason: Option<SupportKind>,
+}
+
+#[derive(Debug, serde::Serialize, serde::Deserialize, Default)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+pub struct FileFeaturesResult {
+    pub features_supported: HashMap<FeatureName, SupportKind>,
+}
+
+impl FileFeaturesResult {
+    /// By default, all features are not supported by a file.
+    const WORKSPACE_FEATURES: [(FeatureName, SupportKind); 3] = [
+        (FeatureName::Lint, SupportKind::FileNotSupported),
+        (FeatureName::Format, SupportKind::FileNotSupported),
+        (FeatureName::OrganizeImports, SupportKind::FileNotSupported),
+    ];
+
+    pub fn new() -> Self {
+        Self {
+            features_supported: HashMap::from(FileFeaturesResult::WORKSPACE_FEATURES),
+        }
+    }
+
+    pub fn with_capabilities(mut self, capabilities: &Capabilities) -> Self {
+        if capabilities.formatter.format.is_some() {
+            self.features_supported
+                .insert(FeatureName::Format, SupportKind::Supported);
+        }
+        if capabilities.analyzer.lint.is_some() {
+            self.features_supported
+                .insert(FeatureName::Lint, SupportKind::Supported);
+        }
+        if capabilities.analyzer.organize_imports.is_some() {
+            self.features_supported
+                .insert(FeatureName::OrganizeImports, SupportKind::Supported);
+        }
+
+        self
+    }
+
+    pub fn with_settings(mut self, settings: &WorkspaceSettings) -> Self {
+        if !settings.formatter().enabled {
+            self.features_supported
+                .insert(FeatureName::Format, SupportKind::FeatureNotEnabled);
+        }
+        if !settings.linter().enabled {
+            self.features_supported
+                .insert(FeatureName::Lint, SupportKind::FeatureNotEnabled);
+        }
+        if !settings.organize_imports().enabled {
+            self.features_supported
+                .insert(FeatureName::OrganizeImports, SupportKind::FeatureNotEnabled);
+        }
+
+        self
+    }
+
+    pub fn ignored(&mut self, feature: FeatureName) {
+        self.features_supported
+            .insert(feature, SupportKind::Ignored);
+    }
+
+    /// Checks whether the file support the given `feature`
+    pub fn supports_for(&self, feature: &FeatureName) -> bool {
+        self.features_supported
+            .get(feature)
+            .map(|support_kind| matches!(support_kind, SupportKind::Supported))
+            .unwrap_or_default()
+    }
+
+    pub fn is_ignored_for(&self, feature: &FeatureName) -> bool {
+        self.features_supported
+            .get(feature)
+            .map(|support_kind| matches!(support_kind, SupportKind::Ignored))
+            .unwrap_or_default()
+    }
+
+    pub fn support_kind_for(&self, feature: &FeatureName) -> Option<&SupportKind> {
+        self.features_supported.get(feature)
+    }
 }
 
 impl SupportsFeatureResult {
-    const fn ignored() -> Self {
-        Self {
-            reason: Some(UnsupportedReason::Ignored),
-        }
-    }
-
-    const fn disabled() -> Self {
-        Self {
-            reason: Some(UnsupportedReason::FeatureNotEnabled),
-        }
-    }
-
-    const fn file_not_supported() -> Self {
-        Self {
-            reason: Some(UnsupportedReason::FileNotSupported),
-        }
-    }
-
     /// Whether the feature is intentionally disabled
     pub const fn is_not_enabled(&self) -> bool {
-        matches!(self.reason, Some(UnsupportedReason::FeatureNotEnabled))
+        matches!(self.reason, Some(SupportKind::FeatureNotEnabled))
     }
 
     /// Whether the feature is supported
@@ -118,24 +182,58 @@ impl SupportsFeatureResult {
 
 #[derive(Debug, serde::Serialize, serde::Deserialize, Eq, PartialEq)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
-pub enum UnsupportedReason {
+pub enum SupportKind {
+    /// The feature is enabled for the file
+    Supported,
+    /// The file is ignored (configuration)
     Ignored,
+    /// The feature is not enabled (configuration or the file doesn't need it)
     FeatureNotEnabled,
+    /// The file is not capable of having this feature
     FileNotSupported,
 }
 
-impl UnsupportedReason {
+impl SupportKind {
+    pub const fn is_supported(&self) -> bool {
+        matches!(self, SupportKind::Supported)
+    }
     pub const fn is_not_enabled(&self) -> bool {
-        matches!(self, UnsupportedReason::FeatureNotEnabled)
+        matches!(self, SupportKind::FeatureNotEnabled)
     }
 }
 
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, Clone, Hash, serde::Serialize, serde::Deserialize, Eq, PartialEq)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub enum FeatureName {
     Format,
     Lint,
     OrganizeImports,
+}
+
+#[derive(Debug, Default)]
+pub struct FeaturesBuilder(Vec<FeatureName>);
+
+impl FeaturesBuilder {
+    pub fn new() -> Self {
+        Self::default()
+    }
+
+    pub fn with_formatter(mut self) -> Self {
+        self.0.push(FeatureName::Format);
+        self
+    }
+    pub fn with_linter(mut self) -> Self {
+        self.0.push(FeatureName::Lint);
+        self
+    }
+    pub fn with_organize_imports(mut self) -> Self {
+        self.0.push(FeatureName::OrganizeImports);
+        self
+    }
+
+    pub fn build(self) -> Vec<FeatureName> {
+        self.0
+    }
 }
 
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
@@ -390,10 +488,10 @@ pub trait Workspace: Send + Sync + RefUnwindSafe {
     /// - Rome doesn't recognize a file, so it can't provide the feature;
     /// - the feature is disabled inside the configuration;
     /// - the file is ignored
-    fn supports_feature(
+    fn file_features(
         &self,
         params: SupportsFeatureParams,
-    ) -> Result<SupportsFeatureResult, WorkspaceError>;
+    ) -> Result<FileFeaturesResult, WorkspaceError>;
 
     /// Checks if the current path is ignored by the workspace, against a particular feature.
     ///

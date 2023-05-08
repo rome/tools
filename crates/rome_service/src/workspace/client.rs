@@ -1,6 +1,6 @@
 use crate::workspace::{
-    GetFileContentParams, IsPathIgnoredParams, OrganizeImportsParams, OrganizeImportsResult,
-    RageParams, RageResult, ServerInfo, SupportsFeatureResult,
+    FileFeaturesResult, GetFileContentParams, IsPathIgnoredParams, OrganizeImportsParams,
+    OrganizeImportsResult, RageParams, RageResult, ServerInfo,
 };
 use crate::{TransportError, Workspace, WorkspaceError};
 use rome_formatter::Printed;
@@ -100,11 +100,11 @@ impl<T> Workspace for WorkspaceClient<T>
 where
     T: WorkspaceTransport + RefUnwindSafe + Send + Sync,
 {
-    fn supports_feature(
+    fn file_features(
         &self,
         params: SupportsFeatureParams,
-    ) -> Result<SupportsFeatureResult, WorkspaceError> {
-        self.request("rome/supports_feature", params)
+    ) -> Result<FileFeaturesResult, WorkspaceError> {
+        self.request("rome/file_features", params)
     }
 
     fn is_path_ignored(&self, params: IsPathIgnoredParams) -> Result<bool, WorkspaceError> {

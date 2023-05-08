@@ -513,7 +513,7 @@ impl ServerFactory {
 
         builder = builder.custom_method("rome/rage", LSPServer::rage);
 
-        workspace_method!(builder, supports_feature);
+        workspace_method!(builder, file_features);
         workspace_method!(builder, is_path_ignored);
         workspace_method!(builder, update_settings);
         workspace_method!(builder, open_file);

@@ -165,6 +165,7 @@ pub enum SourceActionKind {
 }
 
 bitflags! {
+    #[derive(Debug, Copy, Clone, Eq, PartialEq)]
     pub struct RuleCategories: u8 {
         const SYNTAX = 1 << RuleCategory::Syntax as u8;
         const LINT = 1 << RuleCategory::Lint as u8;
