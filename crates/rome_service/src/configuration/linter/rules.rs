@@ -1891,10 +1891,19 @@ pub struct Nursery {
     #[bpaf(long("use-literal-keys"), argument("on|off|warn"), optional, hide)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub use_literal_keys: Option<RuleConfiguration>,
+    #[doc = "Disallow number literal object member names which are not base10 or uses underscore as separator"]
+    #[bpaf(
+        long("use-simple-number-keys"),
+        argument("on|off|warn"),
+        optional,
+        hide
+    )]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub use_simple_number_keys: Option<RuleConfiguration>,
 }
 impl Nursery {
     const GROUP_NAME: &'static str = "nursery";
-    pub(crate) const GROUP_RULES: [&'static str; 20] = [
+    pub(crate) const GROUP_RULES: [&'static str; 21] = [
         "noAccumulatingSpread",
         "noAriaUnsupportedElements",
         "noBannedTypes",
@@ -1915,6 +1924,7 @@ impl Nursery {
         "useIsNan",
         "useLiteralEnumMembers",
         "useLiteralKeys",
+        "useSimpleNumberKeys",
     ];
     const RECOMMENDED_RULES: [&'static str; 11] = [
         "noAriaUnsupportedElements",
@@ -1942,7 +1952,7 @@ impl Nursery {
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[18]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[19]),
     ];
-    const ALL_RULES_AS_FILTERS: [RuleFilter<'static>; 20] = [
+    const ALL_RULES_AS_FILTERS: [RuleFilter<'static>; 21] = [
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[0]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[1]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[2]),
@@ -1963,6 +1973,7 @@ impl Nursery {
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[17]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[18]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[19]),
+        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[20]),
     ];
     pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     pub(crate) const fn is_not_recommended(&self) -> bool {
@@ -2072,6 +2083,11 @@ impl Nursery {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[19]));
             }
         }
+        if let Some(rule) = self.use_simple_number_keys.as_ref() {
+            if rule.is_enabled() {
+                index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[20]));
+            }
+        }
         index_set
     }
     pub(crate) fn get_disabled_rules(&self) -> IndexSet<RuleFilter> {
@@ -2176,6 +2192,11 @@ impl Nursery {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[19]));
             }
         }
+        if let Some(rule) = self.use_simple_number_keys.as_ref() {
+            if rule.is_disabled() {
+                index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[20]));
+            }
+        }
         index_set
     }
     #[doc = r" Checks if, given a rule name, matches one of the rules contained in this category"]
@@ -2187,7 +2208,7 @@ impl Nursery {
     pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 11] {
         Self::RECOMMENDED_RULES_AS_FILTERS
     }
-    pub(crate) fn all_rules_as_filters() -> [RuleFilter<'static>; 20] { Self::ALL_RULES_AS_FILTERS }
+    pub(crate) fn all_rules_as_filters() -> [RuleFilter<'static>; 21] { Self::ALL_RULES_AS_FILTERS }
     #[doc = r" Select preset rules"]
     pub(crate) fn collect_preset_rules(
         &self,
@@ -2227,6 +2248,7 @@ impl Nursery {
             "useIsNan" => self.use_is_nan.as_ref(),
             "useLiteralEnumMembers" => self.use_literal_enum_members.as_ref(),
             "useLiteralKeys" => self.use_literal_keys.as_ref(),
+            "useSimpleNumberKeys" => self.use_simple_number_keys.as_ref(),
             _ => None,
         }
     }

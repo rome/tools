@@ -23,6 +23,7 @@ output. [#4405](https://github.com/rome/tools/pull/4405).
 - [`useLiteralEnumMembers`](https://docs.rome.tools/lint/rules/useLiteralEnumMembers/)
 - [`useHeadingContent`](https://docs.rome.tools/lint/rules/useHeadingContent/)
 - [`noAccumulatingSpread`](https://docs.rome.tools/lint/rules/noAccumulatingSpread/)
+- [`useSimpleNumberKeys`](https://docs.rome.tools/lint/rules/useSimpleNumberKeys/)
 
 #### Promoted rules
 
