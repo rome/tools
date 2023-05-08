@@ -1,5 +1,5 @@
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
-use rome_console::markup;
+use rome_console::{fmt::Display, fmt::Formatter, markup};
 use rome_js_syntax::{jsx_ext::AnyJsxElement, TextRange};
 use rome_rowan::AstNode;
 
@@ -50,9 +50,25 @@ declare_rule! {
     }
 }
 
+pub enum ValidatedElement {
+    Object,
+    Img,
+    Area,
+    Input,
+}
+
+impl Display for ValidatedElement {
+    fn fmt(&self, fmt: &mut Formatter) -> std::io::Result<()> {
+        match self {
+            ValidatedElement::Object => fmt.write_markup(markup!(<Emphasis>"title"</Emphasis>)),
+            _ => fmt.write_markup(markup!(<Emphasis>"alt"</Emphasis>)),
+        }
+    }
+}
+
 impl Rule for UseAltText {
     type Query = Ast<AnyJsxElement>;
-    type State = TextRange;
+    type State = (ValidatedElement, TextRange);
     type Signals = Option<Self::State>;
     type Options = ();
 
@@ -74,18 +90,26 @@ impl Rule for UseAltText {
                     match element {
                         AnyJsxElement::JsxOpeningElement(opening_element) => {
                             if !opening_element.has_accessible_child() {
-                                return Some(element.syntax().text_range());
+                                return Some((
+                                    ValidatedElement::Object,
+                                    element.syntax().text_range(),
+                                ));
                             }
                         }
                         AnyJsxElement::JsxSelfClosingElement(_) => {
-                            return Some(element.syntax().text_range());
+                            return Some((ValidatedElement::Object, element.syntax().text_range()));
                         }
                     }
                 }
             }
-            "img" | "area" => {
+            "img" => {
                 if !has_alt && !has_aria_label && !has_aria_labelledby {
-                    return Some(element.syntax().text_range());
+                    return Some((ValidatedElement::Img, element.syntax().text_range()));
+                }
+            }
+            "area" => {
+                if !has_alt && !has_aria_label && !has_aria_labelledby {
+                    return Some((ValidatedElement::Area, element.syntax().text_range()));
                 }
             }
             "input" => {
@@ -94,7 +118,7 @@ impl Rule for UseAltText {
                     && !has_aria_label
                     && !has_aria_labelledby
                 {
-                    return Some(element.syntax().text_range());
+                    return Some((ValidatedElement::Input, element.syntax().text_range()));
                 }
             }
             _ => {}
@@ -104,15 +128,12 @@ impl Rule for UseAltText {
     }
 
     fn diagnostic(_ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
-        if state.is_empty() {
-            return None;
-        }
+        let (validate_element, range) = state;
         let message = markup!(
-            "Provide the attribute "<Emphasis>"alt"</Emphasis>" when using "<Emphasis>"img"</Emphasis>", "<Emphasis>"area"</Emphasis>" or "<Emphasis>"input type='image'"</Emphasis>""
+            "Provide a text alternative through the "{{validate_element}}", "<Emphasis>"aria-label"</Emphasis>" or "<Emphasis>"aria-labelledby"</Emphasis>" attribute"
         ).to_owned();
-
         Some(
-            RuleDiagnostic::new(rule_category!(), state, message).note(markup! {
+            RuleDiagnostic::new(rule_category!(), range, message).note(markup! {
                 "Meaningful alternative text on elements helps users relying on screen readers to understand content's purpose within a page."
             }),
         )
