@@ -83,9 +83,13 @@ when there are breaking changes.
 ### Configuration
 ### Editors
 
- - Fix an issue where the VSCode extension duplicates text when using VSCode git utilities [#4338]
- - Remove code assists from being added to the code actions when apply fixes;
- -
+#### Other changes
+
+- Fix an issue where the VSCode extension duplicates text when using VSCode git utilities [#4338](https://github.com/rome/tools/issues/4338)
+- Remove code assists from being added to the code actions when apply fixes;
+- When requesting code actions, ignored files should not throw errors. Fixes [#4434](https://github.com/rome/tools/issues/4434)
+
+
 ### Formatter
 
 - Fix an issue where formatting of JSX string literals property values were using incorrect quotes [#4054](https://github.com/rome/tools/issues/4054)

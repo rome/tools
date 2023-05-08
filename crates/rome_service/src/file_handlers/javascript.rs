@@ -18,7 +18,6 @@ use rome_analyze::{
     AnalysisFilter, AnalyzerOptions, ControlFlow, GroupCategory, Never, QueryMatch,
     RegistryVisitor, RuleCategories, RuleCategory, RuleFilter, RuleGroup,
 };
-use rome_diagnostics::panic::catch_unwind;
 use rome_diagnostics::{category, Applicability, Diagnostic, DiagnosticExt, Severity};
 use rome_formatter::{FormatError, Printed};
 use rome_fs::RomePath;

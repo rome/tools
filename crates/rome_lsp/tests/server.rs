@@ -844,6 +844,90 @@ async fn pull_diagnostics_for_rome_json() -> Result<()> {
 }
 
 #[tokio::test]
+async fn no_code_actions_for_ignored_json_files() -> Result<()> {
+    let factory = ServerFactory::default();
+    let (service, client) = factory.create().into_inner();
+    let (stream, sink) = client.split();
+    let mut server = Server::new(service);
+
+    let (sender, mut receiver) = channel(CHANNEL_BUFFER_SIZE);
+    let reader = tokio::spawn(client_handler(stream, sink, sender));
+
+    server.initialize().await?;
+    server.initialized().await?;
+
+    let incorrect_config = r#"{
+       "name": "test"
+    }"#;
+    server
+        .open_named_document(
+            incorrect_config,
+            url!("./node_modules/preact/package.json"),
+            "json",
+        )
+        .await?;
+
+    let notification = tokio::select! {
+        msg = receiver.next() => msg,
+        _ = sleep(Duration::from_secs(1)) => {
+            panic!("timed out waiting for the server to send diagnostics")
+        }
+    };
+
+    assert_eq!(
+        notification,
+        Some(ServerNotification::PublishDiagnostics(
+            PublishDiagnosticsParams {
+                uri: url!("./node_modules/preact/package.json"),
+                version: Some(0),
+                diagnostics: vec![],
+            }
+        ))
+    );
+    let res: lsp::CodeActionResponse = server
+        .request(
+            "textDocument/codeAction",
+            "pull_code_actions",
+            lsp::CodeActionParams {
+                text_document: lsp::TextDocumentIdentifier {
+                    uri: url!("./node_modules/preact/package.json"),
+                },
+                range: lsp::Range {
+                    start: lsp::Position {
+                        line: 0,
+                        character: 7,
+                    },
+                    end: lsp::Position {
+                        line: 0,
+                        character: 7,
+                    },
+                },
+                context: lsp::CodeActionContext {
+                    diagnostics: vec![],
+                    ..Default::default()
+                },
+                work_done_progress_params: lsp::WorkDoneProgressParams {
+                    work_done_token: None,
+                },
+                partial_result_params: lsp::PartialResultParams {
+                    partial_result_token: None,
+                },
+            },
+        )
+        .await?
+        .context("codeAction returned None")?;
+
+    assert_eq!(res, vec![]);
+
+    server.close_document().await?;
+
+    server.shutdown().await?;
+    reader.abort();
+
+    Ok(())
+}
+
+#[tokio::test]
 async fn pull_refactors() -> Result<()> {
     let factory = ServerFactory::default();
     let (service, client) = factory.create().into_inner();

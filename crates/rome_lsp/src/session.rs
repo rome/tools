@@ -282,52 +282,50 @@ impl Session {
         let diagnostics = if self.is_linting_and_formatting_disabled() {
             tracing::trace!("Linting disabled because Rome configuration is missing and `requireConfiguration` is true.");
             vec![]
+        } else if !file_features.supports_for(&FeatureName::Lint)
+            && !file_features.supports_for(&FeatureName::OrganizeImports)
+        {
+            tracing::trace!("linting and import sorting are not supported: {file_features:?}");
+            // Sending empty vector clears published diagnostics
+            vec![]
         } else {
-            if !file_features.supports_for(&FeatureName::Lint)
-                && !file_features.supports_for(&FeatureName::OrganizeImports)
-            {
-                tracing::trace!("linting and import sorting are not supported: {file_features:?}");
-                // Sending empty vector clears published diagnostics
-                vec![]
-            } else {
-                let mut categories = RuleCategories::SYNTAX;
-                if file_features.supports_for(&FeatureName::Lint) {
-                    categories |= RuleCategories::LINT
-                }
-                if file_features.supports_for(&FeatureName::OrganizeImports) {
-                    categories |= RuleCategories::ACTION
-                }
-                let result = self.workspace.pull_diagnostics(PullDiagnosticsParams {
-                    path: rome_path,
-                    categories,
-                    max_diagnostics: u64::MAX,
-                })?;
-
-                tracing::trace!("rome diagnostics: {:#?}", result.diagnostics);
-
-                let result = result
-                    .diagnostics
-                    .into_iter()
-                    .filter_map(|d| {
-                        match utils::diagnostic_to_lsp(
-                            d,
-                            &url,
-                            &doc.line_index,
-                            self.position_encoding(),
-                        ) {
-                            Ok(diag) => Some(diag),
-                            Err(err) => {
-                                tracing::error!("failed to convert diagnostic to LSP: {err:?}");
-                                None
-                            }
-                        }
-                    })
-                    .collect();
-
-                tracing::trace!("lsp diagnostics: {:#?}", result);
-
-                result
+            let mut categories = RuleCategories::SYNTAX;
+            if file_features.supports_for(&FeatureName::Lint) {
+                categories |= RuleCategories::LINT
             }
+            if file_features.supports_for(&FeatureName::OrganizeImports) {
+                categories |= RuleCategories::ACTION
+            }
+            let result = self.workspace.pull_diagnostics(PullDiagnosticsParams {
+                path: rome_path,
+                categories,
+                max_diagnostics: u64::MAX,
+            })?;
+
+            tracing::trace!("rome diagnostics: {:#?}", result.diagnostics);
+
+            let result = result
+                .diagnostics
+                .into_iter()
+                .filter_map(|d| {
+                    match utils::diagnostic_to_lsp(
+                        d,
+                        &url,
+                        &doc.line_index,
+                        self.position_encoding(),
+                    ) {
+                        Ok(diag) => Some(diag),
+                        Err(err) => {
+                            tracing::error!("failed to convert diagnostic to LSP: {err:?}");
+                            None
+                        }
+                    }
+                })
+                .collect();
+
+            tracing::trace!("lsp diagnostics: {:#?}", result);
+
+            result
         };
 
         tracing::Span::current().record("diagnostic_count", diagnostics.len());

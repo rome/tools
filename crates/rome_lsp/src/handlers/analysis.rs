@@ -6,7 +6,7 @@ use anyhow::{Context, Result};
 use rome_analyze::{ActionCategory, SourceActionKind};
 use rome_fs::RomePath;
 use rome_service::workspace::{
-    FeatureName, FeaturesBuilder, FixFileMode, FixFileParams, PullActionsParams, PullActionsResult,
+    FeatureName, FeaturesBuilder, FixFileMode, FixFileParams, PullActionsParams,
     SupportsFeatureParams,
 };
 use rome_service::WorkspaceError;
@@ -85,10 +85,10 @@ pub(crate) fn code_actions(
     }) {
         Ok(result) => result,
         Err(err) => {
-            if matches!(err, WorkspaceError::FileIgnored(_)) {
-                return Ok(Some(Vec::new()));
+            return if matches!(err, WorkspaceError::FileIgnored(_)) {
+                Ok(Some(Vec::new()))
             } else {
-                return Err(err.into());
+                Err(err.into())
             }
         }
     };

@@ -8,7 +8,7 @@ use super::{
 use crate::file_handlers::{Capabilities, FixAllParams, Language, LintParams};
 use crate::workspace::{
     FileFeaturesResult, GetFileContentParams, IsPathIgnoredParams, OrganizeImportsParams,
-    OrganizeImportsResult, RageEntry, RageParams, RageResult, ServerInfo, SupportsFeatureResult,
+    OrganizeImportsResult, RageEntry, RageParams, RageResult, ServerInfo,
 };
 use crate::{
     file_handlers::Features,

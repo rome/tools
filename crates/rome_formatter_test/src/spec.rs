@@ -7,7 +7,7 @@ use rome_formatter::{FormatOptions, Printed};
 use rome_fs::RomePath;
 use rome_parser::AnyParse;
 use rome_rowan::{TextRange, TextSize};
-use rome_service::workspace::{FeatureName, SupportsFeatureParams};
+use rome_service::workspace::{FeatureName, FeaturesBuilder, SupportsFeatureParams};
 use rome_service::App;
 use std::ops::Range;
 use std::path::{Path, PathBuf};
@@ -41,28 +41,26 @@ impl<'a> SpecTestFile<'a> {
             .workspace
             .file_features(SupportsFeatureParams {
                 path: input_file.clone(),
-                features: FeatureName::Format,
+                feature: FeaturesBuilder::new().with_formatter().build(),
             })
             .unwrap();
 
-        match can_format.reason {
-            None => {
-                let mut input_code = input_file.get_buffer_from_file();
+        if can_format.supports_for(&FeatureName::Format) {
+            let mut input_code = input_file.get_buffer_from_file();
 
-                let (_, range_start_index, range_end_index) =
-                    strip_rome_placeholders(&mut input_code);
+            let (_, range_start_index, range_end_index) = strip_rome_placeholders(&mut input_code);
 
-                Some(SpecTestFile {
-                    input_file,
-                    root_path,
+            Some(SpecTestFile {
+                input_file,
+                root_path,
 
-                    input_code,
+                input_code,
 
-                    range_start_index,
-                    range_end_index,
-                })
-            }
-            Some(_) => None,
+                range_start_index,
+                range_end_index,
+            })
+        } else {
+            None
         }
     }
 

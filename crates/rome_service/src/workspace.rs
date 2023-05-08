@@ -146,20 +146,20 @@ impl FileFeaturesResult {
     /// Checks whether the file support the given `feature`
     pub fn supports_for(&self, feature: &FeatureName) -> bool {
         self.features_supported
-            .get(&feature)
+            .get(feature)
             .map(|support_kind| matches!(support_kind, SupportKind::Supported))
             .unwrap_or_default()
     }
 
     pub fn is_ignored_for(&self, feature: &FeatureName) -> bool {
         self.features_supported
-            .get(&feature)
+            .get(feature)
             .map(|support_kind| matches!(support_kind, SupportKind::Ignored))
             .unwrap_or_default()
     }
 
     pub fn support_kind_for(&self, feature: &FeatureName) -> Option<&SupportKind> {
-        self.features_supported.get(&feature)
+        self.features_supported.get(feature)
     }
 }
 

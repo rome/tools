@@ -170,7 +170,7 @@ bitflags! {
         const SYNTAX = 1 << RuleCategory::Syntax as u8;
         const LINT = 1 << RuleCategory::Lint as u8;
         const ACTION = 1 << RuleCategory::Action as u8;
-    }	
+    }
 }
 
 impl Default for RuleCategories {
