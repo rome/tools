@@ -1,5 +1,5 @@
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
-use rome_console::markup;
+use rome_console::{fmt::Display, fmt::Formatter, markup};
 use rome_js_syntax::{jsx_ext::AnyJsxElement, TextRange};
 use rome_rowan::AstNode;
 
@@ -55,6 +55,15 @@ pub enum ValidatedElement {
     Img,
     Area,
     Input,
+}
+
+impl Display for ValidatedElement {
+    fn fmt(&self, fmt: &mut Formatter) -> std::io::Result<()> {
+        match self {
+            ValidatedElement::Object => fmt.write_markup(markup!(<Emphasis>"title"</Emphasis>)),
+            _ => fmt.write_markup(markup!(<Emphasis>"alt"</Emphasis>)),
+        }
+    }
 }
 
 impl Rule for UseAltText {
@@ -120,14 +129,9 @@ impl Rule for UseAltText {
 
     fn diagnostic(_ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
         let (validate_element, range) = state;
-        let message = match validate_element {
-            ValidatedElement::Object => markup!(
-                "Provide a text alternative through the "<Emphasis>"title"</Emphasis>", "<Emphasis>"aria-label"</Emphasis>" or "<Emphasis>"aria-labelledby"</Emphasis>" attribute"
-            ).to_owned(),
-            _ => markup!(
-                "Provide a text alternative through the "<Emphasis>"alt"</Emphasis>", "<Emphasis>"aria-label"</Emphasis>" or "<Emphasis>"aria-labelledby"</Emphasis>" attribute"
-            ).to_owned(),
-        };
+        let message = markup!(
+            "Provide a text alternative through the "{{validate_element}}", "<Emphasis>"aria-label"</Emphasis>" or "<Emphasis>"aria-labelledby"</Emphasis>" attribute"
+        ).to_owned();
         Some(
             RuleDiagnostic::new(rule_category!(), range, message).note(markup! {
                 "Meaningful alternative text on elements helps users relying on screen readers to understand content's purpose within a page."
