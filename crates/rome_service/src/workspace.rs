@@ -60,6 +60,7 @@ use rome_diagnostics::CodeSuggestion;
 use rome_formatter::Printed;
 use rome_fs::RomePath;
 use rome_js_syntax::{TextRange, TextSize};
+use rome_project::Project;
 use rome_text_edit::TextEdit;
 use std::collections::HashMap;
 use std::{borrow::Cow, panic::RefUnwindSafe, sync::Arc};
@@ -243,6 +244,12 @@ impl FeaturesBuilder {
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct UpdateSettingsParams {
     pub configuration: Configuration,
+}
+
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+pub struct ProjectFeaturesParams {
+    pub manifest_path: RomePath,
 }
 
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
@@ -496,6 +503,10 @@ pub trait Workspace: Send + Sync + RefUnwindSafe {
         params: SupportsFeatureParams,
     ) -> Result<FileFeaturesResult, WorkspaceError>;
 
+    /// Given a file, the workspace tries to understand if this file is a "manifest" of a project.
+    fn project_features(&self, params: ProjectFeaturesParams)
+        -> Result<Option<()>, WorkspaceError>;
+
     /// Checks if the current path is ignored by the workspace, against a particular feature.
     ///
     /// Takes as input the path of the file that workspace is currently processing and
@@ -697,5 +708,13 @@ impl<'app, W: Workspace + ?Sized> Drop for FileGuard<'app, W> {
             // this case it's generally better to silently matcher the error
             // than panic (especially in a drop handler)
             .ok();
+    }
+}
+
+pub struct WorkspaceProject<P>(Arc<P>);
+
+impl<P: Project> WorkspaceProject<P> {
+    pub fn get_project(&self) -> &P {
+        self.0.as_ref()
     }
 }

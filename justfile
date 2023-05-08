@@ -36,6 +36,9 @@ codegen-linter:
   just codegen-bindings
   cargo lintdoc
 
+codegen-licenses:
+	cargo codegen-license
+
 # Generates the linter documentation and Rust documentation
 documentation:
   cargo lintdoc

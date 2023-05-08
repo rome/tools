@@ -8,6 +8,7 @@ use crate::{
 use rayon::{scope, Scope};
 use rome_diagnostics::{adapters::IoError, DiagnosticExt, Error, Severity};
 use std::fs::DirEntry;
+use std::sync::RwLock;
 use std::{
     env,
     ffi::OsStr,
@@ -18,9 +19,32 @@ use std::{
 };
 
 /// Implementation of [FileSystem] that directly calls through to the underlying OS
-pub struct OsFileSystem;
+pub struct OsFileSystem {
+    configuration_base_path: RwLock<Option<PathBuf>>,
+}
+
+impl OsFileSystem {
+    pub fn new() -> Self {
+        OsFileSystem {
+            configuration_base_path: RwLock::default(),
+        }
+    }
+}
 
 impl FileSystem for OsFileSystem {
+    fn set_configuration_base_path(&self, path: PathBuf) {
+        let mut configuration = self.configuration_base_path.write().unwrap();
+        let _ = configuration.insert(path);
+    }
+
+    fn get_configuration_base_path(&self) -> Option<PathBuf> {
+        self.configuration_base_path
+            .read()
+            .unwrap()
+            .as_ref()
+            .map(|p| p.clone())
+    }
+
     fn open_with_options(&self, path: &Path, options: OpenOptions) -> io::Result<Box<dyn File>> {
         tracing::debug_span!("OsFileSystem::open_with_options", path = ?path, options = ?options)
             .in_scope(move || -> io::Result<Box<dyn File>> {
@@ -78,7 +102,7 @@ impl File for OsFile {
     }
 
     fn file_version(&self) -> i32 {
-        self.version
+        tracing::debug_span!("OsFile::file_version").in_scope(move || self.version)
     }
 }
 
@@ -105,6 +129,10 @@ impl<'scope> OsTraversalScope<'scope> {
 
 impl<'scope> TraversalScope<'scope> for OsTraversalScope<'scope> {
     fn spawn(&self, ctx: &'scope dyn TraversalContext, path: PathBuf) {
+        // sometimes we attempt to traverse the manifest files, and those might not exists
+        if !path.exists() {
+            return;
+        }
         let file_type = match path.metadata() {
             Ok(meta) => meta.file_type(),
             Err(err) => {

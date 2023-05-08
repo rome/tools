@@ -6,9 +6,10 @@ use super::{
     UpdateSettingsParams,
 };
 use crate::file_handlers::{Capabilities, FixAllParams, Language, LintParams};
+use crate::project_handlers::{KnownProjectHandlers, Manifests, ProjectCapabilities};
 use crate::workspace::{
     FileFeaturesResult, GetFileContentParams, IsPathIgnoredParams, OrganizeImportsParams,
-    OrganizeImportsResult, RageEntry, RageParams, RageResult, ServerInfo,
+    OrganizeImportsResult, ProjectFeaturesParams, RageEntry, RageParams, RageResult, ServerInfo,
 };
 use crate::{
     file_handlers::Features,
@@ -36,6 +37,10 @@ pub(super) struct WorkspaceServer {
     documents: DashMap<RomePath, Document>,
     /// Stores the result of the parser (syntax tree + diagnostics) for a given URL
     syntax: DashMap<RomePath, AnyParse>,
+    /// The projects that the workspace knows and can handle
+    known_projects: KnownProjectHandlers,
+    /// Current manifests
+    manifests: DashMap<RomePath, ProjectManifest>,
 }
 
 /// The `Workspace` object is long lived, so we want it to be able to cross
@@ -53,6 +58,9 @@ pub(crate) struct Document {
     pub(crate) language_hint: Language,
     node_cache: NodeCache,
 }
+pub(crate) struct ProjectManifest {
+    pub(crate) manifest_type: Manifests,
+}
 
 impl WorkspaceServer {
     /// Create a new [Workspace]
@@ -66,6 +74,8 @@ impl WorkspaceServer {
             settings: RwLock::default(),
             documents: DashMap::default(),
             syntax: DashMap::default(),
+            known_projects: KnownProjectHandlers::new(),
+            manifests: DashMap::default(),
         }
     }
 
@@ -74,7 +84,7 @@ impl WorkspaceServer {
     }
 
     /// Get the supported capabilities for a given file path
-    fn get_capabilities(&self, path: &RomePath) -> Capabilities {
+    fn get_file_capabilities(&self, path: &RomePath) -> Capabilities {
         let language = self.get_language(path);
 
         self.features.get_capabilities(path, language)
@@ -88,11 +98,22 @@ impl WorkspaceServer {
             .unwrap_or_default()
     }
 
+    /// Get the supported capabilities for a given manifest path
+    fn get_project_capabilities(&self, manifest_path: &RomePath) -> ProjectCapabilities {
+        let manifest_type = self
+            .manifests
+            .get(manifest_path)
+            .map(|manifest| manifest.manifest_type)
+            .unwrap_or_default();
+
+        self.known_projects
+            .get_capabilities(manifest_path, manifest_type)
+    }
+
     /// Return an error factory function for unsupported features at a given path
     fn build_capability_error<'a>(
         &'a self,
         path: &'a RomePath,
-        // feature_name: &'a str,
     ) -> impl FnOnce() -> WorkspaceError + 'a {
         move || {
             let language_hint = self
@@ -151,7 +172,7 @@ impl WorkspaceServer {
             Entry::Occupied(entry) => Ok(entry.get().clone()),
             Entry::Vacant(entry) => {
                 let rome_path = entry.key();
-                let capabilities = self.get_capabilities(rome_path);
+                let capabilities = self.get_file_capabilities(rome_path);
 
                 let mut document = self
                     .documents
@@ -200,7 +221,7 @@ impl Workspace for WorkspaceServer {
         &self,
         params: SupportsFeatureParams,
     ) -> Result<FileFeaturesResult, WorkspaceError> {
-        let capabilities = self.get_capabilities(&params.path);
+        let capabilities = self.get_file_capabilities(&params.path);
         let settings = self.settings.read().unwrap();
         let mut file_features = FileFeaturesResult::new()
             .with_capabilities(&capabilities)
@@ -274,6 +295,23 @@ impl Workspace for WorkspaceServer {
         Ok(())
     }
 
+    #[tracing::instrument(level = "debug", skip(self))]
+    fn project_features(
+        &self,
+        params: ProjectFeaturesParams,
+    ) -> Result<Option<()>, WorkspaceError> {
+        // let capabilities = self.get_project_capabilities(&params.manifest_path);
+        // let capabilities = self.get_parse(&params.manifest_path);
+        // let load = capabilities
+        //     .syntax
+        //     .parse
+        //     .ok_or_else(self.build_capability_error(&params.manifest_path))?;
+
+        // let result = load(&params.manifest_path)?;
+
+        Ok(Some(()))
+    }
+
     /// Add a new file to the workspace
     fn open_file(&self, params: OpenFileParams) -> Result<(), WorkspaceError> {
         self.syntax.remove(&params.path);
@@ -293,7 +331,7 @@ impl Workspace for WorkspaceServer {
         &self,
         params: GetSyntaxTreeParams,
     ) -> Result<GetSyntaxTreeResult, WorkspaceError> {
-        let capabilities = self.get_capabilities(&params.path);
+        let capabilities = self.get_file_capabilities(&params.path);
         let debug_syntax_tree = capabilities
             .debug
             .debug_syntax_tree
@@ -310,7 +348,7 @@ impl Workspace for WorkspaceServer {
         &self,
         params: GetControlFlowGraphParams,
     ) -> Result<String, WorkspaceError> {
-        let capabilities = self.get_capabilities(&params.path);
+        let capabilities = self.get_file_capabilities(&params.path);
         let debug_control_flow = capabilities
             .debug
             .debug_control_flow
@@ -322,16 +360,8 @@ impl Workspace for WorkspaceServer {
         Ok(printed)
     }
 
-    fn get_file_content(&self, params: GetFileContentParams) -> Result<String, WorkspaceError> {
-        let document = self
-            .documents
-            .get(&params.path)
-            .ok_or(WorkspaceError::not_found())?;
-        Ok(document.content.clone())
-    }
-
     fn get_formatter_ir(&self, params: GetFormatterIRParams) -> Result<String, WorkspaceError> {
-        let capabilities = self.get_capabilities(&params.path);
+        let capabilities = self.get_file_capabilities(&params.path);
         let debug_formatter_ir = capabilities
             .debug
             .debug_formatter_ir
@@ -344,6 +374,14 @@ impl Workspace for WorkspaceServer {
         }
 
         debug_formatter_ir(&params.path, parse, settings)
+    }
+
+    fn get_file_content(&self, params: GetFileContentParams) -> Result<String, WorkspaceError> {
+        let document = self
+            .documents
+            .get(&params.path)
+            .ok_or(WorkspaceError::not_found())?;
+        Ok(document.content.clone())
     }
 
     /// Change the content of an open file
@@ -382,63 +420,108 @@ impl Workspace for WorkspaceServer {
             FeatureName::Lint
         };
 
-        let parse = self.get_parse(params.path.clone(), Some(feature))?;
-        let settings = self.settings.read().unwrap();
+        if Manifests::is_manifest(&params.path) && feature == FeatureName::Lint {
+            let parse = self.get_parse(params.path.clone(), Some(feature))?;
+            let analyzer = self.get_project_capabilities(&params.path).analyzer;
+            let mut skipped_diagnostics = 0;
+            let mut diagnostics = vec![];
+            let mut errors = 0;
 
-        let (diagnostics, errors, skipped_diagnostics) = if let Some(lint) =
-            self.get_capabilities(&params.path).analyzer.lint
-        {
-            let rules = settings.linter().rules.as_ref();
-            let mut rule_filter_list = self.build_rule_filter_list(rules);
-            if settings.organize_imports.enabled {
-                rule_filter_list.push(RuleFilter::Rule("correctness", "organizeImports"));
-            }
-            let mut filter = AnalysisFilter::from_enabled_rules(Some(rule_filter_list.as_slice()));
-            filter.categories = params.categories;
+            if let Some(deserialize) = analyzer.deserialize {
+                let deserialize_result = deserialize(&params.path, parse.clone())?;
+                errors += deserialize_result.errors;
+                skipped_diagnostics += deserialize_result.skipped_diagnostics;
+                diagnostics.extend(deserialize_result.diagnostics);
+            };
 
-            trace!("Analyzer filter to apply to lint: {:?}", &filter);
+            if let Some(license) = analyzer.licenses {
+                license(&params.path, parse.clone())?;
+            };
 
-            let results = lint(LintParams {
-                parse,
-                filter,
-                rules,
-                settings: self.settings(),
-                max_diagnostics: params.max_diagnostics,
-                path: &params.path,
-            });
-
-            (
-                results.diagnostics,
-                results.errors,
-                results.skipped_diagnostics,
-            )
-        } else {
-            let parse_diagnostics = parse.into_diagnostics();
-            let errors = parse_diagnostics
+            errors += parse
+                .diagnostics()
                 .iter()
-                .filter(|diag| diag.severity() <= Severity::Error)
+                .filter(|d| d.severity() >= Severity::Error)
                 .count();
 
-            (parse_diagnostics, errors, 0)
-        };
+            diagnostics.extend(
+                parse
+                    .into_diagnostics()
+                    .into_iter()
+                    .map(rome_diagnostics::serde::Diagnostic::new)
+                    .collect::<Vec<_>>(),
+            );
 
-        Ok(PullDiagnosticsResult {
-            diagnostics: diagnostics
-                .into_iter()
-                .map(|diag| {
-                    let diag = diag.with_file_path(params.path.as_path().display().to_string());
-                    SerdeDiagnostic::new(diag)
-                })
-                .collect(),
-            errors,
-            skipped_diagnostics,
-        })
+            Ok(PullDiagnosticsResult {
+                diagnostics: diagnostics
+                    .into_iter()
+                    .map(|diag| {
+                        let diag = diag.with_file_path(params.path.as_path().display().to_string());
+                        SerdeDiagnostic::new(diag)
+                    })
+                    .collect(),
+                errors,
+                skipped_diagnostics,
+            })
+        } else {
+            let parse = self.get_parse(params.path.clone(), Some(feature))?;
+            let settings = self.settings.read().unwrap();
+
+            let (diagnostics, errors, skipped_diagnostics) =
+                if let Some(lint) = self.get_file_capabilities(&params.path).analyzer.lint {
+                    let rules = settings.linter().rules.as_ref();
+                    let mut rule_filter_list = self.build_rule_filter_list(rules);
+                    if settings.organize_imports.enabled {
+                        rule_filter_list.push(RuleFilter::Rule("correctness", "organizeImports"));
+                    }
+                    let mut filter =
+                        AnalysisFilter::from_enabled_rules(Some(rule_filter_list.as_slice()));
+                    filter.categories = params.categories;
+
+                    trace!("Analyzer filter to apply to lint: {:?}", &filter);
+
+                    let results = lint(LintParams {
+                        parse,
+                        filter,
+                        rules,
+                        settings: self.settings(),
+                        max_diagnostics: params.max_diagnostics,
+                        path: &params.path,
+                    });
+
+                    (
+                        results.diagnostics,
+                        results.errors,
+                        results.skipped_diagnostics,
+                    )
+                } else {
+                    let parse_diagnostics = parse.into_diagnostics();
+                    let errors = parse_diagnostics
+                        .iter()
+                        .filter(|diag| diag.severity() <= Severity::Error)
+                        .count();
+
+                    (parse_diagnostics, errors, 0)
+                };
+
+            Ok(PullDiagnosticsResult {
+                diagnostics: diagnostics
+                    .into_iter()
+                    .map(|diag| {
+                        let diag = diag.with_file_path(params.path.as_path().display().to_string());
+                        SerdeDiagnostic::new(diag)
+                    })
+                    .collect(),
+                errors,
+                skipped_diagnostics,
+            })
+        }
     }
 
     /// Retrieves the list of code actions available for a given cursor
     /// position within a file
     fn pull_actions(&self, params: PullActionsParams) -> Result<PullActionsResult, WorkspaceError> {
-        let capabilities = self.get_capabilities(&params.path);
+        let capabilities = self.get_file_capabilities(&params.path);
         let code_actions = capabilities
             .analyzer
             .code_actions
@@ -459,7 +542,7 @@ impl Workspace for WorkspaceServer {
     /// Runs the given file through the formatter using the provided options
     /// and returns the resulting source code
     fn format_file(&self, params: FormatFileParams) -> Result<Printed, WorkspaceError> {
-        let capabilities = self.get_capabilities(&params.path);
+        let capabilities = self.get_file_capabilities(&params.path);
         let format = capabilities
             .formatter
             .format
@@ -475,7 +558,7 @@ impl Workspace for WorkspaceServer {
     }
 
     fn format_range(&self, params: FormatRangeParams) -> Result<Printed, WorkspaceError> {
-        let capabilities = self.get_capabilities(&params.path);
+        let capabilities = self.get_file_capabilities(&params.path);
         let format_range = capabilities
             .formatter
             .format_range
@@ -491,7 +574,7 @@ impl Workspace for WorkspaceServer {
     }
 
     fn format_on_type(&self, params: FormatOnTypeParams) -> Result<Printed, WorkspaceError> {
-        let capabilities = self.get_capabilities(&params.path);
+        let capabilities = self.get_file_capabilities(&params.path);
         let format_on_type = capabilities
             .formatter
             .format_on_type
@@ -507,7 +590,7 @@ impl Workspace for WorkspaceServer {
     }
 
     fn fix_file(&self, params: super::FixFileParams) -> Result<FixFileResult, WorkspaceError> {
-        let capabilities = self.get_capabilities(&params.path);
+        let capabilities = self.get_file_capabilities(&params.path);
         let fix_all = capabilities
             .analyzer
             .fix_all
@@ -527,7 +610,7 @@ impl Workspace for WorkspaceServer {
     }
 
     fn rename(&self, params: super::RenameParams) -> Result<RenameResult, WorkspaceError> {
-        let capabilities = self.get_capabilities(&params.path);
+        let capabilities = self.get_file_capabilities(&params.path);
         let rename = capabilities
             .analyzer
             .rename
@@ -556,7 +639,7 @@ impl Workspace for WorkspaceServer {
         &self,
         params: OrganizeImportsParams,
     ) -> Result<OrganizeImportsResult, WorkspaceError> {
-        let capabilities = self.get_capabilities(&params.path);
+        let capabilities = self.get_file_capabilities(&params.path);
         let organize_imports = capabilities
             .analyzer
             .organize_imports

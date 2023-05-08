@@ -10,6 +10,7 @@ pub mod settings;
 pub mod workspace;
 
 mod diagnostics;
+mod project_handlers;
 #[cfg(feature = "schemars")]
 pub mod workspace_types;
 
@@ -24,6 +25,7 @@ pub use crate::matcher::{MatchOptions, Matcher, Pattern};
 pub use crate::diagnostics::{TransportError, WorkspaceError};
 /// Exports only for this crate
 pub use crate::file_handlers::JsFormatterSettings;
+pub use crate::project_handlers::Manifests;
 pub use crate::workspace::Workspace;
 pub const VERSION: &str = match option_env!("ROME_VERSION") {
     Some(version) => version,
@@ -43,7 +45,7 @@ pub struct App<'app> {
 
 impl<'app> App<'app> {
     pub fn with_console(console: &'app mut dyn Console) -> Self {
-        Self::with_filesystem_and_console(DynRef::Owned(Box::new(OsFileSystem)), console)
+        Self::with_filesystem_and_console(DynRef::Owned(Box::new(OsFileSystem::new())), console)
     }
 
     /// Create a new instance of the app using the specified [FileSystem] and [Console] implementation

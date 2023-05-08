@@ -2,6 +2,7 @@ mod diagnostics;
 mod lint_file;
 mod migrate;
 mod process_file;
+mod process_manifest;
 mod std_in;
 mod traverse;
 

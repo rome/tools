@@ -182,6 +182,7 @@ define_categories! {
     "format",
     "configuration",
     "organizeImports",
+    "project",
     "migrate",
     "deserialize",
     "internalError/io",
