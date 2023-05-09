@@ -83,7 +83,7 @@ jobs:
       - name: Install toolchain
         uses: moonrepo/setup-rust@v0
         with:
-          bins: nextest
+          bins: cargo-nextest
       - name: Run tests on ${{ matrix.os }}
         run: cargo nextest run --workspace --verbose
       - name: Clean cache
