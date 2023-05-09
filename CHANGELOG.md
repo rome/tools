@@ -2,14 +2,14 @@
 
 ## [Unreleased]
 
-## CLI
-## Configuration
-## Editors
-## Formatter
-## Linter
-## Parser
-## VSCode
-## JavaScript APIs
+### CLI
+### Configuration
+### Editors
+### Formatter
+### Linter
+### Parser
+### VSCode
+### JavaScript APIs
 
 ## 12.1.0
 
@@ -21,20 +21,60 @@
 output. [#4405](https://github.com/rome/tools/pull/4405).
 - The command `rome check` can accept input from `stdin`.
 - Add the argument `--stdin-file-path` to use when running `rome check` via `stdin`.
-- Add the argument `--formatter-enabled` to control the formatter via CLI.
-- Add the argument `--linter-enabled` to control the linter via CLI.
-- Add the argument `--organize-imports-enabled` to control the import sorting via CLI.
+- Add the argument `--formatter-enabled` to the command `rome check` to control the formatter via CLI.
+- Add the argument `--linter-enabled` to the command `rome check` to control the linter via CLI.
+- Add the argument `--organize-imports-enabled` to the command `rome check` to control the import sorting via CLI.
+- Add new command `rome migrate` the transform the configuration file `rome.json`
+	when there are breaking changes.
+
+### Configuration
+
+- Add `vcs` property, to opt in the VCS integration:
+  - `vcs.enabled`, to enable or not the integration;
+  - `vcs.clientKind`, the supported clients;
+  - `vcs.useIgnoreFile`, to ignore the files/paths inside the file;
+  - `vcs.root`, an optional path to the root of the VCS;
+
+### Editors
+
+#### Other changes
+
+- Fix an issue where the VSCode extension duplicates text when using VSCode git utilities [#4338](https://github.com/rome/tools/issues/4338)
+- Remove code assists from being added to the code actions when apply fixes;
+- When requesting code actions, ignored files should not throw errors. Fixes [#4434](https://github.com/rome/tools/issues/4434)
+
+### Formatter
+
+#### Other changes
+
+- Fix an issue where formatting of JSX string literals property values were using incorrect quotes [#4054](https://github.com/rome/tools/issues/4054)
+- Changed import assertion grammar to the new import attribute assertion
+```diff
+- import "module" assert {}
++ import "module" with {}
+```
+- Fix an issue where JSON formatter does not respect `lineWidth` for arrays [#4351](https://github.com/rome/tools/issues/4351)
+- Add support for decorators
 
 ### Linter
 
 #### New rules
 
+- [`noConfusingArrow`](https://docs.rome.tools/lint/rules/noConfusingArrow/)
+- [`noRedundantRoles`](https://docs.rome.tools/lint/rules/noRedundantRoles/)
+- [`noNoninteractiveTabindex`](https://docs.rome.tools/lint/rules/noNoninteractiveTabindex/)
+- [`noAriaUnsupportedElements`](https://docs.rome.tools/lint/rules/noAriaUnsupportedElements/)
+- [`noConsoleLog`](https://docs.rome.tools/lint/rules/noConsoleLog/)
+- [`noForEach`](https://docs.rome.tools/lint/rules/noForEach/)
+- [`useLiteralKeys`](https://docs.rome.tools/lint/rules/useLiteralKeys/)
+- [`noConstantCondition`](https://docs.rome.tools/lint/rules/noConstantCondition/)
 - [`useGroupedTypeImport`](https://docs.rome.tools/lint/rules/useGroupedTypeImport/)
 - [`noUselessConstructor`](https://docs.rome.tools/lint/rules/noUselessConstructor/)
 - [`useLiteralEnumMembers`](https://docs.rome.tools/lint/rules/useLiteralEnumMembers/)
 - [`useHeadingContent`](https://docs.rome.tools/lint/rules/useHeadingContent/)
 - [`noAccumulatingSpread`](https://docs.rome.tools/lint/rules/noAccumulatingSpread/)
 - [`useSimpleNumberKeys`](https://docs.rome.tools/lint/rules/useSimpleNumberKeys/)
+
 
 #### Promoted rules
 
@@ -83,8 +123,12 @@ Note that, `noExtraSemicolons` and `noExtraLabels` are renamed to `noExtraSemico
 
 #### Other changes
 
-- Add new command `rome migrate` the transform the configuration file `rome.json`
-when there are breaking changes.
+- Code actions are formatted using Rome's formatter. If the formatter is disabled,
+	the code action is not formatted.
+- Fixed an issue that [`useShorthandArrayType`](https://docs.rome.tools/lint/rules/useShorthandArrayType) rule did not handle nested ReadonlyArray types correctly and erroneously reported TsObjectType [#4354](https://github.com/rome/tools/issues/4353).
+- [`noUndeclaredVariables`](https://docs.rome.tools/lint/rules/noUndeclaredVariables) detects globals based on the file type.
+- Fix an issue when `noUndeclaredVariables` incorrectly identifies `AggregateError` as an undeclared variable. [#4365](https://github.com/rome/tools/issues/4365)
+- Fix an issue that `useLiteralKeys` rule doesn't ignore valid uses of square bracket notation. [#4370](https://github.com/rome/tools/issues/4370)
 - Fix [#4348](https://github.com/rome/tools/issues/4348) that caused [`noNonNullAssertion`](https://docs.rome.tools/lint/rules/nononnullassertion/) to emit incorrect code action
 - Fix [#4410](https://github.com/rome/tools/issues/4410) that caused [`useButtonType`](https://docs.rome.tools/lint/rules/usebuttontype/) to miss some cases
 - Fix false positive diagnostics that [`useCamelCase`](https://docs.rome.tools/lint/rules/usecamelcase/) caused to default exported components
@@ -93,55 +137,10 @@ when there are breaking changes.
 - Fix false positive diagnostics that [`noHeadeScope`](https://docs.rome.tools/lint/rules/noheaderscope/) caused to custom components
 - Fix false negative diagnostics that [`noNoninteractiveElementToInteractiveRole`](https://docs.rome.tools/lint/rules/nononinteractiveelementtointeractiverole/) and [`noNoninteractiveTabindex`](https://docs.rome.tools/lint/rules/nononinteractivetabindex/) caused to non-interactive elements.
 
-### Configuration
-
-- Add `vcs` property, to opt-in the VCS integration:
-  - `vcs.enabled`, to enable or not the integration;
-  - `vcs.clientKind`, the supported clients;
-  - `vcs.useIgnoreFile`, to ignore the files/paths inside the file;
-  - `vcs.root`, an optional path to the root of the VCS;
-
-### Editors
-
-#### Other changes
-
-- Fix an issue where the VSCode extension duplicates text when using VSCode git utilities [#4338](https://github.com/rome/tools/issues/4338)
-- Remove code assists from being added to the code actions when apply fixes;
-- When requesting code actions, ignored files should not throw errors. Fixes [#4434](https://github.com/rome/tools/issues/4434)
-
-
-### Formatter
-
-- Fix an issue where formatting of JSX string literals property values were using incorrect quotes [#4054](https://github.com/rome/tools/issues/4054)
-- Changed import assertion grammar to the new import attribute assertion
-```diff
-- import "module" assert {}
-+ import "module" with {}
-```
-- Fix an issue where JSON formatter does not respect `lineWidth` for arrays [#4351](https://github.com/rome/tools/issues/4351)
-
-### Linter
-
-#### Other changes
-
-- Code actions are formatted using Rome's formatter. If the formatter is disabled,
-the code action is not formatted.
-- Fixed an issue that [`useShorthandArrayType`](https://docs.rome.tools/lint/rules/useShorthandArrayType) rule did not handle nested ReadonlyArray types correctly and erroneously reported TsObjectType [#4354](https://github.com/rome/tools/issues/4353).
-- [`noUndeclaredVariables`](https://docs.rome.tools/lint/rules/noUndeclaredVariables) detects globals based on the file type.
-- Fix an issue when `noUndeclaredVariables` incorrectly identifies `AggregateError` as an undeclared variable. [#4365](https://github.com/rome/tools/issues/4365)
-- Fix an issue that `useLiteralKeys` rule doesn't ignore valid uses of square bracket notation. [#4370](https://github.com/rome/tools/issues/4370)
-
-#### New rules
-- [`noConfusingArrow`](https://docs.rome.tools/lint/rules/noConfusingArrow/)
-- [`noRedundantRoles`](https://docs.rome.tools/lint/rules/noRedundantRoles/)
-- [`noNoninteractiveTabindex`](https://docs.rome.tools/lint/rules/noNoninteractiveTabindex/)
-- [`noAriaUnsupportedElements`](https://docs.rome.tools/lint/rules/noAriaUnsupportedElements/)
-- [`noConsoleLog`](https://docs.rome.tools/lint/rules/noConsoleLog/)
-- [`noForEach`](https://docs.rome.tools/lint/rules/noForEach/)
-- [`useLiteralKeys`](https://docs.rome.tools/lint/rules/useLiteralKeys/)
-- [`noConstantCondition`](https://docs.rome.tools/lint/rules/noConstantCondition/)
 
 ### Parser
+
+#### Other changes
 
 - Allow module syntax in `cts` files
 - Changed import assertion grammar to the new import attribute assertion
@@ -150,9 +149,11 @@ the code action is not formatted.
 + import "module" with {}
 ```
 - Allow decorators before `export` and `export default`. [#4252](https://github.com/rome/tools/issues/4252)
+- Add support for Stage 3 decorators
 
 ### VSCode
-### JavaScript APIs
+
+- `requireConfiguration` is set to `true` by default
 
 ## 12.0.0
 
