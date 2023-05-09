@@ -164,12 +164,30 @@ jobs:
             ./npm/wasm-web
           if-no-files-found: error
 
+  upload-schema:
+    name: Upload configuration JSON schema
+    runs-on: ubuntu-latest
+    needs: check
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+      # Upload the JSON schema of the configuration
+      - name: Upload configuration JSON schema
+        uses: actions/upload-artifact@v3
+        with:
+          name: json-schema
+          path: ./npm/rome/configuration_schema.json
+          if-no-files-found: error
+
   publish:
     name: Publish
     runs-on: ubuntu-latest
     needs:
       - build
       - build-wasm
+      - upload-schema
     environment: npm-publish
     steps:
       - uses: actions/checkout@v3
@@ -178,6 +196,10 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: cli
+      - name: Download configuration JSON schema
+        uses: actions/download-artifact@v3
+        with:
+          name: json-schema
       - name: Download WASM artifacts
         uses: actions/download-artifact@v3
         with:
@@ -218,5 +240,6 @@ jobs:
           prerelease: ${{ needs.build.outputs.prerelease == 'true' }}
           files: |
             rome-*
+            configuration_schema.json
           fail_on_unmatched_files: true
           generate_release_notes: true
