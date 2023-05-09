@@ -427,7 +427,7 @@ function SyntaxSettings({
 
 	return (
 		<>
-			<h2>Syntax</h2>
+			<h2>Syntax options</h2>
 			<section>
 				<div className="field-row">
 					<label htmlFor="sourceType">Source Type</label>
@@ -527,7 +527,7 @@ function FormatterSettings({
 }) {
 	return (
 		<>
-			<h2>Formatter</h2>
+			<h2>Formatter options</h2>
 			<section>
 				<LineWidthInput lineWidth={lineWidth} setLineWidth={setLineWidth} />
 
@@ -631,7 +631,7 @@ function LinterSettings({
 }) {
 	return (
 		<>
-			<h2>Linter</h2>
+			<h2>Linter options</h2>
 			<section>
 				<div className="field-row">
 					<input
@@ -671,7 +671,7 @@ export function ImportSortingSettings({
 }) {
 	return (
 		<>
-			<h2>Import sorting</h2>
+			<h2>Import sorting options</h2>
 			<section>
 				<div className="field-row">
 					<input
