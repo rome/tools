@@ -208,7 +208,7 @@ pub(crate) fn execute_mode(
     // don't do any traversal if there's some content coming from stdin
     if let Some((path, content)) = mode.as_stdin_file() {
         let rome_path = RomePath::new(path);
-        std_in::run(session, &mode, rome_path, content.as_str(), &cli_options)
+        std_in::run(session, &mode, rome_path, content.as_str(), cli_options)
     } else if let TraversalMode::Migrate {
         write,
         configuration_path,
