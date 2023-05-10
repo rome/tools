@@ -3,7 +3,7 @@
 //! The configuration is divided by "tool", and then it's possible to further customise it
 //! by language. The language might further options divided by tool.
 
-use crate::{DynRef, WorkspaceError};
+use crate::{DynRef, WorkspaceError, VERSION};
 use bpaf::Bpaf;
 use rome_fs::{FileSystem, OpenOptions};
 use serde::{Deserialize, Serialize};
@@ -348,10 +348,17 @@ pub fn create_config(
     })?;
 
     // we now check if rome is installed inside `node_modules` and if so, we
-    let schema_path = Path::new("./node_modules/rome/configuration_schema.json");
-    let options = OpenOptions::default().read(true);
-    if fs.open_with_options(schema_path, options).is_ok() {
-        configuration.schema = schema_path.to_str().map(String::from);
+    if VERSION == "0.0.0" {
+        let schema_path = Path::new("./node_modules/rome/configuration_schema.json");
+        let options = OpenOptions::default().read(true);
+        if fs.open_with_options(schema_path, options).is_ok() {
+            configuration.schema = schema_path.to_str().map(String::from);
+        }
+    } else {
+        configuration.schema = Some(format!(
+            "https://docs.rome.tools/schemas/{}/schema.json",
+            VERSION
+        ));
     }
 
     let contents = serde_json::to_string_pretty(&configuration).map_err(|_| {

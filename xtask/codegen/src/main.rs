@@ -5,6 +5,8 @@ mod generate_configuration;
 mod generate_new_lintrule;
 #[cfg(feature = "schema")]
 mod generate_schema;
+#[cfg(feature = "website")]
+mod generate_website;
 mod promote_rule;
 
 use pico_args::Arguments;
@@ -18,11 +20,12 @@ use crate::generate_bindings::generate_workspace_bindings;
 use crate::generate_configuration::generate_rules_configuration;
 #[cfg(feature = "schema")]
 use crate::generate_schema::generate_configuration_schema;
+#[cfg(feature = "website")]
+use crate::generate_website::generate_files;
 use crate::promote_rule::promote_rule;
 use generate_new_lintrule::*;
 use xtask_codegen::{
     generate_analyzer, generate_ast, generate_formatters, generate_parser_tests, generate_tables,
-    generate_website,
 };
 
 fn main() -> Result<()> {
@@ -80,7 +83,7 @@ fn main() -> Result<()> {
         }
         #[cfg(feature = "website")]
         "website" => {
-            generate_website()?;
+            generate_files()?;
             Ok(())
         }
         "all" => {
@@ -89,7 +92,8 @@ fn main() -> Result<()> {
             generate_parser_tests(Mode::Overwrite)?;
             generate_formatters();
             generate_analyzer()?;
-            generate_website()?;
+            #[cfg(feature = "website")]
+            generate_files()?;
             #[cfg(feature = "configuration")]
             generate_rules_configuration(Mode::Overwrite)?;
             #[cfg(feature = "schema")]
