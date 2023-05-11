@@ -85,11 +85,12 @@ impl TryFrom<AnyJsObjectMember> for NumberLiteral {
     type Error = NumberLiteralError;
 
     fn try_from(any_member: AnyJsObjectMember) -> Result<Self, Self::Error> {
-        let literal_member_name_syntax = any_member
+        let Some(literal_member_name_syntax) = any_member
             .syntax()
             .children()
-            .find(|x| JsLiteralMemberName::can_cast(x.kind()))
-            .unwrap();
+            .find(|x| JsLiteralMemberName::can_cast(x.kind())) else {
+                return Err(NumberLiteralError)
+            };
         let literal_member_name = JsLiteralMemberName::cast(literal_member_name_syntax).unwrap();
 
         let token = literal_member_name.value().unwrap();
