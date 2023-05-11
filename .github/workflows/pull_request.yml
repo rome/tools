@@ -77,7 +77,7 @@ jobs:
       - name: Install toolchain
         uses: moonrepo/setup-rust@v0
         with:
-          bins: nextest
+          bins: cargo-nextest
       - name: Run tests
         run: cargo nextest run --workspace --verbose
       - name: Run doctests
