@@ -62,6 +62,8 @@ fn enclosing_function_if_call_is_at_top_level(call: &JsCallExpression) -> Option
                 | JsSyntaxKind::JS_VARIABLE_DECLARATOR
                 | JsSyntaxKind::JS_VARIABLE_DECLARATOR_LIST
                 | JsSyntaxKind::JS_VARIABLE_DECLARATION
+                | JsSyntaxKind::TS_AS_EXPRESSION
+                | JsSyntaxKind::TS_SATISFIES_EXPRESSION
         )
     });
 
