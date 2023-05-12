@@ -216,7 +216,7 @@ fn debug_formatter_ir(
 }
 
 fn lint(params: LintParams) -> LintResults {
-    let file_source = params.parse.file_source(&params.path).unwrap();
+    let file_source = params.parse.file_source(params.path).unwrap();
     let tree = params.parse.tree();
     let mut diagnostics = params.parse.into_diagnostics();
 
@@ -396,7 +396,7 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, WorkspaceError> {
         rome_path,
     } = params;
 
-    let file_source = parse.file_source(&rome_path).unwrap();
+    let file_source = parse.file_source(rome_path).unwrap();
     let mut tree: AnyJsRoot = parse.tree();
     let mut actions = Vec::new();
 

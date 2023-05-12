@@ -248,8 +248,8 @@ use crate::token_source::{BumpWithContext, NthToken, TokenSource};
 use rome_console::fmt::Display;
 use rome_diagnostics::location::AsSpan;
 use rome_rowan::{
-	AnyFileSource, AstNode, FileSource, Language, SendNode, FileSourceError, SyntaxKind,
-	SyntaxNode, TextRange, TextSize,
+    AnyFileSource, AstNode, FileSource, FileSourceError, Language, SendNode, SyntaxKind,
+    SyntaxNode, TextRange, TextSize,
 };
 use std::any::type_name;
 use std::path::Path;

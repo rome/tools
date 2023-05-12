@@ -44,11 +44,11 @@ impl Display for FileSourceError {
 /// struct UnknownFileSource {}
 ///
 /// impl TryFrom<&Path> for UnknownFileSource {
-/// 	type Error = FileSourceError;
+///  type Error = FileSourceError;
 ///
-/// 	fn try_from(value: &Path) -> Result<Self, Self::Error> {
-///         Ok(UnknownFileSource {})
-///     }
+///  fn try_from(value: &Path) -> Result<Self, Self::Error> {
+///    Ok(UnknownFileSource {})
+///   }
 /// }
 /// impl<'a> FileSource<'a, RawLanguage> for UnknownFileSource {}
 /// ```

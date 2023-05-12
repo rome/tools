@@ -1150,14 +1150,14 @@ pub(crate) mod tests {
     #[macro_export]
     macro_rules! assert_needs_parentheses {
         ($input:expr, $Node:ident) => {{
-            $crate::assert_needs_parentheses!($input, $Node, rome_js_syntax::SourceType::ts())
+            $crate::assert_needs_parentheses!($input, $Node, rome_js_syntax::JsFileSource::ts())
         }};
 
         ($input:expr, $Node:ident[$index:expr]) => {{
             $crate::assert_needs_parentheses!(
                 $input,
                 $Node[$index],
-                rome_js_syntax::SourceType::ts()
+                rome_js_syntax::JsFileSource::ts()
             )
         }};
 
@@ -1203,14 +1203,14 @@ pub(crate) mod tests {
     #[macro_export]
     macro_rules! assert_not_needs_parentheses {
         ($input:expr, $Node:ident) => {{
-            $crate::assert_not_needs_parentheses!($input, $Node, rome_js_syntax::SourceType::ts())
+            $crate::assert_not_needs_parentheses!($input, $Node, rome_js_syntax::JsFileSource::ts())
         }};
 
         ($input:expr, $Node:ident[$index:expr]) => {{
             $crate::assert_not_needs_parentheses!(
                 $input,
                 $Node[$index],
-                rome_js_syntax::SourceType::ts()
+                rome_js_syntax::JsFileSource::ts()
             )
         }};
 
