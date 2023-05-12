@@ -3,7 +3,7 @@ use super::{
     LintResults, Mime, ParserCapabilities,
 };
 use crate::configuration::to_analyzer_configuration;
-use crate::file_handlers::{is_diagnostic_error, FixAllParams, Language as LanguageId};
+use crate::file_handlers::{is_diagnostic_error, Features, FixAllParams, Language as LanguageId};
 use crate::workspace::OrganizeImportsResult;
 use crate::{
     settings::{FormatSettings, Language, LanguageSettings, LanguagesSettings, SettingsHandle},
@@ -36,6 +36,7 @@ use rome_js_syntax::{
 use rome_parser::AnyParse;
 use rome_rowan::{AstNode, BatchMutationExt, Direction, FileSource, NodeCache};
 use std::borrow::Cow;
+use std::ffi::OsStr;
 use std::fmt::Debug;
 use std::path::PathBuf;
 use tracing::{debug, trace};
@@ -122,6 +123,18 @@ impl ExtensionHandler for JsFileHandler {
             },
         }
     }
+}
+
+fn extension_error(path: &RomePath) -> WorkspaceError {
+    let language = Features::get_language(path).or(LanguageId::from_path(path));
+    WorkspaceError::source_file_not_supported(
+        language,
+        path.clone().display().to_string(),
+        path.clone()
+            .extension()
+            .and_then(OsStr::to_str)
+            .map(|s| s.to_string()),
+    )
 }
 
 fn parse(
@@ -216,7 +229,15 @@ fn debug_formatter_ir(
 }
 
 fn lint(params: LintParams) -> LintResults {
-    let file_source = params.parse.file_source(params.path).unwrap();
+    let Ok(file_source) = params
+        .parse
+        .file_source(params.path) else {
+		return LintResults {
+			errors: 0,
+			diagnostics: vec![],
+			skipped_diagnostics: 0
+		}
+	};
     let tree = params.parse.tree();
     let mut diagnostics = params.parse.into_diagnostics();
 
@@ -365,7 +386,12 @@ fn code_actions(
 
     trace!("Filter applied for code actions: {:?}", &filter);
     let analyzer_options = compute_analyzer_options(&settings, PathBuf::from(path.as_path()));
-    let source_type = parse.file_source(path).unwrap();
+    let Ok(source_type) = parse.file_source(path) else {
+		return PullActionsResult {
+			actions: vec![]
+		}
+	};
+
     analyze(&tree, filter, &analyzer_options, source_type, |signal| {
         actions.extend(signal.actions().into_code_action_iter().map(|item| {
             CodeAction {
@@ -396,7 +422,9 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, WorkspaceError> {
         rome_path,
     } = params;
 
-    let file_source = parse.file_source(rome_path).unwrap();
+    let file_source = parse
+        .file_source(rome_path)
+        .map_err(|_| extension_error(params.rome_path))?;
     let mut tree: AnyJsRoot = parse.tree();
     let mut actions = Vec::new();
 

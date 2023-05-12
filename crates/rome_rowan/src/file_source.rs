@@ -70,6 +70,12 @@ pub struct AnyFileSource {
 
 impl AnyFileSource {
     /// Attempts to retrieve the original file source of the file
+    ///
+    /// ## Errors
+    ///
+    /// The function will panic if:
+    /// - the original type and given type mismatch
+    /// - it's possible to retrieve the correct [FileSource] from the given [Path]
     pub fn unwrap_cast<'a, F, L>(&self, path: &'a Path) -> Result<F, FileSourceError>
     where
         F: FileSource<'a, L> + 'static,
