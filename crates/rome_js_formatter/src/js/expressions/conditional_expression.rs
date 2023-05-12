@@ -62,7 +62,7 @@ impl NeedsParentheses for JsConditionalExpression {
 mod tests {
 
     use crate::{assert_needs_parentheses, assert_not_needs_parentheses};
-    use rome_js_syntax::{JsConditionalExpression, SourceType};
+    use rome_js_syntax::{JsConditionalExpression, JsFileSource};
 
     #[test]
     fn needs_parentheses() {
@@ -105,7 +105,7 @@ mod tests {
         assert_needs_parentheses!(
             "<a {...(a ? b : c)} />",
             JsConditionalExpression,
-            SourceType::tsx()
+            JsFileSource::tsx()
         );
 
         assert_needs_parentheses!("(a ? b : c) as number;", JsConditionalExpression);

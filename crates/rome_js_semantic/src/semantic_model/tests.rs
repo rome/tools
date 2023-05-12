@@ -5,8 +5,8 @@ mod test {
         SemanticScopeExtensions,
     };
     use rome_js_syntax::{
-        JsIdentifierAssignment, JsIdentifierBinding, JsReferenceIdentifier, JsSyntaxKind,
-        SourceType, TsIdentifierBinding,
+        JsFileSource, JsIdentifierAssignment, JsIdentifierBinding, JsReferenceIdentifier,
+        JsSyntaxKind, TsIdentifierBinding,
     };
     use rome_rowan::{AstNode, SyntaxNodeCast};
 
@@ -14,7 +14,7 @@ mod test {
     pub fn ok_semantic_model() {
         let r = rome_js_parser::parse(
             "function f(){let a = arguments[0]; let b = a + 1; b = 2; console.log(b)}",
-            SourceType::js_module(),
+            JsFileSource::js_module(),
         );
         let model = semantic_model(&r.tree(), SemanticModelOptions::default());
 
@@ -115,7 +115,7 @@ mod test {
 
     #[test]
     pub fn ok_semantic_model_function_scope() {
-        let r = rome_js_parser::parse("function f() {} function g() {}", SourceType::js_module());
+        let r = rome_js_parser::parse("function f() {} function g() {}", JsFileSource::js_module());
         let model = semantic_model(&r.tree(), SemanticModelOptions::default());
 
         let function_f = r
@@ -153,7 +153,7 @@ mod test {
 
     /// Finds the last time a token named "name" is used and see if its node is marked as exported
     fn assert_is_exported(is_exported: bool, name: &str, code: &str) {
-        let r = rome_js_parser::parse(code, SourceType::tsx());
+        let r = rome_js_parser::parse(code, JsFileSource::tsx());
         let model = semantic_model(&r.tree(), SemanticModelOptions::default());
 
         let node = r
@@ -286,7 +286,7 @@ mod test {
 
     #[test]
     pub fn ok_semantic_model_globals() {
-        let r = rome_js_parser::parse("console.log()", SourceType::js_module());
+        let r = rome_js_parser::parse("console.log()", JsFileSource::js_module());
 
         let mut options = SemanticModelOptions::default();
         options.globals.insert("console".into());

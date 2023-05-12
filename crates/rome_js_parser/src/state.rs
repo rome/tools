@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use bitflags::bitflags;
 use indexmap::IndexMap;
-use rome_js_syntax::SourceType;
+use rome_js_syntax::JsFileSource;
 use rome_rowan::{TextRange, TextSize};
 use std::collections::HashSet;
 use std::ops::{Deref, DerefMut, Range};
@@ -97,7 +97,7 @@ pub(crate) enum StrictMode {
 }
 
 impl ParserState {
-    pub fn new(source_type: &SourceType) -> Self {
+    pub fn new(source_type: &JsFileSource) -> Self {
         let mut state = ParserState {
             parsing_context: ParsingContextFlags::TOP_LEVEL,
             label_set: IndexMap::new(),

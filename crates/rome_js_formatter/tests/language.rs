@@ -6,18 +6,18 @@ use rome_js_formatter::context::{
 };
 use rome_js_formatter::{format_node, format_range, JsFormatLanguage};
 use rome_js_parser::parse;
-use rome_js_syntax::{JsLanguage, SourceType};
+use rome_js_syntax::{JsFileSource, JsLanguage};
 use rome_parser::AnyParse;
 use rome_rowan::SyntaxNode;
 use rome_text_size::TextRange;
 use serde::{Deserialize, Serialize};
 
 pub struct JsTestFormatLanguage {
-    source_type: SourceType,
+    source_type: JsFileSource,
 }
 
 impl JsTestFormatLanguage {
-    pub fn new(source_type: SourceType) -> Self {
+    pub fn new(source_type: JsFileSource) -> Self {
         JsTestFormatLanguage { source_type }
     }
 }
@@ -163,7 +163,7 @@ pub struct JsSerializableFormatOptions {
 }
 
 impl JsSerializableFormatOptions {
-    fn into_format_options(self, source_type: SourceType) -> JsFormatOptions {
+    fn into_format_options(self, source_type: JsFileSource) -> JsFormatOptions {
         JsFormatOptions::new(source_type)
             .with_indent_style(
                 self.indent_style

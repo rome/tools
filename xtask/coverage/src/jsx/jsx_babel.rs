@@ -4,7 +4,7 @@ use crate::{
     runner::{TestCase, TestCaseFiles, TestRunOutcome, TestSuite},
 };
 use rome_js_parser::parse;
-use rome_js_syntax::{ModuleKind, SourceType};
+use rome_js_syntax::{JsFileSource, ModuleKind};
 use rome_rowan::SyntaxKind;
 use std::path::Path;
 
@@ -35,7 +35,7 @@ impl TestCase for BabelJsxTestCase {
     }
 
     fn run(&self) -> TestRunOutcome {
-        let source_type = SourceType::jsx().with_module_kind(ModuleKind::Script);
+        let source_type = JsFileSource::jsx().with_module_kind(ModuleKind::Script);
         let files = TestCaseFiles::single(self.name().to_string(), self.code.clone(), source_type);
         let result = parse(&self.code, source_type);
 

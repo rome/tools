@@ -647,7 +647,7 @@ pub(crate) fn is_multiline_template_starting_on_same_line(template: &JsTemplateE
 mod tests {
 
     use crate::{assert_needs_parentheses, assert_not_needs_parentheses};
-    use rome_js_syntax::{JsArrowFunctionExpression, SourceType};
+    use rome_js_syntax::{JsArrowFunctionExpression, JsFileSource};
 
     #[test]
     fn needs_parentheses() {
@@ -668,7 +668,7 @@ mod tests {
         assert_needs_parentheses!(
             "<Function>(a => a)",
             JsArrowFunctionExpression,
-            SourceType::ts()
+            JsFileSource::ts()
         );
         assert_needs_parentheses!("(a => a) ? b : c", JsArrowFunctionExpression);
         assert_not_needs_parentheses!("a ? b => b : c", JsArrowFunctionExpression);

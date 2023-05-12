@@ -208,11 +208,11 @@ pub fn is_binding_react_stable(
 #[cfg(test)]
 mod test {
     use super::*;
-    use rome_js_syntax::SourceType;
+    use rome_js_syntax::JsFileSource;
 
     #[test]
     pub fn ok_react_stable_captures() {
-        let r = rome_js_parser::parse("const ref = useRef();", SourceType::js_module());
+        let r = rome_js_parser::parse("const ref = useRef();", JsFileSource::js_module());
         let node = r
             .syntax()
             .descendants()

@@ -30,7 +30,7 @@ impl NeedsParentheses for JsInstanceofExpression {
 #[cfg(test)]
 mod tests {
     use crate::{assert_needs_parentheses, assert_not_needs_parentheses};
-    use rome_js_syntax::{JsInstanceofExpression, SourceType};
+    use rome_js_syntax::{JsFileSource, JsInstanceofExpression};
 
     #[test]
     fn needs_parentheses() {
@@ -54,12 +54,12 @@ mod tests {
         assert_needs_parentheses!(
             "<test {...(a instanceof B)} />",
             JsInstanceofExpression,
-            SourceType::tsx()
+            JsFileSource::tsx()
         );
         assert_needs_parentheses!(
             "<test>{...(a instanceof B)}</test>",
             JsInstanceofExpression,
-            SourceType::tsx()
+            JsFileSource::tsx()
         );
 
         assert_needs_parentheses!("(a instanceof B).member", JsInstanceofExpression);

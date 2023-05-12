@@ -430,11 +430,11 @@ impl Iterator for CalleeNamesIterator {
 mod test {
     use super::{contains_a_test_pattern, is_test_each_pattern_callee};
     use rome_js_parser::parse;
-    use rome_js_syntax::{JsCallExpression, JsTemplateExpression, SourceType};
+    use rome_js_syntax::{JsCallExpression, JsFileSource, JsTemplateExpression};
     use rome_rowan::AstNodeList;
 
     fn extract_call_expression(src: &str) -> JsCallExpression {
-        let source_type = SourceType::js_module();
+        let source_type = JsFileSource::js_module();
         let result = parse(src, source_type);
         let module = result
             .tree()
@@ -457,7 +457,7 @@ mod test {
     }
 
     fn extract_template(src: &str) -> JsTemplateExpression {
-        let source_type = SourceType::js_module();
+        let source_type = JsFileSource::js_module();
         let result = parse(src, source_type);
         let module = result
             .tree()

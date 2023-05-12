@@ -7,12 +7,12 @@ mod generated;
 pub mod binding_ext;
 pub mod directive_ext;
 pub mod expr_ext;
+pub mod file_source;
 pub mod identifier_ext;
 pub mod import_ext;
 pub mod jsx_ext;
 pub mod modifier_ext;
 pub mod numbers;
-pub mod source_type;
 pub mod static_value;
 pub mod stmt_ext;
 pub mod suppression;
@@ -22,12 +22,12 @@ mod union_ext;
 
 pub use self::generated::*;
 pub use expr_ext::*;
+pub use file_source::*;
 pub use identifier_ext::*;
 pub use modifier_ext::*;
 pub use rome_rowan::{
     SyntaxNodeText, TextLen, TextRange, TextSize, TokenAtOffset, TriviaPieceKind, WalkEvent,
 };
-pub use source_type::*;
 pub use stmt_ext::*;
 pub use syntax_node::*;
 pub use type_ext::*;

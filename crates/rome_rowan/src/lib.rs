@@ -25,6 +25,7 @@ mod utility_types;
 mod arc;
 mod ast;
 mod cow_mut;
+mod file_source;
 pub mod raw_language;
 #[cfg(feature = "serde")]
 mod serde_impls;
@@ -35,19 +36,20 @@ mod tree_builder;
 pub use rome_text_size::{TextLen, TextRange, TextSize};
 
 pub use crate::{
-    ast::*,
-    green::{NodeCache, RawSyntaxKind},
-    syntax::{
+	ast::*,
+	file_source::{AnyFileSource, FileSource, FileSourceError},
+	green::{NodeCache, RawSyntaxKind},
+	syntax::{
         chain_trivia_pieces, ChainTriviaPiecesIterator, Language, SendNode, SyntaxElement,
         SyntaxElementChildren, SyntaxKind, SyntaxList, SyntaxNode, SyntaxNodeChildren,
         SyntaxNodeOptionExt, SyntaxRewriter, SyntaxSlot, SyntaxToken, SyntaxTriviaPiece,
         SyntaxTriviaPieceComments, TriviaPiece, TriviaPieceKind, VisitNodeSignal,
     },
-    syntax_factory::*,
-    syntax_node_text::SyntaxNodeText,
-    syntax_token_text::SyntaxTokenText,
-    tree_builder::{Checkpoint, TreeBuilder},
-    utility_types::{Direction, NodeOrToken, TokenAtOffset, WalkEvent},
+	syntax_factory::*,
+	syntax_node_text::SyntaxNodeText,
+	syntax_token_text::SyntaxTokenText,
+	tree_builder::{Checkpoint, TreeBuilder},
+	utility_types::{Direction, NodeOrToken, TokenAtOffset, WalkEvent},
 };
 
 pub(crate) use crate::green::{GreenNode, GreenNodeData, GreenToken, GreenTokenData};

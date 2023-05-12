@@ -1,6 +1,6 @@
 use rome_formatter_test::spec::{SpecSnapshot, SpecTestFile};
 use rome_js_formatter::context::JsFormatOptions;
-use rome_js_syntax::{ModuleKind, SourceType};
+use rome_js_syntax::{JsFileSource, ModuleKind};
 use std::path::Path;
 
 mod language {
@@ -29,7 +29,7 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
 
     let Some(test_file) = SpecTestFile::try_from_file(spec_input_file, root_path) else { return; };
 
-    let mut source_type: SourceType = test_file.input_file().as_path().try_into().unwrap();
+    let mut source_type: JsFileSource = test_file.input_file().as_path().try_into().unwrap();
     if file_type != "module" {
         source_type = source_type.with_module_kind(ModuleKind::Script);
     }

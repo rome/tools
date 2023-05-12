@@ -7,7 +7,7 @@ use rome_analyze::{
 use rome_aria::{AriaProperties, AriaRoles};
 use rome_diagnostics::{category, Diagnostic, Error as DiagnosticError};
 use rome_js_syntax::suppression::SuppressionDiagnostic;
-use rome_js_syntax::{suppression::parse_suppression_comment, JsLanguage, SourceType};
+use rome_js_syntax::{suppression::parse_suppression_comment, JsFileSource, JsLanguage};
 use serde::{Deserialize, Serialize};
 use std::sync::Arc;
 use std::{borrow::Cow, error::Error};
@@ -56,7 +56,7 @@ pub fn analyze_with_inspect_matcher<'a, V, F, B>(
     filter: AnalysisFilter,
     inspect_matcher: V,
     options: &'a AnalyzerOptions,
-    source_type: SourceType,
+    source_type: JsFileSource,
     mut emit_signal: F,
 ) -> (Option<B>, Vec<DiagnosticError>)
 where
@@ -147,7 +147,7 @@ pub fn analyze<'a, F, B>(
     root: &LanguageRoot<JsLanguage>,
     filter: AnalysisFilter,
     options: &'a AnalyzerOptions,
-    source_type: SourceType,
+    source_type: JsFileSource,
     emit_signal: F,
 ) -> (Option<B>, Vec<DiagnosticError>)
 where
@@ -166,7 +166,7 @@ mod tests {
     use rome_diagnostics::termcolor::NoColor;
     use rome_diagnostics::{Diagnostic, DiagnosticExt, PrintDiagnostic, Severity};
     use rome_js_parser::parse;
-    use rome_js_syntax::{SourceType, TextRange, TextSize};
+    use rome_js_syntax::{JsFileSource, TextRange, TextSize};
     use std::slice;
 
     use crate::{analyze, AnalysisFilter, ControlFlow};
@@ -185,7 +185,7 @@ mod tests {
 
         const SOURCE: &str = r#"a.b["c"];"#;
 
-        let parsed = parse(SOURCE, SourceType::tsx());
+        let parsed = parse(SOURCE, JsFileSource::tsx());
 
         let mut error_ranges: Vec<TextRange> = Vec::new();
         let options = AnalyzerOptions::default();
@@ -197,7 +197,7 @@ mod tests {
                 ..AnalysisFilter::default()
             },
             &options,
-            SourceType::tsx(),
+            JsFileSource::tsx(),
             |signal| {
                 if let Some(diag) = signal.diagnostic() {
                     error_ranges.push(diag.location().span.unwrap());
@@ -272,7 +272,7 @@ mod tests {
             }
         ";
 
-        let parsed = parse(SOURCE, SourceType::js_module());
+        let parsed = parse(SOURCE, JsFileSource::js_module());
 
         let mut lint_ranges: Vec<TextRange> = Vec::new();
         let mut parse_ranges: Vec<TextRange> = Vec::new();
@@ -283,7 +283,7 @@ mod tests {
             &parsed.tree(),
             AnalysisFilter::default(),
             &options,
-            SourceType::js_module(),
+            JsFileSource::js_module(),
             |signal| {
                 if let Some(diag) = signal.diagnostic() {
                     let span = diag.get_span();
@@ -354,7 +354,7 @@ mod tests {
             a == b;
         ";
 
-        let parsed = parse(SOURCE, SourceType::js_module());
+        let parsed = parse(SOURCE, JsFileSource::js_module());
 
         let filter = AnalysisFilter {
             categories: RuleCategories::SYNTAX,
@@ -366,7 +366,7 @@ mod tests {
             &parsed.tree(),
             filter,
             &options,
-            SourceType::js_module(),
+            JsFileSource::js_module(),
             |signal| {
                 if let Some(diag) = signal.diagnostic() {
                     let code = diag.category().unwrap();

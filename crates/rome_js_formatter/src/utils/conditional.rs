@@ -7,9 +7,9 @@ use rome_formatter::{
 use crate::{AsFormat, IntoFormat};
 use rome_js_syntax::{
     AnyJsExpression, AnyTsType, JsAssignmentExpression, JsCallExpression,
-    JsComputedMemberExpression, JsConditionalExpression, JsInitializerClause, JsNewExpression,
-    JsReturnStatement, JsStaticMemberExpression, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken,
-    JsThrowStatement, JsUnaryExpression, JsYieldArgument, SourceType, TsAsExpression,
+    JsComputedMemberExpression, JsConditionalExpression, JsFileSource, JsInitializerClause,
+    JsNewExpression, JsReturnStatement, JsStaticMemberExpression, JsSyntaxKind, JsSyntaxNode,
+    JsSyntaxToken, JsThrowStatement, JsUnaryExpression, JsYieldArgument, TsAsExpression,
     TsConditionalType, TsNonNullAssertionExpression, TsSatisfiesExpression,
 };
 use rome_rowan::{declare_node_union, match_ast, AstNode, SyntaxResult};
@@ -238,7 +238,11 @@ impl FormatRule<AnyJsConditional> for FormatJsAnyConditionalRule {
 }
 
 impl FormatJsAnyConditionalRule {
-    fn layout(&self, conditional: &AnyJsConditional, source_type: SourceType) -> ConditionalLayout {
+    fn layout(
+        &self,
+        conditional: &AnyJsConditional,
+        source_type: JsFileSource,
+    ) -> ConditionalLayout {
         match conditional.syntax().parent() {
             Some(parent) if parent.kind() == conditional.syntax().kind() => {
                 let conditional_parent = AnyJsConditional::unwrap_cast(parent);

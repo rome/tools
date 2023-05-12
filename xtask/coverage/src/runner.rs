@@ -6,7 +6,7 @@ use rome_diagnostics::termcolor::Buffer;
 use rome_diagnostics::Error;
 use rome_diagnostics::PrintDiagnostic;
 use rome_js_parser::{parse, Parse};
-use rome_js_syntax::{AnyJsRoot, JsSyntaxNode, SourceType};
+use rome_js_syntax::{AnyJsRoot, JsFileSource, JsSyntaxNode};
 use rome_rowan::SyntaxKind;
 use std::fmt::Debug;
 use std::panic::RefUnwindSafe;
@@ -77,7 +77,7 @@ pub(crate) struct TestCaseFile {
     code: String,
 
     /// The source type used to parse the file
-    source_type: SourceType,
+    source_type: JsFileSource,
 }
 
 impl TestCaseFile {
@@ -109,7 +109,7 @@ pub(crate) struct TestCaseFiles {
 }
 
 impl TestCaseFiles {
-    pub(crate) fn single(name: String, code: String, source_type: SourceType) -> Self {
+    pub(crate) fn single(name: String, code: String, source_type: JsFileSource) -> Self {
         Self {
             files: vec![TestCaseFile {
                 name,
@@ -123,7 +123,7 @@ impl TestCaseFiles {
         Self { files: vec![] }
     }
 
-    pub(crate) fn add(&mut self, name: String, code: String, source_type: SourceType) {
+    pub(crate) fn add(&mut self, name: String, code: String, source_type: JsFileSource) {
         self.files.push(TestCaseFile {
             name,
             code,

@@ -2031,3 +2031,52 @@ fn check_stdin_apply_unsafe_only_organize_imports() {
         result,
     ));
 }
+#[test]
+fn should_apply_correct_file_source() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let file_path = Path::new("file.ts");
+    fs.insert(
+        file_path.into(),
+        "type A = { a: string }; type B = Partial<A>".as_bytes(),
+    );
+
+    let config_path = Path::new("rome.json");
+    fs.insert(
+        config_path.into(),
+        r#"{
+    	"linter": {
+    		"rules": {
+    			"recommended": true,
+    			"correctness": {
+    				"noUndeclaredVariables": "error"
+    			}
+    		}
+    	}
+    }"#
+        .as_bytes(),
+    );
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    let mut buffer = String::new();
+    fs.open(file_path)
+        .unwrap()
+        .read_to_string(&mut buffer)
+        .unwrap();
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "should_apply_correct_file_source",
+        fs,
+        console,
+        result,
+    ));
+}

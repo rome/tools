@@ -5,7 +5,7 @@ use rome_js_syntax::{
     AnyJsExportClause, AnyJsExpression, AnyJsFormalParameter, AnyJsImportClause,
     AnyJsLiteralExpression, AnyJsModuleItem, AnyJsName, AnyJsNamedImport,
     AnyJsNamedImportSpecifier, AnyJsObjectMember, AnyJsObjectMemberName, AnyJsParameter,
-    AnyJsStatement, AnyTsName, AnyTsReturnType, AnyTsType, AnyTsTypeMember, SourceType,
+    AnyJsStatement, AnyTsName, AnyTsReturnType, AnyTsType, AnyTsTypeMember, JsFileSource,
     TriviaPieceKind, T,
 };
 use rome_rowan::AstNode;
@@ -398,7 +398,7 @@ pub(crate) fn generate_workspace_bindings(mode: Mode) -> Result<()> {
     )
     .build();
 
-    let formatted = format_node(JsFormatOptions::new(SourceType::ts()), module.syntax()).unwrap();
+    let formatted = format_node(JsFormatOptions::new(JsFileSource::ts()), module.syntax()).unwrap();
     let printed = formatted.print().unwrap();
     let code = printed.into_code();
 

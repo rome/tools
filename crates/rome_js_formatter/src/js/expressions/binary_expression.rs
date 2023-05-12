@@ -30,7 +30,7 @@ impl NeedsParentheses for JsBinaryExpression {
 #[cfg(test)]
 mod tests {
     use crate::{assert_needs_parentheses, assert_not_needs_parentheses};
-    use rome_js_syntax::{JsBinaryExpression, SourceType};
+    use rome_js_syntax::{JsBinaryExpression, JsFileSource};
 
     #[test]
     fn needs_parentheses() {
@@ -51,12 +51,12 @@ mod tests {
         assert_needs_parentheses!(
             "<test {...(4 + 4)} />",
             JsBinaryExpression,
-            SourceType::tsx()
+            JsFileSource::tsx()
         );
         assert_needs_parentheses!(
             "<test>{...(4 + 4)}</test>",
             JsBinaryExpression,
-            SourceType::tsx()
+            JsFileSource::tsx()
         );
 
         assert_needs_parentheses!("(4 + 4).member", JsBinaryExpression);

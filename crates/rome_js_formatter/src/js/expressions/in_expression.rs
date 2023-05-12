@@ -59,7 +59,7 @@ fn is_in_for_initializer(expression: &JsInExpression) -> bool {
 #[cfg(test)]
 mod tests {
     use crate::{assert_needs_parentheses, assert_not_needs_parentheses};
-    use rome_js_syntax::{JsInExpression, SourceType};
+    use rome_js_syntax::{JsFileSource, JsInExpression};
 
     #[test]
     fn needs_parentheses() {
@@ -77,11 +77,15 @@ mod tests {
         assert_needs_parentheses!("(a in b)`template`", JsInExpression);
         assert_needs_parentheses!("[...(a in b)]", JsInExpression);
         assert_needs_parentheses!("({...(a in b)})", JsInExpression);
-        assert_needs_parentheses!("<test {...(a in b)} />", JsInExpression, SourceType::tsx());
+        assert_needs_parentheses!(
+            "<test {...(a in b)} />",
+            JsInExpression,
+            JsFileSource::tsx()
+        );
         assert_needs_parentheses!(
             "<test>{...(a in b)}</test>",
             JsInExpression,
-            SourceType::tsx()
+            JsFileSource::tsx()
         );
 
         assert_needs_parentheses!("(a in b).member", JsInExpression);

@@ -36,7 +36,7 @@ impl NeedsParentheses for JsLogicalExpression {
 mod tests {
 
     use crate::{assert_needs_parentheses, assert_not_needs_parentheses};
-    use rome_js_syntax::{JsLogicalExpression, SourceType};
+    use rome_js_syntax::{JsFileSource, JsLogicalExpression};
 
     #[test]
     fn needs_parentheses() {
@@ -57,12 +57,12 @@ mod tests {
         assert_needs_parentheses!(
             "<test {...(a && b)} />",
             JsLogicalExpression,
-            SourceType::tsx()
+            JsFileSource::tsx()
         );
         assert_needs_parentheses!(
             "<test>{...(a && b)}</test>",
             JsLogicalExpression,
-            SourceType::tsx()
+            JsFileSource::tsx()
         );
 
         assert_needs_parentheses!("(a && b).member", JsLogicalExpression);

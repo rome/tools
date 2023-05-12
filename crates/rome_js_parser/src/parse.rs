@@ -2,12 +2,10 @@
 
 use crate::*;
 use rome_js_syntax::{
-    AnyJsRoot, JsLanguage, JsModule, JsScript, JsSyntaxNode, ModuleKind, SourceType,
+    AnyJsRoot, JsFileSource, JsLanguage, JsModule, JsScript, JsSyntaxNode, ModuleKind,
 };
 use rome_parser::event::Event;
 use rome_parser::token_source::Trivia;
-use rome_parser::AnyParse;
-
 use rome_rowan::{AstNode, NodeCache};
 use std::marker::PhantomData;
 
@@ -84,23 +82,6 @@ impl<T> Parse<T> {
     }
 }
 
-impl<T> From<Parse<T>> for AnyParse
-where
-    T: AstNode,
-    T::Language: 'static,
-{
-    fn from(parse: Parse<T>) -> Self {
-        let root = parse.syntax();
-        let diagnostics = parse.into_diagnostics();
-
-        AnyParse::new(
-            // SAFETY: the parser should always return a root node
-            root.as_send().unwrap(),
-            diagnostics,
-        )
-    }
-}
-
 impl<T: AstNode<Language = JsLanguage>> Parse<T> {
     /// Convert this parse result into a typed AST node.
     ///
@@ -133,7 +114,7 @@ impl<T: AstNode<Language = JsLanguage>> Parse<T> {
 
 fn parse_common(
     text: &str,
-    source_type: SourceType,
+    source_type: JsFileSource,
 ) -> (Vec<Event<JsSyntaxKind>>, Vec<ParseDiagnostic>, Vec<Trivia>) {
     let mut parser = JsParser::new(text, source_type);
     syntax::program::parse(&mut parser);
@@ -148,7 +129,7 @@ fn parse_common(
 ///
 /// ```
 /// use rome_js_parser::parse_script;
-/// use rome_js_syntax::{JsSyntaxToken, SourceType, JsSyntaxList, JsComputedMemberExpression};
+/// use rome_js_syntax::{JsSyntaxToken, JsFileSource, JsSyntaxList, JsComputedMemberExpression};
 /// use rome_rowan::{AstNode, Direction};
 ///
 /// let parse = parse_script("foo.bar[2]");
@@ -177,7 +158,7 @@ fn parse_common(
 pub fn parse_script(text: &str) -> Parse<JsScript> {
     parse(
         text,
-        SourceType::js_module().with_module_kind(ModuleKind::Script),
+        JsFileSource::js_module().with_module_kind(ModuleKind::Script),
     )
     .cast::<JsScript>()
     .unwrap()
@@ -220,7 +201,7 @@ pub fn parse_script(text: &str) -> Parse<JsScript> {
 /// ```
 ///
 pub fn parse_module(text: &str) -> Parse<JsModule> {
-    parse(text, SourceType::js_module())
+    parse(text, JsFileSource::js_module())
         .cast::<JsModule>()
         .unwrap()
 }
@@ -231,24 +212,24 @@ pub fn parse_module(text: &str) -> Parse<JsModule> {
 ///
 /// ```
 /// use rome_js_parser::parse;
-/// use rome_js_syntax::{LanguageVariant, LanguageVersion, ModuleKind, SourceType};
+/// use rome_js_syntax::{LanguageVariant, LanguageVersion, ModuleKind, JsFileSource};
 /// // parse source text as TypeScript
-/// let mut module = SourceType::ts();
+/// let mut module = JsFileSource::ts();
 /// let mut parsed = parse("type F = {}", module);
 /// assert_eq!(parsed.diagnostics().len(), 0);
 /// // parse source text as JSX
-/// module = SourceType::jsx();
+/// module = JsFileSource::jsx();
 /// parsed = parse("<Component></Component>", module);
 /// assert_eq!(parsed.diagnostics().len(), 0);
 /// // parse source text with granular control
-/// module = SourceType::default()
+/// module = JsFileSource::default()
 ///   .with_version(LanguageVersion::ESNext)
 ///   .with_module_kind(ModuleKind::Module)
 ///   .with_variant(LanguageVariant::Jsx);
 /// parsed = parse("foo[bar]", module);
 /// assert_eq!(parsed.diagnostics().len(), 0);
 /// ```
-pub fn parse(text: &str, source_type: SourceType) -> Parse<AnyJsRoot> {
+pub fn parse(text: &str, source_type: JsFileSource) -> Parse<AnyJsRoot> {
     let mut cache = NodeCache::default();
     parse_js_with_cache(text, source_type, &mut cache)
 }
@@ -259,10 +240,10 @@ pub fn parse(text: &str, source_type: SourceType) -> Parse<AnyJsRoot> {
 ///
 /// ```
 /// use rome_js_parser::parse_js_with_cache;
-/// use rome_js_syntax::SourceType;
+/// use rome_js_syntax::JsFileSource;
 /// use rome_rowan::NodeCache;
 ///
-/// let source_type = SourceType::js_module();
+/// let source_type = JsFileSource::js_module();
 /// let mut cache = NodeCache::default();
 /// let mut source = "function f() { return 2 }";
 ///
@@ -275,7 +256,7 @@ pub fn parse(text: &str, source_type: SourceType) -> Parse<AnyJsRoot> {
 /// ```
 pub fn parse_js_with_cache(
     text: &str,
-    source_type: SourceType,
+    source_type: JsFileSource,
     cache: &mut NodeCache,
 ) -> Parse<AnyJsRoot> {
     tracing::debug_span!("parse").in_scope(move || {
