@@ -79,6 +79,7 @@ when there are breaking changes.
 - Fix false positive diagnostics that [`useCamelCase`](https://docs.rome.tools/lint/rules/usecamelcase/) caused to default exported components
 - Fix false positive diagnostics that [`useCamelCase`](https://docs.rome.tools/lint/rules/usecamelcase/) caused to private class members
 - Fix false positive diagnostics that [`useHookAtTopLevel`](https://docs.rome.tools/lint/rules/usehookattoplevel/) caused to arrow functions, export default functions and function expressions.
+- Fix false positive diagnostics that [`useHookAtTopLevel`](https://docs.rome.tools/lint/rules/usehookattoplevel/) caused to `as` or `satisfies` expression.
 - Fix false positive diagnostics that [`noHeadeScope`](https://docs.rome.tools/lint/rules/noheaderscope/) caused to custom components
 - Fix false negative diagnostics that [`noNoninteractiveElementToInteractiveRole`](https://docs.rome.tools/lint/rules/nononinteractiveelementtointeractiverole/) and [`noNoninteractiveTabindex`](https://docs.rome.tools/lint/rules/nononinteractivetabindex/) caused to non-interactive elements.
 
