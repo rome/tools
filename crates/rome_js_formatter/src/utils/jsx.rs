@@ -565,7 +565,7 @@ mod tests {
     };
     use rome_formatter::comments::Comments;
     use rome_js_parser::parse;
-    use rome_js_syntax::{JsxChildList, JsxText, SourceType};
+    use rome_js_syntax::{JsFileSource, JsxChildList, JsxText};
     use rome_rowan::{AstNode, TextSize};
 
     #[test]
@@ -589,7 +589,7 @@ mod tests {
     }
 
     fn assert_jsx_text_chunks(text: &str, expected_chunks: Vec<(TextSize, JsxTextChunk)>) {
-        let parse = parse(&std::format!("<>{text}</>"), SourceType::jsx());
+        let parse = parse(&std::format!("<>{text}</>"), JsFileSource::jsx());
         assert!(
             !parse.has_errors(),
             "Source should not have any errors {:?}",
@@ -660,7 +660,7 @@ mod tests {
     }
 
     fn parse_jsx_children(children: &str) -> JsxChildList {
-        let parse = parse(&std::format!("<div>{children}</div>"), SourceType::jsx());
+        let parse = parse(&std::format!("<div>{children}</div>"), JsFileSource::jsx());
 
         assert!(
             !parse.has_errors(),

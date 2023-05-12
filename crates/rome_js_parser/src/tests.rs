@@ -4,7 +4,7 @@ use rome_console::fmt::{Formatter, Termcolor};
 use rome_console::markup;
 use rome_diagnostics::DiagnosticExt;
 use rome_diagnostics::PrintDiagnostic;
-use rome_js_syntax::{AnyJsRoot, JsSyntaxKind, SourceType};
+use rome_js_syntax::{AnyJsRoot, JsFileSource, JsSyntaxKind};
 use rome_js_syntax::{JsCallArguments, JsLogicalExpression, JsSyntaxToken};
 use rome_rowan::{AstNode, Direction, TextSize};
 use std::fmt::Write;
@@ -19,7 +19,7 @@ let
 a;
 "#;
 
-    let module = parse(src, SourceType::tsx());
+    let module = parse(src, JsFileSource::tsx());
     assert_errors_are_absent(&module, Path::new("parser_smoke_test"));
 }
 
@@ -55,7 +55,7 @@ fn try_parse(path: &str, text: &str) -> Parse<AnyJsRoot> {
         // Files containing a // SCRIPT comment are parsed as script and not as module
         // This is needed to test features that are restricted in strict mode.
         let source_type = if text.contains("// SCRIPT") {
-            SourceType::js_script()
+            JsFileSource::js_script()
         } else {
             path.try_into().unwrap()
         };
@@ -300,7 +300,7 @@ pub fn node_contains_comments() {
 #[test]
 fn parser_regexp_after_operator() {
     fn assert_no_errors(src: &str) {
-        let module = parse(src, SourceType::js_script());
+        let module = parse(src, JsFileSource::js_script());
         assert_errors_are_absent(&module, Path::new("parser_regexp_after_operator"));
     }
     assert_no_errors(r#"a=/a/"#);
@@ -398,7 +398,7 @@ class Foo {
     @decorator declare [b]: number;
 }
     "#;
-    let root = parse(code, SourceType::ts());
+    let root = parse(code, JsFileSource::ts());
     let syntax = root.syntax();
 
     dbg!(syntax, root.diagnostics());

@@ -3,7 +3,7 @@ use crate::{
     check_file_encoding,
     runner::{TestCase, TestCaseFiles, TestRunOutcome, TestSuite},
 };
-use rome_js_syntax::{LanguageVariant, SourceType};
+use rome_js_syntax::{JsFileSource, LanguageVariant};
 use rome_rowan::SyntaxKind;
 use std::path::Path;
 
@@ -41,7 +41,7 @@ impl TestCase for BabelTypescriptTestCase {
     }
 
     fn run(&self) -> TestRunOutcome {
-        let source_type = SourceType::ts().with_variant(self.variant);
+        let source_type = JsFileSource::ts().with_variant(self.variant);
         let files = TestCaseFiles::single(self.name().to_string(), self.code.clone(), source_type);
 
         let result = rome_js_parser::parse(&self.code, source_type);

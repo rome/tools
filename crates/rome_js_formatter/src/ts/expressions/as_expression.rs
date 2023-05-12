@@ -104,7 +104,7 @@ impl NeedsParentheses for TsAsOrSatisfiesExpression {
 mod tests {
 
     use crate::{assert_needs_parentheses, assert_not_needs_parentheses};
-    use rome_js_syntax::{SourceType, TsAsExpression};
+    use rome_js_syntax::{JsFileSource, TsAsExpression};
 
     #[test]
     fn needs_parentheses() {
@@ -126,12 +126,12 @@ mod tests {
         assert_needs_parentheses!(
             "<test {...(x as any)} />",
             TsAsExpression,
-            SourceType::tsx()
+            JsFileSource::tsx()
         );
         assert_needs_parentheses!(
             "<test>{...(x as any)}</test>",
             TsAsExpression,
-            SourceType::tsx()
+            JsFileSource::tsx()
         );
         assert_needs_parentheses!("await (x as any)", TsAsExpression);
         assert_needs_parentheses!("(x as any)!", TsAsExpression);

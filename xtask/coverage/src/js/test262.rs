@@ -3,7 +3,7 @@ use crate::runner::{
 };
 use regex::Regex;
 use rome_js_parser::parse;
-use rome_js_syntax::SourceType;
+use rome_js_syntax::JsFileSource;
 use rome_rowan::syntax::SyntaxKind;
 use rome_rowan::AstNode;
 use serde::Deserialize;
@@ -83,7 +83,7 @@ impl Test262TestCase {
         Self { name, code, meta }
     }
 
-    fn execute_test(&self, append_use_strict: bool, source_type: SourceType) -> TestRunOutcome {
+    fn execute_test(&self, append_use_strict: bool, source_type: JsFileSource) -> TestRunOutcome {
         let code = if append_use_strict {
             format!("\"use strict\";\n{}", self.code)
         } else {
@@ -130,14 +130,14 @@ impl TestCase for Test262TestCase {
     fn run(&self) -> TestRunOutcome {
         let meta = &self.meta;
         if meta.flags.contains(&TestFlag::OnlyStrict) {
-            self.execute_test(true, SourceType::js_script())
+            self.execute_test(true, JsFileSource::js_script())
         } else if meta.flags.contains(&TestFlag::Module) {
-            self.execute_test(false, SourceType::js_module())
+            self.execute_test(false, JsFileSource::js_module())
         } else if meta.flags.contains(&TestFlag::NoStrict) || meta.flags.contains(&TestFlag::Raw) {
-            self.execute_test(false, SourceType::js_script())
+            self.execute_test(false, JsFileSource::js_script())
         } else {
-            let l = self.execute_test(false, SourceType::js_script());
-            let r = self.execute_test(true, SourceType::js_script());
+            let l = self.execute_test(false, JsFileSource::js_script());
+            let r = self.execute_test(true, JsFileSource::js_script());
             merge_outcomes(l, r)
         }
     }

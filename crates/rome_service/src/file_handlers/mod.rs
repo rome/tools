@@ -16,6 +16,7 @@ use rome_js_syntax::{TextRange, TextSize};
 use rome_parser::AnyParse;
 use rome_rowan::NodeCache;
 use std::ffi::OsStr;
+use std::path::Path;
 
 mod javascript;
 mod json;
@@ -51,6 +52,14 @@ impl Language {
             "json" => Language::Json,
             _ => Language::Unknown,
         }
+    }
+
+    /// Returns the language corresponding to the file path
+    pub fn from_path(path: &Path) -> Self {
+        path.extension()
+            .and_then(|path| path.to_str())
+            .map(Language::from_extension)
+            .unwrap_or(Language::Unknown)
     }
 
     /// Returns the language corresponding to this language ID

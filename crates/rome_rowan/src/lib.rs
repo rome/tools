@@ -25,6 +25,7 @@ mod utility_types;
 mod arc;
 mod ast;
 mod cow_mut;
+mod file_source;
 pub mod raw_language;
 #[cfg(feature = "serde")]
 mod serde_impls;
@@ -36,6 +37,7 @@ pub use rome_text_size::{TextLen, TextRange, TextSize};
 
 pub use crate::{
     ast::*,
+    file_source::{AnyFileSource, FileSource, FileSourceError},
     green::{NodeCache, RawSyntaxKind},
     syntax::{
         chain_trivia_pieces, ChainTriviaPiecesIterator, Language, SendNode, SyntaxElement,

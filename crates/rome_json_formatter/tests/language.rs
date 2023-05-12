@@ -3,9 +3,9 @@ use rome_formatter_test::TestFormatLanguage;
 use rome_json_formatter::context::{JsonFormatContext, JsonFormatOptions};
 use rome_json_formatter::{format_node, format_range, JsonFormatLanguage};
 use rome_json_parser::parse_json;
-use rome_json_syntax::JsonLanguage;
+use rome_json_syntax::{JsonFileSource, JsonLanguage};
 use rome_parser::AnyParse;
-use rome_rowan::{SyntaxNode, TextRange};
+use rome_rowan::{FileSource, SyntaxNode, TextRange};
 use serde::{Deserialize, Serialize};
 
 #[derive(Default)]
@@ -18,7 +18,12 @@ impl TestFormatLanguage for JsonTestFormatLanguage {
     type FormatLanguage = JsonFormatLanguage;
 
     fn parse(&self, text: &str) -> AnyParse {
-        parse_json(text).into()
+        let parse = parse_json(text);
+        AnyParse::new(
+            parse.syntax().as_send().unwrap(),
+            parse.into_diagnostics(),
+            JsonFileSource::json().as_any_file_source(),
+        )
     }
 
     fn deserialize_format_options(

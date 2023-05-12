@@ -4,7 +4,7 @@ use rome_diagnostics::location::AsSpan;
 use rome_diagnostics::{
     Advices, Diagnostic, DiagnosticExt, Location, LogCategory, PrintDiagnostic, Visit,
 };
-use rome_js_syntax::{AnyJsRoot, JsSyntaxToken, SourceType, TextRange, TextSize, WalkEvent};
+use rome_js_syntax::{AnyJsRoot, JsFileSource, JsSyntaxToken, TextRange, TextSize, WalkEvent};
 use rome_rowan::{AstNode, NodeOrToken};
 use std::collections::{BTreeMap, HashMap};
 
@@ -104,7 +104,7 @@ use std::collections::{BTreeMap, HashMap};
 /// if(true) ;/*NOEVENT*/;
 /// ```
 pub fn assert(code: &str, test_name: &str) {
-    let r = rome_js_parser::parse(code, SourceType::tsx());
+    let r = rome_js_parser::parse(code, JsFileSource::tsx());
 
     if r.has_errors() {
         let mut console = EnvConsole::default();

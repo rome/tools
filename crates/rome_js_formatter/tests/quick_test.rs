@@ -2,7 +2,7 @@ use rome_formatter_test::check_reformat::CheckReformat;
 use rome_js_formatter::context::{JsFormatOptions, Semicolons};
 use rome_js_formatter::format_node;
 use rome_js_parser::parse;
-use rome_js_syntax::SourceType;
+use rome_js_syntax::JsFileSource;
 
 mod language {
     include!("language.rs");
@@ -17,7 +17,7 @@ const foo = @deco class {
   //
 };
 "#;
-    let syntax = SourceType::tsx();
+    let syntax = JsFileSource::tsx();
     let tree = parse(src, syntax);
     let options = JsFormatOptions::new(syntax).with_semicolons(Semicolons::AsNeeded);
     let result = format_node(options.clone(), &tree.syntax())
@@ -26,7 +26,7 @@ const foo = @deco class {
         .unwrap();
 
     let root = &tree.syntax();
-    let language = language::JsTestFormatLanguage::new(SourceType::tsx());
+    let language = language::JsTestFormatLanguage::new(JsFileSource::tsx());
     let check_reformat =
         CheckReformat::new(root, result.as_code(), "quick_test", &language, options);
     check_reformat.check_reformat();

@@ -1,10 +1,12 @@
 #[macro_use]
 mod generated;
+mod file_source;
 pub mod member_ext;
 pub mod string_ext;
 mod syntax_node;
 
 pub use self::generated::*;
+pub use file_source::JsonFileSource;
 pub use rome_rowan::{TextLen, TextRange, TextSize, TokenAtOffset, TriviaPieceKind, WalkEvent};
 pub use syntax_node::*;
 

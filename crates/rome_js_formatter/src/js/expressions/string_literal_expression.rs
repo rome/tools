@@ -53,7 +53,7 @@ impl NeedsParentheses for JsStringLiteralExpression {
 mod tests {
 
     use crate::{assert_needs_parentheses, assert_not_needs_parentheses};
-    use rome_js_syntax::{JsStringLiteralExpression, ModuleKind, SourceType};
+    use rome_js_syntax::{JsFileSource, JsStringLiteralExpression, ModuleKind};
 
     #[test]
     fn needs_parentheses() {
@@ -88,7 +88,7 @@ mod tests {
         assert_needs_parentheses!(
             "('test');",
             JsStringLiteralExpression,
-            SourceType::ts().with_module_kind(ModuleKind::Module)
+            JsFileSource::ts().with_module_kind(ModuleKind::Module)
         );
 
         assert_not_needs_parentheses!("console.log('a')", JsStringLiteralExpression);

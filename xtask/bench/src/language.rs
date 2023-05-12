@@ -4,20 +4,20 @@ use rome_analyze::{AnalysisFilter, AnalyzerOptions, ControlFlow, Never, RuleCate
 use rome_formatter::{FormatResult, Formatted, PrintResult, Printed};
 use rome_js_analyze::analyze;
 use rome_js_formatter::context::{JsFormatContext, JsFormatOptions};
-use rome_js_syntax::{AnyJsRoot, JsSyntaxNode, SourceType};
+use rome_js_syntax::{AnyJsRoot, JsFileSource, JsSyntaxNode};
 use rome_json_formatter::context::{JsonFormatContext, JsonFormatOptions};
 use rome_json_syntax::JsonSyntaxNode;
 use rome_parser::prelude::ParseDiagnostic;
 use rome_rowan::NodeCache;
 
 pub enum Parse<'a> {
-    JavaScript(SourceType, &'a str),
+    JavaScript(JsFileSource, &'a str),
     Json(&'a str),
 }
 
 impl<'a> Parse<'a> {
     pub fn try_from_case(case: &TestCase) -> Option<Parse> {
-        match SourceType::try_from(case.path()) {
+        match JsFileSource::try_from(case.path()) {
             Ok(source_type) => Some(Parse::JavaScript(source_type, case.code())),
             Err(_) => match case.extension() {
                 "json" => Some(Parse::Json(case.code())),
@@ -47,7 +47,7 @@ impl<'a> Parse<'a> {
 }
 
 pub enum Parsed {
-    JavaScript(rome_js_parser::Parse<AnyJsRoot>, SourceType),
+    JavaScript(rome_js_parser::Parse<AnyJsRoot>, JsFileSource),
     Json(rome_json_parser::JsonParse),
 }
 
@@ -77,7 +77,7 @@ impl Parsed {
 }
 
 pub enum FormatNode {
-    JavaScript(JsSyntaxNode, SourceType),
+    JavaScript(JsSyntaxNode, JsFileSource),
     Json(JsonSyntaxNode),
 }
 
@@ -123,7 +123,7 @@ impl Analyze {
                     ..AnalysisFilter::default()
                 };
                 let options = AnalyzerOptions::default();
-                analyze(root, filter, &options, SourceType::default(), |event| {
+                analyze(root, filter, &options, JsFileSource::default(), |event| {
                     black_box(event.diagnostic());
                     black_box(event.actions());
                     ControlFlow::<Never>::Continue(())

@@ -8,7 +8,7 @@ use rome_formatter::{
     CstFormatContext, FormatContext, FormatElement, FormatOptions, IndentStyle, LineWidth,
     TransformSourceMap,
 };
-use rome_js_syntax::{AnyJsFunctionBody, JsLanguage, SourceType};
+use rome_js_syntax::{AnyJsFunctionBody, JsFileSource, JsLanguage};
 use rome_json_syntax::JsonLanguage;
 use rome_rowan::SyntaxNode;
 use std::fmt;
@@ -154,11 +154,11 @@ pub struct JsFormatOptions {
     semicolons: Semicolons,
 
     /// Information related to the current file
-    source_type: SourceType,
+    source_type: JsFileSource,
 }
 
 impl JsFormatOptions {
-    pub fn new(source_type: SourceType) -> Self {
+    pub fn new(source_type: JsFileSource) -> Self {
         Self {
             source_type,
             indent_style: IndentStyle::default(),
@@ -208,7 +208,7 @@ impl JsFormatOptions {
         self.quote_properties
     }
 
-    pub fn source_type(&self) -> SourceType {
+    pub fn source_type(&self) -> JsFileSource {
         self.source_type
     }
 

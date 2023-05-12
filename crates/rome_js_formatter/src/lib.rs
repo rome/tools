@@ -545,7 +545,7 @@ mod tests {
     use crate::context::JsFormatOptions;
     use rome_formatter::IndentStyle;
     use rome_js_parser::{parse, parse_script};
-    use rome_js_syntax::SourceType;
+    use rome_js_syntax::JsFileSource;
     use rome_rowan::{TextRange, TextSize};
 
     #[test]
@@ -580,7 +580,8 @@ while(
 
         let tree = parse_script(input);
         let result = format_range(
-            JsFormatOptions::new(SourceType::js_script()).with_indent_style(IndentStyle::Space(4)),
+            JsFormatOptions::new(JsFileSource::js_script())
+                .with_indent_style(IndentStyle::Space(4)),
             &tree.syntax(),
             TextRange::new(range_start, range_end),
         );
@@ -612,7 +613,8 @@ function() {
 
         let tree = parse_script(input);
         let result = format_range(
-            JsFormatOptions::new(SourceType::js_script()).with_indent_style(IndentStyle::Space(4)),
+            JsFormatOptions::new(JsFileSource::js_script())
+                .with_indent_style(IndentStyle::Space(4)),
             &tree.syntax(),
             TextRange::new(range_start, range_end),
         );
@@ -639,7 +641,8 @@ function() {
 
         let tree = parse_script(input);
         let result = format_range(
-            JsFormatOptions::new(SourceType::js_script()).with_indent_style(IndentStyle::Space(4)),
+            JsFormatOptions::new(JsFileSource::js_script())
+                .with_indent_style(IndentStyle::Space(4)),
             &tree.syntax(),
             TextRange::new(range_start, range_end),
         );
@@ -667,7 +670,8 @@ function() {
 
         let tree = parse_script(input);
         let result = format_range(
-            JsFormatOptions::new(SourceType::js_script()).with_indent_style(IndentStyle::Space(4)),
+            JsFormatOptions::new(JsFileSource::js_script())
+                .with_indent_style(IndentStyle::Space(4)),
             &tree.syntax(),
             range,
         )
@@ -698,7 +702,8 @@ function() {
 
         let tree = parse_script(input);
         let result = format_range(
-            JsFormatOptions::new(SourceType::js_script()).with_indent_style(IndentStyle::Space(4)),
+            JsFormatOptions::new(JsFileSource::js_script())
+                .with_indent_style(IndentStyle::Space(4)),
             &tree.syntax(),
             range,
         )
@@ -715,7 +720,7 @@ function() {
     fn format_range_out_of_bounds() {
         let src = "statement();";
 
-        let syntax = SourceType::js_module();
+        let syntax = JsFileSource::js_module();
         let tree = parse(src, syntax);
 
         let result = format_range(

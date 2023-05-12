@@ -3,7 +3,7 @@ use super::{
     LintResults, Mime, ParserCapabilities,
 };
 use crate::configuration::to_analyzer_configuration;
-use crate::file_handlers::{is_diagnostic_error, FixAllParams, Language as LanguageId};
+use crate::file_handlers::{is_diagnostic_error, Features, FixAllParams, Language as LanguageId};
 use crate::workspace::OrganizeImportsResult;
 use crate::{
     settings::{FormatSettings, Language, LanguageSettings, LanguagesSettings, SettingsHandle},
@@ -31,11 +31,12 @@ use rome_js_formatter::context::{
 use rome_js_formatter::{context::JsFormatOptions, format_node};
 use rome_js_semantic::{semantic_model, SemanticModelOptions};
 use rome_js_syntax::{
-    AnyJsRoot, JsLanguage, JsSyntaxNode, SourceType, TextRange, TextSize, TokenAtOffset,
+    AnyJsRoot, JsFileSource, JsLanguage, JsSyntaxNode, TextRange, TextSize, TokenAtOffset,
 };
 use rome_parser::AnyParse;
-use rome_rowan::{AstNode, BatchMutationExt, Direction, NodeCache};
+use rome_rowan::{AstNode, BatchMutationExt, Direction, FileSource, NodeCache};
 use std::borrow::Cow;
+use std::ffi::OsStr;
 use std::fmt::Debug;
 use std::path::PathBuf;
 use tracing::{debug, trace};
@@ -124,6 +125,18 @@ impl ExtensionHandler for JsFileHandler {
     }
 }
 
+fn extension_error(path: &RomePath) -> WorkspaceError {
+    let language = Features::get_language(path).or(LanguageId::from_path(path));
+    WorkspaceError::source_file_not_supported(
+        language,
+        path.clone().display().to_string(),
+        path.clone()
+            .extension()
+            .and_then(OsStr::to_str)
+            .map(|s| s.to_string()),
+    )
+}
+
 fn parse(
     rome_path: &RomePath,
     language_hint: LanguageId,
@@ -131,15 +144,22 @@ fn parse(
     cache: &mut NodeCache,
 ) -> AnyParse {
     let source_type =
-        SourceType::try_from(rome_path.as_path()).unwrap_or_else(|_| match language_hint {
-            LanguageId::JavaScriptReact => SourceType::jsx(),
-            LanguageId::TypeScript => SourceType::ts(),
-            LanguageId::TypeScriptReact => SourceType::tsx(),
-            _ => SourceType::js_module(),
+        JsFileSource::try_from(rome_path.as_path()).unwrap_or_else(|_| match language_hint {
+            LanguageId::JavaScriptReact => JsFileSource::jsx(),
+            LanguageId::TypeScript => JsFileSource::ts(),
+            LanguageId::TypeScriptReact => JsFileSource::tsx(),
+            _ => JsFileSource::js_module(),
         });
 
     let parse = rome_js_parser::parse_js_with_cache(text, source_type, cache);
-    AnyParse::from(parse)
+    let root = parse.syntax();
+    let diagnostics = parse.into_diagnostics();
+    AnyParse::new(
+        // SAFETY: the parser should always return a root node
+        root.as_send().unwrap(),
+        diagnostics,
+        source_type.as_any_file_source(),
+    )
 }
 
 fn debug_syntax_tree(_rome_path: &RomePath, parse: AnyParse) -> GetSyntaxTreeResult {
@@ -187,7 +207,7 @@ fn debug_control_flow(parse: AnyParse, cursor: TextSize) -> String {
             }
         },
         &options,
-        SourceType::default(),
+        JsFileSource::default(),
         |_| ControlFlow::<Never>::Continue(()),
     );
 
@@ -209,6 +229,15 @@ fn debug_formatter_ir(
 }
 
 fn lint(params: LintParams) -> LintResults {
+    let Ok(file_source) = params
+        .parse
+        .file_source(params.path) else {
+		return LintResults {
+			errors: 0,
+			diagnostics: vec![],
+			skipped_diagnostics: 0
+		}
+	};
     let tree = params.parse.tree();
     let mut diagnostics = params.parse.into_diagnostics();
 
@@ -227,7 +256,7 @@ fn lint(params: LintParams) -> LintResults {
         &tree,
         params.filter,
         &analyzer_options,
-        SourceType::default(),
+        file_source,
         |signal| {
             if let Some(mut diagnostic) = signal.diagnostic() {
                 // Do not report unused suppression comment diagnostics if this is a syntax-only analyzer pass
@@ -357,26 +386,25 @@ fn code_actions(
 
     trace!("Filter applied for code actions: {:?}", &filter);
     let analyzer_options = compute_analyzer_options(&settings, PathBuf::from(path.as_path()));
+    let Ok(source_type) = parse.file_source(path) else {
+		return PullActionsResult {
+			actions: vec![]
+		}
+	};
 
-    analyze(
-        &tree,
-        filter,
-        &analyzer_options,
-        SourceType::default(),
-        |signal| {
-            actions.extend(signal.actions().into_code_action_iter().map(|item| {
-                CodeAction {
-                    category: item.category.clone(),
-                    rule_name: item
-                        .rule_name
-                        .map(|(group, name)| (Cow::Borrowed(group), Cow::Borrowed(name))),
-                    suggestion: item.suggestion,
-                }
-            }));
+    analyze(&tree, filter, &analyzer_options, source_type, |signal| {
+        actions.extend(signal.actions().into_code_action_iter().map(|item| {
+            CodeAction {
+                category: item.category.clone(),
+                rule_name: item
+                    .rule_name
+                    .map(|(group, name)| (Cow::Borrowed(group), Cow::Borrowed(name))),
+                suggestion: item.suggestion,
+            }
+        }));
 
-            ControlFlow::<Never>::Continue(())
-        },
-    );
+        ControlFlow::<Never>::Continue(())
+    });
 
     PullActionsResult { actions }
 }
@@ -394,6 +422,9 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, WorkspaceError> {
         rome_path,
     } = params;
 
+    let file_source = parse
+        .file_source(rome_path)
+        .map_err(|_| extension_error(params.rome_path))?;
     let mut tree: AnyJsRoot = parse.tree();
     let mut actions = Vec::new();
 
@@ -415,51 +446,45 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, WorkspaceError> {
     let mut errors: u16 = 0;
     let analyzer_options = compute_analyzer_options(&settings, PathBuf::from(rome_path.as_path()));
     loop {
-        let (action, _) = analyze(
-            &tree,
-            filter,
-            &analyzer_options,
-            SourceType::default(),
-            |signal| {
-                let current_diagnostic = signal.diagnostic();
+        let (action, _) = analyze(&tree, filter, &analyzer_options, file_source, |signal| {
+            let current_diagnostic = signal.diagnostic();
 
-                if let Some(diagnostic) = current_diagnostic.as_ref() {
-                    if is_diagnostic_error(diagnostic, params.rules) {
-                        errors += 1;
-                    }
+            if let Some(diagnostic) = current_diagnostic.as_ref() {
+                if is_diagnostic_error(diagnostic, params.rules) {
+                    errors += 1;
+                }
+            }
+
+            for action in signal.actions() {
+                // suppression actions should not be part of the fixes (safe or suggested)
+                if action.is_suppression() {
+                    continue;
                 }
 
-                for action in signal.actions() {
-                    // suppression actions should not be part of the fixes (safe or suggested)
-                    if action.is_suppression() {
-                        continue;
-                    }
-
-                    match fix_file_mode {
-                        FixFileMode::SafeFixes => {
-                            if action.applicability == Applicability::MaybeIncorrect {
-                                skipped_suggested_fixes += 1;
-                            }
-                            if action.applicability == Applicability::Always {
-                                errors = errors.saturating_sub(1);
-                                return ControlFlow::Break(action);
-                            }
+                match fix_file_mode {
+                    FixFileMode::SafeFixes => {
+                        if action.applicability == Applicability::MaybeIncorrect {
+                            skipped_suggested_fixes += 1;
                         }
-                        FixFileMode::SafeAndUnsafeFixes => {
-                            if matches!(
-                                action.applicability,
-                                Applicability::Always | Applicability::MaybeIncorrect
-                            ) {
-                                errors = errors.saturating_sub(1);
-                                return ControlFlow::Break(action);
-                            }
+                        if action.applicability == Applicability::Always {
+                            errors = errors.saturating_sub(1);
+                            return ControlFlow::Break(action);
+                        }
+                    }
+                    FixFileMode::SafeAndUnsafeFixes => {
+                        if matches!(
+                            action.applicability,
+                            Applicability::Always | Applicability::MaybeIncorrect
+                        ) {
+                            errors = errors.saturating_sub(1);
+                            return ControlFlow::Break(action);
                         }
                     }
                 }
+            }
 
-                ControlFlow::Continue(())
-            },
-        );
+            ControlFlow::Continue(())
+        });
 
         match action {
             Some(action) => {
@@ -628,7 +653,7 @@ fn organize_imports(parse: AnyParse) -> Result<OrganizeImportsResult, WorkspaceE
         &tree,
         filter,
         &AnalyzerOptions::default(),
-        SourceType::default(),
+        JsFileSource::default(),
         |signal| {
             for action in signal.actions() {
                 if action.is_suppression() {

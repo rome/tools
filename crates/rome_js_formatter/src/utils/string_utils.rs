@@ -2,7 +2,7 @@ use crate::context::{JsFormatOptions, QuoteProperties, QuoteStyle};
 use crate::prelude::*;
 use rome_formatter::token::string::normalize_string;
 use rome_js_syntax::JsSyntaxKind::{JSX_STRING_LITERAL, JS_STRING_LITERAL};
-use rome_js_syntax::{JsSyntaxToken, SourceType};
+use rome_js_syntax::{JsFileSource, JsSyntaxToken};
 use std::borrow::Cow;
 use unicode_width::UnicodeWidthStr;
 
@@ -173,7 +173,7 @@ struct LiteralStringNormaliser<'token> {
     chosen_quote_properties: QuoteProperties,
 }
 
-/// Convenience enum to map [rome_js_syntax::SourceType] by just reading
+/// Convenience enum to map [rome_js_syntax::JsFileSource] by just reading
 /// the type of file
 #[derive(Eq, PartialEq)]
 pub(crate) enum SourceFileKind {
@@ -181,8 +181,8 @@ pub(crate) enum SourceFileKind {
     JavaScript,
 }
 
-impl From<SourceType> for SourceFileKind {
-    fn from(st: SourceType) -> Self {
+impl From<JsFileSource> for SourceFileKind {
+    fn from(st: JsFileSource) -> Self {
         if st.language().is_typescript() {
             Self::TypeScript
         } else {

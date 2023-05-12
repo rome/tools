@@ -6,7 +6,7 @@ use crate::semantic_services::SemanticServices;
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_syntax::{Language, SourceType, TextRange, TsAsExpression, TsReferenceType};
+use rome_js_syntax::{JsFileSource, Language, TextRange, TsAsExpression, TsReferenceType};
 use rome_rowan::AstNode;
 
 declare_rule! {
@@ -55,7 +55,7 @@ impl Rule for NoUndeclaredVariables {
                 let token = identifier.value_token().ok()?;
                 let text = token.text_trimmed();
 
-                let source_type = ctx.source_type::<SourceType>();
+                let source_type = ctx.source_type::<JsFileSource>();
 
                 if ctx.is_global(text) {
                     return None;
@@ -88,7 +88,7 @@ impl Rule for NoUndeclaredVariables {
     }
 }
 
-fn is_global(reference_name: &str, source_type: &SourceType) -> bool {
+fn is_global(reference_name: &str, source_type: &JsFileSource) -> bool {
     ES_2021.binary_search(&reference_name).is_ok()
         || BROWSER.binary_search(&reference_name).is_ok()
         || NODE.binary_search(&reference_name).is_ok()

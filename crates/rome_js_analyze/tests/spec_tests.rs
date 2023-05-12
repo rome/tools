@@ -13,7 +13,7 @@ use rome_js_parser::{
     parse,
     test_utils::{assert_errors_are_absent, has_bogus_nodes_or_empty_slots},
 };
-use rome_js_syntax::{JsLanguage, SourceType};
+use rome_js_syntax::{JsFileSource, JsLanguage};
 use similar::TextDiff;
 use std::{
     ffi::OsStr, fmt::Write, fs::read_to_string, os::raw::c_int, path::Path, slice, sync::Once,
@@ -65,7 +65,7 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
             write_analysis_to_snapshot(
                 &mut snapshot,
                 &script,
-                SourceType::js_script(),
+                JsFileSource::js_script(),
                 filter,
                 file_name,
                 input_file,
@@ -115,7 +115,7 @@ impl CheckActionType {
 pub(crate) fn write_analysis_to_snapshot(
     snapshot: &mut String,
     input_code: &str,
-    source_type: SourceType,
+    source_type: JsFileSource,
     filter: AnalysisFilter,
     file_name: &str,
     input_file: &Path,
@@ -251,7 +251,7 @@ fn diagnostic_to_string(name: &str, source: &str, diag: Error) -> String {
 fn check_code_action(
     path: &Path,
     source: &str,
-    source_type: SourceType,
+    source_type: JsFileSource,
     action: &AnalyzerAction<JsLanguage>,
 ) {
     let (_, text_edit) = action.mutation.as_text_edits().unwrap_or_default();
@@ -335,7 +335,7 @@ pub(crate) fn run_suppression_test(input: &'static str, _: &str, _: &str, _: &st
     write_analysis_to_snapshot(
         &mut snapshot,
         &input_code,
-        SourceType::jsx(),
+        JsFileSource::jsx(),
         filter,
         file_name,
         input_file,

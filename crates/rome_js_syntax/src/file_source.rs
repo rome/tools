@@ -1,5 +1,6 @@
-use std::fmt::Display;
-use std::path::{Path, PathBuf};
+use crate::JsLanguage;
+use rome_rowan::{FileSource, FileSourceError};
+use std::path::Path;
 
 /// Enum of the different ECMAScript standard versions.
 /// The versions are ordered in increasing order; The newest version comes last.
@@ -94,15 +95,17 @@ impl Language {
     }
 }
 
+impl<'a> FileSource<'a, JsLanguage> for JsFileSource {}
+
 #[derive(Clone, Copy, Debug, Default)]
-pub struct SourceType {
+pub struct JsFileSource {
     language: Language,
     variant: LanguageVariant,
     module_kind: ModuleKind,
     version: LanguageVersion,
 }
 
-impl SourceType {
+impl JsFileSource {
     /// language: JS, variant: Standard, module_kind: Module, version: Latest
     pub fn js_module() -> Self {
         Self::default()
@@ -114,12 +117,12 @@ impl SourceType {
     }
 
     /// language: JS, variant: JSX, module_kind: Module, version: Latest
-    pub fn jsx() -> SourceType {
+    pub fn jsx() -> JsFileSource {
         Self::js_module().with_variant(LanguageVariant::Jsx)
     }
 
     /// language: TS, variant: Standard, module_kind: Module, version: Latest
-    pub fn ts() -> SourceType {
+    pub fn ts() -> JsFileSource {
         Self {
             language: Language::TypeScript {
                 definition_file: false,
@@ -129,13 +132,13 @@ impl SourceType {
     }
 
     /// language: TS, variant: JSX, module_kind: Module, version: Latest
-    pub fn tsx() -> SourceType {
+    pub fn tsx() -> JsFileSource {
         Self::ts().with_variant(LanguageVariant::Jsx)
     }
 
     /// TypeScript definition file
     /// language: TS, ambient, variant: Standard, module_kind: Module, version: Latest
-    pub fn d_ts() -> SourceType {
+    pub fn d_ts() -> JsFileSource {
         Self {
             language: Language::TypeScript {
                 definition_file: true,
@@ -180,72 +183,48 @@ impl SourceType {
     }
 }
 
-impl TryFrom<&Path> for SourceType {
-    type Error = SourceTypeError;
+impl TryFrom<&Path> for JsFileSource {
+    type Error = FileSourceError;
 
     fn try_from(path: &Path) -> Result<Self, Self::Error> {
         let file_name = path
             .file_name()
-            .ok_or_else(|| SourceTypeError::MissingFileName(path.into()))?
+            .ok_or_else(|| FileSourceError::MissingFileName(path.into()))?
             .to_str()
-            .ok_or_else(|| SourceTypeError::MissingFileName(path.into()))?;
+            .ok_or_else(|| FileSourceError::MissingFileName(path.into()))?;
 
         let extension = path
             .extension()
-            .ok_or_else(|| SourceTypeError::MissingFileExtension(path.into()))?
+            .ok_or_else(|| FileSourceError::MissingFileExtension(path.into()))?
             .to_str()
-            .ok_or_else(|| SourceTypeError::MissingFileExtension(path.into()))?;
+            .ok_or_else(|| FileSourceError::MissingFileExtension(path.into()))?;
 
         compute_source_type_from_path_or_extension(file_name, extension)
     }
 }
 
-/// Errors around the construct of the source type
-#[derive(Debug)]
-pub enum SourceTypeError {
-    /// The path has no file name
-    MissingFileName(PathBuf),
-    /// The path has no file extension
-    MissingFileExtension(PathBuf),
-    /// The source type is unknown
-    UnknownExtension(String),
-}
-
-impl std::error::Error for SourceTypeError {}
-
-impl Display for SourceTypeError {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            SourceTypeError::MissingFileName(path) => {
-                write!(f, "The path {path:?} has no file name")
-            }
-            SourceTypeError::MissingFileExtension(path) => {
-                write!(f, "The path {path:?} has no file extension")
-            }
-            SourceTypeError::UnknownExtension(extension) => {
-                write!(f, "The parser can't parse the extension '{extension}' yet")
-            }
-        }
-    }
-}
-
-/// It deduce the [SourceType] from the file name and its extension
+/// It deduce the [JsFileSource] from the file name and its extension
 fn compute_source_type_from_path_or_extension(
     file_name: &str,
     extension: &str,
-) -> Result<SourceType, SourceTypeError> {
+) -> Result<JsFileSource, FileSourceError> {
     let source_type = if file_name.ends_with(".d.ts")
         || file_name.ends_with(".d.mts")
         || file_name.ends_with(".d.cts")
     {
-        SourceType::d_ts()
+        JsFileSource::d_ts()
     } else {
         match extension {
-            "cjs" => SourceType::js_module().with_module_kind(ModuleKind::Script),
-            "js" | "mjs" | "jsx" => SourceType::jsx(),
-            "ts" | "mts" | "cts" => SourceType::ts(),
-            "tsx" => SourceType::tsx(),
-            _ => return Err(SourceTypeError::UnknownExtension(extension.into())),
+            "cjs" => JsFileSource::js_module().with_module_kind(ModuleKind::Script),
+            "js" | "mjs" | "jsx" => JsFileSource::jsx(),
+            "ts" | "mts" | "cts" => JsFileSource::ts(),
+            "tsx" => JsFileSource::tsx(),
+            _ => {
+                return Err(FileSourceError::UnknownExtension(
+                    file_name.into(),
+                    extension.into(),
+                ))
+            }
         }
     };
     Ok(source_type)

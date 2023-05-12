@@ -11,7 +11,7 @@ use rome_console::{
 use rome_diagnostics::termcolor::NoColor;
 use rome_diagnostics::{Diagnostic, DiagnosticExt, PrintDiagnostic};
 use rome_js_analyze::{analyze, visit_registry};
-use rome_js_syntax::{JsLanguage, Language, LanguageVariant, ModuleKind, SourceType};
+use rome_js_syntax::{JsFileSource, JsLanguage, Language, LanguageVariant, ModuleKind};
 use rome_service::settings::WorkspaceSettings;
 use std::{
     collections::BTreeMap,
@@ -401,7 +401,7 @@ fn parse_documentation(
 }
 
 enum BlockType {
-    Js(SourceType),
+    Js(JsFileSource),
     Json,
 }
 
@@ -422,7 +422,7 @@ impl FromStr for CodeBlockTest {
             .filter(|token| !token.is_empty());
 
         let mut test = CodeBlockTest {
-            block_type: BlockType::Js(SourceType::default()),
+            block_type: BlockType::Js(JsFileSource::default()),
             expect_diagnostic: false,
         };
 
@@ -430,17 +430,18 @@ impl FromStr for CodeBlockTest {
             match token {
                 // Determine the language, using the same list of extensions as `compute_source_type_from_path_or_extension`
                 "cjs" => {
-                    test.block_type =
-                        BlockType::Js(SourceType::js_module().with_module_kind(ModuleKind::Script));
+                    test.block_type = BlockType::Js(
+                        JsFileSource::js_module().with_module_kind(ModuleKind::Script),
+                    );
                 }
                 "js" | "mjs" | "jsx" => {
-                    test.block_type = BlockType::Js(SourceType::jsx());
+                    test.block_type = BlockType::Js(JsFileSource::jsx());
                 }
                 "ts" | "mts" | "cts" => {
-                    test.block_type = BlockType::Js(SourceType::ts());
+                    test.block_type = BlockType::Js(JsFileSource::ts());
                 }
                 "tsx" => {
-                    test.block_type = BlockType::Js(SourceType::tsx());
+                    test.block_type = BlockType::Js(JsFileSource::tsx());
                 }
 
                 // Other attributes

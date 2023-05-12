@@ -139,10 +139,10 @@ impl SemanticModel {
     ///
     /// ```rust
     /// use rome_rowan::{AstNode, SyntaxNodeCast};
-    /// use rome_js_syntax::{SourceType, JsReferenceIdentifier};
+    /// use rome_js_syntax::{JsFileSource, JsReferenceIdentifier};
     /// use rome_js_semantic::{semantic_model, SemanticModelOptions, SemanticScopeExtensions};
     ///
-    /// let r = rome_js_parser::parse("function f(){let a = arguments[0]; let b = a + 1;}", SourceType::js_module());
+    /// let r = rome_js_parser::parse("function f(){let a = arguments[0]; let b = a + 1;}", JsFileSource::js_module());
     /// let model = semantic_model(&r.tree(), SemanticModelOptions::default());
     ///
     /// let arguments_reference = r
@@ -188,10 +188,10 @@ impl SemanticModel {
     ///
     /// ```rust
     /// use rome_rowan::{AstNode, SyntaxNodeCast};
-    /// use rome_js_syntax::{SourceType, JsReferenceIdentifier};
+    /// use rome_js_syntax::{JsFileSource, JsReferenceIdentifier};
     /// use rome_js_semantic::{semantic_model, BindingExtensions, SemanticModelOptions};
     ///
-    /// let r = rome_js_parser::parse("function f(){let a = arguments[0]; let b = a + 1;}", SourceType::js_module());
+    /// let r = rome_js_parser::parse("function f(){let a = arguments[0]; let b = a + 1;}", JsFileSource::js_module());
     /// let model = semantic_model(&r.tree(), SemanticModelOptions::default());
     ///
     /// let arguments_reference = r
@@ -340,10 +340,10 @@ impl SemanticModel {
     ///
     /// ```rust
     /// use rome_rowan::{AstNode, SyntaxNodeCast};
-    /// use rome_js_syntax::{SourceType, AnyJsFunction};
+    /// use rome_js_syntax::{JsFileSource, AnyJsFunction};
     /// use rome_js_semantic::{semantic_model, CallsExtensions, SemanticModelOptions};
     ///
-    /// let r = rome_js_parser::parse("function f(){} f() f()", SourceType::js_module());
+    /// let r = rome_js_parser::parse("function f(){} f() f()", JsFileSource::js_module());
     /// let model = semantic_model(&r.tree(), SemanticModelOptions::default());
     ///
     /// let f_declaration = r

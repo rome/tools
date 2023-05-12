@@ -448,9 +448,9 @@ mod tests {
     use rome_formatter::{SourceMarker, TransformSourceMap};
     use rome_js_parser::{parse, parse_module};
     use rome_js_syntax::{
-        JsArrayExpression, JsBinaryExpression, JsExpressionStatement, JsIdentifierExpression,
-        JsLogicalExpression, JsSequenceExpression, JsStringLiteralExpression, JsSyntaxNode,
-        JsUnaryExpression, JsxTagExpression, SourceType,
+        JsArrayExpression, JsBinaryExpression, JsExpressionStatement, JsFileSource,
+        JsIdentifierExpression, JsLogicalExpression, JsSequenceExpression,
+        JsStringLiteralExpression, JsSyntaxNode, JsUnaryExpression, JsxTagExpression,
     };
     use rome_rowan::{AstNode, SyntaxRewriter, TextSize};
 
@@ -809,7 +809,7 @@ mod tests {
     }
 
     fn source_map_test(input: &str) -> (JsSyntaxNode, TransformSourceMap) {
-        let tree = parse(input, SourceType::jsx()).syntax();
+        let tree = parse(input, JsFileSource::jsx()).syntax();
 
         let mut rewriter = JsFormatSyntaxRewriter::default();
         let transformed = rewriter.transform(tree);
@@ -823,7 +823,7 @@ mod tests {
         let (transformed, source_map) = source_map_test("(((a * b) * c)) / 3");
 
         let formatted =
-            format_node(JsFormatOptions::new(SourceType::default()), &transformed).unwrap();
+            format_node(JsFormatOptions::new(JsFileSource::default()), &transformed).unwrap();
         let printed = formatted.print().unwrap();
 
         assert_eq!(printed.as_code(), "(a * b * c) / 3;\n");

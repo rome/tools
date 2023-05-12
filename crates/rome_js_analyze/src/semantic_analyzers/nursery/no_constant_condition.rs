@@ -461,13 +461,13 @@ fn get_boolean_value(node: AnyJsLiteralExpression) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use rome_js_syntax::{AnyJsLiteralExpression, SourceType};
+    use rome_js_syntax::{AnyJsLiteralExpression, JsFileSource};
     use rome_rowan::SyntaxNodeCast;
 
     use super::get_boolean_value;
 
     fn assert_boolean_value(code: &str, value: bool) {
-        let source = rome_js_parser::parse(code, SourceType::tsx());
+        let source = rome_js_parser::parse(code, JsFileSource::tsx());
 
         if source.has_errors() {
             panic!("syntax error")
