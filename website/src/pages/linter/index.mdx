@@ -75,13 +75,25 @@ Lint rules may provide automatic code fixes.
 Rome distinguishes between two types of fixes:
 
 - safe fixes
-- suggested fixes
+- unsafe fixes
 
 Safe fixes are guaranteed to not change the semantic of your code.
 They can be applied without explicit review.
 
-Suggested fixes may change the semantic of your program.
+To apply _safe fixes_, use `--apply`:
+
+```shell
+rome check --apply ./src
+```
+
+Unsafe fixes may change the semantic of your program.
 Therefore, it's advised to manually review the changes.
+
+To apply _unsafe fixes_, use `--apply-unsafe`:
+
+```shell
+rome check --apply-unsafe ./src
+```
 
 ## Ignoring Code
 
