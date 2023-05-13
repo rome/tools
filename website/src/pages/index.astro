@@ -1,7 +1,7 @@
 ---
-import Layout from "../Layout.astro";
-import navigation from "../navigation.json";
-import {buildGetPages} from "../navigation-utils";
+import Layout from "@src/layouts/Layout.astro";
+import navigation from "@src/navigation.json";
+import {buildGetPages} from "@src/navigation-utils";
 const getPages = buildGetPages(await Astro.glob("./**/*.mdx"));
 ---
 

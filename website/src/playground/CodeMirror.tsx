@@ -11,6 +11,8 @@ import type {
 import RealCodeMirror from "@uiw/react-codemirror";
 import { forwardRef, useEffect, useMemo, useState } from "react";
 
+export type RomeExtension = Extension;
+
 interface Props extends ReactCodeMirrorProps {
 	diagnostics?: RomeDiagnostic[];
 }

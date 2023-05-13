@@ -328,6 +328,9 @@ function initState(
 			enabledLinting:
 				searchParams.get("enabledLinting") === "true" ||
 				defaultPlaygroundState.settings.enabledLinting,
+			importSortingEnabled:
+				searchParams.get("importSortingEnabled") === "true" ||
+				defaultPlaygroundState.settings.importSortingEnabled,
 		},
 	};
 }

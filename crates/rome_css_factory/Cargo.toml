@@ -1,10 +1,10 @@
 [package]
 name = "rome_css_factory"
 version = "0.0.0"
-edition = { workspace = true }
-authors = { workspace = true }
-repository = { workspace = true }
-license = { workspace = true }
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true
+license.workspace = true
 
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html

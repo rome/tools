@@ -1,11 +1,11 @@
 ---
 import "@docsearch/css/dist/style.css";
-import "./styles/index.scss";
+import "@src/styles/index.scss";
 
-import ColorSchemeSwitcher from "./components/ColorSchemeSwitcher.astro";
-import ExternalLinks from "./components/ExternalLinks.astro";
-import ActiveLink from "./components/ActiveLink.astro";
-import InlineSVG from "./components/InlineSVG.astro";
+import ColorSchemeSwitcher from "@src/components/ColorSchemeSwitcher.astro";
+import ExternalLinks from "@src/components/ExternalLinks.astro";
+import ActiveLink from "@src/components/ActiveLink.astro";
+import InlineSVG from "@src/components/InlineSVG.astro";
 
 const {props} = Astro;
 const {frontmatter = {}} = props;
@@ -41,7 +41,7 @@ const { default: favicon } = await import("/public/img/favicon.svg?raw");
 		<link rel="mask-icon" href="/img/pinned-rome-logo.svg" color="#FFC905">
 		<link rel="alternate icon" type="image/png" href="/img/favicon.png">
 		<link rel="icon" type="image/svg+xml" href={encodeSVG(favicon)}>
-		
+
 		<link rel="preload" href="/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
 		<link rel="preload" href="/fonts/Inter-Bold.woff2" as="font" type="font/woff2" crossorigin>
 		<link rel="preload" href="/fonts/Inter-Medium.woff2" as="font" type="font/woff2" crossorigin>
@@ -84,7 +84,7 @@ const { default: favicon } = await import("/public/img/favicon.svg?raw");
 			<div id="docsearch-target"></div>
 
 			<ExternalLinks />
-			
+
 			<ColorSchemeSwitcher />
 
 			<a href="#" class="mobile-handle">
@@ -104,12 +104,12 @@ const { default: favicon } = await import("/public/img/favicon.svg?raw");
 				});
 			}
 		</script>}
-		
+
 		<script>
-			import "./frontend-scripts/index.js";
+			import "@src/frontend-scripts/index.js";
 		</script>
 		<script>
-			import "./frontend-scripts/docsearch.js";
+			import "@src/frontend-scripts/docsearch.js";
 		</script>
 	</body>
 </html>

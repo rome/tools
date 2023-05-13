@@ -5,8 +5,8 @@ category: reference
 description: How to customize and configure Rome with rome.json.
 ---
 
-import LintGroups from "/components/reference/Groups.astro";
-import CodeBlockHeader from "/components/CodeBlockHeader.astro";
+import LintGroups from "@src/components/generated/Groups.astro";
+import CodeBlockHeader from "@src/components/CodeBlockHeader.astro";
 
 {/** Make sure to update the redirect in `static/_redirects` when changing the configuration title --> **/}
 
@@ -53,6 +53,17 @@ You can specify a relative path to the schema of the `rome` npm package if `rome
 }
 ```
 
+If you have problems with resolving the physical file, you can use the one published in this site:
+
+
+<CodeBlockHeader filename="rome.json" />
+
+```json
+{
+  "$schema": "https://docs.rome.tools/schemas/12.1.0/schema.json"
+}
+```
+
 ## `files`
 
 ### `files.maxSize`
@@ -76,6 +87,37 @@ match these patterns.
   }
 }
 ```
+
+## `vcs`
+
+Set of properties to integrate Rome with a VCS software.
+
+### `vcs.enabled`
+
+Whether Rome should integrate itself with the VCS client
+
+> Default: false
+
+### `vcs.clientKind`
+
+The kind of client.
+
+Values:
+- `"git"`
+
+### `vcs.useIgnoreFile`
+
+Whether Rome should use the VCS ignore file. When `true`, Rome will ignore the files
+specified in the ignore file.
+
+### `vcs.root`
+
+The folder where Rome should check for VCS files. By default, Rome will use the same
+folder where `rome.json` was found.
+
+If Rome can't find the configuration, it will attempt to use the current working directory.
+If no current working directory can't be found, Rome won't use the VCS integration, and a diagnostic
+will be emitted
 
 ## `linter`
 

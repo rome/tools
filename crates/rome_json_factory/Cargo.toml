@@ -1,10 +1,10 @@
 [package]
 name = "rome_json_factory"
 version = "0.0.1"
-edition = { workspace = true }
-authors = { workspace = true }
-repository = { workspace = true }
-license = { workspace = true }
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true
+license.workspace = true
 description = "Utilities to create JSON AST for rome_json_parser"
 documentation = "https://rustdocs.rome.tools/rome_json_parser/index.html"
 

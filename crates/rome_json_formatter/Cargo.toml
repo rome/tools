@@ -1,13 +1,14 @@
 [package]
 name = "rome_json_formatter"
 version = "0.0.1"
-edition = { workspace = true }
-authors = { workspace = true }
-repository = { workspace = true }
-license = { workspace = true }
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true
+license.workspace = true
 categories = ["development-tools"]
 documentation = "https://rustdocs.rome.tools/rome_js_formatter/index.html"
 description = "Rome's JSON formatter"
+homepage.workspace = true
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

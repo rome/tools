@@ -5,6 +5,7 @@ codegen = "run -p xtask_codegen --"
 codegen-configuration = "run -p xtask_codegen --features configuration -- configuration"
 codegen-schema = "run -p xtask_codegen --features schema -- schema"
 codegen-bindings = "run -p xtask_codegen --features schema -- bindings"
+codegen-website = "run -p xtask_codegen --features website -- website"
 lintdoc = "run -p xtask_lintdoc --"
 documentation = """
     doc \

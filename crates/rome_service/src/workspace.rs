@@ -446,7 +446,6 @@ pub enum RageEntry {
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct OrganizeImportsParams {
     pub path: RomePath,
-    // pub content: String,
 }
 
 #[derive(Debug, serde::Serialize, serde::Deserialize)]

@@ -23,6 +23,7 @@ import { javascript } from "@codemirror/lang-javascript";
 import { json } from "@codemirror/lang-json";
 import { EditorSelection } from "@codemirror/state";
 import type { ViewUpdate } from "@codemirror/view";
+import ImportSortingTab from "@src/playground/tabs/ImportSortingTab";
 import type { ReactCodeMirrorRef } from "@uiw/react-codemirror";
 import * as codeMirrorLangRomeAST from "codemirror-lang-rome-ast";
 import {
@@ -217,6 +218,16 @@ export default function PlaygroundLoader({
 					title: "Control Flow Graph",
 					children: (
 						<ControlFlowTab graph={romeOutput.analysis.controlFlowGraph} />
+					),
+				},
+				{
+					key: "import-sorting",
+					title: "Import Sorting",
+					children: (
+						<ImportSortingTab
+							code={romeOutput.importSorting.code}
+							extensions={codeMirrorExtensions}
+						/>
 					),
 				},
 				{

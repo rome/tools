@@ -5,9 +5,13 @@ use crate::{CliDiagnostic, CliSession};
 use rome_console::{markup, ConsoleExt};
 use rome_fs::RomePath;
 
+use crate::cli_options::CliOptions;
+use crate::execute::diagnostics::{ContentDiffAdvice, FormatDiffDiagnostic};
+use rome_diagnostics::{PrintDiagnostic, MAXIMUM_DISPLAYABLE_DIAGNOSTICS};
 use rome_service::workspace::{
     ChangeFileParams, FeatureName, FeaturesBuilder, FixFileParams, FormatFileParams, Language,
-    OpenFileParams, OrganizeImportsParams, SupportsFeatureParams,
+    OpenFileParams, OrganizeImportsParams, PullDiagnosticsParams, RuleCategories,
+    SupportsFeatureParams,
 };
 use std::borrow::Cow;
 
@@ -16,6 +20,7 @@ pub(crate) fn run<'a>(
     mode: &'a Execution,
     rome_path: RomePath,
     content: &'a str,
+    cli_options: &CliOptions,
 ) -> Result<(), CliDiagnostic> {
     let workspace = &*session.app.workspace;
     let console = &mut *session.app.console;
@@ -47,6 +52,7 @@ pub(crate) fn run<'a>(
                 })
         }
     } else if mode.is_check() {
+        let mut diagnostics = Vec::new();
         let mut new_content = Cow::Borrowed(content);
 
         workspace.open_file(OpenFileParams {
@@ -96,23 +102,52 @@ pub(crate) fn run<'a>(
                 }
             }
         }
+
+        if !mode.is_check_apply_unsafe() {
+            let result = workspace.pull_diagnostics(PullDiagnosticsParams {
+                categories: RuleCategories::LINT | RuleCategories::SYNTAX,
+                path: rome_path.clone(),
+                max_diagnostics: cli_options
+                    .max_diagnostics
+                    .unwrap_or(MAXIMUM_DISPLAYABLE_DIAGNOSTICS)
+                    as u64,
+            })?;
+            diagnostics.extend(result.diagnostics);
+        }
+
         if file_features.supports_for(&FeatureName::Format) {
-            let printed = workspace.format_file(FormatFileParams { path: rome_path })?;
-            if printed.as_code() != new_content {
-                new_content = Cow::Owned(printed.into_code());
+            let printed = workspace.format_file(FormatFileParams {
+                path: rome_path.clone(),
+            })?;
+            if mode.is_check_apply() || mode.is_check_apply_unsafe() {
+                if printed.as_code() != new_content {
+                    new_content = Cow::Owned(printed.into_code());
+                }
+            } else {
+                let diagnostic = FormatDiffDiagnostic {
+                    file_name: &rome_path.display().to_string(),
+                    diff: ContentDiffAdvice {
+                        new: printed.as_code(),
+                        old: content,
+                    },
+                };
+                diagnostics.push(rome_diagnostics::serde::Diagnostic::new(diagnostic));
             }
         }
 
         match new_content {
-            Cow::Borrowed(original) => {
-                console.append(markup! {
-                    {original}
-                });
-            }
+            Cow::Borrowed(_) => {}
             Cow::Owned(new_content) => {
                 console.append(markup! {
                     {new_content}
                 });
+            }
+        }
+        if !diagnostics.is_empty() {
+            for diag in diagnostics {
+                console.error(markup! {
+                    {PrintDiagnostic::simple(&diag)}
+                })
             }
         }
     }

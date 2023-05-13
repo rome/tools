@@ -123,7 +123,7 @@ export interface OrganizeImports {
 	ignore?: StringSet;
 }
 /**
- * Set of properties to configure the integration with the VCS
+ * Set of properties to integrate Rome with a VCS software.
  */
 export interface VcsConfiguration {
 	/**
@@ -137,7 +137,7 @@ export interface VcsConfiguration {
 	/**
 	* The folder where Rome should check for VCS files. By default, Rome will use the same folder where `rome.json` was found.
 
-If Rome can't fine the configuration, it will attempt to use the current working directory. If no current working directory can't be found, Rome won't use the VCS integration. 
+If Rome can't find the configuration, it will attempt to use the current working directory. If no current working directory can't be found, Rome won't use the VCS integration, and a diagnostic will be emitted 
 	 */
 	root?: string;
 	/**
@@ -899,6 +899,12 @@ export interface GetSyntaxTreeResult {
 	ast: string;
 	cst: string;
 }
+export interface OrganizeImportsParams {
+	path: RomePath;
+}
+export interface OrganizeImportsResult {
+	code: string;
+}
 export interface GetFileContentParams {
 	path: RomePath;
 }
@@ -1340,6 +1346,9 @@ export interface Workspace {
 	changeFile(params: ChangeFileParams): Promise<void>;
 	closeFile(params: CloseFileParams): Promise<void>;
 	getSyntaxTree(params: GetSyntaxTreeParams): Promise<GetSyntaxTreeResult>;
+	organizeImports(
+		params: OrganizeImportsParams,
+	): Promise<OrganizeImportsResult>;
 	getFileContent(params: GetFileContentParams): Promise<string>;
 	getControlFlowGraph(params: GetControlFlowGraphParams): Promise<string>;
 	getFormatterIr(params: GetFormatterIRParams): Promise<string>;
@@ -1373,6 +1382,9 @@ export function createWorkspace(transport: Transport): Workspace {
 		},
 		getSyntaxTree(params) {
 			return transport.request("rome/get_syntax_tree", params);
+		},
+		organizeImports(params) {
+			return transport.request("rome/organize_imports", params);
 		},
 		getFileContent(params) {
 			return transport.request("rome/get_file_content", params);

@@ -1,13 +1,14 @@
 [package]
 name = "rome_json_parser"
 version = "0.0.1"
-edition = { workspace = true }
-authors = { workspace = true }
-repository = { workspace = true }
-license = { workspace = true }
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true
+license.workspace = true
 description = "An extremely fast JSON parser"
 documentation = "https://rustdocs.rome.tools/rome_json_parser/index.html"
 categories = ["parser-implementations", "development-tools"]
+homepage.workspace = true
 
 [dependencies]
 rome_rowan = {version = "0.0.1",  path = "../rome_rowan" }

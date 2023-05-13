@@ -1,11 +1,11 @@
 [package]
 name = "rome_text_edit"
 version = "0.0.1"
-authors = { workspace = true }
-edition = { workspace = true }
+authors.workspace = true
+edition.workspace = true
 license = "MIT OR Apache-2.0"
 description = "Simple text editing crate ported from rust-analyzer"
-repository = { workspace = true }
+repository.workspace = true
 documentation = "https://rustdocs.rome.tools/rome_text_edit/index.html"
 
 [dependencies]

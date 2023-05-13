@@ -1396,7 +1396,7 @@
 			]
 		},
 		"VcsConfiguration": {
-			"description": "Set of properties to configure the integration with the VCS",
+			"description": "Set of properties to integrate Rome with a VCS software.",
 			"type": "object",
 			"properties": {
 				"clientKind": {
@@ -1411,7 +1411,7 @@
 					"type": ["boolean", "null"]
 				},
 				"root": {
-					"description": "The folder where Rome should check for VCS files. By default, Rome will use the same folder where `rome.json` was found.\n\nIf Rome can't fine the configuration, it will attempt to use the current working directory. If no current working directory can't be found, Rome won't use the VCS integration.",
+					"description": "The folder where Rome should check for VCS files. By default, Rome will use the same folder where `rome.json` was found.\n\nIf Rome can't find the configuration, it will attempt to use the current working directory. If no current working directory can't be found, Rome won't use the VCS integration, and a diagnostic will be emitted",
 					"type": ["string", "null"]
 				},
 				"useIgnoreFile": {

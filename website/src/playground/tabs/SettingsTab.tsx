@@ -44,6 +44,7 @@ export default function SettingsTab({
 			semicolons,
 			lintRules,
 			enabledLinting,
+			importSortingEnabled,
 		},
 	},
 }: SettingsTabProps) {
@@ -82,6 +83,11 @@ export default function SettingsTab({
 	const setEnabledLinting = createPlaygroundSettingsSetter(
 		setPlaygroundState,
 		"enabledLinting",
+	);
+
+	const setImportSorting = createPlaygroundSettingsSetter(
+		setPlaygroundState,
+		"importSortingEnabled",
 	);
 
 	function setCurrentFilename(newFilename: string) {
@@ -226,6 +232,10 @@ export default function SettingsTab({
 				setLintRules={setLintRules}
 				enabledLinting={enabledLinting}
 				setEnabledLinting={setEnabledLinting}
+			/>
+			<ImportSortingSettings
+				importSortingEnabled={importSortingEnabled}
+				setImportSorting={setImportSorting}
 			/>
 			<SyntaxSettings filename={currentFile} setFilename={setCurrentFilename} />
 		</div>
@@ -417,7 +427,7 @@ function SyntaxSettings({
 
 	return (
 		<>
-			<h2>Syntax</h2>
+			<h2>Syntax options</h2>
 			<section>
 				<div className="field-row">
 					<label htmlFor="sourceType">Source Type</label>
@@ -517,7 +527,7 @@ function FormatterSettings({
 }) {
 	return (
 		<>
-			<h2>Formatter</h2>
+			<h2>Formatter options</h2>
 			<section>
 				<LineWidthInput lineWidth={lineWidth} setLineWidth={setLineWidth} />
 
@@ -621,7 +631,7 @@ function LinterSettings({
 }) {
 	return (
 		<>
-			<h2>Linter</h2>
+			<h2>Linter options</h2>
 			<section>
 				<div className="field-row">
 					<input
@@ -646,6 +656,32 @@ function LinterSettings({
 						<option value={LintRules.Recommended}>Recommended</option>
 						<option value={LintRules.All}>All</option>
 					</select>
+				</div>
+			</section>
+		</>
+	);
+}
+
+export function ImportSortingSettings({
+	importSortingEnabled,
+	setImportSorting,
+}: {
+	importSortingEnabled: boolean;
+	setImportSorting: (value: boolean) => void;
+}) {
+	return (
+		<>
+			<h2>Import sorting options</h2>
+			<section>
+				<div className="field-row">
+					<input
+						id="import-sorting-enabled"
+						name="import-sorting-enabled"
+						type="checkbox"
+						checked={importSortingEnabled}
+						onChange={(e) => setImportSorting(e.target.checked)}
+					/>
+					<label htmlFor="import-sorting-enabled">Import sorting enabled</label>
 				</div>
 			</section>
 		</>
