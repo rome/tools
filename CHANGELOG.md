@@ -7,6 +7,9 @@
 ### Editors
 ### Formatter
 ### Linter
+
+- Fix an issue that [noUnusedVariables`](https://docs.rome.tools/lint/rules/nounusedvariables/) rule did not correctly detect exports when a variable and an `interface` had the same name [#4468](https://github.com/rome/tools/pull/4468)
+
 ### Parser
 ### VSCode
 ### JavaScript APIs
