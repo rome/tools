@@ -216,7 +216,7 @@ function cloneProject(name, repository) {
 		console.log("Updating");
 		inProjectDirectory.run("git reset --hard @{u}");
 		inProjectDirectory.run("git clean -df");
-		inProjectDirectory.run("git pull --depth=1");
+		inProjectDirectory.run("git pull --depth=1 --ff-only");
 	} else {
 		console.log("Clone project...");
 
