@@ -31,7 +31,7 @@ const BENCHMARKS = {
 			repository: "https://github.com/prettier/prettier.git",
 			sourceDirectories: {
 				src: ["js"],
-				scripts: ["js", "mjs"],
+				scripts: ["js"],
 			},
 		},
 	},
@@ -93,7 +93,7 @@ function benchmarkFormatter(rome) {
 		);
 
 		// Run 2 warmups to make sure the files are formatted correctly
-		const hyperfineCommand = `hyperfine -w 2 -n Prettier "${prettierCommand}" -n "Parallel-Prettier" "${parallelPrettierCommand}" -n dprint "${dprintCommand}" -n Rome "${romeCommand}" --shell=${shellOption()} -n "Rome (1 thread)" "${romeSingleCoreCommand}"`;
+		const hyperfineCommand = `hyperfine --show-output -w 2 -n Prettier "${prettierCommand}" -n "Parallel-Prettier" "${parallelPrettierCommand}" -n dprint "${dprintCommand}" -n Rome "${romeCommand}" --shell=${shellOption()} -n "Rome (1 thread)" "${romeSingleCoreCommand}"`;
 		console.log(hyperfineCommand);
 
 		child_process.execSync(hyperfineCommand, {
@@ -108,7 +108,7 @@ function resolvePrettier() {
 }
 
 function resolveParallelPrettier() {
-	return path.resolve("node_modules/.bin/pprettier");
+	return path.resolve("node_modules/@mixer/parallel-prettier/dist/index.js");
 }
 
 function resolveDprint() {
