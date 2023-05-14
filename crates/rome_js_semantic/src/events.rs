@@ -167,7 +167,9 @@ pub struct SemanticEventExtractor {
 #[derive(Debug)]
 struct DeclaredBinding {
     text_range: TextRange,
-    syntax_kind: JsSyntaxKind,
+    /// For export determination, it is necessary to provide
+    /// information on how a specific token is bound
+    parent_syntax_kind: JsSyntaxKind,
 }
 
 #[derive(Debug)]
@@ -625,7 +627,7 @@ impl SemanticEventExtractor {
                 // If we know the declaration of these reference push the correct events...
                 if let Some(declared_binding) = self.bindings.get(&name) {
                     let declaration_at = declared_binding.text_range;
-                    let declaration_syntax_kind = declared_binding.syntax_kind;
+                    let declaration_syntax_kind = declared_binding.parent_syntax_kind;
 
                     for reference in &references {
                         let declaration_before_reference =
@@ -664,7 +666,7 @@ impl SemanticEventExtractor {
 
                                         match (
                                             declaration_syntax_kind,
-                                            shadowed_declration.syntax_kind,
+                                            shadowed_declration.parent_syntax_kind,
                                         ) {
                                             (
                                                 JsSyntaxKind::JS_VARIABLE_DECLARATOR,
@@ -805,7 +807,7 @@ impl SemanticEventExtractor {
                 name.clone(),
                 DeclaredBinding {
                     text_range: declaration_range,
-                    syntax_kind: *parent_syntax_kind,
+                    parent_syntax_kind: *parent_syntax_kind,
                 },
             )
             .map(|shadowed_range| (name.clone(), shadowed_range));
