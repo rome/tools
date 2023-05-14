@@ -80,7 +80,7 @@ function benchmarkFormatter(rome) {
 
 		const dprintCommand = `${resolveDprint()} fmt --incremental=false --config '${require.resolve("./dprint.json")}' ${Object.keys(configuration.sourceDirectories).map(path => `'${path}/**/*'`).join(" ")}`;
 
-		const romeCommand = `${rome} format ${Object.keys(
+		const romeCommand = `${rome} format --max-diagnostics=0 ${Object.keys(
 			configuration.sourceDirectories,
 		)
 			.map((path) => `'${path}'`)
