@@ -89,6 +89,9 @@ switch (foo) {
 res.onAborted(() => /*0*/(/*1*/(/*2*/a/*3*/./*4*/b/*5*/)/*6*/ /*7*/ = /*8*/ /*9*/true/*10*/));
 
 
+(/*1*/[/*2*/a/*3*/,/*4*/b/*5*/, /*6*/c/*7*/]/*8*//*9*/=/*10*/ 2e308) ? foo : bar;
+(/*1*/{/*2*/a/*3*/,/*4*/b/*5*/, /*6*/c/*7*/}/*8*//*9*/=/*10*/ 2e308) ? foo : bar;
+
 ```
 
 # Diagnostics
@@ -659,6 +662,46 @@ invalid.js:83:32 lint/suspicious/noAssignInExpressions  FIXABLE  ━━━━━
   
     83 │ res.onAborted(()·=>·/*0*/(/*1*/(/*2*/a/*3*/./*4*/b/*5*/)/*6*/·/*7*/·===·/*8*/·/*9*/true/*10*/));
        │                                                                      ++                         
+
+```
+
+```
+invalid.js:86:7 lint/suspicious/noAssignInExpressions  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The assignment should not be in an expression.
+  
+  > 86 │ (/*1*/[/*2*/a/*3*/,/*4*/b/*5*/, /*6*/c/*7*/]/*8*//*9*/=/*10*/ 2e308) ? foo : bar;
+       │       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    87 │ (/*1*/{/*2*/a/*3*/,/*4*/b/*5*/, /*6*/c/*7*/}/*8*//*9*/=/*10*/ 2e308) ? foo : bar;
+    88 │ 
+  
+  i The use of assignments in expressions is confusing.
+    Expressions are often considered as side-effect free.
+  
+  i Suggested fix: Did you mean '==='?
+  
+    86 │ (/*1*/[/*2*/a/*3*/,/*4*/b/*5*/,·/*6*/c/*7*/]/*8*//*9*/===/*10*/·2e308)·?·foo·:·bar;
+       │                                                        ++                          
+
+```
+
+```
+invalid.js:87:7 lint/suspicious/noAssignInExpressions  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The assignment should not be in an expression.
+  
+    86 │ (/*1*/[/*2*/a/*3*/,/*4*/b/*5*/, /*6*/c/*7*/]/*8*//*9*/=/*10*/ 2e308) ? foo : bar;
+  > 87 │ (/*1*/{/*2*/a/*3*/,/*4*/b/*5*/, /*6*/c/*7*/}/*8*//*9*/=/*10*/ 2e308) ? foo : bar;
+       │       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    88 │ 
+  
+  i The use of assignments in expressions is confusing.
+    Expressions are often considered as side-effect free.
+  
+  i Suggested fix: Did you mean '==='?
+  
+    87 │ (/*1*/{/*2*/a/*3*/,/*4*/b/*5*/,·/*6*/c/*7*/}/*8*//*9*/===/*10*/·2e308)·?·foo·:·bar;
+       │                                                        ++                          
 
 ```
 

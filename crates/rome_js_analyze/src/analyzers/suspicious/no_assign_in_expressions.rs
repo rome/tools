@@ -21,7 +21,7 @@ use rome_js_syntax::{
     TsSatisfiesExpression, TsTypeAssertionAssignment, TsTypeAssertionAssignmentFields,
     TsTypeAssertionExpression,
 };
-use rome_rowan::{AstNode, BatchMutationExt, SyntaxError, SyntaxResult};
+use rome_rowan::{AstNode, AstSeparatedList, BatchMutationExt, SyntaxError, SyntaxResult};
 
 use crate::JsRuleAction;
 
@@ -204,9 +204,14 @@ impl TryFromAssignment<AnyJsAssignment> for AnyJsExpression {
 impl TryFromAssignment<JsArrayAssignmentPattern> for JsArrayExpression {
     fn try_from_assignment(value: JsArrayAssignmentPattern) -> SyntaxResult<Self> {
         let mut elements = Vec::new();
+        let mut separators = Vec::new();
 
-        for element in value.elements() {
-            let element = match element? {
+        for element in value.elements().elements() {
+            if let Ok(Some(separator)) = element.trailing_separator {
+                separators.push(separator);
+            }
+
+            let element = match element.node? {
                 AnyJsArrayAssignmentPatternElement::AnyJsAssignmentPattern(assignment) => {
                     AnyJsArrayElement::AnyJsExpression(assignment.try_into_expression()?)
                 }
@@ -225,7 +230,7 @@ impl TryFromAssignment<JsArrayAssignmentPattern> for JsArrayExpression {
             elements.push(element);
         }
 
-        let elements = make::js_array_element_list(elements.into_iter(), None);
+        let elements = make::js_array_element_list(elements.into_iter(), separators.into_iter());
 
         let expression =
             make::js_array_expression(value.l_brack_token()?, elements, value.r_brack_token()?);
@@ -257,9 +262,14 @@ impl TryFromAssignment<JsObjectAssignmentPattern> for JsObjectExpression {
         } = value.as_fields();
 
         let mut members = Vec::new();
+        let mut separators = Vec::new();
 
-        for property in properties {
-            let member = match property? {
+        for property in properties.elements() {
+            if let Ok(Some(separator)) = property.trailing_separator {
+                separators.push(separator);
+            }
+
+            let member = match property.node? {
                 AnyJsObjectAssignmentPatternMember::JsBogusAssignment(assigment) => {
                     AnyJsObjectMember::JsBogusMember(make::js_bogus_member([Some(
                         JsSyntaxElement::Node(assigment.into_syntax()),
@@ -310,7 +320,7 @@ impl TryFromAssignment<JsObjectAssignmentPattern> for JsObjectExpression {
             members.push(member);
         }
 
-        let member_list = make::js_object_member_list(members.into_iter(), None);
+        let member_list = make::js_object_member_list(members.into_iter(), separators.into_iter());
 
         let expression = make::js_object_expression(l_curly_token?, member_list, r_curly_token?);
 
