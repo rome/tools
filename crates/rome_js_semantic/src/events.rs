@@ -161,15 +161,17 @@ pub struct SemanticEventExtractor {
     next_scope_id: usize,
     /// At any point this is the set of available bindings and
     /// the range of its declaration
-    bindings: FxHashMap<SyntaxTokenText, DeclaredBinding>,
+    bindings: FxHashMap<SyntaxTokenText, BindingInfo>,
 }
 
+/// Holds the text range of the token when it is bound,
+/// along with the kind of declaration
 #[derive(Debug)]
-struct DeclaredBinding {
+struct BindingInfo {
     text_range: TextRange,
     /// For export determination, it is necessary to provide
     /// information on how a specific token is bound
-    parent_syntax_kind: JsSyntaxKind,
+    declaration_kind: JsSyntaxKind,
 }
 
 #[derive(Debug)]
@@ -213,7 +215,7 @@ struct Scope {
     references: HashMap<SyntaxTokenText, Vec<Reference>>,
     /// All bindings that where shadowed and will be
     /// restored after this scope ends.
-    shadowed: Vec<(SyntaxTokenText, DeclaredBinding)>,
+    shadowed: Vec<(SyntaxTokenText, BindingInfo)>,
     /// If this scope allows declarations to be hoisted
     /// to parent scope or not
     hoisting: ScopeHoisting,
@@ -627,7 +629,7 @@ impl SemanticEventExtractor {
                 // If we know the declaration of these reference push the correct events...
                 if let Some(declared_binding) = self.bindings.get(&name) {
                     let declaration_at = declared_binding.text_range;
-                    let declaration_syntax_kind = declared_binding.parent_syntax_kind;
+                    let declaration_syntax_kind = declared_binding.declaration_kind;
 
                     for reference in &references {
                         let declaration_before_reference =
@@ -666,7 +668,7 @@ impl SemanticEventExtractor {
 
                                         match (
                                             declaration_syntax_kind,
-                                            shadowed_declration.parent_syntax_kind,
+                                            shadowed_declration.declaration_kind,
                                         ) {
                                             (
                                                 JsSyntaxKind::JS_VARIABLE_DECLARATOR,
@@ -794,7 +796,7 @@ impl SemanticEventExtractor {
         &mut self,
         hoisted_scope_id: Option<usize>,
         name_token: &JsSyntaxToken,
-        parent_syntax_kind: &JsSyntaxKind,
+        declaration_kind: &JsSyntaxKind,
     ) {
         let name = name_token.token_text_trimmed();
         let declaration_range = name_token.text_range();
@@ -805,9 +807,9 @@ impl SemanticEventExtractor {
             .bindings
             .insert(
                 name.clone(),
-                DeclaredBinding {
+                BindingInfo {
                     text_range: declaration_range,
-                    parent_syntax_kind: *parent_syntax_kind,
+                    declaration_kind: *declaration_kind,
                 },
             )
             .map(|shadowed_range| (name.clone(), shadowed_range));
