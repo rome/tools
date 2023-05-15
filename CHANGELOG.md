@@ -8,6 +8,10 @@
 ### Formatter
 ### Linter
 - Fixed an issue where the `noAssignInExpressions` rule replaced the operator with an invalid token, which caused other lint rules to crash. [#4464](https://github.com/rome/tools/issues/4464)
+
+#### New rules
+- [`noUselessTypeConstraint`](https://docs.rome.tools/lint/rules/noUselessTypeConstraint/)
+
 ### Parser
 ### VSCode
 ### JavaScript APIs
