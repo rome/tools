@@ -660,9 +660,9 @@ impl SemanticEventExtractor {
 
                         match reference {
                             Reference::Read { is_exported, .. } if *is_exported => {
-                                // Checks if already shadowed variables and interfaces are exportable
-                                let find_exportable_declration = scope.shadowed.iter().find_map(
-                                    |(shadowed_ident_name, shadowed_declration)| {
+                                // Check shadowed bindings to find an exportable binding
+                                let find_exportable_binding = scope.shadowed.iter().find_map(
+                                    |(shadowed_ident_name, shadowed_binding_info)| {
                                         if shadowed_ident_name != &name {
                                             return None;
                                         }
@@ -670,7 +670,7 @@ impl SemanticEventExtractor {
                                         // The order of interface and other bindings is valid in either order
                                         match (
                                             declaration_syntax_kind,
-                                            shadowed_declration.declaration_kind,
+                                            shadowed_binding_info.declaration_kind,
                                         ) {
                                             (
                                                 JsSyntaxKind::JS_VARIABLE_DECLARATOR,
@@ -687,14 +687,14 @@ impl SemanticEventExtractor {
                                             | (
                                                 JsSyntaxKind::TS_INTERFACE_DECLARATION,
                                                 JsSyntaxKind::JS_CLASS_DECLARATION,
-                                            ) => Some(shadowed_declration),
+                                            ) => Some(shadowed_binding_info),
                                             _ => None,
                                         }
                                     },
                                 );
-                                if let Some(decl) = find_exportable_declration {
+                                if let Some(binding_info) = find_exportable_binding {
                                     self.stash.push_back(SemanticEvent::Exported {
-                                        range: decl.text_range,
+                                        range: binding_info.text_range,
                                     });
                                 }
 
