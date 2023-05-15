@@ -1,0 +1,34 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 96
+expression: invalid.ts
+---
+# Input
+```js
+interface FooAny1<T extends any> {
+	field: T;
+}
+
+interface FooAny2<T extends unknown> {
+	field: T;
+}
+
+```
+
+# Diagnostics
+```
+invalid.ts:1:21 lint/complexity/noUselessTypeConstraint ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Useless type constraint.
+  
+  > 1 │ interface FooAny1<T extends any> {
+      │                     ^^^^^^^^^^^
+    2 │ 	field: T;
+    3 │ }
+  
+  i Constraining the type to `any` or `unknown` doesn't have any effect.
+  
+
+```
+
+
