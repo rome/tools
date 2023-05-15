@@ -17,7 +17,7 @@ interface FooAny2<T extends unknown> {
 
 # Diagnostics
 ```
-invalid.ts:1:21 lint/complexity/noUselessTypeConstraint ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:1:21 lint/complexity/noUselessTypeConstraint  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Useless type constraint.
   
@@ -28,11 +28,15 @@ invalid.ts:1:21 lint/complexity/noUselessTypeConstraint ━━━━━━━━
   
   i Constraining the type to `any` or `unknown` doesn't have any effect.
   
+  i Suggested fix: Remove useless type constraint.
+  
+    1 │ interface·FooAny1<T·extends·any>·{
+      │                     -----------   
 
 ```
 
 ```
-invalid.ts:5:21 lint/complexity/noUselessTypeConstraint ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:5:21 lint/complexity/noUselessTypeConstraint  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Useless type constraint.
   
@@ -45,6 +49,10 @@ invalid.ts:5:21 lint/complexity/noUselessTypeConstraint ━━━━━━━━
   
   i Constraining the type to `any` or `unknown` doesn't have any effect.
   
+  i Suggested fix: Remove useless type constraint.
+  
+    5 │ interface·FooAny2<T·extends·unknown>·{
+      │                     ---------------   
 
 ```
 

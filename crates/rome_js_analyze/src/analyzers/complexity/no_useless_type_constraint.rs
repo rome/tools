@@ -1,9 +1,12 @@
 use rome_analyze::context::RuleContext;
-use rome_analyze::{declare_rule, Ast, Rule, RuleDiagnostic};
+use rome_analyze::{declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 
+use rome_diagnostics::Applicability;
 use rome_js_syntax::TsTypeConstraintClause;
-use rome_rowan::AstNode;
+use rome_rowan::{AstNode, BatchMutationExt};
+
+use crate::JsRuleAction;
 
 declare_rule! {
     /// Disallow comparing against `-0`
@@ -43,31 +46,45 @@ declare_rule! {
 
 impl Rule for NoUselessTypeConstraint {
     type Query = Ast<TsTypeConstraintClause>;
-    type State = ();
+    type State = TsTypeConstraintClause;
     type Signals = Option<Self::State>;
     type Options = ();
 
-    fn run(_ctx: &RuleContext<Self>) -> Option<Self::State> {
-        Some(())
-    }
-
-    fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
+    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let node = ctx.query();
         let ty = node.ty().ok()?;
 
-        if ty.as_ts_any_type().is_none() && ty.as_ts_unknown_type().is_none() {
-            return None;
+        if ty.as_ts_any_type().is_some() || ty.as_ts_unknown_type().is_some() {
+            Some(node.clone())
+        } else {
+            None
         }
+    }
+
+    fn diagnostic(_ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
+        state.ty().ok()?;
 
         Some(
             RuleDiagnostic::new(
                 rule_category!(),
-                node.syntax().text_trimmed_range(),
+                state.syntax().text_trimmed_range(),
                 markup! {
                     "Useless type constraint."
                 },
             )
             .note("Constraining the type to `any` or `unknown` doesn't have any effect."),
         )
+    }
+
+    fn action(ctx: &RuleContext<Self>, node_replace: &Self::State) -> Option<JsRuleAction> {
+        let mut mutation = ctx.root().begin();
+        mutation.remove_node(node_replace.clone());
+
+        Some(JsRuleAction {
+            category: ActionCategory::QuickFix,
+            applicability: Applicability::MaybeIncorrect,
+            message: markup! { "Remove useless type constraint." }.to_owned(),
+            mutation,
+        })
     }
 }
