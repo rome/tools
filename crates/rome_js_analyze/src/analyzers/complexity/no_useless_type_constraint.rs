@@ -38,7 +38,7 @@ declare_rule! {
     /// type Bar<T> = {};
     ///```
     pub(crate) NoUselessTypeConstraint {
-        version: "0.7.0",
+        version: "12.1.0",
         name: "noUselessTypeConstraint",
         recommended: true,
     }
