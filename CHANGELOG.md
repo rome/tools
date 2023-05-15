@@ -7,6 +7,7 @@
 ### Editors
 ### Formatter
 ### Linter
+- Fixed an issue where the `noAssignInExpressions` rule replaced the operator with an invalid token, which caused other lint rules to crash. [#4464](https://github.com/rome/tools/issues/4464)
 ### Parser
 ### VSCode
 ### JavaScript APIs
