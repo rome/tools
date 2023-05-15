@@ -660,12 +660,14 @@ impl SemanticEventExtractor {
 
                         match reference {
                             Reference::Read { is_exported, .. } if *is_exported => {
+                                // Checks if already shadowed variables and interfaces are exportable
                                 let find_exportable_declration = scope.shadowed.iter().find_map(
                                     |(shadowed_ident_name, shadowed_declration)| {
                                         if shadowed_ident_name != &name {
                                             return None;
                                         }
 
+                                        // The order of interface and other bindings is valid in either order
                                         match (
                                             declaration_syntax_kind,
                                             shadowed_declration.declaration_kind,
