@@ -42,6 +42,7 @@ define_categories! {
     "lint/complexity/noUselessLabel":"https://docs.rome.tools/lint/rules/noUselessLabel",
     "lint/complexity/noUselessRename": "https://docs.rome.tools/lint/rules/noUselessRename",
     "lint/complexity/noUselessSwitchCase": "https://docs.rome.tools/lint/rules/noUselessSwitchCase",
+    "lint/suspicious/noUselessTypeConstraint": "https://docs.rome.tools/lint/rules/noUselessTypeConstraint",
     "lint/complexity/noWith": "https://docs.rome.tools/lint/rules/noWith",
     "lint/complexity/useFlatMap": "https://docs.rome.tools/lint/rules/useFlatMap",
     "lint/complexity/useOptionalChain": "https://docs.rome.tools/lint/rules/useOptionalChain",
