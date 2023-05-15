@@ -9,7 +9,7 @@ use rome_rowan::{AstNode, BatchMutationExt};
 use crate::JsRuleAction;
 
 declare_rule! {
-    /// Disallow comparing against `-0`
+    /// Disallow using `any` or `unknown` as type constraint.
     ///
     /// ## Examples
     ///

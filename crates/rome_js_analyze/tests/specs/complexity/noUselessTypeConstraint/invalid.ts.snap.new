@@ -13,6 +13,14 @@ interface FooAny2<T extends unknown> {
 	field: T;
 }
 
+class BazAny<T extends any> {
+  quxAny<U extends any>() {}
+}
+
+const QuuxAny = <T extends any>() => {};
+
+function QuuzAny<T extends any>() {}
+
 ```
 
 # Diagnostics
@@ -53,6 +61,88 @@ invalid.ts:5:21 lint/complexity/noUselessTypeConstraint  FIXABLE  ━━━━�
   
     5 │ interface·FooAny2<T·extends·unknown>·{
       │                     ---------------   
+
+```
+
+```
+invalid.ts:9:16 lint/complexity/noUselessTypeConstraint  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Useless type constraint.
+  
+     7 │ }
+     8 │ 
+   > 9 │ class BazAny<T extends any> {
+       │                ^^^^^^^^^^^
+    10 │   quxAny<U extends any>() {}
+    11 │ }
+  
+  i Constraining the type to `any` or `unknown` doesn't have any effect.
+  
+  i Suggested fix: Remove useless type constraint.
+  
+    9 │ class·BazAny<T·extends·any>·{
+      │                -----------   
+
+```
+
+```
+invalid.ts:10:12 lint/complexity/noUselessTypeConstraint  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Useless type constraint.
+  
+     9 │ class BazAny<T extends any> {
+  > 10 │   quxAny<U extends any>() {}
+       │            ^^^^^^^^^^^
+    11 │ }
+    12 │ 
+  
+  i Constraining the type to `any` or `unknown` doesn't have any effect.
+  
+  i Suggested fix: Remove useless type constraint.
+  
+    10 │ ··quxAny<U·extends·any>()·{}
+       │            -----------      
+
+```
+
+```
+invalid.ts:13:20 lint/complexity/noUselessTypeConstraint  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Useless type constraint.
+  
+    11 │ }
+    12 │ 
+  > 13 │ const QuuxAny = <T extends any>() => {};
+       │                    ^^^^^^^^^^^
+    14 │ 
+    15 │ function QuuzAny<T extends any>() {}
+  
+  i Constraining the type to `any` or `unknown` doesn't have any effect.
+  
+  i Suggested fix: Remove useless type constraint.
+  
+    13 │ const·QuuxAny·=·<T·extends·any>()·=>·{};
+       │                    -----------          
+
+```
+
+```
+invalid.ts:15:20 lint/complexity/noUselessTypeConstraint  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Useless type constraint.
+  
+    13 │ const QuuxAny = <T extends any>() => {};
+    14 │ 
+  > 15 │ function QuuzAny<T extends any>() {}
+       │                    ^^^^^^^^^^^
+    16 │ 
+  
+  i Constraining the type to `any` or `unknown` doesn't have any effect.
+  
+  i Suggested fix: Remove useless type constraint.
+  
+    15 │ function·QuuzAny<T·extends·any>()·{}
+       │                    -----------      
 
 ```
 
