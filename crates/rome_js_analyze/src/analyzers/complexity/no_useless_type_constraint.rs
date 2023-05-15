@@ -1,11 +1,9 @@
 use rome_analyze::context::RuleContext;
-use rome_analyze::{declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
+use rome_analyze::{declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_diagnostics::Applicability;
-use rome_js_syntax::{TsTypeConstraintClause};
-use rome_rowan::{AstNode, AstNodeList, BatchMutationExt, Direction, SyntaxElement};
 
-use crate::JsRuleAction;
+use rome_js_syntax::TsTypeConstraintClause;
+use rome_rowan::AstNode;
 
 declare_rule! {
     /// Disallow comparing against `-0`
@@ -49,8 +47,25 @@ impl Rule for NoUselessTypeConstraint {
     type Signals = Option<Self::State>;
     type Options = ();
 
-    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        // let node = ctx.query();
-        None
+    fn run(_ctx: &RuleContext<Self>) -> Option<Self::State> {
+        Some(())
+    }
+
+    fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
+        let node = ctx.query();
+        let ty = node.ty().ok()?;
+
+        let _any_node = ty.as_ts_any_type()?;
+
+        Some(
+            RuleDiagnostic::new(
+                rule_category!(),
+                node.syntax().text_trimmed_range(),
+                markup! {
+                    "Useless type constraint."
+                },
+            )
+            .note("Constraining the type to `any` or `unknown` doesn't have any effect."),
+        )
     }
 }
