@@ -31,4 +31,21 @@ invalid.ts:1:21 lint/complexity/noUselessTypeConstraint ━━━━━━━━
 
 ```
 
+```
+invalid.ts:5:21 lint/complexity/noUselessTypeConstraint ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Useless type constraint.
+  
+    3 │ }
+    4 │ 
+  > 5 │ interface FooAny2<T extends unknown> {
+      │                     ^^^^^^^^^^^^^^^
+    6 │ 	field: T;
+    7 │ }
+  
+  i Constraining the type to `any` or `unknown` doesn't have any effect.
+  
+
+```
+
 

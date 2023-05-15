@@ -55,7 +55,9 @@ impl Rule for NoUselessTypeConstraint {
         let node = ctx.query();
         let ty = node.ty().ok()?;
 
-        let _any_node = ty.as_ts_any_type()?;
+        if ty.as_ts_any_type().is_none() && ty.as_ts_unknown_type().is_none() {
+            return None;
+        }
 
         Some(
             RuleDiagnostic::new(
