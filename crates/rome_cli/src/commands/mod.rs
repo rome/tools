@@ -131,7 +131,7 @@ pub enum RomeCommand {
     #[bpaf(command)]
     Init,
     /// Acts as a server for the Language Server Protocol over stdin/stdout
-    #[bpaf(command)]
+    #[bpaf(command("lsp-proxy"))]
     LspProxy,
     /// It updates the configuration when there are breaking changes
     #[bpaf(command)]
