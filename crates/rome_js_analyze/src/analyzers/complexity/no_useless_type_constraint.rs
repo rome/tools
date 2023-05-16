@@ -23,18 +23,39 @@ declare_rule! {
     /// ### Invalid
     ///
     /// ```ts,expect_diagnostic
-    ///
     /// interface FooAny<T extends any> {}
-    ///
+    /// ```
+    /// ```ts,expect_diagnostic
     /// type BarAny<T extends any> = {};
-    ///
+    /// ```
+    /// ```ts,expect_diagnostic
     /// class BazAny<T extends any> {
     ///   quxAny<U extends any>() {}
     /// }
-    ///
+    /// ```
+    /// ```ts,expect_diagnostic
     /// const QuuxAny = <T extends any>() => {};
-    ///
+    /// ```
+    /// ```ts,expect_diagnostic
     /// function QuuzAny<T extends any>() {}
+    /// ```
+    ///
+    /// ```ts,expect_diagnostic
+    /// interface FooUnknown<T extends unknown> {}
+    /// ```
+    /// ```ts,expect_diagnostic
+    /// type BarUnknown<T extends unknown> = {};
+    /// ```
+    /// ```ts,expect_diagnostic
+    /// class BazUnknown<T extends unknown> {
+    ///   quxUnknown<U extends unknown>() {}
+    /// }
+    /// ```
+    /// ```ts,expect_diagnostic
+    /// const QuuxUnknown = <T extends unknown>() => {};
+    /// ```
+    /// ```ts,expect_diagnostic
+    /// function QuuzUnknown<T extends unknown>() {}
     /// ```
     ///
     /// ### Valid
@@ -45,7 +66,7 @@ declare_rule! {
     /// type Bar<T> = {};
     ///```
     pub(crate) NoUselessTypeConstraint {
-        version: "12.1.0",
+        version: "next",
         name: "noUselessTypeConstraint",
         recommended: true,
     }
