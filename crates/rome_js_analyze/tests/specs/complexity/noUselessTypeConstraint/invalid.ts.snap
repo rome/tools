@@ -27,14 +27,14 @@ function QuuzAny<T extends any>() {}
 ```
 invalid.ts:1:21 lint/complexity/noUselessTypeConstraint  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Useless type constraint.
+  ! Constraining a type parameter to any or unknown is useless.
   
   > 1 │ interface FooAny1<T extends any> {
       │                     ^^^^^^^^^^^
     2 │ 	field: T;
     3 │ }
   
-  i Constraining the type to `any` or `unknown` doesn't have any effect.
+  i All types are subtypes of any and unknown.
   
   i Suggested fix: Remove the constraint.
   
@@ -46,7 +46,7 @@ invalid.ts:1:21 lint/complexity/noUselessTypeConstraint  FIXABLE  ━━━━�
 ```
 invalid.ts:5:21 lint/complexity/noUselessTypeConstraint  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Useless type constraint.
+  ! Constraining a type parameter to any or unknown is useless.
   
     3 │ }
     4 │ 
@@ -55,7 +55,7 @@ invalid.ts:5:21 lint/complexity/noUselessTypeConstraint  FIXABLE  ━━━━�
     6 │ 	field: T;
     7 │ }
   
-  i Constraining the type to `any` or `unknown` doesn't have any effect.
+  i All types are subtypes of any and unknown.
   
   i Suggested fix: Remove the constraint.
   
@@ -67,7 +67,7 @@ invalid.ts:5:21 lint/complexity/noUselessTypeConstraint  FIXABLE  ━━━━�
 ```
 invalid.ts:9:16 lint/complexity/noUselessTypeConstraint  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Useless type constraint.
+  ! Constraining a type parameter to any or unknown is useless.
   
      7 │ }
      8 │ 
@@ -76,7 +76,7 @@ invalid.ts:9:16 lint/complexity/noUselessTypeConstraint  FIXABLE  ━━━━�
     10 │   quxAny<U extends any>() {}
     11 │ }
   
-  i Constraining the type to `any` or `unknown` doesn't have any effect.
+  i All types are subtypes of any and unknown.
   
   i Suggested fix: Remove the constraint.
   
@@ -88,7 +88,7 @@ invalid.ts:9:16 lint/complexity/noUselessTypeConstraint  FIXABLE  ━━━━�
 ```
 invalid.ts:10:12 lint/complexity/noUselessTypeConstraint  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Useless type constraint.
+  ! Constraining a type parameter to any or unknown is useless.
   
      9 │ class BazAny<T extends any> {
   > 10 │   quxAny<U extends any>() {}
@@ -96,7 +96,7 @@ invalid.ts:10:12 lint/complexity/noUselessTypeConstraint  FIXABLE  ━━━━�
     11 │ }
     12 │ 
   
-  i Constraining the type to `any` or `unknown` doesn't have any effect.
+  i All types are subtypes of any and unknown.
   
   i Suggested fix: Remove the constraint.
   
@@ -108,7 +108,7 @@ invalid.ts:10:12 lint/complexity/noUselessTypeConstraint  FIXABLE  ━━━━�
 ```
 invalid.ts:13:20 lint/complexity/noUselessTypeConstraint  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Useless type constraint.
+  ! Constraining a type parameter to any or unknown is useless.
   
     11 │ }
     12 │ 
@@ -117,7 +117,7 @@ invalid.ts:13:20 lint/complexity/noUselessTypeConstraint  FIXABLE  ━━━━�
     14 │ 
     15 │ function QuuzAny<T extends any>() {}
   
-  i Constraining the type to `any` or `unknown` doesn't have any effect.
+  i All types are subtypes of any and unknown.
   
   i Suggested fix: Remove the constraint.
   
@@ -129,7 +129,7 @@ invalid.ts:13:20 lint/complexity/noUselessTypeConstraint  FIXABLE  ━━━━�
 ```
 invalid.ts:15:20 lint/complexity/noUselessTypeConstraint  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Useless type constraint.
+  ! Constraining a type parameter to any or unknown is useless.
   
     13 │ const QuuxAny = <T extends any>() => {};
     14 │ 
@@ -137,7 +137,7 @@ invalid.ts:15:20 lint/complexity/noUselessTypeConstraint  FIXABLE  ━━━━�
        │                    ^^^^^^^^^^^
     16 │ 
   
-  i Constraining the type to `any` or `unknown` doesn't have any effect.
+  i All types are subtypes of any and unknown.
   
   i Suggested fix: Remove the constraint.
   

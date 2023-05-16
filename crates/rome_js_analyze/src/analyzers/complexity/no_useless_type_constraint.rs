@@ -3,8 +3,8 @@ use rome_analyze::{declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 
 use rome_diagnostics::Applicability;
-use rome_js_syntax::{TsAnyType, TsTypeConstraintClause, TsUnknownType};
-use rome_rowan::{declare_node_union, AstNode, BatchMutationExt, TextRange};
+use rome_js_syntax::TsTypeConstraintClause;
+use rome_rowan::{AstNode, BatchMutationExt};
 
 use crate::JsRuleAction;
 
@@ -72,22 +72,9 @@ declare_rule! {
     }
 }
 
-declare_node_union! {
-    pub(crate) AnyInvalidType = TsAnyType | TsUnknownType
-}
-
-impl AnyInvalidType {
-    fn range(&self) -> TextRange {
-        match self {
-            AnyInvalidType::TsAnyType(node) => node.range(),
-            AnyInvalidType::TsUnknownType(node) => node.range(),
-        }
-    }
-}
-
 impl Rule for NoUselessTypeConstraint {
     type Query = Ast<TsTypeConstraintClause>;
-    type State = AnyInvalidType;
+    type State = ();
     type Signals = Option<Self::State>;
     type Options = ();
 
@@ -95,20 +82,19 @@ impl Rule for NoUselessTypeConstraint {
         let node = ctx.query();
         let ty = node.ty().ok()?;
 
-        if let Some(any_type_node) = ty.as_ts_any_type() {
-            Some(any_type_node.clone().into())
-        } else if let Some(unknown_type) = ty.as_ts_unknown_type() {
-            Some(unknown_type.clone().into())
+        if ty.as_ts_any_type().is_some() || ty.as_ts_unknown_type().is_some() {
+            Some(())
         } else {
             None
         }
     }
 
-    fn diagnostic(_ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
+        let node = ctx.query();
         Some(
             RuleDiagnostic::new(
                 rule_category!(),
-                state.range(),
+                node.syntax().text_trimmed_range(),
                 markup! {
                     "Constraining a type parameter to "<Emphasis>"any"</Emphasis>" or "<Emphasis>"unknown"</Emphasis>" is useless."
                 },
@@ -119,9 +105,10 @@ impl Rule for NoUselessTypeConstraint {
         )
     }
 
-    fn action(ctx: &RuleContext<Self>, node_replace: &Self::State) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<JsRuleAction> {
+        let node = ctx.query();
         let mut mutation = ctx.root().begin();
-        mutation.remove_node(node_replace.clone());
+        mutation.remove_node(node.clone());
 
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
