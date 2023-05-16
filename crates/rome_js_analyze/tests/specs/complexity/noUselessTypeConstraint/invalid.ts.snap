@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 96
 expression: invalid.ts
 ---
 # Input
@@ -35,7 +36,7 @@ invalid.ts:1:21 lint/complexity/noUselessTypeConstraint  FIXABLE  ━━━━�
   
   i Constraining the type to `any` or `unknown` doesn't have any effect.
   
-  i Suggested fix: Remove useless type constraint.
+  i Suggested fix: Remove the constraint.
   
     1 │ interface·FooAny1<T·extends·any>·{
       │                     -----------   
@@ -56,7 +57,7 @@ invalid.ts:5:21 lint/complexity/noUselessTypeConstraint  FIXABLE  ━━━━�
   
   i Constraining the type to `any` or `unknown` doesn't have any effect.
   
-  i Suggested fix: Remove useless type constraint.
+  i Suggested fix: Remove the constraint.
   
     5 │ interface·FooAny2<T·extends·unknown>·{
       │                     ---------------   
@@ -77,7 +78,7 @@ invalid.ts:9:16 lint/complexity/noUselessTypeConstraint  FIXABLE  ━━━━�
   
   i Constraining the type to `any` or `unknown` doesn't have any effect.
   
-  i Suggested fix: Remove useless type constraint.
+  i Suggested fix: Remove the constraint.
   
     9 │ class·BazAny<T·extends·any>·{
       │                -----------   
@@ -97,7 +98,7 @@ invalid.ts:10:12 lint/complexity/noUselessTypeConstraint  FIXABLE  ━━━━�
   
   i Constraining the type to `any` or `unknown` doesn't have any effect.
   
-  i Suggested fix: Remove useless type constraint.
+  i Suggested fix: Remove the constraint.
   
     10 │ ··quxAny<U·extends·any>()·{}
        │            -----------      
@@ -118,7 +119,7 @@ invalid.ts:13:20 lint/complexity/noUselessTypeConstraint  FIXABLE  ━━━━�
   
   i Constraining the type to `any` or `unknown` doesn't have any effect.
   
-  i Suggested fix: Remove useless type constraint.
+  i Suggested fix: Remove the constraint.
   
     13 │ const·QuuxAny·=·<T·extends·any>()·=>·{};
        │                    -----------          
@@ -138,7 +139,7 @@ invalid.ts:15:20 lint/complexity/noUselessTypeConstraint  FIXABLE  ━━━━�
   
   i Constraining the type to `any` or `unknown` doesn't have any effect.
   
-  i Suggested fix: Remove useless type constraint.
+  i Suggested fix: Remove the constraint.
   
     15 │ function·QuuzAny<T·extends·any>()·{}
        │                    -----------      
