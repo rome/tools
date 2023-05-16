@@ -3,6 +3,12 @@
 ## [Unreleased]
 
 ### CLI
+
+#### Other changes
+
+- Fix regression where the command `lsp-proxy` was renamed `lsp_proxy` [#4489](https://github.com/rome/tools/issues/4489)
+
+
 ### Configuration
 ### Editors
 ### Formatter
