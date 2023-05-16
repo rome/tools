@@ -83,7 +83,7 @@ impl Rule for NoUselessTypeConstraint {
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
-            message: markup! { "Remove useless type constraint." }.to_owned(),
+            message: markup! { "Remove the constraint." }.to_owned(),
             mutation,
         })
     }
