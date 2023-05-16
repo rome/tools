@@ -110,10 +110,12 @@ impl Rule for NoUselessTypeConstraint {
                 rule_category!(),
                 state.range(),
                 markup! {
-                    "Useless type constraint."
+                    "Constraining a type parameter to "<Emphasis>"any"</Emphasis>" or "<Emphasis>"unknown"</Emphasis>" is useless."
                 },
             )
-            .note("Constraining the type to `any` or `unknown` doesn't have any effect."),
+            .note(markup! {
+                "All types are subtypes of "<Emphasis>"any"</Emphasis>" and "<Emphasis>"unknown"</Emphasis>"."
+            }),
         )
     }
 
