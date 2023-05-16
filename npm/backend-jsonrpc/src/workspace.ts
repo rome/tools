@@ -340,6 +340,10 @@ export interface Complexity {
 	 */
 	noUselessSwitchCase?: RuleConfiguration;
 	/**
+	 * Disallow using any or unknown as type constraint.
+	 */
+	noUselessTypeConstraint?: RuleConfiguration;
+	/**
 	 * Disallow with statements in non-strict contexts.
 	 */
 	noWith?: RuleConfiguration;
@@ -979,6 +983,7 @@ export type Category =
 	| "lint/complexity/noUselessLabel"
 	| "lint/complexity/noUselessRename"
 	| "lint/complexity/noUselessSwitchCase"
+	| "lint/complexity/noUselessTypeConstraint"
 	| "lint/complexity/noWith"
 	| "lint/complexity/useFlatMap"
 	| "lint/complexity/useOptionalChain"
