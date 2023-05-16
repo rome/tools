@@ -1,0 +1,16 @@
+---
+source: crates/rome_cli/tests/snap_test.rs
+expression: content
+---
+# Emitted Messages
+
+```block
+Acts as a server for the Language Server Protocol over stdin/stdout
+
+
+Available options:
+    -h, --help  Prints help information
+
+```
+
+
