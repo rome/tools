@@ -31,7 +31,7 @@ const BENCHMARKS = {
 			repository: "https://github.com/prettier/prettier.git",
 			sourceDirectories: {
 				src: ["js"],
-				scripts: ["js", "mjs"],
+				scripts: ["js"],
 			},
 		},
 	},
@@ -53,6 +53,18 @@ const BENCHMARKS = {
 	},
 };
 
+function getDirsToClone(sourceDirs) {
+	if (typeof sourceDirs !== 'object' || sourceDirs === null) {
+		return;
+	}
+
+	if (Array.isArray(sourceDirs)) {
+		return sourceDirs;
+	}
+
+	return Object.keys(sourceDirs);
+}
+
 function benchmarkFormatter(rome) {
 	console.log("");
 	console.log("Benchmark formatter...");
@@ -65,7 +77,7 @@ function benchmarkFormatter(rome) {
 	for (const [name, configuration] of Object.entries(BENCHMARKS.formatter)) {
 		console.log(`[${name}]`);
 
-		let projectDirectory = cloneProject(name, configuration.repository);
+		let projectDirectory = cloneProject(name, configuration.repository, getDirsToClone(configuration.sourceDirectories));
 
 		const prettierPaths = Object.entries(configuration.sourceDirectories)
 			.flatMap(([directory, extensions]) => {
@@ -80,7 +92,7 @@ function benchmarkFormatter(rome) {
 
 		const dprintCommand = `${resolveDprint()} fmt --incremental=false --config '${require.resolve("./dprint.json")}' ${Object.keys(configuration.sourceDirectories).map(path => `'${path}/**/*'`).join(" ")}`;
 
-		const romeCommand = `${rome} format ${Object.keys(
+		const romeCommand = `${rome} format --max-diagnostics=0 ${Object.keys(
 			configuration.sourceDirectories,
 		)
 			.map((path) => `'${path}'`)
@@ -93,7 +105,7 @@ function benchmarkFormatter(rome) {
 		);
 
 		// Run 2 warmups to make sure the files are formatted correctly
-		const hyperfineCommand = `hyperfine -w 2 -n Prettier "${prettierCommand}" -n "Parallel-Prettier" "${parallelPrettierCommand}" -n dprint "${dprintCommand}" -n Rome "${romeCommand}" --shell=${shellOption()} -n "Rome (1 thread)" "${romeSingleCoreCommand}"`;
+		const hyperfineCommand = `hyperfine --show-output -w 2 -n Prettier "${prettierCommand}" -n "Parallel-Prettier" "${parallelPrettierCommand}" -n dprint "${dprintCommand}" -n Rome "${romeCommand}" --shell=${shellOption()} -n "Rome (1 thread)" "${romeSingleCoreCommand}"`;
 		console.log(hyperfineCommand);
 
 		child_process.execSync(hyperfineCommand, {
@@ -108,7 +120,7 @@ function resolvePrettier() {
 }
 
 function resolveParallelPrettier() {
-	return path.resolve("node_modules/.bin/pprettier");
+	return path.resolve("node_modules/@mixer/parallel-prettier/dist/index.js");
 }
 
 function resolveDprint() {
@@ -124,7 +136,7 @@ function benchmarkLinter(rome) {
 	for (const [name, configuration] of Object.entries(BENCHMARKS.linter)) {
 		console.log(`[${name}]`);
 
-		const projectDirectory = cloneProject(name, configuration.repository);
+		const projectDirectory = cloneProject(name, configuration.repository, getDirsToClone(configuration.sourceDirectories));
 
 		deleteFile(path.join(projectDirectory, ".eslintignore"));
 		deleteFile(path.join(projectDirectory, "/eslintrc.js"));
@@ -207,22 +219,27 @@ function deleteFile(path) {
 	}
 }
 
-function cloneProject(name, repository) {
+function cloneProject(name, repository, dirs = []) {
 	let projectDirectory = path.join(TMP_DIRECTORY, name);
 
 	let inProjectDirectory = withDirectory(projectDirectory);
 
 	if (fs.existsSync(projectDirectory)) {
-		console.log("Updating");
+		console.log(`Updating git repository in directory ${projectDirectory}`);
 		inProjectDirectory.run("git reset --hard @{u}");
 		inProjectDirectory.run("git clean -df");
 		inProjectDirectory.run("git pull --depth=1 --ff-only");
 	} else {
 		console.log("Clone project...");
 
-		withDirectory(TMP_DIRECTORY).run(`git clone --depth=1 ${repository}`, {
+		withDirectory(TMP_DIRECTORY).run(`git clone ${dirs.length > 0 ? '--sparse' : ''} --depth=1 ${repository}`, {
 			stdio: "inherit",
 		});
+	}
+
+	if (dirs.length > 0) {
+		console.log(`Adding directories ${dirs.join()} to sparse checkout in ${projectDirectory}`)
+		inProjectDirectory.run(`git sparse-checkout add ${dirs.join(' ')}`);
 	}
 
 	return projectDirectory;

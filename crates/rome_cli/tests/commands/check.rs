@@ -2080,3 +2080,35 @@ fn should_apply_correct_file_source() {
         result,
     ));
 }
+
+#[test]
+fn apply_unsafe_no_assign_in_expression() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let file_path = Path::new("fix.js");
+    fs.insert(
+        file_path.into(),
+        "res.onAborted(() => (aborted = true));".as_bytes(),
+    );
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Args::from(&[
+            ("check"),
+            file_path.as_os_str().to_str().unwrap(),
+            ("--apply-unsafe"),
+        ]),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "apply_unsafe_no_assign_in_expression",
+        fs,
+        console,
+        result,
+    ));
+}
