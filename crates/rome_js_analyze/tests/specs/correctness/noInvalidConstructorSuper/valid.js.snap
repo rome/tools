@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 96
 expression: valid.js
 ---
 # Input
@@ -37,6 +38,12 @@ export class A extends B {
 }
 
 export default class A extends B {
+    constructor() {
+        super();
+    }
+}
+
+export class A extends mod.B {
     constructor() {
         super();
     }
