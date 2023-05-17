@@ -2,6 +2,26 @@
 
 ## [Unreleased]
 
+## CLI
+## Configuration
+## Editors
+## Formatter
+## Linter
+
+#### New rules
+- [`noUselessTypeConstraint`](https://docs.rome.tools/lint/rules/noUselessTypeConstraint/)
+
+#### Other changes
+
+- `noInnerDeclarations`: allow function declarations in nested block inside an _ES module_ [#4492](https://github.com/rome/tools/compare/main...Conaclos:noInnerDeclarations/4492?expand=1).
+- `noInvalidConstructorSuper`: recognize `extends` clauses that use static member access such as `extends mod.C` [#4499](https://github.com/rome/tools/issues/4499)
+
+## Parser
+## VSCode
+## JavaScript APIs
+
+## 12.1.1
+
 ### CLI
 
 #### Other changes
@@ -10,21 +30,17 @@
 
 
 ### Configuration
-### Editors
-### Formatter
+
+#### Other changes
+
+- Fix an issue where Rome was loading incorrectly recommended rule [#4479](https://github.com/rome/tools/issues/4479) [#4488](https://github.com/rome/tools/issues/4488)
+
 ### Linter
 
 #### Other changes
 
-- Fixed an issue where the `noAssignInExpressions` rule replaced the operator with an invalid token, which caused other lint rules to crash. [#4464](https://github.com/rome/tools/issues/4464)
+- Fix an issue where the `noAssignInExpressions` rule replaced the operator with an invalid token, which caused other lint rules to crash. [#4464](https://github.com/rome/tools/issues/4464)
 - Fix an issue that [`noUnusedVariables`](https://docs.rome.tools/lint/rules/nounusedvariables/) rule did not correctly detect exports when a variable and an `interface` had the same name [#4468](https://github.com/rome/tools/pull/4468)
-
-#### New rules
-- [`noUselessTypeConstraint`](https://docs.rome.tools/lint/rules/noUselessTypeConstraint/)
-
-### Parser
-### VSCode
-### JavaScript APIs
 
 ## 12.1.0
 

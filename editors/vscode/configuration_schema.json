@@ -367,7 +367,7 @@
 					]
 				},
 				"noInnerDeclarations": {
-					"description": "Disallow function and var declarations in nested blocks.",
+					"description": "Disallow function and var declarations that are accessible outside their block.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }

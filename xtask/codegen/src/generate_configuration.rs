@@ -83,7 +83,7 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
 
         group_rules_union.push(quote! {
             if let Some(group) = self.#property_group_name.as_ref() {
-                group.collect_preset_rules(self.is_recommended(), &mut enabled_rules, &mut disabled_rules);
+                group.collect_preset_rules(&mut enabled_rules, &mut disabled_rules);
                 enabled_rules.extend(&group.get_enabled_rules());
                 disabled_rules.extend(&group.get_disabled_rules());
             } else if self.is_all() {
@@ -486,8 +486,10 @@ fn generate_struct(group: &str, rules: &BTreeMap<&'static str, RuleMetadata>) ->
                 #( #lines_all_rule_as_filter ),*
             ];
 
+            /// Retrieves the recommended rules
             pub(crate) fn is_recommended(&self) -> bool {
-                !matches!(self.recommended, Some(false))
+                // we should inject recommended rules only when they are set to "true"
+                matches!(self.recommended, Some(true))
             }
 
             pub(crate) const fn is_not_recommended(&self) -> bool {
@@ -535,7 +537,6 @@ fn generate_struct(group: &str, rules: &BTreeMap<&'static str, RuleMetadata>) ->
             /// Select preset rules
             pub(crate) fn collect_preset_rules(
                 &self,
-                is_recommended: bool,
                 enabled_rules: &mut IndexSet<RuleFilter>,
                 disabled_rules: &mut IndexSet<RuleFilter>,
             ) {
@@ -543,7 +544,7 @@ fn generate_struct(group: &str, rules: &BTreeMap<&'static str, RuleMetadata>) ->
                     enabled_rules.extend(Self::all_rules_as_filters());
                 } else if self.is_not_all() {
                     disabled_rules.extend(Self::all_rules_as_filters());
-                } else if (is_recommended && !self.is_not_recommended()) || self.is_recommended() {
+                } else if self.is_recommended() {
                     enabled_rules.extend(Self::recommended_rules_as_filters());
                 } else if self.is_not_recommended() {
                     disabled_rules.extend(Self::recommended_rules_as_filters());

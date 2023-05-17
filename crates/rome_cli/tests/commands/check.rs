@@ -2112,3 +2112,61 @@ fn apply_unsafe_no_assign_in_expression() {
         result,
     ));
 }
+
+#[test]
+fn should_not_enable_all_recommended_rules() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let configuration = r#"	{
+		"$schema": "https://docs.rome.tools/schemas/12.1.0/schema.json",
+		"organizeImports": {
+		"enabled": false
+	},
+		"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": false,
+			"a11y": {},
+			"complexity": {},
+			"correctness": {},
+			"performance": {},
+			"security": {},
+			"style": {},
+			"suspicious": {}
+		}
+	}
+	}"#;
+
+    let configuration_path = Path::new("rome.json");
+    fs.insert(configuration_path.into(), configuration.as_bytes());
+
+    let file_path = Path::new("fix.js");
+    fs.insert(
+        file_path.into(),
+        r#"
+    		LOOP: for (const x of xs) {
+    		    if (x > 0) {
+    		        break;
+    		    }
+    		    f(x);
+    		}
+		"#,
+    );
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "should_not_enable_all_recommended_rules",
+        fs,
+        console,
+        result,
+    ));
+}
