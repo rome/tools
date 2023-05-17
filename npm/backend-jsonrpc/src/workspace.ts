@@ -389,7 +389,7 @@ export interface Correctness {
 	 */
 	noGlobalObjectCalls?: RuleConfiguration;
 	/**
-	 * Disallow function and var declarations in nested blocks.
+	 * Disallow function and var declarations that are accessible outside their block.
 	 */
 	noInnerDeclarations?: RuleConfiguration;
 	/**

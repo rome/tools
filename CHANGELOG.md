@@ -7,6 +7,11 @@
 ## Editors
 ## Formatter
 ## Linter
+
+#### Other changes
+
+- `noInnerDeclarations`: allow function declarations in nested block inside an _ES module_ [#4492](https://github.com/rome/tools/compare/main...Conaclos:noInnerDeclarations/4492?expand=1).
+
 ## Parser
 ## VSCode
 ## JavaScript APIs
