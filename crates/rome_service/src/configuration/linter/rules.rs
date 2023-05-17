@@ -1177,7 +1177,7 @@ pub struct Correctness {
     )]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub no_global_object_calls: Option<RuleConfiguration>,
-    #[doc = "Disallow function and var declarations in nested blocks."]
+    #[doc = "Disallow function and var declarations that are accessible outside their block."]
     #[bpaf(long("no-inner-declarations"), argument("on|off|warn"), optional, hide)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub no_inner_declarations: Option<RuleConfiguration>,

@@ -1,26 +1,26 @@
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::{
-    AnyJsDeclaration, JsExport, JsFunctionBody, JsModuleItemList, JsScript, JsStatementList,
-    JsStaticInitializationBlockClassMember,
+    AnyJsDeclaration, JsExport, JsFileSource, JsFunctionBody, JsModuleItemList, JsScript,
+    JsStatementList, JsStaticInitializationBlockClassMember,
 };
 use rome_rowan::AstNode;
 
 use crate::control_flow::AnyJsControlFlowRoot;
 
 declare_rule! {
-    /// Disallow `function` and `var` declarations in nested blocks.
+    /// Disallow `function` and `var` declarations that are accessible outside their block.
     ///
-    /// A `function` and a `var` are accessible in the whole body of the
-    /// nearest root (function, module, script, static block).
+    /// A `var` is accessible in the whole body of the nearest root (function, module, script, static block).
     /// To avoid confusion, they should be declared to the nearest root.
-    /// Note that `const` and `let` declarations are block-scoped, and therefore
-    /// they are not affected by this rule.
     ///
-    /// Moreover, prior to ES2015 a function declaration is only allowed in
-    /// the nearest root, though parsers sometimes erroneously accept them elsewhere.
-    /// This only applies to function declarations; named or anonymous function
-    /// expressions can occur anywhere an expression is permitted.
+    /// Prior to ES2015, `function` declarations were only allowed in the nearest root,
+    /// though parsers sometimes erroneously accept them elsewhere.
+    /// In ES2015, inside an _ES module_, a `function` declaration is always block-scoped.
+    ///
+    /// Note that `const` and `let` declarations are block-scoped,
+    /// and therefore they are not affected by this rule.
+    /// Moreover, `function` declarations in nested blocks are allowed inside _ES modules_.
     ///
     /// Source: https://eslint.org/docs/rules/no-inner-declarations
     ///
@@ -28,7 +28,7 @@ declare_rule! {
     ///
     /// ### Invalid
     ///
-    /// ```js,expect_diagnostic
+    /// ```cjs,expect_diagnostic
     /// if (test) {
     ///     function f() {}
     /// }
@@ -40,7 +40,7 @@ declare_rule! {
     /// }
     /// ```
     ///
-    /// ```js,expect_diagnostic
+    /// ```cjs,expect_diagnostic
     /// function f() {
     ///     if (test) {
     ///         function g() {}
@@ -57,6 +57,14 @@ declare_rule! {
     /// ```
     ///
     /// ### Valid
+    ///
+    /// ```js
+    /// // inside a module, function declarations are block-scoped and thus allowed.
+    /// if (test) {
+    ///     function f() {}
+    /// }
+    /// export {}
+    /// ```
     ///
     /// ```js
     /// function f() { }
@@ -98,7 +106,14 @@ impl Rule for NoInnerDeclarations {
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let decl = ctx.query();
         let parent = match decl {
-            AnyJsDeclaration::JsFunctionDeclaration(x) => x.syntax().parent(),
+            AnyJsDeclaration::JsFunctionDeclaration(x) => {
+                if ctx.source_type::<JsFileSource>().is_module() {
+                    // In strict mode (implied by esm), function declarations are block-scoped.
+                    None
+                } else {
+                    x.syntax().parent()
+                }
+            }
             AnyJsDeclaration::JsVariableDeclaration(x) => {
                 if x.is_var() {
                     // ignore parent (JsVariableStatement or JsVariableDeclarationClause)
