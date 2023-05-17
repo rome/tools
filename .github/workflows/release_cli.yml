@@ -145,7 +145,7 @@ jobs:
           fetch-depth: 1
 
       - name: Install wasm-pack
-        uses: jetli/wasm-pack-action@v0.3.0
+        uses: jetli/wasm-pack-action@v0.4.0
 
       - name: Build WASM module for bundlers
         run: wasm-pack build --out-dir ../../npm/wasm-bundler --target bundler --release --scope rometools crates/rome_wasm
