@@ -2170,3 +2170,53 @@ fn should_not_enable_all_recommended_rules() {
         result,
     ));
 }
+
+#[test]
+fn should_not_disable_recommended_rules_for_a_group() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let configuration = r#"	{
+  "$schema": "https://docs.rome.tools/schemas/12.1.0/schema.json",
+  "organizeImports": {
+    "enabled": false
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "complexity": {
+        "noUselessSwitchCase": "off"
+      }
+    }
+  }
+}"#;
+
+    let configuration_path = Path::new("rome.json");
+    fs.insert(configuration_path.into(), configuration.as_bytes());
+
+    let file_path = Path::new("fix.js");
+    fs.insert(
+        file_path.into(),
+        r#"const array = ["split", "the text", "into words"];
+// next line should error because of the recommended rule
+array.map((sentence) => sentence.split(" ")).flat();
+		"#,
+    );
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
+    );
+
+    assert!(result.is_err(), "run_cli returned {result:?}");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "should_not_disable_recommended_rules_for_a_group",
+        fs,
+        console,
+        result,
+    ));
+}
