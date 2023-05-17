@@ -35,3 +35,9 @@ export default class A extends B {
         super();
     }
 }
+
+export class A extends mod.B {
+    constructor() {
+        super();
+    }
+}

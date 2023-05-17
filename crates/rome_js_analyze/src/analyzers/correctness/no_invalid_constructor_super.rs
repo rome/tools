@@ -80,6 +80,7 @@ impl NoInvalidConstructorSuperState {
             }
         }
     }
+
     fn detail(&self) -> Option<(&TextRange, MarkupBuf)> {
         match self {
             NoInvalidConstructorSuperState::BadExtends { extends_range, .. } => Some((
@@ -150,7 +151,7 @@ impl Rule for NoInvalidConstructorSuper {
 }
 
 fn is_valid_constructor(expression: AnyJsExpression) -> Option<bool> {
-    match expression {
+    match expression.omit_parentheses() {
         AnyJsExpression::JsThisExpression(_)
         | AnyJsExpression::JsFunctionExpression(_)
         | AnyJsExpression::JsCallExpression(_)
@@ -159,6 +160,7 @@ fn is_valid_constructor(expression: AnyJsExpression) -> Option<bool> {
         | AnyJsExpression::JsYieldExpression(_)
         | AnyJsExpression::JsNewExpression(_)
         | AnyJsExpression::JsNewTargetExpression(_)
+        | AnyJsExpression::JsStaticMemberExpression(_)
         | AnyJsExpression::JsClassExpression(_) => Some(true),
         AnyJsExpression::JsIdentifierExpression(identifier) => {
             let name = identifier.name().ok()?;
@@ -176,16 +178,13 @@ fn is_valid_constructor(expression: AnyJsExpression) -> Option<bool> {
             ) {
                 return is_valid_constructor(assignment.right().ok()?);
             }
-
             Some(false)
         }
-
         AnyJsExpression::JsLogicalExpression(expression) => {
             let operator = expression.operator().ok()?;
             if matches!(operator, JsLogicalOperator::LogicalAnd) {
                 return is_valid_constructor(expression.right().ok()?);
             }
-
             is_valid_constructor(expression.left().ok()?)
                 .or_else(|| is_valid_constructor(expression.right().ok()?))
         }
@@ -195,9 +194,6 @@ fn is_valid_constructor(expression: AnyJsExpression) -> Option<bool> {
         }
         AnyJsExpression::JsSequenceExpression(sequence_expression) => {
             is_valid_constructor(sequence_expression.right().ok()?)
-        }
-        AnyJsExpression::JsParenthesizedExpression(expression) => {
-            is_valid_constructor(expression.expression().ok()?)
         }
         _ => Some(false),
     }
