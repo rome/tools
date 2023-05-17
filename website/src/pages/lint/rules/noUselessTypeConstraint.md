@@ -62,7 +62,6 @@ type BarAny<T extends any> = {};
 
 ```ts
 class BazAny<T extends any> {
-  quxAny<U extends any>() {}
 }
 ```
 
@@ -72,8 +71,8 @@ class BazAny<T extends any> {
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>class BazAny&lt;T extends any&gt; {
    <strong>   │ </strong>               <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
-    <strong>2 │ </strong>  quxAny&lt;U extends any&gt;() {}
-    <strong>3 │ </strong>}
+    <strong>2 │ </strong>}
+    <strong>3 │ </strong>
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">All types are subtypes of </span><span style="color: rgb(38, 148, 255);"><strong>any</strong></span><span style="color: rgb(38, 148, 255);"> and </span><span style="color: rgb(38, 148, 255);"><strong>unknown</strong></span><span style="color: rgb(38, 148, 255);">.</span>
   
@@ -81,11 +80,19 @@ class BazAny<T extends any> {
   
 <strong>  </strong><strong>  1 │ </strong>class<span style="opacity: 0.8;">·</span>BazAny&lt;T<span style="opacity: 0.8;">·</span><span style="color: Tomato;">e</span><span style="color: Tomato;">x</span><span style="color: Tomato;">t</span><span style="color: Tomato;">e</span><span style="color: Tomato;">n</span><span style="color: Tomato;">d</span><span style="color: Tomato;">s</span><span style="opacity: 0.8;"><span style="color: Tomato;">·</span></span><span style="color: Tomato;">a</span><span style="color: Tomato;">n</span><span style="color: Tomato;">y</span>&gt;<span style="opacity: 0.8;">·</span>{
 <strong>  </strong><strong>    │ </strong>               <span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span>   
-complexity/noUselessTypeConstraint.js:2:12 <a href="https://docs.rome.tools/lint/rules/noUselessTypeConstraint">lint/complexity/noUselessTypeConstraint</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━
+</code></pre>
+
+```ts
+class BazAny {
+  quxAny<U extends any>() {}
+}
+```
+
+<pre class="language-text"><code class="language-text">complexity/noUselessTypeConstraint.js:2:12 <a href="https://docs.rome.tools/lint/rules/noUselessTypeConstraint">lint/complexity/noUselessTypeConstraint</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Constraining a type parameter to </span><span style="color: Tomato;"><strong>any</strong></span><span style="color: Tomato;"> or </span><span style="color: Tomato;"><strong>unknown</strong></span><span style="color: Tomato;"> is useless.</span>
   
-    <strong>1 │ </strong>class BazAny&lt;T extends any&gt; {
+    <strong>1 │ </strong>class BazAny {
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>  quxAny&lt;U extends any&gt;() {}
    <strong>   │ </strong>           <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
     <strong>3 │ </strong>}
@@ -181,41 +188,27 @@ type BarUnknown<T extends unknown> = {};
 
 ```ts
 class BazUnknown<T extends unknown> {
+}
+```ts,expect_diagnostic
+class BazUnknown {
   quxUnknown<U extends unknown>() {}
 }
 ```
 
-<pre class="language-text"><code class="language-text">complexity/noUselessTypeConstraint.js:1:20 <a href="https://docs.rome.tools/lint/rules/noUselessTypeConstraint">lint/complexity/noUselessTypeConstraint</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━
+<pre class="language-text"><code class="language-text">complexity/noUselessTypeConstraint.js:3:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Constraining a type parameter to </span><span style="color: Tomato;"><strong>any</strong></span><span style="color: Tomato;"> or </span><span style="color: Tomato;"><strong>unknown</strong></span><span style="color: Tomato;"> is useless.</span>
-  
-<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>class BazUnknown&lt;T extends unknown&gt; {
-   <strong>   │ </strong>                   <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
-    <strong>2 │ </strong>  quxUnknown&lt;U extends unknown&gt;() {}
-    <strong>3 │ </strong>}
-  
-<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">All types are subtypes of </span><span style="color: rgb(38, 148, 255);"><strong>any</strong></span><span style="color: rgb(38, 148, 255);"> and </span><span style="color: rgb(38, 148, 255);"><strong>unknown</strong></span><span style="color: rgb(38, 148, 255);">.</span>
-  
-<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove the constraint.</span>
-  
-<strong>  </strong><strong>  1 │ </strong>class<span style="opacity: 0.8;">·</span>BazUnknown&lt;T<span style="opacity: 0.8;">·</span><span style="color: Tomato;">e</span><span style="color: Tomato;">x</span><span style="color: Tomato;">t</span><span style="color: Tomato;">e</span><span style="color: Tomato;">n</span><span style="color: Tomato;">d</span><span style="color: Tomato;">s</span><span style="opacity: 0.8;"><span style="color: Tomato;">·</span></span><span style="color: Tomato;">u</span><span style="color: Tomato;">n</span><span style="color: Tomato;">k</span><span style="color: Tomato;">n</span><span style="color: Tomato;">o</span><span style="color: Tomato;">w</span><span style="color: Tomato;">n</span>&gt;<span style="opacity: 0.8;">·</span>{
-<strong>  </strong><strong>    │ </strong>                   <span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span>   
-complexity/noUselessTypeConstraint.js:2:16 <a href="https://docs.rome.tools/lint/rules/noUselessTypeConstraint">lint/complexity/noUselessTypeConstraint</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━
-
-<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Constraining a type parameter to </span><span style="color: Tomato;"><strong>any</strong></span><span style="color: Tomato;"> or </span><span style="color: Tomato;"><strong>unknown</strong></span><span style="color: Tomato;"> is useless.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">unterminated template literal</span>
   
     <strong>1 │ </strong>class BazUnknown&lt;T extends unknown&gt; {
-<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>  quxUnknown&lt;U extends unknown&gt;() {}
-   <strong>   │ </strong>               <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
-    <strong>3 │ </strong>}
-    <strong>4 │ </strong>
+    <strong>2 │ </strong>}
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>3 │ </strong>```ts,expect_diagnostic
+   <strong>   │ </strong>   <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>4 │ </strong>class BazUnknown {
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>5 │ </strong>  quxUnknown&lt;U extends unknown&gt;() {}
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>6 │ </strong>}
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>7 │ </strong>
+   <strong>   │ </strong>
   
-<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">All types are subtypes of </span><span style="color: rgb(38, 148, 255);"><strong>any</strong></span><span style="color: rgb(38, 148, 255);"> and </span><span style="color: rgb(38, 148, 255);"><strong>unknown</strong></span><span style="color: rgb(38, 148, 255);">.</span>
-  
-<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove the constraint.</span>
-  
-<strong>  </strong><strong>  2 │ </strong><span style="opacity: 0.8;">·</span><span style="opacity: 0.8;">·</span>quxUnknown&lt;U<span style="opacity: 0.8;">·</span><span style="color: Tomato;">e</span><span style="color: Tomato;">x</span><span style="color: Tomato;">t</span><span style="color: Tomato;">e</span><span style="color: Tomato;">n</span><span style="color: Tomato;">d</span><span style="color: Tomato;">s</span><span style="opacity: 0.8;"><span style="color: Tomato;">·</span></span><span style="color: Tomato;">u</span><span style="color: Tomato;">n</span><span style="color: Tomato;">k</span><span style="color: Tomato;">n</span><span style="color: Tomato;">o</span><span style="color: Tomato;">w</span><span style="color: Tomato;">n</span>&gt;()<span style="opacity: 0.8;">·</span>{}
-<strong>  </strong><strong>    │ </strong>               <span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span>      
 </code></pre>
 
 ```ts

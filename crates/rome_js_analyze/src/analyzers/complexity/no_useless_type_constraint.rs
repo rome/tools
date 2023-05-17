@@ -30,6 +30,10 @@ declare_rule! {
     /// ```
     /// ```ts,expect_diagnostic
     /// class BazAny<T extends any> {
+    /// }
+    /// ```
+    /// ```ts,expect_diagnostic
+    /// class BazAny {
     ///   quxAny<U extends any>() {}
     /// }
     /// ```
@@ -48,6 +52,9 @@ declare_rule! {
     /// ```
     /// ```ts,expect_diagnostic
     /// class BazUnknown<T extends unknown> {
+    /// }
+    /// ```ts,expect_diagnostic
+    /// class BazUnknown {
     ///   quxUnknown<U extends unknown>() {}
     /// }
     /// ```
