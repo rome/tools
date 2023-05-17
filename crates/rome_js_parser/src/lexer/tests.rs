@@ -1311,6 +1311,7 @@ fn keywords() {
         "abstract",
         "as",
         "asserts",
+        "assert",
         "any",
         "async",
         "await",
