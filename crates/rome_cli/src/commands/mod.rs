@@ -132,7 +132,7 @@ pub enum RomeCommand {
     Init,
     /// Acts as a server for the Language Server Protocol over stdin/stdout
     #[bpaf(command("lsp-proxy"))]
-    LspProxy,
+    LspProxy(#[bpaf(external(cli_options))] CliOptions),
     /// It updates the configuration when there are breaking changes
     #[bpaf(command)]
     Migrate(
@@ -162,7 +162,7 @@ impl RomeCommand {
             RomeCommand::Ci { cli_options, .. } => cli_options.colors.as_ref(),
             RomeCommand::Format { cli_options, .. } => cli_options.colors.as_ref(),
             RomeCommand::Init => None,
-            RomeCommand::LspProxy => None,
+            RomeCommand::LspProxy(cli_options) => cli_options.colors.as_ref(),
             RomeCommand::Migrate(cli_options, _) => cli_options.colors.as_ref(),
             RomeCommand::RunServer { .. } => None,
             RomeCommand::PrintSocket => None,
@@ -179,7 +179,7 @@ impl RomeCommand {
             RomeCommand::Ci { cli_options, .. } => cli_options.use_server,
             RomeCommand::Format { cli_options, .. } => cli_options.use_server,
             RomeCommand::Init => false,
-            RomeCommand::LspProxy => false,
+            RomeCommand::LspProxy(cli_options) => cli_options.use_server,
             RomeCommand::Migrate(cli_options, _) => cli_options.use_server,
             RomeCommand::RunServer { .. } => false,
             RomeCommand::PrintSocket => false,
