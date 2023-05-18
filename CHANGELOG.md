@@ -18,8 +18,18 @@ was defined [#4479](https://github.com/rome/tools/issues/4479)
 
 ### Editors
 ### Formatter
+
+#### Other changes
+
+- Revert [#4359](https://github.com/rome/tools/issues/4359)
+
 ### Linter
 ### Parser
+
+#### Other changes
+
+- Revert [#4359](https://github.com/rome/tools/issues/4359)
+
 ### VSCode
 ### JavaScript APIs
 
