@@ -282,6 +282,13 @@
 						{ "type": "null" }
 					]
 				},
+				"noUselessTypeConstraint": {
+					"description": "Disallow using any or unknown as type constraint.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"noWith": {
 					"description": "Disallow with statements in non-strict contexts.",
 					"anyOf": [
