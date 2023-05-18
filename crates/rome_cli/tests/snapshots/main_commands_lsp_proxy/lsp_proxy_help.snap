@@ -7,9 +7,22 @@ expression: content
 ```block
 Acts as a server for the Language Server Protocol over stdin/stdout
 
+Usage: [--colors off|force] [[--use-server]] [[--verbose]] [--config-path PATH] [--max-diagnostics
+NUMBER] [--skip-errors]
 
 Available options:
-    -h, --help  Prints help information
+        --colors <off|force>  Set the formatting mode for markup: "off" prints everything as plain
+                       text, "force" forces the formatting of markup using ANSI even if the console
+                       output is determined to be incompatible
+        --use-server   Connect to a running instance of the Rome daemon server.
+        --verbose      Print additional verbose advices on diagnostics
+        --config-path <PATH>  Set the filesystem path to the directory of the rome.json configuration
+                       file
+        --max-diagnostics <NUMBER>  Cap the amount of diagnostics displayed (default: 20)
+        --skip-errors  Skip over files containing syntax errors instead of emitting an error
+                       diagnostic.
+        --json         Reports information using the JSON format
+    -h, --help         Prints help information
 
 ```
 
