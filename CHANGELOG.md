@@ -3,6 +3,11 @@
 ## [Unreleased]
 
 ### CLI
+
+#### Other changes
+
+- `rome lsp-proxy` should accept the global CLI options [#4505](https://github.com/rome/tools/issues/4505)
+
 ### Configuration
 ### Editors
 ### Formatter
