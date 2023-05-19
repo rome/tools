@@ -72,7 +72,7 @@ jobs:
           comment="${comment//'%'/'%25'}"
           comment="${comment//$'\n'/'%0A'}"
           comment="${comment//$'\r'/'%0D'}"
-          echo "::set-output name=comment::$comment"
+          echo "comment=$comment" >> $GITHUB_OUTPUT
 
       - name: Get the PR number
         if: github.event_name == 'pull_request'
