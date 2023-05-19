@@ -447,7 +447,17 @@ fn generate_struct(group: &str, rules: &BTreeMap<&'static str, RuleMetadata>) ->
     let group_struct_name = Ident::new(&group.to_capitalized(), Span::call_site());
 
     let number_of_recommended_rules = Literal::u8_unsuffixed(number_of_recommended_rules);
-
+    let (group_recommended, parent_parameter) = if group == "nursery" {
+        (
+            quote! { self.is_recommended() },
+            quote! { _parent_is_recommended: bool, },
+        )
+    } else {
+        (
+            quote! { parent_is_recommended || self.is_recommended() },
+            quote! { parent_is_recommended: bool, },
+        )
+    };
     quote! {
         #[derive(Deserialize, Default, Serialize, Debug, Clone, Bpaf)]
         #[cfg_attr(feature = "schemars", derive(JsonSchema))]
@@ -537,13 +547,13 @@ fn generate_struct(group: &str, rules: &BTreeMap<&'static str, RuleMetadata>) ->
             /// Select preset rules
             pub(crate) fn collect_preset_rules(
                 &self,
-                parent_is_recommended: bool,
+                #parent_parameter
                 enabled_rules: &mut IndexSet<RuleFilter>,
                 disabled_rules: &mut IndexSet<RuleFilter>,
             ) {
                 if self.is_all() {
                     enabled_rules.extend(Self::all_rules_as_filters());
-                } else if parent_is_recommended || self.is_recommended() {
+                } else if #group_recommended {
                     enabled_rules.extend(Self::recommended_rules_as_filters());
                 }
                 if self.is_not_all() {

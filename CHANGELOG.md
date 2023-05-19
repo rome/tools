@@ -9,6 +9,12 @@
 - `rome lsp-proxy` should accept the global CLI options [#4505](https://github.com/rome/tools/issues/4505)
 
 ### Configuration
+
+#### Other changes
+
+- Fix an issue where all the `nursery` were enabled when the `"nursery": {}` object
+was defined [#4479](https://github.com/rome/tools/issues/4479)
+
 ### Editors
 ### Formatter
 ### Linter

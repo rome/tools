@@ -2219,13 +2219,13 @@ impl Nursery {
     #[doc = r" Select preset rules"]
     pub(crate) fn collect_preset_rules(
         &self,
-        parent_is_recommended: bool,
+        _parent_is_recommended: bool,
         enabled_rules: &mut IndexSet<RuleFilter>,
         disabled_rules: &mut IndexSet<RuleFilter>,
     ) {
         if self.is_all() {
             enabled_rules.extend(Self::all_rules_as_filters());
-        } else if parent_is_recommended || self.is_recommended() {
+        } else if self.is_recommended() {
             enabled_rules.extend(Self::recommended_rules_as_filters());
         }
         if self.is_not_all() {
