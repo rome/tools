@@ -21,27 +21,66 @@ Source: https://eslint.org/docs/latest/rules/rule-name
 ### Invalid
 
 ```jsx
-var a = 1;
-a = 2;
+class X {
+  static foo = false;
+  static bar() {};
+}
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noStaticOnlyClass.js:2:1 <a href="https://docs.rome.tools/lint/rules/noStaticOnlyClass">lint/nursery/noStaticOnlyClass</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">nursery/noStaticOnlyClass.js:1:7 <a href="https://docs.rome.tools/lint/rules/noStaticOnlyClass">lint/nursery/noStaticOnlyClass</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Variable is read here.</span>
+<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Don't use static classes as namespaces.</span>
   
-    <strong>1 │ </strong>var a = 1;
-<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>a = 2;
-   <strong>   │ </strong><strong><span style="color: Tomato;">^</span></strong>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>class X {
+   <strong>   │ </strong>      <strong><span style="color: Tomato;">^</span></strong>
+    <strong>2 │ </strong>  static foo = false;
+    <strong>3 │ </strong>  static bar() {};
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Consider using a module or a plain object instead.</span>
+  
+</code></pre>
+
+```jsx
+class StaticConstants {
+  static readonly version = 42;
+
+  static isProduction() {
+    return process.env.NODE_ENV === 'production';
+  }
+}
+```
+
+<pre class="language-text"><code class="language-text">nursery/noStaticOnlyClass.js:2:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">'readonly' modifier can only be used in TypeScript files</span>
+  
+    <strong>1 │ </strong>class StaticConstants {
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>  static readonly version = 42;
+   <strong>   │ </strong>         <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
     <strong>3 │ </strong>
-  
-<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">This note will give you more information.</span>
+    <strong>4 │ </strong>  static isProduction() {
   
 </code></pre>
 
 ## Valid
 
 ```jsx
-var a = 1;
+const X = {
+  foo: false,
+  bar() {}
+};
+```
+
+```jsx
+export const version = 42;
+
+export function isProduction() {
+  return process.env.NODE_ENV === 'production';
+}
+
+function logHelloWorld() {
+  console.log('Hello, world!');
+}
 ```
 
 ## Related links
