@@ -97,6 +97,7 @@ define_categories! {
     "lint/nursery/useLiteralEnumMembers": "https://docs.rome.tools/lint/rules/useLiteralEnumMembers",
     "lint/nursery/useLiteralKeys": "https://docs.rome.tools/lint/rules/useLiteralKeys",
 "lint/nursery/useSimpleNumberKeys": "https://docs.rome.tools/lint/rules/useSimpleNumberKeys",
+"lint/nursery/noStaticOnlyClass": "https://docs.rome.tools/lint/rules/noStaticOnlyClass",
     // Insert new nursery rule here
 
 

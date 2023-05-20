@@ -530,6 +530,10 @@ export interface Nursery {
 	 */
 	noSelfAssign?: RuleConfiguration;
 	/**
+	 * Succinct description of the rule.
+	 */
+	noStaticOnlyClass?: RuleConfiguration;
+	/**
 	 * It enables the recommended rules for this group
 	 */
 	recommended?: boolean;
@@ -1034,6 +1038,7 @@ export type Category =
 	| "lint/nursery/useLiteralEnumMembers"
 	| "lint/nursery/useLiteralKeys"
 	| "lint/nursery/useSimpleNumberKeys"
+	| "lint/nursery/noStaticOnlyClass"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"
