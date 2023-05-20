@@ -1,0 +1,141 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 96
+expression: invalid.ts
+---
+# Input
+```js
+class X0 {
+	static foo = false;
+	static bar() { }
+}
+
+class X1 {
+	static #foo = false;
+	static bar() {}
+}
+
+const X2 = class {
+	static foo = false;
+};
+
+const X3 = class A {
+	static foo = false;
+};
+
+export default class {
+	static foo = false;
+}
+
+class StaticConstants0 {
+  static readonly version = 42;
+
+  static isProduction() {
+    return Math.random() > 0.5;
+  }
+}
+
+```
+
+# Diagnostics
+```
+invalid.ts:1:7 lint/style/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use static classes as namespaces.
+  
+  > 1 │ class X0 {
+      │       ^^
+    2 │ 	static foo = false;
+    3 │ 	static bar() { }
+  
+  i Consider using a module or a plain object instead.
+  
+
+```
+
+```
+invalid.ts:6:7 lint/style/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use static classes as namespaces.
+  
+    4 │ }
+    5 │ 
+  > 6 │ class X1 {
+      │       ^^
+    7 │ 	static #foo = false;
+    8 │ 	static bar() {}
+  
+  i Consider using a module or a plain object instead.
+  
+
+```
+
+```
+invalid.ts:11:12 lint/style/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use static classes as namespaces.
+  
+     9 │ }
+    10 │ 
+  > 11 │ const X2 = class {
+       │            ^^^^^
+    12 │ 	static foo = false;
+    13 │ };
+  
+  i Consider using a module or a plain object instead.
+  
+
+```
+
+```
+invalid.ts:15:18 lint/style/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use static classes as namespaces.
+  
+    13 │ };
+    14 │ 
+  > 15 │ const X3 = class A {
+       │                  ^
+    16 │ 	static foo = false;
+    17 │ };
+  
+  i Consider using a module or a plain object instead.
+  
+
+```
+
+```
+invalid.ts:19:16 lint/style/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use static classes as namespaces.
+  
+    17 │ };
+    18 │ 
+  > 19 │ export default class {
+       │                ^^^^^
+    20 │ 	static foo = false;
+    21 │ }
+  
+  i Consider using a module or a plain object instead.
+  
+
+```
+
+```
+invalid.ts:23:7 lint/style/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use static classes as namespaces.
+  
+    21 │ }
+    22 │ 
+  > 23 │ class StaticConstants0 {
+       │       ^^^^^^^^^^^^^^^^
+    24 │   static readonly version = 42;
+    25 │ 
+  
+  i Consider using a module or a plain object instead.
+  
+
+```
+
+
