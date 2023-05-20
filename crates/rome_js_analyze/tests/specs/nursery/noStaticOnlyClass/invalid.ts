@@ -21,9 +21,9 @@ export default class {
 }
 
 class StaticConstants0 {
-  static readonly version = 42;
+	static readonly version = 42;
 
-  static isProduction() {
-    return Math.random() > 0.5;
-  }
+	static isProduction() {
+		return Math.random() > 0.5;
+	}
 }

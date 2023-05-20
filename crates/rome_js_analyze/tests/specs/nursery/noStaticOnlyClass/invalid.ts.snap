@@ -28,18 +28,18 @@ export default class {
 }
 
 class StaticConstants0 {
-  static readonly version = 42;
+	static readonly version = 42;
 
-  static isProduction() {
-    return Math.random() > 0.5;
-  }
+	static isProduction() {
+		return Math.random() > 0.5;
+	}
 }
 
 ```
 
 # Diagnostics
 ```
-invalid.ts:1:7 lint/style/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:1:7 lint/nursery/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! A class that includes only static members is confusing.
   
@@ -54,7 +54,7 @@ invalid.ts:1:7 lint/style/noStaticOnlyClass ━━━━━━━━━━━━
 ```
 
 ```
-invalid.ts:6:7 lint/style/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:6:7 lint/nursery/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! A class that includes only static members is confusing.
   
@@ -71,7 +71,7 @@ invalid.ts:6:7 lint/style/noStaticOnlyClass ━━━━━━━━━━━━
 ```
 
 ```
-invalid.ts:11:12 lint/style/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:11:12 lint/nursery/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! A class that includes only static members is confusing.
   
@@ -88,7 +88,7 @@ invalid.ts:11:12 lint/style/noStaticOnlyClass ━━━━━━━━━━━�
 ```
 
 ```
-invalid.ts:15:18 lint/style/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:15:18 lint/nursery/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! A class that includes only static members is confusing.
   
@@ -105,7 +105,7 @@ invalid.ts:15:18 lint/style/noStaticOnlyClass ━━━━━━━━━━━�
 ```
 
 ```
-invalid.ts:19:16 lint/style/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:19:16 lint/nursery/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! A class that includes only static members is confusing.
   
@@ -122,7 +122,7 @@ invalid.ts:19:16 lint/style/noStaticOnlyClass ━━━━━━━━━━━�
 ```
 
 ```
-invalid.ts:23:7 lint/style/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:23:7 lint/nursery/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! A class that includes only static members is confusing.
   
@@ -130,7 +130,7 @@ invalid.ts:23:7 lint/style/noStaticOnlyClass ━━━━━━━━━━━�
     22 │ 
   > 23 │ class StaticConstants0 {
        │       ^^^^^^^^^^^^^^^^
-    24 │   static readonly version = 42;
+    24 │ 	static readonly version = 42;
     25 │ 
   
   i Consider using a module or a plain object instead.

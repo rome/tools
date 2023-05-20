@@ -27,19 +27,19 @@ class X4 {
 }
 
 class HelloWorldLogger {
-  constructor() {
-    console.log('Hello, world!');
-  }
+	constructor() {
+		console.log('Hello, world!');
+	}
 }
 
 export const version = 42;
 
 export function isProduction() {
-  return Math.random() > 0.5;
+	return Math.random() > 0.5;
 }
 
 function logHelloWorld() {
-  console.log('Hello, world!');
+	console.log('Hello, world!');
 }
 
 const X5 = class {
@@ -51,16 +51,16 @@ export default class {
 }
 
 function sealed(ctor, _ctx) {
-  Object.seal(ctor);
-  Object.seal(ctor.prototype);
+	Object.seal(ctor);
+	Object.seal(ctor.prototype);
 }
 
 // A decorator should prevent the class from being seen as "static-only"
 @sealed
 class StaticConstants1 {
-  static readonly version = 42;
+	static readonly version = 42;
 
-  static isProduction() {
-    return Math.random() > 0.5;
-  }
+	static isProduction() {
+		return Math.random() > 0.5;
+	}
 }
