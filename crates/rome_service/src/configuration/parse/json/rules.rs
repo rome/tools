@@ -1378,7 +1378,6 @@ impl VisitNode<JsonLanguage> for Nursery {
                 "noNoninteractiveTabindex",
                 "noRedundantRoles",
                 "noSelfAssign",
-                "noStaticOnlyClass",
                 "useAriaPropTypes",
                 "useCamelCase",
                 "useExhaustiveDependencies",
@@ -1598,24 +1597,6 @@ impl VisitNode<JsonLanguage> for Nursery {
                     let mut configuration = RuleConfiguration::default();
                     self.map_to_object(&value, name_text, &mut configuration, diagnostics)?;
                     self.no_self_assign = Some(configuration);
-                }
-                _ => {
-                    diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
-                        "object or string",
-                        value.range(),
-                    ));
-                }
-            },
-            "noStaticOnlyClass" => match value {
-                AnyJsonValue::JsonStringValue(_) => {
-                    let mut configuration = RuleConfiguration::default();
-                    self.map_to_known_string(&value, name_text, &mut configuration, diagnostics)?;
-                    self.no_static_only_class = Some(configuration);
-                }
-                AnyJsonValue::JsonObjectValue(_) => {
-                    let mut configuration = RuleConfiguration::default();
-                    self.map_to_object(&value, name_text, &mut configuration, diagnostics)?;
-                    self.no_static_only_class = Some(configuration);
                 }
                 _ => {
                     diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
@@ -1953,6 +1934,7 @@ impl VisitNode<JsonLanguage> for Style {
                 "noParameterProperties",
                 "noRestrictedGlobals",
                 "noShoutyConstants",
+                "noStaticOnlyClass",
                 "noUnusedTemplateLiteral",
                 "noVar",
                 "useBlockStatements",
@@ -2177,6 +2159,24 @@ impl VisitNode<JsonLanguage> for Style {
                     let mut configuration = RuleConfiguration::default();
                     self.map_to_object(&value, name_text, &mut configuration, diagnostics)?;
                     self.no_shouty_constants = Some(configuration);
+                }
+                _ => {
+                    diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
+                        "object or string",
+                        value.range(),
+                    ));
+                }
+            },
+            "noStaticOnlyClass" => match value {
+                AnyJsonValue::JsonStringValue(_) => {
+                    let mut configuration = RuleConfiguration::default();
+                    self.map_to_known_string(&value, name_text, &mut configuration, diagnostics)?;
+                    self.no_static_only_class = Some(configuration);
+                }
+                AnyJsonValue::JsonObjectValue(_) => {
+                    let mut configuration = RuleConfiguration::default();
+                    self.map_to_object(&value, name_text, &mut configuration, diagnostics)?;
+                    self.no_static_only_class = Some(configuration);
                 }
                 _ => {
                     diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
