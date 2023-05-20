@@ -2687,12 +2687,13 @@ impl Style {
         "useTemplate",
         "useWhile",
     ];
-    const RECOMMENDED_RULES: [&'static str; 15] = [
+    const RECOMMENDED_RULES: [&'static str; 16] = [
         "noArguments",
         "noCommaOperator",
         "noInferrableTypes",
         "noNonNullAssertion",
         "noParameterAssign",
+        "noStaticOnlyClass",
         "noUnusedTemplateLiteral",
         "noVar",
         "useConst",
@@ -2704,12 +2705,13 @@ impl Style {
         "useTemplate",
         "useWhile",
     ];
-    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 15] = [
+    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 16] = [
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[0]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[1]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[3]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[6]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[7]),
+        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[11]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[12]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[13]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[15]),
@@ -3041,7 +3043,7 @@ impl Style {
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
     }
-    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 15] {
+    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 16] {
         Self::RECOMMENDED_RULES_AS_FILTERS
     }
     pub(crate) fn all_rules_as_filters() -> [RuleFilter<'static>; 27] { Self::ALL_RULES_AS_FILTERS }

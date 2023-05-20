@@ -5,6 +5,8 @@ parent: lint/rules/index
 
 # noStaticOnlyClass (since vnext)
 
+> This rule is recommended by Rome.
+
 Succinct description of the rule.
 
 Put context and details about the rule.
@@ -29,7 +31,7 @@ class X {
 
 <pre class="language-text"><code class="language-text">style/noStaticOnlyClass.js:1:7 <a href="https://docs.rome.tools/lint/rules/noStaticOnlyClass">lint/style/noStaticOnlyClass</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Don't use static classes as namespaces.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">A class that includes only </span><span style="color: Tomato;"><strong>static members</strong></span><span style="color: Tomato;"> is confusing.</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>class X {
    <strong>   │ </strong>      <strong><span style="color: Tomato;">^</span></strong>

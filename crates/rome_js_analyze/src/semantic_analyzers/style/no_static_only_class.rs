@@ -1,5 +1,4 @@
-use crate::semantic_services::Semantic;
-use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleDiagnostic};
+use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::{AnyJsClass, AnyJsClassMember};
 use rome_rowan::{AstNode, AstNodeList};
@@ -59,12 +58,12 @@ declare_rule! {
     pub(crate) NoStaticOnlyClass {
         version: "next",
         name: "noStaticOnlyClass",
-        recommended: false,
+        recommended: true,
     }
 }
 
 impl Rule for NoStaticOnlyClass {
-    type Query = Semantic<AnyJsClass>;
+    type Query = Ast<AnyJsClass>;
     type State = ();
     type Signals = Option<Self::State>;
     type Options = ();
@@ -83,9 +82,10 @@ impl Rule for NoStaticOnlyClass {
                 .into_iter()
                 .all(|member| match member {
                     // TODO: Clean up this mess
-                    AnyJsClassMember::JsBogusMember(_) => true, // TODO: What is this?
-                    AnyJsClassMember::JsConstructorClassMember(_) => false, // See GH#4482: Constructors are not regarded as static
+                    AnyJsClassMember::JsBogusMember(_) => false,
                     AnyJsClassMember::JsEmptyClassMember(_) => true, // treat this as static, since it doesn't do anything
+                    AnyJsClassMember::JsConstructorClassMember(_) => false, // See GH#4482: Constructors are not regarded as static
+                    AnyJsClassMember::TsConstructorSignatureClassMember(_) => false, // See GH#4482: Constructors are not regarded as static
                     AnyJsClassMember::JsGetterClassMember(m) => m
                         .modifiers()
                         .iter()
@@ -103,7 +103,6 @@ impl Rule for NoStaticOnlyClass {
                         .iter()
                         .any(|modifier| modifier.as_js_static_modifier().is_some()),
                     AnyJsClassMember::JsStaticInitializationBlockClassMember(_) => true, // See GH#4482: Static initialization blocks are regarded as static
-                    AnyJsClassMember::TsConstructorSignatureClassMember(_) => false, // TODO: What to do with TS types?
                     AnyJsClassMember::TsGetterSignatureClassMember(m) => m
                         .modifiers()
                         .iter()
@@ -140,20 +139,21 @@ impl Rule for NoStaticOnlyClass {
         let class_declaration = ctx.query();
         let class_keyword = class_declaration.class_token().ok()?;
 
-        let diagnostic_node = class_declaration
+        // As this rule matches against classes and anonymous classes (class expressions),
+        // we highlight the class keyword if it has no identifier
+        let range = class_declaration
             .id()
             .ok()?
             .map_or(class_keyword.text_trimmed_range(), |id| {
                 id.syntax().text_trimmed_range()
             });
 
-        // TODO: Wording
         Some(
             RuleDiagnostic::new(
                 rule_category!(),
-                diagnostic_node,
+                range,
                 markup! {
-                    "Don't use static classes as namespaces."
+                    "A class that includes only "<Emphasis>"static members"</Emphasis>" is confusing."
                 },
             )
             .note(markup! {

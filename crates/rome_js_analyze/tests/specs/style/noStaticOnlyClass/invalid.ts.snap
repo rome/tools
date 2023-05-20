@@ -41,7 +41,7 @@ class StaticConstants0 {
 ```
 invalid.ts:1:7 lint/style/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Don't use static classes as namespaces.
+  ! A class that includes only static members is confusing.
   
   > 1 │ class X0 {
       │       ^^
@@ -56,7 +56,7 @@ invalid.ts:1:7 lint/style/noStaticOnlyClass ━━━━━━━━━━━━
 ```
 invalid.ts:6:7 lint/style/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Don't use static classes as namespaces.
+  ! A class that includes only static members is confusing.
   
     4 │ }
     5 │ 
@@ -73,7 +73,7 @@ invalid.ts:6:7 lint/style/noStaticOnlyClass ━━━━━━━━━━━━
 ```
 invalid.ts:11:12 lint/style/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Don't use static classes as namespaces.
+  ! A class that includes only static members is confusing.
   
      9 │ }
     10 │ 
@@ -90,7 +90,7 @@ invalid.ts:11:12 lint/style/noStaticOnlyClass ━━━━━━━━━━━�
 ```
 invalid.ts:15:18 lint/style/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Don't use static classes as namespaces.
+  ! A class that includes only static members is confusing.
   
     13 │ };
     14 │ 
@@ -107,7 +107,7 @@ invalid.ts:15:18 lint/style/noStaticOnlyClass ━━━━━━━━━━━�
 ```
 invalid.ts:19:16 lint/style/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Don't use static classes as namespaces.
+  ! A class that includes only static members is confusing.
   
     17 │ };
     18 │ 
@@ -124,7 +124,7 @@ invalid.ts:19:16 lint/style/noStaticOnlyClass ━━━━━━━━━━━�
 ```
 invalid.ts:23:7 lint/style/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Don't use static classes as namespaces.
+  ! A class that includes only static members is confusing.
   
     21 │ }
     22 │ 
