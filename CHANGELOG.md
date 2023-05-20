@@ -6,7 +6,13 @@
 ### Configuration
 ### Editors
 ### Formatter
+
 ### Linter
+
+#### Other changes
+
+- `noRedeclare`: allow redeclare of index signatures are in different type members [#4478](https://github.com/rome/tools/issues/4478)
+
 ### Parser
 ### VSCode
 ### JavaScript APIs
@@ -35,7 +41,6 @@ was defined [#4479](https://github.com/rome/tools/issues/4479)
 
 - Fix false positive diagnostics ([#4483](https://github.com/rome/tools/issues/4483)) that [`useHookAtTopLevel`](https://docs.rome.tools/lint/rules/usehookattoplevel/) caused to returning call expressions of a hook.
 - Revert [#4359](https://github.com/rome/tools/issues/4359)
-
 
 ### Parser
 

@@ -66,4 +66,9 @@ class C { static { let a; { let a; } } }
 class C { static { { let a; } { let a; } } }
 ```
 
+# Input
+```js
+interface A { [index: string]: string; [index: number]: string; }
+```
+
 
