@@ -13,21 +13,21 @@ homepage.workspace = true
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-rome_json_syntax = {  version = "0.0.1", path = "../rome_json_syntax" }
-rome_formatter = {  version = "0.0.1", path = "../rome_formatter" }
-rome_rowan = {  version = "0.0.1", path = "../rome_rowan" }
+rome_json_syntax = { workspace = true }
+rome_formatter = {  workspace = true }
+rome_rowan = { workspace = true }
 
 [dev-dependencies]
-rome_parser = { version = "0.0.1", path = "../rome_parser" }
-rome_formatter_test = {path = "../rome_formatter_test"}
-rome_fs = { path = "../rome_fs" }
-rome_json_parser = { path = "../rome_json_parser" }
-rome_json_factory = { path = "../rome_json_factory" }
+rome_parser = { workspace = true }
+rome_formatter_test = { workspace = true }
+rome_fs = { workspace = true }
+rome_json_parser = { workspace = true }
+rome_json_factory = { workspace = true }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
-tests_macros = { path = "../tests_macros" }
+tests_macros = { workspace = true }
 insta = { workspace = true, features = ["glob"] }
-rome_diagnostics = { path = "../rome_diagnostics" }
+rome_diagnostics = { workspace = true }
 countme = { workspace = true, features = ["enable"] }
 
 # cargo-workspaces metadata

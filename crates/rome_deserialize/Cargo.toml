@@ -9,12 +9,12 @@ license.workspace = true
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-rome_console = { path = "../rome_console" }
-rome_diagnostics = { path = "../rome_diagnostics"}
-rome_json_parser = { path = "../rome_json_parser" }
-rome_json_syntax = { path = "../rome_json_syntax" }
+rome_console = { workspace = true }
+rome_diagnostics = { workspace = true }
+rome_json_parser = { workspace = true }
+rome_json_syntax = { workspace = true }
 tracing = { workspace = true }
 indexmap = { workspace = true }
-rome_rowan = { path = "../rome_rowan" }
+rome_rowan = { workspace = true }
 serde = "1.0.150"
 serde_json = "1.0.89"

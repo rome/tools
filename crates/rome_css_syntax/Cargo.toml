@@ -10,4 +10,4 @@ license.workspace = true
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-rome_rowan = { path = "../rome_rowan" }
+rome_rowan.workspace = true

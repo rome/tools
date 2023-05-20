@@ -13,11 +13,11 @@ rustc-hash = { workspace = true }
 hashbrown = { version = "0.12.3", features = [
     "inline-more",
 ], default-features = false }
-rome_text_size = { version = "0.0.1", path = "../rome_text_size"}
+rome_text_size = { workspace = true }
 memoffset = "0.8.0"
 countme = { workspace = true }
 serde = { version = "1.0.133", optional = true, default-features = false }
-rome_text_edit = { version = "0.0.1", path = "../rome_text_edit" }
+rome_text_edit = { workspace = true }
 schemars = { version = "0.8.10", optional = true }
 tracing = { workspace = true }
 

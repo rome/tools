@@ -10,5 +10,5 @@ license.workspace = true
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-rome_rowan = { path = "../rome_rowan" }
-rome_css_syntax = { path = "../rome_css_syntax" }
+rome_rowan.workspace = true
+rome_css_syntax.workspace = true
