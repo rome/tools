@@ -81,7 +81,6 @@ impl Rule for NoStaticOnlyClass {
                 .members()
                 .into_iter()
                 .all(|member| match member {
-                    // TODO: Clean up this mess
                     AnyJsClassMember::JsBogusMember(_) => false,
                     AnyJsClassMember::JsEmptyClassMember(_) => true, // treat this as static, since it doesn't do anything
                     AnyJsClassMember::JsConstructorClassMember(_) => false, // See GH#4482: Constructors are not regarded as static
