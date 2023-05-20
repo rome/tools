@@ -83,6 +83,10 @@ function logHelloWorld() {
 }
 ```
 
+```jsx
+class Empty {}
+```
+
 ## Related links
 
 - [Disable a rule](/linter/#disable-a-lint-rule)
