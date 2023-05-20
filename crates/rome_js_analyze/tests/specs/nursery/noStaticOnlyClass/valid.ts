@@ -64,3 +64,5 @@ class StaticConstants1 {
 		return Math.random() > 0.5;
 	}
 }
+
+class Empty {}

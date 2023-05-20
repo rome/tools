@@ -72,6 +72,8 @@ class StaticConstants1 {
 	}
 }
 
+class Empty {}
+
 ```
 
 

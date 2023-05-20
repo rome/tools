@@ -54,6 +54,9 @@ declare_rule! {
     ///   console.log('Hello, world!');
     /// }
     /// ```
+    /// ```js
+    /// class Empty {}
+    /// ```
     ///
     pub(crate) NoStaticOnlyClass {
         version: "next",
@@ -71,7 +74,13 @@ impl Rule for NoStaticOnlyClass {
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let class_declaration = ctx.query();
 
-        // If the class has decorators, we can't be sure that the suer can use a module-based approach instead
+        // If the class is empty, we can't be sure that the user can use a module-based approach instead
+        // Also, the user might be in the process of writing a class, so we won't warn them yet
+        if class_declaration.members().len() == 0 {
+            return None;
+        }
+
+        // If the class has decorators, we can't be sure that the user can use a module-based approach instead
         if class_declaration.decorators().len() > 0 {
             return None;
         }
