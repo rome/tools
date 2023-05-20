@@ -530,6 +530,10 @@ export interface Nursery {
 	 */
 	noSelfAssign?: RuleConfiguration;
 	/**
+	 * Succinct description of the rule.
+	 */
+	noStaticOnlyClass?: RuleConfiguration;
+	/**
 	 * It enables the recommended rules for this group
 	 */
 	recommended?: boolean;
@@ -664,10 +668,6 @@ export interface Style {
 	 * Disallow the use of constants which its value is the upper-case version of its name.
 	 */
 	noShoutyConstants?: RuleConfiguration;
-	/**
-	 * Succinct description of the rule.
-	 */
-	noStaticOnlyClass?: RuleConfiguration;
 	/**
 	 * Disallow template literals if interpolation and special-character handling are not needed
 	 */
@@ -1038,7 +1038,7 @@ export type Category =
 	| "lint/nursery/useLiteralEnumMembers"
 	| "lint/nursery/useLiteralKeys"
 	| "lint/nursery/useSimpleNumberKeys"
-	| "lint/style/noStaticOnlyClass"
+	| "lint/nursery/noStaticOnlyClass"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"

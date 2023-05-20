@@ -5,8 +5,6 @@ parent: lint/rules/index
 
 # noStaticOnlyClass (since vnext)
 
-> This rule is recommended by Rome.
-
 Succinct description of the rule.
 
 Put context and details about the rule.
@@ -29,7 +27,7 @@ class X {
 }
 ```
 
-<pre class="language-text"><code class="language-text">style/noStaticOnlyClass.js:1:7 <a href="https://docs.rome.tools/lint/rules/noStaticOnlyClass">lint/style/noStaticOnlyClass</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">nursery/noStaticOnlyClass.js:1:7 <a href="https://docs.rome.tools/lint/rules/noStaticOnlyClass">lint/nursery/noStaticOnlyClass</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">A class that includes only </span><span style="color: Tomato;"><strong>static members</strong></span><span style="color: Tomato;"> is confusing.</span>
   
@@ -52,7 +50,7 @@ class StaticConstants {
 }
 ```
 
-<pre class="language-text"><code class="language-text">style/noStaticOnlyClass.js:2:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">nursery/noStaticOnlyClass.js:2:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">'readonly' modifier can only be used in TypeScript files</span>
   
