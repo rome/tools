@@ -41,14 +41,14 @@ class StaticConstants0 {
 ```
 invalid.ts:1:7 lint/nursery/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! A class that includes only static members is confusing.
+  ! Avoid classes that contain only static fields
   
   > 1 │ class X0 {
       │       ^^
     2 │ 	static foo = false;
     3 │ 	static bar() { }
   
-  i Consider using a module or a plain object instead.
+  i Prefer using simple functions instead of classes with only static fields
   
 
 ```
@@ -56,7 +56,7 @@ invalid.ts:1:7 lint/nursery/noStaticOnlyClass ━━━━━━━━━━━�
 ```
 invalid.ts:6:7 lint/nursery/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! A class that includes only static members is confusing.
+  ! Avoid classes that contain only static fields
   
     4 │ }
     5 │ 
@@ -65,7 +65,7 @@ invalid.ts:6:7 lint/nursery/noStaticOnlyClass ━━━━━━━━━━━�
     7 │ 	static #foo = false;
     8 │ 	static bar() {}
   
-  i Consider using a module or a plain object instead.
+  i Prefer using simple functions instead of classes with only static fields
   
 
 ```
@@ -73,7 +73,7 @@ invalid.ts:6:7 lint/nursery/noStaticOnlyClass ━━━━━━━━━━━�
 ```
 invalid.ts:11:12 lint/nursery/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! A class that includes only static members is confusing.
+  ! Avoid classes that contain only static fields
   
      9 │ }
     10 │ 
@@ -82,7 +82,7 @@ invalid.ts:11:12 lint/nursery/noStaticOnlyClass ━━━━━━━━━━�
     12 │ 	static foo = false;
     13 │ };
   
-  i Consider using a module or a plain object instead.
+  i Prefer using simple functions instead of classes with only static fields
   
 
 ```
@@ -90,7 +90,7 @@ invalid.ts:11:12 lint/nursery/noStaticOnlyClass ━━━━━━━━━━�
 ```
 invalid.ts:15:18 lint/nursery/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! A class that includes only static members is confusing.
+  ! Avoid classes that contain only static fields
   
     13 │ };
     14 │ 
@@ -99,7 +99,7 @@ invalid.ts:15:18 lint/nursery/noStaticOnlyClass ━━━━━━━━━━�
     16 │ 	static foo = false;
     17 │ };
   
-  i Consider using a module or a plain object instead.
+  i Prefer using simple functions instead of classes with only static fields
   
 
 ```
@@ -107,7 +107,7 @@ invalid.ts:15:18 lint/nursery/noStaticOnlyClass ━━━━━━━━━━�
 ```
 invalid.ts:19:16 lint/nursery/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! A class that includes only static members is confusing.
+  ! Avoid classes that contain only static fields
   
     17 │ };
     18 │ 
@@ -116,7 +116,7 @@ invalid.ts:19:16 lint/nursery/noStaticOnlyClass ━━━━━━━━━━�
     20 │ 	static foo = false;
     21 │ }
   
-  i Consider using a module or a plain object instead.
+  i Prefer using simple functions instead of classes with only static fields
   
 
 ```
@@ -124,7 +124,7 @@ invalid.ts:19:16 lint/nursery/noStaticOnlyClass ━━━━━━━━━━�
 ```
 invalid.ts:23:7 lint/nursery/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! A class that includes only static members is confusing.
+  ! Avoid classes that contain only static fields
   
     21 │ }
     22 │ 
@@ -133,7 +133,7 @@ invalid.ts:23:7 lint/nursery/noStaticOnlyClass ━━━━━━━━━━━
     24 │ 	static readonly version = 42;
     25 │ 
   
-  i Consider using a module or a plain object instead.
+  i Prefer using simple functions instead of classes with only static fields
   
 
 ```

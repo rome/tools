@@ -29,14 +29,14 @@ class X {
 
 <pre class="language-text"><code class="language-text">nursery/noStaticOnlyClass.js:1:7 <a href="https://docs.rome.tools/lint/rules/noStaticOnlyClass">lint/nursery/noStaticOnlyClass</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">A class that includes only </span><span style="color: Tomato;"><strong>static members</strong></span><span style="color: Tomato;"> is confusing.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Avoid classes that contain only static fields</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>class X {
    <strong>   │ </strong>      <strong><span style="color: Tomato;">^</span></strong>
     <strong>2 │ </strong>  static foo = false;
     <strong>3 │ </strong>  static bar() {};
   
-<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Consider using a module or a plain object instead.</span>
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Prefer using simple functions instead of classes with only static fields</span>
   
 </code></pre>
 

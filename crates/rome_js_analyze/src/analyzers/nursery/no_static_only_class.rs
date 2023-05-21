@@ -161,11 +161,11 @@ impl Rule for NoStaticOnlyClass {
                 rule_category!(),
                 range,
                 markup! {
-                    "A class that includes only "<Emphasis>"static members"</Emphasis>" is confusing."
+                    "Avoid classes that contain only static fields"
                 },
             )
             .note(markup! {
-                "Consider using a module or a plain object instead."
+                "Prefer using simple functions instead of classes with only static fields"
             }),
         )
     }
