@@ -48,7 +48,7 @@ export interface Configuration {
 	 */
 	organizeImports?: OrganizeImports;
 	/**
-	 * The configuration of the filesystem
+	 * The configuration of the VCS integration
 	 */
 	vcs?: VcsConfiguration;
 }
@@ -65,6 +65,9 @@ export interface FilesConfiguration {
 	 */
 	maxSize?: number;
 }
+/**
+ * Options applied to the formatter
+ */
 export interface FormatterConfiguration {
 	enabled?: boolean;
 	/**
