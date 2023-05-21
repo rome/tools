@@ -10,6 +10,7 @@ It updates the configuration when there are breaking changes
 Usage: [--write]
 
 Available options:
+  Global options applied to all commands
         --colors <off|force>  Set the formatting mode for markup: "off" prints everything as plain
                        text, "force" forces the formatting of markup using ANSI even if the console
                        output is determined to be incompatible
@@ -21,6 +22,7 @@ Available options:
         --skip-errors  Skip over files containing syntax errors instead of emitting an error
                        diagnostic.
         --json         Reports information using the JSON format
+
         --write        Writes the new configuration file to disk
     -h, --help         Prints help information
 
