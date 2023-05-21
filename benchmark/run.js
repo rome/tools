@@ -228,7 +228,7 @@ function cloneProject(name, repository, dirs = []) {
 		console.log(`Updating git repository in directory ${projectDirectory}`);
 		inProjectDirectory.run("git reset --hard @{u}");
 		inProjectDirectory.run("git clean -df");
-		inProjectDirectory.run("git pull --depth=1");
+		inProjectDirectory.run("git pull --depth=1 --ff-only");
 	} else {
 		console.log("Clone project...");
 
