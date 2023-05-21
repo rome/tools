@@ -4,16 +4,18 @@ use rome_js_syntax::{AnyJsClass, AnyJsClassMember};
 use rome_rowan::{AstNode, AstNodeList};
 
 declare_rule! {
-    /// Succinct description of the rule.
+    /// This rule reports when a class has no non-static members, such as for a class used exclusively as a static namespace.
     ///
-    /// Put context and details about the rule.
-    /// As a starting point, you can take the description of the corresponding _ESLint_ rule (if any).
+    /// Users who come from a [OOP](https://en.wikipedia.org/wiki/Object-oriented_programming) paradigm may wrap their utility functions in an extra class,
+    /// instead of putting them at the top level of an ECMAScript module. Doing so is generally unnecessary in JavaScript and TypeScript projects.
     ///
-    /// Try to stay consistent with the descriptions of implemented rules.
+    /// - Wrapper classes add extra cognitive complexity to code without adding any structural improvements
+    /// 	- Whatever would be put on them, such as utility functions, are already organized by virtue of being in a module.
+    /// 	- As an alternative, you can import * as ... the module to get all of them in a single object.
+    /// - IDEs can't provide as good suggestions for static class or namespace imported properties when you start typing property names
+    /// - It's more difficult to statically analyze code for unused variables, etc. when they're all on the class (see: Finding dead code (and dead types) in TypeScript).
     ///
-    /// Add a link to the corresponding ESLint rule (if any):
-    ///
-    /// Source: https://eslint.org/docs/latest/rules/rule-name
+    /// Source: https://typescript-eslint.io/rules/no-extraneous-class
     ///
     /// ## Examples
     ///
@@ -58,6 +60,31 @@ declare_rule! {
     /// class Empty {}
     /// ```
     ///
+    /// ## Notes on Mutating Variables
+    /// One case you need to be careful of is exporting mutable variables. While class properties can be mutated externally, exported variables are always constant. This means that importers can only ever read the first value they are assigned and cannot write to the variables.
+    ///
+    /// Needing to write to an exported variable is very rare and is generally considered a code smell. If you do need it you can accomplish it using getter and setter functions:
+    /// ```js,expect_diagnostic
+    /// export class Utilities {
+    ///   static mutableCount = 1;
+    ///   static incrementCount() {
+    ///     Utilities.mutableCount += 1;
+    ///   }
+    /// }
+    /// ```
+    ///
+    /// Do this instead:
+    /// ```js
+    /// let mutableCount = 1;
+    ///
+    /// export function getMutableCount() {
+    ///   return mutableField;
+    /// }
+    ///
+    /// export function incrementCount() {
+    ///   mutableField += 1;
+    /// }
+    /// ```
     pub(crate) NoStaticOnlyClass {
         version: "next",
         name: "noStaticOnlyClass",

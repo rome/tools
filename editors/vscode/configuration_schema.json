@@ -736,7 +736,7 @@
 					]
 				},
 				"noStaticOnlyClass": {
-					"description": "Succinct description of the rule.",
+					"description": "This rule reports when a class has no non-static members, such as for a class used exclusively as a static namespace.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }

@@ -530,7 +530,7 @@ export interface Nursery {
 	 */
 	noSelfAssign?: RuleConfiguration;
 	/**
-	 * Succinct description of the rule.
+	 * This rule reports when a class has no non-static members, such as for a class used exclusively as a static namespace.
 	 */
 	noStaticOnlyClass?: RuleConfiguration;
 	/**

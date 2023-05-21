@@ -1870,7 +1870,7 @@ pub struct Nursery {
     #[bpaf(long("no-self-assign"), argument("on|off|warn"), optional, hide)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub no_self_assign: Option<RuleConfiguration>,
-    #[doc = "Succinct description of the rule."]
+    #[doc = "This rule reports when a class has no non-static members, such as for a class used exclusively as a static namespace."]
     #[bpaf(long("no-static-only-class"), argument("on|off|warn"), optional, hide)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub no_static_only_class: Option<RuleConfiguration>,
