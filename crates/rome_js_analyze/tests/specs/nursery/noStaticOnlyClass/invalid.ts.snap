@@ -39,33 +39,41 @@ class StaticConstants0 {
 
 # Diagnostics
 ```
-invalid.ts:1:7 lint/nursery/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:1:1 lint/nursery/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Avoid classes that contain only static fields
+  ! Avoid classes that contain only static fields.
   
   > 1 │ class X0 {
-      │       ^^
-    2 │ 	static foo = false;
-    3 │ 	static bar() { }
-  
-  i Prefer using simple functions instead of classes with only static fields
-  
-
-```
-
-```
-invalid.ts:6:7 lint/nursery/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! Avoid classes that contain only static fields
-  
-    4 │ }
+      │ ^^^^^^^^^^
+  > 2 │ 	static foo = false;
+  > 3 │ 	static bar() { }
+  > 4 │ }
+      │ ^
     5 │ 
-  > 6 │ class X1 {
-      │       ^^
-    7 │ 	static #foo = false;
-    8 │ 	static bar() {}
+    6 │ class X1 {
   
-  i Prefer using simple functions instead of classes with only static fields
+  i Prefer using simple functions instead of classes with only static fields.
+  
+
+```
+
+```
+invalid.ts:6:1 lint/nursery/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid classes that contain only static fields.
+  
+     4 │ }
+     5 │ 
+   > 6 │ class X1 {
+       │ ^^^^^^^^^^
+   > 7 │ 	static #foo = false;
+   > 8 │ 	static bar() {}
+   > 9 │ }
+       │ ^
+    10 │ 
+    11 │ const X2 = class {
+  
+  i Prefer using simple functions instead of classes with only static fields.
   
 
 ```
@@ -73,33 +81,39 @@ invalid.ts:6:7 lint/nursery/noStaticOnlyClass ━━━━━━━━━━━�
 ```
 invalid.ts:11:12 lint/nursery/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Avoid classes that contain only static fields
+  ! Avoid classes that contain only static fields.
   
      9 │ }
     10 │ 
   > 11 │ const X2 = class {
-       │            ^^^^^
-    12 │ 	static foo = false;
-    13 │ };
+       │            ^^^^^^^
+  > 12 │ 	static foo = false;
+  > 13 │ };
+       │ ^
+    14 │ 
+    15 │ const X3 = class A {
   
-  i Prefer using simple functions instead of classes with only static fields
+  i Prefer using simple functions instead of classes with only static fields.
   
 
 ```
 
 ```
-invalid.ts:15:18 lint/nursery/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:15:12 lint/nursery/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Avoid classes that contain only static fields
+  ! Avoid classes that contain only static fields.
   
     13 │ };
     14 │ 
   > 15 │ const X3 = class A {
-       │                  ^
-    16 │ 	static foo = false;
-    17 │ };
+       │            ^^^^^^^^^
+  > 16 │ 	static foo = false;
+  > 17 │ };
+       │ ^
+    18 │ 
+    19 │ export default class {
   
-  i Prefer using simple functions instead of classes with only static fields
+  i Prefer using simple functions instead of classes with only static fields.
   
 
 ```
@@ -107,33 +121,42 @@ invalid.ts:15:18 lint/nursery/noStaticOnlyClass ━━━━━━━━━━�
 ```
 invalid.ts:19:16 lint/nursery/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Avoid classes that contain only static fields
+  ! Avoid classes that contain only static fields.
   
     17 │ };
     18 │ 
   > 19 │ export default class {
-       │                ^^^^^
-    20 │ 	static foo = false;
-    21 │ }
+       │                ^^^^^^^
+  > 20 │ 	static foo = false;
+  > 21 │ }
+       │ ^
+    22 │ 
+    23 │ class StaticConstants0 {
   
-  i Prefer using simple functions instead of classes with only static fields
+  i Prefer using simple functions instead of classes with only static fields.
   
 
 ```
 
 ```
-invalid.ts:23:7 lint/nursery/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:23:1 lint/nursery/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Avoid classes that contain only static fields
+  ! Avoid classes that contain only static fields.
   
     21 │ }
     22 │ 
   > 23 │ class StaticConstants0 {
-       │       ^^^^^^^^^^^^^^^^
-    24 │ 	static readonly version = 42;
-    25 │ 
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^
+  > 24 │ 	static readonly version = 42;
+  > 25 │ 
+  > 26 │ 	static isProduction() {
+  > 27 │ 		return Math.random() > 0.5;
+  > 28 │ 	}
+  > 29 │ }
+       │ ^
+    30 │ 
   
-  i Prefer using simple functions instead of classes with only static fields
+  i Prefer using simple functions instead of classes with only static fields.
   
 
 ```

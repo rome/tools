@@ -144,21 +144,11 @@ impl Rule for NoStaticOnlyClass {
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
         let class_declaration = ctx.query();
-        let class_keyword = class_declaration.class_token().ok()?;
-
-        // As this rule matches against classes and anonymous classes (class expressions),
-        // we highlight the class keyword if it has no identifier
-        let range = class_declaration
-            .id()
-            .ok()?
-            .map_or(class_keyword.text_trimmed_range(), |id| {
-                id.syntax().text_trimmed_range()
-            });
 
         Some(
             RuleDiagnostic::new(
                 rule_category!(),
-                range,
+                class_declaration.syntax().text_trimmed_range(),
                 markup! {
                     "Avoid classes that contain only static fields."
                 },
