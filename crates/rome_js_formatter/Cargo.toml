@@ -15,7 +15,7 @@ categories = [
 
 [dependencies]
 cfg-if = "1.0.0"
-rome_js_syntax = { version = "0.0.2", path = "../rome_js_syntax" }
+rome_js_syntax = { workspace = true }
 rome_json_syntax = { workspace = true }
 rome_js_factory = { version = "0.0.2", path = "../rome_js_factory" }
 rome_formatter = { workspace = true }
