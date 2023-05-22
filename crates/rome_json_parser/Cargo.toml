@@ -21,7 +21,7 @@ rome_parser = { workspace = true }
 tracing = { workspace = true }
 
 [dev-dependencies]
-tests_macros = { path = "../tests_macros" }
+tests_macros = { workspace = true }
 quickcheck = "1.0.3"
 quickcheck_macros = "1.0.0"
 insta = { workspace = true }

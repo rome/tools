@@ -28,7 +28,7 @@ lazy_static = { workspace = true }
 natord = "1.0.9"
 
 [dev-dependencies]
-tests_macros = { path = "../tests_macros" }
+tests_macros = { workspace = true }
 rome_text_edit = { workspace = true }
 rome_js_parser = { workspace = true, features = ["tests"] }
 insta = { workspace = true, features = ["glob"] }
