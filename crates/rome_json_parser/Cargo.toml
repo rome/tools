@@ -14,7 +14,7 @@ homepage.workspace = true
 rome_rowan = { workspace = true }
 rome_console = { workspace = true }
 rome_diagnostics = { workspace = true }
-rome_json_syntax = {version = "0.0.1",  path = "../rome_json_syntax" }
+rome_json_syntax = { workspace = true }
 rome_json_factory = { version = "0.0.1", path = "../rome_json_factory" }
 rome_js_unicode_table = {version = "0.0.1",  path = "../rome_js_unicode_table" }
 rome_parser = { version = "0.0.1", path = "../rome_parser" }

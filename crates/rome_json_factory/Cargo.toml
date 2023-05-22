@@ -12,4 +12,4 @@ documentation = "https://rustdocs.rome.tools/rome_json_parser/index.html"
 
 [dependencies]
 rome_rowan = { workspace = true }
-rome_json_syntax = { version = "0.0.1",path = "../rome_json_syntax" }
+rome_json_syntax = { workspace = true }

@@ -7,7 +7,7 @@ edition = "2021"
 
 [dependencies]
 rome_rowan = { workspace = true }
-rome_json_syntax = { path = "../rome_json_syntax"}
+rome_json_syntax = { workspace = true }
 rome_json_parser = { workspace = true}
 rome_analyze = { path = "../rome_analyze"}
 rome_diagnostics = { workspace = true}

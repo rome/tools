@@ -12,7 +12,7 @@ license.workspace = true
 rome_console = { workspace = true }
 rome_diagnostics = { workspace = true}
 rome_json_parser = { workspace = true }
-rome_json_syntax = { path = "../rome_json_syntax" }
+rome_json_syntax = { workspace = true }
 tracing = { workspace = true }
 indexmap = { workspace = true }
 rome_rowan = { workspace = true }

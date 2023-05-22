@@ -13,7 +13,7 @@ homepage.workspace = true
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-rome_json_syntax = {  version = "0.0.1", path = "../rome_json_syntax" }
+rome_json_syntax = { workspace = true }
 rome_formatter = { workspace = true }
 rome_rowan = { workspace = true }
 

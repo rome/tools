@@ -51,3 +51,4 @@ rome_text_edit = { path = "./crates/rome_text_edit" }
 rome_lsp = { path = "./crates/rome_lsp" }
 rome_text_size = { path = "./crates/rome_text_size" }
 rome_json_formatter = { path = "./crates/rome_json_formatter" }
+rome_json_syntax = { path = "./crates/rome_json_syntax" }
