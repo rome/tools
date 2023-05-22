@@ -24,7 +24,7 @@ rome_parser = { workspace = true }
 rome_js_parser = { workspace = true }
 rome_js_factory = { workspace = true, optional = true }
 rome_js_formatter = { workspace = true, features = ["serde"] }
-rome_js_semantic = { path = "../rome_js_semantic" }
+rome_js_semantic = { workspace = true }
 rome_json_parser = { workspace = true }
 rome_json_syntax = { workspace = true }
 rome_json_formatter = { workspace = true }
