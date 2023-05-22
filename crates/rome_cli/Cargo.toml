@@ -40,7 +40,7 @@ rome_text_size = { workspace = true }
 rome_json_parser = { workspace = true }
 rome_json_formatter = { workspace = true }
 rome_json_syntax = { workspace = true }
-rome_migrate = { path = "../rome_migrate" }
+rome_migrate = { workspace = true }
 rome_rowan = { workspace = true }
 indexmap = { workspace = true }
 
