@@ -19,7 +19,7 @@ rome_rowan = { workspace = true }
 
 [dev-dependencies]
 rome_parser = { workspace = true }
-rome_formatter_test = {path = "../rome_formatter_test"}
+rome_formatter_test = { workspace = true }
 rome_fs = { workspace = true }
 rome_json_parser = { workspace = true }
 rome_json_factory = { workspace = true }
