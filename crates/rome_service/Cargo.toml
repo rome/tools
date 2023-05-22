@@ -25,7 +25,7 @@ rome_js_parser = { path = "../rome_js_parser" }
 rome_js_factory = { path = "../rome_js_factory", optional = true }
 rome_js_formatter = { path = "../rome_js_formatter", features = ["serde"] }
 rome_js_semantic = { path = "../rome_js_semantic" }
-rome_json_parser = { path = "../rome_json_parser" }
+rome_json_parser = { workspace = true }
 rome_json_syntax = { path = "../rome_json_syntax" }
 rome_json_formatter = { path = "../rome_json_formatter" }
 rome_deserialize = { path = "../rome_deserialize" }

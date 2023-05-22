@@ -37,7 +37,7 @@ tokio = { workspace = true, features = ["io-std", "io-util", "net", "time", "rt"
 anyhow = "1.0.52"
 dashmap = { workspace = true }
 rome_text_size = { path = "../rome_text_size" }
-rome_json_parser = { path = "../rome_json_parser" }
+rome_json_parser = { workspace = true }
 rome_json_formatter = { path = "../rome_json_formatter" }
 rome_json_syntax = { path = "../rome_json_syntax" }
 rome_migrate = { path = "../rome_migrate" }
@@ -59,4 +59,4 @@ insta = { workspace = true }
 tokio = { workspace = true, features = ["io-util"] }
 rome_json_formatter = { path = "../rome_json_formatter" }
 rome_js_formatter = { path = "../rome_js_formatter" }
-rome_json_parser = { path = "../rome_json_parser" }
+rome_json_parser = { workspace = true }

@@ -11,7 +11,7 @@ license.workspace = true
 [dependencies]
 rome_console = { workspace = true }
 rome_diagnostics = { workspace = true}
-rome_json_parser = { path = "../rome_json_parser" }
+rome_json_parser = { workspace = true }
 rome_json_syntax = { path = "../rome_json_syntax" }
 tracing = { workspace = true }
 indexmap = { workspace = true }

@@ -12,7 +12,7 @@ license.workspace = true
 rome_rowan = { workspace = true }
 rome_console = { workspace = true }
 rome_diagnostics = { workspace = true }
-rome_json_parser = { path = "../rome_json_parser" }
+rome_json_parser = { workspace = true }
 rome_deserialize = { path = "../rome_deserialize"}
 bitflags.workspace = true
 rustc-hash = { workspace = true }
