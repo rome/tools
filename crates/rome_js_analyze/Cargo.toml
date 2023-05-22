@@ -18,7 +18,7 @@ rome_json_syntax = { path = "../rome_json_syntax" }
 rome_json_factory = { path = "../rome_json_factory" }
 rome_console = { workspace = true }
 rome_diagnostics = { workspace = true }
-rome_deserialize = { path = "../rome_deserialize" }
+rome_deserialize = { workspace = true }
 rome_aria = { path = "../rome_aria" }
 roaring = "0.10.1"
 rustc-hash = { workspace = true }

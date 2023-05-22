@@ -22,7 +22,7 @@ rome_formatter = { version = "0.0.1", path = "../rome_formatter" }
 rome_rowan = { workspace = true }
 rome_text_size = { version = "0.0.1", path = "../rome_text_size" }
 rome_diagnostics_categories = { version = "0.0.1", path = "../rome_diagnostics_categories" }
-rome_deserialize = { path = "../rome_deserialize", version = "0.0.0" }
+rome_deserialize = { workspace = true }
 tracing = { workspace = true }
 unicode-width = "0.1.9"
 serde = { version = "1.0.136", features = ["derive"], optional = true }
