@@ -19,7 +19,7 @@ rome_json_factory = { path = "../rome_json_factory" }
 rome_console = { workspace = true }
 rome_diagnostics = { workspace = true }
 rome_deserialize = { workspace = true }
-rome_aria = { path = "../rome_aria" }
+rome_aria = { workspace = true }
 roaring = "0.10.1"
 rustc-hash = { workspace = true }
 serde = { version = "1.0.136", features = ["derive"] }

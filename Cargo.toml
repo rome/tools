@@ -41,3 +41,5 @@ rome_console = { path = "./crates/rome_console" }
 rome_diagnostics = { path = "./crates/rome_diagnostics" }
 rome_json_parser = { path = "./crates/rome_json_parser" }
 rome_deserialize = { path = "./crates/rome_deserialize" }
+rome_aria_metadata = { path = "./crates/rome_aria_metadata" }
+rome_aria = { path = "./crates/rome_aria" }
