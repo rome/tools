@@ -11,4 +11,4 @@ license.workspace = true
 
 [dependencies]
 rome_rowan = { workspace = true }
-rome_css_syntax = { path = "../rome_css_syntax" }
+rome_css_syntax = { workspace = true }

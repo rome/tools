@@ -55,3 +55,4 @@ rome_json_syntax = { path = "./crates/rome_json_syntax" }
 rome_migrate = { path = "./crates/rome_migrate" }
 rome_js_formatter = { path = "./crates/rome_js_formatter" }
 rome_markup = { path = "./crates/rome_markup" }
+rome_css_syntax = { path = "./crates/rome_css_syntax" }
