@@ -17,7 +17,7 @@ rome_console = { workspace = true }
 rome_diagnostics = { workspace = true }
 rome_formatter = { workspace = true, features = ["serde"] }
 rome_fs = { path = "../rome_fs", features = ["serde"] }
-rome_flags = { path = "../rome_flags" }
+rome_flags = { workspace = true }
 rome_js_analyze = { path = "../rome_js_analyze" }
 rome_js_syntax = { path = "../rome_js_syntax", features = ["serde"] }
 rome_parser = { path = "../rome_parser" }
