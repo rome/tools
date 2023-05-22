@@ -38,7 +38,7 @@ anyhow = "1.0.52"
 dashmap = { workspace = true }
 rome_text_size = { workspace = true }
 rome_json_parser = { workspace = true }
-rome_json_formatter = { path = "../rome_json_formatter" }
+rome_json_formatter = { workspace = true }
 rome_json_syntax = { path = "../rome_json_syntax" }
 rome_migrate = { path = "../rome_migrate" }
 rome_rowan = { workspace = true }
@@ -57,6 +57,6 @@ tikv-jemallocator = "0.5.0"
 [dev-dependencies]
 insta = { workspace = true }
 tokio = { workspace = true, features = ["io-util"] }
-rome_json_formatter = { path = "../rome_json_formatter" }
+rome_json_formatter = { workspace = true }
 rome_js_formatter = { path = "../rome_js_formatter" }
 rome_json_parser = { workspace = true }
