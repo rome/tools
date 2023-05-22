@@ -29,7 +29,7 @@ serde = { version = "1.0.136", features = ["derive"], optional = true }
 schemars = { version = "0.8.10", optional = true }
 
 [dev-dependencies]
-rome_parser = { path = "../rome_parser" }
+rome_parser = { workspace = true }
 rome_formatter_test = { path = "../rome_formatter_test" }
 rome_fs = { workspace = true }
 rome_js_parser = { workspace = true }

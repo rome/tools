@@ -17,7 +17,7 @@ rome_js_syntax = { workspace = true }
 rome_js_factory = { workspace = true }
 rome_js_unicode_table = { version = "0.0.1", path = "../rome_js_unicode_table" }
 rome_rowan = { workspace = true }
-rome_parser = { version = "0.0.1", path = "../rome_parser" }
+rome_parser = { workspace = true }
 drop_bomb = "0.1.5"
 bitflags.workspace = true
 indexmap = { workspace = true }

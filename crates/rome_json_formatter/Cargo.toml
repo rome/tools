@@ -18,7 +18,7 @@ rome_formatter = { workspace = true }
 rome_rowan = { workspace = true }
 
 [dev-dependencies]
-rome_parser = { version = "0.0.1", path = "../rome_parser" }
+rome_parser = { workspace = true }
 rome_formatter_test = {path = "../rome_formatter_test"}
 rome_fs = { workspace = true }
 rome_json_parser = { workspace = true }

@@ -20,7 +20,7 @@ rome_fs = { workspace = true, features = ["serde"] }
 rome_flags = { workspace = true }
 rome_js_analyze = { path = "../rome_js_analyze" }
 rome_js_syntax = { workspace = true, features = ["serde"] }
-rome_parser = { path = "../rome_parser" }
+rome_parser = { workspace = true }
 rome_js_parser = { workspace = true }
 rome_js_factory = { workspace = true, optional = true }
 rome_js_formatter = { workspace = true, features = ["serde"] }
