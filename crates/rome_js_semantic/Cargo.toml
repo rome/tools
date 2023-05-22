@@ -14,7 +14,7 @@ rust-lapper = "1.0.1"
 rustc-hash = { workspace = true }
 
 [dev-dependencies]
-rome_markup = { path = "../rome_markup" }
+rome_markup = { workspace = true }
 rome_diagnostics = { workspace = true }
 rome_console = { workspace = true }
 rome_js_parser = { path = "../rome_js_parser" }
