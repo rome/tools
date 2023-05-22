@@ -12,7 +12,7 @@ rome_control_flow = { path = "../rome_control_flow" }
 rome_rowan = { workspace = true }
 rome_js_semantic = { path = "../rome_js_semantic" }
 rome_js_syntax = { workspace = true }
-rome_js_factory = { path = "../rome_js_factory" }
+rome_js_factory = { workspace = true }
 rome_js_unicode_table = { path = "../rome_js_unicode_table" }
 rome_json_syntax = { workspace = true }
 rome_json_factory = { path = "../rome_json_factory" }

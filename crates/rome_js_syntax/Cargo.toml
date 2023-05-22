@@ -16,7 +16,7 @@ serde = { version = "1.0.136", features = ["derive"], optional = true }
 schemars = { version = "0.8.10", optional = true }
 
 [dev-dependencies]
-rome_js_factory = { path = "../rome_js_factory" }
+rome_js_factory = { workspace = true }
 
 [features]
 serde = ["dep:serde", "schemars", "rome_rowan/serde"]

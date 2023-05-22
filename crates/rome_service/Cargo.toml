@@ -22,7 +22,7 @@ rome_js_analyze = { path = "../rome_js_analyze" }
 rome_js_syntax = { workspace = true, features = ["serde"] }
 rome_parser = { path = "../rome_parser" }
 rome_js_parser = { workspace = true }
-rome_js_factory = { path = "../rome_js_factory", optional = true }
+rome_js_factory = { workspace = true, optional = true }
 rome_js_formatter = { workspace = true, features = ["serde"] }
 rome_js_semantic = { path = "../rome_js_semantic" }
 rome_json_parser = { workspace = true }
