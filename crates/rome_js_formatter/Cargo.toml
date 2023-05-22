@@ -31,7 +31,7 @@ schemars = { version = "0.8.10", optional = true }
 [dev-dependencies]
 rome_parser = { path = "../rome_parser" }
 rome_formatter_test = { path = "../rome_formatter_test" }
-rome_fs = { path = "../rome_fs" }
+rome_fs = { workspace = true }
 rome_js_parser = { path = "../rome_js_parser" }
 rome_js_factory = { path = "../rome_js_factory" }
 serde = { version = "1", features = ["derive"] }

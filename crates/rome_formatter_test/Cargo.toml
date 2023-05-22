@@ -16,7 +16,7 @@ rome_diagnostics = { workspace = true }
 rome_formatter = { workspace = true }
 rome_rowan = { workspace = true }
 rome_console = { workspace = true }
-rome_fs = { path = "../rome_fs" }
+rome_fs = { workspace = true }
 rome_service = { workspace = true }
 similar = "2.1.0"
 similar-asserts = "1.2.0"

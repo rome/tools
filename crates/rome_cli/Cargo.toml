@@ -16,9 +16,9 @@ rome_formatter = { workspace = true }
 rome_diagnostics = { workspace = true }
 rome_service = { workspace = true }
 rome_flags = { workspace = true }
-rome_fs = { path = "../rome_fs" }
+rome_fs = { workspace = true }
 rome_console = { workspace = true }
-rome_text_edit = { path = "../rome_text_edit" }
+rome_text_edit = { workspace = true }
 rome_lsp = { path = "../rome_lsp" }
 rome_deserialize = { workspace = true }
 pico-args = { version ="0.5.0", features=["eq-separator"] }

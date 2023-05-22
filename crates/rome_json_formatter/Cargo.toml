@@ -20,7 +20,7 @@ rome_rowan = { workspace = true }
 [dev-dependencies]
 rome_parser = { version = "0.0.1", path = "../rome_parser" }
 rome_formatter_test = {path = "../rome_formatter_test"}
-rome_fs = { path = "../rome_fs" }
+rome_fs = { workspace = true }
 rome_json_parser = { workspace = true }
 rome_json_factory = { path = "../rome_json_factory" }
 serde = { version = "1", features = ["derive"] }

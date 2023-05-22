@@ -46,3 +46,5 @@ rome_aria = { path = "./crates/rome_aria" }
 rome_formatter = { path = "./crates/rome_formatter" }
 rome_service = { path = "./crates/rome_service" }
 rome_flags = { path = "./crates/rome_flags" }
+rome_fs = { path = "./crates/rome_fs" }
+rome_text_edit = { path = "./crates/rome_text_edit" }

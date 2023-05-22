@@ -16,7 +16,7 @@ rome_analyze = { path = "../rome_analyze", features = ["serde"] }
 rome_console = { workspace = true }
 rome_diagnostics = { workspace = true }
 rome_formatter = { workspace = true, features = ["serde"] }
-rome_fs = { path = "../rome_fs", features = ["serde"] }
+rome_fs = { workspace = true, features = ["serde"] }
 rome_flags = { workspace = true }
 rome_js_analyze = { path = "../rome_js_analyze" }
 rome_js_syntax = { path = "../rome_js_syntax", features = ["serde"] }
@@ -30,7 +30,7 @@ rome_json_syntax = { path = "../rome_json_syntax" }
 rome_json_formatter = { path = "../rome_json_formatter" }
 rome_deserialize = { workspace = true }
 rome_rowan = { workspace = true, features = ["serde"] }
-rome_text_edit = { path = "../rome_text_edit" }
+rome_text_edit = { workspace = true }
 indexmap = { workspace = true, features = ["serde"] }
 schemars = { version = "0.8.10", features = ["indexmap1"], optional = true }
 tracing = { workspace = true, features = ["attributes"] }
