@@ -30,7 +30,7 @@ natord = "1.0.9"
 [dev-dependencies]
 tests_macros = { path = "../tests_macros" }
 rome_text_edit = { workspace = true }
-rome_js_parser = { path = "../rome_js_parser", features = ["tests"] }
+rome_js_parser = { workspace = true, features = ["tests"] }
 insta = { workspace = true, features = ["glob"] }
 countme = { workspace = true, features = ["enable"] }
 similar = "2.1.0"

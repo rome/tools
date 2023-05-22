@@ -17,4 +17,4 @@ rustc-hash = { workspace = true }
 rome_markup = { workspace = true }
 rome_diagnostics = { workspace = true }
 rome_console = { workspace = true }
-rome_js_parser = { path = "../rome_js_parser" }
+rome_js_parser = { workspace = true }

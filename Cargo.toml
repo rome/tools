@@ -58,3 +58,4 @@ rome_markup = { path = "./crates/rome_markup" }
 rome_css_syntax = { path = "./crates/rome_css_syntax" }
 rome_diagnostics_macros = { path = "./crates/rome_diagnostics_macros" }
 rome_diagnostics_categories = { path = "./crates/rome_diagnostics_categories" }
+rome_js_parser = { path = "./crates/rome_js_parser" }
