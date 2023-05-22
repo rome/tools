@@ -15,7 +15,7 @@ serde_json = { version = "1.0.74", features = ["raw_value"] }
 rome_analyze = { path = "../rome_analyze", features = ["serde"] }
 rome_console = { workspace = true }
 rome_diagnostics = { workspace = true }
-rome_formatter = { path = "../rome_formatter", features = ["serde"] }
+rome_formatter = { workspace = true, features = ["serde"] }
 rome_fs = { path = "../rome_fs", features = ["serde"] }
 rome_flags = { path = "../rome_flags" }
 rome_js_analyze = { path = "../rome_js_analyze" }

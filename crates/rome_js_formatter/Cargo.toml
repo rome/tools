@@ -18,7 +18,7 @@ cfg-if = "1.0.0"
 rome_js_syntax = { version = "0.0.2", path = "../rome_js_syntax" }
 rome_json_syntax = { version = "0.0.1", path = "../rome_json_syntax" }
 rome_js_factory = { version = "0.0.2", path = "../rome_js_factory" }
-rome_formatter = { version = "0.0.1", path = "../rome_formatter" }
+rome_formatter = { workspace = true }
 rome_rowan = { workspace = true }
 rome_text_size = { version = "0.0.1", path = "../rome_text_size" }
 rome_diagnostics_categories = { version = "0.0.1", path = "../rome_diagnostics_categories" }

@@ -12,7 +12,7 @@ name = "rome"
 path = "src/main.rs"
 
 [dependencies]
-rome_formatter = { path = "../rome_formatter" }
+rome_formatter = { workspace = true }
 rome_diagnostics = { workspace = true }
 rome_service = { path = "../rome_service" }
 rome_flags = { path = "../rome_flags" }

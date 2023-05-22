@@ -13,7 +13,7 @@ serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 rome_parser = { path = "../rome_parser" }
 rome_diagnostics = { workspace = true }
-rome_formatter = { path = "../rome_formatter" }
+rome_formatter = { workspace = true }
 rome_rowan = { workspace = true }
 rome_console = { workspace = true }
 rome_fs = { path = "../rome_fs" }
