@@ -22,7 +22,7 @@ rome_parser = { workspace = true }
 rome_formatter_test = {path = "../rome_formatter_test"}
 rome_fs = { workspace = true }
 rome_json_parser = { workspace = true }
-rome_json_factory = { path = "../rome_json_factory" }
+rome_json_factory = { workspace = true }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 tests_macros = { path = "../tests_macros" }
