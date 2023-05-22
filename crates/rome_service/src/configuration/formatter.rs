@@ -7,6 +7,7 @@ use rome_formatter::{IndentStyle, LineWidth};
 use serde::{Deserialize, Serialize};
 use std::str::FromStr;
 
+/// Options applied to the formatter
 #[derive(Deserialize, Serialize, Debug, Eq, PartialEq, Clone, Bpaf)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "camelCase", default, deny_unknown_fields)]
