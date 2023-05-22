@@ -12,7 +12,7 @@ license.workspace = true
 dashmap = { workspace = true }
 serde = { version = "1.0.133", features = ["derive"] }
 serde_json = { version = "1.0.74", features = ["raw_value"] }
-rome_analyze = { path = "../rome_analyze", features = ["serde"] }
+rome_analyze = { workspace = true, features = ["serde"] }
 rome_console = { workspace = true }
 rome_diagnostics = { workspace = true }
 rome_formatter = { workspace = true, features = ["serde"] }

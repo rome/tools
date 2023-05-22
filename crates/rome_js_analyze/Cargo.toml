@@ -7,7 +7,7 @@ repository.workspace = true
 license.workspace = true
 
 [dependencies]
-rome_analyze = { path = "../rome_analyze" }
+rome_analyze = { workspace = true }
 rome_control_flow = { path = "../rome_control_flow" }
 rome_rowan = { workspace = true }
 rome_js_semantic = { path = "../rome_js_semantic" }

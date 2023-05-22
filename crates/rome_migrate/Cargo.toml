@@ -9,6 +9,6 @@ edition = "2021"
 rome_rowan = { workspace = true }
 rome_json_syntax = { workspace = true }
 rome_json_parser = { workspace = true}
-rome_analyze = { path = "../rome_analyze"}
+rome_analyze = { workspace = true}
 rome_diagnostics = { workspace = true}
 lazy_static = { workspace = true }

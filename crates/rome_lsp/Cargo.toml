@@ -17,7 +17,7 @@ rome_fs = {  workspace = true }
 rome_service = { workspace = true }
 rome_js_formatter = { workspace = true }
 rome_formatter = { workspace = true }
-rome_analyze = { path = "../rome_analyze" }
+rome_analyze = { workspace = true }
 rome_diagnostics = { workspace = true }
 rome_rowan = { workspace = true }
 rome_console = { workspace = true }
