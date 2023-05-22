@@ -16,7 +16,7 @@ rome_diagnostics = { version = "0.0.1", path = "../rome_diagnostics" }
 rome_js_syntax = { version = "0.0.2", path = "../rome_js_syntax" }
 rome_js_factory = { version = "0.0.2", path = "../rome_js_factory" }
 rome_js_unicode_table = { version = "0.0.1", path = "../rome_js_unicode_table" }
-rome_rowan = { version = "0.0.1", path = "../rome_rowan" }
+rome_rowan = { workspace = true }
 rome_parser = { version = "0.0.1", path = "../rome_parser" }
 drop_bomb = "0.1.5"
 bitflags.workspace = true

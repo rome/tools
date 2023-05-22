@@ -36,5 +36,5 @@ quote = { version = "1.0.21" }
 lazy_static = "1.4.0"
 bpaf = { version = "0.7.10", features = ["derive"] }
 bitflags = "2.2.1"
-
+rome_rowan = { path = "./crates/rome_rowan" }
 

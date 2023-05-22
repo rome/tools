@@ -11,7 +11,7 @@ categories = ["parser-implementations", "development-tools"]
 homepage.workspace = true
 
 [dependencies]
-rome_rowan = {version = "0.0.1",  path = "../rome_rowan" }
+rome_rowan = { workspace = true }
 rome_console = {version = "0.0.1",  path = "../rome_console" }
 rome_diagnostics = {version = "0.0.1",  path = "../rome_diagnostics" }
 rome_json_syntax = {version = "0.0.1",  path = "../rome_json_syntax" }

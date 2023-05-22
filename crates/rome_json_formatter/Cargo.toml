@@ -15,7 +15,7 @@ homepage.workspace = true
 [dependencies]
 rome_json_syntax = {  version = "0.0.1", path = "../rome_json_syntax" }
 rome_formatter = {  version = "0.0.1", path = "../rome_formatter" }
-rome_rowan = {  version = "0.0.1", path = "../rome_rowan" }
+rome_rowan = { workspace = true }
 
 [dev-dependencies]
 rome_parser = { version = "0.0.1", path = "../rome_parser" }

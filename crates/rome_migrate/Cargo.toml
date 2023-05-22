@@ -6,7 +6,7 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-rome_rowan = { path = "../rome_rowan" }
+rome_rowan = { workspace = true }
 rome_json_syntax = { path = "../rome_json_syntax"}
 rome_json_parser = { path = "../rome_json_parser"}
 rome_analyze = { path = "../rome_analyze"}

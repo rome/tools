@@ -8,7 +8,7 @@ description = "Semantic model for the JavaScript language"
 repository.workspace = true
 
 [dependencies]
-rome_rowan = { path = "../rome_rowan" }
+rome_rowan = { workspace = true }
 rome_js_syntax = { path = "../rome_js_syntax" }
 rust-lapper = "1.0.1"
 rustc-hash = { workspace = true }
