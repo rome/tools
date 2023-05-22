@@ -10,7 +10,7 @@ license.workspace = true
 
 
 [dependencies]
-rome_console = { version = "0.0.1", path = "../rome_console" }
+rome_console = { workspace = true }
 rome_diagnostics = { version = "0.0.1",path = "../rome_diagnostics" }
 rome_rowan = { workspace = true }
 drop_bomb = "0.1.5"

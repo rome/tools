@@ -11,7 +11,7 @@ categories = ["parser-implementations", "development-tools"]
 homepage.workspace = true
 
 [dependencies]
-rome_console = { version = "0.0.1", path = "../rome_console" }
+rome_console = { workspace = true }
 rome_diagnostics = { version = "0.0.1", path = "../rome_diagnostics" }
 rome_js_syntax = { version = "0.0.2", path = "../rome_js_syntax" }
 rome_js_factory = { version = "0.0.2", path = "../rome_js_factory" }

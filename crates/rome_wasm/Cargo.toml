@@ -20,7 +20,7 @@ serde = "1.0.136"
 serde-wasm-bindgen = "0.4.5"
 js-sys = "0.3.59"
 rome_service = { path = "../../crates/rome_service" }
-rome_console = { path = "../../crates/rome_console" }
+rome_console = { workspace = true }
 rome_diagnostics = { path = "../../crates/rome_diagnostics" }
 
 # The `console_error_panic_hook` crate provides better debugging of panics by

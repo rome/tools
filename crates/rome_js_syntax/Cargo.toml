@@ -11,7 +11,7 @@ documentation = "https://rustdocs.rome.tools/rome_js_syntax/index.html"
 [dependencies]
 rome_rowan = { workspace = true }
 rome_diagnostics = { version = "0.0.1",path = "../rome_diagnostics" }
-rome_console = {version = "0.0.1", path = "../rome_console" }
+rome_console = { workspace = true }
 serde = { version = "1.0.136", features = ["derive"], optional = true }
 schemars = { version = "0.8.10", optional = true }
 

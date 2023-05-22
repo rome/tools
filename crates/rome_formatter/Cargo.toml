@@ -23,7 +23,7 @@ drop_bomb = "0.1.5"
 indexmap = { workspace = true }
 unicode-width = "0.1.9"
 rome_diagnostics = { version = "0.0.1", path = "../rome_diagnostics" }
-rome_console = { version = "0.0.1", path = "../rome_console" }
+rome_console = { workspace = true }
 
 [dev-dependencies]
 rome_js_parser = { path = "../rome_js_parser" }

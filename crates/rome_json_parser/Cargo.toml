@@ -12,7 +12,7 @@ homepage.workspace = true
 
 [dependencies]
 rome_rowan = { workspace = true }
-rome_console = {version = "0.0.1",  path = "../rome_console" }
+rome_console = { workspace = true }
 rome_diagnostics = {version = "0.0.1",  path = "../rome_diagnostics" }
 rome_json_syntax = {version = "0.0.1",  path = "../rome_json_syntax" }
 rome_json_factory = { version = "0.0.1", path = "../rome_json_factory" }

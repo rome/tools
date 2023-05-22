@@ -26,7 +26,7 @@ test = true
 
 [dependencies]
 rome_rowan = { workspace = true }
-rome_console = { version = "0.0.1", path = "../rome_console", features = ["serde_markup"] }
+rome_console = { workspace = true, features = ["serde_markup"] }
 rome_diagnostics_macros = { version = "0.0.1", path = "../rome_diagnostics_macros" }
 rome_diagnostics_categories = { version = "0.0.1", path = "../rome_diagnostics_categories", features = ["serde"] }
 rome_text_edit = { version = "0.0.1", path = "../rome_text_edit" }

@@ -20,7 +20,7 @@ rome_formatter = { path = "../rome_formatter" }
 rome_analyze = { path = "../rome_analyze" }
 rome_diagnostics = { path = "../rome_diagnostics" }
 rome_rowan = { workspace = true }
-rome_console = { path = "../rome_console" }
+rome_console = { workspace = true }
 rome_text_edit = { path = "../rome_text_edit" }
 tokio = { workspace = true, features = ["rt", "io-std"] }
 tower-lsp = { version = "0.19.0" }
