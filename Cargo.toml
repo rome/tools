@@ -38,3 +38,4 @@ bpaf = { version = "0.7.10", features = ["derive"] }
 bitflags = "2.2.1"
 rome_rowan = { path = "./crates/rome_rowan" }
 rome_console = { path = "./crates/rome_console" }
+rome_diagnostics = { path = "./crates/rome_diagnostics" }

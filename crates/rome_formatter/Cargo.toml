@@ -22,7 +22,7 @@ countme = { workspace = true }
 drop_bomb = "0.1.5"
 indexmap = { workspace = true }
 unicode-width = "0.1.9"
-rome_diagnostics = { version = "0.0.1", path = "../rome_diagnostics" }
+rome_diagnostics = { workspace = true }
 rome_console = { workspace = true }
 
 [dev-dependencies]

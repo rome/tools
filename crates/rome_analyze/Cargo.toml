@@ -11,7 +11,7 @@ license.workspace = true
 [dependencies]
 rome_rowan = { workspace = true }
 rome_console = { workspace = true }
-rome_diagnostics = { path = "../rome_diagnostics" }
+rome_diagnostics = { workspace = true }
 rome_json_parser = { path = "../rome_json_parser" }
 rome_deserialize = { path = "../rome_deserialize"}
 bitflags.workspace = true

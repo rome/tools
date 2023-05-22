@@ -10,5 +10,5 @@ rome_rowan = { workspace = true }
 rome_json_syntax = { path = "../rome_json_syntax"}
 rome_json_parser = { path = "../rome_json_parser"}
 rome_analyze = { path = "../rome_analyze"}
-rome_diagnostics = { path = "../rome_diagnostics"}
+rome_diagnostics = { workspace = true}
 lazy_static = { workspace = true }
