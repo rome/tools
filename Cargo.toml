@@ -44,3 +44,4 @@ rome_deserialize = { path = "./crates/rome_deserialize" }
 rome_aria_metadata = { path = "./crates/rome_aria_metadata" }
 rome_aria = { path = "./crates/rome_aria" }
 rome_formatter = { path = "./crates/rome_formatter" }
+rome_service = { path = "./crates/rome_service" }

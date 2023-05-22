@@ -14,7 +14,7 @@ serde = { version = "1.0.133", features = ["derive"] }
 anyhow = "1.0.52"
 indexmap = { workspace = true }
 rome_fs = {  path = "../rome_fs" }
-rome_service = { path = "../rome_service" }
+rome_service = { workspace = true }
 rome_js_formatter = { path = "../rome_js_formatter" }
 rome_formatter = { workspace = true }
 rome_analyze = { path = "../rome_analyze" }

@@ -14,7 +14,7 @@ path = "src/main.rs"
 [dependencies]
 rome_formatter = { workspace = true }
 rome_diagnostics = { workspace = true }
-rome_service = { path = "../rome_service" }
+rome_service = { workspace = true }
 rome_flags = { path = "../rome_flags" }
 rome_fs = { path = "../rome_fs" }
 rome_console = { workspace = true }
