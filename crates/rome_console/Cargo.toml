@@ -12,7 +12,7 @@ documentation = "https://rustdocs.rome.tools/rome_console/index.html"
 [dependencies]
 rome_markup = { version = "0.0.1", path = "../rome_markup" }
 atty = "0.2.14"
-rome_text_size = { version = "0.0.1", path = "../rome_text_size"}
+rome_text_size = { workspace = true}
 termcolor = "1.1.2"
 unicode-width = "0.1.9"
 serde = { version = "1.0.133", optional = true, features = ["derive"] }

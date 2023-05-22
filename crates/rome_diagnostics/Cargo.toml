@@ -30,7 +30,7 @@ rome_console = { workspace = true, features = ["serde_markup"] }
 rome_diagnostics_macros = { version = "0.0.1", path = "../rome_diagnostics_macros" }
 rome_diagnostics_categories = { version = "0.0.1", path = "../rome_diagnostics_categories", features = ["serde"] }
 rome_text_edit = { workspace = true }
-rome_text_size = { version = "0.0.1", path = "../rome_text_size" }
+rome_text_size = { workspace = true }
 unicode-width = "0.1.9"
 serde = { version = "1.0.133", features = ["derive"] }
 termcolor = "1.1.2"

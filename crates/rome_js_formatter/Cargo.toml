@@ -20,7 +20,7 @@ rome_json_syntax = { version = "0.0.1", path = "../rome_json_syntax" }
 rome_js_factory = { version = "0.0.2", path = "../rome_js_factory" }
 rome_formatter = { workspace = true }
 rome_rowan = { workspace = true }
-rome_text_size = { version = "0.0.1", path = "../rome_text_size" }
+rome_text_size = { workspace = true }
 rome_diagnostics_categories = { version = "0.0.1", path = "../rome_diagnostics_categories" }
 rome_deserialize = { workspace = true }
 tracing = { workspace = true }
