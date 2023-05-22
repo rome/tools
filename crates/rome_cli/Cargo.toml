@@ -19,7 +19,7 @@ rome_flags = { workspace = true }
 rome_fs = { workspace = true }
 rome_console = { workspace = true }
 rome_text_edit = { workspace = true }
-rome_lsp = { path = "../rome_lsp" }
+rome_lsp = { workspace = true }
 rome_deserialize = { workspace = true }
 pico-args = { version ="0.5.0", features=["eq-separator"] }
 bpaf = { workspace = true }
