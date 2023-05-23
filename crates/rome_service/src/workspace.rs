@@ -121,6 +121,26 @@ impl FileFeaturesResult {
         self
     }
 
+    pub fn ignore_unknown_files(
+        mut self,
+        settings: &WorkspaceSettings,
+        capabilities: &Capabilities,
+    ) -> Self {
+        if settings.files.ignore_unknown_files {
+            if capabilities.formatter.format.is_some() {
+                self.ignored(FeatureName::Format);
+            }
+            if capabilities.analyzer.lint.is_some() {
+                self.ignored(FeatureName::Lint);
+            }
+            if capabilities.analyzer.organize_imports.is_some() {
+                self.ignored(FeatureName::OrganizeImports);
+            }
+        }
+
+        self
+    }
+
     pub fn with_settings(mut self, settings: &WorkspaceSettings) -> Self {
         if !settings.formatter().enabled {
             self.features_supported

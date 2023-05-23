@@ -244,6 +244,10 @@ pub struct FilesConfiguration {
     #[serde(skip_serializing_if = "Option::is_none")]
     #[bpaf(hide)]
     pub ignore: Option<StringSet>,
+
+    /// Ignore files not recognized by rome.
+    #[bpaf(long("files-ignore-unknown"))]
+    pub ignore_unknown: Option<bool>,
 }
 
 impl FilesConfiguration {

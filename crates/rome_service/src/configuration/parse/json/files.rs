@@ -35,6 +35,9 @@ impl VisitNode<JsonLanguage> for FilesConfiguration {
                     .map_to_index_set_string(&value, name_text, diagnostics)
                     .map(StringSet::new);
             }
+            "ignore_unknown" => {
+                self.ignore_unknown = self.map_to_boolean(&value, name_text, diagnostics)
+            }
             _ => {}
         }
         Some(())
