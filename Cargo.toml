@@ -36,37 +36,37 @@ quote = { version = "1.0.21" }
 lazy_static = "1.4.0"
 bpaf = { version = "0.8.0", features = ["derive"] }
 bitflags = "2.2.1"
-rome_rowan = { path = "./crates/rome_rowan" }
-rome_console = { path = "./crates/rome_console" }
-rome_diagnostics = { path = "./crates/rome_diagnostics" }
+rome_rowan = { version = "0.0.1", path = "./crates/rome_rowan" }
+rome_console = { version = "0.0.1", path = "./crates/rome_console" }
+rome_diagnostics = { version = "0.0.1", path = "./crates/rome_diagnostics" }
 rome_json_parser = { path = "./crates/rome_json_parser" }
-rome_deserialize = { path = "./crates/rome_deserialize" }
+rome_deserialize = { version = "0.0.0", path = "./crates/rome_deserialize" }
 rome_aria_metadata = { path = "./crates/rome_aria_metadata" }
 rome_aria = { path = "./crates/rome_aria" }
-rome_formatter = { path = "./crates/rome_formatter" }
+rome_formatter = { version = "0.0.1", path = "./crates/rome_formatter" }
 rome_service = { path = "./crates/rome_service" }
 rome_flags = { path = "./crates/rome_flags" }
 rome_fs = { path = "./crates/rome_fs" }
-rome_text_edit = { path = "./crates/rome_text_edit" }
+rome_text_edit = { version = "0.0.1", path = "./crates/rome_text_edit" }
 rome_lsp = { path = "./crates/rome_lsp" }
-rome_text_size = { path = "./crates/rome_text_size" }
+rome_text_size = { version = "0.0.1", path = "./crates/rome_text_size" }
 rome_json_formatter = { path = "./crates/rome_json_formatter" }
-rome_json_syntax = { path = "./crates/rome_json_syntax" }
+rome_json_syntax = { version = "0.0.1", path = "./crates/rome_json_syntax" }
 rome_migrate = { path = "./crates/rome_migrate" }
 rome_js_formatter = { path = "./crates/rome_js_formatter" }
-rome_markup = { path = "./crates/rome_markup" }
+rome_markup = { version = "0.0.1", path = "./crates/rome_markup" }
 rome_css_syntax = { path = "./crates/rome_css_syntax" }
-rome_diagnostics_macros = { path = "./crates/rome_diagnostics_macros" }
-rome_diagnostics_categories = { path = "./crates/rome_diagnostics_categories" }
+rome_diagnostics_macros = { version = "0.0.1", path = "./crates/rome_diagnostics_macros" }
+rome_diagnostics_categories = { version = "0.0.1", path = "./crates/rome_diagnostics_categories" }
 rome_js_parser = { path = "./crates/rome_js_parser" }
-rome_js_syntax = { path = "./crates/rome_js_syntax" }
-rome_js_factory = { path = "./crates/rome_js_factory" }
-rome_parser = { path = "./crates/rome_parser" }
+rome_js_syntax = { version = "0.0.2", path = "./crates/rome_js_syntax" }
+rome_js_factory = { version = "0.0.2", path = "./crates/rome_js_factory" }
+rome_parser = { version = "0.0.1", path = "./crates/rome_parser" }
 rome_analyze = { path = "./crates/rome_analyze" }
 rome_control_flow = { path = "./crates/rome_control_flow" }
 rome_js_semantic = { path = "./crates/rome_js_semantic" }
-rome_js_unicode_table = { path = "./crates/rome_js_unicode_table" }
-rome_json_factory = { path = "./crates/rome_json_factory" }
+rome_js_unicode_table = { version = "0.0.1", path = "./crates/rome_js_unicode_table" }
+rome_json_factory = { version = "0.0.1", path = "./crates/rome_json_factory" }
 tests_macros = { path = "./crates/tests_macros" }
 rome_formatter_test = { path = "./crates/rome_formatter_test" }
 rome_js_analyze  = { path = "./crates/rome_js_analyze" }
