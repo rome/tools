@@ -856,6 +856,13 @@
 						{ "type": "null" }
 					]
 				},
+				"useNamingConvention": {
+					"description": "Succinct description of the rule.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"useSimpleNumberKeys": {
 					"description": "Disallow number literal object member names which are not base10 or uses underscore as separator",
 					"anyOf": [

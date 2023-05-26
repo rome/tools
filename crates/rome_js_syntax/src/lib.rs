@@ -11,6 +11,7 @@ pub mod file_source;
 pub mod identifier_ext;
 pub mod import_ext;
 pub mod jsx_ext;
+pub mod member_name_ext;
 pub mod modifier_ext;
 pub mod numbers;
 pub mod static_value;

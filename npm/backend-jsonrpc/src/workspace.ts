@@ -590,6 +590,10 @@ export interface Nursery {
 	 */
 	useLiteralKeys?: RuleConfiguration;
 	/**
+	 * Succinct description of the rule.
+	 */
+	useNamingConvention?: RuleConfiguration;
+	/**
 	 * Disallow number literal object member names which are not base10 or uses underscore as separator
 	 */
 	useSimpleNumberKeys?: RuleConfiguration;

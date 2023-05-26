@@ -1,0 +1,16 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 96
+expression: camelCase.jsx
+---
+# Input
+```js
+// valid
+function Component() {}
+<Component>foo</Component>
+export function ExportComponent() {}
+export default function ExportDefaultComponent() {}
+
+```
+
+
