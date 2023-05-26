@@ -19,6 +19,7 @@ Available options:
         --config-path <PATH>  Set the filesystem path to the directory of the rome.json configuration
                        file
         --max-diagnostics <NUMBER>  Cap the amount of diagnostics displayed (default: 20)
+        --suppress-warnings  Do not emit warning diagnostics
         --skip-errors  Skip over files containing syntax errors instead of emitting an error
                        diagnostic.
         --json         Reports information using the JSON format
