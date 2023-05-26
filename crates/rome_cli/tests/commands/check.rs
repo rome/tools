@@ -1355,7 +1355,6 @@ fn suppress_warnings() {
             file_path.as_os_str().to_str().unwrap(),
         ]),
     );
-    print!("{:?}", console.out_buffer);
     assert!(result.is_err(), "run_cli returned {result:?}");
 
     let messages = &console.out_buffer;
