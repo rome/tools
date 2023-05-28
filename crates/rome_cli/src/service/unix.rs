@@ -16,7 +16,7 @@ use tokio::{
     process::{Child, Command},
     time,
 };
-use tracing::Instrument;
+use tracing::{debug, info, Instrument};
 
 /// Returns the filesystem path of the global socket used to communicate with
 /// the server daemon
@@ -43,7 +43,9 @@ pub(crate) fn enumerate_pipes() -> io::Result<impl Iterator<Item = String>> {
 
 /// Try to connect to the global socket and wait for the connection to become ready
 async fn try_connect() -> io::Result<UnixStream> {
-    let stream = UnixStream::connect(get_socket_name()).await?;
+    let socket_name = get_socket_name();
+    info!("Trying to connect to socket {}", socket_name.display());
+    let stream = UnixStream::connect(socket_name).await?;
     stream
         .ready(Interest::READABLE | Interest::WRITABLE)
         .await?;
@@ -55,6 +57,7 @@ fn spawn_daemon(stop_on_disconnect: bool) -> io::Result<Child> {
     let binary = env::current_exe()?;
 
     let mut cmd = Command::new(binary);
+    debug!("command {:?}", &cmd);
     cmd.arg("__run_server");
 
     if stop_on_disconnect {
@@ -136,7 +139,7 @@ pub(crate) async fn ensure_daemon(stop_on_disconnect: bool) -> io::Result<bool> 
                             let _status = result?;
                             return Err(io::Error::new(
                                 io::ErrorKind::ConnectionReset,
-                                "the server process exited before the connection could be etablished",
+                                "the server process exited before the connection could be established",
                             ));
                         }
                         _ = time::sleep(Duration::from_millis(50)) => {}
@@ -176,8 +179,11 @@ pub(crate) async fn print_socket() -> io::Result<()> {
 pub(crate) async fn run_daemon(factory: ServerFactory) -> io::Result<Infallible> {
     let path = get_socket_name();
 
+    info!("Trying to connect to socket {}", path.display());
+
     // Try to remove the socket file if it already exists
     if path.exists() {
+        info!("Remove socket folder {}", path.display());
         fs::remove_file(&path)?;
     }
 

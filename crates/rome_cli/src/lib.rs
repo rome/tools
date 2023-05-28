@@ -139,7 +139,7 @@ impl<'app> CliSession<'app> {
                 },
             ),
             RomeCommand::Init => commands::init::init(self),
-            RomeCommand::LspProxy => commands::daemon::lsp_proxy(),
+            RomeCommand::LspProxy(_) => commands::daemon::lsp_proxy(),
             RomeCommand::Migrate(cli_options, write) => {
                 commands::migrate::migrate(self, cli_options, write)
             }

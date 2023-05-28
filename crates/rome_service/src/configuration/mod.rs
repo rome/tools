@@ -51,7 +51,7 @@ pub struct Configuration {
     #[bpaf(hide)]
     pub schema: Option<String>,
 
-    /// The configuration of the filesystem
+    /// The configuration of the VCS integration
     #[serde(skip_serializing_if = "Option::is_none")]
     #[bpaf(external(vcs_configuration), optional, hide_usage)]
     pub vcs: Option<VcsConfiguration>,

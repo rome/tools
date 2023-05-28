@@ -48,7 +48,7 @@ export interface Configuration {
 	 */
 	organizeImports?: OrganizeImports;
 	/**
-	 * The configuration of the filesystem
+	 * The configuration of the VCS integration
 	 */
 	vcs?: VcsConfiguration;
 }
@@ -65,6 +65,9 @@ export interface FilesConfiguration {
 	 */
 	maxSize?: number;
 }
+/**
+ * Options applied to the formatter
+ */
 export interface FormatterConfiguration {
 	enabled?: boolean;
 	/**
@@ -339,6 +342,10 @@ export interface Complexity {
 	 * Disallow useless case in switch statements.
 	 */
 	noUselessSwitchCase?: RuleConfiguration;
+	/**
+	 * Disallow using any or unknown as type constraint.
+	 */
+	noUselessTypeConstraint?: RuleConfiguration;
 	/**
 	 * Disallow with statements in non-strict contexts.
 	 */
@@ -979,6 +986,7 @@ export type Category =
 	| "lint/complexity/noUselessLabel"
 	| "lint/complexity/noUselessRename"
 	| "lint/complexity/noUselessSwitchCase"
+	| "lint/complexity/noUselessTypeConstraint"
 	| "lint/complexity/noWith"
 	| "lint/complexity/useFlatMap"
 	| "lint/complexity/useOptionalChain"

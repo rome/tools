@@ -1,5 +1,11 @@
 # Benchmarks
-## Getting Started
+## Running in Docker
+
+Run in the root directory, not `./benchmark`
+
+1. `docker build --rm -f Dockerfile.benchmark . --progress plain`
+
+## Running locally
 1. Install hyperfine: `cargo install hyperfine`
 2. Install node modules: `npm i`
 3. Run the benchmarks: `node run.js`

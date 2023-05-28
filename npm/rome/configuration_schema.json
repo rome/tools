@@ -41,7 +41,7 @@
 			"anyOf": [{ "$ref": "#/definitions/OrganizeImports" }, { "type": "null" }]
 		},
 		"vcs": {
-			"description": "The configuration of the filesystem",
+			"description": "The configuration of the VCS integration",
 			"anyOf": [
 				{ "$ref": "#/definitions/VcsConfiguration" },
 				{ "type": "null" }
@@ -277,6 +277,13 @@
 				},
 				"noUselessSwitchCase": {
 					"description": "Disallow useless case in switch statements.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
+				"noUselessTypeConstraint": {
+					"description": "Disallow using any or unknown as type constraint.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }
@@ -524,6 +531,7 @@
 			"additionalProperties": false
 		},
 		"FormatterConfiguration": {
+			"description": "Options applied to the formatter",
 			"type": "object",
 			"properties": {
 				"enabled": { "default": true, "type": ["boolean", "null"] },

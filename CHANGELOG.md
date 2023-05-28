@@ -2,20 +2,45 @@
 
 ## [Unreleased]
 
-## CLI
-## Configuration
-## Editors
-## Formatter
-## Linter
+### CLI
+
+#### Other changes
+
+- `rome lsp-proxy` should accept the global CLI options [#4505](https://github.com/rome/tools/issues/4505)
+- Enhance help descriptions
+
+### Configuration
+
+#### Other changes
+
+- Fix an issue where all the `nursery` were enabled when the `"nursery": {}` object
+was defined [#4479](https://github.com/rome/tools/issues/4479)
+
+### Editors
+### Formatter
+### Linter
+### Parser
+### VSCode
+### JavaScript APIs
+
+## 12.1.2
+
+### Configuration
+
+#### Other changes
+
+- Fix regression where a specific combination of configuration didn't load
+the correct rules to apply [#4502](https://github.com/rome/tools/issues/4502)
+
+### Linter
+
+#### New rules
+- [`noUselessTypeConstraint`](https://docs.rome.tools/lint/rules/noUselessTypeConstraint/)
 
 #### Other changes
 
 - `noInnerDeclarations`: allow function declarations in nested block inside an _ES module_ [#4492](https://github.com/rome/tools/compare/main...Conaclos:noInnerDeclarations/4492?expand=1).
 - `noInvalidConstructorSuper`: recognize `extends` clauses that use static member access such as `extends mod.C` [#4499](https://github.com/rome/tools/issues/4499)
-
-## Parser
-## VSCode
-## JavaScript APIs
 
 ## 12.1.1
 
@@ -38,7 +63,6 @@
 
 - Fix an issue where the `noAssignInExpressions` rule replaced the operator with an invalid token, which caused other lint rules to crash. [#4464](https://github.com/rome/tools/issues/4464)
 - Fix an issue that [`noUnusedVariables`](https://docs.rome.tools/lint/rules/nounusedvariables/) rule did not correctly detect exports when a variable and an `interface` had the same name [#4468](https://github.com/rome/tools/pull/4468)
-
 
 ## 12.1.0
 

@@ -13,15 +13,15 @@ serde_json = "1.0.74"
 serde = { version = "1.0.133", features = ["derive"] }
 anyhow = "1.0.52"
 indexmap = { workspace = true }
-rome_fs = {  path = "../rome_fs" }
-rome_service = { path = "../rome_service" }
-rome_js_formatter = { path = "../rome_js_formatter" }
-rome_formatter = { path = "../rome_formatter" }
-rome_analyze = { path = "../rome_analyze" }
-rome_diagnostics = { path = "../rome_diagnostics" }
-rome_rowan = { path = "../rome_rowan" }
-rome_console = { path = "../rome_console" }
-rome_text_edit = { path = "../rome_text_edit" }
+rome_fs = {  workspace = true }
+rome_service = { workspace = true }
+rome_js_formatter = { workspace = true }
+rome_formatter = { workspace = true }
+rome_analyze = { workspace = true }
+rome_diagnostics = { workspace = true }
+rome_rowan = { workspace = true }
+rome_console = { workspace = true }
+rome_text_edit = { workspace = true }
 tokio = { workspace = true, features = ["rt", "io-std"] }
 tower-lsp = { version = "0.19.0" }
 tracing = { workspace = true, features = ["attributes"] }
