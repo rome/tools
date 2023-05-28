@@ -1,0 +1,14 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 96
+expression: validImportSource.js
+---
+# Input
+```js
+// Don't apply naming convention on the import source
+import { Unknown_Style as u } from ""
+
+import { Unknown_Style } from ""
+```
+
+

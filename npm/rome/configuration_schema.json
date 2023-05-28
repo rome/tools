@@ -505,6 +505,10 @@
 				}
 			}
 		},
+		"EnumMemberCase": {
+			"type": "string",
+			"enum": ["PascalCase", "CONSTANT_CASE", "camelCase"]
+		},
 		"FilesConfiguration": {
 			"description": "The configuration of the filesystem",
 			"type": "object",
@@ -697,6 +701,15 @@
 			},
 			"additionalProperties": false
 		},
+		"NamingConventionOptions": {
+			"type": "object",
+			"required": ["enumMemberCase", "strictCase"],
+			"properties": {
+				"enumMemberCase": { "$ref": "#/definitions/EnumMemberCase" },
+				"strictCase": { "type": "boolean" }
+			},
+			"additionalProperties": false
+		},
 		"Nursery": {
 			"description": "A list of rules that belong to this group",
 			"type": "object",
@@ -857,7 +870,7 @@
 					]
 				},
 				"useNamingConvention": {
-					"description": "Succinct description of the rule.",
+					"description": "Enforce naming conventions for everything across a codebase.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }
@@ -919,6 +932,10 @@
 				{
 					"description": "Options for `useExhaustiveDependencies` and `useHookAtTopLevel` rule",
 					"allOf": [{ "$ref": "#/definitions/HooksOptions" }]
+				},
+				{
+					"description": "Options for `useNamingConvention` rule",
+					"allOf": [{ "$ref": "#/definitions/NamingConventionOptions" }]
 				},
 				{ "description": "No options available", "type": "null" }
 			]

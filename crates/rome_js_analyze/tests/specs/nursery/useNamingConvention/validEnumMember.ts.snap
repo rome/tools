@@ -1,0 +1,14 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 96
+expression: validEnumMember.ts
+---
+# Input
+```js
+enum Status {
+    Open,
+    Close,
+}
+```
+
+

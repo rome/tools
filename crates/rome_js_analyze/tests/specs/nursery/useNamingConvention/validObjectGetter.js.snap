@@ -1,0 +1,29 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 96
+expression: validObjectGetter.js
+---
+# Input
+```js
+export default {
+    get p() {},
+
+    get property() {},
+
+    get specialProperty() {},
+
+    get stream$() {},
+
+    get $stream() {},
+
+    get _special_() {},
+
+    get "custom-property"() {},
+
+    get "@"() {},
+
+    get READONLY_PROPERTY() {},
+}
+```
+
+

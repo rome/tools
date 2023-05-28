@@ -1,0 +1,15 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 96
+expression: validTypeParameter.ts
+---
+# Input
+```js
+export default class <T, T1, T42, _U> {}
+
+type Mapped<T> = {
+    [K in keyof T]: T
+}
+```
+
+

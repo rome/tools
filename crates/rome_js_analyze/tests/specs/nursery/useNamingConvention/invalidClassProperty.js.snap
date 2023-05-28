@@ -1,0 +1,268 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 96
+expression: invalidClassProperty.js
+---
+# Input
+```js
+export default class {
+    X
+
+    #X
+
+    Initialized = 0
+
+    #Initialized = 0
+
+    PROPERTY
+
+    #PROPERTY
+
+    SpecialProperty
+
+    #SpecialProperty
+
+    special_property
+
+    #special_property
+
+    Unknown_Style
+
+    #Unknown_Style
+
+    Unknown_Init_Style = 0
+
+    #Unknown_Init_Style = 0
+}
+```
+
+# Diagnostics
+```
+invalidClassProperty.js:2:5 lint/nursery/useNamingConvention ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class property name should be in camelCase.
+  
+    1 │ export default class {
+  > 2 │     X
+      │     ^
+    3 │ 
+    4 │     #X
+  
+  i The name is currently in <Capital>[number].
+  
+
+```
+
+```
+invalidClassProperty.js:4:5 lint/nursery/useNamingConvention ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class property name should be in camelCase.
+  
+    2 │     X
+    3 │ 
+  > 4 │     #X
+      │     ^^
+    5 │ 
+    6 │     Initialized = 0
+  
+  i The name is currently in <Capital>[number].
+  
+
+```
+
+```
+invalidClassProperty.js:6:5 lint/nursery/useNamingConvention ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class property name should be in camelCase.
+  
+    4 │     #X
+    5 │ 
+  > 6 │     Initialized = 0
+      │     ^^^^^^^^^^^
+    7 │ 
+    8 │     #Initialized = 0
+  
+  i The name is currently in PascalCase.
+  
+
+```
+
+```
+invalidClassProperty.js:8:5 lint/nursery/useNamingConvention ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class property name should be in camelCase.
+  
+     6 │     Initialized = 0
+     7 │ 
+   > 8 │     #Initialized = 0
+       │     ^^^^^^^^^^^^
+     9 │ 
+    10 │     PROPERTY
+  
+  i The name is currently in PascalCase.
+  
+
+```
+
+```
+invalidClassProperty.js:10:5 lint/nursery/useNamingConvention ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class property name should be in camelCase.
+  
+     8 │     #Initialized = 0
+     9 │ 
+  > 10 │     PROPERTY
+       │     ^^^^^^^^
+    11 │ 
+    12 │     #PROPERTY
+  
+  i The name is currently in UPPERCASE.
+  
+
+```
+
+```
+invalidClassProperty.js:12:5 lint/nursery/useNamingConvention ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class property name should be in camelCase.
+  
+    10 │     PROPERTY
+    11 │ 
+  > 12 │     #PROPERTY
+       │     ^^^^^^^^^
+    13 │ 
+    14 │     SpecialProperty
+  
+  i The name is currently in UPPERCASE.
+  
+
+```
+
+```
+invalidClassProperty.js:14:5 lint/nursery/useNamingConvention ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class property name should be in camelCase.
+  
+    12 │     #PROPERTY
+    13 │ 
+  > 14 │     SpecialProperty
+       │     ^^^^^^^^^^^^^^^
+    15 │ 
+    16 │     #SpecialProperty
+  
+  i The name is currently in PascalCase.
+  
+
+```
+
+```
+invalidClassProperty.js:16:5 lint/nursery/useNamingConvention ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class property name should be in camelCase.
+  
+    14 │     SpecialProperty
+    15 │ 
+  > 16 │     #SpecialProperty
+       │     ^^^^^^^^^^^^^^^^
+    17 │ 
+    18 │     special_property
+  
+  i The name is currently in PascalCase.
+  
+
+```
+
+```
+invalidClassProperty.js:18:5 lint/nursery/useNamingConvention ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class property name should be in camelCase.
+  
+    16 │     #SpecialProperty
+    17 │ 
+  > 18 │     special_property
+       │     ^^^^^^^^^^^^^^^^
+    19 │ 
+    20 │     #special_property
+  
+  i The name is currently in snake_case.
+  
+
+```
+
+```
+invalidClassProperty.js:20:5 lint/nursery/useNamingConvention ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class property name should be in camelCase.
+  
+    18 │     special_property
+    19 │ 
+  > 20 │     #special_property
+       │     ^^^^^^^^^^^^^^^^^
+    21 │ 
+    22 │     Unknown_Style
+  
+  i The name is currently in snake_case.
+  
+
+```
+
+```
+invalidClassProperty.js:22:5 lint/nursery/useNamingConvention ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class property name should be in camelCase.
+  
+    20 │     #special_property
+    21 │ 
+  > 22 │     Unknown_Style
+       │     ^^^^^^^^^^^^^
+    23 │ 
+    24 │     #Unknown_Style
+  
+
+```
+
+```
+invalidClassProperty.js:24:5 lint/nursery/useNamingConvention ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class property name should be in camelCase.
+  
+    22 │     Unknown_Style
+    23 │ 
+  > 24 │     #Unknown_Style
+       │     ^^^^^^^^^^^^^^
+    25 │ 
+    26 │     Unknown_Init_Style = 0
+  
+
+```
+
+```
+invalidClassProperty.js:26:5 lint/nursery/useNamingConvention ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class property name should be in camelCase.
+  
+    24 │     #Unknown_Style
+    25 │ 
+  > 26 │     Unknown_Init_Style = 0
+       │     ^^^^^^^^^^^^^^^^^^
+    27 │ 
+    28 │     #Unknown_Init_Style = 0
+  
+
+```
+
+```
+invalidClassProperty.js:28:5 lint/nursery/useNamingConvention ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class property name should be in camelCase.
+  
+    26 │     Unknown_Init_Style = 0
+    27 │ 
+  > 28 │     #Unknown_Init_Style = 0
+       │     ^^^^^^^^^^^^^^^^^^^
+    29 │ }
+  
+
+```
+
+

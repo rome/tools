@@ -1,52 +1,96 @@
-use crate::{control_flow::AnyJsControlFlowRoot, semantic_services::Semantic};
-use bitflags::bitflags;
-use rome_analyze::{
-    context::RuleContext, declare_rule, DeserializableRuleOptions, Rule, RuleDiagnostic,
+use std::str::FromStr;
+
+use crate::{
+    control_flow::AnyJsControlFlowRoot,
+    semantic_services::Semantic,
+    utils::case::{Case, Decomposed},
+    utils::rename::{AnyJsRenamableDeclaration, RenameSymbolExtensions},
+    JsRuleAction,
 };
+use bpaf::Bpaf;
+use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_deserialize::{
-    json::{
-        deserialize_from_json_str, has_only_known_keys, with_only_known_variants, JsonDeserialize,
-        VisitJsonNode,
-    },
-    DeserializationDiagnostic, Deserialized, VisitNode,
+    json::{has_only_known_keys, with_only_known_variants, VisitJsonNode},
+    DeserializationDiagnostic, VisitNode,
 };
+use rome_diagnostics::Applicability;
+use rome_js_semantic::CanBeImportedExported;
 use rome_js_syntax::{
-    binding_ext::AnyJsBindingDeclaration, member_name_ext::AnyJsMember, AnyJsClassMember,
-    AnyJsObjectMember, AnyTsTypeMember, JsIdentifierBinding, JsLiteralExportName,
-    JsLiteralMemberName, JsPrivateClassMemberName, TsTypeParameterName,
+    binding_ext::AnyJsBindingDeclaration,
+    member_name_ext::{AnyJsMember, AnyJsNamedExport},
+    AnyJsClassMember, AnyJsObjectMember, AnyTsTypeMember, JsIdentifierBinding, JsLiteralExportName,
+    JsLiteralMemberName, JsPrivateClassMemberName, JsSyntaxKind, JsSyntaxToken,
+    JsVariableDeclarator, JsVariableKind, TsIdentifierBinding, TsTypeParameterName,
 };
 use rome_json_syntax::JsonLanguage;
-use rome_rowan::{declare_node_union, AstNode, SyntaxNode};
+use rome_rowan::{declare_node_union, AstNode, BatchMutationExt, SyntaxNode, SyntaxResult};
+use serde::{Deserialize, Serialize};
 use smallvec::SmallVec;
 
+#[cfg(feature = "schemars")]
+use schemars::JsonSchema;
+
 declare_rule! {
-    /// Succinct description of the rule.
+    /// Enforce naming conventions for everything across a codebase.
     ///
-    /// Put context and details about the rule.
-    /// As a starting point, you can take the description of the corresponding _ESLint_ rule (if any).
+    /// Enforcing naming conventions helps keep the codebase consistent,
+    /// and reduces overhead when thinking about how to name a variable.
     ///
-    /// Try to stay consistent with the descriptions of implemented rules.
+    /// This rule enforces the wide-spread naming conventions of JavaScript and TypeScript codebase.
     ///
-    /// Add a link to the corresponding ESLint rule (if any):
+    /// In contrast to the _ESLint_ `naming-convention` rule, this rule is not fine-tunable.
+    /// By default, an enum member has to be in _StrictUpperPascalCase_,
+    /// while the _ESLint_ requires an enum member to be in _strictCamelCase_.
+    /// This rule also supports to require an enum member to be in _CONSTANT_CASE_.
     ///
-    /// Source: https://eslint.org/docs/latest/rules/rule-name
+    /// Source: https://typescript-eslint.io/rules/naming-convention/#allowed-selectors-modifiers-and-types
+    ///
+    /// ## Options
+    ///
+    /// ### strictCase
+    ///
+    /// Default: _true_
+    ///
+    /// By default, `HTTPServer` and `aHTTPServer` are not considered in `PascalCase` and in `camelCase`.
+    /// They have to be written as `HttpServer` and `aHttpServer`.
+    /// By setting `strictCase` to `false`, consecutive uppercase characters are allowed.
+    ///
+    /// ### enumMemberCase
+    ///
+    /// Default: `PascalCase`
+    ///
+    /// By default, the rule enforces tha naming convention followed by the [TypeScript Compiler team](https://www.typescriptlang.org/docs/handbook/enums.html):
+    /// an `enum` member has to be in `PascalCase`.
+    /// You can enforce another convention by setting `enumMemberCase`.
+    /// The supported cases are: `camelCase`, `CONSTANT_CASE`, and `PascalCase`.
     ///
     /// ## Examples
     ///
     /// ### Invalid
     ///
     /// ```js,expect_diagnostic
-    /// var a = 1;
-    /// a = 2;
+    /// let snake_case;
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// class camelCase {}
     /// ```
     ///
     /// ## Valid
     ///
     /// ```js
-    /// var a = 1;
+    /// let camelCase;
     /// ```
     ///
+    /// ```js
+    /// const CONSTANT_CASE = 0;
+    /// const camelCase = {};
+    /// ```
+    ///
+    /// ```js
+    /// class PascalCase {}
+    /// ```
     pub(crate)  UseNamingConvention {
         version: "next",
         name: "useNamingConvention",
@@ -54,372 +98,253 @@ declare_rule! {
     }
 }
 
-declare_node_union! {
-    pub(crate) AnyName = JsIdentifierBinding | JsLiteralMemberName | JsPrivateClassMemberName | JsLiteralExportName | TsTypeParameterName
-}
+impl Rule for UseNamingConvention {
+    type Query = Semantic<AnyName>;
+    type State = State;
+    type Signals = Option<Self::State>;
+    type Options = NamingConventionOptions;
 
-#[derive(Clone, Copy, Debug)]
-pub(crate) enum Named {
-    CatchParameter,
-    Class,
-    ClassGetter,
-    ClassMethod,
-    ClassProperty,
-    ClassSetter,
-    ClassStaticGetter,
-    ClassStaticMethod,
-    ClassStaticProperty,
-    ClassStaticSetter,
-    Enum,
-    EnumMember,
-    ExportAlias,
-    Function,
-    FunctionParameter,
-    ImportAlias,
-    ImportNamespace,
-    IndexParameter,
-    Interface,
-    Namespace,
-    ObjectGetter,
-    ObjectMethod,
-    ObjectProperty,
-    ObjectSetter,
-    TypeAlias,
-    TypeGetter,
-    TypeMethod,
-    TypeProperty,
-    TypeReadonlyProperty,
-    TypeSetter,
-    TypeParameter,
-    ModuleLevelVariable,
-    Variable,
-}
-
-impl Named {
-    fn from_any_js_name(js_name: &AnyName) -> Option<Self> {
-        match js_name {
-            AnyName::JsIdentifierBinding(binding) => {
-                let Some(decl) = binding.declaration() else {
-                    return None;
-                };
-                match decl {
-                    AnyJsBindingDeclaration::JsVariableDeclarator(var) => {
-                        let is_module_level = matches!(
-                            var.syntax()
-                                .ancestors()
-                                .find_map(AnyJsControlFlowRoot::cast),
-                            Some(AnyJsControlFlowRoot::JsModule(_))
-                                | Some(AnyJsControlFlowRoot::JsScript(_))
-                        );
-                        Some(if is_module_level {
-                            Self::ModuleLevelVariable
-                        } else {
-                            Self::Variable
-                        })
-                    }
-                    AnyJsBindingDeclaration::JsCatchDeclaration(_) => Some(Self::CatchParameter),
-                    AnyJsBindingDeclaration::JsFormalParameter(_)
-                    | AnyJsBindingDeclaration::JsRestParameter(_)
-                    | AnyJsBindingDeclaration::TsPropertyParameter(_) => {
-                        Some(Self::FunctionParameter)
-                    }
-                    AnyJsBindingDeclaration::TsIndexSignatureParameter(_) => {
-                        Some(Self::IndexParameter)
-                    }
-                    AnyJsBindingDeclaration::JsNamespaceImportSpecifier(_)
-                    | AnyJsBindingDeclaration::JsImportNamespaceClause(_) => {
-                        Some(Self::ImportNamespace)
-                    }
-                    AnyJsBindingDeclaration::JsFunctionDeclaration(_)
-                    | AnyJsBindingDeclaration::JsFunctionExpression(_)
-                    | AnyJsBindingDeclaration::JsFunctionExportDefaultDeclaration(_)
-                    | AnyJsBindingDeclaration::TsDeclareFunctionDeclaration(_)
-                    | AnyJsBindingDeclaration::TsDeclareFunctionExportDefaultDeclaration(_) => {
-                        Some(Self::Function)
-                    }
-                    AnyJsBindingDeclaration::JsNamedImportSpecifier(_) => Some(Self::ImportAlias),
-                    AnyJsBindingDeclaration::TsModuleDeclaration(_) => Some(Self::Namespace),
-                    AnyJsBindingDeclaration::TsTypeAliasDeclaration(_) => Some(Self::TypeAlias),
-                    AnyJsBindingDeclaration::JsClassDeclaration(_)
-                    | AnyJsBindingDeclaration::JsClassExpression(_)
-                    | AnyJsBindingDeclaration::JsClassExportDefaultDeclaration(_) => {
-                        Some(Self::Class)
-                    }
-                    AnyJsBindingDeclaration::TsInterfaceDeclaration(_) => Some(Self::Interface),
-                    AnyJsBindingDeclaration::TsEnumDeclaration(_) => Some(Self::Enum),
-                    AnyJsBindingDeclaration::JsBogusParameter(_)
-                    | AnyJsBindingDeclaration::JsImportDefaultClause(_)
-                    | AnyJsBindingDeclaration::JsShorthandNamedImportSpecifier(_)
-                    | AnyJsBindingDeclaration::JsBogusNamedImportSpecifier(_)
-                    | AnyJsBindingDeclaration::TsImportEqualsDeclaration(_)
-                    | AnyJsBindingDeclaration::JsDefaultImportSpecifier(_) => None,
-                }
-            }
-            AnyName::JsLiteralMemberName(member_name) => {
-                if let Some(member) = member_name.member() {
-                    return match member {
-                        AnyJsMember::AnyJsClassMember(member) => Self::from_class_member(&member),
-                        AnyJsMember::AnyTsTypeMember(member) => Self::from_type_member(&member),
-                        AnyJsMember::AnyJsObjectMember(member) => Self::from_object_member(&member),
-                        AnyJsMember::JsObjectAssignmentPatternProperty(_)
-                        | AnyJsMember::AnyJsObjectBindingPatternMember(_) => None,
-                        AnyJsMember::TsEnumMember(_) => Some(Self::EnumMember),
-                    };
-                }
-                None
-            }
-            AnyName::JsPrivateClassMemberName(member_name) => {
-                if let Some(member) = member_name.member() {
-                    return Self::from_class_member(&member);
-                }
-                None
-            }
-            AnyName::JsLiteralExportName(_) => Some(Self::ExportAlias),
-            AnyName::TsTypeParameterName(_) => Some(Self::TypeParameter),
+    fn run(ctx: &RuleContext<Self>) -> Self::Signals {
+        let node = ctx.query();
+        let options = ctx.options();
+        let element = Named::from_name(node)?;
+        let allowed_cases = element.naming_convention(options);
+        if allowed_cases.is_empty() {
+            // No naming convention to verify
+            return None;
         }
-    }
-
-    fn from_class_member(member: &AnyJsClassMember) -> Option<Self> {
-        match member {
-            AnyJsClassMember::JsBogusMember(_)
-            | AnyJsClassMember::JsConstructorClassMember(_)
-            | AnyJsClassMember::TsConstructorSignatureClassMember(_)
-            | AnyJsClassMember::JsEmptyClassMember(_)
-            | AnyJsClassMember::JsStaticInitializationBlockClassMember(_) => None,
-            AnyJsClassMember::TsIndexSignatureClassMember(_) => Some(Self::IndexParameter),
-            AnyJsClassMember::JsGetterClassMember(getter) => {
-                Some(if getter.modifiers().has_static_modifier() {
-                    Self::ClassStaticGetter
-                } else {
-                    Self::ClassGetter
-                })
-            }
-            AnyJsClassMember::TsGetterSignatureClassMember(getter) => {
-                Some(if getter.modifiers().has_static_modifier() {
-                    Self::ClassStaticGetter
-                } else {
-                    Self::ClassGetter
-                })
-            }
-            AnyJsClassMember::JsMethodClassMember(method) => {
-                Some(if method.modifiers().has_static_modifier() {
-                    Self::ClassStaticMethod
-                } else {
-                    Self::ClassMethod
-                })
-            }
-            AnyJsClassMember::TsMethodSignatureClassMember(method) => {
-                Some(if method.modifiers().has_static_modifier() {
-                    Self::ClassStaticMethod
-                } else {
-                    Self::ClassMethod
-                })
-            }
-            AnyJsClassMember::JsPropertyClassMember(property) => {
-                Some(if property.modifiers().has_static_modifier() {
-                    Self::ClassStaticProperty
-                } else {
-                    Self::ClassProperty
-                })
-            }
-            AnyJsClassMember::TsPropertySignatureClassMember(property) => {
-                Some(if property.modifiers().has_static_modifier() {
-                    Self::ClassStaticProperty
-                } else {
-                    Self::ClassProperty
-                })
-            }
-            AnyJsClassMember::TsInitializedPropertySignatureClassMember(property) => {
-                Some(if property.modifiers().has_static_modifier() {
-                    Self::ClassStaticProperty
-                } else {
-                    Self::ClassProperty
-                })
-            }
-            AnyJsClassMember::JsSetterClassMember(setter) => {
-                Some(if setter.modifiers().has_static_modifier() {
-                    Self::ClassStaticSetter
-                } else {
-                    Self::ClassSetter
-                })
-            }
-            AnyJsClassMember::TsSetterSignatureClassMember(setter) => {
-                Some(if setter.modifiers().has_static_modifier() {
-                    Self::ClassStaticSetter
-                } else {
-                    Self::ClassSetter
-                })
-            }
-        }
-    }
-
-    fn from_object_member(member: &AnyJsObjectMember) -> Option<Self> {
-        match member {
-            AnyJsObjectMember::JsBogusMember(_) | AnyJsObjectMember::JsSpread(_) => None,
-            AnyJsObjectMember::JsGetterObjectMember(_) => Some(Self::ObjectGetter),
-            AnyJsObjectMember::JsMethodObjectMember(_) => Some(Self::ObjectMethod),
-            AnyJsObjectMember::JsPropertyObjectMember(_)
-            | AnyJsObjectMember::JsShorthandPropertyObjectMember(_) => Some(Self::ObjectProperty),
-            AnyJsObjectMember::JsSetterObjectMember(_) => Some(Self::ObjectSetter),
-        }
-    }
-
-    fn from_type_member(member: &AnyTsTypeMember) -> Option<Self> {
-        match member {
-            AnyTsTypeMember::JsBogusMember(_)
-            | AnyTsTypeMember::TsCallSignatureTypeMember(_)
-            | AnyTsTypeMember::TsConstructSignatureTypeMember(_) => None,
-            AnyTsTypeMember::TsIndexSignatureTypeMember(_) => Some(Self::IndexParameter),
-            AnyTsTypeMember::TsGetterSignatureTypeMember(_) => Some(Self::TypeGetter),
-            AnyTsTypeMember::TsMethodSignatureTypeMember(_) => Some(Self::TypeMethod),
-            AnyTsTypeMember::TsPropertySignatureTypeMember(property) => {
-                Some(if property.readonly_token().is_some() {
-                    Self::TypeReadonlyProperty
-                } else {
-                    Self::TypeProperty
-                })
-            }
-            AnyTsTypeMember::TsSetterSignatureTypeMember(_) => Some(Self::TypeSetter),
-        }
-    }
-
-    const fn to_str(self) -> &'static str {
-        match self {
-            Self::CatchParameter => "catch parameter",
-            Self::Class => "class",
-            Self::ClassGetter => "class getter",
-            Self::ClassMethod => "class method",
-            Self::ClassProperty => "class property",
-            Self::ClassSetter => "class setter",
-            Self::ClassStaticGetter => "static getter",
-            Self::ClassStaticMethod => "static method",
-            Self::ClassStaticProperty => "static property",
-            Self::ClassStaticSetter => "static setter",
-            Self::Enum => "enum",
-            Self::EnumMember => "enum member",
-            Self::ExportAlias => "export alias",
-            Self::Function => "function",
-            Self::FunctionParameter => "function parameter",
-            Self::ImportAlias => "import alias",
-            Self::ImportNamespace => "import namespace",
-            Self::IndexParameter => "index parameter",
-            Self::Interface => "interface",
-            Self::Namespace => "namespace",
-            Self::ObjectGetter => "object getter",
-            Self::ObjectMethod => "object method",
-            Self::ObjectProperty => "object property",
-            Self::ObjectSetter => "object setter",
-            Self::TypeAlias => "type alias",
-            Self::TypeGetter => "getter",
-            Self::TypeMethod => "method",
-            Self::TypeProperty => "property",
-            Self::TypeReadonlyProperty => "readonly property",
-            Self::TypeSetter => "setter",
-            Self::TypeParameter => "type parameter",
-            Self::ModuleLevelVariable => "top-level variable",
-            Self::Variable => "variable",
-        }
-    }
-
-    fn naming_style(self, options: &Options) -> NamingStyle {
-        let result = match self {
-            Self::CatchParameter
-            | Self::ClassGetter
-            | Self::ClassMethod
-            | Self::ClassProperty
-            | Self::ClassSetter
-            | Self::ClassStaticMethod
-            | Self::ClassStaticSetter
-            | Self::FunctionParameter
-            | Self::ImportNamespace
-            | Self::IndexParameter
-            | Self::ObjectMethod
-            | Self::ObjectSetter
-            | Self::TypeMethod
-            | Self::TypeProperty
-            | Self::TypeSetter
-            | Self::Variable => NamingStyle::LOWER_CAMEL_CASE,
-            Self::Class | Self::Interface | Self::Enum | Self::TypeParameter => {
-                NamingStyle::UPPER_CAMEL_CASE
-            }
-            Self::ClassStaticGetter
-            | Self::ClassStaticProperty
-            | Self::ModuleLevelVariable
-            | Self::ObjectGetter
-            | Self::ObjectProperty
-            | Self::TypeGetter
-            | Self::TypeReadonlyProperty => {
-                NamingStyle::LOWER_CAMEL_CASE | NamingStyle::UPPER_UNDERSCORE_CASE
-            }
-            Self::EnumMember => options.enum_member_case.0,
-            Self::ImportAlias | Self::ExportAlias => {
-                NamingStyle::CAMEL_CASE | NamingStyle::UPPER_UNDERSCORE_CASE
-            }
-            Self::Function | Self::Namespace | Self::TypeAlias => NamingStyle::CAMEL_CASE,
-        };
-        if options.strict_camel_case {
-            result
+        let name_token = node.name_token().ok()?;
+        let name = name_token.text_trimmed();
+        let Decomposed {
+            prefix,
+            main,
+            suffix,
+        } = Decomposed::from(name);
+        let actual_case = Case::identify(main, options.strict_case);
+        let issue = if !matches!(prefix, "" | "_" | "__" | "$") {
+            Invalid::Prefix
+        } else if !matches!(suffix, "" | "_" | "__" | "$") {
+            Invalid::Suffix
         } else {
-            result.non_strict()
+            if let Some(actual_case) = actual_case {
+                if allowed_cases
+                    .iter()
+                    .any(|&expected_style| actual_case.is_compatible(expected_style))
+                {
+                    // Valid case
+                    return None;
+                }
+            } else if main.is_empty() {
+                return None;
+            }
+            Invalid::Case(actual_case)
+        };
+        Some(State { element, issue })
+    }
+
+    fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
+        let State { element, issue } = state;
+        let node = ctx.query();
+        let name_token = node.name_token().ok()?;
+        let name = name_token.text_trimmed();
+        let node_range = node.syntax().text_trimmed_range();
+        let diagnostic = match issue {
+            Invalid::Case(actual_case) => {
+                let allowed_cases = element.naming_convention(ctx.options());
+                let allowed_case_names = allowed_cases
+                    .iter()
+                    .map(|style| style.to_str())
+                    .collect::<SmallVec<[_; 3]>>()
+                    .join(" or ");
+                let mut diagnostic = RuleDiagnostic::new(
+                    rule_category!(),
+                    node_range,
+                    markup! {
+                        "This "<Emphasis>{element.to_str()}</Emphasis>" name should be in "<Emphasis>{allowed_case_names}</Emphasis>"."
+                    },
+                );
+                if let Some(actual_case) = actual_case {
+                    diagnostic = diagnostic.note(markup! {
+                        "The name is currently in "<Emphasis>{actual_case.to_str()}</Emphasis>"."
+                    })
+                }
+                diagnostic
+            }
+            Invalid::Prefix => {
+                let Decomposed { prefix, .. } = Decomposed::from(name);
+                RuleDiagnostic::new(
+                    rule_category!(),
+                    node_range,
+                    markup! {
+                        "This "<Emphasis>{element.to_str()}</Emphasis>" name might only prefixed by "<Emphasis>"_"</Emphasis>" or "<Emphasis>"$"</Emphasis>"."
+                    },
+                ).note(markup! {
+                    "The current prefix is "<Emphasis>{prefix}</Emphasis>"."
+                })
+            }
+            Invalid::Suffix => {
+                let Decomposed { suffix, .. } = Decomposed::from(name);
+                RuleDiagnostic::new(
+                    rule_category!(),
+                    node_range,
+                    markup! {
+                        "This "<Emphasis>{element.to_str()}</Emphasis>" name might only be suffixed by "<Emphasis>"_"</Emphasis>" or "<Emphasis>"$"</Emphasis>"."
+                    },
+                ).note(markup! {
+                    "The current suffix is "<Emphasis>{suffix}</Emphasis>"."
+                })
+            }
+        };
+        Some(diagnostic)
+    }
+
+    fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
+        let node = ctx.query();
+        let model = ctx.model();
+        let mut mutation = ctx.root().begin();
+        let State { element, issue } = state;
+        let renamable = match node {
+            AnyName::JsIdentifierBinding(binding) => {
+                if binding.is_exported(model) {
+                    return None;
+                }
+                if let Some(AnyJsBindingDeclaration::TsPropertyParameter(_)) = binding.declaration()
+                {
+                    // Property parameters are also class properties.
+                    return None;
+                }
+                Some(AnyJsRenamableDeclaration::JsIdentifierBinding(
+                    binding.clone(),
+                ))
+            }
+            AnyName::TsIdentifierBinding(binding) => {
+                if binding.is_exported(model) {
+                    return None;
+                }
+                Some(AnyJsRenamableDeclaration::TsIdentifierBinding(
+                    binding.clone(),
+                ))
+            }
+            _ => None,
+        };
+        if let Some(renamable) = renamable {
+            let name_token = node.name_token().ok()?;
+            let Decomposed {
+                mut prefix,
+                main,
+                mut suffix,
+            } = Decomposed::from(name_token.text_trimmed());
+            prefix = if prefix.contains("__") {
+                "__"
+            } else if prefix.contains('_') {
+                "_"
+            } else if prefix.contains('$') {
+                "$"
+            } else {
+                ""
+            };
+            suffix = if suffix.contains("__") {
+                "__"
+            } else if suffix.contains('_') {
+                "_"
+            } else if suffix.contains('$') {
+                "$"
+            } else {
+                ""
+            };
+            let message;
+            let mut new_name;
+            match issue {
+                Invalid::Case(_) => {
+                    let preferred_case = element.naming_convention(ctx.options())[0];
+                    new_name = preferred_case.convert(main);
+                    message = markup! { "Rename this symbol in "<Emphasis>{preferred_case.to_str()}</Emphasis>"." }.to_owned();
+                }
+                Invalid::Prefix | Invalid::Suffix => {
+                    new_name = main.to_string();
+                    message = markup! { "Rename with a recommended prefix and suffix." }.to_owned();
+                }
+            }
+            new_name.insert_str(0, prefix);
+            new_name.insert_str(new_name.len(), suffix);
+            let renamed = mutation.rename_any_renamable_node(model, renamable, &new_name[..]);
+            if renamed {
+                return Some(JsRuleAction {
+                    category: ActionCategory::QuickFix,
+                    applicability: Applicability::Always,
+                    message,
+                    mutation,
+                });
+            }
+        }
+        None
+    }
+}
+
+declare_node_union! {
+    pub(crate) AnyName = JsIdentifierBinding | JsLiteralMemberName | JsPrivateClassMemberName |
+    JsLiteralExportName | TsIdentifierBinding | TsTypeParameterName
+}
+
+impl AnyName {
+    fn name_token(&self) -> SyntaxResult<JsSyntaxToken> {
+        match self {
+            AnyName::JsIdentifierBinding(binding) => binding.name_token(),
+            AnyName::JsLiteralMemberName(member_name) => member_name.value(),
+            AnyName::JsPrivateClassMemberName(member_name) => member_name.id_token(),
+            AnyName::JsLiteralExportName(export_name) => export_name.value(),
+            AnyName::TsIdentifierBinding(binding) => binding.name_token(),
+            AnyName::TsTypeParameterName(type_parameter) => type_parameter.ident_token(),
         }
     }
 }
 
-#[derive(Debug, Eq, PartialEq, Clone, Copy)]
-pub(crate) struct EnumMemberNamingStyleOption(NamingStyle);
-
-impl EnumMemberNamingStyleOption {
-    pub(crate) const KNOWN_VALUES: &'static [&'static str] =
-        &["UpperCamelCase", "UPPER_UNDERSCORE_CASE"];
+#[derive(Debug)]
+pub(crate) struct State {
+    element: Named,
+    issue: Invalid,
 }
 
-impl Default for EnumMemberNamingStyleOption {
-    fn default() -> Self {
-        Self(NamingStyle::UPPER_CAMEL_CASE)
-    }
+#[derive(Debug)]
+enum Invalid {
+    Case(Option<Case>),
+    Prefix,
+    Suffix,
 }
 
-impl VisitNode<JsonLanguage> for EnumMemberNamingStyleOption {
-    fn visit_member_value(
-        &mut self,
-        node: &SyntaxNode<JsonLanguage>,
-        diagnostics: &mut Vec<DeserializationDiagnostic>,
-    ) -> Option<()> {
-        let node = with_only_known_variants(node, Self::KNOWN_VALUES, diagnostics)?;
-        match node.inner_string_text().ok()?.text() {
-            "UpperCamelCase" => {
-                *self = Self(NamingStyle::UPPER_CAMEL_CASE);
-            }
-            "UPPER_UNDERSCORE_CASE" => {
-                *self = Self(NamingStyle::UPPER_UNDERSCORE_CASE);
-            }
-            _ => {}
-        }
-        Some(())
-    }
+#[derive(Debug, Copy, Clone, Serialize, Deserialize, Bpaf)]
+#[cfg_attr(feature = "schemars", derive(JsonSchema))]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct NamingConventionOptions {
+    #[bpaf(hide)]
+    strict_case: bool,
+    #[bpaf(hide)]
+    enum_member_case: EnumMemberCase,
 }
 
-#[derive(Debug, Eq, PartialEq, Clone, Copy)]
-pub(crate) struct Options {
-    strict_camel_case: bool,
-    enum_member_case: EnumMemberNamingStyleOption,
+impl NamingConventionOptions {
+    pub(crate) const KNOWN_KEYS: &'static [&'static str] = &["strictCase", "enumMemberCase"];
 }
 
-impl Options {
-    pub(crate) const KNOWN_KEYS: &'static [&'static str] = &["strictCamelCase", "enumMemberCase"];
-}
-
-impl Default for Options {
+impl Default for NamingConventionOptions {
     fn default() -> Self {
         Self {
-            strict_camel_case: true,
+            strict_case: true,
             enum_member_case: Default::default(),
         }
     }
 }
 
-impl VisitJsonNode for Options {}
-impl VisitNode<JsonLanguage> for Options {
+impl FromStr for NamingConventionOptions {
+    type Err = &'static str;
+
+    fn from_str(_s: &str) -> Result<Self, Self::Err> {
+        Ok(Self::default())
+    }
+}
+
+impl VisitJsonNode for NamingConventionOptions {}
+impl VisitNode<JsonLanguage> for NamingConventionOptions {
     fn visit_member_name(
         &mut self,
         node: &SyntaxNode<JsonLanguage>,
@@ -436,253 +361,406 @@ impl VisitNode<JsonLanguage> for Options {
     ) -> Option<()> {
         let (name, value) = self.get_key_and_value(key, value, diagnostics)?;
         let name_text = name.text();
-        if name_text == "strictCamelCase" {
-            value.as_json_boolean_value()?;
+        match name_text {
+            "strictCase" => {
+                self.strict_case = self.map_to_boolean(&value, name_text, diagnostics)?
+            }
+            "enumMemberCase" => {
+                let mut enum_member_case = EnumMemberCase::default();
+                self.map_to_known_string(&value, name_text, &mut enum_member_case, diagnostics)?;
+                self.enum_member_case = enum_member_case;
+            }
+            _ => {}
         }
         Some(())
     }
 }
 
-impl JsonDeserialize for Options {
-    fn deserialize_from_ast(
-        root: rome_json_syntax::JsonRoot,
-        visitor: &mut impl VisitJsonNode,
+#[derive(Debug, Default, Copy, Clone, Serialize, Deserialize)]
+#[cfg_attr(feature = "schemars", derive(JsonSchema))]
+pub(crate) enum EnumMemberCase {
+    #[serde(rename = "PascalCase")]
+    #[default]
+    Pascal,
+    #[serde(rename = "CONSTANT_CASE")]
+    Constant,
+    #[serde(rename = "camelCase")]
+    Camel,
+}
+
+impl EnumMemberCase {
+    pub const KNOWN_VALUES: &'static [&'static str] =
+        &["camelCase", "CONSTANT_CASE", "PascalCase"];
+}
+
+impl FromStr for EnumMemberCase {
+    type Err = &'static str;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "camelCase" | "CamelCase" => Ok(Self::Camel),
+            "CONSTANT_CASE" | "ConstantCase" => Ok(Self::Constant),
+            "PascalCase" => Ok(Self::Pascal),
+            // TODO: replace this error with a diagnostic
+            _ => Err("Value not supported for EnumMemberCase"),
+        }
+    }
+}
+
+impl VisitNode<JsonLanguage> for EnumMemberCase {
+    fn visit_member_value(
+        &mut self,
+        node: &SyntaxNode<JsonLanguage>,
         diagnostics: &mut Vec<DeserializationDiagnostic>,
     ) -> Option<()> {
-        let object = root.value().ok()?;
-        let object = object.as_json_object_value()?;
-        for element in object.json_member_list() {
-            let element = element.ok()?;
-            visitor.visit_map(
-                element.name().ok()?.syntax(),
-                element.value().ok()?.syntax(),
-                diagnostics,
-            )?;
-        }
+        let node = with_only_known_variants(node, Self::KNOWN_VALUES, diagnostics)?;
+        *self = match node.inner_string_text().ok()?.text() {
+            "camelCase" => Self::Camel,
+            "CONSTANT_CASE" => Self::Constant,
+            "PascalCase" => Self::Pascal,
+            _ => return None,
+        };
         Some(())
     }
 }
 
-impl DeserializableRuleOptions for Options {
-    fn from(value: String) -> Deserialized<Self> {
-        deserialize_from_json_str(&value)
+impl From<EnumMemberCase> for Case {
+    fn from(case: EnumMemberCase) -> Case {
+        match case {
+            EnumMemberCase::Pascal => Case::Pascal,
+            EnumMemberCase::Constant => Case::Constant,
+            EnumMemberCase::Camel => Case::Camel,
+        }
     }
 }
 
-#[derive(Debug)]
-pub(crate) struct State {
-    actual_style: NamingStyle,
-    element: Named,
+#[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
+enum Named {
+    CatchParameter,
+    Class,
+    ClassGetter,
+    ClassMethod,
+    ClassProperty,
+    ClassSetter,
+    ClassStaticGetter,
+    ClassStaticMethod,
+    ClassStaticProperty,
+    ClassStaticSetter,
+    Enum,
+    EnumMember,
+    ExportAlias,
+    ExportSource,
+    Function,
+    FunctionParameter,
+    ImportAlias,
+    ImportNamespace,
+    ImportSource,
+    IndexParameter,
+    Interface,
+    LocalConst,
+    LocalLet,
+    LocalVar,
+    Namespace,
+    ObjectGetter,
+    ObjectMethod,
+    ObjectProperty,
+    ObjectSetter,
+    ParameterProperty,
+    TopLevelConst,
+    TopLevelLet,
+    TopLevelVar,
+    TypeAlias,
+    TypeGetter,
+    TypeMethod,
+    TypeProperty,
+    TypeReadonlyProperty,
+    TypeSetter,
+    TypeParameter,
 }
 
-impl Rule for UseNamingConvention {
-    type Query = Semantic<AnyName>;
-    type State = State;
-    type Signals = Option<Self::State>;
-    type Options = Options;
-
-    fn run(ctx: &RuleContext<Self>) -> Self::Signals {
-        let name = ctx.query();
-        let element = Named::from_any_js_name(name)?;
-        let expected_style = element.naming_style(ctx.options());
-        let actual_style = match name {
-            AnyName::JsIdentifierBinding(binding) => identify_naming_style(
-                trim_leading_trailing_underscore_dollar(binding.name_token().ok()?.text_trimmed()),
-            ),
-
-            AnyName::JsLiteralMemberName(member_name) => identify_naming_style(
-                trim_leading_trailing_underscore_dollar(&member_name.name().ok()?),
-            ),
-
+impl Named {
+    fn from_name(js_name: &AnyName) -> Option<Named> {
+        match js_name {
+            AnyName::JsIdentifierBinding(binding) => {
+                Named::from_binding_declaration(&binding.declaration()?)
+            }
+            AnyName::TsIdentifierBinding(binding) => {
+                Named::from_binding_declaration(&binding.declaration()?)
+            }
+            AnyName::JsLiteralMemberName(member_name) => {
+                // ignore quoted members
+                if member_name.value().ok()?.kind() == JsSyntaxKind::JS_STRING_LITERAL {
+                    return None;
+                }
+                match member_name.member()? {
+                    AnyJsMember::AnyJsClassMember(member) => Named::from_class_member(&member),
+                    AnyJsMember::AnyTsTypeMember(member) => Named::from_type_member(&member),
+                    AnyJsMember::AnyJsObjectMember(member) => Named::from_object_member(&member),
+                    AnyJsMember::JsObjectAssignmentPatternProperty(_)
+                    | AnyJsMember::AnyJsObjectBindingPatternMember(_) => None,
+                    AnyJsMember::TsEnumMember(_) => Some(Named::EnumMember),
+                }
+            }
             AnyName::JsPrivateClassMemberName(member_name) => {
-                identify_naming_style(trim_leading_trailing_underscore_dollar(
-                    member_name.id_token().ok()?.text_trimmed(),
-                ))
+                Named::from_class_member(&member_name.member()?)
             }
-            AnyName::JsLiteralExportName(export_name) => identify_naming_style(
-                trim_leading_trailing_underscore_dollar(export_name.value().ok()?.text_trimmed()),
-            ),
-            AnyName::TsTypeParameterName(type_parameter) => {
-                identify_naming_style(trim_leading_trailing_underscore_dollar(
-                    type_parameter.ident_token().ok()?.text_trimmed(),
-                ))
+            AnyName::JsLiteralExportName(export_name) => {
+                Some(match export_name.named_export()? {
+                    AnyJsNamedExport::JsNamedImportSpecifier(_) => Named::ImportSource,
+                    AnyJsNamedExport::JsExportNamedFromSpecifier(_) => Named::ExportSource,
+                    AnyJsNamedExport::JsExportNamedSpecifier(_)
+                    | AnyJsNamedExport::JsExportAsClause(_) => Named::ExportAlias,
+                })
             }
-        };
-        if actual_style.intersects(expected_style) {
-            return None;
+            AnyName::TsTypeParameterName(_) => Some(Named::TypeParameter),
         }
-        Some(State {
-            actual_style,
-            element,
+    }
+
+    fn from_class_member(member: &AnyJsClassMember) -> Option<Named> {
+        match member {
+            AnyJsClassMember::JsBogusMember(_)
+            | AnyJsClassMember::JsConstructorClassMember(_)
+            | AnyJsClassMember::TsConstructorSignatureClassMember(_)
+            | AnyJsClassMember::JsEmptyClassMember(_)
+            | AnyJsClassMember::JsStaticInitializationBlockClassMember(_) => None,
+            AnyJsClassMember::TsIndexSignatureClassMember(_) => Some(Named::IndexParameter),
+            AnyJsClassMember::JsGetterClassMember(getter) => {
+                Some(if getter.modifiers().has_static_modifier() {
+                    Named::ClassStaticGetter
+                } else {
+                    Named::ClassGetter
+                })
+            }
+            AnyJsClassMember::TsGetterSignatureClassMember(getter) => {
+                Some(if getter.modifiers().has_static_modifier() {
+                    Named::ClassStaticGetter
+                } else {
+                    Named::ClassGetter
+                })
+            }
+            AnyJsClassMember::JsMethodClassMember(method) => {
+                Some(if method.modifiers().has_static_modifier() {
+                    Named::ClassStaticMethod
+                } else {
+                    Named::ClassMethod
+                })
+            }
+            AnyJsClassMember::TsMethodSignatureClassMember(method) => {
+                Some(if method.modifiers().has_static_modifier() {
+                    Named::ClassStaticMethod
+                } else {
+                    Named::ClassMethod
+                })
+            }
+            AnyJsClassMember::JsPropertyClassMember(property) => {
+                Some(if property.modifiers().has_static_modifier() {
+                    Named::ClassStaticProperty
+                } else {
+                    Named::ClassProperty
+                })
+            }
+            AnyJsClassMember::TsPropertySignatureClassMember(property) => {
+                Some(if property.modifiers().has_static_modifier() {
+                    Named::ClassStaticProperty
+                } else {
+                    Named::ClassProperty
+                })
+            }
+            AnyJsClassMember::TsInitializedPropertySignatureClassMember(property) => {
+                Some(if property.modifiers().has_static_modifier() {
+                    Named::ClassStaticProperty
+                } else {
+                    Named::ClassProperty
+                })
+            }
+            AnyJsClassMember::JsSetterClassMember(setter) => {
+                Some(if setter.modifiers().has_static_modifier() {
+                    Named::ClassStaticSetter
+                } else {
+                    Named::ClassSetter
+                })
+            }
+            AnyJsClassMember::TsSetterSignatureClassMember(setter) => {
+                Some(if setter.modifiers().has_static_modifier() {
+                    Named::ClassStaticSetter
+                } else {
+                    Named::ClassSetter
+                })
+            }
+        }
+    }
+
+    fn from_binding_declaration(decl: &AnyJsBindingDeclaration) -> Option<Named> {
+        match decl {
+            AnyJsBindingDeclaration::JsVariableDeclarator(var) => {
+                Named::from_variable_declarator(var)
+            }
+            AnyJsBindingDeclaration::JsBogusParameter(_)
+            | AnyJsBindingDeclaration::JsFormalParameter(_)
+            | AnyJsBindingDeclaration::JsRestParameter(_) => Some(Named::FunctionParameter),
+            AnyJsBindingDeclaration::JsCatchDeclaration(_) => Some(Named::CatchParameter),
+            AnyJsBindingDeclaration::TsPropertyParameter(_) => Some(Named::ParameterProperty),
+            AnyJsBindingDeclaration::TsIndexSignatureParameter(_) => Some(Named::IndexParameter),
+            AnyJsBindingDeclaration::JsNamespaceImportSpecifier(_)
+            | AnyJsBindingDeclaration::JsImportNamespaceClause(_) => Some(Named::ImportNamespace),
+            AnyJsBindingDeclaration::JsFunctionDeclaration(_)
+            | AnyJsBindingDeclaration::JsFunctionExpression(_)
+            | AnyJsBindingDeclaration::JsFunctionExportDefaultDeclaration(_)
+            | AnyJsBindingDeclaration::TsDeclareFunctionDeclaration(_)
+            | AnyJsBindingDeclaration::TsDeclareFunctionExportDefaultDeclaration(_) => {
+                Some(Named::Function)
+            }
+            AnyJsBindingDeclaration::JsImportDefaultClause(_)
+            | AnyJsBindingDeclaration::TsImportEqualsDeclaration(_)
+            | AnyJsBindingDeclaration::JsDefaultImportSpecifier(_)
+            | AnyJsBindingDeclaration::JsNamedImportSpecifier(_) => Some(Named::ImportAlias),
+            AnyJsBindingDeclaration::TsModuleDeclaration(_) => Some(Named::Namespace),
+            AnyJsBindingDeclaration::TsTypeAliasDeclaration(_) => Some(Named::TypeAlias),
+            AnyJsBindingDeclaration::JsClassDeclaration(_)
+            | AnyJsBindingDeclaration::JsClassExpression(_)
+            | AnyJsBindingDeclaration::JsClassExportDefaultDeclaration(_) => Some(Named::Class),
+            AnyJsBindingDeclaration::TsInterfaceDeclaration(_) => Some(Named::Interface),
+            AnyJsBindingDeclaration::TsEnumDeclaration(_) => Some(Named::Enum),
+            AnyJsBindingDeclaration::JsShorthandNamedImportSpecifier(_) => {
+                Some(Named::ImportSource)
+            }
+            AnyJsBindingDeclaration::JsBogusNamedImportSpecifier(_) => None,
+        }
+    }
+
+    fn from_variable_declarator(var: &JsVariableDeclarator) -> Option<Named> {
+        let is_top_level_level = matches!(
+            var.syntax()
+                .ancestors()
+                .find_map(AnyJsControlFlowRoot::cast),
+            Some(AnyJsControlFlowRoot::JsModule(_)) | Some(AnyJsControlFlowRoot::JsScript(_))
+        );
+        let var_kind = var.declaration()?.variable_kind().ok()?;
+        Some(match (var_kind, is_top_level_level) {
+            (JsVariableKind::Const, false) => Named::LocalConst,
+            (JsVariableKind::Let, false) => Named::LocalLet,
+            (JsVariableKind::Var, false) => Named::LocalVar,
+            (JsVariableKind::Const, true) => Named::TopLevelConst,
+            (JsVariableKind::Let, true) => Named::TopLevelLet,
+            (JsVariableKind::Var, true) => Named::TopLevelVar,
         })
     }
 
-    fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
-        let State {
-            actual_style,
-            element,
-        } = state;
-        let expected_style = element.naming_style(ctx.options());
-        let name = ctx.query();
-        let actual_style_name = actual_style.style_names().join(" and ");
-        let expected_style_names = expected_style.style_names().join(" or ");
-        let mut diagnostic = RuleDiagnostic::new(
-            rule_category!(),
-            name.syntax().text_trimmed_range(),
-            markup! {
-                "This "{element.to_str()}" name should be in "{expected_style_names}"."
-            },
-        );
-        if !actual_style_name.is_empty() {
-            diagnostic = diagnostic.note(markup! {
-                "The name is currently in "{actual_style_name}"."
-            })
+    fn from_object_member(member: &AnyJsObjectMember) -> Option<Named> {
+        match member {
+            AnyJsObjectMember::JsBogusMember(_) | AnyJsObjectMember::JsSpread(_) => None,
+            AnyJsObjectMember::JsGetterObjectMember(_) => Some(Named::ObjectGetter),
+            AnyJsObjectMember::JsMethodObjectMember(_) => Some(Named::ObjectMethod),
+            AnyJsObjectMember::JsPropertyObjectMember(_)
+            | AnyJsObjectMember::JsShorthandPropertyObjectMember(_) => Some(Named::ObjectProperty),
+            AnyJsObjectMember::JsSetterObjectMember(_) => Some(Named::ObjectSetter),
         }
-        Some(diagnostic)
-    }
-}
-
-bitflags! {
-    pub(crate) struct NamingStyle: u8 {
-        const LOWER_CAMEL_CASE = 1;
-        const UPPER_CAMEL_CASE = 1 << 1;
-        const NON_STRICT = 1 << 2;
-        const LOWER_UNDERSCORE_CASE = 1 << 3;
-        const UPPER_UNDERSCORE_CASE = 1 << 4;
-        const LOWER_DASH_CASE = 1 << 5;
-        const UPPER_DASH_CASE = 1 << 6;
-
-        const CAMEL_CASE = Self::LOWER_CAMEL_CASE.bits() | Self::UPPER_CAMEL_CASE.bits();
-        const UNDERSCORE_CASE = Self::LOWER_UNDERSCORE_CASE.bits() | Self::UPPER_UNDERSCORE_CASE.bits();
-        const DASH_CASE = Self::LOWER_DASH_CASE.bits() | Self::UPPER_DASH_CASE.bits();
-        const NON_STRICT_LOWER_CAMEL_CASE = Self::NON_STRICT.bits() | Self::LOWER_CAMEL_CASE.bits();
-        const NON_STRICT_UPPER_CAMEL_CASE = Self::NON_STRICT.bits() | Self::UPPER_CAMEL_CASE.bits();
-        const NON_STRICT_CAMEL_CASE = Self::NON_STRICT_LOWER_CAMEL_CASE.bits() | Self::NON_STRICT_UPPER_CAMEL_CASE.bits();
-        const LOWER_CASE = Self::LOWER_CAMEL_CASE.bits() | Self::LOWER_UNDERSCORE_CASE.bits() | Self::LOWER_DASH_CASE.bits();
-        // UPPER_CASE name is not always a UPPER_CAMEL_CASE name. e.g. "TEST" is in uppercase, but is not in strict camel case.
-        const UPPER_CASE = Self::NON_STRICT_UPPER_CAMEL_CASE.bits() | Self::UPPER_UNDERSCORE_CASE.bits() | Self::UPPER_DASH_CASE.bits();
-    }
-}
-
-impl NamingStyle {
-    fn non_strict(self) -> Self {
-        if self.intersects(NamingStyle::CAMEL_CASE) {
-            return self | NamingStyle::NON_STRICT;
-        }
-        self
     }
 
-    fn style_names(self) -> SmallVec<[&'static str; 6]> {
-        let mut result = SmallVec::new();
-        if self.contains(Self::LOWER_CAMEL_CASE) {
-            if self.contains(Self::NON_STRICT) {
-                result.push("lowerCamelCase");
-            } else {
-                result.push("strictLowerCamelCase");
+    fn from_type_member(member: &AnyTsTypeMember) -> Option<Named> {
+        match member {
+            AnyTsTypeMember::JsBogusMember(_)
+            | AnyTsTypeMember::TsCallSignatureTypeMember(_)
+            | AnyTsTypeMember::TsConstructSignatureTypeMember(_) => None,
+            AnyTsTypeMember::TsIndexSignatureTypeMember(_) => Some(Named::IndexParameter),
+            AnyTsTypeMember::TsGetterSignatureTypeMember(_) => Some(Named::TypeGetter),
+            AnyTsTypeMember::TsMethodSignatureTypeMember(_) => Some(Named::TypeMethod),
+            AnyTsTypeMember::TsPropertySignatureTypeMember(property) => {
+                Some(if property.readonly_token().is_some() {
+                    Named::TypeReadonlyProperty
+                } else {
+                    Named::TypeProperty
+                })
             }
-        }
-        if self.contains(Self::UPPER_CAMEL_CASE) {
-            if self.contains(Self::NON_STRICT) {
-                result.push("UpperCamelCase");
-            } else {
-                result.push("StrictUpperCamelCase");
-            }
-        }
-        if self.contains(Self::LOWER_UNDERSCORE_CASE) {
-            result.push("lower_underscore_case")
-        }
-        if self.contains(Self::UPPER_UNDERSCORE_CASE) {
-            result.push("UPPER_UNDERSCORE_CASE")
-        }
-        if self.contains(Self::LOWER_DASH_CASE) {
-            result.push("lower-dash-case")
-        }
-        if self.contains(Self::UPPER_DASH_CASE) {
-            result.push("UPPER-DASH-CASE")
-        }
-        result
-    }
-}
-
-fn trim_leading_trailing_underscore_dollar(s: &str) -> &str {
-    let mut start = 0;
-    let mut end = s.len();
-    if start < end && (&s[..1] == "_" || &s[..1] == "$") {
-        start = 1
-    }
-    if start < end && (&s[end - 1..] == "_" || &s[end - 1..] == "$") {
-        end -= 1
-    }
-    &s[start..end]
-}
-
-pub(crate) fn identify_naming_style(s: &str) -> NamingStyle {
-    // An empty string respects all styles
-    let mut result = NamingStyle::all();
-    let mut previous_is_uppercase = false;
-    for (i, c) in s.char_indices() {
-        if !c.is_alphanumeric() && c != '_' && c != '-' {
-            return NamingStyle::empty();
-        }
-        if i == 0 {
-            if !c.is_alphanumeric() {
-                return NamingStyle::empty();
-            }
-            if c.is_uppercase() {
-                result = NamingStyle::UPPER_CASE - NamingStyle::NON_STRICT;
-                previous_is_uppercase = true;
-            } else {
-                result = NamingStyle::LOWER_CASE;
-            }
-            continue;
-        }
-        if c == '_' {
-            result &= NamingStyle::UNDERSCORE_CASE;
-        } else if c == '-' {
-            result &= NamingStyle::DASH_CASE;
-        } else if c.is_uppercase() {
-            if previous_is_uppercase {
-                result = result.non_strict();
-            } else {
-                result &= NamingStyle::NON_STRICT_CAMEL_CASE;
-                previous_is_uppercase = true;
-            }
-        } else if previous_is_uppercase {
-            result &= NamingStyle::NON_STRICT_CAMEL_CASE;
-            previous_is_uppercase = false;
-        } else {
-            result &= NamingStyle::NON_STRICT_CAMEL_CASE | NamingStyle::LOWER_CASE;
-        }
-        if result.is_empty() {
-            break;
+            AnyTsTypeMember::TsSetterSignatureTypeMember(_) => Some(Named::TypeSetter),
         }
     }
-    result
-}
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+    const fn to_str(self) -> &'static str {
+        match self {
+            Named::CatchParameter => "catch parameter",
+            Named::Class => "class",
+            Named::ClassGetter => "class getter",
+            Named::ClassMethod => "class method",
+            Named::ClassProperty => "class property",
+            Named::ClassSetter => "class setter",
+            Named::ClassStaticGetter => "static getter",
+            Named::ClassStaticMethod => "static method",
+            Named::ClassStaticProperty => "static property",
+            Named::ClassStaticSetter => "static setter",
+            Named::Enum => "enum",
+            Named::EnumMember => "enum member",
+            Named::ExportAlias => "export alias",
+            Named::ExportSource => "export source",
+            Named::Function => "function",
+            Named::FunctionParameter => "function parameter",
+            Named::ImportAlias => "import alias",
+            Named::ImportNamespace => "import namespace",
+            Named::ImportSource => "import source",
+            Named::IndexParameter => "index parameter",
+            Named::Interface => "interface",
+            Named::LocalConst => "local const",
+            Named::LocalLet => "local let",
+            Named::LocalVar => "local var",
+            Named::Namespace => "namespace",
+            Named::ObjectGetter => "object getter",
+            Named::ObjectMethod => "object method",
+            Named::ObjectProperty => "object property",
+            Named::ObjectSetter => "object setter",
+            Named::ParameterProperty => "parameter property",
+            Named::TopLevelConst => "top-level const",
+            Named::TopLevelLet => "top-level let",
+            Named::TopLevelVar => "top-level var",
+            Named::TypeAlias => "type alias",
+            Named::TypeGetter => "getter",
+            Named::TypeMethod => "method",
+            Named::TypeProperty => "property",
+            Named::TypeReadonlyProperty => "readonly property",
+            Named::TypeSetter => "setter",
+            Named::TypeParameter => "type parameter",
+        }
+    }
 
-    #[test]
-    fn test_identify_naming_style() {
-        assert!(identify_naming_style("UpperStrictCamelCase") == NamingStyle::UPPER_CAMEL_CASE);
-        assert!(identify_naming_style("lowerStrictCamelCase") == NamingStyle::LOWER_CAMEL_CASE);
-        assert!(
-            identify_naming_style("UPPER_UNDERSCORE_CASE") == NamingStyle::UPPER_UNDERSCORE_CASE
-        );
-        assert!(
-            identify_naming_style("lower_underscore_case") == NamingStyle::LOWER_UNDERSCORE_CASE
-        );
-        assert!(identify_naming_style("UPPER-DASH-CASE") == NamingStyle::UPPER_DASH_CASE);
-        assert!(identify_naming_style("lower-dash-case") == NamingStyle::LOWER_DASH_CASE);
-        assert!(identify_naming_style("UPPER") == NamingStyle::UPPER_CASE);
-        assert!(identify_naming_style("lower") == NamingStyle::LOWER_CASE);
-        assert!(identify_naming_style("UpperCC") == NamingStyle::NON_STRICT_UPPER_CAMEL_CASE);
-        assert!(identify_naming_style("lowerCC") == NamingStyle::NON_STRICT_LOWER_CAMEL_CASE);
-
-        assert!(identify_naming_style("") == NamingStyle::all());
-        assert!(identify_naming_style("Capital-Words") == NamingStyle::empty());
-        assert!(identify_naming_style("Capital_Words") == NamingStyle::empty());
+    /// Naming convention of `self`. The preferred convention comes first.
+    fn naming_convention(self, options: &NamingConventionOptions) -> SmallVec<[Case; 3]> {
+        match self {
+            Named::CatchParameter
+            | Named::ClassGetter
+            | Named::ClassMethod
+            | Named::ClassProperty
+            | Named::ClassSetter
+            | Named::ClassStaticMethod
+            | Named::ClassStaticSetter
+            | Named::FunctionParameter
+            | Named::ImportNamespace
+            | Named::IndexParameter
+            | Named::ObjectMethod
+            | Named::ObjectSetter
+            | Named::ParameterProperty
+            | Named::TypeMethod
+            | Named::TypeProperty
+            | Named::TypeSetter
+            | Named::LocalConst
+            | Named::LocalLet
+            | Named::LocalVar
+            | Named::TopLevelLet => SmallVec::from_slice(&[Case::Camel]),
+            Named::Class | Named::Interface | Named::Enum => SmallVec::from_slice(&[Case::Pascal]),
+            Named::ClassStaticGetter
+            | Named::ClassStaticProperty
+            | Named::ObjectGetter
+            | Named::ObjectProperty
+            | Named::TypeGetter
+            | Named::TypeReadonlyProperty => SmallVec::from_slice(&[Case::Camel, Case::Constant]),
+            Named::EnumMember => SmallVec::from_slice(&[options.enum_member_case.into()]),
+            Named::ExportAlias | Named::ImportAlias | Named::TopLevelConst | Named::TopLevelVar => {
+                SmallVec::from_slice(&[Case::Camel, Case::Pascal, Case::Constant])
+            }
+            Named::ExportSource | Named::ImportSource => SmallVec::new(),
+            Named::Function | Named::Namespace => {
+                SmallVec::from_slice(&[Case::Camel, Case::Pascal])
+            }
+            Named::TypeAlias => SmallVec::from_slice(&[Case::Pascal, Case::Camel]),
+            Named::TypeParameter => SmallVec::from_slice(&[Case::NumberableCapital]),
+        }
     }
 }

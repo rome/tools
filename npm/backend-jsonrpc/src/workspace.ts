@@ -590,7 +590,7 @@ export interface Nursery {
 	 */
 	useLiteralKeys?: RuleConfiguration;
 	/**
-	 * Succinct description of the rule.
+	 * Enforce naming conventions for everything across a codebase.
 	 */
 	useNamingConvention?: RuleConfiguration;
 	/**

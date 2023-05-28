@@ -1,0 +1,65 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 96
+expression: invalidObjectGetter.js
+---
+# Input
+```js
+export default {
+    get SpecialProperty() {},
+
+    get special_property() {},
+
+    get Unknown_Style() {},
+}
+```
+
+# Diagnostics
+```
+invalidObjectGetter.js:2:9 lint/nursery/useNamingConvention ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This object getter name should be in camelCase or CONSTANT_CASE.
+  
+    1 │ export default {
+  > 2 │     get SpecialProperty() {},
+      │         ^^^^^^^^^^^^^^^
+    3 │ 
+    4 │     get special_property() {},
+  
+  i The name is currently in PascalCase.
+  
+
+```
+
+```
+invalidObjectGetter.js:4:9 lint/nursery/useNamingConvention ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This object getter name should be in camelCase or CONSTANT_CASE.
+  
+    2 │     get SpecialProperty() {},
+    3 │ 
+  > 4 │     get special_property() {},
+      │         ^^^^^^^^^^^^^^^^
+    5 │ 
+    6 │     get Unknown_Style() {},
+  
+  i The name is currently in snake_case.
+  
+
+```
+
+```
+invalidObjectGetter.js:6:9 lint/nursery/useNamingConvention ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This object getter name should be in camelCase or CONSTANT_CASE.
+  
+    4 │     get special_property() {},
+    5 │ 
+  > 6 │     get Unknown_Style() {},
+      │         ^^^^^^^^^^^^^
+    7 │ }
+  
+
+```
+
+

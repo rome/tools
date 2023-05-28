@@ -8,6 +8,7 @@ use std::borrow::Cow;
 use std::iter;
 
 pub mod batch;
+pub mod case;
 pub mod escape;
 pub mod rename;
 #[cfg(test)]

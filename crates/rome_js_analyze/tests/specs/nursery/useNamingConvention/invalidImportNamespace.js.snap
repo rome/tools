@@ -1,0 +1,143 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 96
+expression: invalidImportNamespace.js
+---
+# Input
+```js
+import * as X from ""
+
+import * as PascalCase from ""
+
+import * as CONSTANT_CASE from ""
+
+import * as snake_case from ""
+
+import * as Unknown_Style from ""
+
+```
+
+# Diagnostics
+```
+invalidImportNamespace.js:1:13 lint/nursery/useNamingConvention  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This import namespace name should be in camelCase.
+  
+  > 1 │ import * as X from ""
+      │             ^
+    2 │ 
+    3 │ import * as PascalCase from ""
+  
+  i The name is currently in <Capital>[number].
+  
+  i Safe fix: Rename this symbol in camelCase.
+  
+     1    │ - import·*·as·X·from·""
+        1 │ + import·*·as·x·from·""
+     2  2 │   
+     3  3 │   import * as PascalCase from ""
+  
+
+```
+
+```
+invalidImportNamespace.js:3:13 lint/nursery/useNamingConvention  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This import namespace name should be in camelCase.
+  
+    1 │ import * as X from ""
+    2 │ 
+  > 3 │ import * as PascalCase from ""
+      │             ^^^^^^^^^^
+    4 │ 
+    5 │ import * as CONSTANT_CASE from ""
+  
+  i The name is currently in PascalCase.
+  
+  i Safe fix: Rename this symbol in camelCase.
+  
+     1  1 │   import * as X from ""
+     2  2 │   
+     3    │ - import·*·as·PascalCase·from·""
+        3 │ + import·*·as·pascalCase·from·""
+     4  4 │   
+     5  5 │   import * as CONSTANT_CASE from ""
+  
+
+```
+
+```
+invalidImportNamespace.js:5:13 lint/nursery/useNamingConvention  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This import namespace name should be in camelCase.
+  
+    3 │ import * as PascalCase from ""
+    4 │ 
+  > 5 │ import * as CONSTANT_CASE from ""
+      │             ^^^^^^^^^^^^^
+    6 │ 
+    7 │ import * as snake_case from ""
+  
+  i The name is currently in CONSTANT_CASE.
+  
+  i Safe fix: Rename this symbol in camelCase.
+  
+     3  3 │   import * as PascalCase from ""
+     4  4 │   
+     5    │ - import·*·as·CONSTANT_CASE·from·""
+        5 │ + import·*·as·constantCase·from·""
+     6  6 │   
+     7  7 │   import * as snake_case from ""
+  
+
+```
+
+```
+invalidImportNamespace.js:7:13 lint/nursery/useNamingConvention  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This import namespace name should be in camelCase.
+  
+    5 │ import * as CONSTANT_CASE from ""
+    6 │ 
+  > 7 │ import * as snake_case from ""
+      │             ^^^^^^^^^^
+    8 │ 
+    9 │ import * as Unknown_Style from ""
+  
+  i The name is currently in snake_case.
+  
+  i Safe fix: Rename this symbol in camelCase.
+  
+     5  5 │   import * as CONSTANT_CASE from ""
+     6  6 │   
+     7    │ - import·*·as·snake_case·from·""
+        7 │ + import·*·as·snakeCase·from·""
+     8  8 │   
+     9  9 │   import * as Unknown_Style from ""
+  
+
+```
+
+```
+invalidImportNamespace.js:9:13 lint/nursery/useNamingConvention  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This import namespace name should be in camelCase.
+  
+     7 │ import * as snake_case from ""
+     8 │ 
+   > 9 │ import * as Unknown_Style from ""
+       │             ^^^^^^^^^^^^^
+    10 │ 
+  
+  i Safe fix: Rename this symbol in camelCase.
+  
+     7  7 │   import * as snake_case from ""
+     8  8 │   
+     9    │ - import·*·as·Unknown_Style·from·""
+        9 │ + import·*·as·unknownStyle·from·""
+    10 10 │   
+  
+
+```
+
+

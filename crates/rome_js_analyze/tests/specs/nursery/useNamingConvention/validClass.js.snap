@@ -1,0 +1,22 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 96
+expression: validClass.js
+---
+# Input
+```js
+class C {}
+
+class _C {}
+
+class PascalCase {}
+
+class _PascalCase {}
+
+export default class DefaultClass {}
+
+const x = class ClassExpression {}
+
+```
+
+

@@ -1906,7 +1906,7 @@ pub struct Nursery {
     #[bpaf(long("use-literal-keys"), argument("on|off|warn"), optional, hide)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub use_literal_keys: Option<RuleConfiguration>,
-    #[doc = "Succinct description of the rule."]
+    #[doc = "Enforce naming conventions for everything across a codebase."]
     #[bpaf(long("use-naming-convention"), argument("on|off|warn"), optional, hide)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub use_naming_convention: Option<RuleConfiguration>,

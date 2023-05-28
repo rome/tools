@@ -1,0 +1,17 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 96
+expression: validIndexParameter.ts
+---
+# Input
+```js
+export interface X {
+    [s: string]: unknown
+
+    [index: number]: unknown
+
+    [specialSymbol: symbol]: unknown
+}
+```
+
+

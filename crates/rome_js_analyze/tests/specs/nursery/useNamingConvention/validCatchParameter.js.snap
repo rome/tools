@@ -1,0 +1,22 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 96
+expression: validCatchParameter.js
+---
+# Input
+```js
+try {} catch(e) {}
+
+try {} catch(_e) {}
+
+try {} catch(_) {}
+
+try {} catch(err) {}
+
+try {} catch(specificError) {}
+
+try {} catch(_specificError) {}
+
+```
+
+

@@ -5,6 +5,7 @@ use rome_js_semantic::{ReferencesExtensions, SemanticModel};
 use rome_js_syntax::{
     binding_ext::AnyJsIdentifierBinding, JsIdentifierAssignment, JsIdentifierBinding, JsLanguage,
     JsReferenceIdentifier, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken, TextRange,
+    TsIdentifierBinding,
 };
 use rome_rowan::{AstNode, BatchMutation, SyntaxNodeCast, TriviaPiece};
 use serde::{Deserialize, Serialize};
@@ -15,6 +16,12 @@ pub trait RenamableNode {
 }
 
 impl RenamableNode for JsIdentifierBinding {
+    fn binding(&self, _: &SemanticModel) -> Option<JsSyntaxNode> {
+        Some(self.syntax().clone())
+    }
+}
+
+impl RenamableNode for TsIdentifierBinding {
     fn binding(&self, _: &SemanticModel) -> Option<JsSyntaxNode> {
         Some(self.syntax().clone())
     }
@@ -34,8 +41,7 @@ impl RenamableNode for JsIdentifierAssignment {
 
 impl RenamableNode for AnyJsIdentifierBinding {
     fn binding(&self, _: &SemanticModel) -> Option<JsSyntaxNode> {
-        let node = self.syntax();
-        Some(node.clone())
+        Some(self.syntax().clone())
     }
 }
 
@@ -43,6 +49,7 @@ pub enum AnyJsRenamableDeclaration {
     JsIdentifierBinding(JsIdentifierBinding),
     JsReferenceIdentifier(JsReferenceIdentifier),
     JsIdentifierAssignment(JsIdentifierAssignment),
+    TsIdentifierBinding(TsIdentifierBinding),
 }
 
 impl RenamableNode for AnyJsRenamableDeclaration {
@@ -55,6 +62,9 @@ impl RenamableNode for AnyJsRenamableDeclaration {
                 RenamableNode::binding(node, model)
             }
             AnyJsRenamableDeclaration::JsIdentifierAssignment(node) => {
+                RenamableNode::binding(node, model)
+            }
+            AnyJsRenamableDeclaration::TsIdentifierBinding(node) => {
                 RenamableNode::binding(node, model)
             }
         }
@@ -142,6 +152,10 @@ impl TryFrom<JsSyntaxNode> for AnyJsRenamableDeclaration {
             JsSyntaxKind::JS_IDENTIFIER_ASSIGNMENT => node
                 .cast::<JsIdentifierAssignment>()
                 .map(AnyJsRenamableDeclaration::JsIdentifierAssignment)
+                .ok_or(Self::Error::CannotFindDeclaration(node_name)),
+            JsSyntaxKind::TS_IDENTIFIER_BINDING => node
+                .cast::<TsIdentifierBinding>()
+                .map(AnyJsRenamableDeclaration::TsIdentifierBinding)
                 .ok_or(Self::Error::CannotFindDeclaration(node_name)),
             _ => Err(Self::Error::CannotFindDeclaration(node_name)),
         }

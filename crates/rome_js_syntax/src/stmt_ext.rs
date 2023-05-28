@@ -3,9 +3,9 @@
 use crate::{
     AnyJsArrayAssignmentPatternElement, AnyJsAssignmentPattern, AnyJsSwitchClause,
     JsForVariableDeclaration, JsStatementList, JsSyntaxToken as SyntaxToken, JsVariableDeclaration,
-    TsModuleDeclaration, T,
+    JsVariableDeclarator, TsModuleDeclaration, T,
 };
-use rome_rowan::SyntaxResult;
+use rome_rowan::{declare_node_union, AstNode, SyntaxResult};
 
 impl AnyJsSwitchClause {
     pub fn clause_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -90,6 +90,42 @@ impl JsForVariableDeclaration {
             T![var] => JsVariableKind::Var,
             _ => unreachable!(),
         })
+    }
+}
+
+declare_node_union! {
+    pub AnyJsVariableDeclaration = JsVariableDeclaration | JsForVariableDeclaration
+}
+
+impl AnyJsVariableDeclaration {
+    /// Whether the declaration is a const declaration
+    pub fn is_const(&self) -> bool {
+        self.variable_kind() == Ok(JsVariableKind::Const)
+    }
+
+    /// Whether the declaration is a let declaration
+    pub fn is_let(&self) -> bool {
+        self.variable_kind() == Ok(JsVariableKind::Let)
+    }
+
+    /// Whether the declaration is a var declaration
+    pub fn is_var(&self) -> bool {
+        self.variable_kind() == Ok(JsVariableKind::Var)
+    }
+
+    pub fn variable_kind(&self) -> SyntaxResult<JsVariableKind> {
+        match self {
+            AnyJsVariableDeclaration::JsForVariableDeclaration(decl) => decl.variable_kind(),
+            AnyJsVariableDeclaration::JsVariableDeclaration(decl) => decl.variable_kind(),
+        }
+    }
+}
+
+impl JsVariableDeclarator {
+    pub fn declaration(&self) -> Option<AnyJsVariableDeclaration> {
+        self.syntax()
+            .ancestors()
+            .find_map(AnyJsVariableDeclaration::cast)
     }
 }
 

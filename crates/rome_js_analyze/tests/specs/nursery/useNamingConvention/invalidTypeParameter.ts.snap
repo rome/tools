@@ -1,0 +1,119 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 96
+expression: invalidTypeParameter.ts
+---
+# Input
+```js
+export default class <l, l1, camelCase, CONSTANT_CASE, snake_case, Unknown_Style> {}
+
+type Mapped<T> = {
+    [k in keyof T]: T
+}
+```
+
+# Diagnostics
+```
+invalidTypeParameter.ts:1:23 lint/nursery/useNamingConvention ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This type parameter name should be in <Capital>[number].
+  
+  > 1 │ export default class <l, l1, camelCase, CONSTANT_CASE, snake_case, Unknown_Style> {}
+      │                       ^
+    2 │ 
+    3 │ type Mapped<T> = {
+  
+  i The name is currently in lowercase.
+  
+
+```
+
+```
+invalidTypeParameter.ts:1:26 lint/nursery/useNamingConvention ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This type parameter name should be in <Capital>[number].
+  
+  > 1 │ export default class <l, l1, camelCase, CONSTANT_CASE, snake_case, Unknown_Style> {}
+      │                          ^^
+    2 │ 
+    3 │ type Mapped<T> = {
+  
+  i The name is currently in lowercase.
+  
+
+```
+
+```
+invalidTypeParameter.ts:1:30 lint/nursery/useNamingConvention ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This type parameter name should be in <Capital>[number].
+  
+  > 1 │ export default class <l, l1, camelCase, CONSTANT_CASE, snake_case, Unknown_Style> {}
+      │                              ^^^^^^^^^
+    2 │ 
+    3 │ type Mapped<T> = {
+  
+  i The name is currently in camelCase.
+  
+
+```
+
+```
+invalidTypeParameter.ts:1:41 lint/nursery/useNamingConvention ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This type parameter name should be in <Capital>[number].
+  
+  > 1 │ export default class <l, l1, camelCase, CONSTANT_CASE, snake_case, Unknown_Style> {}
+      │                                         ^^^^^^^^^^^^^
+    2 │ 
+    3 │ type Mapped<T> = {
+  
+  i The name is currently in CONSTANT_CASE.
+  
+
+```
+
+```
+invalidTypeParameter.ts:1:56 lint/nursery/useNamingConvention ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This type parameter name should be in <Capital>[number].
+  
+  > 1 │ export default class <l, l1, camelCase, CONSTANT_CASE, snake_case, Unknown_Style> {}
+      │                                                        ^^^^^^^^^^
+    2 │ 
+    3 │ type Mapped<T> = {
+  
+  i The name is currently in snake_case.
+  
+
+```
+
+```
+invalidTypeParameter.ts:1:68 lint/nursery/useNamingConvention ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This type parameter name should be in <Capital>[number].
+  
+  > 1 │ export default class <l, l1, camelCase, CONSTANT_CASE, snake_case, Unknown_Style> {}
+      │                                                                    ^^^^^^^^^^^^^
+    2 │ 
+    3 │ type Mapped<T> = {
+  
+
+```
+
+```
+invalidTypeParameter.ts:4:6 lint/nursery/useNamingConvention ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This type parameter name should be in <Capital>[number].
+  
+    3 │ type Mapped<T> = {
+  > 4 │     [k in keyof T]: T
+      │      ^
+    5 │ }
+  
+  i The name is currently in lowercase.
+  
+
+```
+
+

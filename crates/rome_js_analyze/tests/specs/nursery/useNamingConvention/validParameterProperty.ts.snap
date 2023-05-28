@@ -1,0 +1,18 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 96
+expression: validParameterProperty.ts
+---
+# Input
+```js
+export default class {
+    constructor(
+        readonly p: unknown,
+        protected property: unknown,
+        public camelCase: unknown,
+        private _privateProperty: unknown,
+    ) {}
+}
+```
+
+

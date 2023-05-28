@@ -1,0 +1,19 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 96
+expression: validInterface.ts
+---
+# Input
+```js
+export interface X {}
+
+export interface PascalCase {}
+
+export interface _PascalCase {}
+
+export interface _ {}
+
+export interface $ {}
+```
+
+

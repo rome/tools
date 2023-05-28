@@ -1,0 +1,117 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 96
+expression: validTopLevelVariable.ts
+---
+# Input
+```js
+export const CONSTANT_CASE = 0
+
+export const camelCase = 0
+
+export const PascalCase = class {}
+
+export var CONSTANT_CASE_1 = 0
+
+export var camelCase1 = 0
+
+export var PascalCase1 = class {}
+
+export let CONSTANT_CASE_2 = 0
+
+export let camelCase2 = 0
+
+export let PascalCase2 = class {}
+
+namespace X {
+    export const CONSTANT_CASE = 0
+
+    export const camelCase = 0
+
+    export const PascalCase = class {}
+
+    export var CONSTANT_CASE_1 = 0
+
+    export var camelCase1 = 0
+
+    export var PascalCase1 = class {}
+
+    export let CONSTANT_CASE_2 = 0
+
+    export let camelCase2 = 0
+
+    export let PascalCase2 = class {}
+}
+
+```
+
+# Diagnostics
+```
+validTopLevelVariable.ts:13:12 lint/nursery/useNamingConvention ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This top-level let name should be in camelCase.
+  
+    11 │ export var PascalCase1 = class {}
+    12 │ 
+  > 13 │ export let CONSTANT_CASE_2 = 0
+       │            ^^^^^^^^^^^^^^^
+    14 │ 
+    15 │ export let camelCase2 = 0
+  
+  i The name is currently in CONSTANT_CASE.
+  
+
+```
+
+```
+validTopLevelVariable.ts:17:12 lint/nursery/useNamingConvention ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This top-level let name should be in camelCase.
+  
+    15 │ export let camelCase2 = 0
+    16 │ 
+  > 17 │ export let PascalCase2 = class {}
+       │            ^^^^^^^^^^^
+    18 │ 
+    19 │ namespace X {
+  
+  i The name is currently in PascalCase.
+  
+
+```
+
+```
+validTopLevelVariable.ts:32:16 lint/nursery/useNamingConvention ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This top-level let name should be in camelCase.
+  
+    30 │     export var PascalCase1 = class {}
+    31 │ 
+  > 32 │     export let CONSTANT_CASE_2 = 0
+       │                ^^^^^^^^^^^^^^^
+    33 │ 
+    34 │     export let camelCase2 = 0
+  
+  i The name is currently in CONSTANT_CASE.
+  
+
+```
+
+```
+validTopLevelVariable.ts:36:16 lint/nursery/useNamingConvention ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This top-level let name should be in camelCase.
+  
+    34 │     export let camelCase2 = 0
+    35 │ 
+  > 36 │     export let PascalCase2 = class {}
+       │                ^^^^^^^^^^^
+    37 │ }
+    38 │ 
+  
+  i The name is currently in PascalCase.
+  
+
+```
+
+
