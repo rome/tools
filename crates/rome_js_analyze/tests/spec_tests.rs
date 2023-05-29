@@ -143,7 +143,11 @@ pub(crate) fn write_analysis_to_snapshot(
                     .into_diagnostics()
                     .into_iter()
                     .map(|diagnostic| {
-                        diagnostic_to_string(&options_file.display().to_string(), &json, diagnostic)
+                        diagnostic_to_string(
+                            options_file.file_stem().unwrap().to_str().unwrap(),
+                            &json,
+                            diagnostic,
+                        )
                     })
                     .collect::<Vec<_>>(),
             );

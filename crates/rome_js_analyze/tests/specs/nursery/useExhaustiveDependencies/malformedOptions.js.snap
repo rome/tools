@@ -9,7 +9,7 @@ expression: malformedOptions.js
 
 # Diagnostics
 ```
-/Users/ema/www/tools/crates/rome_js_analyze/tests/specs/nursery/useExhaustiveDependencies/malformedOptions.options.json:9:7 deserialize ━━━━━━━━━━
+malformedOptions.options:9:7 deserialize ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Found an unknown key `hook`.
   
