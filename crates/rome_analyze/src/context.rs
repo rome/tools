@@ -6,9 +6,6 @@ use std::path::Path;
 type RuleQueryResult<R> = <<R as Rule>::Query as Queryable>::Output;
 type RuleServiceBag<R> = <<R as Rule>::Query as Queryable>::Services;
 
-#[derive(Clone)]
-pub struct ServiceBagRuleOptionsWrapper<R: Rule>(pub R::Options);
-
 pub struct RuleContext<'a, R>
 where
     R: ?Sized + Rule,
@@ -19,6 +16,7 @@ where
     services: RuleServiceBag<R>,
     globals: &'a [&'a str],
     file_path: &'a Path,
+    options: &'a R::Options,
 }
 
 impl<'a, R> RuleContext<'a, R>
@@ -31,6 +29,7 @@ where
         services: &'a ServiceBag,
         globals: &'a [&'a str],
         file_path: &'a Path,
+        options: &'a R::Options,
     ) -> Result<Self, Error> {
         let rule_key = RuleKey::rule::<R>();
         Ok(Self {
@@ -40,6 +39,7 @@ where
             services: FromServices::from_services(&rule_key, services)?,
             globals,
             file_path,
+            options,
         })
     }
 
@@ -90,11 +90,7 @@ where
     /// }
     /// ```
     pub fn options(&self) -> &R::Options {
-        let ServiceBagRuleOptionsWrapper(options) = self
-            .bag
-            .get_service::<ServiceBagRuleOptionsWrapper<R>>()
-            .unwrap();
-        options
+        self.options
     }
 
     /// Checks whether the provided text belongs to globals

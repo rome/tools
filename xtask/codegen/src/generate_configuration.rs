@@ -652,9 +652,10 @@ fn generate_push_to_analyzer_rules(group: &str) -> TokenStream {
                 if let Some(RuleConfiguration::WithOptions(rule_options)) =
                     rules.get_rule_configuration(rule_name)
                 {
-                    if let Some(options) = &rule_options.options {
+                    if let Some(possible_options) = &rule_options.options {
                         if let Some(rule_key) = metadata.find_rule(#group, rule_name) {
-                            analyzer_rules.push_rule(rule_key, options.to_string());
+                        let rule_options = possible_options.extract_option(&rule_key);
+                        analyzer_rules.push_rule(rule_key, rule_options);
                         }
                     }
                 }

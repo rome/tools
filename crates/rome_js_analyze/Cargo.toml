@@ -26,6 +26,8 @@ serde = { version = "1.0.136", features = ["derive"] }
 serde_json = { version = "1.0.74", features = ["raw_value"] }
 lazy_static = { workspace = true }
 natord = "1.0.9"
+bpaf.workspace = true
+schemars = { workspace = true, optional = true }
 
 [dev-dependencies]
 tests_macros = { workspace = true }
@@ -35,3 +37,8 @@ insta = { workspace = true, features = ["glob"] }
 countme = { workspace = true, features = ["enable"] }
 similar = "2.1.0"
 json_comments = "0.2.1"
+rome_service = { path = "../rome_service"}
+rome_json_parser = { path = "../rome_json_parser"}
+
+[features]
+schemars = ["dep:schemars"]

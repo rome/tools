@@ -3,7 +3,7 @@
 mod a11y;
 mod complexity;
 mod correctness;
-mod nursery;
+pub(crate) mod nursery;
 mod security;
 mod style;
 mod suspicious;

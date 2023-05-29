@@ -11,7 +11,7 @@ use rome_analyze::{
 use rome_diagnostics::Error;
 use rome_json_syntax::JsonLanguage;
 use std::convert::Infallible;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 /// Return the static [MetadataRegistry] for the JS analyzer rules
 pub fn metadata() -> &'static MetadataRegistry {
@@ -44,8 +44,11 @@ where
     B: 'a,
 {
     let filter = AnalysisFilter::default();
-    let options = AnalyzerOptions::default();
-    let mut registry = RuleRegistry::builder(&filter, &options, root);
+    let options = AnalyzerOptions {
+        file_path: PathBuf::from(configuration_file_path),
+        ..AnalyzerOptions::default()
+    };
+    let mut registry = RuleRegistry::builder(&filter, root);
     visit_migration_registry(&mut registry);
 
     let (migration_registry, services, diagnostics, visitors) = registry.build();
@@ -67,19 +70,12 @@ where
         analyzer.add_visitor(phase, visitor);
     }
 
-    let globals: Vec<_> = options
-        .configuration
-        .globals
-        .iter()
-        .map(|global| global.as_str())
-        .collect();
     (
         analyzer.run(AnalyzerContext {
             root: root.clone(),
             range: filter.range,
             services,
-            globals: globals.as_slice(),
-            file_path: configuration_file_path,
+            options: &options,
         }),
         diagnostics,
     )

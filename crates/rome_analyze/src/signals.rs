@@ -4,7 +4,8 @@ use crate::{
     context::RuleContext,
     registry::{RuleLanguage, RuleRoot},
     rule::Rule,
-    AnalyzerDiagnostic, Queryable, RuleGroup, ServiceBag, SuppressionCommentEmitter,
+    AnalyzerDiagnostic, AnalyzerOptions, Queryable, RuleGroup, ServiceBag,
+    SuppressionCommentEmitter,
 };
 use rome_console::MarkupBuf;
 use rome_diagnostics::{advice::CodeSuggestionAdvice, Applicability, CodeSuggestion, Error};
@@ -12,7 +13,6 @@ use rome_rowan::{BatchMutation, Language};
 use std::borrow::Cow;
 use std::iter::FusedIterator;
 use std::marker::PhantomData;
-use std::path::Path;
 use std::vec::IntoIter;
 
 /// Event raised by the analyzer when a [Rule](crate::Rule)
@@ -245,8 +245,7 @@ pub(crate) struct RuleSignal<'phase, R: Rule> {
     /// An optional action to suppress the rule.
     apply_suppression_comment: SuppressionCommentEmitter<RuleLanguage<R>>,
     /// A list of strings that are considered "globals" inside the analyzer
-    globals: &'phase [&'phase str],
-    file_path: &'phase Path,
+    options: &'phase AnalyzerOptions,
 }
 
 impl<'phase, R> RuleSignal<'phase, R>
@@ -261,8 +260,7 @@ where
         apply_suppression_comment: SuppressionCommentEmitter<
             <<R as Rule>::Query as Queryable>::Language,
         >,
-        globals: &'phase [&'phase str],
-        file_path: &'phase Path,
+        options: &'phase AnalyzerOptions,
     ) -> Self {
         Self {
             root,
@@ -270,8 +268,7 @@ where
             state,
             services,
             apply_suppression_comment,
-            globals,
-            file_path,
+            options,
         }
     }
 }
@@ -279,14 +276,18 @@ where
 impl<'bag, R> AnalyzerSignal<RuleLanguage<R>> for RuleSignal<'bag, R>
 where
     R: Rule + 'static,
+    <R as Rule>::Options: Default,
 {
     fn diagnostic(&self) -> Option<AnalyzerDiagnostic> {
+        let globals = self.options.globals();
+        let options = self.options.rule_options::<R>().unwrap_or_default();
         let ctx = RuleContext::new(
             &self.query_result,
             self.root,
             self.services,
-            self.globals,
-            self.file_path,
+            &globals,
+            &self.options.file_path,
+            &options,
         )
         .ok()?;
 
@@ -294,12 +295,15 @@ where
     }
 
     fn actions(&self) -> AnalyzerActionIter<RuleLanguage<R>> {
+        let globals = self.options.globals();
+        let options = self.options.rule_options::<R>().unwrap_or_default();
         let ctx = RuleContext::new(
             &self.query_result,
             self.root,
             self.services,
-            self.globals,
-            self.file_path,
+            &globals,
+            &self.options.file_path,
+            &options,
         )
         .ok();
         if let Some(ctx) = ctx {

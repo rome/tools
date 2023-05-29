@@ -1,12 +1,11 @@
 use crate::{
-    context::{RuleContext, ServiceBagRuleOptionsWrapper},
+    context::RuleContext,
     matcher::{GroupKey, MatchQueryParams},
     query::{QueryKey, Queryable},
     signals::RuleSignal,
-    AddVisitor, AnalysisFilter, AnalyzerOptions, DeserializableRuleOptions, GroupCategory,
-    QueryMatcher, Rule, RuleGroup, RuleKey, RuleMetadata, ServiceBag, SignalEntry, Visitor,
+    AddVisitor, AnalysisFilter, GroupCategory, QueryMatcher, Rule, RuleGroup, RuleKey,
+    RuleMetadata, ServiceBag, SignalEntry, Visitor,
 };
-use rome_deserialize::Deserialized;
 use rome_diagnostics::Error;
 use rome_rowan::{AstNode, Language, RawSyntaxKind, SyntaxKind, SyntaxNode};
 use rustc_hash::{FxHashMap, FxHashSet};
@@ -109,12 +108,10 @@ pub struct RuleRegistry<L: Language> {
 impl<L: Language + Default> RuleRegistry<L> {
     pub fn builder<'a>(
         filter: &'a AnalysisFilter<'a>,
-        options: &'a AnalyzerOptions,
         root: &'a L::Root,
     ) -> RuleRegistryBuilder<'a, L> {
         RuleRegistryBuilder {
             filter,
-            options,
             root,
             registry: RuleRegistry {
                 phase_rules: Default::default(),
@@ -142,7 +139,6 @@ enum TypeRules<L: Language> {
 
 pub struct RuleRegistryBuilder<'a, L: Language> {
     filter: &'a AnalysisFilter<'a>,
-    options: &'a AnalyzerOptions,
     root: &'a L::Root,
     // Rule Registry
     registry: RuleRegistry<L>,
@@ -170,6 +166,7 @@ impl<L: Language + Default + 'static> RegistryVisitor<L> for RuleRegistryBuilder
     fn record_rule<R>(&mut self)
     where
         R: Rule + 'static,
+        <R as Rule>::Options: Default,
         R::Query: Queryable<Language = L>,
         <R::Query as Queryable>::Output: Clone,
     {
@@ -221,27 +218,6 @@ impl<L: Language + Default + 'static> RegistryVisitor<L> for RuleRegistryBuilder
         }
 
         phase.rule_states.push(RuleState::default());
-
-        let rule_key = RuleKey::rule::<R>();
-
-        let deserialized =
-            if let Some(options) = self.options.configuration.rules.get_rule(&rule_key) {
-                let value = options.value();
-                <R::Options as DeserializableRuleOptions>::from(value.to_string())
-            } else {
-                Deserialized::new(<R::Options as Default>::default(), vec![])
-            };
-
-        if deserialized.has_errors() {
-            for error in deserialized.into_diagnostics() {
-                self.diagnostics.push(error)
-            }
-        } else {
-            self.services
-                .insert_service(ServiceBagRuleOptionsWrapper::<R>(
-                    deserialized.into_deserialized(),
-                ))
-        }
 
         <R::Query as Queryable>::build_visitor(&mut self.visitors, self.root);
     }
@@ -403,6 +379,7 @@ impl<L: Language + Default> RegistryRule<L> {
     fn new<R>(state_index: usize) -> Self
     where
         R: Rule + 'static,
+        <R as Rule>::Options: Default,
         R::Query: Queryable<Language = L> + 'static,
         <R::Query as Queryable>::Output: Clone,
     {
@@ -415,6 +392,7 @@ impl<L: Language + Default> RegistryRule<L> {
             R: Rule + 'static,
             R::Query: 'static,
             <R::Query as Queryable>::Output: Clone,
+            <R as Rule>::Options: Default,
         {
             if let Some(node) = params.query.downcast_ref::<SyntaxNode<RuleLanguage<R>>>() {
                 if state.suppressions.inner.contains(node) {
@@ -426,12 +404,15 @@ impl<L: Language + Default> RegistryRule<L> {
             // if the query doesn't match
             let query_result = params.query.downcast_ref().unwrap();
             let query_result = <R::Query as Queryable>::unwrap_match(params.services, query_result);
+            let globals = params.options.globals();
+            let options = params.options.rule_options::<R>().unwrap_or_default();
             let ctx = match RuleContext::new(
                 &query_result,
                 params.root,
                 params.services,
-                params.globals,
-                params.file_path,
+                &globals,
+                &params.options.file_path,
+                &options,
             ) {
                 Ok(ctx) => ctx,
                 Err(error) => return Err(error),
@@ -449,8 +430,7 @@ impl<L: Language + Default> RegistryRule<L> {
                     result,
                     params.services,
                     params.apply_suppression_comment,
-                    params.globals,
-                    params.file_path,
+                    params.options,
                 ));
 
                 params.signal_queue.push(SignalEntry {

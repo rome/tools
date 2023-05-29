@@ -567,6 +567,33 @@
 			},
 			"additionalProperties": false
 		},
+		"Hooks": {
+			"type": "object",
+			"required": ["name"],
+			"properties": {
+				"closureIndex": {
+					"type": ["integer", "null"],
+					"format": "uint",
+					"minimum": 0.0
+				},
+				"dependenciesIndex": {
+					"type": ["integer", "null"],
+					"format": "uint",
+					"minimum": 0.0
+				},
+				"name": { "type": "string" }
+			},
+			"additionalProperties": false
+		},
+		"HooksOptions": {
+			"description": "Options for the rule `useExhaustiveDependencies`",
+			"type": "object",
+			"required": ["hooks"],
+			"properties": {
+				"hooks": { "type": "array", "items": { "$ref": "#/definitions/Hooks" } }
+			},
+			"additionalProperties": false
+		},
 		"JavascriptConfiguration": {
 			"type": "object",
 			"properties": {
@@ -854,6 +881,19 @@
 				{ "description": "Space", "type": "string", "enum": ["space"] }
 			]
 		},
+		"PossibleOptions": {
+			"anyOf": [
+				{
+					"description": "Options for `useExhaustiveDependencies` rule",
+					"allOf": [{ "$ref": "#/definitions/HooksOptions" }]
+				},
+				{
+					"description": "Options for `useHookAtTopLevel` rule",
+					"allOf": [{ "$ref": "#/definitions/HooksOptions" }]
+				},
+				{ "description": "No options available", "type": "null" }
+			]
+		},
 		"QuoteProperties": { "type": "string", "enum": ["asNeeded", "preserve"] },
 		"QuoteStyle": { "type": "string", "enum": ["double", "single"] },
 		"RuleConfiguration": {
@@ -868,10 +908,15 @@
 		},
 		"RuleWithOptions": {
 			"type": "object",
-			"required": ["level", "options"],
+			"required": ["level"],
 			"properties": {
 				"level": { "$ref": "#/definitions/RulePlainConfiguration" },
-				"options": true
+				"options": {
+					"anyOf": [
+						{ "$ref": "#/definitions/PossibleOptions" },
+						{ "type": "null" }
+					]
+				}
 			},
 			"additionalProperties": false
 		},
