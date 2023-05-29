@@ -47,6 +47,31 @@ function Component1() {
 }
 ```
 
+## Options
+
+Allows to specify custom hooks - from libraries or internal projects - that can be considered stable.
+
+```
+{
+    "//": "...",
+    "options": {
+        "hooks": [
+            { "name": "useLocation", "closureIndex": 0, "dependenciesIndex": 1},
+            { "name": "useQuery", "closureIndex": 1, "dependenciesIndex": 0}
+        ]
+    }
+}
+```
+
+Given the previous example, your hooks be used like this:
+
+```jsx
+function Foo() {
+    const location = useLocation(() => {}, []);
+    const query = useQuery([], () => {});
+}
+```
+
 ## Related links
 
 - [Disable a rule](/linter/#disable-a-lint-rule)

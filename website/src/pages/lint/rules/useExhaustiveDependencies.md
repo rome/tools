@@ -175,18 +175,12 @@ Allows to specify custom hooks - from libraries or internal projects - that can 
     "//": "...",
     "options": {
         "hooks": [
-            ["useLocation", 0, 1],
-            ["useQuery", 1, 0]
+            { "name": "useLocation", "closureIndex": 0, "dependenciesIndex": 1},
+            { "name": "useQuery", "closureIndex": 1, "dependenciesIndex": 0}
         ]
     }
 }
 ```
-
-The following items mean:
-
-1. the name of the hook
-2. the index of the closure
-3. the index of the array of dependencies
 
 Given the previous example, your hooks be used like this:
 

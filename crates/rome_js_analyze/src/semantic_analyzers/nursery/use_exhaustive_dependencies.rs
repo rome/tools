@@ -101,18 +101,13 @@ declare_rule! {
     /// {
     ///     "//": "...",
     ///     "options": {
-    ///         "hooks": {
+    ///         "hooks": [
     ///             { "name": "useLocation", "closureIndex": 0, "dependenciesIndex": 1},
-    ///             { "name": "useQuery", "closureIndex": 0, "dependenciesIndex": 1},
-    ///         }
+    ///             { "name": "useQuery", "closureIndex": 1, "dependenciesIndex": 0}
+    ///         ]
     ///     }
     /// }
     /// ```
-    ///
-    /// The following items mean:
-    /// 1. the name of the hook
-    /// 2. the index of the closure
-    /// 3. the index of the array of dependencies
     ///
     /// Given the previous example, your hooks be used like this:
     ///
@@ -185,12 +180,13 @@ impl Default for ReactExtensiveDependenciesOptions {
     }
 }
 
-/// Options for the rule `useExhaustiveDependencies`
+/// Options for the rule `useExhaustiveDependencies` and `useHookAtTopLevel`
 #[derive(Default, Deserialize, Serialize, Debug, Clone, Bpaf)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct HooksOptions {
     #[bpaf(external, hide, many)]
+    /// List of safe hooks
     pub hooks: Vec<Hooks>,
 }
 
@@ -207,10 +203,15 @@ impl FromStr for HooksOptions {
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct Hooks {
     #[bpaf(hide)]
+    /// The name of the hook
     pub name: String,
     #[bpaf(hide)]
+    /// The "position" of the closure function, starting from zero.
+    ///
+    /// ### Example
     pub closure_index: Option<usize>,
     #[bpaf(hide)]
+    /// The "position" of the array of dependencies, starting from zero.
     pub dependencies_index: Option<usize>,
 }
 

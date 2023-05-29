@@ -572,25 +572,31 @@
 			"required": ["name"],
 			"properties": {
 				"closureIndex": {
+					"description": "The \"position\" of the closure function, starting from zero.\n\n### Example",
 					"type": ["integer", "null"],
 					"format": "uint",
 					"minimum": 0.0
 				},
 				"dependenciesIndex": {
+					"description": "The \"position\" of the array of dependencies, starting from zero.",
 					"type": ["integer", "null"],
 					"format": "uint",
 					"minimum": 0.0
 				},
-				"name": { "type": "string" }
+				"name": { "description": "The name of the hook", "type": "string" }
 			},
 			"additionalProperties": false
 		},
 		"HooksOptions": {
-			"description": "Options for the rule `useExhaustiveDependencies`",
+			"description": "Options for the rule `useExhaustiveDependencies` and `useHookAtTopLevel`",
 			"type": "object",
 			"required": ["hooks"],
 			"properties": {
-				"hooks": { "type": "array", "items": { "$ref": "#/definitions/Hooks" } }
+				"hooks": {
+					"description": "List of safe hooks",
+					"type": "array",
+					"items": { "$ref": "#/definitions/Hooks" }
+				}
 			},
 			"additionalProperties": false
 		},
@@ -884,11 +890,7 @@
 		"PossibleOptions": {
 			"anyOf": [
 				{
-					"description": "Options for `useExhaustiveDependencies` rule",
-					"allOf": [{ "$ref": "#/definitions/HooksOptions" }]
-				},
-				{
-					"description": "Options for `useHookAtTopLevel` rule",
+					"description": "Options for `useExhaustiveDependencies` and `useHookAtTopLevel` rule",
 					"allOf": [{ "$ref": "#/definitions/HooksOptions" }]
 				},
 				{ "description": "No options available", "type": "null" }
