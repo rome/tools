@@ -14,8 +14,10 @@ impl RuleOptions {
         let (type_id, value) = &self.0;
         let current_id = TypeId::of::<O>();
         debug_assert_eq!(type_id, &current_id);
-        let options = value.downcast_ref::<O>();
-        options.unwrap()
+        // SAFETY: the code should fail when asserting the types.
+        // If the code throws an error here, it means that the developer didn't test
+        // the rule with the options
+        value.downcast_ref::<O>().unwrap()
     }
 
     /// Creates a new [RuleOptions]

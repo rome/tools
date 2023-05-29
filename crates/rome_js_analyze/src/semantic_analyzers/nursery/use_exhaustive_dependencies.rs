@@ -280,7 +280,16 @@ impl VisitNode<JsonLanguage> for HooksOptions {
         let mut hook = Hooks::default();
         let element = AnyJsonValue::cast(element.clone())?;
         self.map_to_object(&element, "hooks", &mut hook, diagnostics)?;
-        self.hooks.push(hook);
+        if hook.name.is_empty() {
+            diagnostics.push(
+                DeserializationDiagnostic::new(markup!(
+                    "The field "<Emphasis>"name"</Emphasis>" is mandatory"
+                ))
+                .with_range(element.range()),
+            )
+        } else {
+            self.hooks.push(hook);
+        }
         Some(())
     }
 
