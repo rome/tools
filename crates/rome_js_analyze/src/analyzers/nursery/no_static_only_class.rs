@@ -1,6 +1,11 @@
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_syntax::{AnyJsClass, AnyJsClassMember};
+use rome_js_syntax::{
+    AnyJsClass, AnyJsClassMember, JsGetterClassMember, JsMethodClassMember, JsPropertyClassMember,
+    JsSetterClassMember, TsGetterSignatureClassMember, TsIndexSignatureClassMember,
+    TsInitializedPropertySignatureClassMember, TsMethodSignatureClassMember,
+    TsPropertySignatureClassMember, TsSetterSignatureClassMember,
+};
 use rome_rowan::{AstNode, AstNodeList};
 
 declare_rule! {
@@ -92,6 +97,33 @@ declare_rule! {
     }
 }
 
+trait HasStaticModifier {
+    fn has_static_modifier(&self) -> bool;
+}
+
+macro_rules! impl_has_static_modifiers {
+    ($type:ty) => {
+        impl HasStaticModifier for $type {
+            fn has_static_modifier(&self) -> bool {
+                self.modifiers()
+                    .iter()
+                    .any(|modifier| modifier.as_js_static_modifier().is_some())
+            }
+        }
+    };
+}
+
+impl_has_static_modifiers!(JsGetterClassMember);
+impl_has_static_modifiers!(JsSetterClassMember);
+impl_has_static_modifiers!(JsMethodClassMember);
+impl_has_static_modifiers!(JsPropertyClassMember);
+impl_has_static_modifiers!(TsGetterSignatureClassMember);
+impl_has_static_modifiers!(TsIndexSignatureClassMember);
+impl_has_static_modifiers!(TsInitializedPropertySignatureClassMember);
+impl_has_static_modifiers!(TsMethodSignatureClassMember);
+impl_has_static_modifiers!(TsPropertySignatureClassMember);
+impl_has_static_modifiers!(TsSetterSignatureClassMember);
+
 impl Rule for NoStaticOnlyClass {
     type Query = Ast<AnyJsClass>;
     type State = ();
@@ -115,53 +147,29 @@ impl Rule for NoStaticOnlyClass {
         let all_members_static = class_declaration
             .members()
             .iter()
-            .all(|member| match member {
-                AnyJsClassMember::JsBogusMember(_) => false,
-                AnyJsClassMember::JsEmptyClassMember(_) => true, // treat this as static, since it doesn't do anything
-                AnyJsClassMember::JsConstructorClassMember(_) => false, // See GH#4482: Constructors are not regarded as static
-                AnyJsClassMember::TsConstructorSignatureClassMember(_) => false, // See GH#4482: Constructors are not regarded as static
-                AnyJsClassMember::JsGetterClassMember(m) => m
-                    .modifiers()
-                    .iter()
-                    .any(|modifier| modifier.as_js_static_modifier().is_some()),
-                AnyJsClassMember::JsMethodClassMember(m) => m
-                    .modifiers()
-                    .iter()
-                    .any(|modifier| modifier.as_js_static_modifier().is_some()),
-                AnyJsClassMember::JsPropertyClassMember(m) => m
-                    .modifiers()
-                    .iter()
-                    .any(|modifier| modifier.as_js_static_modifier().is_some()),
-                AnyJsClassMember::JsSetterClassMember(m) => m
-                    .modifiers()
-                    .iter()
-                    .any(|modifier| modifier.as_js_static_modifier().is_some()),
-                AnyJsClassMember::JsStaticInitializationBlockClassMember(_) => true, // See GH#4482: Static initialization blocks are regarded as static
-                AnyJsClassMember::TsGetterSignatureClassMember(m) => m
-                    .modifiers()
-                    .iter()
-                    .any(|modifier| modifier.as_js_static_modifier().is_some()),
-                AnyJsClassMember::TsIndexSignatureClassMember(m) => m
-                    .modifiers()
-                    .iter()
-                    .any(|modifier| modifier.as_js_static_modifier().is_some()),
-                AnyJsClassMember::TsInitializedPropertySignatureClassMember(m) => m
-                    .modifiers()
-                    .iter()
-                    .any(|modifier| modifier.as_js_static_modifier().is_some()),
-                AnyJsClassMember::TsMethodSignatureClassMember(m) => m
-                    .modifiers()
-                    .iter()
-                    .any(|modifier| modifier.as_js_static_modifier().is_some()),
-                AnyJsClassMember::TsPropertySignatureClassMember(m) => m
-                    .modifiers()
-                    .iter()
-                    .any(|modifier| modifier.as_js_static_modifier().is_some()),
-                AnyJsClassMember::TsSetterSignatureClassMember(m) => m
-                    .modifiers()
-                    .iter()
-                    .any(|modifier| modifier.as_js_static_modifier().is_some()),
-            });
+            .filter_map(|member| match member {
+                AnyJsClassMember::JsBogusMember(_) => None,
+                AnyJsClassMember::JsEmptyClassMember(_) => None,
+                AnyJsClassMember::JsConstructorClassMember(_) => Some(false), // See GH#4482: Constructors are not regarded as static
+                AnyJsClassMember::TsConstructorSignatureClassMember(_) => Some(false), // See GH#4482: Constructors are not regarded as static
+                AnyJsClassMember::JsGetterClassMember(m) => Some(m.has_static_modifier()),
+                AnyJsClassMember::JsMethodClassMember(m) => Some(m.has_static_modifier()),
+                AnyJsClassMember::JsPropertyClassMember(m) => Some(m.has_static_modifier()),
+                AnyJsClassMember::JsSetterClassMember(m) => Some(m.has_static_modifier()),
+                AnyJsClassMember::JsStaticInitializationBlockClassMember(_) => Some(true), // See GH#4482: Static initialization blocks are regarded as static
+                AnyJsClassMember::TsGetterSignatureClassMember(m) => Some(m.has_static_modifier()),
+                AnyJsClassMember::TsIndexSignatureClassMember(m) => Some(m.has_static_modifier()),
+                AnyJsClassMember::TsInitializedPropertySignatureClassMember(m) => {
+                    Some(m.has_static_modifier())
+                }
+                AnyJsClassMember::TsMethodSignatureClassMember(m) => Some(m.has_static_modifier()),
+                AnyJsClassMember::TsPropertySignatureClassMember(m) => {
+                    Some(m.has_static_modifier())
+                }
+                AnyJsClassMember::TsSetterSignatureClassMember(m) => Some(m.has_static_modifier()),
+            })
+            .all(|is_static| is_static);
+
         if all_members_static {
             Some(())
         } else {
