@@ -16,7 +16,7 @@ const PLATFORMS = {
 	},
 };
 
-const binPath = PLATFORMS?.[platform]?.[arch];
+const binPath = env.ROME_BINARY || PLATFORMS?.[platform]?.[arch];
 if (binPath) {
 	const result = require("child_process").spawnSync(
 		require.resolve(binPath),
