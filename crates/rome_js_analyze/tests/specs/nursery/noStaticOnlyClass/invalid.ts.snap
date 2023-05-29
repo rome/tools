@@ -41,7 +41,7 @@ class StaticConstants0 {
 ```
 invalid.ts:1:1 lint/nursery/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Avoid classes that contain only static fields.
+  ! Avoid classes that contain only static members.
   
   > 1 │ class X0 {
       │ ^^^^^^^^^^
@@ -52,7 +52,7 @@ invalid.ts:1:1 lint/nursery/noStaticOnlyClass ━━━━━━━━━━━�
     5 │ 
     6 │ class X1 {
   
-  i Prefer using simple functions instead of classes with only static fields.
+  i Prefer using simple functions instead of classes with only static members.
   
 
 ```
@@ -60,7 +60,7 @@ invalid.ts:1:1 lint/nursery/noStaticOnlyClass ━━━━━━━━━━━�
 ```
 invalid.ts:6:1 lint/nursery/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Avoid classes that contain only static fields.
+  ! Avoid classes that contain only static members.
   
      4 │ }
      5 │ 
@@ -73,7 +73,7 @@ invalid.ts:6:1 lint/nursery/noStaticOnlyClass ━━━━━━━━━━━�
     10 │ 
     11 │ const X2 = class {
   
-  i Prefer using simple functions instead of classes with only static fields.
+  i Prefer using simple functions instead of classes with only static members.
   
 
 ```
@@ -81,7 +81,7 @@ invalid.ts:6:1 lint/nursery/noStaticOnlyClass ━━━━━━━━━━━�
 ```
 invalid.ts:11:12 lint/nursery/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Avoid classes that contain only static fields.
+  ! Avoid classes that contain only static members.
   
      9 │ }
     10 │ 
@@ -93,7 +93,7 @@ invalid.ts:11:12 lint/nursery/noStaticOnlyClass ━━━━━━━━━━�
     14 │ 
     15 │ const X3 = class A {
   
-  i Prefer using simple functions instead of classes with only static fields.
+  i Prefer using simple functions instead of classes with only static members.
   
 
 ```
@@ -101,7 +101,7 @@ invalid.ts:11:12 lint/nursery/noStaticOnlyClass ━━━━━━━━━━�
 ```
 invalid.ts:15:12 lint/nursery/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Avoid classes that contain only static fields.
+  ! Avoid classes that contain only static members.
   
     13 │ };
     14 │ 
@@ -113,7 +113,7 @@ invalid.ts:15:12 lint/nursery/noStaticOnlyClass ━━━━━━━━━━�
     18 │ 
     19 │ export default class {
   
-  i Prefer using simple functions instead of classes with only static fields.
+  i Prefer using simple functions instead of classes with only static members.
   
 
 ```
@@ -121,7 +121,7 @@ invalid.ts:15:12 lint/nursery/noStaticOnlyClass ━━━━━━━━━━�
 ```
 invalid.ts:19:16 lint/nursery/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Avoid classes that contain only static fields.
+  ! Avoid classes that contain only static members.
   
     17 │ };
     18 │ 
@@ -133,7 +133,7 @@ invalid.ts:19:16 lint/nursery/noStaticOnlyClass ━━━━━━━━━━�
     22 │ 
     23 │ class StaticConstants0 {
   
-  i Prefer using simple functions instead of classes with only static fields.
+  i Prefer using simple functions instead of classes with only static members.
   
 
 ```
@@ -141,7 +141,7 @@ invalid.ts:19:16 lint/nursery/noStaticOnlyClass ━━━━━━━━━━�
 ```
 invalid.ts:23:1 lint/nursery/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Avoid classes that contain only static fields.
+  ! Avoid classes that contain only static members.
   
     21 │ }
     22 │ 
@@ -156,7 +156,7 @@ invalid.ts:23:1 lint/nursery/noStaticOnlyClass ━━━━━━━━━━━
        │ ^
     30 │ 
   
-  i Prefer using simple functions instead of classes with only static fields.
+  i Prefer using simple functions instead of classes with only static members.
   
 
 ```

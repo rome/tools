@@ -177,11 +177,11 @@ impl Rule for NoStaticOnlyClass {
                 rule_category!(),
                 class_declaration.syntax().text_trimmed_range(),
                 markup! {
-                    "Avoid classes that contain only static fields."
+                    "Avoid classes that contain only static members."
                 },
             )
             .note(markup! {
-                "Prefer using simple functions instead of classes with only static fields."
+                "Prefer using simple functions instead of classes with only static members."
             }),
         )
     }
