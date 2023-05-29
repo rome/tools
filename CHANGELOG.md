@@ -8,6 +8,7 @@
 
 - `rome lsp-proxy` should accept the global CLI options [#4505](https://github.com/rome/tools/issues/4505)
 - Enhance help descriptions
+- Accept the environment variable 'ROME_BINARY' to override the Rome binary
 
 ### Configuration
 
