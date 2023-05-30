@@ -42,11 +42,3 @@ rome_json_parser = { path = "../rome_json_parser"}
 
 [features]
 schemars = ["dep:schemars"]
-
-
-[package.metadata.cargo-udeps.ignore]
-normal = [
-	"rome_json_parser",
-	"rome_deserialize"
-]
-

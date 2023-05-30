@@ -1652,9 +1652,7 @@ version = "0.0.0"
 dependencies = [
  "bitflags 2.2.1",
  "rome_console",
- "rome_deserialize",
  "rome_diagnostics",
- "rome_json_parser",
  "rome_rowan",
  "rustc-hash",
  "schemars",

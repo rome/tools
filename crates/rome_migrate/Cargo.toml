@@ -8,13 +8,10 @@ edition = "2021"
 [dependencies]
 rome_rowan = { workspace = true }
 rome_json_syntax = { workspace = true }
-rome_json_parser = { workspace = true}
 rome_analyze = { workspace = true}
 rome_diagnostics = { workspace = true}
 lazy_static = { workspace = true }
 
-[package.metadata.cargo-udeps.ignore]
-normale = [
-	"rome_json_parser"
-]
+[dev-dependencies]
+rome_json_parser = { workspace = true }
 
