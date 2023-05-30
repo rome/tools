@@ -140,7 +140,7 @@ impl Rule for NoStaticOnlyClass {
         }
 
         // If the class has decorators, we can't be sure that the user can use a module-based approach instead
-        if class_declaration.decorators().len() > 0 {
+        if !class_declaration.decorators().is_empty() {
             return None;
         }
 
