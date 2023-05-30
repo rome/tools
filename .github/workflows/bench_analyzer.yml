@@ -62,11 +62,9 @@ jobs:
           critcmp main pr >> output
           echo "\`\`\`" >> output
           cat output
-          comment="$(cat output)"
-          comment="${comment//'%'/'%25'}"
-          comment="${comment//$'\n'/'%0A'}"
-          comment="${comment//$'\r'/'%0D'}"
-          echo "comment=$comment" >> $GITHUB_OUTPUT
+          echo "comment<<EOF" >> $GITHUB_OUTPUT
+          cat output >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Write a new comment
         uses: peter-evans/create-or-update-comment@v1.4.5
