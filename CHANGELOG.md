@@ -3,7 +3,31 @@
 ## [Unreleased]
 
 ### CLI
+
+#### Other changes
+
+- Add a new option to ignore unknown files
+
+	```shell
+	rome format ./src --files-ignore-unknown=true
+	```
+	Doing so, Rome won't emit diagnostics for file that it doesn't know how to handle.
+
 ### Configuration
+
+#### Other changes
+
+- Add a new option to ignore unknown files:
+
+	```json
+	{
+		"files": {
+			"ignoreUnknown": true
+		}
+	}
+	```
+	Doing so, Rome won't emit diagnostics for file that it doesn't know how to handle.
+
 ### Editors
 ### Formatter
 ### Linter

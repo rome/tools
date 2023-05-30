@@ -520,6 +520,10 @@
 					"description": "A list of Unix shell style patterns. Rome tools will ignore files/folders that will match these patterns.",
 					"anyOf": [{ "$ref": "#/definitions/StringSet" }, { "type": "null" }]
 				},
+				"ignoreUnknown": {
+					"description": "Tells Rome to not emit diagnostics when handling files that doesn't know",
+					"type": ["boolean", "null"]
+				},
 				"maxSize": {
 					"description": "The maximum allowed size for source code files in bytes. Files above this limit will be ignored for performance reason. Defaults to 1 MiB",
 					"default": null,
