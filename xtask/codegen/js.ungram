@@ -1318,7 +1318,7 @@ JsShorthandNamedImportSpecifier =
 // import a from "mod" assert { type: "json" }
 //                     ^^^^^^^^^^^^^^^^^^^^^^^
 JsImportAssertion =
-    'assert'
+    assertion_kind: ('assert' | 'with')
     '{'
     assertions: JsImportAssertionEntryList
     '}'

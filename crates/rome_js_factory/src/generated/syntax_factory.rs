@@ -2809,7 +2809,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<4usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if element.kind() == T![assert] {
+                    if matches!(element.kind(), T![assert] | T![with]) {
                         slots.mark_present();
                         current_element = elements.next();
                     }

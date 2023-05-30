@@ -3294,13 +3294,13 @@ impl JsImportAssertion {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> JsImportAssertionFields {
         JsImportAssertionFields {
-            assert_token: self.assert_token(),
+            assertion_kind: self.assertion_kind(),
             l_curly_token: self.l_curly_token(),
             assertions: self.assertions(),
             r_curly_token: self.r_curly_token(),
         }
     }
-    pub fn assert_token(&self) -> SyntaxResult<SyntaxToken> {
+    pub fn assertion_kind(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -3322,7 +3322,7 @@ impl Serialize for JsImportAssertion {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsImportAssertionFields {
-    pub assert_token: SyntaxResult<SyntaxToken>,
+    pub assertion_kind: SyntaxResult<SyntaxToken>,
     pub l_curly_token: SyntaxResult<SyntaxToken>,
     pub assertions: JsImportAssertionEntryList,
     pub r_curly_token: SyntaxResult<SyntaxToken>,
@@ -17934,8 +17934,8 @@ impl std::fmt::Debug for JsImportAssertion {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("JsImportAssertion")
             .field(
-                "assert_token",
-                &support::DebugSyntaxResult(self.assert_token()),
+                "assertion_kind",
+                &support::DebugSyntaxResult(self.assertion_kind()),
             )
             .field(
                 "l_curly_token",

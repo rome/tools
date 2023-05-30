@@ -1939,7 +1939,7 @@ impl JsImportBuilder {
     }
 }
 pub fn js_import_assertion(
-    assert_token: SyntaxToken,
+    assertion_kind_token: SyntaxToken,
     l_curly_token: SyntaxToken,
     assertions: JsImportAssertionEntryList,
     r_curly_token: SyntaxToken,
@@ -1947,7 +1947,7 @@ pub fn js_import_assertion(
     JsImportAssertion::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_IMPORT_ASSERTION,
         [
-            Some(SyntaxElement::Token(assert_token)),
+            Some(SyntaxElement::Token(assertion_kind_token)),
             Some(SyntaxElement::Token(l_curly_token)),
             Some(SyntaxElement::Node(assertions.into_syntax())),
             Some(SyntaxElement::Token(r_curly_token)),

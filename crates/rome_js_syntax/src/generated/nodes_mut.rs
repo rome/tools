@@ -1765,7 +1765,7 @@ impl JsImport {
     }
 }
 impl JsImportAssertion {
-    pub fn with_assert_token(self, element: SyntaxToken) -> Self {
+    pub fn with_assertion_kind_token(self, element: SyntaxToken) -> Self {
         Self::unwrap_cast(
             self.syntax
                 .splice_slots(0usize..=0usize, once(Some(element.into()))),

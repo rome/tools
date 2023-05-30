@@ -10,13 +10,16 @@ pub(crate) struct FormatJsImportAssertion;
 impl FormatNodeRule<JsImportAssertion> for FormatJsImportAssertion {
     fn fmt_fields(&self, node: &JsImportAssertion, f: &mut JsFormatter) -> FormatResult<()> {
         let JsImportAssertionFields {
-            assert_token,
             l_curly_token,
             assertions,
             r_curly_token,
+            assertion_kind,
         } = node.as_fields();
 
-        write![f, [assert_token.format(), space(), l_curly_token.format()]]?;
+        write![
+            f,
+            [assertion_kind.format(), space(), l_curly_token.format()]
+        ]?;
 
         if assertions.is_empty() {
             let has_dangling = f.comments().has_dangling_comments(node.syntax());

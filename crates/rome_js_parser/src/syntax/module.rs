@@ -539,6 +539,15 @@ fn parse_any_named_import_specifier(p: &mut JsParser) -> ParsedSyntax {
 // import "x" assert
 // { type: "json" }
 
+// test import_attribute
+// import "x" with { type: "json" }
+// import "foo" with { "type": "json" };
+// import foo from "foo.json" with { type: "json" };
+// import {test} from "foo.json" with { for: "for" }
+// import foo_json from "foo.json" with { type: "json", hasOwnProperty: "true" };
+// import "x" with
+// { type: "json" }
+
 // test_err import_assertion_err
 // import "foo" assert { type, "json" };
 // import "bar" \u{61}ssert { type: "json" };
@@ -549,15 +558,40 @@ fn parse_any_named_import_specifier(p: &mut JsParser) -> ParsedSyntax {
 // import "x" assert;
 // import ipsum from "ipsum.json" assert { type: "json", lazy: true, startAtLine: 1 };
 // import { a } from "a.json" assert
+
+// test_err import_attribute_err
+// import "foo" with { type, "json" };
+// import { foo } with { type: "json" };
+// import "lorem"
+// assert { type: "json" }
+// import foo2 from "foo.json" with { "type": "json", type: "html", "type": "js" };
+// import "x" with;
+// import ipsum from "ipsum.json" with { type: "json", lazy: true, startAtLine: 1 };
+// import { a } from "a.json" with
 fn parse_import_assertion(p: &mut JsParser) -> ParsedSyntax {
-    if !p.at(T![assert]) || p.has_preceding_line_break() {
+    if p.has_preceding_line_break() {
+        return Absent;
+    }
+    if !p.at(T![assert]) && !p.at(T![with]) {
         return Absent;
     }
 
     let m = p.start();
-    p.expect(T![assert]);
-    p.expect(T!['{']);
+    match p.cur() {
+        T![assert] => {
+            p.expect(T![assert]);
+        }
+        T![with] => {
+            p.expect(T![with]);
+        }
+        _ => {
+            m.abandon(p);
+            return Absent;
+        }
+    };
 
+    // bump assert or with
+    p.expect(T!['{']);
     ImportAssertionList::default().parse_list(p);
 
     p.expect(T!['}']);

@@ -9,7 +9,7 @@ JsModule {
                     value_token: JS_STRING_LITERAL@7..11 "\"x\"" [] [Whitespace(" ")],
                 },
                 assertion: JsImportAssertion {
-                    assert_token: ASSERT_KW@11..18 "assert" [] [Whitespace(" ")],
+                    assertion_kind: ASSERT_KW@11..18 "assert" [] [Whitespace(" ")],
                     l_curly_token: L_CURLY@18..20 "{" [] [Whitespace(" ")],
                     assertions: JsImportAssertionEntryList [
                         JsImportAssertionEntry {
@@ -30,7 +30,7 @@ JsModule {
                     value_token: JS_STRING_LITERAL@42..48 "\"foo\"" [] [Whitespace(" ")],
                 },
                 assertion: JsImportAssertion {
-                    assert_token: ASSERT_KW@48..55 "assert" [] [Whitespace(" ")],
+                    assertion_kind: ASSERT_KW@48..55 "assert" [] [Whitespace(" ")],
                     l_curly_token: L_CURLY@55..57 "{" [] [Whitespace(" ")],
                     assertions: JsImportAssertionEntryList [
                         JsImportAssertionEntry {
@@ -56,7 +56,7 @@ JsModule {
                     value_token: JS_STRING_LITERAL@91..102 "\"foo.json\"" [] [Whitespace(" ")],
                 },
                 assertion: JsImportAssertion {
-                    assert_token: ASSERT_KW@102..109 "assert" [] [Whitespace(" ")],
+                    assertion_kind: ASSERT_KW@102..109 "assert" [] [Whitespace(" ")],
                     l_curly_token: L_CURLY@109..111 "{" [] [Whitespace(" ")],
                     assertions: JsImportAssertionEntryList [
                         JsImportAssertionEntry {
@@ -92,7 +92,7 @@ JsModule {
                     value_token: JS_STRING_LITERAL@146..157 "\"foo.json\"" [] [Whitespace(" ")],
                 },
                 assertion: JsImportAssertion {
-                    assert_token: ASSERT_KW@157..164 "assert" [] [Whitespace(" ")],
+                    assertion_kind: ASSERT_KW@157..164 "assert" [] [Whitespace(" ")],
                     l_curly_token: L_CURLY@164..166 "{" [] [Whitespace(" ")],
                     assertions: JsImportAssertionEntryList [
                         JsImportAssertionEntry {
@@ -118,7 +118,7 @@ JsModule {
                     value_token: JS_STRING_LITERAL@200..211 "\"foo.json\"" [] [Whitespace(" ")],
                 },
                 assertion: JsImportAssertion {
-                    assert_token: ASSERT_KW@211..218 "assert" [] [Whitespace(" ")],
+                    assertion_kind: ASSERT_KW@211..218 "assert" [] [Whitespace(" ")],
                     l_curly_token: L_CURLY@218..220 "{" [] [Whitespace(" ")],
                     assertions: JsImportAssertionEntryList [
                         JsImportAssertionEntry {
@@ -145,7 +145,7 @@ JsModule {
                     value_token: JS_STRING_LITERAL@267..271 "\"x\"" [] [Whitespace(" ")],
                 },
                 assertion: JsImportAssertion {
-                    assert_token: ASSERT_KW@271..277 "assert" [] [],
+                    assertion_kind: ASSERT_KW@271..277 "assert" [] [],
                     l_curly_token: L_CURLY@277..280 "{" [Newline("\n")] [Whitespace(" ")],
                     assertions: JsImportAssertionEntryList [
                         JsImportAssertionEntry {

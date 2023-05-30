@@ -192,7 +192,7 @@ JsModule {
                     value_token: JS_STRING_LITERAL@201..207 "\"mod\"" [] [Whitespace(" ")],
                 },
                 assertion: JsImportAssertion {
-                    assert_token: ASSERT_KW@207..214 "assert" [] [Whitespace(" ")],
+                    assertion_kind: ASSERT_KW@207..214 "assert" [] [Whitespace(" ")],
                     l_curly_token: L_CURLY@214..216 "{" [] [Whitespace(" ")],
                     assertions: JsImportAssertionEntryList [
                         JsImportAssertionEntry {
