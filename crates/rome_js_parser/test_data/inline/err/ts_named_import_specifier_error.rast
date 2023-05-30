@@ -25,7 +25,7 @@ JsModule {
                 source: JsModuleSource {
                     value_token: JS_STRING_LITERAL@24..31 "\"./mod\"" [] [],
                 },
-                attribute: missing (optional),
+                assertion: missing (optional),
             },
             semicolon_token: SEMICOLON@31..32 ";" [] [],
         },
@@ -52,7 +52,7 @@ JsModule {
                 source: JsModuleSource {
                     value_token: JS_STRING_LITERAL@62..69 "\"./mod\"" [] [],
                 },
-                attribute: missing (optional),
+                assertion: missing (optional),
             },
             semicolon_token: SEMICOLON@69..70 ";" [] [],
         },
@@ -79,7 +79,7 @@ JsModule {
                 source: JsModuleSource {
                     value_token: JS_STRING_LITERAL@102..109 "\"./mod\"" [] [],
                 },
-                attribute: missing (optional),
+                assertion: missing (optional),
             },
             semicolon_token: SEMICOLON@109..110 ";" [] [],
         },
@@ -106,7 +106,7 @@ JsModule {
                 source: JsModuleSource {
                     value_token: JS_STRING_LITERAL@147..154 "\"./mod\"" [] [],
                 },
-                attribute: missing (optional),
+                assertion: missing (optional),
             },
             semicolon_token: SEMICOLON@154..155 ";" [] [],
         },
@@ -122,7 +122,7 @@ JsModule {
                 },
                 from_token: missing (required),
                 source: missing (required),
-                attribute: missing (optional),
+                assertion: missing (optional),
             },
             semicolon_token: missing (optional),
         },
