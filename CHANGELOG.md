@@ -3,6 +3,17 @@
 ## [Unreleased]
 
 ### CLI
+### Configuration
+### Editors
+### Formatter
+### Linter
+### Parser
+### VSCode
+### JavaScript APIs
+
+## 12.1.3
+
+### CLI
 
 #### Other changes
 
