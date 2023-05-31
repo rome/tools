@@ -17,7 +17,7 @@ JsModule {
                             source: JsModuleSource {
                                 value_token: JS_STRING_LITERAL@19..24 "\"bar\"" [] [],
                             },
-                            attribute: missing (optional),
+                            assertion: missing (optional),
                         },
                         SEMICOLON@24..25 ";" [] [],
                     ],

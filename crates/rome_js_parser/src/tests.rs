@@ -14,9 +14,7 @@ use std::path::{Path, PathBuf};
 #[test]
 fn parser_smoke_test() {
     let src = r#"
-let
-// comment
-a;
+import "x" with { type: "json" }
 "#;
 
     let module = parse(src, JsFileSource::tsx());

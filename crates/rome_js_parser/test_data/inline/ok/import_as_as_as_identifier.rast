@@ -27,7 +27,7 @@ JsModule {
                 source: JsModuleSource {
                     value_token: JS_STRING_LITERAL@25..31 "\"test\"" [] [],
                 },
-                attribute: missing (optional),
+                assertion: missing (optional),
             },
             semicolon_token: SEMICOLON@31..32 ";" [] [],
         },

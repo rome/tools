@@ -3,6 +3,17 @@
 ## [Unreleased]
 
 ### CLI
+### Configuration
+### Editors
+### Formatter
+### Linter
+### Parser
+### VSCode
+### JavaScript APIs
+
+## 12.1.3
+
+### CLI
 
 #### Other changes
 
@@ -16,17 +27,22 @@
 - Fix an issue where all the `nursery` were enabled when the `"nursery": {}` object
 was defined [#4479](https://github.com/rome/tools/issues/4479)
 
-### Editors
 ### Formatter
+
 ### Linter
 
 #### Other changes
 
 - Fix false positive diagnostics ([#4483](https://github.com/rome/tools/issues/4483)) that [`useHookAtTopLevel`](https://docs.rome.tools/lint/rules/usehookattoplevel/) caused to returning call expressions of a hook.
+- Revert [#4359](https://github.com/rome/tools/issues/4359)
+
 
 ### Parser
-### VSCode
-### JavaScript APIs
+
+#### Other changes
+
+- Revert [#4359](https://github.com/rome/tools/issues/4359)
+
 
 ## 12.1.2
 
