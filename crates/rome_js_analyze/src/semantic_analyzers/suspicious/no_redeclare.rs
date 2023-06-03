@@ -5,7 +5,7 @@ use rome_console::markup;
 use rome_js_semantic::Scope;
 use rome_js_syntax::binding_ext::AnyJsBindingDeclaration;
 use rome_js_syntax::{
-    TextRange, TsIndexSignatureParameter, TsIndexSignatureTypeMember, TsTypeMemberList,
+    AnyTsType, TextRange, TsIndexSignatureParameter, TsIndexSignatureTypeMember, TsTypeMemberList,
 };
 use rome_rowan::AstNode;
 use std::collections::HashMap;
@@ -181,7 +181,12 @@ fn are_same_index_signature_type_annotations(
 ) -> Option<bool> {
     let first_ts_type = first.type_annotation().ok()?.ty().ok()?;
     let second_ts_type = second.type_annotation().ok()?.ty().ok()?;
-    Some(first_ts_type.text() == second_ts_type.text())
+    match (first_ts_type, second_ts_type) {
+        (AnyTsType::TsStringType(_), AnyTsType::TsStringType(_)) => Some(true),
+        (AnyTsType::TsNumberType(_), AnyTsType::TsNumberType(_)) => Some(true),
+        (AnyTsType::TsSymbolType(_), AnyTsType::TsSymbolType(_)) => Some(true),
+        _ => None,
+    }
 }
 
 fn are_same_type_members(
