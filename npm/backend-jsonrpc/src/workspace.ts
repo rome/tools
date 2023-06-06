@@ -896,7 +896,7 @@ export interface RuleWithOptions {
 	level: RulePlainConfiguration;
 	options?: PossibleOptions;
 }
-export type PossibleOptions = HooksOptions | null;
+export type PossibleOptions = HooksOptions | NamingConventionOptions | null;
 /**
  * Options for the rule `useExhaustiveDependencies` and `useHookAtTopLevel`
  */
@@ -905,6 +905,10 @@ export interface HooksOptions {
 	 * List of safe hooks
 	 */
 	hooks: Hooks[];
+}
+export interface NamingConventionOptions {
+	enumMemberCase: EnumMemberCase;
+	strictCase: boolean;
 }
 export interface Hooks {
 	/**
@@ -922,6 +926,7 @@ export interface Hooks {
 	 */
 	name: string;
 }
+export type EnumMemberCase = "PascalCase" | "CONSTANT_CASE" | "camelCase";
 export interface OpenFileParams {
 	content: string;
 	language_hint?: Language;

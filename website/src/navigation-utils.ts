@@ -21,7 +21,7 @@ export function buildGetPages(pages: GlobInstance[]) {
 	};
 }
 
-export function buildTOC(
+export function buildToc(
 	page: Astro.MDXInstance<Record<string, unknown>>,
 ): string {
 	const headings = page
@@ -46,9 +46,9 @@ export function buildTOC(
 			buf += "<li>";
 			buf += `<a href="#${encodeURI(heading.slug)}">${heading.text}</a>`;
 
-			const subTOC = buildDepth(i + 1, depth + 1);
-			if (subTOC !== "") {
-				buf += `<ol>${subTOC}</ol>`;
+			const subToc = buildDepth(i + 1, depth + 1);
+			if (subToc !== "") {
+				buf += `<ol>${subToc}</ol>`;
 			}
 
 			buf += "</li>";

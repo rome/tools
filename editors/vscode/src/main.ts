@@ -25,9 +25,9 @@ import {
 } from "vscode-languageclient/node";
 
 import resolveImpl = require("resolve/async");
-import type * as Resolve from "resolve";
+import type * as resolve from "resolve";
 
-const resolveAsync = promisify<string, Resolve.AsyncOpts, string | undefined>(
+const resolveAsync = promisify<string, resolve.AsyncOpts, string | undefined>(
 	resolveImpl,
 );
 

@@ -1,8 +1,8 @@
 import PlaygroundLoader from "./PlaygroundLoader";
 import React from "react";
-import ReactDOM from "react-dom";
+import ReactDom from "react-dom";
 
-ReactDOM.render(
+ReactDom.render(
 	<React.StrictMode>
 		<PlaygroundLoader />
 	</React.StrictMode>,

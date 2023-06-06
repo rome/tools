@@ -3,7 +3,9 @@
 use crate::semantic_analyzers::nursery::use_exhaustive_dependencies::{
     hooks_options, HooksOptions,
 };
-use crate::semantic_analyzers::nursery::use_naming_convention::{naming_convention_options, NamingConventionOptions};
+use crate::semantic_analyzers::nursery::use_naming_convention::{
+    naming_convention_options, NamingConventionOptions,
+};
 use bpaf::Bpaf;
 use rome_analyze::options::RuleOptions;
 use rome_analyze::RuleKey;
@@ -51,7 +53,7 @@ impl PossibleOptions {
             }
             "useNamingConvention" => {
                 let options = match self {
-                    PossibleOptions::NamingConvention(options) => options.clone(),
+                    PossibleOptions::NamingConvention(options) => *options,
                     _ => NamingConventionOptions::default(),
                 };
                 RuleOptions::new(options)
@@ -82,12 +84,12 @@ impl VisitNode<JsonLanguage> for PossibleOptions {
         match name.text() {
             "hooks" => {
                 let mut options = HooksOptions::default();
-                self.map_to_array(&val, &name, &mut options, diagnostics);
+                self.map_to_array(&val, &name, &mut options, diagnostics)?;
                 *self = PossibleOptions::Hooks(options);
             }
             "strictCase" | "enumMemberCase" => {
                 let mut options = match self {
-                    PossibleOptions::NamingConvention(options) => options.clone(),
+                    PossibleOptions::NamingConvention(options) => *options,
                     _ => NamingConventionOptions::default(),
                 };
                 options.visit_map(key, value, diagnostics)?;

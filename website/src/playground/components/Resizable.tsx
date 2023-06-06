@@ -20,7 +20,7 @@ type ResizeHandler = {
 };
 
 const handlers: {
-	[key in Props["direction"]]: ResizeHandler;
+	[K in Props["direction"]]: ResizeHandler;
 } = {
 	top: {
 		resizingCursor: "row-resize",

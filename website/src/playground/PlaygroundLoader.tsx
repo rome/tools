@@ -21,7 +21,7 @@ import {
 	getCurrentCode,
 	getExtension,
 	getFileState,
-	isJSXFilename,
+	isJsxFilename,
 	isScriptFilename,
 	isTypeScriptFilename,
 	normalizeFilename,
@@ -223,7 +223,7 @@ function buildLocation(state: PlaygroundState): string {
 			queryStringObj.typescript = "false";
 		}
 
-		if (!isJSXFilename(state.currentFile)) {
+		if (!isJsxFilename(state.currentFile)) {
 			queryStringObj.jsx = "false";
 		}
 
@@ -351,7 +351,7 @@ export function usePlaygroundState(): [
 	Dispatch<SetStateAction<PlaygroundState>>,
 	() => void,
 ] {
-	const [url, setURL] = useState(window.location.toString());
+	const [url, setUrl] = useState(window.location.toString());
 
 	const [playgroundState, setPlaygroundState] = useState(() => {
 		let searchQuery = window.location.search;
@@ -371,7 +371,7 @@ export function usePlaygroundState(): [
 	}
 
 	useEffect(() => {
-		setURL(buildLocation(playgroundState));
+		setUrl(buildLocation(playgroundState));
 	}, [playgroundState]);
 
 	// Throttle updating of URL

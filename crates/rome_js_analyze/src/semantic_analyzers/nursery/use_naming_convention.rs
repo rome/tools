@@ -317,9 +317,9 @@ enum Invalid {
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct NamingConventionOptions {
     #[bpaf(hide)]
-    strict_case: bool,
+    pub strict_case: bool,
     #[bpaf(hide)]
-    enum_member_case: EnumMemberCase,
+    pub enum_member_case: EnumMemberCase,
 }
 
 impl NamingConventionOptions {
@@ -370,7 +370,7 @@ impl VisitNode<JsonLanguage> for NamingConventionOptions {
                 self.map_to_known_string(&value, name_text, &mut enum_member_case, diagnostics)?;
                 self.enum_member_case = enum_member_case;
             }
-            _ => {}
+            _ => return None,
         }
         Some(())
     }
@@ -378,7 +378,7 @@ impl VisitNode<JsonLanguage> for NamingConventionOptions {
 
 #[derive(Debug, Default, Copy, Clone, Serialize, Deserialize)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
-pub(crate) enum EnumMemberCase {
+pub enum EnumMemberCase {
     #[serde(rename = "PascalCase")]
     #[default]
     Pascal,
@@ -389,8 +389,7 @@ pub(crate) enum EnumMemberCase {
 }
 
 impl EnumMemberCase {
-    pub const KNOWN_VALUES: &'static [&'static str] =
-        &["camelCase", "CONSTANT_CASE", "PascalCase"];
+    pub const KNOWN_VALUES: &'static [&'static str] = &["camelCase", "CONSTANT_CASE", "PascalCase"];
 }
 
 impl FromStr for EnumMemberCase {

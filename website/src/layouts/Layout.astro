@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "@src/layouts/BaseLayout.astro";
 import NavigationSidebar from "@src/components/NavigationSidebar.astro";
-import {buildGetPages, buildTOC} from "@src/navigation-utils";
+import {buildGetPages, buildToc} from "@src/navigation-utils";
 
 const {props} = Astro;
 const {frontmatter = {}} = props;
@@ -16,7 +16,7 @@ let toc = "";
 const allPages = getPages();
 for (const page of allPages) {
   if (page.file === frontmatter.file) {
-    toc = buildTOC(page);
+    toc = buildToc(page);
     sidebarEnabled = toc !== "";
     break;
   }

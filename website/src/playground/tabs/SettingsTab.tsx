@@ -12,7 +12,7 @@ import {
 	classnames,
 	createPlaygroundSettingsSetter,
 	getFileState,
-	isJSXFilename,
+	isJsxFilename,
 	isScriptFilename,
 	isTypeScriptFilename,
 	modifyFilename,
@@ -466,7 +466,7 @@ function SyntaxSettings({
 						onChange={(e) => {
 							setFilename(
 								modifyFilename(filename, {
-									jsx: isJSXFilename(filename),
+									jsx: isJsxFilename(filename),
 									typescript: e.target.checked,
 									script: false,
 								}),
@@ -482,7 +482,7 @@ function SyntaxSettings({
 						id="jsx"
 						name="jsx"
 						type="checkbox"
-						checked={isJSXFilename(filename)}
+						checked={isJsxFilename(filename)}
 						onChange={(e) => {
 							setFilename(
 								modifyFilename(filename, {
@@ -620,7 +620,7 @@ function FormatterSettings({
 						onChange={(e) => setTrailingComma(e.target.value as TrailingComma)}
 					>
 						<option value={TrailingComma.All}>All</option>
-						<option value={TrailingComma.ES5}>ES5</option>
+						<option value={TrailingComma.Es5}>ES5</option>
 						<option value={TrailingComma.None}>None</option>
 					</select>
 				</div>
