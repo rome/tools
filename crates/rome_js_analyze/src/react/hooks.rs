@@ -3,7 +3,8 @@ use std::collections::{HashMap, HashSet};
 use rome_js_semantic::{Capture, ClosureExtensions, SemanticModel};
 use rome_js_syntax::{
     binding_ext::AnyJsIdentifierBinding, AnyJsExpression, JsArrayBindingPattern,
-    JsArrayBindingPatternElementList, JsCallExpression, JsVariableDeclarator, TextRange,
+    JsArrayBindingPatternElementList, JsArrowFunctionExpression, JsCallExpression,
+    JsFunctionExpression, JsVariableDeclarator, TextRange,
 };
 use rome_rowan::AstNode;
 use serde::{Deserialize, Serialize};
@@ -15,15 +16,36 @@ pub(crate) struct ReactCallWithDependencyResult {
     pub(crate) dependencies_node: Option<AnyJsExpression>,
 }
 
+pub enum AnyJsFunctionExpression {
+    JsArrowFunctionExpression(JsArrowFunctionExpression),
+    JsFunctionExpression(JsFunctionExpression),
+}
+
+impl TryFrom<AnyJsExpression> for AnyJsFunctionExpression {
+    type Error = ();
+
+    fn try_from(expression: AnyJsExpression) -> Result<Self, Self::Error> {
+        match expression {
+            AnyJsExpression::JsArrowFunctionExpression(arrow_function) => {
+                Ok(Self::JsArrowFunctionExpression(arrow_function))
+            }
+            AnyJsExpression::JsFunctionExpression(function) => {
+                Ok(Self::JsFunctionExpression(function))
+            }
+            _ => Err(()),
+        }
+    }
+}
+
 impl ReactCallWithDependencyResult {
     /// Returns all [Reference] captured by the closure argument of the React hook.
     /// See [react_hook_with_dependency].
     pub fn all_captures(&self, model: &SemanticModel) -> impl Iterator<Item = Capture> {
         self.closure_node
             .as_ref()
-            .and_then(|node| node.as_js_arrow_function_expression())
-            .map(|arrow_function| {
-                let closure = arrow_function.closure(model);
+            .and_then(|node| AnyJsFunctionExpression::try_from(node.clone()).ok())
+            .map(|function_expression| {
+                let closure = function_expression.closure(model);
                 let range = *closure.closure_range();
                 closure
                     .descendents()
