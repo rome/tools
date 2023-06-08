@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: js/module/export/trailing-comma/export_trailing_comma.js
+info: js/module/export/trailing-comma/export_trailing_comma.js
 ---
 
 # Input
@@ -26,6 +25,7 @@ export {
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 Semicolons: Always
@@ -45,6 +45,7 @@ export {
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: ES5
 Semicolons: Always
@@ -64,6 +65,7 @@ export {
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: None
 Semicolons: Always

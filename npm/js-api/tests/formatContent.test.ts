@@ -123,4 +123,29 @@ describe("Rome WebAssembly formatContent", () => {
 
 		expect(result.content).toEqual(formatted);
 	});
+
+	it("should format content with custom configuration (8 spaces, jsx single quotes, preserve quotes)", () => {
+		const content = `<div bar="foo" baz={"foo"} />`;
+		const formatted = `<div bar='foo' baz={"foo"} />;
+`;
+
+		rome.applyConfiguration({
+			formatter: {
+				indentStyle: "space",
+				indentSize: 8,
+			},
+			javascript: {
+				formatter: {
+					jsxQuoteStyle: "single",
+					quoteProperties: "preserve",
+				},
+			},
+		});
+
+		const result = rome.formatContent(content, {
+			filePath: "example.js",
+		});
+
+		expect(result.content).toEqual(formatted);
+	});
 });

@@ -1,0 +1,20 @@
+{
+	"cases": [
+		{
+			"jsx_quote_style": "Double",
+			"quote_style": "Double"
+		},
+		{
+			"jsx_quote_style": "Single",
+			"quote_style": "Single"
+		},
+		{
+			"jsx_quote_style": "Double",
+			"quote_style": "Single"
+		},
+		{
+			"jsx_quote_style": "Single",
+			"quote_style": "Double"
+		}
+	]
+}

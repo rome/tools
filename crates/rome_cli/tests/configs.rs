@@ -76,6 +76,7 @@ pub const CONFIG_ALL_FIELDS: &str = r#"{
     "globals": ["$"],
     "formatter": {
       "quoteStyle": "double",
+      "jsxQuoteStyle": "double",
       "quoteProperties": "asNeeded"
     }
   }

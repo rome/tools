@@ -30,6 +30,9 @@
 
 ### Editors
 ### Formatter
+
+- Added a new option called `--jsx-quote-style` to the formatter. This option allows you to choose between single and double quotes for JSX attributes. [#4486](https://github.com/rome/tools/issues/4486)
+
 ### Linter
 
 #### Other changes

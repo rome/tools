@@ -53,6 +53,7 @@ export const queryAuditLog = async ({
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 Semicolons: Always
@@ -102,6 +103,7 @@ export const queryAuditLog = async ({
 Indent style: Tab
 Line width: 100
 Quote style: Double Quotes
+JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 Semicolons: Always
@@ -148,6 +150,7 @@ export const queryAuditLog = async ({
 Indent style: Tab
 Line width: 120
 Quote style: Double Quotes
+JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 Semicolons: Always

@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: jsx/element.jsx
+info: jsx/element.jsx
 ---
 
 # Input
@@ -351,6 +350,7 @@ function Component() {
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 Semicolons: Always
@@ -767,4 +767,5 @@ function Component() {
   238: 				<pre className="h-screen overflow-y-scroll whitespace-pre-wrap text-red-500 text-xs">
   287: 		Uncle Boonmee Who Can Recall His Past Lives dir. Apichatpong Weerasethakul{" "}
 ```
+
 
