@@ -1,5 +1,5 @@
 {
-	"$schema": "../../../../../../npm/rome/configuration_schema.json",
+	"$schema": "../../../../npm/rome/configuration_schema.json",
 	"linter": {
 		"rules": {
 			"nursery": {
@@ -8,7 +8,6 @@
 					"options": {
 						"hooks": [
 							{
-								"name": "useMyEffect",
 								"closureIndex": 0,
 								"dependenciesIndex": 1
 							}

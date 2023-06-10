@@ -567,6 +567,39 @@
 			},
 			"additionalProperties": false
 		},
+		"Hooks": {
+			"type": "object",
+			"required": ["name"],
+			"properties": {
+				"closureIndex": {
+					"description": "The \"position\" of the closure function, starting from zero.\n\n### Example",
+					"type": ["integer", "null"],
+					"format": "uint",
+					"minimum": 0.0
+				},
+				"dependenciesIndex": {
+					"description": "The \"position\" of the array of dependencies, starting from zero.",
+					"type": ["integer", "null"],
+					"format": "uint",
+					"minimum": 0.0
+				},
+				"name": { "description": "The name of the hook", "type": "string" }
+			},
+			"additionalProperties": false
+		},
+		"HooksOptions": {
+			"description": "Options for the rule `useExhaustiveDependencies` and `useHookAtTopLevel`",
+			"type": "object",
+			"required": ["hooks"],
+			"properties": {
+				"hooks": {
+					"description": "List of safe hooks",
+					"type": "array",
+					"items": { "$ref": "#/definitions/Hooks" }
+				}
+			},
+			"additionalProperties": false
+		},
 		"JavascriptConfiguration": {
 			"type": "object",
 			"properties": {
@@ -854,6 +887,15 @@
 				{ "description": "Space", "type": "string", "enum": ["space"] }
 			]
 		},
+		"PossibleOptions": {
+			"anyOf": [
+				{
+					"description": "Options for `useExhaustiveDependencies` and `useHookAtTopLevel` rule",
+					"allOf": [{ "$ref": "#/definitions/HooksOptions" }]
+				},
+				{ "description": "No options available", "type": "null" }
+			]
+		},
 		"QuoteProperties": { "type": "string", "enum": ["asNeeded", "preserve"] },
 		"QuoteStyle": { "type": "string", "enum": ["double", "single"] },
 		"RuleConfiguration": {
@@ -868,10 +910,15 @@
 		},
 		"RuleWithOptions": {
 			"type": "object",
-			"required": ["level", "options"],
+			"required": ["level"],
 			"properties": {
 				"level": { "$ref": "#/definitions/RulePlainConfiguration" },
-				"options": true
+				"options": {
+					"anyOf": [
+						{ "$ref": "#/definitions/PossibleOptions" },
+						{ "type": "null" }
+					]
+				}
 			},
 			"additionalProperties": false
 		},

@@ -31,7 +31,7 @@ impl VisitNode<JsonLanguage> for Configuration {
         let name_text = name.text();
         match name_text {
             "$schema" => {
-                self.schema = Some(self.map_to_string(&value, name_text, diagnostics)?);
+                self.schema = self.map_to_string(&value, name_text, diagnostics);
             }
             "files" => {
                 let mut files = FilesConfiguration::default();

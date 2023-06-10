@@ -32,6 +32,17 @@ pub trait VisitNode<L: Language>: Sized {
     ) -> Option<()> {
         unimplemented!("you should implement visit_map")
     }
+
+    /// Called when visiting a list of elements.
+    ///
+    /// The implementor should loop through the list and call this function by passing the encountered nodes.
+    fn visit_array_member(
+        &mut self,
+        _element: &SyntaxNode<L>,
+        _diagnostics: &mut Vec<DeserializationDiagnostic>,
+    ) -> Option<()> {
+        unimplemented!("you should implement visit_array_member")
+    }
 }
 
 impl<L: Language> VisitNode<L> for () {

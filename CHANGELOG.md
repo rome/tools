@@ -7,6 +7,60 @@
 ### Editors
 ### Formatter
 ### Linter
+
+#### Other changes
+
+- The rules [`useExhaustiveDependencies`](https://docs.rome.tools/lint/rules/useexhaustivedependencies/) and [`useHookAtTopLevel`](https://docs.rome.tools/lint/rules/usehookattoplevel/) accept a different
+	shape of options
+
+Old configuration
+
+```json
+{
+	"linter": {
+		"rules": {
+			"nursery": {
+				"useExhaustiveDependencies": {
+					"level": "error",
+					"options": {
+						"hooks": [
+							["useMyEffect", 0, 1]
+						]
+					}
+				}
+			}
+		}
+	}
+}
+```
+
+New configuration
+
+```json
+{
+	"linter": {
+		"rules": {
+			"nursery": {
+				"useExhaustiveDependencies": {
+					"level": "error",
+					"options": {
+						"hooks": [
+							{
+								"name": "useMyEffect",
+								"closureIndex": 0,
+								"dependenciesIndex": 1
+							}
+						]
+					}
+				}
+			}
+		}
+	}
+}
+```
+
+
+
 ### Parser
 ### VSCode
 ### JavaScript APIs
