@@ -61,6 +61,10 @@ export interface FilesConfiguration {
 	 */
 	ignore?: StringSet;
 	/**
+	 * Tells Rome to not emit diagnostics when handling files that doesn't know
+	 */
+	ignoreUnknown?: boolean;
+	/**
 	 * The maximum allowed size for source code files in bytes. Files above this limit will be ignored for performance reason. Defaults to 1 MiB
 	 */
 	maxSize?: number;
