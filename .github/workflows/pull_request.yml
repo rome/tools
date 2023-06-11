@@ -83,6 +83,20 @@ jobs:
       - name: Run doctests
         run: cargo test --doc
 
+  fuzz-all:
+    name: Build common fuzzers
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Install toolchain
+        uses: moonrepo/setup-rust@v0
+        with:
+          bins: cargo-fuzz
+      - name: Build rome_parse_all
+        run: cargo fuzz build --features rome_all -s none rome_parse_all
+      - name: Build rome_format_all
+        run: cargo fuzz build --features rome_all -s none rome_format_all
+
   test-node-api:
     name: Test node.js API
     runs-on: ubuntu-latest
