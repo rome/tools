@@ -11,7 +11,7 @@ To use the fuzzers provided in this directory, start by invoking:
 ```
 
 This will install [`cargo-fuzz`](https://github.com/rust-fuzz/cargo-fuzz) and optionally download a
-[dataset](https://zenodo.org/record/3628784) which improves the efficacy of the testing.
+[dataset](https://www.sri.inf.ethz.ch/js150) which improves the efficacy of the testing.
 **This step is necessary for initialising the corpus directory, as all fuzzers share a common
 corpus.**
 The dataset may take several hours to download and clean, so if you're just looking to try out the
