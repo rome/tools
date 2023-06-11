@@ -3,6 +3,8 @@
 ## [Unreleased]
 
 ### CLI
+#### Other changes
+Fixes [#4556](https://github.com/rome/tools/issues/4556) using `lines()` to enable OS independent line parsing when processing the .gitignore file.
 ### Configuration
 ### Editors
 ### Formatter
