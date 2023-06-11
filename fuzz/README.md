@@ -10,8 +10,8 @@ To use the fuzzers provided in this directory, start by invoking:
 ./fuzz/init-fuzzers.sh
 ```
 
-This will install [`cargo-fuzz`](https://github.com/rust-fuzz/cargo-fuzz) and optionally download a
-[dataset](https://www.sri.inf.ethz.ch/js150) which improves the efficacy of the testing.
+This will install [`cargo-fuzz`](https://github.com/rust-fuzz/cargo-fuzz) and optionally download
+datasets which improve the efficacy of the testing.
 **This step is necessary for initialising the corpus directory, as all fuzzers share a common
 corpus.**
 The dataset may take several hours to download and clean, so if you're just looking to try out the
@@ -70,4 +70,38 @@ added to the corpus.
 
 ## Each fuzzer harness in detail
 
-TODO
+Each fuzzer harness is designed to test different aspects of Rome.
+Since Rome's primary function is parsing, formatting, and linting, we can use fuzzing not only to
+detect crashes or panics, but also to detect violations of guarantees of the crate.
+This concept is used extensively throughout the fuzzers.
+
+### `rome_parse_*`
+
+Each of the `rome_parse_*` fuzz harnesses utilise the [round-trip
+property](https://blog.ssanj.net/posts/2016-06-26-property-based-testing-patterns.html) of parsing
+and unparsing; that is, given a particular input, if we parse some code successfully, we expect the
+unparsed code to have the content as the original code.
+If they do not match, then some details of the original input were not captured on the first parse.
+The corpus for the JS-like parsers is based on unit tests and [a JS dataset for machine learning
+training](https://www.sri.inf.ethz.ch/js150).
+
+Errata for specific fuzzers can be seen below.
+
+#### `rome_parse_json`
+
+Since JSON formats are distinct from JS source code and are a relatively simple format, it is not
+strictly necessary to use the shared corpus.
+[Fuzzbench](https://google.github.io/fuzzbench/) results consistently show that JSON parsers tend to
+max out their coverage with minimal or no corpora.
+
+At time of writing (June 11, 2023), JSONC does not seem to be supported, so it is not fuzzed.
+
+#### `rome_parse_css`
+
+TODO (this is potentially hard -- not a lot of corpora for CSS in the wild)
+
+#### `rome_parse_all`
+
+This fuzz harness merely merges all the JS parsers together to create a shared corpus.
+It can be used in place of the parsers for d_ts, jsx, module, script, tsx, and typescript in
+continuous integration.

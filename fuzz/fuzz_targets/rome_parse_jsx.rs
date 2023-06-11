@@ -8,7 +8,7 @@ use rome_js_syntax::JsFileSource;
 
 pub fn do_fuzz(case: &[u8]) -> Corpus {
     let parse_type = JsFileSource::jsx();
-    rome_common::fuzz_source_type(case, parse_type)
+    rome_common::fuzz_js_parser_with_source_type(case, parse_type)
 }
 
 #[cfg(not(feature = "rome_parse_all"))]

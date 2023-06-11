@@ -1,3 +1,5 @@
 artifacts/
 corpus/rome_parse_all
+corpus/rome_parse_json
+corpus/rome_parse_css
 Cargo.lock
