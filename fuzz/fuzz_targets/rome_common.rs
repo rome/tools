@@ -1,3 +1,6 @@
+//! Common functionality between different fuzzers. Look here if you need to inspect implementation
+//! details for the fuzzer harnesses!
+
 #![allow(dead_code)]
 
 use libfuzzer_sys::Corpus;
