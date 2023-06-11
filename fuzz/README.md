@@ -96,12 +96,24 @@ max out their coverage with minimal or no corpora.
 
 At time of writing (June 11, 2023), JSONC does not seem to be supported, so it is not fuzzed.
 
-#### `rome_parse_css`
-
-TODO (this is potentially hard -- not a lot of corpora for CSS in the wild)
-
 #### `rome_parse_all`
 
 This fuzz harness merely merges all the JS parsers together to create a shared corpus.
 It can be used in place of the parsers for d_ts, jsx, module, script, tsx, and typescript in
 continuous integration.
+
+### `rome_format_*`
+
+These fuzzers use the same corpora as the fuzzers previously mentioned, but check the correctness of
+the formatters as well.
+We assume the following qualities of formatters:
+ - Formatters will not introduce syntax errors into the program
+ - Formatting code twice will have the same result as formatting code once
+
+In this way, we verify the [idempotency](https://en.wikipedia.org/wiki/Idempotence) and syntax
+preservation property of formatting.
+
+Of particular note: these fuzzers may have false negative results if e.g. two tokens are turned into
+one token and the reformatting result is the same.
+Unfortunately, we can't necessarily control for this because the formatter may reorganise the
+sequence of tokens.
