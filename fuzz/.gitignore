@@ -1,0 +1,3 @@
+artifacts/
+corpus/rome_parse_all
+Cargo.lock
