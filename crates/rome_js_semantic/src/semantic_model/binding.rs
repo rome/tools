@@ -1,7 +1,5 @@
 use super::*;
-use rome_js_syntax::{
-    binding_ext::AnyJsIdentifierBinding, AnyJsBinding, TextRange, TsTypeParameterName,
-};
+use rome_js_syntax::{binding_ext::AnyJsIdentifierBinding, TextRange, TsTypeParameterName};
 
 /// Internal type with all the semantic data of a specific binding
 #[derive(Debug)]
@@ -135,7 +133,6 @@ pub trait IsBindingAstNode: AstNode<Language = JsLanguage> {
 impl IsBindingAstNode for JsIdentifierBinding {}
 impl IsBindingAstNode for TsIdentifierBinding {}
 impl IsBindingAstNode for AnyJsIdentifierBinding {}
-impl IsBindingAstNode for AnyJsBinding {}
 impl IsBindingAstNode for TsTypeParameterName {}
 
 /// Extension method to allow nodes that have declaration to easily

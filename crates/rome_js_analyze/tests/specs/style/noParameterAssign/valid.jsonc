@@ -57,5 +57,6 @@
 	"function foo(a) { for ([a.b] of []); }",
 	"function foo(a) { a.b &&= c; }",
 	"function foo(a) { a.b.c ||= d; }",
-	"function foo(a) { a[b] ??= c; }"
+	"function foo(a) { a[b] ??= c; }",
+	"function foo(arguments) { }"
 ]
