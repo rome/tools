@@ -824,6 +824,13 @@
 						{ "type": "null" }
 					]
 				},
+				"noNonoctalDecimalEscape": {
+					"description": "Disallow \\8 and \\9 escape sequences in string literals.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"noRedundantRoles": {
 					"description": "Enforce explicit role property is not the same as implicit/default role property on an element.",
 					"anyOf": [

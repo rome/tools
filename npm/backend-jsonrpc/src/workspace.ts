@@ -554,6 +554,10 @@ export interface Nursery {
 	 */
 	noNoninteractiveTabindex?: RuleConfiguration;
 	/**
+	 * Disallow \8 and \9 escape sequences in string literals.
+	 */
+	noNonoctalDecimalEscape?: RuleConfiguration;
+	/**
 	 * Enforce explicit role property is not the same as implicit/default role property on an element.
 	 */
 	noRedundantRoles?: RuleConfiguration;
@@ -1129,8 +1133,12 @@ export type Category =
 	| "lint/nursery/useNamingConvention"
 	| "lint/nursery/noGlobalIsNan"
 	| "lint/nursery/noGlobalIsFinite"
+<<<<<<< HEAD
 	| "lint/nursery/useArrowFunction"
 	| "lint/nursery/noVoid"
+=======
+	| "lint/nursery/noNonoctalDecimalEscape"
+>>>>>>> 96622b3272 (feat(rome_js_analyze): noNonoctalDecimalEscape)
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"

@@ -1360,6 +1360,7 @@ impl VisitNode<JsonLanguage> for Nursery {
                 "noGlobalIsFinite",
                 "noGlobalIsNan",
                 "noNoninteractiveTabindex",
+                "noNonoctalDecimalEscape",
                 "noRedundantRoles",
                 "noSelfAssign",
                 "noStaticOnlyClass",
@@ -1603,6 +1604,24 @@ impl VisitNode<JsonLanguage> for Nursery {
                     let mut configuration = RuleConfiguration::default();
                     self.map_to_object(&value, name_text, &mut configuration, diagnostics)?;
                     self.no_noninteractive_tabindex = Some(configuration);
+                }
+                _ => {
+                    diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
+                        "object or string",
+                        value.range(),
+                    ));
+                }
+            },
+            "noNonoctalDecimalEscape" => match value {
+                AnyJsonValue::JsonStringValue(_) => {
+                    let mut configuration = RuleConfiguration::default();
+                    self.map_to_known_string(&value, name_text, &mut configuration, diagnostics)?;
+                    self.no_nonoctal_decimal_escape = Some(configuration);
+                }
+                AnyJsonValue::JsonObjectValue(_) => {
+                    let mut configuration = RuleConfiguration::default();
+                    self.map_to_object(&value, name_text, &mut configuration, diagnostics)?;
+                    self.no_nonoctal_decimal_escape = Some(configuration);
                 }
                 _ => {
                     diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
