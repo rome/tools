@@ -9,11 +9,9 @@ license.workspace = true
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-rome_rowan = { path = "../rome_rowan" }
-rome_console = { path = "../rome_console" }
-rome_diagnostics = { path = "../rome_diagnostics" }
-rome_json_parser = { path = "../rome_json_parser" }
-rome_deserialize = { path = "../rome_deserialize"}
+rome_rowan = { workspace = true }
+rome_console = { workspace = true }
+rome_diagnostics = { workspace = true }
 bitflags.workspace = true
 rustc-hash = { workspace = true }
 serde = { version = "1.0.136", features = ["derive"] }

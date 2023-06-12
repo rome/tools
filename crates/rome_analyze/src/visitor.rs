@@ -1,13 +1,11 @@
-use std::collections::BinaryHeap;
-use std::path::Path;
-
-use rome_rowan::{AstNode, Language, SyntaxNode, TextRange, WalkEvent};
-
 use crate::{
     matcher::{MatchQueryParams, Query},
     registry::{NodeLanguage, Phases},
-    LanguageRoot, QueryMatch, QueryMatcher, ServiceBag, SignalEntry, SuppressionCommentEmitter,
+    AnalyzerOptions, LanguageRoot, QueryMatch, QueryMatcher, ServiceBag, SignalEntry,
+    SuppressionCommentEmitter,
 };
+use rome_rowan::{AstNode, Language, SyntaxNode, TextRange, WalkEvent};
+use std::collections::BinaryHeap;
 
 /// Mutable context objects shared by all visitors
 pub struct VisitorContext<'phase, 'query, L: Language> {
@@ -18,8 +16,7 @@ pub struct VisitorContext<'phase, 'query, L: Language> {
     pub(crate) query_matcher: &'query mut dyn QueryMatcher<L>,
     pub(crate) signal_queue: &'query mut BinaryHeap<SignalEntry<'phase, L>>,
     pub apply_suppression_comment: SuppressionCommentEmitter<L>,
-    pub globals: &'phase [&'phase str],
-    pub file_path: &'phase Path,
+    pub options: &'phase AnalyzerOptions,
 }
 
 impl<'phase, 'query, L: Language> VisitorContext<'phase, 'query, L> {
@@ -31,8 +28,7 @@ impl<'phase, 'query, L: Language> VisitorContext<'phase, 'query, L> {
             services: self.services,
             signal_queue: self.signal_queue,
             apply_suppression_comment: self.apply_suppression_comment,
-            globals: self.globals,
-            file_path: self.file_path,
+            options: self.options,
         })
     }
 }

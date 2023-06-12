@@ -2,7 +2,7 @@ use crate::semantic_services::Semantic;
 use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_semantic::{AllBindingWriteReferencesIter, Reference, ReferencesExtensions};
-use rome_js_syntax::{AnyJsBindingPattern, AnyJsFormalParameter, AnyJsParameter};
+use rome_js_syntax::{AnyJsBinding, AnyJsBindingPattern, AnyJsFormalParameter, AnyJsParameter};
 use rome_rowan::AstNode;
 
 declare_rule! {
@@ -71,10 +71,10 @@ impl Rule for NoParameterAssign {
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let param = ctx.query();
         let model = ctx.model();
-        if let Some(binding) = binding_of(param) {
-            if let Some(binding) = binding.as_any_js_binding() {
-                return binding.all_writes(model);
-            }
+        if let Some(AnyJsBindingPattern::AnyJsBinding(AnyJsBinding::JsIdentifierBinding(binding))) =
+            binding_of(param)
+        {
+            return binding.all_writes(model);
         }
         // Empty iterator that conforms to `AllBindingWriteReferencesIter` type.
         std::iter::successors(None, |_| None)

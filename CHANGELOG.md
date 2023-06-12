@@ -6,7 +6,102 @@
 
 #### Other changes
 
+- Add a new option to ignore unknown files
+
+	```shell
+	rome format ./src --files-ignore-unknown=true
+	```
+	Doing so, Rome won't emit diagnostics for file that it doesn't know how to handle.
+
+### Configuration
+
+#### Other changes
+
+- Add a new option to ignore unknown files:
+
+	```json
+	{
+		"files": {
+			"ignoreUnknown": true
+		}
+	}
+	```
+	Doing so, Rome won't emit diagnostics for file that it doesn't know how to handle.
+
+### Editors
+### Formatter
+
+- Added a new option called `--jsx-quote-style` to the formatter. This option allows you to choose between single and double quotes for JSX attributes. [#4486](https://github.com/rome/tools/issues/4486)
+
+### Linter
+
+- Fix a crash in the `NoParameterAssign` rule that occurred when there was a bogus binding. [#4323](https://github.com/rome/tools/issues/4323)
+
+#### Other changes
+
+- The rules [`useExhaustiveDependencies`](https://docs.rome.tools/lint/rules/useexhaustivedependencies/) and [`useHookAtTopLevel`](https://docs.rome.tools/lint/rules/usehookattoplevel/) accept a different
+	shape of options
+
+Old configuration
+
+```json
+{
+	"linter": {
+		"rules": {
+			"nursery": {
+				"useExhaustiveDependencies": {
+					"level": "error",
+					"options": {
+						"hooks": [
+							["useMyEffect", 0, 1]
+						]
+					}
+				}
+			}
+		}
+	}
+}
+```
+
+New configuration
+
+```json
+{
+	"linter": {
+		"rules": {
+			"nursery": {
+				"useExhaustiveDependencies": {
+					"level": "error",
+					"options": {
+						"hooks": [
+							{
+								"name": "useMyEffect",
+								"closureIndex": 0,
+								"dependenciesIndex": 1
+							}
+						]
+					}
+				}
+			}
+		}
+	}
+}
+```
+
+
+
+### Parser
+### VSCode
+### JavaScript APIs
+
+## 12.1.3
+
+### CLI
+
+#### Other changes
+
 - `rome lsp-proxy` should accept the global CLI options [#4505](https://github.com/rome/tools/issues/4505)
+- Enhance help descriptions
 
 ### Configuration
 
@@ -15,12 +110,22 @@
 - Fix an issue where all the `nursery` were enabled when the `"nursery": {}` object
 was defined [#4479](https://github.com/rome/tools/issues/4479)
 
-### Editors
 ### Formatter
+
 ### Linter
+
+#### Other changes
+
+- Fix false positive diagnostics ([#4483](https://github.com/rome/tools/issues/4483)) that [`useHookAtTopLevel`](https://docs.rome.tools/lint/rules/usehookattoplevel/) caused to returning call expressions of a hook.
+- Revert [#4359](https://github.com/rome/tools/issues/4359)
+
+
 ### Parser
-### VSCode
-### JavaScript APIs
+
+#### Other changes
+
+- Revert [#4359](https://github.com/rome/tools/issues/4359)
+
 
 ## 12.1.2
 

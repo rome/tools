@@ -9,7 +9,7 @@ repository.workspace = true
 documentation = "https://rustdocs.rome.tools/rome_text_edit/index.html"
 
 [dependencies]
-rome_text_size = { version = "0.0.1", path = "../rome_text_size", features = ["serde"] }
+rome_text_size = { workspace = true, features = ["serde"] }
 serde = { version = "1.0.136", features = ["derive"] }
 schemars = { version = "0.8.10", optional = true }
 similar = { version = "2.1.0", features = ["unicode"] }

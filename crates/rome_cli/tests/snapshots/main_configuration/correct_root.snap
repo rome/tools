@@ -39,6 +39,7 @@ expression: content
     "globals": ["$"],
     "formatter": {
       "quoteStyle": "double",
+      "jsxQuoteStyle": "double",
       "quoteProperties": "asNeeded"
     }
   }

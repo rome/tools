@@ -48,7 +48,7 @@ export interface Configuration {
 	 */
 	organizeImports?: OrganizeImports;
 	/**
-	 * The configuration of the filesystem
+	 * The configuration of the VCS integration
 	 */
 	vcs?: VcsConfiguration;
 }
@@ -61,10 +61,17 @@ export interface FilesConfiguration {
 	 */
 	ignore?: StringSet;
 	/**
+	 * Tells Rome to not emit diagnostics when handling files that doesn't know
+	 */
+	ignoreUnknown?: boolean;
+	/**
 	 * The maximum allowed size for source code files in bytes. Files above this limit will be ignored for performance reason. Defaults to 1 MiB
 	 */
 	maxSize?: number;
 }
+/**
+ * Options applied to the formatter
+ */
 export interface FormatterConfiguration {
 	enabled?: boolean;
 	/**
@@ -155,6 +162,10 @@ The allowed range of values is 1..=320
 export type LineWidth = number;
 export interface JavascriptFormatter {
 	/**
+	 * The style for JSX quotes. Defaults to double.
+	 */
+	jsxQuoteStyle?: QuoteStyle;
+	/**
 	 * When properties in objects are quoted. Defaults to asNeeded.
 	 */
 	quoteProperties?: QuoteProperties;
@@ -191,8 +202,8 @@ export interface Rules {
 	suspicious?: Suspicious;
 }
 export type VcsClientKind = "git";
-export type QuoteProperties = "asNeeded" | "preserve";
 export type QuoteStyle = "double" | "single";
+export type QuoteProperties = "asNeeded" | "preserve";
 export type Semicolons = "always" | "asNeeded";
 /**
  * Print trailing commas wherever possible in multi-line comma-separated syntactic structures.
@@ -874,7 +885,33 @@ export type RuleConfiguration = RulePlainConfiguration | RuleWithOptions;
 export type RulePlainConfiguration = "warn" | "error" | "off";
 export interface RuleWithOptions {
 	level: RulePlainConfiguration;
-	options: any;
+	options?: PossibleOptions;
+}
+export type PossibleOptions = HooksOptions | null;
+/**
+ * Options for the rule `useExhaustiveDependencies` and `useHookAtTopLevel`
+ */
+export interface HooksOptions {
+	/**
+	 * List of safe hooks
+	 */
+	hooks: Hooks[];
+}
+export interface Hooks {
+	/**
+	* The "position" of the closure function, starting from zero.
+
+### Example 
+	 */
+	closureIndex?: number;
+	/**
+	 * The "position" of the array of dependencies, starting from zero.
+	 */
+	dependenciesIndex?: number;
+	/**
+	 * The name of the hook
+	 */
+	name: string;
 }
 export interface OpenFileParams {
 	content: string;

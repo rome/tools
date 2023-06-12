@@ -1,11 +1,12 @@
 use json_comments::StripComments;
 use rome_analyze::{
-    AnalysisFilter, AnalyzerAction, AnalyzerOptions, ControlFlow, Never, RuleFilter, RuleKey,
+    AnalysisFilter, AnalyzerAction, AnalyzerOptions, ControlFlow, Never, RuleFilter,
 };
 use rome_console::{
     fmt::{Formatter, Termcolor},
     markup, Markup,
 };
+use rome_deserialize::json::deserialize_from_json_str;
 use rome_diagnostics::advice::CodeSuggestionAdvice;
 use rome_diagnostics::termcolor::NoColor;
 use rome_diagnostics::{DiagnosticExt, Error, PrintDiagnostic, Severity};
@@ -14,6 +15,9 @@ use rome_js_parser::{
     test_utils::{assert_errors_are_absent, has_bogus_nodes_or_empty_slots},
 };
 use rome_js_syntax::{JsFileSource, JsLanguage};
+use rome_service::configuration::to_analyzer_configuration;
+use rome_service::settings::WorkspaceSettings;
+use rome_service::Configuration;
 use similar::TextDiff;
 use std::{
     ffi::OsStr, fmt::Write, fs::read_to_string, os::raw::c_int, path::Path, slice, sync::Once,
@@ -127,23 +131,40 @@ pub(crate) fn write_analysis_to_snapshot(
     let mut diagnostics = Vec::new();
     let mut code_fixes = Vec::new();
     let mut options = AnalyzerOptions::default();
-
     // We allow a test file to configure its rule using a special
     // file with the same name as the test but with extension ".options.json"
     // that configures that specific rule.
     let options_file = input_file.with_extension("options.json");
-    if let Ok(json) = std::fs::read_to_string(options_file) {
-        //RuleKey needs 'static string, so we must leak them here
-        let (group, rule) = parse_test_path(input_file);
-        let group = Box::leak(Box::new(group.to_string()));
-        let rule = Box::leak(Box::new(rule.to_string()));
-        let rule_key = RuleKey::new(group, rule);
+    if let Ok(json) = std::fs::read_to_string(options_file.clone()) {
+        let deserialized = deserialize_from_json_str::<Configuration>(json.as_str());
+        if deserialized.has_errors() {
+            diagnostics.extend(
+                deserialized
+                    .into_diagnostics()
+                    .into_iter()
+                    .map(|diagnostic| {
+                        diagnostic_to_string(
+                            options_file.file_stem().unwrap().to_str().unwrap(),
+                            &json,
+                            diagnostic,
+                        )
+                    })
+                    .collect::<Vec<_>>(),
+            );
+            None
+        } else {
+            let configuration = deserialized.into_deserialized();
+            let mut settings = WorkspaceSettings::default();
+            settings.merge_with_configuration(configuration).unwrap();
+            let configuration =
+                to_analyzer_configuration(&settings.linter, &settings.languages, |_| vec![]);
+            options = AnalyzerOptions {
+                configuration,
+                ..AnalyzerOptions::default()
+            };
 
-        options
-            .configuration
-            .rules
-            .push_rule(rule_key, json.clone());
-        Some(json)
+            Some(json)
+        }
     } else {
         None
     };

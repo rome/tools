@@ -11,17 +11,17 @@ categories = ["parser-implementations", "development-tools"]
 homepage.workspace = true
 
 [dependencies]
-rome_rowan = {version = "0.0.1",  path = "../rome_rowan" }
-rome_console = {version = "0.0.1",  path = "../rome_console" }
-rome_diagnostics = {version = "0.0.1",  path = "../rome_diagnostics" }
-rome_json_syntax = {version = "0.0.1",  path = "../rome_json_syntax" }
-rome_json_factory = { version = "0.0.1", path = "../rome_json_factory" }
-rome_js_unicode_table = {version = "0.0.1",  path = "../rome_js_unicode_table" }
-rome_parser = { version = "0.0.1", path = "../rome_parser" }
+rome_rowan = { workspace = true }
+rome_console = { workspace = true }
+rome_diagnostics = { workspace = true }
+rome_json_syntax = { workspace = true }
+rome_json_factory = { workspace = true }
+rome_js_unicode_table = { workspace = true }
+rome_parser = { workspace = true }
 tracing = { workspace = true }
 
 [dev-dependencies]
-tests_macros = { path = "../tests_macros" }
+tests_macros = { workspace = true }
 quickcheck = "1.0.3"
 quickcheck_macros = "1.0.0"
 insta = { workspace = true }

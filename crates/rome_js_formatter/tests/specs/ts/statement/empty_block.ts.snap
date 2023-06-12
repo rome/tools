@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: ts/statement/empty_block.ts
+info: ts/statement/empty_block.ts
 ---
 
 # Input
@@ -22,6 +21,7 @@ type X = {};
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 Semicolons: Always

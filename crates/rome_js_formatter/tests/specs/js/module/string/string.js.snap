@@ -8,14 +8,14 @@ info: js/module/string/string.js
 ```js
 import hey from "hey"
 import hey from "hey";
-import "x" with { type: "json" }
-import "foo" with { "type": "json" };
-import foo from "foo.json" with { type: "json" };
-import foo from "foo.json" with {
+import "x" assert { type: "json" }
+import "foo" assert { "type": "json" };
+import foo from "foo.json" assert { type: "json" };
+import foo from "foo.json" assert {
 
     type:
         "json" };
-import foo2 from "foo.json" with { "type": "json", type: "html", "type": "js" };
+import foo2 from "foo.json" assert { "type": "json", type: "html", "type": "js" };
 import a, * as b from "foo"
 
 const foo = {};
@@ -50,7 +50,7 @@ export * from "hey"
 
 export * as something_bad_will_happen from "something_bad_might_not_happen"
 
-export * as something_bad_will_happen from "something_bad_might_not_happen" with { "type": "json", "type2": "json3"}
+export * as something_bad_will_happen from "something_bad_might_not_happen" assert { "type": "json", "type2": "json3"}
 
 
 // this one should switch to use single quotes
@@ -64,7 +64,6 @@ export * as something_bad_will_happen from "something_bad_might_not_happen" with
 
 // you should remove the escape
 ("content \'\' ")
-
 ```
 
 
@@ -78,6 +77,7 @@ export * as something_bad_will_happen from "something_bad_might_not_happen" with
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 Semicolons: Always
@@ -86,11 +86,15 @@ Semicolons: Always
 ```js
 import hey from "hey";
 import hey from "hey";
-import "x" with { type: "json" };
-import "foo" with { "type": "json" };
-import foo from "foo.json" with { type: "json" };
-import foo from "foo.json" with { type: "json" };
-import foo2 from "foo.json" with { "type": "json", type: "html", "type": "js" };
+import "x" assert { type: "json" };
+import "foo" assert { "type": "json" };
+import foo from "foo.json" assert { type: "json" };
+import foo from "foo.json" assert { type: "json" };
+import foo2 from "foo.json" assert {
+	"type": "json",
+	type: "html",
+	"type": "js",
+};
 import a, * as b from "foo";
 
 const foo = {};
@@ -127,7 +131,7 @@ export * from "hey";
 
 export * as something_bad_will_happen from "something_bad_might_not_happen";
 
-export * as something_bad_will_happen from "something_bad_might_not_happen" with {
+export * as something_bad_will_happen from "something_bad_might_not_happen" assert {
 	"type": "json",
 	"type2": "json3",
 };
@@ -147,7 +151,7 @@ export * as something_bad_will_happen from "something_bad_might_not_happen" with
 
 # Lines exceeding max width of 80 characters
 ```
-   44: export * as something_bad_will_happen from "something_bad_might_not_happen" with {
+   48: export * as something_bad_will_happen from "something_bad_might_not_happen" assert {
 ```
 
 ## Output 2
@@ -156,6 +160,7 @@ export * as something_bad_will_happen from "something_bad_might_not_happen" with
 Indent style: Tab
 Line width: 80
 Quote style: Single Quotes
+JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 Semicolons: Always
@@ -164,11 +169,15 @@ Semicolons: Always
 ```js
 import hey from 'hey';
 import hey from 'hey';
-import 'x' with { type: 'json' };
-import 'foo' with { 'type': 'json' };
-import foo from 'foo.json' with { type: 'json' };
-import foo from 'foo.json' with { type: 'json' };
-import foo2 from 'foo.json' with { 'type': 'json', type: "html", "type": "js" };
+import 'x' assert { type: 'json' };
+import 'foo' assert { 'type': 'json' };
+import foo from 'foo.json' assert { type: 'json' };
+import foo from 'foo.json' assert { type: 'json' };
+import foo2 from 'foo.json' assert {
+	'type': 'json',
+	type: "html",
+	"type": "js",
+};
 import a, * as b from 'foo';
 
 const foo = {};
@@ -205,7 +214,7 @@ export * from 'hey';
 
 export * as something_bad_will_happen from 'something_bad_might_not_happen';
 
-export * as something_bad_will_happen from 'something_bad_might_not_happen' with {
+export * as something_bad_will_happen from 'something_bad_might_not_happen' assert {
 	'type': 'json',
 	'type2': 'json3',
 };
@@ -225,7 +234,7 @@ export * as something_bad_will_happen from 'something_bad_might_not_happen' with
 
 # Lines exceeding max width of 80 characters
 ```
-   44: export * as something_bad_will_happen from 'something_bad_might_not_happen' with {
+   48: export * as something_bad_will_happen from 'something_bad_might_not_happen' assert {
 ```
 
 ## Output 3
@@ -234,6 +243,7 @@ export * as something_bad_will_happen from 'something_bad_might_not_happen' with
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+JSX quote style: Double Quotes
 Quote properties: Preserve
 Trailing comma: All
 Semicolons: Always
@@ -242,11 +252,15 @@ Semicolons: Always
 ```js
 import hey from "hey";
 import hey from "hey";
-import "x" with { type: "json" };
-import "foo" with { "type": "json" };
-import foo from "foo.json" with { type: "json" };
-import foo from "foo.json" with { type: "json" };
-import foo2 from "foo.json" with { "type": "json", type: "html", "type": "js" };
+import "x" assert { type: "json" };
+import "foo" assert { "type": "json" };
+import foo from "foo.json" assert { type: "json" };
+import foo from "foo.json" assert { type: "json" };
+import foo2 from "foo.json" assert {
+	"type": "json",
+	type: "html",
+	"type": "js",
+};
 import a, * as b from "foo";
 
 const foo = {};
@@ -283,7 +297,7 @@ export * from "hey";
 
 export * as something_bad_will_happen from "something_bad_might_not_happen";
 
-export * as something_bad_will_happen from "something_bad_might_not_happen" with {
+export * as something_bad_will_happen from "something_bad_might_not_happen" assert {
 	"type": "json",
 	"type2": "json3",
 };
@@ -303,7 +317,7 @@ export * as something_bad_will_happen from "something_bad_might_not_happen" with
 
 # Lines exceeding max width of 80 characters
 ```
-   44: export * as something_bad_will_happen from "something_bad_might_not_happen" with {
+   48: export * as something_bad_will_happen from "something_bad_might_not_happen" assert {
 ```
 
 

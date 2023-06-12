@@ -76,6 +76,7 @@ impl WorkspaceSettings {
             let formatter = javascript.formatter;
             if let Some(formatter) = formatter {
                 self.languages.javascript.formatter.quote_style = formatter.quote_style;
+                self.languages.javascript.formatter.jsx_quote_style = formatter.jsx_quote_style;
                 self.languages.javascript.formatter.quote_properties = formatter.quote_properties;
                 self.languages.javascript.formatter.trailing_comma = formatter.trailing_comma;
                 self.languages.javascript.formatter.semicolons = formatter.semicolons;
@@ -241,6 +242,9 @@ pub struct FilesSettings {
 
     /// List of paths/files to matcher
     pub ignored_files: Matcher,
+
+    /// Files not recognized by Rome should not emit a diagnostic
+    pub ignore_unknown: bool,
 }
 
 /// Limit the size of files to 1.0 MiB by default
@@ -257,6 +261,7 @@ impl Default for FilesSettings {
                 require_literal_leading_dot: false,
                 require_literal_separator: false,
             }),
+            ignore_unknown: false,
         }
     }
 }
@@ -285,6 +290,7 @@ impl TryFrom<FilesConfiguration> for FilesSettings {
         Ok(Self {
             max_size: config.max_size.unwrap_or(DEFAULT_FILE_SIZE_LIMIT),
             ignored_files: matcher,
+            ignore_unknown: config.ignore_unknown.unwrap_or_default(),
         })
     }
 }

@@ -1,25 +1,24 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: js/module/import/bare_import.js
+info: js/module/import/bare_import.js
 ---
 
 # Input
 
 ```js
 import "very_long_import_very_long_import_very_long_import_very_long_import_very_long_import_very_long_import_very_long_import_";
-import "very_long_import_very_long_import_very_long_import_very_long_import_very_long_import_very_long" with { type :   "json"}
-import "short" with {
+import "very_long_import_very_long_import_very_long_import_very_long_import_very_long_import_very_long" assert { type :   "json"}
+import "short" assert {
 
         type :   "json"
 }
 
-import "very_long_import_very_long_import_very" with {
+import "very_long_import_very_long_import_very" assert {
     // something good is here
     "type": /****/ "json"
         }
 
-import "very_long_import_very_long_import_very" with {
+import "very_long_import_very_long_import_very" assert {
 		// something good is here
 		"type": /****/ "json",
 		"type2" /****/ : "json",
@@ -44,6 +43,7 @@ import "very_long_import_very_long_import_very" with {
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 Semicolons: Always
@@ -51,17 +51,17 @@ Semicolons: Always
 
 ```js
 import "very_long_import_very_long_import_very_long_import_very_long_import_very_long_import_very_long_import_very_long_import_";
-import "very_long_import_very_long_import_very_long_import_very_long_import_very_long_import_very_long" with {
+import "very_long_import_very_long_import_very_long_import_very_long_import_very_long_import_very_long" assert {
 	type: "json",
 };
-import "short" with { type: "json" };
+import "short" assert { type: "json" };
 
-import "very_long_import_very_long_import_very" with {
+import "very_long_import_very_long_import_very" assert {
 	// something good is here
 	"type": /****/ "json",
 };
 
-import "very_long_import_very_long_import_very" with {
+import "very_long_import_very_long_import_very" assert {
 	// something good is here
 	"type": /****/ "json",
 	"type2": /****/ "json",
@@ -76,7 +76,8 @@ import "very_long_import_very_long_import_very" with {
 # Lines exceeding max width of 80 characters
 ```
     1: import "very_long_import_very_long_import_very_long_import_very_long_import_very_long_import_very_long_import_very_long_import_";
-    2: import "very_long_import_very_long_import_very_long_import_very_long_import_very_long_import_very_long" with {
+    2: import "very_long_import_very_long_import_very_long_import_very_long_import_very_long_import_very_long" assert {
    20: 	"typetypetypetypetypetypetypetypetypetypetype": /****/ "typetypetypetypetypetypetypetypetypetypetypetypetypetype",
 ```
+
 

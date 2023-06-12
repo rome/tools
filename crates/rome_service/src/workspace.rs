@@ -151,11 +151,14 @@ impl FileFeaturesResult {
             .unwrap_or_default()
     }
 
-    pub fn is_ignored_for(&self, feature: &FeatureName) -> bool {
-        self.features_supported
-            .get(feature)
-            .map(|support_kind| matches!(support_kind, SupportKind::Ignored))
-            .unwrap_or_default()
+    /// Loops through all the features of the current file, and if a feature is [SupportKind::FileNotSupported],
+    /// it gets changed to [SupportKind::Ignored]
+    pub fn ignore_not_supported(&mut self) {
+        for support_kind in self.features_supported.values_mut() {
+            if matches!(support_kind, SupportKind::FileNotSupported) {
+                *support_kind = SupportKind::Ignored;
+            }
+        }
     }
 
     pub fn support_kind_for(&self, feature: &FeatureName) -> Option<&SupportKind> {

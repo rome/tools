@@ -60,7 +60,7 @@ fn generate_category(
             file_name.to_string(),
             (
                 quote! {
-                    mod #module_name;
+                   pub(crate) mod #module_name;
                 },
                 quote! {
                     self::#module_name::#group_name
@@ -137,7 +137,7 @@ fn generate_group(category: &'static str, group: &str) -> Result<()> {
             key,
             (
                 quote! {
-                    mod #module_name;
+                    pub(crate) mod #module_name;
                 },
                 quote! {
                     self::#module_name::#rule_type

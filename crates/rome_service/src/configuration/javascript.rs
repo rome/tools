@@ -67,6 +67,9 @@ pub struct JavascriptFormatter {
     /// The style for quotes. Defaults to double.
     #[bpaf(long("quote-style"), argument("double|single"), optional)]
     pub quote_style: Option<QuoteStyle>,
+    /// The style for JSX quotes. Defaults to double.
+    #[bpaf(long("jsx-quote-style"), argument("double|single"), optional)]
+    pub jsx_quote_style: Option<QuoteStyle>,
     /// When properties in objects are quoted. Defaults to asNeeded.
     #[bpaf(long("quote-properties"), argument("preserve|as-needed"), optional)]
     pub quote_properties: Option<QuoteProperties>,
@@ -81,6 +84,7 @@ pub struct JavascriptFormatter {
 impl JavascriptFormatter {
     pub(crate) const KNOWN_KEYS: &'static [&'static str] = &[
         "quoteStyle",
+        "jsxQuoteStyle",
         "quoteProperties",
         "trailingComma",
         "semicolons",
@@ -94,6 +98,9 @@ impl MergeWith<JavascriptFormatter> for JavascriptFormatter {
         }
         if let Some(quote_style) = other.quote_style {
             self.quote_style = Some(quote_style);
+        }
+        if let Some(jsx_quote_style) = other.jsx_quote_style {
+            self.jsx_quote_style = Some(jsx_quote_style);
         }
         if let Some(semicolons) = other.semicolons {
             self.semicolons = Some(semicolons);

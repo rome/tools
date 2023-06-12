@@ -45,6 +45,7 @@ use tracing::{debug, trace};
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct JsFormatterSettings {
     pub quote_style: Option<QuoteStyle>,
+    pub jsx_quote_style: Option<QuoteStyle>,
     pub quote_properties: Option<QuoteProperties>,
     pub trailing_comma: Option<TrailingComma>,
     pub semicolons: Option<Semicolons>,
@@ -79,6 +80,7 @@ impl Language for JsLanguage {
             .with_indent_style(global.indent_style.unwrap_or_default())
             .with_line_width(global.line_width.unwrap_or_default())
             .with_quote_style(language.quote_style.unwrap_or_default())
+            .with_jsx_quote_style(language.jsx_quote_style.unwrap_or_default())
             .with_quote_properties(language.quote_properties.unwrap_or_default())
             .with_trailing_comma(language.trailing_comma.unwrap_or_default())
             .with_semicolons(language.semicolons.unwrap_or_default())

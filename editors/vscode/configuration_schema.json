@@ -41,7 +41,7 @@
 			"anyOf": [{ "$ref": "#/definitions/OrganizeImports" }, { "type": "null" }]
 		},
 		"vcs": {
-			"description": "The configuration of the filesystem",
+			"description": "The configuration of the VCS integration",
 			"anyOf": [
 				{ "$ref": "#/definitions/VcsConfiguration" },
 				{ "type": "null" }
@@ -520,6 +520,10 @@
 					"description": "A list of Unix shell style patterns. Rome tools will ignore files/folders that will match these patterns.",
 					"anyOf": [{ "$ref": "#/definitions/StringSet" }, { "type": "null" }]
 				},
+				"ignoreUnknown": {
+					"description": "Tells Rome to not emit diagnostics when handling files that doesn't know",
+					"type": ["boolean", "null"]
+				},
 				"maxSize": {
 					"description": "The maximum allowed size for source code files in bytes. Files above this limit will be ignored for performance reason. Defaults to 1 MiB",
 					"default": null,
@@ -531,6 +535,7 @@
 			"additionalProperties": false
 		},
 		"FormatterConfiguration": {
+			"description": "Options applied to the formatter",
 			"type": "object",
 			"properties": {
 				"enabled": { "default": true, "type": ["boolean", "null"] },
@@ -566,6 +571,39 @@
 			},
 			"additionalProperties": false
 		},
+		"Hooks": {
+			"type": "object",
+			"required": ["name"],
+			"properties": {
+				"closureIndex": {
+					"description": "The \"position\" of the closure function, starting from zero.\n\n### Example",
+					"type": ["integer", "null"],
+					"format": "uint",
+					"minimum": 0.0
+				},
+				"dependenciesIndex": {
+					"description": "The \"position\" of the array of dependencies, starting from zero.",
+					"type": ["integer", "null"],
+					"format": "uint",
+					"minimum": 0.0
+				},
+				"name": { "description": "The name of the hook", "type": "string" }
+			},
+			"additionalProperties": false
+		},
+		"HooksOptions": {
+			"description": "Options for the rule `useExhaustiveDependencies` and `useHookAtTopLevel`",
+			"type": "object",
+			"required": ["hooks"],
+			"properties": {
+				"hooks": {
+					"description": "List of safe hooks",
+					"type": "array",
+					"items": { "$ref": "#/definitions/Hooks" }
+				}
+			},
+			"additionalProperties": false
+		},
 		"JavascriptConfiguration": {
 			"type": "object",
 			"properties": {
@@ -591,6 +629,11 @@
 		"JavascriptFormatter": {
 			"type": "object",
 			"properties": {
+				"jsxQuoteStyle": {
+					"description": "The style for JSX quotes. Defaults to double.",
+					"default": null,
+					"anyOf": [{ "$ref": "#/definitions/QuoteStyle" }, { "type": "null" }]
+				},
 				"quoteProperties": {
 					"description": "When properties in objects are quoted. Defaults to asNeeded.",
 					"default": null,
@@ -860,6 +903,15 @@
 				{ "description": "Space", "type": "string", "enum": ["space"] }
 			]
 		},
+		"PossibleOptions": {
+			"anyOf": [
+				{
+					"description": "Options for `useExhaustiveDependencies` and `useHookAtTopLevel` rule",
+					"allOf": [{ "$ref": "#/definitions/HooksOptions" }]
+				},
+				{ "description": "No options available", "type": "null" }
+			]
+		},
 		"QuoteProperties": { "type": "string", "enum": ["asNeeded", "preserve"] },
 		"QuoteStyle": { "type": "string", "enum": ["double", "single"] },
 		"RuleConfiguration": {
@@ -874,10 +926,15 @@
 		},
 		"RuleWithOptions": {
 			"type": "object",
-			"required": ["level", "options"],
+			"required": ["level"],
 			"properties": {
 				"level": { "$ref": "#/definitions/RulePlainConfiguration" },
-				"options": true
+				"options": {
+					"anyOf": [
+						{ "$ref": "#/definitions/PossibleOptions" },
+						{ "type": "null" }
+					]
+				}
 			},
 			"additionalProperties": false
 		},

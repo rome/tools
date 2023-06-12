@@ -31,3 +31,7 @@ export function Component4() {
 export default function Component5() {
     useEffect();
 };
+
+const Component6 = () => {
+    return useState();
+};

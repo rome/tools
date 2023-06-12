@@ -8,25 +8,24 @@ info: js/module/export/named_from_clause.js
 ```js
 export {a,
     b as c
-} from "fancy" with { type: "json"}
+} from "fancy" assert { type: "json"}
 
 
 export {
     lorem_lorem_lorem_lorem_lorem_lorem_lorem_lorem_lorem,
     lorem_lorem_lorem_lorem_lorem_ as ipsum_ipsum_ipsum_ipsum_ipsum_ipsum_
-} from "fancy" with { type: "json", "type2": "json", type23: "json", "type24": "json"}
+} from "fancy" assert { type: "json", "type2": "json", type23: "json", "type24": "json"}
 
 
 export { loooooooooooooooooooooooooooooooooooooooooooooooooong } from "loooooooooooooooooooooooooooooooooooooooooooooong"
 
 export { loooooooooooooooooooooooooooooooooooooooooooooooooong, } from "loooooooooooooooooooooooooooooooooooooooooooooong"
 
-export {
-// comment
+export { 
+// comment 
 loooooooooooooooooooooooooooooooooooooooooooooooooong } from "loooooooooooooooooooooooooooooooooooooooooooooong"
 
 export { a as b } from "loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong"
-
 ```
 
 
@@ -40,18 +39,19 @@ export { a as b } from "looooooooooooooooooooooooooooooooooooooooooooooooooooooo
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 Semicolons: Always
 -----
 
 ```js
-export { a, b as c } from "fancy" with { type: "json" };
+export { a, b as c } from "fancy" assert { type: "json" };
 
 export {
 	lorem_lorem_lorem_lorem_lorem_lorem_lorem_lorem_lorem,
 	lorem_lorem_lorem_lorem_lorem_ as ipsum_ipsum_ipsum_ipsum_ipsum_ipsum_,
-} from "fancy" with {
+} from "fancy" assert {
 	type: "json",
 	"type2": "json",
 	type23: "json",

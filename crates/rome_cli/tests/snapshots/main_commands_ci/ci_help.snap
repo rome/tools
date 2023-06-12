@@ -8,7 +8,7 @@ expression: content
 Command to use in CI environments. Run various checks of a set of files.
 
 Usage: [--formatter-enabled true|false] [--linter-enabled true|false] [--organize-imports-enabled
-true|false] <PATH>...
+true|false] [<PATH>]...
 
 Available positional items:
     <PATH>  Single file, single path or list of paths
@@ -17,6 +17,8 @@ Available options:
         --formatter-enabled <true|false>  Allow to enable or disable the formatter check.
         --linter-enabled <true|false>  Allow to enable or disable the linter check.
         --organize-imports-enabled <true|false>  Allow to enable or disable the organize imports.
+  The configuration that is contained inside the file `rome.json`
+  Set of properties to integrate Rome with a VCS software.
         --vcs-client-kind <git>  The kind of client.
         --vcs-enabled <true|false>  Whether Rome should integrate itself with the VCS client
         --vcs-use-ignore-file <true|false>  Whether Rome should use the VCS ignore file. When [true],
@@ -26,18 +28,28 @@ Available options:
                        configuration, it will attempt to use the current working directory. If no
                        current working directory can't be found, Rome won't use the VCS integration,
                        and a diagnostic will be emitted
+
+  The configuration of the filesystem
         --files-max-size <NUMBER>  The maximum allowed size for source code files in bytes. Files
                        above this limit will be ignored for performance reason. Defaults to 1 MiB
+        --files-ignore-unknown <true|false>  Tells Rome to not emit diagnostics when handling files
+                       that doesn't know
+
+  Options applied to the formatter
         --indent-style <tab|space>  The indent style.
         --indent-size <NUMBER>  The size of the indentation, 2 by default
         --line-width <NUMBER>  What's the max width of a line. Defaults to 80.
+
         --quote-style <double|single>  The style for quotes. Defaults to double.
+        --jsx-quote-style <double|single>  The style for JSX quotes. Defaults to double.
         --quote-properties <preserve|as-needed>  When properties in objects are quoted. Defaults to
                        asNeeded.
         --trailing-comma <all|es5|none>  Print trailing commas wherever possible in multi-line
                        comma-separated syntactic structures. Defaults to "all".
         --semicolons <always|as-needed>  Whether the formatter prints semicolons for all statements
                        or only in for statements where it is necessary because of ASI.
+
+  Global options applied to all commands
         --colors <off|force>  Set the formatting mode for markup: "off" prints everything as plain
                        text, "force" forces the formatting of markup using ANSI even if the console
                        output is determined to be incompatible
@@ -49,6 +61,7 @@ Available options:
         --skip-errors  Skip over files containing syntax errors instead of emitting an error
                        diagnostic.
         --json         Reports information using the JSON format
+
     -h, --help         Prints help information
 
 ```

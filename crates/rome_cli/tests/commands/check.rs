@@ -2273,3 +2273,66 @@ if (true) {
         result,
     ));
 }
+
+#[test]
+fn apply_bogus_argument() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let file_path = Path::new("fix.js");
+    fs.insert(
+        file_path.into(),
+        "function _13_1_3_fun(arguments) { }".as_bytes(),
+    );
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Args::from(&[
+            ("check"),
+            file_path.as_os_str().to_str().unwrap(),
+            ("--apply-unsafe"),
+        ]),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "apply_bogus_argument",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn ignores_unknown_file() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let file_path1 = Path::new("test.txt");
+    fs.insert(file_path1.into(), *b"content");
+
+    let file_path2 = Path::new("test.js");
+    fs.insert(file_path2.into(), *b"console.log('bar');\n");
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Args::from(&[
+            ("check"),
+            file_path1.as_os_str().to_str().unwrap(),
+            file_path2.as_os_str().to_str().unwrap(),
+            "--files-ignore-unknown=true",
+        ]),
+    );
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "ignores_unknown_file",
+        fs,
+        console,
+        result,
+    ));
+}

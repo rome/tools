@@ -333,14 +333,14 @@ fn parse_import_default_or_named_clause_rest(
 
             p.expect(T![from]);
             parse_module_source(p).or_add_diagnostic(p, expected_module_source);
-            parse_import_attributes(p).ok();
+            parse_import_assertion(p).ok();
 
             named_clause.complete(p, JS_IMPORT_NAMED_CLAUSE)
         }
         _ => {
             p.expect(T![from]);
             parse_module_source(p).or_add_diagnostic(p, expected_module_source);
-            parse_import_attributes(p).ok();
+            parse_import_assertion(p).ok();
 
             m.complete(p, JS_IMPORT_DEFAULT_CLAUSE)
         }
@@ -353,7 +353,7 @@ fn parse_import_default_or_named_clause_rest(
 fn parse_import_bare_clause(p: &mut JsParser) -> ParsedSyntax {
     parse_module_source(p).map(|module_source| {
         let m = module_source.precede(p);
-        parse_import_attributes(p).ok();
+        parse_import_assertion(p).ok();
         m.complete(p, JS_IMPORT_BARE_CLAUSE)
     })
 }
@@ -367,7 +367,7 @@ fn parse_import_namespace_clause_rest(p: &mut JsParser, m: Marker) -> CompletedM
     parse_binding(p).or_add_diagnostic(p, expected_binding);
     p.expect(T![from]);
     parse_module_source(p).or_add_diagnostic(p, expected_module_source);
-    parse_import_attributes(p).ok();
+    parse_import_assertion(p).ok();
 
     m.complete(p, JS_IMPORT_NAMESPACE_CLAUSE)
 }
@@ -383,7 +383,7 @@ fn parse_import_named_clause_rest(p: &mut JsParser, m: Marker) -> CompletedMarke
     parse_named_import(p).or_add_diagnostic(p, expected_named_import);
     p.expect(T![from]);
     parse_module_source(p).or_add_diagnostic(p, expected_module_source);
-    parse_import_attributes(p).ok();
+    parse_import_assertion(p).ok();
 
     m.complete(p, JS_IMPORT_NAMED_CLAUSE)
 }
@@ -530,6 +530,15 @@ fn parse_any_named_import_specifier(p: &mut JsParser) -> ParsedSyntax {
     }
 }
 
+// test import_assertion
+// import "x" assert { type: "json" }
+// import "foo" assert { "type": "json" };
+// import foo from "foo.json" assert { type: "json" };
+// import {test} from "foo.json" assert { for: "for" }
+// import foo_json from "foo.json" assert { type: "json", hasOwnProperty: "true" };
+// import "x" assert
+// { type: "json" }
+
 // test import_attribute
 // import "x" with { type: "json" }
 // import "foo" with { "type": "json" };
@@ -539,45 +548,70 @@ fn parse_any_named_import_specifier(p: &mut JsParser) -> ParsedSyntax {
 // import "x" with
 // { type: "json" }
 
+// test_err import_assertion_err
+// import "foo" assert { type, "json" };
+// import "bar" \u{61}ssert { type: "json" };
+// import { foo } assert { type: "json" };
+// import "lorem"
+// assert { type: "json" }
+// import foo2 from "foo.json" assert { "type": "json", type: "html", "type": "js" };
+// import "x" assert;
+// import ipsum from "ipsum.json" assert { type: "json", lazy: true, startAtLine: 1 };
+// import { a } from "a.json" assert
+
 // test_err import_attribute_err
 // import "foo" with { type, "json" };
-// import "bar" \u{61}ith { type: "json" };
 // import { foo } with { type: "json" };
 // import "lorem"
-// with { type: "json" }
+// assert { type: "json" }
 // import foo2 from "foo.json" with { "type": "json", type: "html", "type": "js" };
 // import "x" with;
 // import ipsum from "ipsum.json" with { type: "json", lazy: true, startAtLine: 1 };
 // import { a } from "a.json" with
-fn parse_import_attributes(p: &mut JsParser) -> ParsedSyntax {
-    if !p.at(T![with]) || p.has_preceding_line_break() {
+fn parse_import_assertion(p: &mut JsParser) -> ParsedSyntax {
+    if p.has_preceding_line_break() {
+        return Absent;
+    }
+    if !p.at(T![assert]) && !p.at(T![with]) {
         return Absent;
     }
 
     let m = p.start();
-    p.expect(T![with]);
-    p.expect(T!['{']);
+    match p.cur() {
+        T![assert] => {
+            p.expect(T![assert]);
+        }
+        T![with] => {
+            p.expect(T![with]);
+        }
+        _ => {
+            m.abandon(p);
+            return Absent;
+        }
+    };
 
-    ImportAttributeList::default().parse_list(p);
+    // bump assert or with
+    p.expect(T!['{']);
+    ImportAssertionList::default().parse_list(p);
 
     p.expect(T!['}']);
 
-    Present(m.complete(p, JS_IMPORT_ATTRIBUTE))
+    Present(m.complete(p, JS_IMPORT_ASSERTION))
 }
 
 #[derive(Default)]
-struct ImportAttributeList {
-    attribute_keys: HashMap<String, TextRange>,
+struct ImportAssertionList {
+    assertion_keys: HashMap<String, TextRange>,
 }
 
-impl ParseSeparatedList for ImportAttributeList {
+impl ParseSeparatedList for ImportAssertionList {
     type Kind = JsSyntaxKind;
     type Parser<'source> = JsParser<'source>;
 
-    const LIST_KIND: Self::Kind = JS_IMPORT_ATTRIBUTE_ENTRY_LIST;
+    const LIST_KIND: Self::Kind = JS_IMPORT_ASSERTION_ENTRY_LIST;
 
     fn parse_element(&mut self, p: &mut JsParser) -> ParsedSyntax {
-        parse_import_attribute_entry(p, &mut self.attribute_keys)
+        parse_import_assertion_entry(p, &mut self.assertion_keys)
     }
 
     fn is_at_list_end(&self, p: &mut JsParser) -> bool {
@@ -588,11 +622,11 @@ impl ParseSeparatedList for ImportAttributeList {
         parsed_element.or_recover(
             p,
             &ParseRecovery::new(
-                JS_BOGUS_IMPORT_ATTRIBUTE_ENTRY,
+                JS_BOGUS_IMPORT_ASSERTION_ENTRY,
                 STMT_RECOVERY_SET.union(token_set![T![,], T!['}']]),
             )
             .enable_recovery_on_line_break(),
-            |p, range| expected_node("import attribute entry", range).into_diagnostic(p),
+            |p, range| expected_node("import assertion entry", range).into_diagnostic(p),
         )
     }
 
@@ -605,9 +639,9 @@ impl ParseSeparatedList for ImportAttributeList {
     }
 }
 
-fn parse_import_attribute_entry(
+fn parse_import_assertion_entry(
     p: &mut JsParser,
-    seen_attribute_keys: &mut HashMap<String, TextRange>,
+    seen_assertion_keys: &mut HashMap<String, TextRange>,
 ) -> ParsedSyntax {
     let m = p.start();
     let key_range = p.cur_range();
@@ -641,7 +675,7 @@ fn parse_import_attribute_entry(
     let mut valid = true;
 
     if let Some(key) = key {
-        if let Some(first_use) = seen_attribute_keys.get(&key) {
+        if let Some(first_use) = seen_assertion_keys.get(&key) {
             p.error(duplicate_assertion_keys_error(
                 p,
                 &key,
@@ -650,14 +684,14 @@ fn parse_import_attribute_entry(
             ));
             valid = false;
         } else {
-            seen_attribute_keys.insert(key, key_range);
+            seen_assertion_keys.insert(key, key_range);
         }
     };
 
     p.expect(T![:]);
     p.expect(JS_STRING_LITERAL);
 
-    let mut entry = m.complete(p, JS_IMPORT_ATTRIBUTE_ENTRY);
+    let mut entry = m.complete(p, JS_IMPORT_ASSERTION_ENTRY);
 
     if !valid {
         entry.change_to_bogus(p);
@@ -1007,7 +1041,7 @@ where
 // export * from "a";
 // export * as c from "b";
 // export * as default from "b"
-// export * from "mod" with { type: "json" }
+// export * from "mod" assert { type: "json" }
 // export type * from "types";
 // export type * as types from "types";
 //
@@ -1034,7 +1068,7 @@ fn parse_export_from_clause(p: &mut JsParser) -> ParsedSyntax {
     parse_export_as_clause(p).ok();
     p.expect(T![from]);
     parse_module_source(p).or_add_diagnostic(p, expected_module_source);
-    parse_import_attributes(p).ok();
+    parse_import_assertion(p).ok();
     semi(p, TextRange::new(start, p.cur_range().end()));
 
     Present(m.complete(p, JS_EXPORT_FROM_CLAUSE))
@@ -1046,7 +1080,7 @@ fn parse_export_from_clause(p: &mut JsParser) -> ParsedSyntax {
 // export { as } from "mod";
 // export { default as "b" } from "mod";
 // export { "a" as b } from "mod";
-// export { a } from "mod" with { type: "json" }
+// export { a } from "mod" assert { type: "json" }
 // export { "a" } from "./mod";
 // export {
 //      "a"
@@ -1080,7 +1114,7 @@ fn parse_export_named_from_clause(p: &mut JsParser) -> ParsedSyntax {
     p.expect(T![from]);
 
     parse_module_source(p).or_add_diagnostic(p, expected_module_source);
-    parse_import_attributes(p).ok();
+    parse_import_assertion(p).ok();
 
     semi(p, TextRange::new(start, p.cur_range().start()));
 
