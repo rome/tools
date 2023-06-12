@@ -1,5 +1,5 @@
 [package]
-name = "rome-fuzz"
+name = "rome_fuzz"
 version = "0.0.0"
 authors = [
   "Addison Crump <research@addisoncrump.info>",
