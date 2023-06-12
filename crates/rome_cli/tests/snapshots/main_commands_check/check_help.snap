@@ -33,6 +33,8 @@ Available options:
   The configuration of the filesystem
         --files-max-size <NUMBER>  The maximum allowed size for source code files in bytes. Files
                         above this limit will be ignored for performance reason. Defaults to 1 MiB
+        --files-ignore-unknown <true|false>  Tells Rome to not emit diagnostics when handling files
+                        that doesn't know
 
   Options applied to the formatter
         --indent-style <tab|space>  The indent style.

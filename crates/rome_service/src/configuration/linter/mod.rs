@@ -8,9 +8,10 @@ use crate::settings::LinterSettings;
 use crate::{ConfigurationDiagnostic, MatchOptions, Matcher, WorkspaceError};
 use bpaf::Bpaf;
 use rome_diagnostics::Severity;
+use rome_js_analyze::options::{possible_options, PossibleOptions};
 pub use rules::*;
 #[cfg(feature = "schemars")]
-use schemars::{gen::SchemaGenerator, schema::Schema, JsonSchema};
+use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 use std::str::FromStr;
 
@@ -188,8 +189,8 @@ impl FromStr for RulePlainConfiguration {
 pub struct RuleWithOptions {
     pub level: RulePlainConfiguration,
     #[serde(skip_serializing_if = "Option::is_none")]
-    #[cfg_attr(feature = "schemars", schemars(schema_with = "schema_any"))]
-    pub options: Option<String>,
+    #[bpaf(external(possible_options), hide, optional)]
+    pub options: Option<PossibleOptions>,
 }
 
 impl FromStr for RuleWithOptions {
@@ -199,18 +200,5 @@ impl FromStr for RuleWithOptions {
             level: RulePlainConfiguration::default(),
             options: None,
         })
-    }
-}
-
-#[cfg(feature = "schemars")]
-fn schema_any(_gen: &mut SchemaGenerator) -> Schema {
-    Schema::Bool(true)
-}
-
-impl FromStr for Rules {
-    type Err = String;
-
-    fn from_str(_s: &str) -> Result<Self, Self::Err> {
-        Ok(Rules::default())
     }
 }

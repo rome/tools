@@ -19,6 +19,7 @@ mod assists;
 mod ast_utils;
 mod control_flow;
 pub mod globals;
+pub mod options;
 mod react;
 mod registry;
 mod semantic_analyzers;
@@ -97,7 +98,7 @@ where
         result
     }
 
-    let mut registry = RuleRegistry::builder(&filter, options, root);
+    let mut registry = RuleRegistry::builder(&filter, root);
     visit_registry(&mut registry);
 
     let (registry, mut services, diagnostics, visitors) = registry.build();
@@ -122,19 +123,12 @@ where
     services.insert_service(Arc::new(AriaRoles::default()));
     services.insert_service(Arc::new(AriaProperties::default()));
     services.insert_service(source_type);
-    let globals: Vec<_> = options
-        .configuration
-        .globals
-        .iter()
-        .map(|global| global.as_str())
-        .collect();
     (
         analyzer.run(AnalyzerContext {
             root: root.clone(),
             range: filter.range,
             services,
-            globals: globals.as_slice(),
-            file_path: options.file_path.as_path(),
+            options,
         }),
         diagnostics,
     )
@@ -159,7 +153,8 @@ where
 
 #[cfg(test)]
 mod tests {
-    use rome_analyze::{AnalyzerOptions, Never, RuleCategories, RuleFilter};
+    use rome_analyze::options::RuleOptions;
+    use rome_analyze::{AnalyzerOptions, Never, RuleCategories, RuleFilter, RuleKey};
     use rome_console::fmt::{Formatter, Termcolor};
     use rome_console::{markup, Markup};
     use rome_diagnostics::category;
@@ -169,6 +164,7 @@ mod tests {
     use rome_js_syntax::{JsFileSource, TextRange, TextSize};
     use std::slice;
 
+    use crate::semantic_analyzers::nursery::use_exhaustive_dependencies::{Hooks, HooksOptions};
     use crate::{analyze, AnalysisFilter, ControlFlow};
 
     #[ignore]
@@ -183,13 +179,28 @@ mod tests {
             String::from_utf8(buffer).unwrap()
         }
 
-        const SOURCE: &str = r#"a.b["c"];"#;
+        const SOURCE: &str = r#"function f() {
+        	if (true){
+        	useMyEffect(() => {}, []);
+
+        	}
+        }"#;
 
         let parsed = parse(SOURCE, JsFileSource::tsx());
 
         let mut error_ranges: Vec<TextRange> = Vec::new();
-        let options = AnalyzerOptions::default();
-        let rule_filter = RuleFilter::Rule("nursery", "useLiteralKeys");
+        let mut options = AnalyzerOptions::default();
+        let hook = Hooks {
+            name: "myEffect".to_string(),
+            closure_index: Some(0),
+            dependencies_index: Some(1),
+        };
+        let rule_filter = RuleFilter::Rule("nursery", "useHookAtTopLevel");
+        options.configuration.rules.push_rule(
+            RuleKey::new("nursery", "useHookAtTopLevel"),
+            RuleOptions::new(HooksOptions { hooks: vec![hook] }),
+        );
+
         analyze(
             &parsed.tree(),
             AnalysisFilter {

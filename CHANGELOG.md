@@ -3,7 +3,31 @@
 ## [Unreleased]
 
 ### CLI
+
+#### Other changes
+
+- Add a new option to ignore unknown files
+
+	```shell
+	rome format ./src --files-ignore-unknown=true
+	```
+	Doing so, Rome won't emit diagnostics for file that it doesn't know how to handle.
+
 ### Configuration
+
+#### Other changes
+
+- Add a new option to ignore unknown files:
+
+	```json
+	{
+		"files": {
+			"ignoreUnknown": true
+		}
+	}
+	```
+	Doing so, Rome won't emit diagnostics for file that it doesn't know how to handle.
+
 ### Editors
 ### Formatter
 
@@ -12,6 +36,56 @@
 #### Other changes
 
 - `noRedeclare`: allow redeclare of index signatures are in different type members [#4478](https://github.com/rome/tools/issues/4478)
+- The rules [`useExhaustiveDependencies`](https://docs.rome.tools/lint/rules/useexhaustivedependencies/) and [`useHookAtTopLevel`](https://docs.rome.tools/lint/rules/usehookattoplevel/) accept a different
+	shape of options
+
+Old configuration
+
+```json
+{
+	"linter": {
+		"rules": {
+			"nursery": {
+				"useExhaustiveDependencies": {
+					"level": "error",
+					"options": {
+						"hooks": [
+							["useMyEffect", 0, 1]
+						]
+					}
+				}
+			}
+		}
+	}
+}
+```
+
+New configuration
+
+```json
+{
+	"linter": {
+		"rules": {
+			"nursery": {
+				"useExhaustiveDependencies": {
+					"level": "error",
+					"options": {
+						"hooks": [
+							{
+								"name": "useMyEffect",
+								"closureIndex": 0,
+								"dependenciesIndex": 1
+							}
+						]
+					}
+				}
+			}
+		}
+	}
+}
+```
+
+
 
 ### Parser
 ### VSCode

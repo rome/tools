@@ -1652,9 +1652,7 @@ version = "0.0.0"
 dependencies = [
  "bitflags 2.2.1",
  "rome_console",
- "rome_deserialize",
  "rome_diagnostics",
- "rome_json_parser",
  "rome_rowan",
  "rustc-hash",
  "schemars",
@@ -1874,6 +1872,7 @@ dependencies = [
 name = "rome_js_analyze"
 version = "0.0.0"
 dependencies = [
+ "bpaf",
  "countme",
  "insta",
  "json_comments",
@@ -1892,10 +1891,13 @@ dependencies = [
  "rome_js_syntax",
  "rome_js_unicode_table",
  "rome_json_factory",
+ "rome_json_parser",
  "rome_json_syntax",
  "rome_rowan",
+ "rome_service",
  "rome_text_edit",
  "rustc-hash",
+ "schemars",
  "serde",
  "serde_json",
  "similar",
