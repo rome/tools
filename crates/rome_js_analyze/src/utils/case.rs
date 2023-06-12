@@ -1,5 +1,10 @@
-#[derive(Debug, Default, Copy, Clone, Eq, PartialEq)]
-pub(crate) enum Case {
+/// Represents the [Case] of a string.
+///
+/// Note that some cases are superset of others.
+/// For example, `Case::Camel` includes `Case::Lower`.
+/// See [Case::is_compatible_with] for more details.
+#[derive(Debug, Default, Copy, Clone, Eq, PartialEq, Hash)]
+pub enum Case {
     /// Unknown case
     #[default]
     Unknown,
@@ -22,9 +27,49 @@ pub(crate) enum Case {
 }
 
 impl Case {
-    /// Returns the case of `s` or `None` if the case is unknown.
-    pub(crate) fn identify(s: &str, strict: bool) -> Case {
-        let mut chars = s.chars();
+    /// Returns the [Case] of `value`.
+    ///
+    /// If `strict` is `true`, then two consecutive uppercase characters are not
+    /// allowed in camelCase and PascalCase.
+    /// For instance, `HTTPServer` is not considered in _PascalCase_ when `strict` is `true`.
+    ///
+    /// A figure is considered both uppercase and lowercase.
+    /// Thus, `V8_ENGINE` is in _CONSTANt_CASE_ and `V8Engine` is in _PascalCase_.
+    ///
+    /// ### Examples
+    ///
+    /// ```
+    /// use rome_js_analyze::utils::case::Case;
+    ///
+    /// assert_eq!(Case::identify("aHttpServer", /* no effect */ true), Case::Camel);
+    /// assert_eq!(Case::identify("aHTTPServer", true), Case::Unknown);
+    /// assert_eq!(Case::identify("aHTTPServer", false), Case::Camel);
+    /// assert_eq!(Case::identify("v8Engine", true), Case::Camel);
+    ///
+    /// assert_eq!(Case::identify("HTTP_SERVER", /* no effect */ true), Case::Constant);
+    /// assert_eq!(Case::identify("V8_ENGINE", /* no effect */ true), Case::Constant);
+    ///
+    /// assert_eq!(Case::identify("http-server", /* no effect */ true), Case::Kebab);
+    ///
+    /// assert_eq!(Case::identify("httpserver", /* no effect */ true), Case::Lower);
+    ///
+    /// assert_eq!(Case::identify("T", /* no effect */ true), Case::NumberableCapital);
+    /// assert_eq!(Case::identify("T1", /* no effect */ true), Case::NumberableCapital);
+    ///
+    /// assert_eq!(Case::identify("HttpServer", /* no effect */ true), Case::Pascal);
+    /// assert_eq!(Case::identify("HTTPServer", true), Case::Unknown);
+    /// assert_eq!(Case::identify("HTTPServer", false), Case::Pascal);
+    /// assert_eq!(Case::identify("V8Engine", true), Case::Pascal);
+    ///
+    /// assert_eq!(Case::identify("http_server", /* no effect */ true), Case::Snake);
+    ///
+    /// assert_eq!(Case::identify("HTTPSERVER", /* no effect */ true), Case::Upper);
+    ///
+    /// assert_eq!(Case::identify("", /* no effect */ true), Case::Unknown);
+    /// assert_eq!(Case::identify("_", /* no effect */ true), Case::Unknown);
+    /// ```
+    pub fn identify(value: &str, strict: bool) -> Case {
+        let mut chars = value.chars();
         let Some(first_char) = chars.next() else {
             return Case::Unknown;
         };
@@ -77,24 +122,48 @@ impl Case {
         result
     }
 
-    pub(crate) const fn to_str(self) -> &'static str {
-        match self {
-            Case::Unknown => "unknown case",
-            Case::Camel => "camelCase",
-            Case::Constant => "CONSTANT_CASE",
-            Case::Kebab => "kebab-case",
-            Case::Lower => "lowercase",
-            Case::NumberableCapital => "<Capital>[number]",
-            Case::Pascal => "PascalCase",
-            Case::Snake => "snake_case",
-            Case::Upper => "UPPERCASE",
-        }
-    }
-
-    /// Returns true if a name that respects `self` also respects `other`.
+    /// Returns `true` if a name that respects `self` also respects `other`.
     ///
-    /// For example, a name in _lowercase_ is also in _camelCase_.
-    pub(crate) fn is_compatible_with(self, other: Case) -> bool {
+    /// For example, a name in [Case::Lowercase] is also in [Case::Camel], [Case::Kebab] , and [Case::Snake].
+    /// Thus [Case::Lowercase] is compatible with [Case::Camel], [Case::Kebab] , and [Case::Snake].
+    ///
+    /// Any [Case] is compatible with `Case::Unknown` and with itself.
+    ///
+    /// ### Examples
+    ///
+    /// ```
+    /// use rome_js_analyze::utils::case::Case;
+    ///
+    /// assert!(Case::Lower.is_compatible_with(Case::Camel));
+    /// assert!(Case::Lower.is_compatible_with(Case::Kebab));
+    /// assert!(Case::Lower.is_compatible_with(Case::Lower));
+    /// assert!(Case::Lower.is_compatible_with(Case::Snake));
+    ///
+    /// assert!(Case::NumberableCapital.is_compatible_with(Case::Constant));
+    /// assert!(Case::NumberableCapital.is_compatible_with(Case::Pascal));
+    /// assert!(Case::NumberableCapital.is_compatible_with(Case::Upper));
+    ///
+    /// assert!(Case::Upper.is_compatible_with(Case::Constant));
+    ///
+    /// assert!(Case::Camel.is_compatible_with(Case::Unknown));
+    /// assert!(Case::Constant.is_compatible_with(Case::Unknown));
+    /// assert!(Case::Kebab.is_compatible_with(Case::Unknown));
+    /// assert!(Case::Lower.is_compatible_with(Case::Unknown));
+    /// assert!(Case::NumberableCapital.is_compatible_with(Case::Unknown));
+    /// assert!(Case::Pascal.is_compatible_with(Case::Unknown));
+    /// assert!(Case::Snake.is_compatible_with(Case::Unknown));
+    /// assert!(Case::Upper.is_compatible_with(Case::Unknown));
+    ///
+    /// assert!(Case::Camel.is_compatible_with(Case::Camel));
+    /// assert!(Case::Constant.is_compatible_with(Case::Constant));
+    /// assert!(Case::Kebab.is_compatible_with(Case::Kebab));
+    /// assert!(Case::Lower.is_compatible_with(Case::Lower));
+    /// assert!(Case::NumberableCapital.is_compatible_with(Case::NumberableCapital));
+    /// assert!(Case::Pascal.is_compatible_with(Case::Pascal));
+    /// assert!(Case::Upper.is_compatible_with(Case::Upper));
+    /// assert!(Case::Unknown.is_compatible_with(Case::Unknown));
+    /// ```
+    pub fn is_compatible_with(self, other: Case) -> bool {
         self == other
             || matches!(other, Case::Unknown)
             || matches!((self, other), |(
@@ -109,17 +178,45 @@ impl Case {
             ))
     }
 
-    pub(crate) fn convert(self, input: &str) -> String {
-        if input.is_empty() || matches!(self, Case::Unknown) {
-            return input.to_string();
+    /// Convert `value` to the `self` [Case].
+    ///
+    /// ### Examples
+    ///
+    /// ```
+    /// use rome_js_analyze::utils::case::Case;
+    ///
+    /// assert_eq!(Case::Camel.convert("Http_SERVER"), "httpServer");
+    /// assert_eq!(Case::Camel.convert("v8-Engine"), "v8Engine");
+    ///
+    /// assert_eq!(Case::Constant.convert("HttpServer"), "HTTP_SERVER");
+    /// assert_eq!(Case::Constant.convert("v8-Engine"), "V8_ENGINE");
+    ///
+    /// assert_eq!(Case::Kebab.convert("Http_SERVER"), "http-server");
+    /// assert_eq!(Case::Kebab.convert("v8Engine"), "v8-engine");
+    ///
+    /// assert_eq!(Case::Lower.convert("Http_SERVER"), "httpserver");
+    ///
+    /// assert_eq!(Case::NumberableCapital.convert("LONG"), "L");
+    ///
+    /// assert_eq!(Case::Pascal.convert("http_SERVER"), "HttpServer");
+    ///
+    /// assert_eq!(Case::Snake.convert("HttpServer"), "http_server");
+    ///
+    /// assert_eq!(Case::Upper.convert("Http_SERVER"), "HTTPSERVER");
+    ///
+    /// assert_eq!(Case::Unknown.convert("_"), "_");
+    /// ```
+    pub fn convert(self, value: &str) -> String {
+        if value.is_empty() || matches!(self, Case::Unknown) {
+            return value.to_string();
         }
         let mut word_separator = matches!(self, Case::Pascal);
-        let last_i = input.len() - 1;
-        let mut output = String::with_capacity(input.len());
+        let last_i = value.len() - 1;
+        let mut output = String::with_capacity(value.len());
         let mut first_alphanumeric_i = 0;
-        for ((i, current), next) in input
+        for ((i, current), next) in value
             .char_indices()
-            .zip(input.chars().skip(1).map(Some).chain(Some(None)))
+            .zip(value.chars().skip(1).map(Some).chain(Some(None)))
         {
             if (i == 0 || (i == last_i)) && (current == '_' || current == '$') {
                 output.push(current);
@@ -179,20 +276,54 @@ impl Case {
     }
 }
 
-#[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
-pub(crate) struct Decomposed<'a> {
-    pub(crate) prefix: &'a str,
-    pub(crate) main: &'a str,
-    pub(crate) suffix: &'a str,
+impl std::fmt::Display for Case {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let repr = match self {
+            Case::Unknown => "unknown case",
+            Case::Camel => "camelCase",
+            Case::Constant => "CONSTANT_CASE",
+            Case::Kebab => "kebab-case",
+            Case::Lower => "lowercase",
+            Case::NumberableCapital => "numberable capital case",
+            Case::Pascal => "PascalCase",
+            Case::Snake => "snake_case",
+            Case::Upper => "UPPERCASE",
+        };
+        write!(f, "{}", repr)
+    }
 }
 
-impl<'a> Decomposed<'a> {
-    pub(crate) fn from(s: &'a str) -> Self {
-        let main = s.trim_start_matches(|c: char| !c.is_alphanumeric());
-        let prefix = &s[..s.len() - main.len()];
+/// Represents a string that contains a non-alphanumeric prefix and suffix.
+/// The remaining characters are the main part of the string.
+///
+/// Any field may contain an empty strings.
+#[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
+pub struct Decomposed<'a> {
+    pub prefix: &'a str,
+    pub main: &'a str,
+    pub suffix: &'a str,
+}
+
+impl<'a> From<&'a str> for Decomposed<'a> {
+    /// Decompose `value` into a non-alphanumeric `prefix` and `suffix` and keep the remaining
+    /// characters in `main`.
+    ///
+    /// ### Examples
+    ///
+    /// ```
+    /// use rome_js_analyze::utils::case::Decomposed;
+    ///
+    /// assert_eq!(Decomposed::from("id"), Decomposed { prefix: "", main: "id", suffix: "" });
+    /// assert_eq!(Decomposed::from("__id__"), Decomposed { prefix: "__", main: "id", suffix: "__" });
+    /// assert_eq!(Decomposed::from("_@_id_$_"), Decomposed { prefix: "_@_", main: "id", suffix: "_$_" });
+    /// assert_eq!(Decomposed::from("____"), Decomposed { prefix: "____", main: "", suffix: "" });
+    /// ```
+    fn from(value: &'a str) -> Decomposed {
+        let main = value.trim_start_matches(|c: char| !c.is_alphanumeric());
+        let prefix = &value[..value.len() - main.len()];
         let main = main.trim_end_matches(|c: char| !c.is_alphanumeric());
-        let suffix = &s[prefix.len() + main.len()..];
-        Self {
+        let suffix = &value[prefix.len() + main.len()..];
+        Decomposed {
             prefix,
             main,
             suffix,
@@ -203,45 +334,6 @@ impl<'a> Decomposed<'a> {
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    #[test]
-    fn test_case_identify() {
-        assert_eq!(Case::identify("strictCamelCase", true), Case::Camel,);
-        assert_eq!(Case::identify("camelCASE", true), Case::Unknown);
-        assert_eq!(Case::identify("strictCamelCase", false), Case::Camel,);
-        assert_eq!(Case::identify("camelCASE", false), Case::Camel);
-
-        assert_eq!(Case::identify("CONSTANT_CASE", true), Case::Constant);
-        assert_eq!(Case::identify("CONSTANT_CASE", false), Case::Constant);
-
-        assert_eq!(Case::identify("kebab-case", true), Case::Kebab);
-        assert_eq!(Case::identify("kebab-case", false), Case::Kebab);
-
-        assert_eq!(Case::identify("lowercase", true), Case::Lower);
-        assert_eq!(Case::identify("lowercase", true), Case::Lower);
-
-        assert_eq!(Case::identify("T", true), Case::NumberableCapital);
-        assert_eq!(Case::identify("T", false), Case::NumberableCapital);
-        assert_eq!(Case::identify("T1", true), Case::NumberableCapital);
-        assert_eq!(Case::identify("T1", false), Case::NumberableCapital);
-
-        assert_eq!(Case::identify("V8Engine", true), Case::Pascal);
-        assert_eq!(Case::identify("V8Engine", false), Case::Pascal);
-        assert_eq!(Case::identify("StrictPascalCase", true), Case::Pascal);
-        assert_eq!(Case::identify("StrictPascalCase", false), Case::Pascal);
-        assert_eq!(Case::identify("PascalCASE", true), Case::Unknown);
-        assert_eq!(Case::identify("PascalCASE", false), Case::Pascal);
-
-        assert_eq!(Case::identify("snake_case", true), Case::Snake);
-        assert_eq!(Case::identify("snake_case", false), Case::Snake);
-
-        assert_eq!(Case::identify("UPPERCASE", true), Case::Upper);
-        assert_eq!(Case::identify("UPPERCASE", false), Case::Upper);
-
-        assert_eq!(Case::identify("unknown_Case", false), Case::Unknown);
-        assert_eq!(Case::identify("unknown-Case", false), Case::Unknown);
-        assert_eq!(Case::identify("symbol@", false), Case::Unknown);
-    }
 
     #[test]
     fn test_case_convert() {

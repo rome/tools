@@ -3,9 +3,9 @@
 use crate::{
     AnyJsArrayAssignmentPatternElement, AnyJsAssignmentPattern, AnyJsSwitchClause,
     JsForVariableDeclaration, JsStatementList, JsSyntaxToken as SyntaxToken, JsVariableDeclaration,
-    JsVariableDeclarator, TsModuleDeclaration, T,
+    TsModuleDeclaration, T,
 };
-use rome_rowan::{declare_node_union, AstNode, SyntaxResult};
+use rome_rowan::{declare_node_union, SyntaxResult};
 
 impl AnyJsSwitchClause {
     pub fn clause_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -118,14 +118,6 @@ impl AnyJsVariableDeclaration {
             AnyJsVariableDeclaration::JsForVariableDeclaration(decl) => decl.variable_kind(),
             AnyJsVariableDeclaration::JsVariableDeclaration(decl) => decl.variable_kind(),
         }
-    }
-}
-
-impl JsVariableDeclarator {
-    pub fn declaration(&self) -> Option<AnyJsVariableDeclaration> {
-        self.syntax()
-            .ancestors()
-            .find_map(AnyJsVariableDeclaration::cast)
     }
 }
 

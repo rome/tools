@@ -1,10 +1,12 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 96
+assertion_line: 100
 expression: invalidTypeAlias.ts
 ---
 # Input
 ```js
+export type camelCase = {}
+
 export type CONSTANT_CASE = {}
 
 export type snake_case = {}
@@ -22,14 +24,14 @@ type _Unknown_Style = {}
 ```
 invalidTypeAlias.ts:1:13 lint/nursery/useNamingConvention ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This type alias name should be in PascalCase or camelCase.
+  ! This type alias name should be in PascalCase.
   
-  > 1 │ export type CONSTANT_CASE = {}
-      │             ^^^^^^^^^^^^^
+  > 1 │ export type camelCase = {}
+      │             ^^^^^^^^^
     2 │ 
-    3 │ export type snake_case = {}
+    3 │ export type CONSTANT_CASE = {}
   
-  i The name is currently in CONSTANT_CASE.
+  i The name is currently in camelCase.
   
 
 ```
@@ -37,16 +39,16 @@ invalidTypeAlias.ts:1:13 lint/nursery/useNamingConvention ━━━━━━━�
 ```
 invalidTypeAlias.ts:3:13 lint/nursery/useNamingConvention ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This type alias name should be in PascalCase or camelCase.
+  ! This type alias name should be in PascalCase.
   
-    1 │ export type CONSTANT_CASE = {}
+    1 │ export type camelCase = {}
     2 │ 
-  > 3 │ export type snake_case = {}
-      │             ^^^^^^^^^^
+  > 3 │ export type CONSTANT_CASE = {}
+      │             ^^^^^^^^^^^^^
     4 │ 
-    5 │ export type Unknown_Style = {}
+    5 │ export type snake_case = {}
   
-  i The name is currently in snake_case.
+  i The name is currently in CONSTANT_CASE.
   
 
 ```
@@ -54,40 +56,33 @@ invalidTypeAlias.ts:3:13 lint/nursery/useNamingConvention ━━━━━━━�
 ```
 invalidTypeAlias.ts:5:13 lint/nursery/useNamingConvention ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This type alias name should be in PascalCase or camelCase.
+  ! This type alias name should be in PascalCase.
   
-    3 │ export type snake_case = {}
+    3 │ export type CONSTANT_CASE = {}
     4 │ 
-  > 5 │ export type Unknown_Style = {}
+  > 5 │ export type snake_case = {}
+      │             ^^^^^^^^^^
+    6 │ 
+    7 │ export type Unknown_Style = {}
+  
+  i The name is currently in snake_case.
+  
+
+```
+
+```
+invalidTypeAlias.ts:7:13 lint/nursery/useNamingConvention ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This type alias name should be in PascalCase.
+  
+    5 │ export type snake_case = {}
+    6 │ 
+  > 7 │ export type Unknown_Style = {}
       │             ^^^^^^^^^^^^^
-    6 │ 
-    7 │ type _CONSTANT_CASE = {}
-  
-
-```
-
-```
-invalidTypeAlias.ts:7:6 lint/nursery/useNamingConvention  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! This type alias name should be in PascalCase or camelCase.
-  
-    5 │ export type Unknown_Style = {}
-    6 │ 
-  > 7 │ type _CONSTANT_CASE = {}
-      │      ^^^^^^^^^^^^^^
     8 │ 
-    9 │ type _snake_case = {}
+    9 │ type _CONSTANT_CASE = {}
   
-  i The name is currently in CONSTANT_CASE.
-  
-  i Safe fix: Rename this symbol in PascalCase.
-  
-     5  5 │   export type Unknown_Style = {}
-     6  6 │   
-     7    │ - type·_CONSTANT_CASE·=·{}
-        7 │ + type·_ConstantCase·=·{}
-     8  8 │   
-     9  9 │   type _snake_case = {}
+  i The name is currently in unknown case.
   
 
 ```
@@ -95,25 +90,25 @@ invalidTypeAlias.ts:7:6 lint/nursery/useNamingConvention  FIXABLE  ━━━━�
 ```
 invalidTypeAlias.ts:9:6 lint/nursery/useNamingConvention  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This type alias name should be in PascalCase or camelCase.
+  ! This type alias name should be in PascalCase.
   
-     7 │ type _CONSTANT_CASE = {}
+     7 │ export type Unknown_Style = {}
      8 │ 
-   > 9 │ type _snake_case = {}
-       │      ^^^^^^^^^^^
+   > 9 │ type _CONSTANT_CASE = {}
+       │      ^^^^^^^^^^^^^^
     10 │ 
-    11 │ type _Unknown_Style = {}
+    11 │ type _snake_case = {}
   
-  i The name is currently in snake_case.
+  i The name is currently in CONSTANT_CASE.
   
   i Safe fix: Rename this symbol in PascalCase.
   
-     7  7 │   type _CONSTANT_CASE = {}
+     7  7 │   export type Unknown_Style = {}
      8  8 │   
-     9    │ - type·_snake_case·=·{}
-        9 │ + type·_SnakeCase·=·{}
+     9    │ - type·_CONSTANT_CASE·=·{}
+        9 │ + type·_ConstantCase·=·{}
     10 10 │   
-    11 11 │   type _Unknown_Style = {}
+    11 11 │   type _snake_case = {}
   
 
 ```
@@ -121,19 +116,47 @@ invalidTypeAlias.ts:9:6 lint/nursery/useNamingConvention  FIXABLE  ━━━━�
 ```
 invalidTypeAlias.ts:11:6 lint/nursery/useNamingConvention  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This type alias name should be in PascalCase or camelCase.
+  ! This type alias name should be in PascalCase.
   
-     9 │ type _snake_case = {}
+     9 │ type _CONSTANT_CASE = {}
     10 │ 
-  > 11 │ type _Unknown_Style = {}
-       │      ^^^^^^^^^^^^^^
+  > 11 │ type _snake_case = {}
+       │      ^^^^^^^^^^^
+    12 │ 
+    13 │ type _Unknown_Style = {}
+  
+  i The name is currently in snake_case.
   
   i Safe fix: Rename this symbol in PascalCase.
   
-     9  9 │   type _snake_case = {}
+     9  9 │   type _CONSTANT_CASE = {}
     10 10 │   
-    11    │ - type·_Unknown_Style·=·{}
-       11 │ + type·_UnknownStyle·=·{}
+    11    │ - type·_snake_case·=·{}
+       11 │ + type·_SnakeCase·=·{}
+    12 12 │   
+    13 13 │   type _Unknown_Style = {}
+  
+
+```
+
+```
+invalidTypeAlias.ts:13:6 lint/nursery/useNamingConvention  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This type alias name should be in PascalCase.
+  
+    11 │ type _snake_case = {}
+    12 │ 
+  > 13 │ type _Unknown_Style = {}
+       │      ^^^^^^^^^^^^^^
+  
+  i The name is currently in unknown case.
+  
+  i Safe fix: Rename this symbol in PascalCase.
+  
+    11 11 │   type _snake_case = {}
+    12 12 │   
+    13    │ - type·_Unknown_Style·=·{}
+       13 │ + type·_UnknownStyle·=·{}
   
 
 ```

@@ -16,6 +16,4 @@ export default {
     "custom-property": 0,
 
     "@": 0,
-
-    A_CONSTANT: 0,
 }

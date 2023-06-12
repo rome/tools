@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 96
+assertion_line: 100
 expression: invalidNamespace.ts
 ---
 # Input
@@ -83,6 +83,8 @@ invalidNamespace.ts:7:18 lint/nursery/useNamingConvention ━━━━━━━�
       │                  ^^^^^^^^^^^^^
     8 │ 
     9 │ namespace _XXX {}
+  
+  i The name is currently in unknown case.
   
 
 ```
@@ -174,6 +176,8 @@ invalidNamespace.ts:15:11 lint/nursery/useNamingConvention  FIXABLE  ━━━�
     14 │ 
   > 15 │ namespace _Unknown_Style {}
        │           ^^^^^^^^^^^^^^
+  
+  i The name is currently in unknown case.
   
   i Safe fix: Rename this symbol in camelCase.
   

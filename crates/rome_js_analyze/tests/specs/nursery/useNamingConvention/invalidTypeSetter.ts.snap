@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 96
+assertion_line: 100
 expression: invalidTypeSetter.ts
 ---
 # Input
@@ -30,7 +30,7 @@ invalidTypeSetter.ts:2:9 lint/nursery/useNamingConvention ━━━━━━━�
     3 │ 
     4 │     set PROPERTY(x: unknown )
   
-  i The name is currently in <Capital>[number].
+  i The name is currently in numberable capital case.
   
 
 ```
@@ -96,6 +96,8 @@ invalidTypeSetter.ts:10:9 lint/nursery/useNamingConvention ━━━━━━━
   > 10 │     set Unknown_Style(x: unknown )
        │         ^^^^^^^^^^^^^
     11 │ }
+  
+  i The name is currently in unknown case.
   
 
 ```

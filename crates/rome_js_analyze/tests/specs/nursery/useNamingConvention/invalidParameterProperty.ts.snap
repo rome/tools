@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 96
+assertion_line: 100
 expression: invalidParameterProperty.ts
 ---
 # Input
@@ -62,6 +62,8 @@ invalidParameterProperty.ts:7:16 lint/nursery/useNamingConvention ━━━━�
       │                ^^^^^^^^^^^^^
     8 │     ) {}
     9 │ }
+  
+  i The name is currently in unknown case.
   
 
 ```

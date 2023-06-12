@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 96
+assertion_line: 100
 expression: invalidObjectProperty.js
 ---
 # Input
@@ -22,7 +22,7 @@ export default {
 ```
 invalidObjectProperty.js:2:5 lint/nursery/useNamingConvention ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This object property name should be in camelCase or CONSTANT_CASE.
+  ! This object property name should be in camelCase.
   
     1 │ export default {
   > 2 │     Initialized: 0,
@@ -38,7 +38,7 @@ invalidObjectProperty.js:2:5 lint/nursery/useNamingConvention ━━━━━━
 ```
 invalidObjectProperty.js:4:5 lint/nursery/useNamingConvention ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This object property name should be in camelCase or CONSTANT_CASE.
+  ! This object property name should be in camelCase.
   
     2 │     Initialized: 0,
     3 │ 
@@ -55,7 +55,7 @@ invalidObjectProperty.js:4:5 lint/nursery/useNamingConvention ━━━━━━
 ```
 invalidObjectProperty.js:6:5 lint/nursery/useNamingConvention ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This object property name should be in camelCase or CONSTANT_CASE.
+  ! This object property name should be in camelCase.
   
     4 │     SpecialProperty: 0,
     5 │ 
@@ -72,7 +72,7 @@ invalidObjectProperty.js:6:5 lint/nursery/useNamingConvention ━━━━━━
 ```
 invalidObjectProperty.js:8:5 lint/nursery/useNamingConvention ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This object property name should be in camelCase or CONSTANT_CASE.
+  ! This object property name should be in camelCase.
   
      6 │     special_property: 0,
      7 │ 
@@ -81,19 +81,23 @@ invalidObjectProperty.js:8:5 lint/nursery/useNamingConvention ━━━━━━
      9 │ 
     10 │     Unknown_Init_Style: 0,
   
+  i The name is currently in unknown case.
+  
 
 ```
 
 ```
 invalidObjectProperty.js:10:5 lint/nursery/useNamingConvention ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This object property name should be in camelCase or CONSTANT_CASE.
+  ! This object property name should be in camelCase.
   
      8 │     Unknown_Style: 0,
      9 │ 
   > 10 │     Unknown_Init_Style: 0,
        │     ^^^^^^^^^^^^^^^^^^
     11 │ }
+  
+  i The name is currently in unknown case.
   
 
 ```

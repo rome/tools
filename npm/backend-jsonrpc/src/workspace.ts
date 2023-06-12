@@ -906,8 +906,17 @@ export interface HooksOptions {
 	 */
 	hooks: Hooks[];
 }
+/**
+ * Rule's options.
+ */
 export interface NamingConventionOptions {
+	/**
+	 * Allowed [Case] for _TypeScript_ `enum` member names.
+	 */
 	enumMemberCase: EnumMemberCase;
+	/**
+	 * If `false`, then consecutive uppercase are allowed in [Case::camelCase] and [Case::PascalCase]. This does not affect other [Case].
+	 */
 	strictCase: boolean;
 }
 export interface Hooks {
@@ -926,6 +935,9 @@ export interface Hooks {
 	 */
 	name: string;
 }
+/**
+ * Supported cases for TypeScript `enum` member names.
+ */
 export type EnumMemberCase = "PascalCase" | "CONSTANT_CASE" | "camelCase";
 export interface OpenFileParams {
 	content: string;

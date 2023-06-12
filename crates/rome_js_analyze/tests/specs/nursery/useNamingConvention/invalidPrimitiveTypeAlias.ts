@@ -1,5 +1,3 @@
-export type camelCase = {}
-
 export type CONSTANT_CASE = {}
 
 export type snake_case = {}

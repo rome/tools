@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 96
+assertion_line: 100
 expression: validTypeAlias.ts
 ---
 # Input
@@ -10,10 +10,6 @@ export type X = {}
 export type PascalCase = {}
 
 export type _PascalCase = {}
-
-export type camelCase = {}
-
-export type _camelCase = {}
 
 export type _ = {}
 

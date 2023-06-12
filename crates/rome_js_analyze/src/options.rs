@@ -92,7 +92,7 @@ impl VisitNode<JsonLanguage> for PossibleOptions {
                     PossibleOptions::NamingConvention(options) => *options,
                     _ => NamingConventionOptions::default(),
                 };
-                self.map_to_object(&val, &name, &mut options, diagnostics)?;
+                options.visit_map(key, value, diagnostics)?;
                 *self = PossibleOptions::NamingConvention(options);
             }
             _ => (),

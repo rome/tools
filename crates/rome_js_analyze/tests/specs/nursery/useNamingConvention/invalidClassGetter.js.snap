@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 96
+assertion_line: 100
 expression: invalidClassGetter.js
 ---
 # Input
@@ -40,7 +40,7 @@ invalidClassGetter.js:2:9 lint/nursery/useNamingConvention ━━━━━━━
     3 │ 
     4 │     get PROPERTY() {}
   
-  i The name is currently in <Capital>[number].
+  i The name is currently in numberable capital case.
   
 
 ```
@@ -108,6 +108,8 @@ invalidClassGetter.js:10:9 lint/nursery/useNamingConvention ━━━━━━�
     11 │ 
     12 │     get #X() {}
   
+  i The name is currently in unknown case.
+  
 
 ```
 
@@ -123,7 +125,7 @@ invalidClassGetter.js:12:9 lint/nursery/useNamingConvention ━━━━━━�
     13 │ 
     14 │     get #PROPERTY() {}
   
-  i The name is currently in <Capital>[number].
+  i The name is currently in numberable capital case.
   
 
 ```
@@ -189,6 +191,8 @@ invalidClassGetter.js:20:9 lint/nursery/useNamingConvention ━━━━━━�
   > 20 │     get #Unknown_Style() {}
        │         ^^^^^^^^^^^^^^
     21 │ }
+  
+  i The name is currently in unknown case.
   
 
 ```

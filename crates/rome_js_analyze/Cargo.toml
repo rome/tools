@@ -28,7 +28,7 @@ lazy_static = { workspace = true }
 natord = "1.0.9"
 bpaf.workspace = true
 schemars = { workspace = true, optional = true }
-smallvec = { version = "1.8.0", features = ["union", "const_new"] }
+smallvec = { workspace = true }
 
 [dev-dependencies]
 tests_macros = { workspace = true }

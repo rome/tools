@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 96
+assertion_line: 100
 expression: invalidFunctionParameter.js
 ---
 # Input
@@ -17,7 +17,7 @@ invalidFunctionParameter.js:1:12 lint/nursery/useNamingConvention  FIXABLE  ━�
   > 1 │ function f(A, SpecialParameter, _snake_case, CONSTANT_CASE) {}
       │            ^
   
-  i The name is currently in <Capital>[number].
+  i The name is currently in numberable capital case.
   
   i Safe fix: Rename this symbol in camelCase.
   

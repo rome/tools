@@ -506,8 +506,20 @@
 			}
 		},
 		"EnumMemberCase": {
-			"type": "string",
-			"enum": ["PascalCase", "CONSTANT_CASE", "camelCase"]
+			"description": "Supported cases for TypeScript `enum` member names.",
+			"oneOf": [
+				{
+					"description": "PascalCase",
+					"type": "string",
+					"enum": ["PascalCase"]
+				},
+				{
+					"description": "CONSTANT_CASE",
+					"type": "string",
+					"enum": ["CONSTANT_CASE"]
+				},
+				{ "description": "camelCase", "type": "string", "enum": ["camelCase"] }
+			]
 		},
 		"FilesConfiguration": {
 			"description": "The configuration of the filesystem",
@@ -702,10 +714,17 @@
 			"additionalProperties": false
 		},
 		"NamingConventionOptions": {
+			"description": "Rule's options.",
 			"type": "object",
 			"properties": {
-				"enumMemberCase": { "$ref": "#/definitions/EnumMemberCase" },
-				"strictCase": { "type": "boolean" }
+				"enumMemberCase": {
+					"description": "Allowed [Case] for _TypeScript_ `enum` member names.",
+					"allOf": [{ "$ref": "#/definitions/EnumMemberCase" }]
+				},
+				"strictCase": {
+					"description": "If `false`, then consecutive uppercase are allowed in [Case::camelCase] and [Case::PascalCase]. This does not affect other [Case].",
+					"type": "boolean"
+				}
 			},
 			"additionalProperties": false
 		},

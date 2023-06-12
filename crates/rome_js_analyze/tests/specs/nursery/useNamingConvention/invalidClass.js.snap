@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 96
+assertion_line: 100
 expression: invalidClass.js
 ---
 # Input
@@ -117,6 +117,8 @@ invalidClass.js:9:7 lint/nursery/useNamingConvention  FIXABLE  ━━━━━�
     8 │ 
   > 9 │ class Unknown_Style {}
       │       ^^^^^^^^^^^^^
+  
+  i The name is currently in unknown case.
   
   i Safe fix: Rename this symbol in PascalCase.
   

@@ -14,6 +14,4 @@ export default {
     get "custom-property"() {},
 
     get "@"() {},
-
-    get READONLY_PROPERTY() {},
 }

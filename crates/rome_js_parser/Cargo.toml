@@ -22,7 +22,7 @@ drop_bomb = "0.1.5"
 bitflags.workspace = true
 indexmap = { workspace = true }
 cfg-if = "1.0.0"
-smallvec = { version = "1.8.0", features = ["union", "const_new"] }
+smallvec = { workspace = true }
 tracing = { workspace = true }
 
 [dev-dependencies]

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 96
+assertion_line: 100
 expression: invalidImportNamespace.js
 ---
 # Input
@@ -28,7 +28,7 @@ invalidImportNamespace.js:1:13 lint/nursery/useNamingConvention  FIXABLE  ━━
     2 │ 
     3 │ import * as PascalCase from ""
   
-  i The name is currently in <Capital>[number].
+  i The name is currently in numberable capital case.
   
   i Safe fix: Rename this symbol in camelCase.
   
@@ -128,6 +128,8 @@ invalidImportNamespace.js:9:13 lint/nursery/useNamingConvention  FIXABLE  ━━
    > 9 │ import * as Unknown_Style from ""
        │             ^^^^^^^^^^^^^
     10 │ 
+  
+  i The name is currently in unknown case.
   
   i Safe fix: Rename this symbol in camelCase.
   

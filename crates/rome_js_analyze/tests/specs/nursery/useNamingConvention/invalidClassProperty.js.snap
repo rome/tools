@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 96
+assertion_line: 100
 expression: invalidClassProperty.js
 ---
 # Input
@@ -48,7 +48,7 @@ invalidClassProperty.js:2:5 lint/nursery/useNamingConvention ━━━━━━�
     3 │ 
     4 │     #X
   
-  i The name is currently in <Capital>[number].
+  i The name is currently in numberable capital case.
   
 
 ```
@@ -65,7 +65,7 @@ invalidClassProperty.js:4:5 lint/nursery/useNamingConvention ━━━━━━�
     5 │ 
     6 │     Initialized = 0
   
-  i The name is currently in <Capital>[number].
+  i The name is currently in numberable capital case.
   
 
 ```
@@ -218,6 +218,8 @@ invalidClassProperty.js:22:5 lint/nursery/useNamingConvention ━━━━━━
     23 │ 
     24 │     #Unknown_Style
   
+  i The name is currently in unknown case.
+  
 
 ```
 
@@ -232,6 +234,8 @@ invalidClassProperty.js:24:5 lint/nursery/useNamingConvention ━━━━━━
        │     ^^^^^^^^^^^^^^
     25 │ 
     26 │     Unknown_Init_Style = 0
+  
+  i The name is currently in unknown case.
   
 
 ```
@@ -248,6 +252,8 @@ invalidClassProperty.js:26:5 lint/nursery/useNamingConvention ━━━━━━
     27 │ 
     28 │     #Unknown_Init_Style = 0
   
+  i The name is currently in unknown case.
+  
 
 ```
 
@@ -261,6 +267,8 @@ invalidClassProperty.js:28:5 lint/nursery/useNamingConvention ━━━━━━
   > 28 │     #Unknown_Init_Style = 0
        │     ^^^^^^^^^^^^^^^^^^^
     29 │ }
+  
+  i The name is currently in unknown case.
   
 
 ```

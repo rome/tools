@@ -1,37 +1,8 @@
 use crate::{
     AnyJsMethodModifier, AnyJsPropertyModifier, AnyTsIndexSignatureModifier,
     AnyTsMethodSignatureModifier, AnyTsPropertyParameterModifier, AnyTsPropertySignatureModifier,
-    JsMethodModifierList, JsPropertyModifierList, JsSyntaxKind, TsAccessibilityModifier,
-    TsMethodSignatureModifierList, TsPropertySignatureModifierList,
+    JsSyntaxKind, TsAccessibilityModifier,
 };
-
-impl JsPropertyModifierList {
-    pub fn has_static_modifier(&self) -> bool {
-        self.into_iter()
-            .any(|modifier| modifier.as_js_static_modifier().is_some())
-    }
-}
-
-impl TsPropertySignatureModifierList {
-    pub fn has_static_modifier(&self) -> bool {
-        self.into_iter()
-            .any(|modifier| modifier.as_js_static_modifier().is_some())
-    }
-}
-
-impl JsMethodModifierList {
-    pub fn has_static_modifier(&self) -> bool {
-        self.into_iter()
-            .any(|modifier| modifier.as_js_static_modifier().is_some())
-    }
-}
-
-impl TsMethodSignatureModifierList {
-    pub fn has_static_modifier(&self) -> bool {
-        self.into_iter()
-            .any(|modifier| modifier.as_js_static_modifier().is_some())
-    }
-}
 
 /// Helpful data structure to make the order modifiers predictable inside the formatter
 #[derive(Debug, Ord, PartialOrd, Eq, PartialEq)]

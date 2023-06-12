@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 96
+assertion_line: 100
 expression: invalidClassStaticGetter.js
 ---
 # Input
@@ -68,6 +68,8 @@ invalidClassStaticGetter.js:6:16 lint/nursery/useNamingConvention ━━━━�
     7 │ 
     8 │     static get #X() {}
   
+  i The name is currently in unknown case.
+  
 
 ```
 
@@ -115,6 +117,8 @@ invalidClassStaticGetter.js:14:16 lint/nursery/useNamingConvention ━━━━�
   > 14 │     static get #Unknown_Style() {}
        │                ^^^^^^^^^^^^^^
     15 │ }
+  
+  i The name is currently in unknown case.
   
 
 ```

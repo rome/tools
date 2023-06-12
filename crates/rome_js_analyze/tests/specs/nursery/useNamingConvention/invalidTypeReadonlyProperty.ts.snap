@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 96
+assertion_line: 100
 expression: invalidTypeReadonlyProperty.ts
 ---
 # Input
@@ -81,6 +81,8 @@ invalidTypeReadonlyProperty.ts:8:14 lint/nursery/useNamingConvention ━━━�
      9 │ 
     10 │     readonly Unknown_Init_Style: unknown
   
+  i The name is currently in unknown case.
+  
 
 ```
 
@@ -94,6 +96,8 @@ invalidTypeReadonlyProperty.ts:10:14 lint/nursery/useNamingConvention ━━━�
   > 10 │     readonly Unknown_Init_Style: unknown
        │              ^^^^^^^^^^^^^^^^^^
     11 │ }
+  
+  i The name is currently in unknown case.
   
 
 ```

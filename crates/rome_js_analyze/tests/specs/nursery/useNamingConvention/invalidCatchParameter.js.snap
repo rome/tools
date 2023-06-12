@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 96
+assertion_line: 100
 expression: invalidCatchParameter.js
 ---
 # Input
@@ -26,7 +26,7 @@ invalidCatchParameter.js:1:14 lint/nursery/useNamingConvention  FIXABLE  ━━�
     2 │ 
     3 │ try {} catch(SpecificError) {}
   
-  i The name is currently in <Capital>[number].
+  i The name is currently in numberable capital case.
   
   i Safe fix: Rename this symbol in camelCase.
   
