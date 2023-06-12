@@ -32,6 +32,8 @@
 ### Formatter
 ### Linter
 
+- Fix a crash in the `NoParameterAssign` rule that occurred when there was a bogus binding. [#4323](https://github.com/rome/tools/issues/4323)
+
 #### Other changes
 
 - The rules [`useExhaustiveDependencies`](https://docs.rome.tools/lint/rules/useexhaustivedependencies/) and [`useHookAtTopLevel`](https://docs.rome.tools/lint/rules/usehookattoplevel/) accept a different
