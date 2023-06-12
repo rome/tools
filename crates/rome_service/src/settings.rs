@@ -76,6 +76,7 @@ impl WorkspaceSettings {
             let formatter = javascript.formatter;
             if let Some(formatter) = formatter {
                 self.languages.javascript.formatter.quote_style = formatter.quote_style;
+                self.languages.javascript.formatter.jsx_quote_style = formatter.jsx_quote_style;
                 self.languages.javascript.formatter.quote_properties = formatter.quote_properties;
                 self.languages.javascript.formatter.trailing_comma = formatter.trailing_comma;
                 self.languages.javascript.formatter.semicolons = formatter.semicolons;

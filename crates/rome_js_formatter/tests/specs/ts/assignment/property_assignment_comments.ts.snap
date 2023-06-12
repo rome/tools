@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: ts/assignment/property_assignment_comments.ts
+info: ts/assignment/property_assignment_comments.ts
 ---
 
 # Input
@@ -54,6 +53,7 @@ class Test {
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 Semicolons: Always

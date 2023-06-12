@@ -31,7 +31,11 @@
 ### Editors
 ### Formatter
 
+- Added a new option called `--jsx-quote-style` to the formatter. This option allows you to choose between single and double quotes for JSX attributes. [#4486](https://github.com/rome/tools/issues/4486)
+
 ### Linter
+
+- Fix a crash in the `NoParameterAssign` rule that occurred when there was a bogus binding. [#4323](https://github.com/rome/tools/issues/4323)
 
 #### Other changes
 

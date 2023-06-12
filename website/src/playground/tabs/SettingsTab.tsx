@@ -39,6 +39,7 @@ export default function SettingsTab({
 			indentWidth,
 			indentStyle,
 			quoteStyle,
+			jsxQuoteStyle,
 			quoteProperties,
 			trailingComma,
 			semicolons,
@@ -63,6 +64,10 @@ export default function SettingsTab({
 	const setQuoteStyle = createPlaygroundSettingsSetter(
 		setPlaygroundState,
 		"quoteStyle",
+	);
+	const setJsxQuoteStyle = createPlaygroundSettingsSetter(
+		setPlaygroundState,
+		"jsxQuoteStyle",
 	);
 	const setQuoteProperties = createPlaygroundSettingsSetter(
 		setPlaygroundState,
@@ -220,6 +225,8 @@ export default function SettingsTab({
 				setIndentWidth={setIndentWidth}
 				quoteStyle={quoteStyle}
 				setQuoteStyle={setQuoteStyle}
+				jsxQuoteStyle={jsxQuoteStyle}
+				setJsxQuoteStyle={setJsxQuoteStyle}
 				quoteProperties={quoteProperties}
 				setQuoteProperties={setQuoteProperties}
 				trailingComma={trailingComma}
@@ -503,6 +510,8 @@ function FormatterSettings({
 	setIndentWidth,
 	quoteStyle,
 	setQuoteStyle,
+	jsxQuoteStyle,
+	setJsxQuoteStyle,
 	quoteProperties,
 	setQuoteProperties,
 	trailingComma,
@@ -518,6 +527,8 @@ function FormatterSettings({
 	setIndentWidth: (value: number) => void;
 	quoteStyle: QuoteStyle;
 	setQuoteStyle: (value: QuoteStyle) => void;
+	jsxQuoteStyle: QuoteStyle;
+	setJsxQuoteStyle: (value: QuoteStyle) => void;
 	quoteProperties: QuoteProperties;
 	setQuoteProperties: (value: QuoteProperties) => void;
 	trailingComma: TrailingComma;
@@ -566,6 +577,19 @@ function FormatterSettings({
 						name="quoteStyle"
 						value={quoteStyle ?? ""}
 						onChange={(e) => setQuoteStyle(e.target.value as QuoteStyle)}
+					>
+						<option value={QuoteStyle.Double}>Double</option>
+						<option value={QuoteStyle.Single}>Single</option>
+					</select>
+				</div>
+
+				<div className="field-row">
+					<label htmlFor="jsxQuoteStyle">Jsx Quote Style</label>
+					<select
+						id="jsxQuoteStyle"
+						name="jsxQuoteStyle"
+						value={jsxQuoteStyle ?? ""}
+						onChange={(e) => setJsxQuoteStyle(e.target.value as QuoteStyle)}
 					>
 						<option value={QuoteStyle.Double}>Double</option>
 						<option value={QuoteStyle.Single}>Single</option>

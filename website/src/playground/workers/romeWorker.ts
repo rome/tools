@@ -65,6 +65,7 @@ self.addEventListener("message", async (e) => {
 				indentStyle,
 				indentWidth,
 				quoteStyle,
+				jsxQuoteStyle,
 				quoteProperties,
 				lintRules,
 				enabledLinting,
@@ -93,6 +94,8 @@ self.addEventListener("message", async (e) => {
 				javascript: {
 					formatter: {
 						quoteStyle: quoteStyle === QuoteStyle.Double ? "double" : "single",
+						jsxQuoteStyle:
+							jsxQuoteStyle === QuoteStyle.Double ? "double" : "single",
 						quoteProperties:
 							quoteProperties === QuoteProperties.Preserve
 								? "preserve"

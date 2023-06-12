@@ -75,6 +75,11 @@ impl VisitNode<JsonLanguage> for JavascriptFormatter {
         let (name, value) = self.get_key_and_value(key, value, diagnostics)?;
         let name_text = name.text();
         match name_text {
+            "jsxQuoteStyle" => {
+                let mut jsx_quote_style = QuoteStyle::default();
+                self.map_to_known_string(&value, name_text, &mut jsx_quote_style, diagnostics)?;
+                self.jsx_quote_style = Some(jsx_quote_style);
+            }
             "quoteStyle" => {
                 let mut quote_style = QuoteStyle::default();
                 self.map_to_known_string(&value, name_text, &mut quote_style, diagnostics)?;

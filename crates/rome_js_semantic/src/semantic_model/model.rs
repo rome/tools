@@ -373,7 +373,7 @@ impl SemanticModel {
         };
 
         Some(AllCallsIter {
-            references: identifier.all_reads(self),
+            references: identifier.as_js_identifier_binding()?.all_reads(self),
         })
     }
 }

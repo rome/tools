@@ -309,6 +309,9 @@ function initState(
 			quoteStyle:
 				(searchParams.get("quoteStyle") as QuoteStyle) ??
 				defaultPlaygroundState.settings.quoteStyle,
+			jsxQuoteStyle:
+				(searchParams.get("jsxQuoteStyle") as QuoteStyle) ??
+				defaultPlaygroundState.settings.jsxQuoteStyle,
 			quoteProperties:
 				(searchParams.get("quoteProperties") as QuoteProperties) ??
 				defaultPlaygroundState.settings.quoteProperties,

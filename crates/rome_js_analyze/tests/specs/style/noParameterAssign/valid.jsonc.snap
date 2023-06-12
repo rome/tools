@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 91
 expression: valid.jsonc
 ---
 # Input
@@ -296,6 +295,11 @@ function foo(a) { a.b.c ||= d; }
 # Input
 ```js
 function foo(a) { a[b] ??= c; }
+```
+
+# Input
+```js
+function foo(arguments) { }
 ```
 
 

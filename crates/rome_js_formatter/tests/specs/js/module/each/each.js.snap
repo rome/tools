@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: js/module/each/each.js
+info: js/module/each/each.js
 ---
 
 # Input
@@ -87,6 +86,7 @@ ${2} | ${1} | ${3}`
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 Semicolons: Always
@@ -172,4 +172,5 @@ ${2} | ${1} | ${3}`;
    54: 	${1} | ${[{ start: 5, end: 15 }]}                        | ${[1, 2, 3, 4, 5, 6, 7, 8]}
    55: 	${1} | ${[{ start: 5, end: 15 }]}                        | ${["test", "string", "for", "prettier"]}
 ```
+
 

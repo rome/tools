@@ -144,6 +144,9 @@ pub struct JsFormatOptions {
     /// The style for quotes. Defaults to double.
     quote_style: QuoteStyle,
 
+    /// The style for JSX quotes. Defaults to double.
+    jsx_quote_style: QuoteStyle,
+
     /// When properties in objects are quoted. Defaults to as-needed.
     quote_properties: QuoteProperties,
 
@@ -164,6 +167,7 @@ impl JsFormatOptions {
             indent_style: IndentStyle::default(),
             line_width: LineWidth::default(),
             quote_style: QuoteStyle::default(),
+            jsx_quote_style: QuoteStyle::default(),
             quote_properties: QuoteProperties::default(),
             trailing_comma: TrailingComma::default(),
             semicolons: Semicolons::default(),
@@ -185,6 +189,11 @@ impl JsFormatOptions {
         self
     }
 
+    pub fn with_jsx_quote_style(mut self, jsx_quote_style: QuoteStyle) -> Self {
+        self.jsx_quote_style = jsx_quote_style;
+        self
+    }
+
     pub fn with_quote_properties(mut self, quote_properties: QuoteProperties) -> Self {
         self.quote_properties = quote_properties;
         self
@@ -202,6 +211,10 @@ impl JsFormatOptions {
 
     pub fn quote_style(&self) -> QuoteStyle {
         self.quote_style
+    }
+
+    pub fn jsx_quote_style(&self) -> QuoteStyle {
+        self.jsx_quote_style
     }
 
     pub fn quote_properties(&self) -> QuoteProperties {
@@ -247,6 +260,7 @@ impl fmt::Display for JsFormatOptions {
         writeln!(f, "Indent style: {}", self.indent_style)?;
         writeln!(f, "Line width: {}", self.line_width.value())?;
         writeln!(f, "Quote style: {}", self.quote_style)?;
+        writeln!(f, "JSX quote style: {}", self.jsx_quote_style)?;
         writeln!(f, "Quote properties: {}", self.quote_properties)?;
         writeln!(f, "Trailing comma: {}", self.trailing_comma)?;
         writeln!(f, "Semicolons: {}", self.semicolons)
