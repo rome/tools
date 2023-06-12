@@ -1,14 +1,11 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
 assertion_line: 100
-expression: validEnumMemberConstantCase.ts
+expression: validClassNonStrictPascalCase.js
 ---
 # Input
 ```js
-enum Status {
-    OPEN,
-    CLOSE,
-}
+class HTTPServer {}
 ```
 
 

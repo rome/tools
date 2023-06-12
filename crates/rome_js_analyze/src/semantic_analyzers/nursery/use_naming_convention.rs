@@ -312,14 +312,28 @@ enum Invalid {
     Suffix,
 }
 
-#[derive(Debug, Copy, Clone, Serialize, Deserialize, Bpaf)]
+#[derive(Debug, Copy, Clone, Eq, PartialEq, Serialize, Deserialize, Bpaf)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct NamingConventionOptions {
     #[bpaf(hide)]
+    #[serde(default = "default_strict_case", skip_serializing_if = "is_default_strict_case")]
     pub strict_case: bool,
     #[bpaf(hide)]
+    #[serde(default, skip_serializing_if = "is_default")]
     pub enum_member_case: EnumMemberCase,
+}
+
+const fn default_strict_case() -> bool {
+    true
+}
+
+const fn is_default_strict_case(strict_case: &bool) -> bool {
+    *strict_case == default_strict_case()
+}
+
+fn is_default<T: Default + Eq>(value: &T) -> bool {
+    value == &T::default()
 }
 
 impl NamingConventionOptions {
@@ -329,7 +343,7 @@ impl NamingConventionOptions {
 impl Default for NamingConventionOptions {
     fn default() -> Self {
         Self {
-            strict_case: true,
+            strict_case: default_strict_case(),
             enum_member_case: Default::default(),
         }
     }
@@ -376,7 +390,7 @@ impl VisitNode<JsonLanguage> for NamingConventionOptions {
     }
 }
 
-#[derive(Debug, Default, Copy, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Copy, Clone, Eq, PartialEq, Serialize, Deserialize)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 pub enum EnumMemberCase {
     #[serde(rename = "PascalCase")]
@@ -761,5 +775,84 @@ impl Named {
             Named::TypeAlias => SmallVec::from_slice(&[Case::Pascal, Case::Camel]),
             Named::TypeParameter => SmallVec::from_slice(&[Case::NumberableCapital]),
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use rome_analyze::options::RuleOptions;
+    use rome_analyze::{AnalyzerOptions, Never, RuleFilter, RuleKey};
+    use rome_console::fmt::{Formatter, Termcolor};
+    use rome_console::{markup, Markup};
+    use rome_diagnostics::termcolor::NoColor;
+    use rome_diagnostics::{Diagnostic, DiagnosticExt, PrintDiagnostic, Severity};
+    use rome_js_parser::parse;
+    use rome_js_syntax::{JsFileSource, TextRange};
+    use std::slice;
+
+    use super::*;
+    use crate::{analyze, AnalysisFilter, ControlFlow};
+
+    #[ignore]
+    #[test]
+    fn quick_test() {
+        fn markup_to_string(markup: Markup) -> String {
+            let mut buffer = Vec::new();
+            let mut write = Termcolor(NoColor::new(&mut buffer));
+            let mut fmt = Formatter::new(&mut write);
+            fmt.write_markup(markup).unwrap();
+
+            String::from_utf8(buffer).unwrap()
+        }
+
+        const SOURCE: &str = r#"
+        	enum Status {
+                OPEN,
+                CLOSE,
+            }
+        "#;
+
+        let parsed = parse(SOURCE, JsFileSource::ts());
+
+        let mut error_ranges: Vec<TextRange> = Vec::new();
+        let mut options = AnalyzerOptions::default();
+        let rule_filter = RuleFilter::Rule("nursery", "useNamingConvention");
+        options.configuration.rules.push_rule(
+            RuleKey::new("nursery", "useNamingConvention"),
+            RuleOptions::new(NamingConventionOptions {
+                strict_case: true,
+                enum_member_case: EnumMemberCase::Constant,
+            }),
+        );
+
+        analyze(
+            &parsed.tree(),
+            AnalysisFilter {
+                enabled_rules: Some(slice::from_ref(&rule_filter)),
+                ..AnalysisFilter::default()
+            },
+            &options,
+            JsFileSource::tsx(),
+            |signal| {
+                if let Some(diag) = signal.diagnostic() {
+                    error_ranges.push(diag.location().span.unwrap());
+                    let error = diag
+                        .with_severity(Severity::Warning)
+                        .with_file_path("ahahah")
+                        .with_file_source_code(SOURCE);
+                    let text = markup_to_string(markup! {
+                        {PrintDiagnostic::verbose(&error)}
+                    });
+                    eprintln!("{text}");
+                }
+
+                for action in signal.actions() {
+                    let new_code = action.mutation.commit();
+                    eprintln!("{new_code}");
+                }
+
+                ControlFlow::<Never>::Continue(())
+            },
+        );
     }
 }

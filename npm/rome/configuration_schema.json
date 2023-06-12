@@ -703,7 +703,6 @@
 		},
 		"NamingConventionOptions": {
 			"type": "object",
-			"required": ["enumMemberCase", "strictCase"],
 			"properties": {
 				"enumMemberCase": { "$ref": "#/definitions/EnumMemberCase" },
 				"strictCase": { "type": "boolean" }

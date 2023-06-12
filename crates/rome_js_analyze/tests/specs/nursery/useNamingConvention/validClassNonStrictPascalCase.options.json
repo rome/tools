@@ -6,8 +6,7 @@
 				"useNamingConvention": {
 					"level": "error",
 					"options": {
-						"enumMemberCase": "camelCase",
-						"strictCase": true
+						"strictCase": false
 					}
 				}
 			}
