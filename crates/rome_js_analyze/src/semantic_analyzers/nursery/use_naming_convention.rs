@@ -94,7 +94,7 @@ declare_rule! {
     pub(crate)  UseNamingConvention {
         version: "next",
         name: "useNamingConvention",
-        recommended: true,
+        recommended: false,
     }
 }
 
@@ -126,24 +126,21 @@ impl Rule for UseNamingConvention {
         } else if !matches!(suffix, "" | "_" | "__" | "$") {
             Invalid::Suffix
         } else {
-            if let Some(actual_case) = actual_case {
-                if allowed_cases
+            if main.is_empty()
+                || allowed_cases
                     .iter()
-                    .any(|&expected_style| actual_case.is_compatible(expected_style))
-                {
-                    // Valid case
-                    return None;
-                }
-            } else if main.is_empty() {
+                    .any(|&expected_style| actual_case.is_compatible_with(expected_style))
+            {
+                // Valid case
                 return None;
             }
             Invalid::Case(actual_case)
         };
-        Some(State { element, issue })
+        Some(State { element, invalid: issue })
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
-        let State { element, issue } = state;
+        let State { element, invalid: issue } = state;
         let node = ctx.query();
         let name_token = node.name_token().ok()?;
         let name = name_token.text_trimmed();
@@ -163,11 +160,9 @@ impl Rule for UseNamingConvention {
                         "This "<Emphasis>{element.to_str()}</Emphasis>" name should be in "<Emphasis>{allowed_case_names}</Emphasis>"."
                     },
                 );
-                if let Some(actual_case) = actual_case {
-                    diagnostic = diagnostic.note(markup! {
-                        "The name is currently in "<Emphasis>{actual_case.to_str()}</Emphasis>"."
-                    })
-                }
+                diagnostic = diagnostic.note(markup! {
+                    "The name is currently in "<Emphasis>{actual_case.to_str()}</Emphasis>"."
+                });
                 diagnostic
             }
             Invalid::Prefix => {
@@ -202,7 +197,7 @@ impl Rule for UseNamingConvention {
         let node = ctx.query();
         let model = ctx.model();
         let mut mutation = ctx.root().begin();
-        let State { element, issue } = state;
+        let State { element, invalid } = state;
         let renamable = match node {
             AnyName::JsIdentifierBinding(binding) => {
                 if binding.is_exported(model) {
@@ -254,7 +249,7 @@ impl Rule for UseNamingConvention {
             };
             let message;
             let mut new_name;
-            match issue {
+            match invalid {
                 Invalid::Case(_) => {
                     let preferred_case = element.naming_convention(ctx.options())[0];
                     new_name = preferred_case.convert(main);
@@ -302,12 +297,12 @@ impl AnyName {
 #[derive(Debug)]
 pub(crate) struct State {
     element: Named,
-    issue: Invalid,
+    invalid: Invalid,
 }
 
 #[derive(Debug)]
 enum Invalid {
-    Case(Option<Case>),
+    Case(Case),
     Prefix,
     Suffix,
 }
@@ -317,7 +312,10 @@ enum Invalid {
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct NamingConventionOptions {
     #[bpaf(hide)]
-    #[serde(default = "default_strict_case", skip_serializing_if = "is_default_strict_case")]
+    #[serde(
+        default = "default_strict_case",
+        skip_serializing_if = "is_default_strict_case"
+    )]
     pub strict_case: bool,
     #[bpaf(hide)]
     #[serde(default, skip_serializing_if = "is_default")]
@@ -384,7 +382,7 @@ impl VisitNode<JsonLanguage> for NamingConventionOptions {
                 self.map_to_known_string(&value, name_text, &mut enum_member_case, diagnostics)?;
                 self.enum_member_case = enum_member_case;
             }
-            _ => return None,
+            _ => (),
         }
         Some(())
     }
@@ -409,14 +407,8 @@ impl EnumMemberCase {
 impl FromStr for EnumMemberCase {
     type Err = &'static str;
 
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        match s {
-            "camelCase" | "CamelCase" => Ok(Self::Camel),
-            "CONSTANT_CASE" | "ConstantCase" => Ok(Self::Constant),
-            "PascalCase" => Ok(Self::Pascal),
-            // TODO: replace this error with a diagnostic
-            _ => Err("Value not supported for EnumMemberCase"),
-        }
+    fn from_str(_s: &str) -> Result<Self, Self::Err> {
+        Ok(EnumMemberCase::default())
     }
 }
 
@@ -427,12 +419,12 @@ impl VisitNode<JsonLanguage> for EnumMemberCase {
         diagnostics: &mut Vec<DeserializationDiagnostic>,
     ) -> Option<()> {
         let node = with_only_known_variants(node, Self::KNOWN_VALUES, diagnostics)?;
-        *self = match node.inner_string_text().ok()?.text() {
-            "camelCase" => Self::Camel,
-            "CONSTANT_CASE" => Self::Constant,
-            "PascalCase" => Self::Pascal,
-            _ => return None,
-        };
+        match node.inner_string_text().ok()?.text() {
+            "camelCase" => *self = Self::Camel,
+            "CONSTANT_CASE" => *self = Self::Constant,
+            "PascalCase" => *self = Self::Pascal,
+            _ => (),
+        }
         Some(())
     }
 }
@@ -775,84 +767,5 @@ impl Named {
             Named::TypeAlias => SmallVec::from_slice(&[Case::Pascal, Case::Camel]),
             Named::TypeParameter => SmallVec::from_slice(&[Case::NumberableCapital]),
         }
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use rome_analyze::options::RuleOptions;
-    use rome_analyze::{AnalyzerOptions, Never, RuleFilter, RuleKey};
-    use rome_console::fmt::{Formatter, Termcolor};
-    use rome_console::{markup, Markup};
-    use rome_diagnostics::termcolor::NoColor;
-    use rome_diagnostics::{Diagnostic, DiagnosticExt, PrintDiagnostic, Severity};
-    use rome_js_parser::parse;
-    use rome_js_syntax::{JsFileSource, TextRange};
-    use std::slice;
-
-    use super::*;
-    use crate::{analyze, AnalysisFilter, ControlFlow};
-
-    #[ignore]
-    #[test]
-    fn quick_test() {
-        fn markup_to_string(markup: Markup) -> String {
-            let mut buffer = Vec::new();
-            let mut write = Termcolor(NoColor::new(&mut buffer));
-            let mut fmt = Formatter::new(&mut write);
-            fmt.write_markup(markup).unwrap();
-
-            String::from_utf8(buffer).unwrap()
-        }
-
-        const SOURCE: &str = r#"
-        	enum Status {
-                OPEN,
-                CLOSE,
-            }
-        "#;
-
-        let parsed = parse(SOURCE, JsFileSource::ts());
-
-        let mut error_ranges: Vec<TextRange> = Vec::new();
-        let mut options = AnalyzerOptions::default();
-        let rule_filter = RuleFilter::Rule("nursery", "useNamingConvention");
-        options.configuration.rules.push_rule(
-            RuleKey::new("nursery", "useNamingConvention"),
-            RuleOptions::new(NamingConventionOptions {
-                strict_case: true,
-                enum_member_case: EnumMemberCase::Constant,
-            }),
-        );
-
-        analyze(
-            &parsed.tree(),
-            AnalysisFilter {
-                enabled_rules: Some(slice::from_ref(&rule_filter)),
-                ..AnalysisFilter::default()
-            },
-            &options,
-            JsFileSource::tsx(),
-            |signal| {
-                if let Some(diag) = signal.diagnostic() {
-                    error_ranges.push(diag.location().span.unwrap());
-                    let error = diag
-                        .with_severity(Severity::Warning)
-                        .with_file_path("ahahah")
-                        .with_file_source_code(SOURCE);
-                    let text = markup_to_string(markup! {
-                        {PrintDiagnostic::verbose(&error)}
-                    });
-                    eprintln!("{text}");
-                }
-
-                for action in signal.actions() {
-                    let new_code = action.mutation.commit();
-                    eprintln!("{new_code}");
-                }
-
-                ControlFlow::<Never>::Continue(())
-            },
-        );
     }
 }

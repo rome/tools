@@ -1,5 +1,8 @@
-#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+#[derive(Debug, Default, Copy, Clone, Eq, PartialEq)]
 pub(crate) enum Case {
+    /// Unknown case
+    #[default]
+    Unknown,
     /// camelCase
     Camel,
     // CONSTANT_CASE
@@ -20,58 +23,63 @@ pub(crate) enum Case {
 
 impl Case {
     /// Returns the case of `s` or `None` if the case is unknown.
-    pub(crate) fn identify(s: &str, strict: bool) -> Option<Case> {
+    pub(crate) fn identify(s: &str, strict: bool) -> Case {
         let mut chars = s.chars();
-        let c = chars.next()?;
-        if !c.is_alphanumeric() {
-            return None;
+        let Some(first_char) = chars.next() else {
+            return Case::Unknown;
+        };
+        if !first_char.is_alphanumeric() {
+            return Case::Unknown;
         }
-        let mut result = if c.is_uppercase() {
+        let mut result = if first_char.is_uppercase() {
             Case::NumberableCapital
         } else {
             Case::Lower
         };
-        let mut prev = c;
+        let mut previous_char = first_char;
         let mut has_consecutive_uppercase = false;
-        for c in chars {
-            result = match c {
+        for current_char in chars {
+            result = match current_char {
                 '-' => match result {
                     Case::Kebab | Case::Lower => Case::Kebab,
-                    _ => return None,
+                    _ => return Case::Unknown,
                 },
                 '_' => match result {
                     Case::Constant | Case::NumberableCapital | Case::Upper => Case::Constant,
                     Case::Lower | Case::Snake => Case::Snake,
-                    Case::Camel | Case::Kebab | Case::Pascal => return None,
+                    Case::Camel | Case::Kebab | Case::Pascal | Case::Unknown => {
+                        return Case::Unknown
+                    }
                 },
-                _ if c.is_uppercase() => {
-                    has_consecutive_uppercase = has_consecutive_uppercase || prev.is_uppercase();
+                _ if current_char.is_uppercase() => {
+                    has_consecutive_uppercase |= previous_char.is_uppercase();
                     match result {
                         Case::Camel | Case::Pascal if strict && has_consecutive_uppercase => {
-                            return None
+                            return Case::Unknown
                         }
                         Case::Camel | Case::Constant | Case::Pascal => result,
                         Case::Lower => Case::Camel,
                         Case::NumberableCapital | Case::Upper => Case::Upper,
-                        Case::Kebab | Case::Snake => return None,
+                        Case::Kebab | Case::Snake | Case::Unknown => return Case::Unknown,
                     }
                 }
-                _ if c.is_lowercase() => match result {
+                _ if current_char.is_lowercase() => match result {
                     Case::Camel | Case::Kebab | Case::Lower | Case::Snake => result,
                     Case::Pascal | Case::NumberableCapital => Case::Pascal,
                     Case::Upper if !strict || !has_consecutive_uppercase => Case::Pascal,
-                    Case::Constant | Case::Upper => return None,
+                    Case::Constant | Case::Upper | Case::Unknown => return Case::Unknown,
                 },
-                _ if c.is_numeric() => result, // Figures don't change the case.
-                _ => return None,
+                _ if current_char.is_numeric() => result, // Figures don't change the case.
+                _ => return Case::Unknown,
             };
-            prev = c;
+            previous_char = current_char;
         }
-        Some(result)
+        result
     }
 
     pub(crate) const fn to_str(self) -> &'static str {
         match self {
+            Case::Unknown => "unknown case",
             Case::Camel => "camelCase",
             Case::Constant => "CONSTANT_CASE",
             Case::Kebab => "kebab-case",
@@ -86,8 +94,9 @@ impl Case {
     /// Returns true if a name that respects `self` also respects `other`.
     ///
     /// For example, a name in _lowercase_ is also in _camelCase_.
-    pub(crate) fn is_compatible(self, other: Case) -> bool {
+    pub(crate) fn is_compatible_with(self, other: Case) -> bool {
         self == other
+            || matches!(other, Case::Unknown)
             || matches!((self, other), |(
                 Case::Lower,
                 Case::Camel | Case::Kebab | Case::Snake,
@@ -101,7 +110,7 @@ impl Case {
     }
 
     pub(crate) fn convert(self, input: &str) -> String {
-        if input.is_empty() {
+        if input.is_empty() || matches!(self, Case::Unknown) {
             return input.to_string();
         }
         let mut word_separator = matches!(self, Case::Pascal);
@@ -132,6 +141,7 @@ impl Case {
                     | Case::Lower
                     | Case::NumberableCapital
                     | Case::Pascal
+                    | Case::Unknown
                     | Case::Upper => (),
                     Case::Constant | Case::Snake => {
                         output.push('_');
@@ -156,6 +166,7 @@ impl Case {
                     }
                 }
                 Case::Kebab | Case::Snake | Case::Lower => output.extend(current.to_lowercase()),
+                Case::Unknown => (),
             }
             word_separator = false;
             if let Some(next) = next {
@@ -195,44 +206,41 @@ mod tests {
 
     #[test]
     fn test_case_identify() {
-        assert_eq!(Case::identify("strictCamelCase", true), Some(Case::Camel),);
-        assert_eq!(Case::identify("camelCASE", true), None);
-        assert_eq!(Case::identify("strictCamelCase", false), Some(Case::Camel),);
-        assert_eq!(Case::identify("camelCASE", false), Some(Case::Camel));
+        assert_eq!(Case::identify("strictCamelCase", true), Case::Camel,);
+        assert_eq!(Case::identify("camelCASE", true), Case::Unknown);
+        assert_eq!(Case::identify("strictCamelCase", false), Case::Camel,);
+        assert_eq!(Case::identify("camelCASE", false), Case::Camel);
 
-        assert_eq!(Case::identify("CONSTANT_CASE", true), Some(Case::Constant));
-        assert_eq!(Case::identify("CONSTANT_CASE", false), Some(Case::Constant));
+        assert_eq!(Case::identify("CONSTANT_CASE", true), Case::Constant);
+        assert_eq!(Case::identify("CONSTANT_CASE", false), Case::Constant);
 
-        assert_eq!(Case::identify("kebab-case", true), Some(Case::Kebab));
-        assert_eq!(Case::identify("kebab-case", false), Some(Case::Kebab));
+        assert_eq!(Case::identify("kebab-case", true), Case::Kebab);
+        assert_eq!(Case::identify("kebab-case", false), Case::Kebab);
 
-        assert_eq!(Case::identify("lowercase", true), Some(Case::Lower));
-        assert_eq!(Case::identify("lowercase", true), Some(Case::Lower));
+        assert_eq!(Case::identify("lowercase", true), Case::Lower);
+        assert_eq!(Case::identify("lowercase", true), Case::Lower);
 
-        assert_eq!(Case::identify("T", true), Some(Case::NumberableCapital));
-        assert_eq!(Case::identify("T", false), Some(Case::NumberableCapital));
-        assert_eq!(Case::identify("T1", true), Some(Case::NumberableCapital));
-        assert_eq!(Case::identify("T1", false), Some(Case::NumberableCapital));
+        assert_eq!(Case::identify("T", true), Case::NumberableCapital);
+        assert_eq!(Case::identify("T", false), Case::NumberableCapital);
+        assert_eq!(Case::identify("T1", true), Case::NumberableCapital);
+        assert_eq!(Case::identify("T1", false), Case::NumberableCapital);
 
-        assert_eq!(Case::identify("V8Engine", true), Some(Case::Pascal));
-        assert_eq!(Case::identify("V8Engine", false), Some(Case::Pascal));
-        assert_eq!(Case::identify("StrictPascalCase", true), Some(Case::Pascal));
-        assert_eq!(
-            Case::identify("StrictPascalCase", false),
-            Some(Case::Pascal)
-        );
-        assert_eq!(Case::identify("PascalCASE", true), None);
-        assert_eq!(Case::identify("PascalCASE", false), Some(Case::Pascal));
+        assert_eq!(Case::identify("V8Engine", true), Case::Pascal);
+        assert_eq!(Case::identify("V8Engine", false), Case::Pascal);
+        assert_eq!(Case::identify("StrictPascalCase", true), Case::Pascal);
+        assert_eq!(Case::identify("StrictPascalCase", false), Case::Pascal);
+        assert_eq!(Case::identify("PascalCASE", true), Case::Unknown);
+        assert_eq!(Case::identify("PascalCASE", false), Case::Pascal);
 
-        assert_eq!(Case::identify("snake_case", true), Some(Case::Snake));
-        assert_eq!(Case::identify("snake_case", false), Some(Case::Snake));
+        assert_eq!(Case::identify("snake_case", true), Case::Snake);
+        assert_eq!(Case::identify("snake_case", false), Case::Snake);
 
-        assert_eq!(Case::identify("UPPERCASE", true), Some(Case::Upper));
-        assert_eq!(Case::identify("UPPERCASE", false), Some(Case::Upper));
+        assert_eq!(Case::identify("UPPERCASE", true), Case::Upper);
+        assert_eq!(Case::identify("UPPERCASE", false), Case::Upper);
 
-        assert_eq!(Case::identify("unknown_Case", false), None);
-        assert_eq!(Case::identify("unknown-Case", false), None);
-        assert_eq!(Case::identify("symbol@", false), None);
+        assert_eq!(Case::identify("unknown_Case", false), Case::Unknown);
+        assert_eq!(Case::identify("unknown-Case", false), Case::Unknown);
+        assert_eq!(Case::identify("symbol@", false), Case::Unknown);
     }
 
     #[test]
@@ -288,6 +296,8 @@ mod tests {
         assert_eq!(Case::Upper.convert("PascalCase"), "PASCALCASE");
         assert_eq!(Case::Upper.convert("snake_case"), "SNAKECASE");
         assert_eq!(Case::Upper.convert("Unknown_Style"), "UNKNOWNSTYLE");
+
+        assert_eq!(Case::Unknown.convert("Unknown_Style"), "Unknown_Style");
     }
 
     #[test]

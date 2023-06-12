@@ -1,0 +1,43 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 100
+expression: validClassNonStrictPascalCase.js
+---
+# Input
+```js
+class HTTPServer {}
+```
+
+# Diagnostics
+```
+validClassNonStrictPascalCase.options:9:21 deserialize ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × The value of key strictCase is incorrect. Expected a object.
+  
+     7 │ 					"level": "error",
+     8 │ 					"options": {
+   > 9 │ 						"strictCase": false
+       │ 						              ^^^^^
+    10 │ 					}
+    11 │ 				}
+  
+
+```
+
+```
+validClassNonStrictPascalCase.js:1:7 lint/nursery/useNamingConvention  FIXABLE  ━━━━━━━━━━━━━━━━━━━━
+
+  ! This class name should be in PascalCase.
+  
+  > 1 │ class HTTPServer {}
+      │       ^^^^^^^^^^
+  
+  i Safe fix: Rename this symbol in PascalCase.
+  
+  - class·HTTPServer·{}
+  + class·HttpServer·{}
+  
+
+```
+
+

@@ -1,0 +1,62 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 100
+expression: validEnumMemberCamelCase.ts
+---
+# Input
+```js
+enum Status {
+    open,
+    close,
+}
+```
+
+# Diagnostics
+```
+validEnumMemberCamelCase.options:9:25 deserialize ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × The value of key enumMemberCase is incorrect. Expected a object.
+  
+     7 │ 					"level": "error",
+     8 │ 					"options": {
+   > 9 │ 						"enumMemberCase": "camelCase",
+       │ 						                  ^^^^^^^^^^^
+    10 │ 						"strictCase": true
+    11 │ 					}
+  
+
+```
+
+```
+validEnumMemberCamelCase.ts:2:5 lint/nursery/useNamingConvention ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This enum member name should be in PascalCase.
+  
+    1 │ enum Status {
+  > 2 │     open,
+      │     ^^^^
+    3 │     close,
+    4 │ }
+  
+  i The name is currently in lowercase.
+  
+
+```
+
+```
+validEnumMemberCamelCase.ts:3:5 lint/nursery/useNamingConvention ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This enum member name should be in PascalCase.
+  
+    1 │ enum Status {
+    2 │     open,
+  > 3 │     close,
+      │     ^^^^^
+    4 │ }
+  
+  i The name is currently in lowercase.
+  
+
+```
+
+
