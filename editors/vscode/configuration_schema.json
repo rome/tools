@@ -778,6 +778,13 @@
 						{ "type": "null" }
 					]
 				},
+				"noStaticOnlyClass": {
+					"description": "This rule reports when a class has no non-static members, such as for a class used exclusively as a static namespace.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"recommended": {
 					"description": "It enables the recommended rules for this group",
 					"type": ["boolean", "null"]

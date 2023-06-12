@@ -541,6 +541,10 @@ export interface Nursery {
 	 */
 	noSelfAssign?: RuleConfiguration;
 	/**
+	 * This rule reports when a class has no non-static members, such as for a class used exclusively as a static namespace.
+	 */
+	noStaticOnlyClass?: RuleConfiguration;
+	/**
 	 * It enables the recommended rules for this group
 	 */
 	recommended?: boolean;
@@ -1071,6 +1075,7 @@ export type Category =
 	| "lint/nursery/useLiteralEnumMembers"
 	| "lint/nursery/useLiteralKeys"
 	| "lint/nursery/useSimpleNumberKeys"
+	| "lint/nursery/noStaticOnlyClass"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"
