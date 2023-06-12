@@ -39,6 +39,7 @@
 
 #### Other changes
 
+- `noRedeclare`: allow redeclare of index signatures are in different type members [#4478](https://github.com/rome/tools/issues/4478)
 - The rules [`useExhaustiveDependencies`](https://docs.rome.tools/lint/rules/useexhaustivedependencies/) and [`useHookAtTopLevel`](https://docs.rome.tools/lint/rules/usehookattoplevel/) accept a different
 	shape of options
 
