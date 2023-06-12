@@ -129,8 +129,9 @@ pub fn fuzz_js_formatter_with_source_type(data: &[u8], source: JsFileSource) -> 
                 );
                 if let Some(diagnostic) = maybe_diagnostic {
                     panic!(
-                        "formatter introduced linter failure: {}\n{}",
+                        "formatter introduced linter failure: {} (expected one of: {})\n{}",
                         diagnostic,
+                        linter_errors.join(", "),
                         TextDiff::from_lines(code1, code2)
                             .unified_diff()
                             .header("original code", "formatted")
@@ -142,11 +143,12 @@ pub fn fuzz_js_formatter_with_source_type(data: &[u8], source: JsFileSource) -> 
                 let printed2 = formatted2
                     .print()
                     .expect("reformatted code could not be printed");
+                let code3 = printed2.as_code();
                 assert_eq!(
                     code2,
-                    printed2.as_code(),
+                    code3,
                     "format results differ:\n{}",
-                    TextDiff::from_lines(code1, code2)
+                    TextDiff::from_lines(code2, code3)
                         .unified_diff()
                         .header("formatted", "reformatted")
                 )
