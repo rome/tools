@@ -193,14 +193,7 @@ fn are_same_type_members(
     first: &TsIndexSignatureTypeMember,
     second: &TsIndexSignatureTypeMember,
 ) -> Option<bool> {
-    let first_text_range = first
-        .parent::<TsTypeMemberList>()?
-        .syntax()
-        .text_trimmed_range();
-
-    let second_text_range = second
-        .parent::<TsTypeMemberList>()?
-        .syntax()
-        .text_trimmed_range();
-    Some(first_text_range == second_text_range)
+    let first_parent = first.parent::<TsTypeMemberList>()?;
+    let second_parent = second.parent::<TsTypeMemberList>()?;
+    Some(first_parent == second_parent)
 }
