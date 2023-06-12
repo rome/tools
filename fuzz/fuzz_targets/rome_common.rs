@@ -12,6 +12,7 @@ use rome_js_syntax::JsFileSource;
 use rome_json_formatter::context::JsonFormatOptions;
 use rome_json_formatter::JsonFormatLanguage;
 use rome_json_parser::parse_json;
+use similar::TextDiff;
 
 pub fn fuzz_js_parser_with_source_type(data: &[u8], source: JsFileSource) -> Corpus {
     let Ok(code1) = std::str::from_utf8(data) else { return Corpus::Reject; };
@@ -37,14 +38,27 @@ pub fn fuzz_js_formatter_with_source_type(data: &[u8], source: JsFileSource) -> 
             if let Ok(printed1) = formatted1.print() {
                 let code2 = printed1.as_code();
                 let parse2 = parse(code2, source);
-                assert!(!parse2.has_errors(), "formatter introduced errors");
+                assert!(
+                    !parse2.has_errors(),
+                    "formatter introduced errors:\n{}",
+                    TextDiff::from_lines(code1, code2)
+                        .unified_diff()
+                        .header("original code", "formatted")
+                );
                 let syntax2 = parse2.syntax();
                 let formatted2 = format_node(&syntax2, language)
                     .expect("formatted code could not be reformatted");
                 let printed2 = formatted2
                     .print()
                     .expect("reformatted code could not be printed");
-                assert_eq!(code2, printed2.as_code(), "format results differ")
+                assert_eq!(
+                    code2,
+                    printed2.as_code(),
+                    "format results differ:\n{}",
+                    TextDiff::from_lines(code1, code2)
+                        .unified_diff()
+                        .header("formatted", "reformatted")
+                )
             }
         }
     }
@@ -76,14 +90,27 @@ pub fn fuzz_json_formatter(data: &[u8]) -> Corpus {
             if let Ok(printed1) = formatted1.print() {
                 let code2 = printed1.as_code();
                 let parse2 = parse_json(code2);
-                assert!(!parse2.has_errors(), "formatter introduced errors");
+                assert!(
+                    !parse2.has_errors(),
+                    "formatter introduced errors:\n{}",
+                    TextDiff::from_lines(code1, code2)
+                        .unified_diff()
+                        .header("original code", "formatted")
+                );
                 let syntax2 = parse2.syntax();
                 let formatted2 = format_node(&syntax2, language)
                     .expect("formatted code could not be reformatted");
                 let printed2 = formatted2
                     .print()
                     .expect("reformatted code could not be printed");
-                assert_eq!(code2, printed2.as_code(), "format results differ")
+                assert_eq!(
+                    code2,
+                    printed2.as_code(),
+                    "format results differ:\n{}",
+                    TextDiff::from_lines(code1, code2)
+                        .unified_diff()
+                        .header("formatted", "reformatted")
+                )
             }
         }
     }
