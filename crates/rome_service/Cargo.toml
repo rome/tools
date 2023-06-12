@@ -37,7 +37,7 @@ tracing = { workspace = true, features = ["attributes"] }
 bpaf = {  workspace = true }
 
 [features]
-schemars = ["dep:schemars", "rome_formatter/serde", "rome_js_factory", "rome_text_edit/schemars"]
+schemars = ["dep:schemars", "rome_js_analyze/schemars", "rome_formatter/serde", "rome_js_factory", "rome_text_edit/schemars"]
 
 [dev-dependencies]
 insta = { workspace = true }

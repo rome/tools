@@ -61,6 +61,10 @@ export interface FilesConfiguration {
 	 */
 	ignore?: StringSet;
 	/**
+	 * Tells Rome to not emit diagnostics when handling files that doesn't know
+	 */
+	ignoreUnknown?: boolean;
+	/**
 	 * The maximum allowed size for source code files in bytes. Files above this limit will be ignored for performance reason. Defaults to 1 MiB
 	 */
 	maxSize?: number;
@@ -873,7 +877,33 @@ export type RuleConfiguration = RulePlainConfiguration | RuleWithOptions;
 export type RulePlainConfiguration = "warn" | "error" | "off";
 export interface RuleWithOptions {
 	level: RulePlainConfiguration;
-	options: any;
+	options?: PossibleOptions;
+}
+export type PossibleOptions = HooksOptions | null;
+/**
+ * Options for the rule `useExhaustiveDependencies` and `useHookAtTopLevel`
+ */
+export interface HooksOptions {
+	/**
+	 * List of safe hooks
+	 */
+	hooks: Hooks[];
+}
+export interface Hooks {
+	/**
+	* The "position" of the closure function, starting from zero.
+
+### Example 
+	 */
+	closureIndex?: number;
+	/**
+	 * The "position" of the array of dependencies, starting from zero.
+	 */
+	dependenciesIndex?: number;
+	/**
+	 * The name of the hook
+	 */
+	name: string;
 }
 export interface OpenFileParams {
 	content: string;

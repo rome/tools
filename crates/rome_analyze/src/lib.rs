@@ -5,7 +5,6 @@ use std::cmp::Ordering;
 use std::collections::{BTreeMap, BinaryHeap};
 use std::fmt::{Debug, Display, Formatter};
 use std::ops;
-use std::path::Path;
 
 mod categories;
 pub mod context;
@@ -43,7 +42,6 @@ pub use crate::services::{FromServices, MissingServicesDiagnostic, ServiceBag};
 pub use crate::signals::{AnalyzerAction, AnalyzerSignal, DiagnosticSignal};
 pub use crate::syntax::{Ast, SyntaxVisitor};
 pub use crate::visitor::{NodeVisitor, Visitor, VisitorContext, VisitorFinishContext};
-pub use rule::DeserializableRuleOptions;
 
 use rome_console::markup;
 use rome_diagnostics::{category, Applicability, Diagnostic, DiagnosticExt, DiagnosticTags};
@@ -77,8 +75,7 @@ pub struct AnalyzerContext<'a, L: Language> {
     pub root: LanguageRoot<L>,
     pub services: ServiceBag,
     pub range: Option<TextRange>,
-    pub globals: &'a [&'a str],
-    pub file_path: &'a Path,
+    pub options: &'a AnalyzerOptions,
 }
 
 impl<'analyzer, L, Matcher, Break, Diag> Analyzer<'analyzer, L, Matcher, Break, Diag>
@@ -142,9 +139,8 @@ where
                 root: &ctx.root,
                 services: &ctx.services,
                 range: ctx.range,
-                globals: ctx.globals,
                 apply_suppression_comment,
-                file_path: ctx.file_path,
+                options: ctx.options,
             };
 
             // The first phase being run will inspect the tokens and parse the
@@ -221,10 +217,8 @@ struct PhaseRunner<'analyzer, 'phase, L: Language, Matcher, Break, Diag> {
     services: &'phase ServiceBag,
     /// Optional text range to restrict the analysis to
     range: Option<TextRange>,
-    /// Options passed to the analyzer
-    globals: &'phase [&'phase str],
-    /// The [Path] of the current file
-    file_path: &'phase Path,
+    /// Analyzer options
+    options: &'phase AnalyzerOptions,
 }
 
 /// Single entry for a suppression comment in the `line_suppressions` buffer
@@ -283,8 +277,7 @@ where
                     query_matcher: self.query_matcher,
                     signal_queue: &mut self.signal_queue,
                     apply_suppression_comment: self.apply_suppression_comment,
-                    globals: self.globals,
-                    file_path: self.file_path,
+                    options: self.options,
                 };
 
                 visitor.visit(&node_event, ctx);
@@ -309,8 +302,7 @@ where
                     query_matcher: self.query_matcher,
                     signal_queue: &mut self.signal_queue,
                     apply_suppression_comment: self.apply_suppression_comment,
-                    globals: self.globals,
-                    file_path: self.file_path,
+                    options: self.options,
                 };
 
                 visitor.visit(&event, ctx);

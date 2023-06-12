@@ -6,8 +6,6 @@ use crate::{
 };
 use rome_console::fmt::Display;
 use rome_console::{markup, MarkupBuf};
-use rome_deserialize::json::{deserialize_from_json_str, JsonDeserialize, VisitJsonNode};
-use rome_deserialize::Deserialized;
 use rome_diagnostics::advice::CodeSuggestionAdvice;
 use rome_diagnostics::location::AsSpan;
 use rome_diagnostics::Applicability;
@@ -16,6 +14,7 @@ use rome_diagnostics::{
     Visit,
 };
 use rome_rowan::{AstNode, BatchMutation, BatchMutationExt, Language, TextRange};
+use std::fmt::Debug;
 
 /// Static metadata containing information about a rule
 pub struct RuleMetadata {
@@ -236,24 +235,6 @@ impl_group_language!(
     T76, T77, T78, T79, T80, T81, T82, T83, T84, T85, T86, T87, T88, T89
 );
 
-// pub trait DeserializableRuleOptions: Default + DeserializeOwned + Sized {
-//     fn try_from(value: String) -> Result<Self, AnalyzerDiagnostic> {
-//         // parse_json();
-//     }
-// }
-
-pub trait DeserializableRuleOptions: Default + Sized + JsonDeserialize + VisitJsonNode {
-    fn from(value: String) -> Deserialized<Self> {
-        deserialize_from_json_str(&value)
-    }
-}
-
-impl DeserializableRuleOptions for () {
-    fn from(_value: String) -> Deserialized<Self> {
-        Deserialized::new((), vec![])
-    }
-}
-
 /// Trait implemented by all analysis rules: declares interest to a certain AstNode type,
 /// and a callback function to be executed on all nodes matching the query to possibly
 /// raise an analysis event
@@ -269,7 +250,7 @@ pub trait Rule: RuleMeta + Sized {
     /// analyzer
     type Signals: IntoIterator<Item = Self::State>;
     /// The options that belong to a rule
-    type Options: DeserializableRuleOptions;
+    type Options: Default + Clone + Debug;
 
     fn phase() -> Phases {
         <<<Self as Rule>::Query as Queryable>::Services as Phase>::phase()

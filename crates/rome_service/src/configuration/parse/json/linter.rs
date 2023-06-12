@@ -5,6 +5,7 @@ use crate::{RuleConfiguration, Rules};
 use rome_console::markup;
 use rome_deserialize::json::{has_only_known_keys, with_only_known_variants, VisitJsonNode};
 use rome_deserialize::{DeserializationDiagnostic, VisitNode};
+use rome_js_analyze::options::PossibleOptions;
 use rome_json_syntax::{AnyJsonValue, JsonLanguage, JsonObjectValue, JsonSyntaxNode};
 use rome_rowan::{AstNode, AstSeparatedList, SyntaxNode};
 
@@ -106,11 +107,13 @@ impl VisitNode<JsonLanguage> for RuleConfiguration {
                 }
             }
             "options" => {
+                let mut possible_options = PossibleOptions::default();
+                self.map_to_object(&value, name_text, &mut possible_options, diagnostics);
                 if let RuleConfiguration::WithOptions(options) = self {
-                    options.options = Some(format!("{value}"))
+                    options.options = Some(possible_options)
                 } else {
                     *self = RuleConfiguration::WithOptions(RuleWithOptions {
-                        options: Some(format!("{value}")),
+                        options: Some(possible_options),
                         ..RuleWithOptions::default()
                     })
                 }
@@ -175,7 +178,9 @@ impl VisitNode<JsonLanguage> for RuleWithOptions {
                 self.level = rule_options;
             }
             "options" => {
-                self.options = Some(format!("{}", value));
+                let mut possible_options = PossibleOptions::default();
+                self.map_to_object(&value, name_text, &mut possible_options, diagnostics);
+                self.options = Some(possible_options);
             }
             _ => {}
         }
