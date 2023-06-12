@@ -21,6 +21,7 @@ info: js/module/expression/binary_range_expression.js
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 Semicolons: Always

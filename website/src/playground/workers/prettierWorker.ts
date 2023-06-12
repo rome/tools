@@ -28,6 +28,7 @@ self.addEventListener("message", (e) => {
 				indentStyle,
 				indentWidth,
 				quoteStyle,
+				jsxQuoteStyle,
 				quoteProperties,
 				trailingComma,
 				semicolons,
@@ -41,6 +42,7 @@ self.addEventListener("message", (e) => {
 				indentWidth,
 				filepath: filename,
 				quoteStyle,
+				jsxQuoteStyle,
 				quoteProperties,
 				trailingComma,
 				semicolons,
@@ -68,6 +70,7 @@ function formatWithPrettier(
 		indentWidth: number;
 		filepath: string;
 		quoteStyle: QuoteStyle;
+		jsxQuoteStyle: QuoteStyle;
 		quoteProperties: QuoteProperties;
 		trailingComma: TrailingComma;
 		semicolons: Semicolons;
@@ -82,6 +85,7 @@ function formatWithPrettier(
 			plugins: [parserBabel],
 			parser: getPrettierParser(options.filepath),
 			singleQuote: options.quoteStyle === QuoteStyle.Single,
+			jsxSingleQuote: options.jsxQuoteStyle === QuoteStyle.Single,
 			quoteProps: options.quoteProperties,
 			trailingComma: options.trailingComma,
 			semi: options.semicolons === Semicolons.Always,

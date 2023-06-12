@@ -19,6 +19,15 @@ const CUSTOM_FORMAT_AFTER: &str = r#"function f() {
 }
 "#;
 
+const APPLY_JSX_QUOTE_STYLE_BEFORE: &str = r#"
+<div
+  bar="foo"
+  baz={"foo"}
+/>"#;
+
+const APPLY_JSX_QUOTE_STYLE_AFTER: &str = r#"<div bar='foo' baz={"foo"} />;
+"#;
+
 const APPLY_QUOTE_STYLE_BEFORE: &str = r#"
 let a = "something";
 let b = {
@@ -532,6 +541,50 @@ fn applies_custom_configuration_over_config_file_issue_3175_v2() {
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
         "applies_custom_configuration_over_config_file_issue_3175_v2",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn applies_custom_jsx_quote_style() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let file_path = Path::new("file.js");
+    fs.insert(file_path.into(), APPLY_JSX_QUOTE_STYLE_BEFORE.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Args::from(&[
+            ("format"),
+            ("--jsx-quote-style"),
+            ("single"),
+            ("--quote-properties"),
+            ("preserve"),
+            ("--write"),
+            file_path.as_os_str().to_str().unwrap(),
+        ]),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    let mut file = fs
+        .open(file_path)
+        .expect("formatting target file was removed by the CLI");
+
+    let mut content = String::new();
+    file.read_to_string(&mut content)
+        .expect("failed to read file from memory FS");
+
+    assert_eq!(content, APPLY_JSX_QUOTE_STYLE_AFTER);
+
+    drop(file);
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "applies_custom_jsx_quote_style",
         fs,
         console,
         result,

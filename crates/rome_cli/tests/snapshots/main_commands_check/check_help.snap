@@ -42,6 +42,7 @@ Available options:
         --line-width <NUMBER>  What's the max width of a line. Defaults to 80.
 
         --quote-style <double|single>  The style for quotes. Defaults to double.
+        --jsx-quote-style <double|single>  The style for JSX quotes. Defaults to double.
         --quote-properties <preserve|as-needed>  When properties in objects are quoted. Defaults to
                         asNeeded.
         --trailing-comma <all|es5|none>  Print trailing commas wherever possible in multi-line

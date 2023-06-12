@@ -629,6 +629,11 @@
 		"JavascriptFormatter": {
 			"type": "object",
 			"properties": {
+				"jsxQuoteStyle": {
+					"description": "The style for JSX quotes. Defaults to double.",
+					"default": null,
+					"anyOf": [{ "$ref": "#/definitions/QuoteStyle" }, { "type": "null" }]
+				},
 				"quoteProperties": {
 					"description": "When properties in objects are quoted. Defaults to asNeeded.",
 					"default": null,

@@ -42,7 +42,10 @@ impl<'token> FormatLiteralStringToken<'token> {
             JS_STRING_LITERAL | JSX_STRING_LITERAL
         ));
 
-        let chosen_quote_style = options.quote_style();
+        let chosen_quote_style = match token.kind() {
+            JSX_STRING_LITERAL => options.jsx_quote_style(),
+            _ => options.quote_style(),
+        };
         let chosen_quote_properties = options.quote_properties();
 
         let mut string_cleaner =

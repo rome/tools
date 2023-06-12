@@ -21,6 +21,7 @@ info: js/module/string/parentheses_token.js
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 Semicolons: Always
@@ -36,6 +37,7 @@ Semicolons: Always
 Indent style: Tab
 Line width: 80
 Quote style: Single Quotes
+JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 Semicolons: Always
@@ -51,6 +53,7 @@ Semicolons: Always
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+JSX quote style: Double Quotes
 Quote properties: Preserve
 Trailing comma: All
 Semicolons: Always

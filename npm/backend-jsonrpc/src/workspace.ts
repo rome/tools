@@ -162,6 +162,10 @@ The allowed range of values is 1..=320
 export type LineWidth = number;
 export interface JavascriptFormatter {
 	/**
+	 * The style for JSX quotes. Defaults to double.
+	 */
+	jsxQuoteStyle?: QuoteStyle;
+	/**
 	 * When properties in objects are quoted. Defaults to asNeeded.
 	 */
 	quoteProperties?: QuoteProperties;
@@ -198,8 +202,8 @@ export interface Rules {
 	suspicious?: Suspicious;
 }
 export type VcsClientKind = "git";
-export type QuoteProperties = "asNeeded" | "preserve";
 export type QuoteStyle = "double" | "single";
+export type QuoteProperties = "asNeeded" | "preserve";
 export type Semicolons = "always" | "asNeeded";
 /**
  * Print trailing commas wherever possible in multi-line comma-separated syntactic structures.

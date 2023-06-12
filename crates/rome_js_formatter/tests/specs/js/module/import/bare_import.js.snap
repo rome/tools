@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: js/module/import/bare_import.js
+info: js/module/import/bare_import.js
 ---
 
 # Input
@@ -44,6 +43,7 @@ import "very_long_import_very_long_import_very" assert {
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 Semicolons: Always
@@ -79,4 +79,5 @@ import "very_long_import_very_long_import_very" assert {
     2: import "very_long_import_very_long_import_very_long_import_very_long_import_very_long_import_very_long" assert {
    20: 	"typetypetypetypetypetypetypetypetypetypetype": /****/ "typetypetypetypetypetypetypetypetypetypetypetypetypetype",
 ```
+
 
