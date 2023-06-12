@@ -11,13 +11,15 @@ fi
 
 if [ ! -d corpus/rome_format_all ]; then
   mkdir -p corpus/rome_format_all
-  read -p "Would you like to build a corpus from a javascript source code dataset? (this will take a long time!) [Y/n] " -n 1 -r
-  echo
   cd corpus/rome_format_all
-  if [[ $REPLY =~ ^[Yy]$ ]]; then
-    curl -L http://files.srl.inf.ethz.ch/data/js_dataset.tar.gz | tar xzO data.tar.gz | tar xz
-    find . -type d -exec chmod 755 {} \;
-    find . -type f -exec chmod 644 {} \;
+  if [ -z ${CI+x} ]; then
+    read -p "Would you like to build a corpus from a javascript source code dataset? (this will take a long time!) [Y/n] " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+      curl -L http://files.srl.inf.ethz.ch/data/js_dataset.tar.gz | tar xzO data.tar.gz | tar xz
+      find . -type d -exec chmod 755 {} \;
+      find . -type f -exec chmod 644 {} \;
+    fi
   fi
   cp -r "../../../crates/rome_js_parser/test_data" .
   find . -name \*.rast -delete

@@ -5,12 +5,14 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 cd "$SCRIPT_DIR"
 
+mkdir -p corpus/rome_format_all
 cd corpus/rome_format_all
-cp -r "../../../crates/rome_js_formatter/test_data" .
+cp -r "../../../crates/rome_js_parser/test_data" .
 find . -name \*.rast -delete
 cd -
-cargo fuzz cmin --features rome_format_all -s none rome_format_all
+cargo fuzz cmin --features rome_all -s none rome_format_all
 
+mkdir -p corpus/rome_format_json
 cd corpus/rome_format_json
 cp -r "../../../crates/rome_json_parser/tests/json_test_suite" .
 find . -name \*.rast -delete

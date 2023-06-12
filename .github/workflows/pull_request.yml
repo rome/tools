@@ -96,7 +96,7 @@ jobs:
         with:
           bins: cargo-fuzz
       - name: Run init-fuzzer
-        run: yes n | sh fuzz/init-fuzzer.sh
+        run: sh fuzz/init-fuzzer.sh
 
   test-node-api:
     name: Test node.js API
