@@ -57,7 +57,7 @@ pub enum FormatElement {
 
     /// A list of different variants representing the same content. The printer picks the best fitting content.
     /// Line breaks inside of a best fitting don't propagate to parent groups.
-    BestFitting(BestFitting),
+    BestFitting(BestFittingElement),
 
     /// A [Tag] that marks the start/end of some content to which some special formatting is applied.
     Tag(Tag),
@@ -279,14 +279,14 @@ impl FormatElements for FormatElement {
 ///
 /// Best fitting is defined as the variant that takes the most horizontal space but fits on the line.
 #[derive(Clone, Eq, PartialEq)]
-pub struct BestFitting {
+pub struct BestFittingElement {
     /// The different variants for this element.
     /// The first element is the one that takes up the most space horizontally (the most flat),
     /// The last element takes up the least space horizontally (but most horizontal space).
     variants: Box<[Box<[FormatElement]>]>,
 }
 
-impl BestFitting {
+impl BestFittingElement {
     /// Creates a new best fitting IR with the given variants. The method itself isn't unsafe
     /// but it is to discourage people from using it because the printer will panic if
     /// the slice doesn't contain at least the least and most expanded variants.
@@ -326,7 +326,7 @@ impl BestFitting {
     }
 }
 
-impl std::fmt::Debug for BestFitting {
+impl std::fmt::Debug for BestFittingElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_list().entries(&*self.variants).finish()
     }

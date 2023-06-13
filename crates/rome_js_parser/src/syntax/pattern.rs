@@ -1,4 +1,4 @@
-///! Provides traits for parsing pattern like nodes
+//! Provides traits for parsing pattern like nodes
 use crate::prelude::*;
 use crate::syntax::expr::{parse_assignment_expression_or_higher, ExpressionContext};
 use crate::syntax::js_parse_error;

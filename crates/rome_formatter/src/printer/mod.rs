@@ -6,7 +6,7 @@ mod stack;
 
 pub use printer_options::*;
 
-use crate::format_element::{BestFitting, LineMode, PrintMode};
+use crate::format_element::{BestFittingElement, LineMode, PrintMode};
 use crate::{
     ActualStart, FormatElement, GroupId, IndentStyle, InvalidDocumentError, PrintError,
     PrintResult, Printed, SourceMarker, TextRange,
@@ -380,7 +380,7 @@ impl<'a> Printer<'a> {
 
     fn print_best_fitting(
         &mut self,
-        best_fitting: &'a BestFitting,
+        best_fitting: &'a BestFittingElement,
         queue: &mut PrintQueue<'a>,
         stack: &mut PrintCallStack,
     ) -> PrintResult<()> {

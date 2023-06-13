@@ -1,11 +1,11 @@
+//! Provides factory function to create common diagnostics for the JavaScript syntax
+
 use crate::prelude::*;
 use crate::span::Span;
 use crate::JsParser;
 use crate::JsSyntaxFeature::TypeScript;
 use rome_js_syntax::TextRange;
 use rome_parser::diagnostic::{expected_any, expected_node};
-
-///! Provides factory function to create common diagnostics for the JavaScript syntax
 
 pub(crate) fn expected_function_body(p: &JsParser, range: TextRange) -> ParseDiagnostic {
     expected_node("function body", range).into_diagnostic(p)

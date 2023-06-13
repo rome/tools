@@ -1,3 +1,5 @@
+//! Implements the parsing logic for ES Module syntax
+
 use crate::lexer::TextSize;
 use crate::prelude::*;
 use crate::state::{EnterAmbientContext, ExportDefaultItem, ExportDefaultItemKind};
@@ -37,8 +39,6 @@ use rome_parser::ParserProgress;
 use std::collections::HashMap;
 
 use super::auxiliary::{is_nth_at_declaration_clause, parse_declaration_clause};
-
-///! Implements the parsing logic for ES Module syntax
 
 // test module
 // import a from "b";

@@ -518,7 +518,7 @@ fn write_grouped_arguments(
     // ... and best fitting only requires the most flat/and expanded.
     unsafe {
         f.write_element(FormatElement::BestFitting(
-            format_element::BestFitting::from_vec_unchecked(vec![
+            format_element::BestFittingElement::from_vec_unchecked(vec![
                 most_flat,
                 middle_variant,
                 most_expanded.into_boxed_slice(),
