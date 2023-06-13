@@ -77,7 +77,7 @@ schemars = { version = "0.8.10" }
 opt-level = 1
 debug = true
 
-[profile.test]
+[profile.test.package.rome_wasm]
 opt-level = 1
 debug = true
 
