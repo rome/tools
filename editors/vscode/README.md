@@ -96,17 +96,3 @@ Enables Rome to handle renames in the workspace (experimental).
 
 Disables formatting, linting, and syntax errors for projects without a `rome.json` file. Requires Rome 12 or newer.
 Enabled by default.
-
-## Known limitations
-
-### Configuration per sub-directory
-
-Rome doesn’t yet support loading the `rome.json` file from a directory other than the workspace root ([issue 3576](https://github.com/rome/tools/issues/3576), [issue 3289](https://github.com/rome/tools/issues/3289)). That means it is currently impossible to enable Rome only for a specific sub-folder or to use different configurations for different folders.
-
-### Configuration resolution for multi-root workspaces
-
-Rome isn't yet able to pick up the `rome.json` configuration in [multi-root workspaces](https://code.visualstudio.com/docs/editor/multi-root-workspaces) if the configuration isn't in the first root folder ([issue 3538](https://github.com/rome/tools/issues/3538)). You can work around this limitation by making the folder with the configuration the first root folder of the workspace (drag it to the top).
-
-### Disable Rome for workspaces without a `rome.json` configuration
-
-You can set Rome's [`rome.requireConfiguration`](#romerequireconfiguration) setting to `true` to disable Rome's formatter, linter, and syntax errors for projects without a `rome.json` file.
