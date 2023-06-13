@@ -8,7 +8,7 @@ if ! command -v wasm-pack &> /dev/null; then
 fi
 
 if [ "$1" == "preview" ]; then
-  pnpm build:wasm-dev
+  pnpm build:wasm
 else
   pnpm build:wasm
 fi
