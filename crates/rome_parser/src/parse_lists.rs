@@ -1,5 +1,6 @@
+//! A set of traits useful to parse various types of lists
+
 use crate::parse_recovery::RecoveryResult;
-///! A set of traits useful to parse various types of lists
 use crate::prelude::*;
 use crate::ParserProgress;
 use rome_rowan::SyntaxKind;

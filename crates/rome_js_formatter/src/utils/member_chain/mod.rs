@@ -1,107 +1,107 @@
-///! Utility function that applies some heuristic to format chain member expressions and call expressions
-///!
-///! We want to transform code that looks like this:
-///!
-///! ```js
-///! something.execute().then().then().catch()
-///! ```
-///!
-///! To something like this:
-///!
-///! ```js
-///! something
-///!   .execute()
-///!   .then()
-///!   .then()
-///!   .catch()
-///! ```
-///!
-///! In order to achieve that we use the same heuristic that [Prettier applies](https://github.com/prettier/prettier/blob/main/src/language-js/print/member-chain.js).
-///!
-///! The process is the following:
-///!
-///! ### Flattening the AST
-///! We flatten the AST. See, the code above is actually nested, where the first member expression (`something`)
-///! that we see is actually the last one. This is a oversimplified version of the AST:
-///!
-///! ```block
-///! [
-///!     .catch() [
-///!         .then() [
-///!             .then() [
-///!                 .execute() [
-///!                     something
-///!                 ]
-///!             ]
-///!         ]
-///!     ]
-///! ]
-///! ```
-///! So we need to navigate the AST and make sure that `something` is actually
-///! the first one. In a sense, we have to revert the chain of children. We will do that using a recursion.
-///!
-///! While we navigate the AST and we found particular nodes that we want to track, we also
-///! format them. The format of these nodes is different from the standard version.
-///!
-///! Our formatter makes sure that we don't format twice the same nodes. Let's say for example that
-///! we find a `something().execute()`, its AST is like this:
-///!
-///! ```block
-///! JsCallExpression {
-///!     callee: JsStaticMember {
-///!         object: JsCallExpression {
-///!             callee: Reference {
-///!                 execute
-///!             }
-///!         }
-///!     }
-///! }
-///! ```
-///!
-///! When we track the first [rome_js_syntax::JsCallExpression], we hold basically all the children,
-///! that applies for the rest of the nodes. If we decided to format all the children of each node,
-///! we will risk to format the last node, the `Reference`, four times.
-///!
-///! To avoid this, when we encounter particular nodes, we don't format all of its children, but defer
-///! the formatting to the child itself.
-///!
-///! The end result of the flattening, will create an array of something like this:
-///!
-///! ```block
-///! [ Identifier, JsCallExpression, JsStaticMember, JsCallExpression ]
-///! ```
-///!
-///! ### Grouping
-///!
-///! After the flattening, we start the grouping. We want to group nodes in a way that will help us
-///! to apply a deterministic formatting.
-///! - first group will be the identifier
-///! - the rest of the groups will be  will start StaticMemberExpression followed by the rest of the nodes,
-///! right before the end of the next StaticMemberExpression
-///!
-///! The first group is special, because it holds the reference; it has its own heuristic.
-///! Inside the first group we store the first element of the flattened array, then:
-///!
-///! 1. as many as [rome_js_syntax::JsCallExpression] we can find, this cover cases like
-///! `something()()().then()`;
-///! 2. as many as [rome_js_syntax::JsComputedMemberExpression] we can find, this cover cases like
-///! `something()()[1][3].then()`;
-///! 3. as many as consecutive [rome_js_syntax::JsStaticMemberExpression] or [rome_js_syntax::JsComputedMemberExpression], this cover cases like
-///! `this.items[0].then()`
-///!
-///! The rest of the groups are essentially a sequence of `[StaticMemberExpression , CallExpression]`.
-///! In order to achieve that, we simply start looping through the rest of the flatten items that we haven't seen.
-///!
-///! Eventually, we should have something like this:
-///!
-///! ```block
-///! [
-///!     [ReferenceIdentifier, CallExpression], // with possible computed expressions in the middle
-///!     [StaticMemberExpression, StaticMemberExpression, CallExpression],
-///!     [StaticMemberExpression, CallExpression],
-///!     [StaticMemberExpression],
-///! ]
-///! ```
+//! Utility function that applies some heuristic to format chain member expressions and call expressions
+//!
+//! We want to transform code that looks like this:
+//!
+//! ```js
+//! something.execute().then().then().catch()
+//! ```
+//!
+//! To something like this:
+//!
+//! ```js
+//! something
+//!   .execute()
+//!   .then()
+//!   .then()
+//!   .catch()
+//! ```
+//!
+//! In order to achieve that we use the same heuristic that [Prettier applies](https://github.com/prettier/prettier/blob/main/src/language-js/print/member-chain.js).
+//!
+//! The process is the following:
+//!
+//! ### Flattening the AST
+//! We flatten the AST. See, the code above is actually nested, where the first member expression (`something`)
+//! that we see is actually the last one. This is a oversimplified version of the AST:
+//!
+//! ```block
+//! [
+//!     .catch() [
+//!         .then() [
+//!             .then() [
+//!                 .execute() [
+//!                     something
+//!                 ]
+//!             ]
+//!         ]
+//!     ]
+//! ]
+//! ```
+//! So we need to navigate the AST and make sure that `something` is actually
+//! the first one. In a sense, we have to revert the chain of children. We will do that using a recursion.
+//!
+//! While we navigate the AST and we found particular nodes that we want to track, we also
+//! format them. The format of these nodes is different from the standard version.
+//!
+//! Our formatter makes sure that we don't format twice the same nodes. Let's say for example that
+//! we find a `something().execute()`, its AST is like this:
+//!
+//! ```block
+//! JsCallExpression {
+//!     callee: JsStaticMember {
+//!         object: JsCallExpression {
+//!             callee: Reference {
+//!                 execute
+//!             }
+//!         }
+//!     }
+//! }
+//! ```
+//!
+//! When we track the first [rome_js_syntax::JsCallExpression], we hold basically all the children,
+//! that applies for the rest of the nodes. If we decided to format all the children of each node,
+//! we will risk to format the last node, the `Reference`, four times.
+//!
+//! To avoid this, when we encounter particular nodes, we don't format all of its children, but defer
+//! the formatting to the child itself.
+//!
+//! The end result of the flattening, will create an array of something like this:
+//!
+//! ```block
+//! [ Identifier, JsCallExpression, JsStaticMember, JsCallExpression ]
+//! ```
+//!
+//! ### Grouping
+//!
+//! After the flattening, we start the grouping. We want to group nodes in a way that will help us
+//! to apply a deterministic formatting.
+//! - first group will be the identifier
+//! - the rest of the groups will be  will start StaticMemberExpression followed by the rest of the nodes,
+//! right before the end of the next StaticMemberExpression
+//!
+//! The first group is special, because it holds the reference; it has its own heuristic.
+//! Inside the first group we store the first element of the flattened array, then:
+//!
+//! 1. as many as [rome_js_syntax::JsCallExpression] we can find, this cover cases like
+//! `something()()().then()`;
+//! 2. as many as [rome_js_syntax::JsComputedMemberExpression] we can find, this cover cases like
+//! `something()()[1][3].then()`;
+//! 3. as many as consecutive [rome_js_syntax::JsStaticMemberExpression] or [rome_js_syntax::JsComputedMemberExpression], this cover cases like
+//! `this.items[0].then()`
+//!
+//! The rest of the groups are essentially a sequence of `[StaticMemberExpression , CallExpression]`.
+//! In order to achieve that, we simply start looping through the rest of the flatten items that we haven't seen.
+//!
+//! Eventually, we should have something like this:
+//!
+//! ```block
+//! [
+//!     [ReferenceIdentifier, CallExpression], // with possible computed expressions in the middle
+//!     [StaticMemberExpression, StaticMemberExpression, CallExpression],
+//!     [StaticMemberExpression, CallExpression],
+//!     [StaticMemberExpression],
+//! ]
+//! ```
 mod chain_member;
 mod groups;
 mod simple_argument;

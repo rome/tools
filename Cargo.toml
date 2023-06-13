@@ -73,3 +73,14 @@ rome_js_analyze  = { path = "./crates/rome_js_analyze" }
 schemars = { version = "0.8.10" }
 
 
+[profile.dev.package.rome_wasm]
+opt-level = 1
+debug = true
+
+[profile.test.package.rome_wasm]
+opt-level = 1
+debug = true
+
+[profile.release.package.rome_wasm]
+opt-level = 3
+debug = false

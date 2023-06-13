@@ -1,5 +1,5 @@
+//! Provides a sample language implementation that is useful in API explanation or tests
 use crate::raw_language::RawLanguageKind::{COMMA_TOKEN, LITERAL_EXPRESSION, ROOT};
-///! Provides a sample language implementation that is useful in API explanation or tests
 use crate::{
     AstNode, AstSeparatedList, Language, ParsedChildren, RawNodeSlots, RawSyntaxKind,
     RawSyntaxNode, SyntaxFactory, SyntaxKind, SyntaxKindSet, SyntaxList, SyntaxNode, TreeBuilder,
