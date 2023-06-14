@@ -6,6 +6,7 @@ on:
       - main
     paths: # Only run when changes are made to rust code or root Cargo
       - 'crates/**'
+      - 'fuzz/**'
       - 'xtask/**'
       - 'Cargo.toml'
       - 'Cargo.lock'
@@ -82,6 +83,20 @@ jobs:
         run: cargo nextest run --workspace --verbose
       - name: Run doctests
         run: cargo test --doc
+
+  fuzz-all:
+    name: Build and init fuzzers
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Install toolchain
+        uses: moonrepo/setup-rust@v0
+        with:
+          bins: cargo-fuzz
+      - name: Run init-fuzzer
+        run: bash fuzz/init-fuzzer.sh
 
   test-node-api:
     name: Test node.js API
