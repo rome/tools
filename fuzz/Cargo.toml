@@ -102,14 +102,18 @@ path = "fuzz_targets/rome_format_tsx.rs"
 name = "rome_format_typescript"
 path = "fuzz_targets/rome_format_typescript.rs"
 
+# enabling debug seems to cause a massive use of RAM (>12GB)
 [profile.release]
-opt-level = 2
-debug = true
+opt-level = 3
+#debug = true
+debug = false
 
 [profile.dev]
-opt-level = 2
-debug = true
+opt-level = 3
+#debug = true
+debug = false
 
 [profile.test]
-opt-level = 2
-debug = true
+opt-level = 3
+#debug = true
+debug = false

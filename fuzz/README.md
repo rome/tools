@@ -21,7 +21,7 @@ without it (very unlikely for the fuzzer to generate valid python code from "thi
 Once you have initialised the fuzzers, you can then execute any fuzzer with:
 
 ```bash
-cargo fuzz run -s none name_of_fuzzer -- -timeout=1
+cargo fuzz run --strip-dead-code -s none name_of_fuzzer -- -timeout=1
 ```
 
 **Users using Apple M1 devices must use a nightly compiler and omit the `-s none` portion of this
@@ -40,7 +40,7 @@ triggered with a smaller input.
 `cargo-fuzz` supports this out of the box with:
 
 ```bash
-cargo fuzz tmin -s none name_of_fuzzer artifacts/name_of_fuzzer/crash-...
+cargo fuzz tmin --strip-dead-code -s none name_of_fuzzer artifacts/name_of_fuzzer/crash-...
 ```
 
 From here, you will need to analyse the input and potentially the behaviour of the program.
@@ -117,3 +117,10 @@ Of particular note: these fuzzers may have false negative results if e.g. two to
 one token and the reformatting result is the same.
 Unfortunately, we can't necessarily control for this because the formatter may reorganise the
 sequence of tokens.
+
+## Errata
+
+Unfortunately, `--strip-dead-code` is necessary to build the target with a suitable amount of
+memory.
+This seems to be caused by some issue in LLVM, but I haven't been able to spend the time to
+investigate this fully yet.
