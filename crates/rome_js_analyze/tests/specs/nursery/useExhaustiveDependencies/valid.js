@@ -127,3 +127,41 @@ const MyComponent11 = React.memo(() => {
         console.log(outside);
     });
 });
+
+// exported functions
+export function MyComponent12() {
+    let a = 1;
+    useEffect(() => {
+        console.log(a);
+    }, [a]);
+}
+
+export default function MyComponent13() {
+    let a = 1;
+    useEffect(() => {
+        console.log(a);
+    }, [a]);
+}
+
+// named function
+function MyComponent14() {
+    let a = 1;
+    useEffect(function inner() {
+        console.log(a);
+    }, [a]);
+}
+
+function MyComponent15() {
+    let a = 1;
+    useEffect(async function inner() {
+        console.log(a);
+    }, [a]);
+}
+
+// React.useXXX case
+function MyComponent16() {
+    let a = 1;
+    React.useEffect(() => {
+        console.log(a);
+    }, [a]);
+}

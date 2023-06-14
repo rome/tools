@@ -1,6 +1,6 @@
 use std::collections::{HashMap, HashSet};
 
-use rome_js_semantic::{Capture, ClosureExtensions, SemanticModel};
+use rome_js_semantic::{Capture, Closure, ClosureExtensions, SemanticModel};
 use rome_js_syntax::{
     binding_ext::AnyJsIdentifierBinding, AnyJsExpression, JsArrayBindingPattern,
     JsArrayBindingPatternElementList, JsArrowFunctionExpression, JsCallExpression,
@@ -19,6 +19,15 @@ pub(crate) struct ReactCallWithDependencyResult {
 pub enum AnyJsFunctionExpression {
     JsArrowFunctionExpression(JsArrowFunctionExpression),
     JsFunctionExpression(JsFunctionExpression),
+}
+
+impl AnyJsFunctionExpression {
+    fn closure(&self, model: &SemanticModel) -> Closure {
+        match self {
+            Self::JsArrowFunctionExpression(arrow_function) => arrow_function.closure(model),
+            Self::JsFunctionExpression(function) => function.closure(model),
+        }
+    }
 }
 
 impl TryFrom<AnyJsExpression> for AnyJsFunctionExpression {
@@ -118,14 +127,15 @@ pub(crate) fn react_hook_with_dependency(
     call: &JsCallExpression,
     hooks: &HashMap<String, ReactHookConfiguration>,
 ) -> Option<ReactCallWithDependencyResult> {
-    let name = call
-        .callee()
-        .ok()?
-        .as_js_identifier_expression()?
-        .name()
-        .ok()?
-        .value_token()
-        .ok()?;
+    let name = match call.callee().ok()? {
+        AnyJsExpression::JsIdentifierExpression(identifier) => {
+            Some(identifier.name().ok()?.value_token().ok()?)
+        }
+        AnyJsExpression::JsStaticMemberExpression(member) => {
+            Some(member.member().ok()?.as_js_name()?.value_token().ok()?)
+        }
+        _ => None,
+    }?;
     let function_name_range = name.text_trimmed_range();
     let name = name.text_trimmed();
 

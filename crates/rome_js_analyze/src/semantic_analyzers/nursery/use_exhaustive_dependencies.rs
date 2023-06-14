@@ -489,6 +489,7 @@ fn function_of_hook_call(call: &JsCallExpression) -> Option<JsSyntaxNode> {
         matches!(
             x.kind(),
             JsSyntaxKind::JS_FUNCTION_DECLARATION
+                | JsSyntaxKind::JS_FUNCTION_EXPORT_DEFAULT_DECLARATION
                 | JsSyntaxKind::JS_FUNCTION_EXPRESSION
                 | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION
         )

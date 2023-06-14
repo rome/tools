@@ -12,7 +12,7 @@ enum A { B = 1 }
 abstract class C { static D = 1 }
 class D {
     constructor() {
-        
+
     }
 }
 
@@ -28,4 +28,13 @@ function MyComponent() {
         console.log(new D());
         console.log(M.f());
     }, []);
+}
+
+// Capturing an object property with optional chaining
+export function MyComponent2() {
+    let selectedArticle: { redirectUrl: string } | undefined;
+
+    useEffect(() => {
+        if (selectedArticle?.redirectUrl) {}
+    }, [selectedArticle?.redirectUrl]);
 }
