@@ -36,6 +36,10 @@
 ### Linter
 
 - Fix a crash in the `NoParameterAssign` rule that occurred when there was a bogus binding. [#4323](https://github.com/rome/tools/issues/4323)
+- Fix useExhaustiveDependencies rule in the following cases [#4330](https://github.com/rome/tools/issues/4330)
+  - when the first argument of hooks is a named function
+  - inside an export default function
+  - for React.use* hooks
 
 #### Other changes
 
