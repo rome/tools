@@ -124,14 +124,14 @@ impl Diagnostic for BpafError {
     }
 
     fn description(&self, fmt: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        if let bpaf::ParseFailure::Stderr(reason) = &self.error {
+        if let bpaf::ParseFailure::Stderr(reason, boo) = &self.error {
             write!(fmt, "{}", reason)?;
         }
         Ok(())
     }
 
     fn message(&self, fmt: &mut fmt::Formatter<'_>) -> io::Result<()> {
-        if let bpaf::ParseFailure::Stderr(reason) = &self.error {
+        if let bpaf::ParseFailure::Stderr(reason, _) = &self.error {
             let error = reason.to_string();
             fmt.write_str(&error)?;
         }

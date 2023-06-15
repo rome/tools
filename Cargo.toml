@@ -34,7 +34,7 @@ tokio = { version = "~1.18.5" }
 insta = "1.21.2"
 quote = { version = "1.0.21" }
 lazy_static = "1.4.0"
-bpaf = { version = "0.8.0", features = ["derive"] }
+bpaf = { git = "https://github.com/pacak/bpaf.git", branch = "rc-0.9.0", version = "0.8.0", features = ["derive"] }
 bitflags = "2.2.1"
 rome_rowan = { version = "0.0.1", path = "./crates/rome_rowan" }
 rome_console = { version = "0.0.1", path = "./crates/rome_console" }
