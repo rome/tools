@@ -15,26 +15,14 @@ expression: content
 ## `fix.js`
 
 ```js
-
-(1 >= -0)
-
-```
-
-# Termination Message
-
-```block
-internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × No files were processed in the specified paths.
-  
-
+1 >= 0;
 
 ```
 
 # Emitted Messages
 
 ```block
-Fixed 0 file(s) in <TIME>
+Fixed 1 file(s) in <TIME>
 ```
 
 

@@ -1,9 +1,9 @@
 use crate::cli_options::CliOptions;
-use crate::configuration::load_configuration;
+use crate::configuration::{load_configuration, LoadedConfiguration};
 use crate::vcs::store_path_to_ignore_from_vcs;
 use crate::{execute_mode, CliDiagnostic, CliSession, Execution, TraversalMode};
 use rome_console::{markup, ConsoleExt};
-use rome_diagnostics::{DiagnosticExt, PrintDiagnostic, Severity};
+use rome_diagnostics::{PrintDiagnostic, Severity};
 use rome_service::configuration::organize_imports::OrganizeImports;
 use rome_service::configuration::{FormatterConfiguration, LinterConfiguration};
 use rome_service::workspace::{FixFileMode, UpdateSettingsParams};
@@ -53,17 +53,20 @@ pub(crate) fn check(
         Some(FixFileMode::SafeAndUnsafeFixes)
     };
 
-    let (mut fs_configuration, diagnostics, configuration_path) =
-        load_configuration(&mut session, &cli_options)?.consume();
+    let LoadedConfiguration {
+        configuration: mut fs_configuration,
+        diagnostics,
+        directory_path: configuration_path,
+        ..
+    } = load_configuration(&mut session, &cli_options)?;
     if !diagnostics.is_empty() {
         let console = &mut session.app.console;
         console.log(markup!{
-           <Warn>"Found errors in the configuration file, Rome will use its defaults for the sections that are incorrect."</Warn>
+           <Error>"Found errors in the configuration file, Rome will use its defaults for the sections that are incorrect."</Error>
         });
         for diagnostic in diagnostics {
-            let diagnostic = diagnostic.with_severity(Severity::Warning);
-            console.log(markup! {
-                {PrintDiagnostic::verbose(&diagnostic)}
+            console.error(markup! {
+				{if cli_options.verbose { PrintDiagnostic::verbose(&diagnostic) } else { PrintDiagnostic::simple(&diagnostic) }}
             })
         }
     }

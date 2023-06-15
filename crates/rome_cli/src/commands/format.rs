@@ -1,5 +1,5 @@
 use crate::cli_options::CliOptions;
-use crate::configuration::load_configuration;
+use crate::configuration::{load_configuration, LoadedConfiguration};
 use crate::execute::ReportMode;
 use crate::vcs::store_path_to_ignore_from_vcs;
 use crate::{execute_mode, CliDiagnostic, CliSession, Execution, TraversalMode};
@@ -38,8 +38,12 @@ pub(crate) fn format(
         files_configuration,
         write,
     } = payload;
-    let (mut configuration, diagnostics, configuration_path) =
-        load_configuration(&mut session, &cli_options)?.consume();
+    let LoadedConfiguration {
+        mut configuration,
+        diagnostics,
+        directory_path: configuration_path,
+        ..
+    } = load_configuration(&mut session, &cli_options)?;
     if !diagnostics.is_empty() {
         let console = &mut session.app.console;
         console.log(markup!{

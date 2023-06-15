@@ -1,4 +1,5 @@
 use crate::cli_options::CliOptions;
+use crate::configuration::LoadedConfiguration;
 use crate::vcs::store_path_to_ignore_from_vcs;
 use crate::{
     configuration::load_configuration, execute_mode, CliDiagnostic, CliSession, Execution,
@@ -23,14 +24,18 @@ pub(crate) struct CiCommandPayload {
 
 /// Handler for the "ci" command of the Rome CLI
 pub(crate) fn ci(mut session: CliSession, payload: CiCommandPayload) -> Result<(), CliDiagnostic> {
-    let (mut configuration, diagnostics, configuration_path) =
-        load_configuration(&mut session, &payload.cli_options)?.consume();
+    let LoadedConfiguration {
+        mut configuration,
+        diagnostics,
+        directory_path: configuration_path,
+        ..
+    } = load_configuration(&mut session, &payload.cli_options)?;
 
     if !diagnostics.is_empty() {
         let console = &mut session.app.console;
         for diagnostic in diagnostics {
             console.error(markup! {
-                {PrintDiagnostic::verbose(&diagnostic)}
+				{if payload.cli_options.verbose { PrintDiagnostic::verbose(&diagnostic) } else { PrintDiagnostic::simple(&diagnostic) }}
             })
         }
         return Err(CliDiagnostic::incompatible_end_configuration(

@@ -42,6 +42,30 @@ expression: content
 # Emitted Messages
 
 ```block
+fix.js format ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Formatter would have printed the following content:
+  
+    1   │ - 
+    2   │ - ····→ → LOOP:·for·(const·x·of·xs)·{
+    3   │ - ····→ → ····if·(x·>·0)·{
+    4   │ - ····→ → ········break;
+    5   │ - ····→ → ····}
+    6   │ - ····→ → ····f(x);
+    7   │ - ····→ → }
+    8   │ - → → 
+      1 │ + LOOP:·for·(const·x·of·xs)·{
+      2 │ + → if·(x·>·0)·{
+      3 │ + → → break;
+      4 │ + → }
+      5 │ + → f(x);
+      6 │ + }
+      7 │ + 
+  
+
+```
+
+```block
 Checked 1 file(s) in <TIME>
 ```
 

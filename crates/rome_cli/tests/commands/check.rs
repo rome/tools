@@ -424,7 +424,7 @@ fn no_lint_if_linter_is_disabled_when_run_apply() {
         ]),
     );
 
-    assert!(result.is_err(), "run_cli returned {result:?}");
+    assert!(result.is_ok(), "run_cli returned {result:?}");
 
     let mut buffer = String::new();
     fs.open(file_path)
@@ -432,7 +432,7 @@ fn no_lint_if_linter_is_disabled_when_run_apply() {
         .read_to_string(&mut buffer)
         .unwrap();
 
-    assert_eq!(buffer, FIX_BEFORE);
+    assert_eq!(buffer, FIX_AFTER);
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
@@ -460,7 +460,7 @@ fn no_lint_if_linter_is_disabled() {
         Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
     );
 
-    assert!(result.is_err(), "run_cli returned {result:?}");
+    assert!(result.is_ok(), "run_cli returned {result:?}");
 
     let mut buffer = String::new();
     fs.open(file_path)

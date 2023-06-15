@@ -2,6 +2,7 @@ mod commands;
 mod configs;
 #[cfg(test)]
 mod snap_test;
+mod cases;
 
 #[cfg(test)]
 use snap_test::assert_cli_snapshot;

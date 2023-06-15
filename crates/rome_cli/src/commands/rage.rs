@@ -165,9 +165,8 @@ impl Display for RageConfiguration<'_, '_> {
 
         match load_config(self.0, ConfigurationBasePath::default()) {
             Ok(None) => KeyValuePair("Status", markup!(<Dim>"unset"</Dim>)).fmt(fmt)?,
-            Ok(Some(deserialized)) => {
-                let (deserialized, _) = deserialized;
-                let (configuration, diagnostics) = deserialized.consume();
+            Ok(Some(result)) => {
+                let (configuration, diagnostics) = result.deserialized.consume();
                 let status = if !diagnostics.is_empty() {
                     for diagnostic in diagnostics {
                         (markup! {

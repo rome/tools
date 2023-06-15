@@ -3,6 +3,7 @@ use crate::configuration::parse::json::vcs::validate_vcs_configuration;
 use crate::configuration::vcs::VcsConfiguration;
 use crate::configuration::{
     FilesConfiguration, FormatterConfiguration, JavascriptConfiguration, LinterConfiguration,
+    StringSet,
 };
 use crate::Configuration;
 use rome_deserialize::json::{has_only_known_keys, VisitJsonNode};
@@ -63,6 +64,11 @@ impl VisitNode<JsonLanguage> for Configuration {
                 let mut organize_imports = OrganizeImports::default();
                 self.map_to_object(&value, name_text, &mut organize_imports, diagnostics)?;
                 self.organize_imports = Some(organize_imports);
+            }
+            "extends" => {
+                self.extends = self
+                    .map_to_index_set_string(&value, name_text, diagnostics)
+                    .map(StringSet::new);
             }
             _ => {}
         }

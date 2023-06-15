@@ -10,7 +10,7 @@ Run the formatter on a set of files.
 Usage: [--write] [<PATH>]...
 
 Available positional items:
-    <PATH>  Single file, single path or list of paths
+    <PATH>  Single file, single path or list of paths.
 
 Available options:
   Options applied to the formatter
@@ -44,7 +44,7 @@ Available options:
                        that doesn't know
 
         --stdin-file-path <PATH>  A file name with its extension to pass when reading from standard
-                       in, e.g. echo 'let a;' | rome format --stdin-file-path=file.js"
+                       in, e.g. echo 'let a;' | rome format --stdin-file-path=file.js".
   Global options applied to all commands
         --colors <off|force>  Set the formatting mode for markup: "off" prints everything as plain
                        text, "force" forces the formatting of markup using ANSI even if the console
@@ -58,7 +58,7 @@ Available options:
                        diagnostic.
         --json         Reports information using the JSON format
 
-        --write
+        --write        Writes formatted files to file system.
     -h, --help         Prints help information
 
 ```

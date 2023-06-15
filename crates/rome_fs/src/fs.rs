@@ -36,12 +36,24 @@ pub trait FileSystem: Send + Sync + RefUnwindSafe {
     /// Checks if the given path exists in the file system
     fn path_exists(&self, path: &Path) -> bool;
 
+    /// Method that takes a path to a folder `file_path`, and a `file_name`. It attempts to find
+    /// and read the file from that folder and if not found, it reads the parent directories recursively
+    /// until:
+    /// - the file is found, then it reads and return its contents
+    /// - the file is not found
+    ///
+    /// If `should_error_if_file_not_found` it `true`, it returns an error.
+    ///
+    /// ## Errors
+    ///
+    /// - The file can't be read
+    ///
     fn auto_search(
         &self,
         mut file_path: PathBuf,
         file_name: &str,
         should_error_if_file_not_found: bool,
-    ) -> Result<Option<(String, PathBuf)>, FileSystemDiagnostic> {
+    ) -> Result<Option<AutoSearchResult>, FileSystemDiagnostic> {
         let mut from_parent = false;
         let mut file_directory_path = file_path.join(file_name);
         loop {
@@ -66,7 +78,11 @@ pub trait FileSystem: Send + Sync + RefUnwindSafe {
                     );
                     }
 
-                    return Ok(Some((buffer, file_path)));
+                    return Ok(Some(AutoSearchResult {
+                        content: buffer,
+                        file_path: file_directory_path,
+                        directory_path: file_path,
+                    }));
                 }
                 Err(err) => {
                     // base paths from users are not eligible for auto discovery
@@ -109,6 +125,16 @@ pub trait FileSystem: Send + Sync + RefUnwindSafe {
             };
         }
     }
+}
+
+/// Result of the auto search
+pub struct AutoSearchResult {
+    /// The content of the file
+    pub content: String,
+    /// The path of the directory where the file was found
+    pub directory_path: PathBuf,
+    /// The path of the file found
+    pub file_path: PathBuf,
 }
 
 pub trait File {

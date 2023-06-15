@@ -104,6 +104,17 @@ pub(crate) fn process_file(ctx: &TraversalOptions, path: &Path) -> FileResult {
                 })
                 .and(
                     file_features
+                        .support_kind_for(&FeatureName::Format)
+                        .and_then(|support_kind| {
+                            if support_kind.is_not_enabled() {
+                                Some(support_kind)
+                            } else {
+                                None
+                            }
+                        }),
+                )
+                .and(
+                    file_features
                         .support_kind_for(&FeatureName::OrganizeImports)
                         .and_then(|support_kind| {
                             if support_kind.is_not_enabled() {
@@ -323,7 +334,7 @@ pub(crate) fn process_file(ctx: &TraversalOptions, path: &Path) -> FileResult {
                     if ctx.execution.as_fix_file_mode().is_some() {
                         true
                     } else {
-                        return Ok(result);
+                        false
                     }
                 }
                 TraversalMode::CI { .. } => false,

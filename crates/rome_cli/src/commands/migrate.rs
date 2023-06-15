@@ -1,5 +1,5 @@
 use crate::cli_options::CliOptions;
-use crate::configuration::load_configuration;
+use crate::configuration::{load_configuration, LoadedConfiguration};
 use crate::diagnostics::MigrationDiagnostic;
 use crate::execute::{execute_mode, Execution, TraversalMode};
 use crate::{CliDiagnostic, CliSession};
@@ -10,7 +10,12 @@ pub(crate) fn migrate(
     cli_options: CliOptions,
     write: bool,
 ) -> Result<(), CliDiagnostic> {
-    let (_, _, path) = load_configuration(&mut session, &cli_options)?.consume();
+    let LoadedConfiguration {
+        configuration: _,
+        diagnostics: _,
+        directory_path: path,
+        ..
+    } = load_configuration(&mut session, &cli_options)?;
     let config_name = session.app.fs.config_name();
     if let Some(path) = path {
         execute_mode(

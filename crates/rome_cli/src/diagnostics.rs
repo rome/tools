@@ -163,10 +163,16 @@ pub struct CheckError {
     action_kind: CheckActionKind,
 }
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Clone, Copy)]
 pub enum CheckActionKind {
     Check,
     Apply,
+}
+
+impl Debug for CheckActionKind {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self, f)
+    }
 }
 
 impl Display for CheckActionKind {
@@ -688,7 +694,7 @@ mod test {
     fn termination_diagnostic_size() {
         assert_eq!(
             std::mem::size_of::<CliDiagnostic>(),
-            88,
+            104,
             "you successfully decreased the size of the diagnostic!"
         )
     }

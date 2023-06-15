@@ -5,7 +5,7 @@
 
 use crate::{DynRef, WorkspaceError, VERSION};
 use bpaf::Bpaf;
-use rome_fs::{FileSystem, OpenOptions};
+use rome_fs::{AutoSearchResult, FileSystem, OpenOptions};
 use serde::{Deserialize, Serialize};
 use std::fmt::Debug;
 use std::io::ErrorKind;
@@ -80,6 +80,11 @@ pub struct Configuration {
     #[serde(skip_serializing_if = "Option::is_none")]
     #[bpaf(external(javascript_configuration), optional)]
     pub javascript: Option<JavascriptConfiguration>,
+
+    /// A list of paths to other JSON files, used to extends the current configuration.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(hide)]
+    pub extends: Option<StringSet>,
 }
 
 impl Default for Configuration {
@@ -95,6 +100,7 @@ impl Default for Configuration {
             javascript: None,
             schema: None,
             vcs: None,
+            extends: None,
         }
     }
 }
@@ -108,6 +114,7 @@ impl Configuration {
         "javascript",
         "$schema",
         "organizeImports",
+        "extends",
     ];
     pub fn is_formatter_disabled(&self) -> bool {
         self.formatter
@@ -271,10 +278,18 @@ impl MergeWith<FilesConfiguration> for FilesConfiguration {
 
 /// - [Result]: if an error occurred while loading the configuration file.
 /// - [Option]: sometimes not having a configuration file should not be an error, so we need this type.
-/// - [Deserialized]: result of the deserialization of the configuration.
-/// - [Configuration]: the type needed to [Deserialized] to infer the return type.
-/// - [PathBuf]: the path of where the first `rome.json` path was found
-type LoadConfig = Result<Option<(Deserialized<Configuration>, PathBuf)>, WorkspaceError>;
+/// - [ConfigurationPayload]: The result of the operation
+type LoadConfig = Result<Option<ConfigurationPayload>, WorkspaceError>;
+
+pub struct ConfigurationPayload {
+    /// The result of the deserialization
+    pub deserialized: Deserialized<Configuration>,
+    /// The path of where the `rome.json` file was found. This contains the `rome.json` name.
+    pub configuration_file_path: PathBuf,
+    /// The base path of where the `rome.json` file was found.
+    /// This has to be used to resolve other configuration files.
+    pub configuration_directory_path: PathBuf,
+}
 
 #[derive(Debug, Default, PartialEq)]
 pub enum ConfigurationBasePath {
@@ -323,10 +338,19 @@ pub fn load_config(
 
     let result = file_system.auto_search(configuration_directory, config_name, should_error)?;
 
-    if let Some((buffer, configuration_path)) = result {
-        let deserialized = deserialize_from_json_str::<Configuration>(&buffer)
+    if let Some(auto_search_result) = result {
+        let AutoSearchResult {
+            content,
+            directory_path,
+            file_path,
+        } = auto_search_result;
+        let deserialized = deserialize_from_json_str::<Configuration>(&content)
             .with_file_path(&configuration_file_path.display().to_string());
-        Ok(Some((deserialized, configuration_path)))
+        Ok(Some(ConfigurationPayload {
+            deserialized,
+            configuration_file_path: file_path,
+            configuration_directory_path: directory_path,
+        }))
     } else {
         Ok(None)
     }

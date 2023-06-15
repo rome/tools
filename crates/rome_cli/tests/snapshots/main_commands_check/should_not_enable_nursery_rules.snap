@@ -37,6 +37,16 @@ if (true) {
 # Emitted Messages
 
 ```block
+fix.ts format ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Formatter would have printed the following content:
+  
+    7 │ → → 
+      │ ----
+
+```
+
+```block
 Checked 1 file(s) in <TIME>
 ```
 
