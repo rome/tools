@@ -17,7 +17,7 @@ invalidFunctionParameter.js:1:12 lint/nursery/useNamingConvention  FIXABLE  ━�
   > 1 │ function f(A, SpecialParameter, _snake_case, CONSTANT_CASE) {}
       │            ^
   
-  i The name is currently in numberable capital case.
+  i The name could be renamed to `a`.
   
   i Safe fix: Rename this symbol in camelCase.
   
@@ -35,7 +35,7 @@ invalidFunctionParameter.js:1:15 lint/nursery/useNamingConvention  FIXABLE  ━�
   > 1 │ function f(A, SpecialParameter, _snake_case, CONSTANT_CASE) {}
       │               ^^^^^^^^^^^^^^^^
   
-  i The name is currently in PascalCase.
+  i The name could be renamed to `specialParameter`.
   
   i Safe fix: Rename this symbol in camelCase.
   
@@ -48,12 +48,12 @@ invalidFunctionParameter.js:1:15 lint/nursery/useNamingConvention  FIXABLE  ━�
 ```
 invalidFunctionParameter.js:1:33 lint/nursery/useNamingConvention  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This function parameter name should be in camelCase.
+  ! This function parameter name trimmed as `snake_case` should be in camelCase.
   
   > 1 │ function f(A, SpecialParameter, _snake_case, CONSTANT_CASE) {}
       │                                 ^^^^^^^^^^^
   
-  i The name is currently in snake_case.
+  i The name could be renamed to `_snakeCase`.
   
   i Safe fix: Rename this symbol in camelCase.
   
@@ -71,7 +71,7 @@ invalidFunctionParameter.js:1:46 lint/nursery/useNamingConvention  FIXABLE  ━�
   > 1 │ function f(A, SpecialParameter, _snake_case, CONSTANT_CASE) {}
       │                                              ^^^^^^^^^^^^^
   
-  i The name is currently in CONSTANT_CASE.
+  i The name could be renamed to `constantCase`.
   
   i Safe fix: Rename this symbol in camelCase.
   

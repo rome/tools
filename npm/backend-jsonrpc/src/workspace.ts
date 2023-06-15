@@ -911,11 +911,11 @@ export interface HooksOptions {
  */
 export interface NamingConventionOptions {
 	/**
-	 * Allowed [Case] for _TypeScript_ `enum` member names.
+	 * Allowed cases for _TypeScript_ `enum` member names.
 	 */
 	enumMemberCase: EnumMemberCase;
 	/**
-	 * If `false`, then consecutive uppercase are allowed in [Case::camelCase] and [Case::PascalCase]. This does not affect other [Case].
+	 * If `false`, then consecutive uppercase are allowed in _camel_ and _pascal_ cases. This does not affect other [Case].
 	 */
 	strictCase: boolean;
 }
@@ -1101,6 +1101,7 @@ export type Category =
 	| "lint/nursery/useLiteralKeys"
 	| "lint/nursery/useSimpleNumberKeys"
 	| "lint/nursery/noStaticOnlyClass"
+	| "lint/nursery/useNamingConvention"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"

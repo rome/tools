@@ -3,7 +3,7 @@ use std::str::FromStr;
 use crate::{
     control_flow::AnyJsControlFlowRoot,
     semantic_services::Semantic,
-    utils::case::{Case, Decomposed},
+    utils::case::Case,
     utils::rename::{AnyJsRenamableDeclaration, RenameSymbolExtensions},
     JsRuleAction,
 };
@@ -42,7 +42,7 @@ declare_rule! {
     ///
     /// ## Naming conventions
     ///
-    /// All names can be prefixed and suffixed by one or two underscores `_`, or a dollar sign `$`.
+    /// All names can be prefixed and suffixed by underscores `_` and dollar signs `$`.
     ///
     /// ### Variables
     ///
@@ -93,13 +93,47 @@ declare_rule! {
     /// function trim(s) { /*...*/ }
     /// ```
     ///
-    /// `function` names in `PascalCase` are also supported.
+    /// `function` names in `PascalCase` are also supported:
     ///
-    /// ### `import` and `export`
+    /// ```jsx
+    /// function Component() {
+    ///     return <div></div>;
+    /// }
+    /// ```
     ///
-    /// ### `class`, `interface`, and literal object `type`
+    /// ### `enum`
     ///
-    /// A `class` and a _TypeScript_ `interface` names should be in `PascalCase`.
+    /// A _TypeScript_ `enum` name should be in `PascalCase`.
+    /// `enum` members are by default in `PascalCase`.
+    /// However, you can configure the case of `enum` members.
+    /// See [options](#options) for more details.
+    ///
+    /// ```ts
+    /// enum Status {
+    ///     Open,
+    ///     Close,
+    /// }
+    /// ```
+    ///
+    /// ### Type names
+    ///
+    /// All `class` names, `interface` names, `type` names, and type parameters should be in `PascalCase`.
+    ///
+    /// ```ts
+    /// type Name = string;
+    ///
+    /// interface Named { /* ... */ }
+    ///
+    /// class Person { /* ... */ }
+    /// ```
+    ///
+    /// Examples of incorrect names:
+    ///
+    /// ```ts,expect_diagnostic
+    /// type person = { name: string };
+    /// ```
+    ///
+    /// ### Properties and methods
     ///
     /// Properties and methods should be in `camelCase`.
     ///
@@ -150,20 +184,6 @@ declare_rule! {
     /// }
     /// ```
     ///
-    /// ### `enum`
-    ///
-    /// A _TypeScript_ `enum` name should be in `PascalCase`.
-    /// `enum` members are by default in `PascalCase`.
-    /// However, you can configure the case of `enum` members.
-    /// See [options](#options) for more details.
-    ///
-    /// ```ts
-    /// enum Status {
-    ///     Open,
-    ///     Close,
-    /// }
-    /// ```
-    ///
     /// ### `namespace`
     ///
     /// A _TypeScript_ `namespace` should be either in `camelCase` or in `PascalCase`.
@@ -174,48 +194,14 @@ declare_rule! {
     /// }
     /// ```
     ///
-    /// ### Literal objects
-    ///
-    /// Properties and methods of literal objects should be in `camelCase`.
-    ///
-    /// ```js
-    /// const book = {
-    ///     authorName: "Isaac Asimov",
-    ///     name: "Foundation"
-    /// };
-    /// ```
-    ///
-    /// ### `type` alias
-    ///
-    /// A _TypeScript_ `type` alias should be in `PascalCase`:
-    ///
-    /// ```ts
-    /// type Person = { name: string };
-    /// ```
-    ///
-    /// A `type` that aliases a primitive type can also be in `camelCase`:
-    ///
-    /// ```ts
-    /// type integer = number;
-    /// ```
-    ///
-    /// Examples of incorrect names:
-    ///
-    /// ```ts,expect_diagnostic
-    /// type PERSON = { name: string };
-    /// ```
-    ///
-    /// ```ts,expect_diagnostic
-    /// type bool = Boolean;
-    /// ```
     /// ### `import` and `export`
     ///
     /// Namespaced `import * as` and `export * as` should be in `camelCase`.
     ///
     /// ```js
-    /// import * as myLib from "myLib";
+    /// import * as myLib from "my-lib";
     ///
-    /// export * as myLib from "myLib";
+    /// export * as myLib from "my-lib";
     /// ```
     ///
     /// `import` and `export` aliases should be in `camelCase`, `PascalCase`, or `CONSTANT_CASE`:
@@ -227,24 +213,10 @@ declare_rule! {
     /// } from "node:assert";
     /// ```
     ///
-    /// ### Type parameters `<T>`
-    ///
-    /// _Type parameters_, also named _generics_, may appear in _TypeScript_ source files.
-    /// They are declared between enclosing angle brackets.
-    ///
-    /// A type parameter name must consist of a uppercase character and may be followed by a number.
-    /// Thus, `T`, `T1`, and `T42` are valid names.
-    ///
-    /// ```ts
-    /// function id<T>(val: T): T { return val; }
-    ///
-    /// type Pair<E1, E2> = [E1, E2];
-    /// ```
-    ///
-    /// Example of incorrect name:
+    /// Examples of incorrect names:
     ///
     /// ```ts,expect_diagnostic
-    /// function id<Val>(val: Val): T { return val; }
+    /// import * as MyLib from "my-lib";
     /// ```
     ///
     /// ## Options
@@ -304,95 +276,63 @@ impl Rule for UseNamingConvention {
         }
         let name_token = node.name_token().ok()?;
         let name = name_token.text_trimmed();
-        let Decomposed {
-            prefix,
-            main,
-            suffix,
-        } = Decomposed::from(name);
-        let actual_case = Case::identify(main, options.strict_case);
-        let issue = if !matches!(prefix, "" | "_" | "__" | "$") {
-            Invalid::Prefix
-        } else if !matches!(suffix, "" | "_" | "__" | "$") {
-            Invalid::Suffix
-        } else {
-            if main.is_empty()
-                || allowed_cases
-                    .iter()
-                    .any(|&expected_style| actual_case.is_compatible_with(expected_style))
-            {
-                // Valid case
-                return None;
-            }
-            Invalid::Case(actual_case)
-        };
+        let trimmed_name = trim_underscore_dollar(name);
+        let actual_case = Case::identify(trimmed_name, options.strict_case);
+        if trimmed_name.is_empty()
+            || allowed_cases
+                .iter()
+                .any(|&expected_style| actual_case.is_compatible_with(expected_style))
+        {
+            // Valid case
+            return None;
+        }
+        let preferred_case = element.allowed_cases(ctx.options())[0];
+        let new_trimmed_name = preferred_case.convert(trimmed_name);
+        let suggested_name = name.replace(trimmed_name, &new_trimmed_name);
         Some(State {
             element,
-            invalid: issue,
+            suggested_name,
         })
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
         let State {
             element,
-            invalid: issue,
+            suggested_name,
         } = state;
-        let node = ctx.query();
-        let name_token = node.name_token().ok()?;
+        let name_token = ctx.query().name_token().ok()?;
         let name = name_token.text_trimmed();
-        let node_range = node.syntax().text_trimmed_range();
-        let diagnostic = match issue {
-            Invalid::Case(actual_case) => {
-                let allowed_cases = element.allowed_cases(ctx.options());
-                let allowed_case_names = allowed_cases
-                    .iter()
-                    .map(|style| style.to_string())
-                    .collect::<SmallVec<[_; 3]>>()
-                    .join(" or ");
-                let mut diagnostic = RuleDiagnostic::new(
-                    rule_category!(),
-                    node_range,
-                    markup! {
-                        "This "<Emphasis>{element.to_string()}</Emphasis>" name should be in "<Emphasis>{allowed_case_names}</Emphasis>"."
-                    },
-                );
-                diagnostic = diagnostic.note(markup! {
-                    "The name is currently in "<Emphasis>{actual_case.to_string()}</Emphasis>"."
-                });
-                diagnostic
-            }
-            Invalid::Prefix => {
-                let Decomposed { prefix, .. } = Decomposed::from(name);
-                RuleDiagnostic::new(
-                    rule_category!(),
-                    node_range,
-                    markup! {
-                        "This "<Emphasis>{element.to_string()}</Emphasis>" name might only prefixed by "<Emphasis>"_"</Emphasis>" or "<Emphasis>"$"</Emphasis>"."
-                    },
-                ).note(markup! {
-                    "The current prefix is "<Emphasis>{prefix}</Emphasis>"."
-                })
-            }
-            Invalid::Suffix => {
-                let Decomposed { suffix, .. } = Decomposed::from(name);
-                RuleDiagnostic::new(
-                    rule_category!(),
-                    node_range,
-                    markup! {
-                        "This "<Emphasis>{element.to_string()}</Emphasis>" name might only be suffixed by "<Emphasis>"_"</Emphasis>" or "<Emphasis>"$"</Emphasis>"."
-                    },
-                ).note(markup! {
-                    "The current suffix is "<Emphasis>{suffix}</Emphasis>"."
-                })
-            }
+        let trimmed_name = trim_underscore_dollar(name);
+        let allowed_cases = element.allowed_cases(ctx.options());
+        let allowed_case_names = allowed_cases
+            .iter()
+            .map(|style| style.to_string())
+            .collect::<SmallVec<[_; 3]>>()
+            .join(" or ");
+        let trimmed_info = if name != trimmed_name {
+            markup! {" trimmed as `"{trimmed_name}"`"}.to_owned()
+        } else {
+            markup! {""}.to_owned()
         };
-        Some(diagnostic)
+        Some(RuleDiagnostic::new(
+            rule_category!(),
+            ctx.query().syntax().text_trimmed_range(),
+            markup! {
+                "This "<Emphasis>{element.to_string()}</Emphasis>" name"{trimmed_info}" should be in "<Emphasis>{allowed_case_names}</Emphasis>"."
+            },
+        ).note(markup! {
+            "The name could be renamed to `"{suggested_name}"`."
+        }))
     }
 
     fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
         let node = ctx.query();
         let model = ctx.model();
         let mut mutation = ctx.root().begin();
-        let State { element, invalid } = state;
+        let State {
+            element,
+            suggested_name,
+        } = state;
         let renamable = match node {
             AnyName::JsIdentifierBinding(binding) => {
                 if binding.is_exported(model) {
@@ -418,51 +358,13 @@ impl Rule for UseNamingConvention {
             _ => None,
         };
         if let Some(renamable) = renamable {
-            let name_token = node.name_token().ok()?;
-            let Decomposed {
-                mut prefix,
-                main,
-                mut suffix,
-            } = Decomposed::from(name_token.text_trimmed());
-            prefix = if prefix.contains("__") {
-                "__"
-            } else if prefix.contains('_') {
-                "_"
-            } else if prefix.contains('$') {
-                "$"
-            } else {
-                ""
-            };
-            suffix = if suffix.contains("__") {
-                "__"
-            } else if suffix.contains('_') {
-                "_"
-            } else if suffix.contains('$') {
-                "$"
-            } else {
-                ""
-            };
-            let message;
-            let mut new_name;
-            match invalid {
-                Invalid::Case(_) => {
-                    let preferred_case = element.allowed_cases(ctx.options())[0];
-                    new_name = preferred_case.convert(main);
-                    message = markup! { "Rename this symbol in "<Emphasis>{preferred_case.to_string()}</Emphasis>"." }.to_owned();
-                }
-                Invalid::Prefix | Invalid::Suffix => {
-                    new_name = main.to_string();
-                    message = markup! { "Rename with a recommended prefix and suffix." }.to_owned();
-                }
-            }
-            new_name.insert_str(0, prefix);
-            new_name.insert_str(new_name.len(), suffix);
-            let renamed = mutation.rename_any_renamable_node(model, renamable, &new_name[..]);
+            let preferred_case = element.allowed_cases(ctx.options())[0];
+            let renamed = mutation.rename_any_renamable_node(model, renamable, &suggested_name[..]);
             if renamed {
                 return Some(JsRuleAction {
                     category: ActionCategory::QuickFix,
                     applicability: Applicability::Always,
-                    message,
+                    message: markup! { "Rename this symbol in "<Emphasis>{preferred_case.to_string()}</Emphasis>"." }.to_owned(),
                     mutation,
                 });
             }
@@ -498,14 +400,7 @@ impl AnyName {
 #[derive(Debug)]
 pub(crate) struct State {
     element: Named,
-    invalid: Invalid,
-}
-
-#[derive(Debug)]
-enum Invalid {
-    Case(Case),
-    Prefix,
-    Suffix,
+    suggested_name: String,
 }
 
 /// Rule's options.
@@ -513,7 +408,7 @@ enum Invalid {
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct NamingConventionOptions {
-    /// If `false`, then consecutive uppercase are allowed in [Case::camelCase] and [Case::PascalCase].
+    /// If `false`, then consecutive uppercase are allowed in _camel_ and _pascal_ cases.
     /// This does not affect other [Case].
     #[bpaf(hide)]
     #[serde(
@@ -522,7 +417,7 @@ pub struct NamingConventionOptions {
     )]
     pub strict_case: bool,
 
-    /// Allowed [Case] for _TypeScript_ `enum` member names.
+    /// Allowed cases for _TypeScript_ `enum` member names.
     #[bpaf(hide)]
     #[serde(default, skip_serializing_if = "is_default")]
     pub enum_member_case: EnumMemberCase,
@@ -691,7 +586,6 @@ enum Named {
     ObjectProperty,
     ObjectSetter,
     ParameterProperty,
-    PrimitiveTypeAlias,
     TopLevelConst,
     TopLevelLet,
     TopLevelVar,
@@ -882,14 +776,7 @@ impl Named {
             | AnyJsBindingDeclaration::JsDefaultImportSpecifier(_)
             | AnyJsBindingDeclaration::JsNamedImportSpecifier(_) => Some(Named::ImportAlias),
             AnyJsBindingDeclaration::TsModuleDeclaration(_) => Some(Named::Namespace),
-            AnyJsBindingDeclaration::TsTypeAliasDeclaration(type_alias) => {
-                let ty = type_alias.ty().ok()?.omit_parentheses();
-                if ty.is_literal_type() || ty.is_primitive_type() {
-                    Some(Named::PrimitiveTypeAlias)
-                } else {
-                    Some(Named::TypeAlias)
-                }
-            }
+            AnyJsBindingDeclaration::TsTypeAliasDeclaration(_) => Some(Named::TypeAlias),
             AnyJsBindingDeclaration::JsClassDeclaration(_)
             | AnyJsBindingDeclaration::JsClassExpression(_)
             | AnyJsBindingDeclaration::JsClassExportDefaultDeclaration(_) => Some(Named::Class),
@@ -980,9 +867,11 @@ impl Named {
             | Named::TypeMethod
             | Named::TypeProperty
             | Named::TypeSetter => SmallVec::from_slice(&[Case::Camel]),
-            Named::Class | Named::Enum | Named::Interface | Named::TypeAlias => {
-                SmallVec::from_slice(&[Case::Pascal])
-            }
+            Named::Class
+            | Named::Enum
+            | Named::Interface
+            | Named::TypeAlias
+            | Named::TypeParameter => SmallVec::from_slice(&[Case::Pascal]),
             Named::ClassStaticGetter
             | Named::ClassStaticProperty
             | Named::TypeReadonlyProperty
@@ -992,10 +881,9 @@ impl Named {
                 SmallVec::from_slice(&[Case::Camel, Case::Pascal, Case::Constant])
             }
             Named::ExportSource | Named::ImportSource => SmallVec::new(),
-            Named::Function | Named::Namespace | Named::PrimitiveTypeAlias => {
+            Named::Function | Named::Namespace => {
                 SmallVec::from_slice(&[Case::Camel, Case::Pascal])
             }
-            Named::TypeParameter => SmallVec::from_slice(&[Case::NumberableCapital]),
         }
     }
 }
@@ -1033,7 +921,6 @@ impl std::fmt::Display for Named {
             Named::ObjectProperty => "object property",
             Named::ObjectSetter => "object setter",
             Named::ParameterProperty => "parameter property",
-            Named::PrimitiveTypeAlias => "primitive type alias",
             Named::TopLevelConst => "top-level const",
             Named::TopLevelLet => "top-level let",
             Named::TopLevelVar => "top-level var",
@@ -1047,4 +934,10 @@ impl std::fmt::Display for Named {
         };
         write!(f, "{}", repr)
     }
+}
+
+/// trim underscores and dollar signs from `name`.
+fn trim_underscore_dollar(name: &str) -> &str {
+    name.trim_start_matches(|c| c == '_' || c == '$')
+        .trim_end_matches(|c| c == '_' || c == '$')
 }

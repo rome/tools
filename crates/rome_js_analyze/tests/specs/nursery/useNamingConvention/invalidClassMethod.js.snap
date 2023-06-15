@@ -40,7 +40,7 @@ invalidClassMethod.js:2:5 lint/nursery/useNamingConvention ━━━━━━━
     3 │ 
     4 │     METHOD() {}
   
-  i The name is currently in numberable capital case.
+  i The name could be renamed to `m`.
   
 
 ```
@@ -57,7 +57,7 @@ invalidClassMethod.js:4:5 lint/nursery/useNamingConvention ━━━━━━━
     5 │ 
     6 │     AMethod() {}
   
-  i The name is currently in UPPERCASE.
+  i The name could be renamed to `method`.
   
 
 ```
@@ -74,7 +74,7 @@ invalidClassMethod.js:6:5 lint/nursery/useNamingConvention ━━━━━━━
     7 │ 
     8 │     method_1() {}
   
-  i The name is currently in unknown case.
+  i The name could be renamed to `aMethod`.
   
 
 ```
@@ -91,7 +91,7 @@ invalidClassMethod.js:8:5 lint/nursery/useNamingConvention ━━━━━━━
      9 │ 
     10 │     Unknown_Style() {}
   
-  i The name is currently in snake_case.
+  i The name could be renamed to `method1`.
   
 
 ```
@@ -108,7 +108,7 @@ invalidClassMethod.js:10:5 lint/nursery/useNamingConvention ━━━━━━�
     11 │ 
     12 │     #M() {}
   
-  i The name is currently in unknown case.
+  i The name could be renamed to `unknownStyle`.
   
 
 ```
@@ -125,7 +125,7 @@ invalidClassMethod.js:12:5 lint/nursery/useNamingConvention ━━━━━━�
     13 │ 
     14 │     #METHOD() {}
   
-  i The name is currently in numberable capital case.
+  i The name could be renamed to `m`.
   
 
 ```
@@ -142,7 +142,7 @@ invalidClassMethod.js:14:5 lint/nursery/useNamingConvention ━━━━━━�
     15 │ 
     16 │     #AMethod() {}
   
-  i The name is currently in UPPERCASE.
+  i The name could be renamed to `method`.
   
 
 ```
@@ -159,7 +159,7 @@ invalidClassMethod.js:16:5 lint/nursery/useNamingConvention ━━━━━━�
     17 │ 
     18 │     #method_1() {}
   
-  i The name is currently in unknown case.
+  i The name could be renamed to `aMethod`.
   
 
 ```
@@ -176,7 +176,7 @@ invalidClassMethod.js:18:5 lint/nursery/useNamingConvention ━━━━━━�
     19 │ 
     20 │     #Unknown_Style() {}
   
-  i The name is currently in snake_case.
+  i The name could be renamed to `method1`.
   
 
 ```
@@ -192,7 +192,7 @@ invalidClassMethod.js:20:5 lint/nursery/useNamingConvention ━━━━━━�
        │     ^^^^^^^^^^^^^^
     21 │ }
   
-  i The name is currently in unknown case.
+  i The name could be renamed to `unknownStyle`.
   
 
 ```

@@ -30,7 +30,7 @@ invalidTypeSetter.ts:2:9 lint/nursery/useNamingConvention ━━━━━━━�
     3 │ 
     4 │     set PROPERTY(x: unknown )
   
-  i The name is currently in numberable capital case.
+  i The name could be renamed to `x`.
   
 
 ```
@@ -47,7 +47,7 @@ invalidTypeSetter.ts:4:9 lint/nursery/useNamingConvention ━━━━━━━�
     5 │ 
     6 │     set SpecialProperty(x: unknown )
   
-  i The name is currently in UPPERCASE.
+  i The name could be renamed to `property`.
   
 
 ```
@@ -64,7 +64,7 @@ invalidTypeSetter.ts:6:9 lint/nursery/useNamingConvention ━━━━━━━�
     7 │ 
     8 │     set special_property(x: unknown )
   
-  i The name is currently in PascalCase.
+  i The name could be renamed to `specialProperty`.
   
 
 ```
@@ -81,7 +81,7 @@ invalidTypeSetter.ts:8:9 lint/nursery/useNamingConvention ━━━━━━━�
      9 │ 
     10 │     set Unknown_Style(x: unknown )
   
-  i The name is currently in snake_case.
+  i The name could be renamed to `specialProperty`.
   
 
 ```
@@ -97,7 +97,7 @@ invalidTypeSetter.ts:10:9 lint/nursery/useNamingConvention ━━━━━━━
        │         ^^^^^^^^^^^^^
     11 │ }
   
-  i The name is currently in unknown case.
+  i The name could be renamed to `unknownStyle`.
   
 
 ```

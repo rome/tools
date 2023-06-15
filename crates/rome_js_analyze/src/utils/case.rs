@@ -124,8 +124,8 @@ impl Case {
 
     /// Returns `true` if a name that respects `self` also respects `other`.
     ///
-    /// For example, a name in [Case::Lowercase] is also in [Case::Camel], [Case::Kebab] , and [Case::Snake].
-    /// Thus [Case::Lowercase] is compatible with [Case::Camel], [Case::Kebab] , and [Case::Snake].
+    /// For example, a name in [Case::Lower] is also in [Case::Camel], [Case::Kebab] , and [Case::Snake].
+    /// Thus [Case::Lower] is compatible with [Case::Camel], [Case::Kebab] , and [Case::Snake].
     ///
     /// Any [Case] is compatible with `Case::Unknown` and with itself.
     ///
@@ -293,44 +293,6 @@ impl std::fmt::Display for Case {
     }
 }
 
-/// Represents a string that contains a non-alphanumeric prefix and suffix.
-/// The remaining characters are the main part of the string.
-///
-/// Any field may contain an empty strings.
-#[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
-pub struct Decomposed<'a> {
-    pub prefix: &'a str,
-    pub main: &'a str,
-    pub suffix: &'a str,
-}
-
-impl<'a> From<&'a str> for Decomposed<'a> {
-    /// Decompose `value` into a non-alphanumeric `prefix` and `suffix` and keep the remaining
-    /// characters in `main`.
-    ///
-    /// ### Examples
-    ///
-    /// ```
-    /// use rome_js_analyze::utils::case::Decomposed;
-    ///
-    /// assert_eq!(Decomposed::from("id"), Decomposed { prefix: "", main: "id", suffix: "" });
-    /// assert_eq!(Decomposed::from("__id__"), Decomposed { prefix: "__", main: "id", suffix: "__" });
-    /// assert_eq!(Decomposed::from("_@_id_$_"), Decomposed { prefix: "_@_", main: "id", suffix: "_$_" });
-    /// assert_eq!(Decomposed::from("____"), Decomposed { prefix: "____", main: "", suffix: "" });
-    /// ```
-    fn from(value: &'a str) -> Decomposed {
-        let main = value.trim_start_matches(|c: char| !c.is_alphanumeric());
-        let prefix = &value[..value.len() - main.len()];
-        let main = main.trim_end_matches(|c: char| !c.is_alphanumeric());
-        let suffix = &value[prefix.len() + main.len()..];
-        Decomposed {
-            prefix,
-            main,
-            suffix,
-        }
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -390,58 +352,5 @@ mod tests {
         assert_eq!(Case::Upper.convert("Unknown_Style"), "UNKNOWNSTYLE");
 
         assert_eq!(Case::Unknown.convert("Unknown_Style"), "Unknown_Style");
-    }
-
-    #[test]
-    fn test_decomposed_from() {
-        assert_eq!(
-            Decomposed::from("_"),
-            Decomposed {
-                prefix: "_",
-                main: "",
-                suffix: ""
-            }
-        );
-        assert_eq!(
-            Decomposed::from("$"),
-            Decomposed {
-                prefix: "$",
-                main: "",
-                suffix: ""
-            }
-        );
-        assert_eq!(
-            Decomposed::from("___"),
-            Decomposed {
-                prefix: "___",
-                main: "",
-                suffix: ""
-            }
-        );
-        assert_eq!(
-            Decomposed::from("$$$"),
-            Decomposed {
-                prefix: "$$$",
-                main: "",
-                suffix: ""
-            }
-        );
-
-        assert_eq!(
-            Decomposed::from("__CONSTANT_CASE__"),
-            Decomposed {
-                prefix: "__",
-                main: "CONSTANT_CASE",
-                suffix: "__"
-            }
-        );
-        assert_eq!(
-            Decomposed::from("CONSTANT_CASE$"),
-            Decomposed {
-                prefix: "",
-                main: "CONSTANT_CASE",
-                suffix: "$"
-            }
-        );
     }
 }

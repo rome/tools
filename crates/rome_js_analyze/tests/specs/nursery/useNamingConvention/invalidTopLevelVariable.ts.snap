@@ -31,7 +31,7 @@ invalidTopLevelVariable.ts:1:14 lint/nursery/useNamingConvention ━━━━━
     2 │ 
     3 │ export var Unknown_Style_1 = 0
   
-  i The name is currently in unknown case.
+  i The name could be renamed to `unknownStyle`.
   
 
 ```
@@ -48,7 +48,7 @@ invalidTopLevelVariable.ts:3:12 lint/nursery/useNamingConvention ━━━━━
     4 │ 
     5 │ export let Unknown_Style_2 = 0
   
-  i The name is currently in unknown case.
+  i The name could be renamed to `unknownStyle1`.
   
 
 ```
@@ -65,7 +65,7 @@ invalidTopLevelVariable.ts:5:12 lint/nursery/useNamingConvention ━━━━━
     6 │ 
     7 │ export namespace X {
   
-  i The name is currently in unknown case.
+  i The name could be renamed to `unknownStyle2`.
   
 
 ```
@@ -81,7 +81,7 @@ invalidTopLevelVariable.ts:8:18 lint/nursery/useNamingConvention ━━━━━
      9 │ 
     10 │     export var Unknown_Style_1 = 0
   
-  i The name is currently in unknown case.
+  i The name could be renamed to `unknownStyle`.
   
 
 ```
@@ -98,7 +98,7 @@ invalidTopLevelVariable.ts:10:16 lint/nursery/useNamingConvention ━━━━�
     11 │ 
     12 │     export let Unknown_Style_2 = 0
   
-  i The name is currently in unknown case.
+  i The name could be renamed to `unknownStyle1`.
   
 
 ```
@@ -114,7 +114,7 @@ invalidTopLevelVariable.ts:12:16 lint/nursery/useNamingConvention ━━━━�
        │                ^^^^^^^^^^^^^^^
     13 │ }
   
-  i The name is currently in unknown case.
+  i The name could be renamed to `unknownStyle2`.
   
 
 ```

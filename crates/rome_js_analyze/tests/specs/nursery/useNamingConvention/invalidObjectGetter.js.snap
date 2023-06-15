@@ -26,7 +26,7 @@ invalidObjectGetter.js:2:9 lint/nursery/useNamingConvention ━━━━━━�
     3 │ 
     4 │     get special_property() {},
   
-  i The name is currently in PascalCase.
+  i The name could be renamed to `specialProperty`.
   
 
 ```
@@ -43,7 +43,7 @@ invalidObjectGetter.js:4:9 lint/nursery/useNamingConvention ━━━━━━�
     5 │ 
     6 │     get Unknown_Style() {},
   
-  i The name is currently in snake_case.
+  i The name could be renamed to `specialProperty`.
   
 
 ```
@@ -59,7 +59,7 @@ invalidObjectGetter.js:6:9 lint/nursery/useNamingConvention ━━━━━━�
       │         ^^^^^^^^^^^^^
     7 │ }
   
-  i The name is currently in unknown case.
+  i The name could be renamed to `unknownStyle`.
   
 
 ```

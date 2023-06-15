@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 96
+assertion_line: 100
 expression: invalidEnumMember.ts
 ---
 # Input
@@ -28,7 +28,7 @@ invalidEnumMember.ts:2:5 lint/nursery/useNamingConvention ━━━━━━━�
     3 │     CLOSE,
     4 │ }
   
-  i The name is currently in UPPERCASE.
+  i The name could be renamed to `Open`.
   
 
 ```
@@ -45,7 +45,7 @@ invalidEnumMember.ts:3:5 lint/nursery/useNamingConvention ━━━━━━━�
     4 │ }
     5 │ 
   
-  i The name is currently in UPPERCASE.
+  i The name could be renamed to `Close`.
   
 
 ```
@@ -61,7 +61,7 @@ invalidEnumMember.ts:7:5 lint/nursery/useNamingConvention ━━━━━━━�
     8 │     left,
     9 │ }
   
-  i The name is currently in lowercase.
+  i The name could be renamed to `Right`.
   
 
 ```
@@ -77,7 +77,7 @@ invalidEnumMember.ts:8:5 lint/nursery/useNamingConvention ━━━━━━━�
       │     ^^^^
     9 │ }
   
-  i The name is currently in lowercase.
+  i The name could be renamed to `Left`.
   
 
 ```

@@ -30,7 +30,7 @@ invalidTypeReadonlyProperty.ts:2:14 lint/nursery/useNamingConvention ━━━�
     3 │ 
     4 │     readonly SpecialProperty: unknown
   
-  i The name is currently in PascalCase.
+  i The name could be renamed to `initialized`.
   
 
 ```
@@ -47,7 +47,7 @@ invalidTypeReadonlyProperty.ts:4:14 lint/nursery/useNamingConvention ━━━�
     5 │ 
     6 │     readonly special_property: unknown
   
-  i The name is currently in PascalCase.
+  i The name could be renamed to `specialProperty`.
   
 
 ```
@@ -64,7 +64,7 @@ invalidTypeReadonlyProperty.ts:6:14 lint/nursery/useNamingConvention ━━━�
     7 │ 
     8 │     readonly Unknown_Style: unknown
   
-  i The name is currently in snake_case.
+  i The name could be renamed to `specialProperty`.
   
 
 ```
@@ -81,7 +81,7 @@ invalidTypeReadonlyProperty.ts:8:14 lint/nursery/useNamingConvention ━━━�
      9 │ 
     10 │     readonly Unknown_Init_Style: unknown
   
-  i The name is currently in unknown case.
+  i The name could be renamed to `unknownStyle`.
   
 
 ```
@@ -97,7 +97,7 @@ invalidTypeReadonlyProperty.ts:10:14 lint/nursery/useNamingConvention ━━━�
        │              ^^^^^^^^^^^^^^^^^^
     11 │ }
   
-  i The name is currently in unknown case.
+  i The name could be renamed to `unknownInitStyle`.
   
 
 ```

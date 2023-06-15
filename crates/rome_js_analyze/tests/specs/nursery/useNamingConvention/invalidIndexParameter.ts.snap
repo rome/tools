@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 96
+assertion_line: 100
 expression: invalidIndexParameter.ts
 ---
 # Input
@@ -26,7 +26,7 @@ invalidIndexParameter.ts:2:6 lint/nursery/useNamingConvention  FIXABLE  ━━�
     3 │ 
     4 │     [CONSTANT_CASE: number]: unknown
   
-  i The name is currently in PascalCase.
+  i The name could be renamed to `pascalCase`.
   
   i Safe fix: Rename this symbol in camelCase.
   
@@ -51,7 +51,7 @@ invalidIndexParameter.ts:4:6 lint/nursery/useNamingConvention  FIXABLE  ━━�
     5 │ 
     6 │     [snake_case: symbol]: unknown
   
-  i The name is currently in CONSTANT_CASE.
+  i The name could be renamed to `constantCase`.
   
   i Safe fix: Rename this symbol in camelCase.
   
@@ -76,7 +76,7 @@ invalidIndexParameter.ts:6:6 lint/nursery/useNamingConvention  FIXABLE  ━━�
       │      ^^^^^^^^^^
     7 │ }
   
-  i The name is currently in snake_case.
+  i The name could be renamed to `snakeCase`.
   
   i Safe fix: Rename this symbol in camelCase.
   

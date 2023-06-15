@@ -721,7 +721,6 @@ impl JsSyntaxKind {
             QUESTION2EQ => "??=",
             AT => "@",
             BACKTICK => "`",
-            HASH => "#",
             BREAK_KW => "break",
             CASE_KW => "case",
             CATCH_KW => "catch",

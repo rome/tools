@@ -718,11 +718,11 @@
 			"type": "object",
 			"properties": {
 				"enumMemberCase": {
-					"description": "Allowed [Case] for _TypeScript_ `enum` member names.",
+					"description": "Allowed cases for _TypeScript_ `enum` member names.",
 					"allOf": [{ "$ref": "#/definitions/EnumMemberCase" }]
 				},
 				"strictCase": {
-					"description": "If `false`, then consecutive uppercase are allowed in [Case::camelCase] and [Case::PascalCase]. This does not affect other [Case].",
+					"description": "If `false`, then consecutive uppercase are allowed in _camel_ and _pascal_ cases. This does not affect other [Case].",
 					"type": "boolean"
 				}
 			},

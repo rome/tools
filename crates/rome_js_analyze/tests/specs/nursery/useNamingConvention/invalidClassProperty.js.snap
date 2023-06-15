@@ -48,7 +48,7 @@ invalidClassProperty.js:2:5 lint/nursery/useNamingConvention ━━━━━━�
     3 │ 
     4 │     #X
   
-  i The name is currently in numberable capital case.
+  i The name could be renamed to `x`.
   
 
 ```
@@ -65,7 +65,7 @@ invalidClassProperty.js:4:5 lint/nursery/useNamingConvention ━━━━━━�
     5 │ 
     6 │     Initialized = 0
   
-  i The name is currently in numberable capital case.
+  i The name could be renamed to `x`.
   
 
 ```
@@ -82,7 +82,7 @@ invalidClassProperty.js:6:5 lint/nursery/useNamingConvention ━━━━━━�
     7 │ 
     8 │     #Initialized = 0
   
-  i The name is currently in PascalCase.
+  i The name could be renamed to `initialized`.
   
 
 ```
@@ -99,7 +99,7 @@ invalidClassProperty.js:8:5 lint/nursery/useNamingConvention ━━━━━━�
      9 │ 
     10 │     PROPERTY
   
-  i The name is currently in PascalCase.
+  i The name could be renamed to `initialized`.
   
 
 ```
@@ -116,7 +116,7 @@ invalidClassProperty.js:10:5 lint/nursery/useNamingConvention ━━━━━━
     11 │ 
     12 │     #PROPERTY
   
-  i The name is currently in UPPERCASE.
+  i The name could be renamed to `property`.
   
 
 ```
@@ -133,7 +133,7 @@ invalidClassProperty.js:12:5 lint/nursery/useNamingConvention ━━━━━━
     13 │ 
     14 │     SpecialProperty
   
-  i The name is currently in UPPERCASE.
+  i The name could be renamed to `property`.
   
 
 ```
@@ -150,7 +150,7 @@ invalidClassProperty.js:14:5 lint/nursery/useNamingConvention ━━━━━━
     15 │ 
     16 │     #SpecialProperty
   
-  i The name is currently in PascalCase.
+  i The name could be renamed to `specialProperty`.
   
 
 ```
@@ -167,7 +167,7 @@ invalidClassProperty.js:16:5 lint/nursery/useNamingConvention ━━━━━━
     17 │ 
     18 │     special_property
   
-  i The name is currently in PascalCase.
+  i The name could be renamed to `specialProperty`.
   
 
 ```
@@ -184,7 +184,7 @@ invalidClassProperty.js:18:5 lint/nursery/useNamingConvention ━━━━━━
     19 │ 
     20 │     #special_property
   
-  i The name is currently in snake_case.
+  i The name could be renamed to `specialProperty`.
   
 
 ```
@@ -201,7 +201,7 @@ invalidClassProperty.js:20:5 lint/nursery/useNamingConvention ━━━━━━
     21 │ 
     22 │     Unknown_Style
   
-  i The name is currently in snake_case.
+  i The name could be renamed to `specialProperty`.
   
 
 ```
@@ -218,7 +218,7 @@ invalidClassProperty.js:22:5 lint/nursery/useNamingConvention ━━━━━━
     23 │ 
     24 │     #Unknown_Style
   
-  i The name is currently in unknown case.
+  i The name could be renamed to `unknownStyle`.
   
 
 ```
@@ -235,7 +235,7 @@ invalidClassProperty.js:24:5 lint/nursery/useNamingConvention ━━━━━━
     25 │ 
     26 │     Unknown_Init_Style = 0
   
-  i The name is currently in unknown case.
+  i The name could be renamed to `unknownStyle`.
   
 
 ```
@@ -252,7 +252,7 @@ invalidClassProperty.js:26:5 lint/nursery/useNamingConvention ━━━━━━
     27 │ 
     28 │     #Unknown_Init_Style = 0
   
-  i The name is currently in unknown case.
+  i The name could be renamed to `unknownInitStyle`.
   
 
 ```
@@ -268,7 +268,7 @@ invalidClassProperty.js:28:5 lint/nursery/useNamingConvention ━━━━━━
        │     ^^^^^^^^^^^^^^^^^^^
     29 │ }
   
-  i The name is currently in unknown case.
+  i The name could be renamed to `unknownInitStyle`.
   
 
 ```

@@ -27,7 +27,7 @@ invalidClass.js:1:7 lint/nursery/useNamingConvention  FIXABLE  ━━━━━�
     2 │ 
     3 │ class camelCase {}
   
-  i The name is currently in lowercase.
+  i The name could be renamed to `C`.
   
   i Safe fix: Rename this symbol in PascalCase.
   
@@ -51,7 +51,7 @@ invalidClass.js:3:7 lint/nursery/useNamingConvention  FIXABLE  ━━━━━�
     4 │ 
     5 │ export default class default_class {}
   
-  i The name is currently in camelCase.
+  i The name could be renamed to `CamelCase`.
   
   i Safe fix: Rename this symbol in PascalCase.
   
@@ -77,7 +77,7 @@ invalidClass.js:5:22 lint/nursery/useNamingConvention ━━━━━━━━�
     6 │ 
     7 │ const x = class CLASS_EXPRESSION {}
   
-  i The name is currently in snake_case.
+  i The name could be renamed to `DefaultClass`.
   
 
 ```
@@ -94,7 +94,7 @@ invalidClass.js:7:17 lint/nursery/useNamingConvention  FIXABLE  ━━━━━�
     8 │ 
     9 │ class Unknown_Style {}
   
-  i The name is currently in CONSTANT_CASE.
+  i The name could be renamed to `ClassExpression`.
   
   i Safe fix: Rename this symbol in PascalCase.
   
@@ -118,7 +118,7 @@ invalidClass.js:9:7 lint/nursery/useNamingConvention  FIXABLE  ━━━━━�
   > 9 │ class Unknown_Style {}
       │       ^^^^^^^^^^^^^
   
-  i The name is currently in unknown case.
+  i The name could be renamed to `UnknownStyle`.
   
   i Safe fix: Rename this symbol in PascalCase.
   

@@ -34,7 +34,7 @@ invalidLocalVariable.js:2:11 lint/nursery/useNamingConvention  FIXABLE  ━━�
     3 │ 
     4 │     const PascalCaseConst = 0
   
-  i The name is currently in numberable capital case.
+  i The name could be renamed to `x`.
   
   i Safe fix: Rename this symbol in camelCase.
   
@@ -59,7 +59,7 @@ invalidLocalVariable.js:4:11 lint/nursery/useNamingConvention  FIXABLE  ━━�
     5 │ 
     6 │     let PascalCaseLet
   
-  i The name is currently in PascalCase.
+  i The name could be renamed to `pascalCaseConst`.
   
   i Safe fix: Rename this symbol in camelCase.
   
@@ -85,7 +85,7 @@ invalidLocalVariable.js:6:9 lint/nursery/useNamingConvention  FIXABLE  ━━━
     7 │ 
     8 │     var PascalCaseVar
   
-  i The name is currently in PascalCase.
+  i The name could be renamed to `pascalCaseLet`.
   
   i Safe fix: Rename this symbol in camelCase.
   
@@ -111,7 +111,7 @@ invalidLocalVariable.js:8:9 lint/nursery/useNamingConvention  FIXABLE  ━━━
      9 │ 
     10 │     const CONSTANT_CASE_CONST = 0
   
-  i The name is currently in PascalCase.
+  i The name could be renamed to `pascalCaseVar`.
   
   i Safe fix: Rename this symbol in camelCase.
   
@@ -137,7 +137,7 @@ invalidLocalVariable.js:10:11 lint/nursery/useNamingConvention  FIXABLE  ━━�
     11 │ 
     12 │     let CONSTANT_CASE_LET
   
-  i The name is currently in CONSTANT_CASE.
+  i The name could be renamed to `constantCaseConst`.
   
   i Safe fix: Rename this symbol in camelCase.
   
@@ -163,7 +163,7 @@ invalidLocalVariable.js:12:9 lint/nursery/useNamingConvention  FIXABLE  ━━�
     13 │ 
     14 │     var CONSTANT_CASE_VAR
   
-  i The name is currently in CONSTANT_CASE.
+  i The name could be renamed to `constantCaseLet`.
   
   i Safe fix: Rename this symbol in camelCase.
   
@@ -188,7 +188,7 @@ invalidLocalVariable.js:14:9 lint/nursery/useNamingConvention  FIXABLE  ━━�
        │         ^^^^^^^^^^^^^^^^^
     15 │ }
   
-  i The name is currently in CONSTANT_CASE.
+  i The name could be renamed to `constantCaseVar`.
   
   i Safe fix: Rename this symbol in camelCase.
   

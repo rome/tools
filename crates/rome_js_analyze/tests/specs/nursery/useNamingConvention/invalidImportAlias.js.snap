@@ -33,7 +33,7 @@ invalidImportAlias.js:1:15 lint/nursery/useNamingConvention  FIXABLE  ━━━�
     2 │ 
     3 │ import { Y as snake_case  } from ""
   
-  i The name is currently in unknown case.
+  i The name could be renamed to `xxXx`.
   
   i Safe fix: Rename this symbol in camelCase.
   
@@ -57,7 +57,7 @@ invalidImportAlias.js:3:15 lint/nursery/useNamingConvention  FIXABLE  ━━━�
     4 │ 
     5 │ import { X as XxXX } from ""
   
-  i The name is currently in snake_case.
+  i The name could be renamed to `snakeCase`.
   
   i Safe fix: Rename this symbol in camelCase.
   
@@ -83,7 +83,7 @@ invalidImportAlias.js:5:15 lint/nursery/useNamingConvention  FIXABLE  ━━━�
     6 │ 
     7 │ import { Y as snake_case  } from ""
   
-  i The name is currently in unknown case.
+  i The name could be renamed to `xxXx`.
   
   i Safe fix: Rename this symbol in camelCase.
   
@@ -109,7 +109,7 @@ invalidImportAlias.js:7:15 lint/nursery/useNamingConvention  FIXABLE  ━━━�
     8 │ 
     9 │ import XxXX from ""
   
-  i The name is currently in snake_case.
+  i The name could be renamed to `snakeCase`.
   
   i Safe fix: Rename this symbol in camelCase.
   
@@ -135,7 +135,7 @@ invalidImportAlias.js:9:8 lint/nursery/useNamingConvention  FIXABLE  ━━━�
     10 │ 
     11 │ import snake_case from ""
   
-  i The name is currently in unknown case.
+  i The name could be renamed to `xxXx`.
   
   i Safe fix: Rename this symbol in camelCase.
   
@@ -161,7 +161,7 @@ invalidImportAlias.js:11:8 lint/nursery/useNamingConvention  FIXABLE  ━━━�
     12 │ 
     13 │ import XxXX from ""
   
-  i The name is currently in snake_case.
+  i The name could be renamed to `snakeCase`.
   
   i Safe fix: Rename this symbol in camelCase.
   
@@ -187,7 +187,7 @@ invalidImportAlias.js:13:8 lint/nursery/useNamingConvention  FIXABLE  ━━━�
     14 │ 
     15 │ import snake_case from ""
   
-  i The name is currently in unknown case.
+  i The name could be renamed to `xxXx`.
   
   i Safe fix: Rename this symbol in camelCase.
   
@@ -211,7 +211,7 @@ invalidImportAlias.js:15:8 lint/nursery/useNamingConvention  FIXABLE  ━━━�
   > 15 │ import snake_case from ""
        │        ^^^^^^^^^^
   
-  i The name is currently in snake_case.
+  i The name could be renamed to `snakeCase`.
   
   i Safe fix: Rename this symbol in camelCase.
   

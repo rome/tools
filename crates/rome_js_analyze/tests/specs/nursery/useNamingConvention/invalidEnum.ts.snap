@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 96
+assertion_line: 100
 expression: invalidEnum.ts
 ---
 # Input
@@ -23,7 +23,7 @@ invalidEnum.ts:1:6 lint/nursery/useNamingConvention  FIXABLE  ━━━━━━
     2 │ 
     3 │ enum special_status {}
   
-  i The name is currently in camelCase.
+  i The name could be renamed to `SpecialStatus`.
   
   i Safe fix: Rename this symbol in PascalCase.
   
@@ -47,7 +47,7 @@ invalidEnum.ts:3:6 lint/nursery/useNamingConvention  FIXABLE  ━━━━━━
     4 │ 
     5 │ enum SPECIAL_STATUS {}
   
-  i The name is currently in snake_case.
+  i The name could be renamed to `SpecialStatus`.
   
   i Safe fix: Rename this symbol in PascalCase.
   
@@ -71,7 +71,7 @@ invalidEnum.ts:5:6 lint/nursery/useNamingConvention  FIXABLE  ━━━━━━
   > 5 │ enum SPECIAL_STATUS {}
       │      ^^^^^^^^^^^^^^
   
-  i The name is currently in CONSTANT_CASE.
+  i The name could be renamed to `SpecialStatus`.
   
   i Safe fix: Rename this symbol in PascalCase.
   

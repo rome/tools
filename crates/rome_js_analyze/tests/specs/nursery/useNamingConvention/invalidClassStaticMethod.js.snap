@@ -38,7 +38,7 @@ invalidClassStaticMethod.js:2:12 lint/nursery/useNamingConvention ━━━━�
     3 │ 
     4 │     static AMethod() {}
   
-  i The name is currently in UPPERCASE.
+  i The name could be renamed to `method`.
   
 
 ```
@@ -55,7 +55,7 @@ invalidClassStaticMethod.js:4:12 lint/nursery/useNamingConvention ━━━━�
     5 │ 
     6 │     static method_1() {}
   
-  i The name is currently in unknown case.
+  i The name could be renamed to `aMethod`.
   
 
 ```
@@ -72,7 +72,7 @@ invalidClassStaticMethod.js:6:12 lint/nursery/useNamingConvention ━━━━�
     7 │ 
     8 │     static Unknown_Style() {}
   
-  i The name is currently in snake_case.
+  i The name could be renamed to `method1`.
   
 
 ```
@@ -89,7 +89,7 @@ invalidClassStaticMethod.js:8:12 lint/nursery/useNamingConvention ━━━━�
      9 │ 
     10 │     static #M() {}
   
-  i The name is currently in unknown case.
+  i The name could be renamed to `unknownStyle`.
   
 
 ```
@@ -106,7 +106,7 @@ invalidClassStaticMethod.js:10:12 lint/nursery/useNamingConvention ━━━━�
     11 │ 
     12 │     static #METHOD() {}
   
-  i The name is currently in numberable capital case.
+  i The name could be renamed to `m`.
   
 
 ```
@@ -123,7 +123,7 @@ invalidClassStaticMethod.js:12:12 lint/nursery/useNamingConvention ━━━━�
     13 │ 
     14 │     static #AMethod() {}
   
-  i The name is currently in UPPERCASE.
+  i The name could be renamed to `method`.
   
 
 ```
@@ -140,7 +140,7 @@ invalidClassStaticMethod.js:14:12 lint/nursery/useNamingConvention ━━━━�
     15 │ 
     16 │     static #method_1() {}
   
-  i The name is currently in unknown case.
+  i The name could be renamed to `aMethod`.
   
 
 ```
@@ -157,7 +157,7 @@ invalidClassStaticMethod.js:16:12 lint/nursery/useNamingConvention ━━━━�
     17 │ 
     18 │     static #Unknown_Style() {}
   
-  i The name is currently in snake_case.
+  i The name could be renamed to `method1`.
   
 
 ```
@@ -173,7 +173,7 @@ invalidClassStaticMethod.js:18:12 lint/nursery/useNamingConvention ━━━━�
        │            ^^^^^^^^^^^^^^
     19 │ }
   
-  i The name is currently in unknown case.
+  i The name could be renamed to `unknownStyle`.
   
 
 ```

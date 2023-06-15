@@ -25,7 +25,7 @@ invalidExportAlias.js:1:15 lint/nursery/useNamingConvention ━━━━━━�
     2 │ 
     3 │ export { Y as snake_case  }
   
-  i The name is currently in unknown case.
+  i The name could be renamed to `xxXx`.
   
 
 ```
@@ -42,7 +42,7 @@ invalidExportAlias.js:3:15 lint/nursery/useNamingConvention ━━━━━━�
     4 │ 
     5 │ export { X as XxXX } from ""
   
-  i The name is currently in snake_case.
+  i The name could be renamed to `snakeCase`.
   
 
 ```
@@ -59,7 +59,7 @@ invalidExportAlias.js:5:15 lint/nursery/useNamingConvention ━━━━━━�
     6 │ 
     7 │ export { Y as snake_case  } from ""
   
-  i The name is currently in unknown case.
+  i The name could be renamed to `xxXx`.
   
 
 ```
@@ -74,7 +74,7 @@ invalidExportAlias.js:7:15 lint/nursery/useNamingConvention ━━━━━━�
   > 7 │ export { Y as snake_case  } from ""
       │               ^^^^^^^^^^
   
-  i The name is currently in snake_case.
+  i The name could be renamed to `snakeCase`.
   
 
 ```

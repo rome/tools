@@ -26,7 +26,7 @@ invalidCatchParameter.js:1:14 lint/nursery/useNamingConvention  FIXABLE  ━━�
     2 │ 
     3 │ try {} catch(SpecificError) {}
   
-  i The name is currently in numberable capital case.
+  i The name could be renamed to `e`.
   
   i Safe fix: Rename this symbol in camelCase.
   
@@ -50,7 +50,7 @@ invalidCatchParameter.js:3:14 lint/nursery/useNamingConvention  FIXABLE  ━━�
     4 │ 
     5 │ try {} catch(specific_error) {}
   
-  i The name is currently in PascalCase.
+  i The name could be renamed to `specificError`.
   
   i Safe fix: Rename this symbol in camelCase.
   
@@ -76,7 +76,7 @@ invalidCatchParameter.js:5:14 lint/nursery/useNamingConvention  FIXABLE  ━━�
     6 │ 
     7 │ try {} catch(SPECIFIC_ERROR) {}
   
-  i The name is currently in snake_case.
+  i The name could be renamed to `specificError`.
   
   i Safe fix: Rename this symbol in camelCase.
   
@@ -101,7 +101,7 @@ invalidCatchParameter.js:7:14 lint/nursery/useNamingConvention  FIXABLE  ━━�
       │              ^^^^^^^^^^^^^^
     8 │ 
   
-  i The name is currently in CONSTANT_CASE.
+  i The name could be renamed to `specificError`.
   
   i Safe fix: Rename this symbol in camelCase.
   

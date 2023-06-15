@@ -33,7 +33,7 @@ invalidNamespace.ts:1:18 lint/nursery/useNamingConvention ━━━━━━━�
     2 │ 
     3 │ export namespace CONSTANT_CASE {}
   
-  i The name is currently in UPPERCASE.
+  i The name could be renamed to `xxx`.
   
 
 ```
@@ -50,7 +50,7 @@ invalidNamespace.ts:3:18 lint/nursery/useNamingConvention ━━━━━━━�
     4 │ 
     5 │ export namespace snake_case {}
   
-  i The name is currently in CONSTANT_CASE.
+  i The name could be renamed to `constantCase`.
   
 
 ```
@@ -67,7 +67,7 @@ invalidNamespace.ts:5:18 lint/nursery/useNamingConvention ━━━━━━━�
     6 │ 
     7 │ export namespace Unknown_Style {}
   
-  i The name is currently in snake_case.
+  i The name could be renamed to `snakeCase`.
   
 
 ```
@@ -84,7 +84,7 @@ invalidNamespace.ts:7:18 lint/nursery/useNamingConvention ━━━━━━━�
     8 │ 
     9 │ namespace _XXX {}
   
-  i The name is currently in unknown case.
+  i The name could be renamed to `unknownStyle`.
   
 
 ```
@@ -92,7 +92,7 @@ invalidNamespace.ts:7:18 lint/nursery/useNamingConvention ━━━━━━━�
 ```
 invalidNamespace.ts:9:11 lint/nursery/useNamingConvention  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This namespace name should be in camelCase or PascalCase.
+  ! This namespace name trimmed as `XXX` should be in camelCase or PascalCase.
   
      7 │ export namespace Unknown_Style {}
      8 │ 
@@ -101,7 +101,7 @@ invalidNamespace.ts:9:11 lint/nursery/useNamingConvention  FIXABLE  ━━━━
     10 │ 
     11 │ namespace _CONSTANT_CASE {}
   
-  i The name is currently in UPPERCASE.
+  i The name could be renamed to `_xxx`.
   
   i Safe fix: Rename this symbol in camelCase.
   
@@ -118,7 +118,7 @@ invalidNamespace.ts:9:11 lint/nursery/useNamingConvention  FIXABLE  ━━━━
 ```
 invalidNamespace.ts:11:11 lint/nursery/useNamingConvention  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This namespace name should be in camelCase or PascalCase.
+  ! This namespace name trimmed as `CONSTANT_CASE` should be in camelCase or PascalCase.
   
      9 │ namespace _XXX {}
     10 │ 
@@ -127,7 +127,7 @@ invalidNamespace.ts:11:11 lint/nursery/useNamingConvention  FIXABLE  ━━━�
     12 │ 
     13 │ namespace _snake_case {}
   
-  i The name is currently in CONSTANT_CASE.
+  i The name could be renamed to `_constantCase`.
   
   i Safe fix: Rename this symbol in camelCase.
   
@@ -144,7 +144,7 @@ invalidNamespace.ts:11:11 lint/nursery/useNamingConvention  FIXABLE  ━━━�
 ```
 invalidNamespace.ts:13:11 lint/nursery/useNamingConvention  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This namespace name should be in camelCase or PascalCase.
+  ! This namespace name trimmed as `snake_case` should be in camelCase or PascalCase.
   
     11 │ namespace _CONSTANT_CASE {}
     12 │ 
@@ -153,7 +153,7 @@ invalidNamespace.ts:13:11 lint/nursery/useNamingConvention  FIXABLE  ━━━�
     14 │ 
     15 │ namespace _Unknown_Style {}
   
-  i The name is currently in snake_case.
+  i The name could be renamed to `_snakeCase`.
   
   i Safe fix: Rename this symbol in camelCase.
   
@@ -170,14 +170,14 @@ invalidNamespace.ts:13:11 lint/nursery/useNamingConvention  FIXABLE  ━━━�
 ```
 invalidNamespace.ts:15:11 lint/nursery/useNamingConvention  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This namespace name should be in camelCase or PascalCase.
+  ! This namespace name trimmed as `Unknown_Style` should be in camelCase or PascalCase.
   
     13 │ namespace _snake_case {}
     14 │ 
   > 15 │ namespace _Unknown_Style {}
        │           ^^^^^^^^^^^^^^
   
-  i The name is currently in unknown case.
+  i The name could be renamed to `_unknownStyle`.
   
   i Safe fix: Rename this symbol in camelCase.
   

@@ -25,7 +25,7 @@ invalidFunction.js:1:10 lint/nursery/useNamingConvention  FIXABLE  ━━━━�
     2 │ 
     3 │ function special_function() {}
   
-  i The name is currently in UPPERCASE.
+  i The name could be renamed to `person`.
   
   i Safe fix: Rename this symbol in camelCase.
   
@@ -49,7 +49,7 @@ invalidFunction.js:3:10 lint/nursery/useNamingConvention  FIXABLE  ━━━━�
     4 │ 
     5 │ function Unknown_Style() {}
   
-  i The name is currently in snake_case.
+  i The name could be renamed to `specialFunction`.
   
   i Safe fix: Rename this symbol in camelCase.
   
@@ -75,7 +75,7 @@ invalidFunction.js:5:10 lint/nursery/useNamingConvention  FIXABLE  ━━━━�
     6 │ 
     7 │ const g = function SPECIAL_FUNCTION() {}
   
-  i The name is currently in unknown case.
+  i The name could be renamed to `unknownStyle`.
   
   i Safe fix: Rename this symbol in camelCase.
   
@@ -99,7 +99,7 @@ invalidFunction.js:7:20 lint/nursery/useNamingConvention  FIXABLE  ━━━━�
   > 7 │ const g = function SPECIAL_FUNCTION() {}
       │                    ^^^^^^^^^^^^^^^^
   
-  i The name is currently in CONSTANT_CASE.
+  i The name could be renamed to `specialFunction`.
   
   i Safe fix: Rename this symbol in camelCase.
   

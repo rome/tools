@@ -40,7 +40,7 @@ invalidClassStaticSetter.js:2:16 lint/nursery/useNamingConvention ━━━━�
     3 │ 
     4 │     static set PROPERTY(x) {}
   
-  i The name is currently in numberable capital case.
+  i The name could be renamed to `x`.
   
 
 ```
@@ -57,7 +57,7 @@ invalidClassStaticSetter.js:4:16 lint/nursery/useNamingConvention ━━━━�
     5 │ 
     6 │     static set SpecialProperty(x) {}
   
-  i The name is currently in UPPERCASE.
+  i The name could be renamed to `property`.
   
 
 ```
@@ -74,7 +74,7 @@ invalidClassStaticSetter.js:6:16 lint/nursery/useNamingConvention ━━━━�
     7 │ 
     8 │     static set special_property(x) {}
   
-  i The name is currently in PascalCase.
+  i The name could be renamed to `specialProperty`.
   
 
 ```
@@ -91,7 +91,7 @@ invalidClassStaticSetter.js:8:16 lint/nursery/useNamingConvention ━━━━�
      9 │ 
     10 │     static set Unknown_Style(x) {}
   
-  i The name is currently in snake_case.
+  i The name could be renamed to `specialProperty`.
   
 
 ```
@@ -108,7 +108,7 @@ invalidClassStaticSetter.js:10:16 lint/nursery/useNamingConvention ━━━━�
     11 │ 
     12 │     static set #X(x) {}
   
-  i The name is currently in unknown case.
+  i The name could be renamed to `unknownStyle`.
   
 
 ```
@@ -125,7 +125,7 @@ invalidClassStaticSetter.js:12:16 lint/nursery/useNamingConvention ━━━━�
     13 │ 
     14 │     static set #PROPERTY(x) {}
   
-  i The name is currently in numberable capital case.
+  i The name could be renamed to `x`.
   
 
 ```
@@ -142,7 +142,7 @@ invalidClassStaticSetter.js:14:16 lint/nursery/useNamingConvention ━━━━�
     15 │ 
     16 │     static set #SpecialProperty(x) {}
   
-  i The name is currently in UPPERCASE.
+  i The name could be renamed to `property`.
   
 
 ```
@@ -159,7 +159,7 @@ invalidClassStaticSetter.js:16:16 lint/nursery/useNamingConvention ━━━━�
     17 │ 
     18 │     static set #special_property(x) {}
   
-  i The name is currently in PascalCase.
+  i The name could be renamed to `specialProperty`.
   
 
 ```
@@ -176,7 +176,7 @@ invalidClassStaticSetter.js:18:16 lint/nursery/useNamingConvention ━━━━�
     19 │ 
     20 │     static set #Unknown_Style(x) {}
   
-  i The name is currently in snake_case.
+  i The name could be renamed to `specialProperty`.
   
 
 ```
@@ -192,7 +192,7 @@ invalidClassStaticSetter.js:20:16 lint/nursery/useNamingConvention ━━━━�
        │                ^^^^^^^^^^^^^^
     21 │ }
   
-  i The name is currently in unknown case.
+  i The name could be renamed to `unknownStyle`.
   
 
 ```

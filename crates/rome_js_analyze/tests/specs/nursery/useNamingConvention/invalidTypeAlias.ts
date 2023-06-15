@@ -11,3 +11,5 @@ type _CONSTANT_CASE = {}
 type _snake_case = {}
 
 type _Unknown_Style = {}
+
+type str = string

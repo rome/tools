@@ -34,7 +34,7 @@ invalidClassStaticGetter.js:2:16 lint/nursery/useNamingConvention ━━━━�
     3 │ 
     4 │     static get special_property() {}
   
-  i The name is currently in PascalCase.
+  i The name could be renamed to `specialProperty`.
   
 
 ```
@@ -51,7 +51,7 @@ invalidClassStaticGetter.js:4:16 lint/nursery/useNamingConvention ━━━━�
     5 │ 
     6 │     static get Unknown_Style() {}
   
-  i The name is currently in snake_case.
+  i The name could be renamed to `specialProperty`.
   
 
 ```
@@ -68,7 +68,7 @@ invalidClassStaticGetter.js:6:16 lint/nursery/useNamingConvention ━━━━�
     7 │ 
     8 │     static get #X() {}
   
-  i The name is currently in unknown case.
+  i The name could be renamed to `unknownStyle`.
   
 
 ```
@@ -85,7 +85,7 @@ invalidClassStaticGetter.js:10:16 lint/nursery/useNamingConvention ━━━━�
     11 │ 
     12 │     static get #special_property() {}
   
-  i The name is currently in PascalCase.
+  i The name could be renamed to `specialProperty`.
   
 
 ```
@@ -102,7 +102,7 @@ invalidClassStaticGetter.js:12:16 lint/nursery/useNamingConvention ━━━━�
     13 │ 
     14 │     static get #Unknown_Style() {}
   
-  i The name is currently in snake_case.
+  i The name could be renamed to `specialProperty`.
   
 
 ```
@@ -118,7 +118,7 @@ invalidClassStaticGetter.js:14:16 lint/nursery/useNamingConvention ━━━━�
        │                ^^^^^^^^^^^^^^
     15 │ }
   
-  i The name is currently in unknown case.
+  i The name could be renamed to `unknownStyle`.
   
 
 ```

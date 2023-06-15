@@ -28,7 +28,7 @@ invalidTypeMethod.ts:2:5 lint/nursery/useNamingConvention ━━━━━━━�
     3 │ 
     4 │     AMethod(): unknown
   
-  i The name is currently in UPPERCASE.
+  i The name could be renamed to `method`.
   
 
 ```
@@ -45,7 +45,7 @@ invalidTypeMethod.ts:4:5 lint/nursery/useNamingConvention ━━━━━━━�
     5 │ 
     6 │     method_1(): unknown
   
-  i The name is currently in unknown case.
+  i The name could be renamed to `aMethod`.
   
 
 ```
@@ -62,7 +62,7 @@ invalidTypeMethod.ts:6:5 lint/nursery/useNamingConvention ━━━━━━━�
     7 │ 
     8 │     Unknown_Style(): unknown
   
-  i The name is currently in snake_case.
+  i The name could be renamed to `method1`.
   
 
 ```
@@ -78,7 +78,7 @@ invalidTypeMethod.ts:8:5 lint/nursery/useNamingConvention ━━━━━━━�
       │     ^^^^^^^^^^^^^
     9 │ }
   
-  i The name is currently in unknown case.
+  i The name could be renamed to `unknownStyle`.
   
 
 ```

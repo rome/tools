@@ -28,7 +28,7 @@ invalidImportNamespace.js:1:13 lint/nursery/useNamingConvention  FIXABLE  ━━
     2 │ 
     3 │ import * as PascalCase from ""
   
-  i The name is currently in numberable capital case.
+  i The name could be renamed to `x`.
   
   i Safe fix: Rename this symbol in camelCase.
   
@@ -52,7 +52,7 @@ invalidImportNamespace.js:3:13 lint/nursery/useNamingConvention  FIXABLE  ━━
     4 │ 
     5 │ import * as CONSTANT_CASE from ""
   
-  i The name is currently in PascalCase.
+  i The name could be renamed to `pascalCase`.
   
   i Safe fix: Rename this symbol in camelCase.
   
@@ -78,7 +78,7 @@ invalidImportNamespace.js:5:13 lint/nursery/useNamingConvention  FIXABLE  ━━
     6 │ 
     7 │ import * as snake_case from ""
   
-  i The name is currently in CONSTANT_CASE.
+  i The name could be renamed to `constantCase`.
   
   i Safe fix: Rename this symbol in camelCase.
   
@@ -104,7 +104,7 @@ invalidImportNamespace.js:7:13 lint/nursery/useNamingConvention  FIXABLE  ━━
     8 │ 
     9 │ import * as Unknown_Style from ""
   
-  i The name is currently in snake_case.
+  i The name could be renamed to `snakeCase`.
   
   i Safe fix: Rename this symbol in camelCase.
   
@@ -129,7 +129,7 @@ invalidImportNamespace.js:9:13 lint/nursery/useNamingConvention  FIXABLE  ━━
        │             ^^^^^^^^^^^^^
     10 │ 
   
-  i The name is currently in unknown case.
+  i The name could be renamed to `unknownStyle`.
   
   i Safe fix: Rename this symbol in camelCase.
   

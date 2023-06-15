@@ -29,7 +29,7 @@ invalidParameterProperty.ts:3:18 lint/nursery/useNamingConvention ━━━━�
     4 │ 
     5 │         protected CONSTANT_CASE: unknown,
   
-  i The name is currently in PascalCase.
+  i The name could be renamed to `pascalCase`.
   
 
 ```
@@ -46,7 +46,7 @@ invalidParameterProperty.ts:5:19 lint/nursery/useNamingConvention ━━━━�
     6 │ 
     7 │         public Unknown_Style: unknown,
   
-  i The name is currently in CONSTANT_CASE.
+  i The name could be renamed to `constantCase`.
   
 
 ```
@@ -63,7 +63,7 @@ invalidParameterProperty.ts:7:16 lint/nursery/useNamingConvention ━━━━�
     8 │     ) {}
     9 │ }
   
-  i The name is currently in unknown case.
+  i The name could be renamed to `unknownStyle`.
   
 
 ```
