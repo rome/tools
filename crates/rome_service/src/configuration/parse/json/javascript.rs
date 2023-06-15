@@ -137,12 +137,9 @@ impl VisitNode<JsonLanguage> for JavascriptParser {
     ) -> Option<()> {
         let (name, value) = self.get_key_and_value(key, value, diagnostics)?;
         let name_text = name.text();
-        match name_text {
-            "unsafeParameterDecoratorsEnabled" => {
-                self.unsafe_parameter_decorators_enabled =
-                    self.map_to_boolean(&value, name_text, diagnostics);
-            }
-            _ => {}
+        if name_text == "unsafeParameterDecoratorsEnabled" {
+            self.unsafe_parameter_decorators_enabled =
+                self.map_to_boolean(&value, name_text, diagnostics);
         }
 
         Some(())
