@@ -28,6 +28,19 @@
 	```
 	Doing so, Rome won't emit diagnostics for file that it doesn't know how to handle.
 
+- Add a new `"javascript"` option to support the usafe/experimental
+parameter decorators:
+
+	```json
+	{
+		"javascript": {
+			"parser": {
+				"unsafeParameterDecoratorsEnabled": true
+			}
+		}
+	}
+	```
+
 ### Editors
 ### Formatter
 
