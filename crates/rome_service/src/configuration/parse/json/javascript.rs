@@ -1,4 +1,4 @@
-use crate::configuration::javascript::JavascriptOrganizeImports;
+use crate::configuration::javascript::{JavascriptOrganizeImports, JavascriptParser};
 use crate::configuration::string_set::StringSet;
 use crate::configuration::{JavascriptConfiguration, JavascriptFormatter};
 use rome_deserialize::json::{has_only_known_keys, VisitJsonNode};
@@ -115,6 +115,36 @@ impl VisitNode<JsonLanguage> for JavascriptOrganizeImports {
         _value: &JsonSyntaxNode,
         _diagnostics: &mut Vec<DeserializationDiagnostic>,
     ) -> Option<()> {
+        Some(())
+    }
+}
+
+impl VisitJsonNode for JavascriptParser {}
+impl VisitNode<JsonLanguage> for JavascriptParser {
+    fn visit_member_name(
+        &mut self,
+        node: &JsonSyntaxNode,
+        diagnostics: &mut Vec<DeserializationDiagnostic>,
+    ) -> Option<()> {
+        has_only_known_keys(node, JavascriptParser::KNOWN_KEYS, diagnostics)
+    }
+
+    fn visit_map(
+        &mut self,
+        key: &SyntaxNode<JsonLanguage>,
+        value: &SyntaxNode<JsonLanguage>,
+        diagnostics: &mut Vec<DeserializationDiagnostic>,
+    ) -> Option<()> {
+        let (name, value) = self.get_key_and_value(key, value, diagnostics)?;
+        let name_text = name.text();
+        match name_text {
+            "unsafeParameterDecoratorsEnabled" => {
+                self.unsafe_parameter_decorators_enabled =
+                    self.map_to_boolean(&value, name_text, diagnostics);
+            }
+            _ => {}
+        }
+
         Some(())
     }
 }

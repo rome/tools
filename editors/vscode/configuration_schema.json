@@ -622,6 +622,12 @@
 						{ "$ref": "#/definitions/JavascriptOrganizeImports" },
 						{ "type": "null" }
 					]
+				},
+				"parser": {
+					"anyOf": [
+						{ "$ref": "#/definitions/JavascriptParser" },
+						{ "type": "null" }
+					]
 				}
 			},
 			"additionalProperties": false
@@ -631,12 +637,10 @@
 			"properties": {
 				"jsxQuoteStyle": {
 					"description": "The style for JSX quotes. Defaults to double.",
-					"default": null,
 					"anyOf": [{ "$ref": "#/definitions/QuoteStyle" }, { "type": "null" }]
 				},
 				"quoteProperties": {
 					"description": "When properties in objects are quoted. Defaults to asNeeded.",
-					"default": null,
 					"anyOf": [
 						{ "$ref": "#/definitions/QuoteProperties" },
 						{ "type": "null" }
@@ -644,17 +648,14 @@
 				},
 				"quoteStyle": {
 					"description": "The style for quotes. Defaults to double.",
-					"default": null,
 					"anyOf": [{ "$ref": "#/definitions/QuoteStyle" }, { "type": "null" }]
 				},
 				"semicolons": {
 					"description": "Whether the formatter prints semicolons for all statements or only in for statements where it is necessary because of ASI.",
-					"default": null,
 					"anyOf": [{ "$ref": "#/definitions/Semicolons" }, { "type": "null" }]
 				},
 				"trailingComma": {
 					"description": "Print trailing commas wherever possible in multi-line comma-separated syntactic structures. Defaults to \"all\".",
-					"default": null,
 					"anyOf": [
 						{ "$ref": "#/definitions/TrailingComma" },
 						{ "type": "null" }
@@ -665,6 +666,16 @@
 		},
 		"JavascriptOrganizeImports": {
 			"type": "object",
+			"additionalProperties": false
+		},
+		"JavascriptParser": {
+			"type": "object",
+			"properties": {
+				"unsafeParameterDecoratorsEnabled": {
+					"description": "It enables the experimental and unsafe parsing of parameter decorators\n\nThese decorators belong to an old proposal, and they are subject to change.",
+					"type": ["boolean", "null"]
+				}
+			},
 			"additionalProperties": false
 		},
 		"LineWidth": {
