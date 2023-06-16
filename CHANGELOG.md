@@ -11,6 +11,7 @@
 	```shell
 	rome format ./src --files-ignore-unknown=true
 	```
+
 	Doing so, Rome won't emit diagnostics for file that it doesn't know how to handle.
 
 ### Configuration
@@ -29,71 +30,80 @@
 	Doing so, Rome won't emit diagnostics for file that it doesn't know how to handle.
 
 ### Editors
+
 ### Formatter
 
 - Added a new option called `--jsx-quote-style` to the formatter. This option allows you to choose between single and double quotes for JSX attributes. [#4486](https://github.com/rome/tools/issues/4486)
 
 ### Linter
 
-- Fix a crash in the `NoParameterAssign` rule that occurred when there was a bogus binding. [#4323](https://github.com/rome/tools/issues/4323)
+#### BREAKING CHANGES
+
+- Remove `lint/complexity/noExtraSEmicolon` ([#4553](https://github.com/rome/tools/issues/4553))
+
+  The _Rome_ formatter takes care of removing extra semicolons.
+  Thus, there is no need for this rule.
 
 #### Other changes
 
 - `noRedeclare`: allow redeclare of index signatures are in different type members [#4478](https://github.com/rome/tools/issues/4478)
-- The rules [`useExhaustiveDependencies`](https://docs.rome.tools/lint/rules/useexhaustivedependencies/) and [`useHookAtTopLevel`](https://docs.rome.tools/lint/rules/usehookattoplevel/) accept a different
-	shape of options
 
-Old configuration
+- Fix a crash in the `NoParameterAssign` rule that occurred when there was a bogus binding. [#4323](https://github.com/rome/tools/issues/4323)
 
-```json
-{
-	"linter": {
-		"rules": {
-			"nursery": {
-				"useExhaustiveDependencies": {
-					"level": "error",
-					"options": {
-						"hooks": [
-							["useMyEffect", 0, 1]
-						]
-					}
-				}
-			}
-		}
-	}
-}
-```
+- The rules [`useExhaustiveDependencies`](https://docs.rome.tools/lint/rules/useexhaustivedependencies/) and [`useHookAtTopLevel`](https://docs.rome.tools/lint/rules/usehookattoplevel/) accept a different shape of options
 
-New configuration
-
-```json
-{
-	"linter": {
-		"rules": {
-			"nursery": {
-				"useExhaustiveDependencies": {
-					"level": "error",
-					"options": {
-						"hooks": [
-							{
-								"name": "useMyEffect",
-								"closureIndex": 0,
-								"dependenciesIndex": 1
-							}
-						]
-					}
-				}
-			}
-		}
-	}
-}
-```
-
-
+  Old configuration
+  
+  ```json
+  {
+  	"linter": {
+  		"rules": {
+  			"nursery": {
+  				"useExhaustiveDependencies": {
+  					"level": "error",
+  					"options": {
+  						"hooks": [
+  							["useMyEffect", 0, 1]
+  						]
+  					}
+  				}
+  			}
+  		}
+  	}
+  }
+  ```
+  
+  New configuration
+  
+  ```json
+  {
+  	"linter": {
+  		"rules": {
+  			"nursery": {
+  				"useExhaustiveDependencies": {
+  					"level": "error",
+  					"options": {
+  						"hooks": [
+  							{
+  								"name": "useMyEffect",
+  								"closureIndex": 0,
+  								"dependenciesIndex": 1
+  							}
+  						]
+  					}
+  				}
+  			}
+  		}
+  	}
+  }
+  ```
 
 ### Parser
+
 ### VSCode
+
 ### JavaScript APIs
+
 
 ## 12.1.3
 
@@ -120,7 +130,6 @@ was defined [#4479](https://github.com/rome/tools/issues/4479)
 
 - Fix false positive diagnostics ([#4483](https://github.com/rome/tools/issues/4483)) that [`useHookAtTopLevel`](https://docs.rome.tools/lint/rules/usehookattoplevel/) caused to returning call expressions of a hook.
 - Revert [#4359](https://github.com/rome/tools/issues/4359)
-- Remove `lint/complexity/noExtraSEmicolon` ([#4553](https://github.com/rome/tools/issues/4553))
 
 ### Parser
 
