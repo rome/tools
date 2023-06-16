@@ -2577,7 +2577,7 @@ pub struct Style {
     #[bpaf(long("use-const"), argument("on|off|warn"), optional, hide)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub use_const: Option<RuleConfiguration>,
-    #[doc = "Enforce default function parameters and optional parameters to be last."]
+    #[doc = "Enforce default function parameters and optional function parameters to be last."]
     #[bpaf(
         long("use-default-parameter-last"),
         argument("on|off|warn"),

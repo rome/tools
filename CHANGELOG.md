@@ -50,6 +50,12 @@
 
 - Fix a crash in the `NoParameterAssign` rule that occurred when there was a bogus binding. [#4323](https://github.com/rome/tools/issues/4323)
 
+- Improve the diagnostic and the code action of [`useDefaultParameterLast`](https://docs.rome.tools/lint/rules/usedefaultparameterlast/).
+
+  The diagnostic now reports the last required parameter which should precede optional and default parameters.
+
+  The code action now removes any whitespace between the parameter name and its initialization.
+
 - The rules [`useExhaustiveDependencies`](https://docs.rome.tools/lint/rules/useexhaustivedependencies/) and [`useHookAtTopLevel`](https://docs.rome.tools/lint/rules/usehookattoplevel/) accept a different shape of options
 
   Old configuration
@@ -72,7 +78,7 @@
   	}
   }
   ```
-  
+
   New configuration
   
   ```json

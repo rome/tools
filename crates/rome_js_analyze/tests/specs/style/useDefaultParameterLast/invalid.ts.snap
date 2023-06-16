@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 100
 expression: invalid.ts
 ---
 # Input
@@ -21,14 +22,14 @@ export class Foo {
 ```
 invalid.ts:1:30 lint/style/useDefaultParameterLast  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! The optional parameter should follow the required parameter or should be a required parameter.
+  ! This optional parameter should follow the last required parameter or should be a required parameter.
   
   > 1 │ export function h(a: number, b?: number, c: number) {}
       │                              ^^^^^^^^^^
     2 │ 
     3 │ export function l(a = 0, b?: number, c: number) {}
   
-  i The required parameter is here:
+  i The last required parameter is here:
   
   > 1 │ export function h(a: number, b?: number, c: number) {}
       │                                          ^^^^^^^^^
@@ -47,7 +48,7 @@ invalid.ts:1:30 lint/style/useDefaultParameterLast  FIXABLE  ━━━━━━�
 ```
 invalid.ts:3:19 lint/style/useDefaultParameterLast  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! The default parameter should follow the required parameter or should be a required parameter.
+  ! This default parameter should follow the last required parameter or should be a required parameter.
   
     1 │ export function h(a: number, b?: number, c: number) {}
     2 │ 
@@ -56,7 +57,7 @@ invalid.ts:3:19 lint/style/useDefaultParameterLast  FIXABLE  ━━━━━━�
     4 │ 
     5 │ export function f(a = 0, b = 0, c?: string, c: string) {}
   
-  i The required parameter is here:
+  i The last required parameter is here:
   
     1 │ export function h(a: number, b?: number, c: number) {}
     2 │ 
@@ -70,14 +71,14 @@ invalid.ts:3:19 lint/style/useDefaultParameterLast  FIXABLE  ━━━━━━�
   i Suggested fix: Turn the parameter into a required parameter.
   
     3 │ export·function·l(a·=·0,·b?:·number,·c:·number)·{}
-      │                     ---                           
+      │                    ----                           
 
 ```
 
 ```
 invalid.ts:3:26 lint/style/useDefaultParameterLast  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! The optional parameter should follow the required parameter or should be a required parameter.
+  ! This optional parameter should follow the last required parameter or should be a required parameter.
   
     1 │ export function h(a: number, b?: number, c: number) {}
     2 │ 
@@ -86,7 +87,7 @@ invalid.ts:3:26 lint/style/useDefaultParameterLast  FIXABLE  ━━━━━━�
     4 │ 
     5 │ export function f(a = 0, b = 0, c?: string, c: string) {}
   
-  i The required parameter is here:
+  i The last required parameter is here:
   
     1 │ export function h(a: number, b?: number, c: number) {}
     2 │ 
@@ -107,7 +108,7 @@ invalid.ts:3:26 lint/style/useDefaultParameterLast  FIXABLE  ━━━━━━�
 ```
 invalid.ts:5:19 lint/style/useDefaultParameterLast  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! The default parameter should follow the required parameter or should be a required parameter.
+  ! This default parameter should follow the last required parameter or should be a required parameter.
   
     3 │ export function l(a = 0, b?: number, c: number) {}
     4 │ 
@@ -116,7 +117,7 @@ invalid.ts:5:19 lint/style/useDefaultParameterLast  FIXABLE  ━━━━━━�
     6 │ 
     7 │ export function h(a/* before */?/* after */: number, b: number) {}
   
-  i The required parameter is here:
+  i The last required parameter is here:
   
     3 │ export function l(a = 0, b?: number, c: number) {}
     4 │ 
@@ -130,14 +131,14 @@ invalid.ts:5:19 lint/style/useDefaultParameterLast  FIXABLE  ━━━━━━�
   i Suggested fix: Turn the parameter into a required parameter.
   
     5 │ export·function·f(a·=·0,·b·=·0,·c?:·string,·c:·string)·{}
-      │                     ---                                  
+      │                    ----                                  
 
 ```
 
 ```
 invalid.ts:5:26 lint/style/useDefaultParameterLast  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! The default parameter should follow the required parameter or should be a required parameter.
+  ! This default parameter should follow the last required parameter or should be a required parameter.
   
     3 │ export function l(a = 0, b?: number, c: number) {}
     4 │ 
@@ -146,7 +147,7 @@ invalid.ts:5:26 lint/style/useDefaultParameterLast  FIXABLE  ━━━━━━�
     6 │ 
     7 │ export function h(a/* before */?/* after */: number, b: number) {}
   
-  i The required parameter is here:
+  i The last required parameter is here:
   
     3 │ export function l(a = 0, b?: number, c: number) {}
     4 │ 
@@ -160,14 +161,14 @@ invalid.ts:5:26 lint/style/useDefaultParameterLast  FIXABLE  ━━━━━━�
   i Suggested fix: Turn the parameter into a required parameter.
   
     5 │ export·function·f(a·=·0,·b·=·0,·c?:·string,·c:·string)·{}
-      │                            ---                           
+      │                           ----                           
 
 ```
 
 ```
 invalid.ts:5:33 lint/style/useDefaultParameterLast  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! The optional parameter should follow the required parameter or should be a required parameter.
+  ! This optional parameter should follow the last required parameter or should be a required parameter.
   
     3 │ export function l(a = 0, b?: number, c: number) {}
     4 │ 
@@ -176,7 +177,7 @@ invalid.ts:5:33 lint/style/useDefaultParameterLast  FIXABLE  ━━━━━━�
     6 │ 
     7 │ export function h(a/* before */?/* after */: number, b: number) {}
   
-  i The required parameter is here:
+  i The last required parameter is here:
   
     3 │ export function l(a = 0, b?: number, c: number) {}
     4 │ 
@@ -197,7 +198,7 @@ invalid.ts:5:33 lint/style/useDefaultParameterLast  FIXABLE  ━━━━━━�
 ```
 invalid.ts:7:19 lint/style/useDefaultParameterLast  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! The optional parameter should follow the required parameter or should be a required parameter.
+  ! This optional parameter should follow the last required parameter or should be a required parameter.
   
     5 │ export function f(a = 0, b = 0, c?: string, c: string) {}
     6 │ 
@@ -206,7 +207,7 @@ invalid.ts:7:19 lint/style/useDefaultParameterLast  FIXABLE  ━━━━━━�
     8 │ 
     9 │ export class Foo {
   
-  i The required parameter is here:
+  i The last required parameter is here:
   
     5 │ export function f(a = 0, b = 0, c?: string, c: string) {}
     6 │ 
@@ -227,14 +228,14 @@ invalid.ts:7:19 lint/style/useDefaultParameterLast  FIXABLE  ━━━━━━�
 ```
 invalid.ts:10:17 lint/style/useDefaultParameterLast  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! The default parameter should follow the required parameter or should be a required parameter.
+  ! This default parameter should follow the last required parameter or should be a required parameter.
   
      9 │ export class Foo {
   > 10 │     constructor(readonly a = 10, readonly b: number) {}
        │                 ^^^^^^^^^^^^^^^
     11 │ }
   
-  i The required parameter is here:
+  i The last required parameter is here:
   
      9 │ export class Foo {
   > 10 │     constructor(readonly a = 10, readonly b: number) {}
@@ -246,7 +247,7 @@ invalid.ts:10:17 lint/style/useDefaultParameterLast  FIXABLE  ━━━━━━
   i Suggested fix: Turn the parameter into a required parameter.
   
     10 │ ····constructor(readonly·a·=·10,·readonly·b:·number)·{}
-       │                            ----                        
+       │                           -----                        
 
 ```
 

@@ -1121,7 +1121,7 @@
 					]
 				},
 				"useDefaultParameterLast": {
-					"description": "Enforce default function parameters and optional parameters to be last.",
+					"description": "Enforce default function parameters and optional function parameters to be last.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }
