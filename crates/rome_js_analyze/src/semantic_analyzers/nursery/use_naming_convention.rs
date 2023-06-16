@@ -35,35 +35,31 @@ use schemars::JsonSchema;
 declare_rule! {
     /// Enforce naming conventions for everything across a codebase.
     ///
-    /// Enforcing naming conventions helps to keep the codebase consistent,
-    /// and reduces overhead when thinking about how to name a variable.
-    ///
-    /// This rule enforces the wide-spread naming conventions of _JavaScript_ and _TypeScript_.
+    /// Enforcing [naming conventions](https://en.wikipedia.org/wiki/Naming_convention_(programming)) helps to keep the codebase consistent,
+    /// and reduces overhead when thinking about the name [case] of a variable.
     ///
     /// ## Naming conventions
     ///
     /// All names can be prefixed and suffixed by underscores `_` and dollar signs `$`.
     ///
-    /// ### Variables
+    /// ### Variable names
     ///
-    /// All variables, including function parameters and catch parameters, should be in `camelCase`.
+    /// All variables, including function parameters and catch parameters, are in [`camelCase`].
+    ///
+    /// Additionally, top-level variables declared as `const` or `var` may be in [`CONSTANT_CASE`] or [`PascalCase`].
+    /// Top-level variables are declared at module or script level.
+    /// Variables declared in a TypeScript `module` or `namespace` are also considered top-level.
     ///
     /// ```js
     /// function f(param, _unusedParam) {
     ///     let localValue = 0;
     ///     try {
     ///         /* ... */
-    ///     } catch (error) {
+    ///     } catch (customError) {
     ///         /* ... */
     ///     }
     /// }
-    /// ```
     ///
-    /// Additionally, top-level variables declared as `const` or `var` may be in `CONSTANT_CASE` or `PascalCase`.
-    /// Top-level variables are declared at the module or script level.
-    /// Variables declared in a TypeScript `module` or `namespace` are also considered as top-level.
-    ///
-    /// ```ts
     /// export const A_CONSTANT = 5;
     ///
     /// export const Person = class {}
@@ -82,30 +78,27 @@ declare_rule! {
     /// ```
     ///
     /// ```js,expect_diagnostic
-    /// function f(Param) {}
+    /// function f(FirstParam) {}
     /// ```
     ///
-    /// ### `function`
+    /// ### Function names
     ///
-    /// A `function` name should be in `camelCase`.
-    ///
-    /// ```js
-    /// function trim(s) { /*...*/ }
-    /// ```
-    ///
-    /// `function` names in `PascalCase` are also supported:
+    /// A `function` name is in [`camelCase`] or [`PascalCase`].
     ///
     /// ```jsx
+    /// function trimString(s) { /*...*/ }
+    ///
     /// function Component() {
     ///     return <div></div>;
     /// }
     /// ```
     ///
-    /// ### `enum`
+    /// ### TypeScript `enum` names
     ///
-    /// A _TypeScript_ `enum` name should be in `PascalCase`.
-    /// `enum` members are by default in `PascalCase`.
-    /// However, you can configure the case of `enum` members.
+    /// A _TypeScript_ `enum` name is in [`PascalCase`].
+    ///
+    /// `enum` members are by default in [`PascalCase`].
+    /// However, you can configure the [case] of `enum` members.
     /// See [options](#options) for more details.
     ///
     /// ```ts
@@ -115,88 +108,83 @@ declare_rule! {
     /// }
     /// ```
     ///
-    /// ### Type names
+    /// ### Classes
     ///
-    /// All `class` names, `interface` names, `type` names, and type parameters should be in `PascalCase`.
+    /// - A class name is in [`PascalCase`].
     ///
-    /// ```ts
-    /// type Name = string;
+    /// - A static property name and a static getter name are in [`camelCase`] or [`CONSTANT_CASE`].
     ///
-    /// interface Named { /* ... */ }
-    ///
-    /// class Person { /* ... */ }
-    /// ```
-    ///
-    /// Examples of incorrect names:
-    ///
-    /// ```ts,expect_diagnostic
-    /// type person = { name: string };
-    /// ```
-    ///
-    /// ### Properties and methods
-    ///
-    /// Properties and methods should be in `camelCase`.
+    /// - A class property name and a class method name are in [`camelCase`].
     ///
     /// ```js
     /// class Person {
-    ///     property = 0;
+    ///     static MAX_FRIEND_COUNT = 256;
     ///
-    ///     method() {}
+    ///     static get SPECIAL_PERSON_INSTANCE() { /*...*/ }
+    ///
+    ///     initializedProperty = 0;
+    ///
+    ///     specialMethod() {}
     /// }
     /// ```
     ///
-    /// ```ts
-    /// interface Named {
-    ///     readonly property: string;
+    /// ### TypeScript `type` aliases and `interface`
     ///
-    ///     method(): void;
-    /// }
-    /// ```
+    /// - A `type` alias and an interface name are in [`PascalCase`].
+    ///
+    /// - A property name and a method name in a type or interface are in [`camelCase`] or [`CONSTANT_CASE`].
+    ///
+    /// - A `readonly` property name and a getter name can also be in [`CONSTANT_CASE`].
     ///
     /// ```ts
     /// type Named = {
-    ///     readonly property: string;
+    ///     readonly fullName: string;
     ///
-    ///     method(): void;
+    ///     specialMethod(): void;
     /// };
-    /// ```
     ///
-    /// Static properties and getters can be in `CONSTANT_CASE`:
+    /// interface Named {
+    ///     readonly fullName: string;
     ///
-    /// ```js
-    /// class Person {
-    ///     static CONSTANT = 0;
-    ///
-    ///     static get INSTANCE() { /*...*/ }
+    ///     specialMethod(): void;
     /// }
-    /// ```
     ///
-    /// An interface and a literal object type allow `readonly` properties and getter in `CONSTANT_CASE`.
-    /// This enables to model a `class` constructor:
-    ///
-    /// ```ts
     /// interface PersonConstructor {
-    ///     readonly CONSTANT: number;
+    ///     readonly MAX_FRIEND_COUNT: number;
     ///
-    ///     get INSTANCE(): Person;
+    ///     get SPECIAL_PERSON_INSTANCE(): Person;
     ///
     ///     new(): Person;
     /// }
     /// ```
     ///
-    /// ### `namespace`
+    /// Examples of an incorrect type alias:
     ///
-    /// A _TypeScript_ `namespace` should be either in `camelCase` or in `PascalCase`.
+    /// ```ts,expect_diagnostic
+    /// type person = { fullName: string };
+    /// ```
     ///
-    /// ```ts
-    /// namespace str {
-    ///     /*...*/
+    /// ### Literal object property and method names
+    ///
+    /// Literal object property and method names are in [`camelCase`].
+    ///
+    /// ```js
+    /// const alice = {
+    ///     fullName: "Alice",
     /// }
     /// ```
     ///
-    /// ### `import` and `export`
+    /// Example of an incorrect name:
     ///
-    /// Namespaced `import * as` and `export * as` should be in `camelCase`.
+    /// ```js,expect_diagnostic
+    /// const alice = {
+    ///     FULL_NAME: "Alice",
+    /// }
+    /// ```
+    ///
+    /// ### Imported and exported module aliases
+    ///
+    /// Imported and exported module aliases are in [`camelCase`].
     ///
     /// ```js
     /// import * as myLib from "my-lib";
@@ -204,7 +192,7 @@ declare_rule! {
     /// export * as myLib from "my-lib";
     /// ```
     ///
-    /// `import` and `export` aliases should be in `camelCase`, `PascalCase`, or `CONSTANT_CASE`:
+    /// `import` and `export` aliases are in [`camelCase`], [`PascalCase`], or [`CONSTANT_CASE`]:
     ///
     /// ```js
     /// import assert, {
@@ -213,45 +201,71 @@ declare_rule! {
     /// } from "node:assert";
     /// ```
     ///
-    /// Examples of incorrect names:
+    /// Examples of an incorrect name:
     ///
     /// ```ts,expect_diagnostic
     /// import * as MyLib from "my-lib";
     /// ```
     ///
+    /// ### TypeScript type parameter names
+    ///
+    /// A _TypeScript_ type parameter name is in [`PascalCase`].
+    ///
+    /// ```ts
+    /// function id<Val>(value: Val): Val { /* ... */}
+    /// ```
+    ///
+    /// ### TypeScript `namespace` names
+    ///
+    /// A _TypeScript_ `namespace` name is in [`camelCase`] or in [`PascalCase`].
+    ///
+    /// ```ts
+    /// namespace mathExtra {
+    ///     /*...*/
+    /// }
+    ///
+    /// namespace MathExtra {
+    ///     /*...*/
+    /// }
+    /// ```
+    ///
     /// ## Options
     ///
     /// The rule provides two options that are detailed in the following subsections.
-    /// The default configuration is as follows:
     ///
     /// ```json
     /// {
     ///     "//": "...",
     ///     "options": {
-    ///         "strictCase": true,
-    ///         "enumMemberCase": "PascalCase"
+    ///         "strictCase": false,
+    ///         "enumMemberCase": "CONSTANT_CASE"
     ///     }
     /// }
     /// ```
     ///
     /// ### strictCase
     ///
-    /// When this option is set to `true`, it forbids consecutive uppercase characters in `camelCase` and `PascalCase`.
-    /// For instance, `HTTPServer` and `aHTTPServer` are not considered in `PascalCase` and in `camelCase` when the option is set to `true`.
+    /// When this option is set to `true`, it forbids consecutive uppercase characters in [`camelCase`] and [`PascalCase`].
+    /// For instance,  when the option is set to `true`, `HTTPServer` or `aHTTPServer` will throw an error.
     /// These names should be renamed to `HttpServer` and `aHttpServer`
     ///
     /// When the option is set to `false`, consecutive uppercase characters are allowed.
     /// `HTTPServer` and `aHTTPServer` are so valid.
     ///
-    /// Default: _true_
+    /// Default: `true`
     ///
     /// ### enumMemberCase
     ///
     /// By default, the rule enforces the naming convention followed by the [TypeScript Compiler team](https://www.typescriptlang.org/docs/handbook/enums.html):
-    /// an `enum` member should be in `PascalCase`.
+    /// an `enum` member has to be in [`PascalCase`].
     ///
     /// You can enforce another convention by setting `enumMemberCase` option.
-    /// The supported cases are: `PascalCase`, `CONSTANT_CASE`, and `camelCase`.
+    /// The supported cases are: [`PascalCase`], [`CONSTANT_CASE`], and [`camelCase`].
+    ///
+    /// [case]: https://en.wikipedia.org/wiki/Naming_convention_(programming)#Examples_of_multiple-word_identifier_formats
+    /// [`camelCase`]: https://en.wikipedia.org/wiki/Camel_case
+    /// [`PascalCase`]: https://en.wikipedia.org/wiki/Camel_case
+    /// [`CONSTANT_CASE`]: https://en.wikipedia.org/wiki/Snake_case
     pub(crate)  UseNamingConvention {
         version: "next",
         name: "useNamingConvention",

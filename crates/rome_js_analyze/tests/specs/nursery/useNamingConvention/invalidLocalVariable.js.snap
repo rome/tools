@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 100
 expression: invalidLocalVariable.js
 ---
 # Input
@@ -20,6 +19,13 @@ export default function () {
 
     var CONSTANT_CASE_VAR
 }
+
+export function f() {
+    const a_var = 0;
+    console.log(a_var);
+    return a_var;
+}
+
 ```
 
 # Diagnostics
@@ -187,6 +193,7 @@ invalidLocalVariable.js:14:9 lint/nursery/useNamingConvention  FIXABLE  ━━�
   > 14 │     var CONSTANT_CASE_VAR
        │         ^^^^^^^^^^^^^^^^^
     15 │ }
+    16 │ 
   
   i The name could be renamed to `constantCaseVar`.
   
@@ -197,6 +204,36 @@ invalidLocalVariable.js:14:9 lint/nursery/useNamingConvention  FIXABLE  ━━�
     14    │ - ····var·CONSTANT_CASE_VAR
        14 │ + ····var·constantCaseVar
     15 15 │   }
+    16 16 │   
+  
+
+```
+
+```
+invalidLocalVariable.js:18:11 lint/nursery/useNamingConvention  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This local const name should be in camelCase.
+  
+    17 │ export function f() {
+  > 18 │     const a_var = 0;
+       │           ^^^^^
+    19 │     console.log(a_var);
+    20 │     return a_var;
+  
+  i The name could be renamed to `aVar`.
+  
+  i Safe fix: Rename this symbol in camelCase.
+  
+    16 16 │   
+    17 17 │   export function f() {
+    18    │ - ····const·a_var·=·0;
+    19    │ - ····console.log(a_var);
+    20    │ - ····return·a_var;
+       18 │ + ····const·aVar·=·0;
+       19 │ + ····console.log(aVar);
+       20 │ + ····return·aVar;
+    21 21 │   }
+    22 22 │   
   
 
 ```
