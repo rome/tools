@@ -199,7 +199,7 @@ impl std::fmt::Display for CheckActionKind {
 #[diagnostic(
     category = "internalError/io",
     severity = Error,
-    message = "Fixes applied to the file, but there a still diagnostics to address."
+    message = "Fixes applied to the file, but there are still diagnostics to address."
 )]
 pub struct FileCheckApply {
     #[location(resource)]

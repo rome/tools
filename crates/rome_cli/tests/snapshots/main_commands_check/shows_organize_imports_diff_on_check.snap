@@ -46,7 +46,7 @@ check.js organizeImports ━━━━━━━━━━━━━━━━━━�
 ```block
 check.js internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Fixes applied to the file, but there a still diagnostics to address.
+  × Fixes applied to the file, but there are still diagnostics to address.
   
 
 ```

@@ -40,7 +40,7 @@ internalError/io ━━━━━━━━━━━━━━━━━━━━━
 ```block
 test1.js internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Fixes applied to the file, but there a still diagnostics to address.
+  × Fixes applied to the file, but there are still diagnostics to address.
   
 
 ```
@@ -48,7 +48,7 @@ test1.js internalError/io ━━━━━━━━━━━━━━━━━━
 ```block
 test2.js internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Fixes applied to the file, but there a still diagnostics to address.
+  × Fixes applied to the file, but there are still diagnostics to address.
   
 
 ```
