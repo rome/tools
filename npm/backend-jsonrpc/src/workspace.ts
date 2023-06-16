@@ -319,10 +319,6 @@ export interface Complexity {
 	 */
 	noExtraBooleanCast?: RuleConfiguration;
 	/**
-	 * Typing mistakes and misunderstandings about where semicolons are required can lead to semicolons that are unnecessary. While not technically an error, extra semicolons can cause confusion when reading code.
-	 */
-	noExtraSemicolon?: RuleConfiguration;
-	/**
 	 * Disallow unclear usage of multiple space characters in regular expression literals
 	 */
 	noMultipleSpacesInRegularExpressionLiterals?: RuleConfiguration;
@@ -1016,7 +1012,6 @@ export type Category =
 	| "lint/a11y/useValidAriaProps"
 	| "lint/a11y/useValidLang"
 	| "lint/complexity/noExtraBooleanCast"
-	| "lint/complexity/noExtraSemicolon"
 	| "lint/complexity/noMultipleSpacesInRegularExpressionLiterals"
 	| "lint/complexity/noUselessCatch"
 	| "lint/complexity/noUselessConstructor"
