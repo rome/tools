@@ -82,6 +82,15 @@ impl WorkspaceSettings {
                 self.languages.javascript.formatter.semicolons = formatter.semicolons;
             }
 
+            if let Some(parser) = javascript.parser {
+                self.languages
+                    .javascript
+                    .parser
+                    .parse_class_parameter_decorators = parser
+                    .unsafe_parameter_decorators_enabled
+                    .unwrap_or_default();
+            }
+
             let organize_imports = javascript.organize_imports;
             if let Some(_organize_imports) = organize_imports {}
         }
@@ -207,6 +216,9 @@ pub trait Language: rome_rowan::Language {
     /// Fully resolved formatter options type for this language
     type FormatOptions: rome_formatter::FormatOptions;
 
+    /// Settings that belong to the parser
+    type ParserSettings: Default;
+
     /// Read the settings type for this language from the [LanguagesSettings] map
     fn lookup_settings(languages: &LanguagesSettings) -> &LanguageSettings<Self>;
 
@@ -232,6 +244,9 @@ pub struct LanguageSettings<L: Language> {
 
     /// Organize imports settings for this language
     pub organize_imports: L::OrganizeImportsSettings,
+
+    /// Parser settings for this language
+    pub parser: L::ParserSettings,
 }
 
 /// Filesystem settings for the entire workspace

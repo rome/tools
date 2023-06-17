@@ -35,11 +35,13 @@ pub struct JsParser<'source> {
     pub source_type: JsFileSource,
     context: ParserContext<JsSyntaxKind>,
     source: JsTokenSource<'source>,
+    #[allow(dead_code)]
+    options: JsParserOptions,
 }
 
 impl<'source> JsParser<'source> {
     /// Creates a new parser that parses the `source`.
-    pub fn new(source: &'source str, source_type: JsFileSource) -> Self {
+    pub fn new(source: &'source str, source_type: JsFileSource, options: JsParserOptions) -> Self {
         let source = JsTokenSource::from_str(source);
 
         JsParser {
@@ -47,6 +49,7 @@ impl<'source> JsParser<'source> {
             source_type,
             context: ParserContext::default(),
             source,
+            options,
         }
     }
 

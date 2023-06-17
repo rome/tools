@@ -24,6 +24,7 @@ indexmap = { workspace = true }
 cfg-if = "1.0.0"
 smallvec = { workspace = true }
 tracing = { workspace = true }
+schemars = { workspace = true, optional = true}
 
 [dev-dependencies]
 tests_macros = { workspace = true }
@@ -33,6 +34,7 @@ quickcheck_macros = "1.0.0"
 
 [features]
 serde = ["rome_js_syntax/serde"]
+schemars = ["dep:schemars"]
 tests = []
 
 # cargo-workspaces metadata

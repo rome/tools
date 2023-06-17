@@ -123,6 +123,7 @@ pub mod test_utils;
 #[cfg(test)]
 mod tests;
 
+pub mod options;
 mod prelude;
 pub mod syntax;
 mod token_source;
@@ -131,6 +132,7 @@ use crate::prelude::*;
 pub(crate) use crate::ParsedSyntax::{Absent, Present};
 pub use crate::{
     lexer::{LexContext, ReLexContext},
+    options::JsParserOptions,
     parse::*,
 };
 pub(crate) use parser::{JsParser, ParseRecovery};
