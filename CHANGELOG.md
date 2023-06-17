@@ -173,7 +173,7 @@ the correct rules to apply [#4502](https://github.com/rome/tools/issues/4502)
 
 #### Other changes
 
-- `noInnerDeclarations`: allow function declarations in nested block inside an _ES module_ [#4492](https://github.com/rome/tools/compare/main...Conaclos:noInnerDeclarations/4492?expand=1).
+- `noInnerDeclarations`: allow function declarations in nested block inside an _ES module_ [#4492](https://github.com/rome/tools/issues/4492).
 - `noInvalidConstructorSuper`: recognize `extends` clauses that use static member access such as `extends mod.C` [#4499](https://github.com/rome/tools/issues/4499)
 
 ## 12.1.1
