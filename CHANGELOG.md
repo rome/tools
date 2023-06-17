@@ -52,7 +52,7 @@ parameter decorators:
 
 #### BREAKING CHANGES
 
-- Remove `lint/complexity/noExtraSEmicolon` ([#4553](https://github.com/rome/tools/issues/4553))
+- Remove `lint/complexity/noExtraSemicolon` ([#4553](https://github.com/rome/tools/issues/4553))
 
   The _Rome_ formatter takes care of removing extra semicolons.
   Thus, there is no need for this rule.
