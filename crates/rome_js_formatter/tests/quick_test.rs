@@ -1,7 +1,7 @@
 use rome_formatter_test::check_reformat::CheckReformat;
 use rome_js_formatter::context::{JsFormatOptions, QuoteStyle, Semicolons};
 use rome_js_formatter::format_node;
-use rome_js_parser::parse;
+use rome_js_parser::{parse, JsParserOptions};
 use rome_js_syntax::JsFileSource;
 
 mod language {
@@ -21,7 +21,7 @@ fn quick_test() {
 )
 "#;
     let syntax = JsFileSource::tsx();
-    let tree = parse(src, syntax);
+    let tree = parse(src, syntax, JsParserOptions::default());
     let options = JsFormatOptions::new(syntax)
         .with_semicolons(Semicolons::AsNeeded)
         .with_quote_style(QuoteStyle::Double)

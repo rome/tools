@@ -544,7 +544,7 @@ mod tests {
 
     use crate::context::JsFormatOptions;
     use rome_formatter::IndentStyle;
-    use rome_js_parser::{parse, parse_script};
+    use rome_js_parser::{parse, parse_script, JsParserOptions};
     use rome_js_syntax::JsFileSource;
     use rome_rowan::{TextRange, TextSize};
 
@@ -578,7 +578,7 @@ while(
         let range_start = TextSize::try_from(input.find("let").unwrap() - 2).unwrap();
         let range_end = TextSize::try_from(input.find("const").unwrap()).unwrap();
 
-        let tree = parse_script(input);
+        let tree = parse_script(input, JsParserOptions::default());
         let result = format_range(
             JsFormatOptions::new(JsFileSource::js_script())
                 .with_indent_style(IndentStyle::Space(4)),
@@ -611,7 +611,7 @@ function() {
         let range_start = TextSize::try_from(input.find("const").unwrap()).unwrap();
         let range_end = TextSize::try_from(input.find('}').unwrap()).unwrap();
 
-        let tree = parse_script(input);
+        let tree = parse_script(input, JsParserOptions::default());
         let result = format_range(
             JsFormatOptions::new(JsFileSource::js_script())
                 .with_indent_style(IndentStyle::Space(4)),
@@ -639,7 +639,7 @@ function() {
         let range_start = TextSize::from(5);
         let range_end = TextSize::from(5);
 
-        let tree = parse_script(input);
+        let tree = parse_script(input, JsParserOptions::default());
         let result = format_range(
             JsFormatOptions::new(JsFileSource::js_script())
                 .with_indent_style(IndentStyle::Space(4)),
@@ -668,7 +668,7 @@ function() {
 }"#
         );
 
-        let tree = parse_script(input);
+        let tree = parse_script(input, JsParserOptions::default());
         let result = format_range(
             JsFormatOptions::new(JsFileSource::js_script())
                 .with_indent_style(IndentStyle::Space(4)),
@@ -700,7 +700,7 @@ function() {
 
         debug_assert_eq!(&input[range], r#"  quux (); //"#);
 
-        let tree = parse_script(input);
+        let tree = parse_script(input, JsParserOptions::default());
         let result = format_range(
             JsFormatOptions::new(JsFileSource::js_script())
                 .with_indent_style(IndentStyle::Space(4)),
@@ -721,7 +721,7 @@ function() {
         let src = "statement();";
 
         let syntax = JsFileSource::js_module();
-        let tree = parse(src, syntax);
+        let tree = parse(src, syntax, JsParserOptions::default());
 
         let result = format_range(
             JsFormatOptions::new(syntax),

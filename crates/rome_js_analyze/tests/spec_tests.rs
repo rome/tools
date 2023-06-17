@@ -13,6 +13,7 @@ use rome_diagnostics::{DiagnosticExt, Error, PrintDiagnostic, Severity};
 use rome_js_parser::{
     parse,
     test_utils::{assert_errors_are_absent, has_bogus_nodes_or_empty_slots},
+    JsParserOptions,
 };
 use rome_js_syntax::{JsFileSource, JsLanguage};
 use rome_service::configuration::to_analyzer_configuration;
@@ -74,6 +75,7 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
                 file_name,
                 input_file,
                 CheckActionType::Lint,
+                JsParserOptions::default(),
             );
         }
 
@@ -90,6 +92,7 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
             file_name,
             input_file,
             CheckActionType::Lint,
+            JsParserOptions::default(),
         )
     };
 
@@ -116,6 +119,7 @@ impl CheckActionType {
     }
 }
 
+#[allow(clippy::too_many_arguments)]
 pub(crate) fn write_analysis_to_snapshot(
     snapshot: &mut String,
     input_code: &str,
@@ -124,8 +128,9 @@ pub(crate) fn write_analysis_to_snapshot(
     file_name: &str,
     input_file: &Path,
     check_action_type: CheckActionType,
+    parser_options: JsParserOptions,
 ) -> usize {
-    let parsed = parse(input_code, source_type);
+    let parsed = parse(input_code, source_type, parser_options.clone());
     let root = parsed.tree();
 
     let mut diagnostics = Vec::new();
@@ -174,11 +179,23 @@ pub(crate) fn write_analysis_to_snapshot(
             for action in event.actions() {
                 if check_action_type.is_suppression() {
                     if action.is_suppression() {
-                        check_code_action(input_file, input_code, source_type, &action);
+                        check_code_action(
+                            input_file,
+                            input_code,
+                            source_type,
+                            &action,
+                            parser_options.clone(),
+                        );
                         diag = diag.add_code_suggestion(CodeSuggestionAdvice::from(action));
                     }
                 } else if !action.is_suppression() {
-                    check_code_action(input_file, input_code, source_type, &action);
+                    check_code_action(
+                        input_file,
+                        input_code,
+                        source_type,
+                        &action,
+                        parser_options.clone(),
+                    );
                     diag = diag.add_code_suggestion(CodeSuggestionAdvice::from(action));
                 }
             }
@@ -191,11 +208,23 @@ pub(crate) fn write_analysis_to_snapshot(
         for action in event.actions() {
             if check_action_type.is_suppression() {
                 if action.category.matches("quickfix.suppressRule") {
-                    check_code_action(input_file, input_code, source_type, &action);
+                    check_code_action(
+                        input_file,
+                        input_code,
+                        source_type,
+                        &action,
+                        parser_options.clone(),
+                    );
                     code_fixes.push(code_fix_to_string(input_code, action));
                 }
             } else if !action.category.matches("quickfix.suppressRule") {
-                check_code_action(input_file, input_code, source_type, &action);
+                check_code_action(
+                    input_file,
+                    input_code,
+                    source_type,
+                    &action,
+                    parser_options.clone(),
+                );
                 code_fixes.push(code_fix_to_string(input_code, action));
             }
         }
@@ -274,6 +303,7 @@ fn check_code_action(
     source: &str,
     source_type: JsFileSource,
     action: &AnalyzerAction<JsLanguage>,
+    options: JsParserOptions,
 ) {
     let (_, text_edit) = action.mutation.as_text_edits().unwrap_or_default();
 
@@ -298,7 +328,7 @@ fn check_code_action(
     }
 
     // Re-parse the modified code and panic if the resulting tree has syntax errors
-    let re_parse = parse(&output, source_type);
+    let re_parse = parse(&output, source_type, options);
     assert_errors_are_absent(&re_parse, path);
 }
 
@@ -361,6 +391,7 @@ pub(crate) fn run_suppression_test(input: &'static str, _: &str, _: &str, _: &st
         file_name,
         input_file,
         CheckActionType::Suppression,
+        JsParserOptions::default(),
     );
 
     insta::with_settings!({

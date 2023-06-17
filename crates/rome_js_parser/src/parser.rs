@@ -215,6 +215,7 @@ pub struct JsParserCheckpoint {
 #[cfg(test)]
 mod tests {
     use crate::prelude::*;
+    use crate::JsParserOptions;
     use rome_js_syntax::{JsFileSource, JsSyntaxKind};
 
     #[test]
@@ -222,7 +223,11 @@ mod tests {
         expected = "Marker must either be `completed` or `abandoned` to avoid that children are implicitly attached to a marker's parent."
     )]
     fn uncompleted_markers_panic() {
-        let mut parser = JsParser::new("'use strict'", JsFileSource::default());
+        let mut parser = JsParser::new(
+            "'use strict'",
+            JsFileSource::default(),
+            JsParserOptions::default(),
+        );
 
         let _ = parser.start();
         // drop the marker without calling complete or abandon
@@ -230,7 +235,11 @@ mod tests {
 
     #[test]
     fn completed_marker_doesnt_panic() {
-        let mut p = JsParser::new("'use strict'", JsFileSource::default());
+        let mut p = JsParser::new(
+            "'use strict'",
+            JsFileSource::default(),
+            JsParserOptions::default(),
+        );
 
         let m = p.start();
         p.expect(JsSyntaxKind::JS_STRING_LITERAL);
@@ -239,7 +248,11 @@ mod tests {
 
     #[test]
     fn abandoned_marker_doesnt_panic() {
-        let mut p = JsParser::new("'use strict'", JsFileSource::default());
+        let mut p = JsParser::new(
+            "'use strict'",
+            JsFileSource::default(),
+            JsParserOptions::default(),
+        );
 
         let m = p.start();
         m.abandon(&mut p);

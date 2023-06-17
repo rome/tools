@@ -3,7 +3,7 @@ use crate::{
     check_file_encoding,
     runner::{TestCase, TestCaseFiles, TestRunOutcome, TestSuite},
 };
-use rome_js_parser::parse;
+use rome_js_parser::{parse, JsParserOptions};
 use rome_js_syntax::{JsFileSource, ModuleKind};
 use rome_rowan::SyntaxKind;
 use std::path::Path;
@@ -36,8 +36,13 @@ impl TestCase for BabelJsxTestCase {
 
     fn run(&self) -> TestRunOutcome {
         let source_type = JsFileSource::jsx().with_module_kind(ModuleKind::Script);
-        let files = TestCaseFiles::single(self.name().to_string(), self.code.clone(), source_type);
-        let result = parse(&self.code, source_type);
+        let files = TestCaseFiles::single(
+            self.name().to_string(),
+            self.code.clone(),
+            source_type,
+            JsParserOptions::default(),
+        );
+        let result = parse(&self.code, source_type, JsParserOptions::default());
 
         if result.diagnostics().is_empty() {
             if let Some(bogus) = result

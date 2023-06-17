@@ -4,6 +4,7 @@ use rome_js_syntax::JsFileSource;
 use super::utils::{parse_separated_list, parse_str, parse_until_chr, parse_whitespace0};
 use crate::check_file_encoding;
 use crate::runner::{TestCase, TestCaseFiles, TestRunOutcome, TestSuite};
+use rome_js_parser::JsParserOptions;
 use std::fmt::Write;
 use std::path::{Path, PathBuf};
 use std::str::FromStr;
@@ -62,6 +63,7 @@ impl TestCase for SymbolsMicrosoftTestCase {
                             self.name.clone(),
                             "".to_string(),
                             JsFileSource::tsx(),
+                            JsParserOptions::default(),
                         ),
                         errors: vec![],
                     }
@@ -69,9 +71,14 @@ impl TestCase for SymbolsMicrosoftTestCase {
             }
         };
 
-        let t = TestCaseFiles::single(self.name.clone(), code.clone(), JsFileSource::tsx());
+        let t = TestCaseFiles::single(
+            self.name.clone(),
+            code.clone(),
+            JsFileSource::tsx(),
+            JsParserOptions::default(),
+        );
 
-        let r = rome_js_parser::parse(&code, JsFileSource::tsx());
+        let r = rome_js_parser::parse(&code, JsFileSource::tsx(), JsParserOptions::default());
         let mut actual: Vec<_> = rome_js_semantic::semantic_events(r.syntax())
             .into_iter()
             .filter(|x| {

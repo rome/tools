@@ -10,11 +10,16 @@ pub struct JsParserOptions {
 }
 
 impl JsParserOptions {
+    pub fn with_parse_class_parameter_decorators(mut self) -> Self {
+        self.parse_class_parameter_decorators = true;
+        self
+    }
+
     /// Should parse parameter decorators inside classes, e.g.:
     ///
     /// ```js
     /// class C {
-    /// 	post(@Param() name) {}
+    ///   post(@Param() name) {}
     /// }
     /// ```
     pub fn should_parse_parameter_decorators(&self) -> bool {
