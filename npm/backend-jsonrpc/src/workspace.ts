@@ -104,6 +104,7 @@ If defined here, they should not emit diagnostics.
 	 */
 	globals?: StringSet;
 	organize_imports?: JavascriptOrganizeImports;
+	parser?: JavascriptParser;
 }
 export interface LinterConfiguration {
 	/**
@@ -183,6 +184,14 @@ export interface JavascriptFormatter {
 	trailingComma?: TrailingComma;
 }
 export interface JavascriptOrganizeImports {}
+export interface JavascriptParser {
+	/**
+	* It enables the experimental and unsafe parsing of parameter decorators
+
+These decorators belong to an old proposal, and they are subject to change. 
+	 */
+	unsafeParameterDecoratorsEnabled?: boolean;
+}
 export interface Rules {
 	a11y?: A11y;
 	/**
