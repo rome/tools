@@ -8,7 +8,7 @@ use rome_rowan::{declare_node_union, AstNode, BatchMutationExt, Direction};
 use crate::JsRuleAction;
 
 declare_rule! {
-    /// Enforce default function parameters and optional parameters to be last.
+    /// Enforce default function parameters and optional function parameters to be last.
     ///
     /// Default and optional parameters that precede a required parameter cannot be omitted at call site.
     ///
@@ -60,8 +60,8 @@ declare_node_union! {
 }
 
 impl AnyFormalParameter {
-    pub(crate) fn is_optional(&self) -> bool {
-        self.question_mark_token().is_some() || self.initializer().is_some()
+    pub(crate) fn is_required(&self) -> bool {
+        self.question_mark_token().is_none() && self.initializer().is_none()
     }
 
     pub(crate) fn initializer(&self) -> Option<JsInitializerClause> {
@@ -95,19 +95,22 @@ impl Rule for UseDefaultParameterLast {
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let formal_param = ctx.query();
-        if formal_param.is_optional() {
-            let next_required_param = formal_param
-                .syntax()
-                .siblings(Direction::Next)
-                .filter_map(AnyFormalParameter::cast)
-                .find(|x| !x.is_optional());
-            next_required_param
-        } else {
-            None
+        if formal_param.is_required() {
+            return None;
         }
+        let last_required_param = formal_param
+            .syntax()
+            .siblings(Direction::Next)
+            .filter_map(AnyFormalParameter::cast)
+            .filter(|x| x.is_required())
+            .last();
+        last_required_param
     }
 
-    fn diagnostic(ctx: &RuleContext<Self>, required_param: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(
+        ctx: &RuleContext<Self>,
+        last_required_param: &Self::State,
+    ) -> Option<RuleDiagnostic> {
         let formal_param = ctx.query();
         let param_kind = if formal_param.question_mark_token().is_some() {
             "optional"
@@ -118,12 +121,12 @@ impl Rule for UseDefaultParameterLast {
             rule_category!(),
             formal_param.range(),
             markup! {
-                "The "<Emphasis>{param_kind}" parameter"</Emphasis>" should follow the "<Emphasis>"required parameter"</Emphasis>" or should be a "<Emphasis>"required parameter"</Emphasis>"."
+                "This "<Emphasis>{param_kind}" parameter"</Emphasis>" should follow the last "<Emphasis>"required parameter"</Emphasis>" or should be a "<Emphasis>"required parameter"</Emphasis>"."
             },
         ).detail(
-            required_param.range(),
+            last_required_param.range(),
             markup! {
-                "The "<Emphasis>"required parameter"</Emphasis>" is here:"
+                "The last "<Emphasis>"required parameter"</Emphasis>" is here:"
             },
         ).note(
             markup! {
@@ -150,18 +153,27 @@ impl Rule for UseDefaultParameterLast {
             mutation.remove_token(question_mark);
         } else {
             let initializer = opt_param.initializer()?;
-            let first_token = initializer.syntax().first_token()?;
-            let last_token = initializer.syntax().last_token()?;
-            let prev_token = first_token.prev_token()?;
-            let new_prev_token = prev_token.with_trailing_trivia_pieces(
-                prev_token
+            let first_initializer_token = initializer.syntax().first_token()?;
+            let last_initializer_token = initializer.syntax().last_token()?;
+            let prev_initializer_token = first_initializer_token.prev_token()?;
+            let trailing_trivia_count = prev_initializer_token.trailing_trivia().pieces().count();
+            let last_trailing_non_space = prev_initializer_token
+                .trailing_trivia()
+                .pieces()
+                .rev()
+                .position(|p| !p.is_newline() && !p.is_whitespace())
+                .unwrap_or(trailing_trivia_count);
+            let new_prev_initializer_token = prev_initializer_token.with_trailing_trivia_pieces(
+                prev_initializer_token
                     .trailing_trivia()
                     .pieces()
-                    .chain(first_token.leading_trivia().pieces())
-                    .chain(last_token.trailing_trivia().pieces())
+                    .take(trailing_trivia_count - last_trailing_non_space)
+                    .chain(first_initializer_token.leading_trivia().pieces())
+                    .chain(last_initializer_token.trailing_trivia().pieces())
                     .collect::<Vec<_>>(),
             );
-            mutation.replace_token_discard_trivia(prev_token, new_prev_token);
+            mutation
+                .replace_token_discard_trivia(prev_initializer_token, new_prev_initializer_token);
             mutation.remove_node(initializer);
         }
         Some(JsRuleAction {

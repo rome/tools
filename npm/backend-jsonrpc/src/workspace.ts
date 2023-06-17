@@ -696,7 +696,7 @@ export interface Style {
 	 */
 	useConst?: RuleConfiguration;
 	/**
-	 * Enforce default function parameters and optional parameters to be last.
+	 * Enforce default function parameters and optional function parameters to be last.
 	 */
 	useDefaultParameterLast?: RuleConfiguration;
 	/**
