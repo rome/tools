@@ -69,7 +69,7 @@ export default function PlaygroundLoader({
 		if (clipboardStatus !== "normal") {
 			setClipboardStatus("normal");
 		}
-	}, [romeOutput.formatter.ir]);
+	}, [clipboardStatus]);
 
 	const onUpdate = useCallback((viewUpdate: ViewUpdate) => {
 		const cursorPosition = viewUpdate.state.selection.ranges[0]?.from ?? 0;
@@ -81,7 +81,7 @@ export default function PlaygroundLoader({
 				  }
 				: state,
 		);
-	}, []);
+	}, [setPlaygroundState]);
 
 	useEffect(() => {
 		scrollAstNodeIntoView(playgroundState.cursorPosition);
@@ -136,7 +136,7 @@ export default function PlaygroundLoader({
 				},
 			},
 		}));
-	}, []);
+	}, [setPlaygroundState]);
 
 	const { width } = useWindowSize();
 	const hasNarrowViewport = width !== undefined && width <= 1000;
