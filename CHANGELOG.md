@@ -117,6 +117,11 @@ parameter decorators:
   }
   ```
 
+- [noRedundantUseStrict](https://docs.rome.tools/lint/rules/noredundantusestrict/) check only `'use strict'` directive to resolve false positive diagnostics.
+
+  React introduce new directives, "use client" and "use server".
+  The rule raises false positive errors about these directives.
+
 ### Parser
 
 ### VSCode
