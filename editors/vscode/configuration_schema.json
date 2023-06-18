@@ -785,6 +785,13 @@
 						{ "type": "null" }
 					]
 				},
+				"noDuplicateKeys": {
+					"description": "Disallow two keys with the same name inside an object.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"noForEach": {
 					"description": "Prefer for...of statement instead of Array.forEach.",
 					"anyOf": [
