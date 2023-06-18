@@ -1,0 +1,39 @@
+---
+source: crates/rome_json_analyze/tests/spec_tests.rs
+expression: invalid.json
+---
+# Input
+```js
+{
+	"foo": "",
+	"foo": ""
+}
+
+```
+
+# Diagnostics
+```
+invalid.json:3:2 lint/nursery/noDuplicateKeys ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The key foo was already declared
+  
+    1 │ {
+    2 │ 	"foo": "",
+  > 3 │ 	"foo": ""
+      │ 	^^^^^
+    4 │ }
+    5 │ 
+  
+  i Remove or rename the key
+  
+    1 │ {
+    2 │ 	"foo": "",
+  > 3 │ 	"foo": ""
+      │ 	^^^^^
+    4 │ }
+    5 │ 
+  
+
+```
+
+

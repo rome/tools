@@ -17,6 +17,7 @@ A-Project:
 A-Linter:
   - crates/rome_analyze/**
   - crates/rome_js_analyze/**
+  - crates/rome_json_analyze/**
 
 A-Parser:
   - crates/rome_parser/**

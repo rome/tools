@@ -47,7 +47,9 @@ _touch file:
 # Tests a lint rule. The name of the rule needs to be camel case
 test-lintrule name:
   just _touch crates/rome_js_analyze/tests/spec_tests.rs
+  just _touch crates/rome_json_analyze/tests/spec_tests.rs
   cargo test -p rome_js_analyze -- {{snakecase(name)}}
+  cargo test -p rome_json_analyze -- {{snakecase(name)}}
 
 check-ready:
   git diff --exit-code --quiet

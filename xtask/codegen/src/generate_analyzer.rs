@@ -1,4 +1,5 @@
 use std::collections::BTreeMap;
+use std::path::PathBuf;
 
 use anyhow::{Context, Ok, Result};
 use case::CaseExt;
@@ -7,22 +8,33 @@ use quote::{format_ident, quote};
 use xtask::{glue::fs2, project_root};
 
 pub fn generate_analyzer() -> Result<()> {
+    generate_js_analyzer()?;
+    generate_json_analyzer()?;
+    Ok(())
+}
+
+fn generate_js_analyzer() -> Result<()> {
+    let base_path = project_root().join("crates/rome_js_analyze/src");
     let mut analyzers = BTreeMap::new();
-    generate_category("analyzers", &mut analyzers)?;
+    generate_category("analyzers", &mut analyzers, base_path.clone())?;
 
     let mut semantic_analyzers = BTreeMap::new();
-    generate_category("semantic_analyzers", &mut semantic_analyzers)?;
+    generate_category(
+        "semantic_analyzers",
+        &mut semantic_analyzers,
+        base_path.clone(),
+    )?;
 
     let mut aria_analyzers = BTreeMap::new();
-    generate_category("aria_analyzers", &mut aria_analyzers)?;
+    generate_category("aria_analyzers", &mut aria_analyzers, base_path.clone())?;
 
     let mut assists = BTreeMap::new();
-    generate_category("assists", &mut assists)?;
+    generate_category("assists", &mut assists, base_path.clone())?;
 
     let mut syntax = BTreeMap::new();
-    generate_category("syntax", &mut syntax)?;
+    generate_category("syntax", &mut syntax, base_path)?;
 
-    update_registry_builder(
+    update_js_registry_builder(
         analyzers,
         semantic_analyzers,
         aria_analyzers,
@@ -31,11 +43,23 @@ pub fn generate_analyzer() -> Result<()> {
     )
 }
 
+fn generate_json_analyzer() -> Result<()> {
+    let mut analyzers = BTreeMap::new();
+    generate_category(
+        "analyzers",
+        &mut analyzers,
+        project_root().join("crates/rome_json_analyze/src"),
+    )?;
+
+    update_json_registry_builder(analyzers)
+}
+
 fn generate_category(
     name: &'static str,
     entries: &mut BTreeMap<&'static str, TokenStream>,
+    base_path: PathBuf,
 ) -> Result<()> {
-    let path = project_root().join("crates/rome_js_analyze/src").join(name);
+    let path = base_path.join(name);
 
     let mut groups = BTreeMap::new();
     for entry in fs2::read_dir(path)? {
@@ -51,7 +75,7 @@ fn generate_category(
             .to_str()
             .context("could not convert file name to string")?;
 
-        generate_group(name, file_name)?;
+        generate_group(name, file_name, base_path.clone())?;
 
         let module_name = format_ident!("{}", file_name);
         let group_name = format_ident!("{}", to_camel_case(file_name)?);
@@ -102,21 +126,13 @@ fn generate_category(
         }
     })?;
 
-    fs2::write(
-        project_root()
-            .join("crates/rome_js_analyze/src")
-            .join(format!("{name}.rs")),
-        tokens,
-    )?;
+    fs2::write(base_path.join(format!("{name}.rs")), tokens)?;
 
     Ok(())
 }
 
-fn generate_group(category: &'static str, group: &str) -> Result<()> {
-    let path = project_root()
-        .join("crates/rome_js_analyze/src")
-        .join(category)
-        .join(group);
+fn generate_group(category: &'static str, group: &str, base_path: PathBuf) -> Result<()> {
+    let path = base_path.join(category).join(group);
 
     let mut rules = BTreeMap::new();
     for entry in fs2::read_dir(path)? {
@@ -165,13 +181,7 @@ fn generate_group(category: &'static str, group: &str) -> Result<()> {
         }
     })?;
 
-    fs2::write(
-        project_root()
-            .join("crates/rome_js_analyze/src")
-            .join(category)
-            .join(format!("{group}.rs")),
-        tokens,
-    )?;
+    fs2::write(base_path.join(category).join(format!("{group}.rs")), tokens)?;
 
     Ok(())
 }
@@ -196,7 +206,7 @@ fn to_camel_case(input: &str) -> Result<String> {
     Ok(result)
 }
 
-fn update_registry_builder(
+fn update_js_registry_builder(
     analyzers: BTreeMap<&'static str, TokenStream>,
     semantic_analyzers: BTreeMap<&'static str, TokenStream>,
     aria_analyzers: BTreeMap<&'static str, TokenStream>,
@@ -218,6 +228,25 @@ fn update_registry_builder(
         use rome_js_syntax::JsLanguage;
 
         pub fn visit_registry<V: RegistryVisitor<JsLanguage>>(registry: &mut V) {
+            #( #categories )*
+        }
+    })?;
+
+    fs2::write(path, tokens)?;
+
+    Ok(())
+}
+
+fn update_json_registry_builder(analyzers: BTreeMap<&'static str, TokenStream>) -> Result<()> {
+    let path = project_root().join("crates/rome_json_analyze/src/registry.rs");
+
+    let categories = analyzers.into_values();
+
+    let tokens = xtask::reformat(quote! {
+        use rome_analyze::RegistryVisitor;
+        use rome_json_syntax::JsonLanguage;
+
+        pub fn visit_registry<V: RegistryVisitor<JsonLanguage>>(registry: &mut V) {
             #( #categories )*
         }
     })?;

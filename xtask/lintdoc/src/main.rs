@@ -13,6 +13,7 @@ use rome_diagnostics::{Diagnostic, DiagnosticExt, PrintDiagnostic};
 use rome_js_analyze::{analyze, visit_registry};
 use rome_js_parser::JsParserOptions;
 use rome_js_syntax::{JsFileSource, JsLanguage, Language, LanguageVariant, ModuleKind};
+use rome_json_syntax::JsonLanguage;
 use rome_service::settings::WorkspaceSettings;
 use std::{
     collections::BTreeMap,
@@ -90,8 +91,30 @@ fn main() -> Result<()> {
         }
     }
 
+    impl RegistryVisitor<JsonLanguage> for LintRulesVisitor {
+        fn record_category<C: GroupCategory<Language = JsonLanguage>>(&mut self) {
+            if matches!(C::CATEGORY, RuleCategory::Lint) {
+                C::record_groups(self);
+            }
+        }
+
+        fn record_rule<R>(&mut self)
+        where
+            R: Rule + 'static,
+            R::Query: Queryable<Language = JsonLanguage>,
+            <R::Query as Queryable>::Output: Clone,
+        {
+            self.number_or_rules += 1;
+            self.groups
+                .entry(<R::Group as RuleGroup>::NAME)
+                .or_insert_with(BTreeMap::new)
+                .insert(R::METADATA.name, R::METADATA);
+        }
+    }
+
     let mut visitor = LintRulesVisitor::default();
-    visit_registry(&mut visitor);
+    rome_js_analyze::visit_registry(&mut visitor);
+    rome_json_analyze::visit_registry(&mut visitor);
 
     let LintRulesVisitor {
         mut groups,
@@ -565,33 +588,39 @@ fn assert_lint(
                 };
 
                 let options = AnalyzerOptions::default();
-                let (_, diagnostics) = analyze(&root, filter, &options, source_type, |signal| {
-                    if let Some(mut diag) = signal.diagnostic() {
-                        let category = diag.category().expect("linter diagnostic has no code");
-                        let severity = settings.get_severity_from_rule_code(category).expect(
+                let (_, diagnostics) = rome_js_analyze::analyze(
+                    &root,
+                    filter,
+                    &options,
+                    source_type,
+                    |signal| {
+                        if let Some(mut diag) = signal.diagnostic() {
+                            let category = diag.category().expect("linter diagnostic has no code");
+                            let severity = settings.get_severity_from_rule_code(category).expect(
                             "If you see this error, it means you need to run cargo codegen-configuration",
                         );
 
-                        for action in signal.actions() {
-                            if !action.is_suppression() {
-                                diag = diag.add_code_suggestion(action.into());
+                            for action in signal.actions() {
+                                if !action.is_suppression() {
+                                    diag = diag.add_code_suggestion(action.into());
+                                }
+                            }
+
+                            let error = diag
+                                .with_severity(severity)
+                                .with_file_path(file.clone())
+                                .with_file_source_code(code);
+                            let res = write_diagnostic(code, error);
+
+                            // Abort the analysis on error
+                            if let Err(err) = res {
+                                return ControlFlow::Break(err);
                             }
                         }
 
-                        let error = diag
-                            .with_severity(severity)
-                            .with_file_path(file.clone())
-                            .with_file_source_code(code);
-                        let res = write_diagnostic(code, error);
-
-                        // Abort the analysis on error
-                        if let Err(err) = res {
-                            return ControlFlow::Break(err);
-                        }
-                    }
-
-                    ControlFlow::Continue(())
-                });
+                        ControlFlow::Continue(())
+                    },
+                );
 
                 // Result is Some(_) if analysis aborted with an error
                 for diagnostic in diagnostics {
@@ -617,6 +646,55 @@ fn assert_lint(
                         .with_file_path(file.clone())
                         .with_file_source_code(code);
                     write_diagnostic(code, error)?;
+                }
+            } else {
+                let root = parse.tree();
+
+                let settings = WorkspaceSettings::default();
+
+                let rule_filter = RuleFilter::Rule(group, rule);
+                let filter = AnalysisFilter {
+                    enabled_rules: Some(slice::from_ref(&rule_filter)),
+                    ..AnalysisFilter::default()
+                };
+
+                let options = AnalyzerOptions::default();
+                let (_, diagnostics) = rome_json_analyze::analyze(
+                    &root.value().unwrap(),
+                    filter,
+                    &options,
+                    |signal| {
+                        if let Some(mut diag) = signal.diagnostic() {
+                            let category = diag.category().expect("linter diagnostic has no code");
+                            let severity = settings.get_severity_from_rule_code(category).expect(
+								"If you see this error, it means you need to run cargo codegen-configuration",
+							);
+
+                            for action in signal.actions() {
+                                if !action.is_suppression() {
+                                    diag = diag.add_code_suggestion(action.into());
+                                }
+                            }
+
+                            let error = diag
+                                .with_severity(severity)
+                                .with_file_path(file.clone())
+                                .with_file_source_code(code);
+                            let res = write_diagnostic(code, error);
+
+                            // Abort the analysis on error
+                            if let Err(err) = res {
+                                return ControlFlow::Break(err);
+                            }
+                        }
+
+                        ControlFlow::Continue(())
+                    },
+                );
+
+                // Result is Some(_) if analysis aborted with an error
+                for diagnostic in diagnostics {
+                    write_diagnostic(code, diagnostic)?;
                 }
             }
         }

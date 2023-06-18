@@ -22,7 +22,9 @@ fs_extra = "1.3.0"
 rome_rowan = { path = "../../crates/rome_rowan", optional = true }
 rome_analyze = { path = "../../crates/rome_analyze", optional = true }
 rome_js_analyze = { path = "../../crates/rome_js_analyze", optional = true }
+rome_json_analyze = { workspace = true, optional = true }
 rome_js_syntax = { path = "../../crates/rome_js_syntax", optional = true }
+rome_json_syntax = { workspace = true, optional = true }
 rome_js_factory = { path = "../../crates/rome_js_factory", optional = true }
 rome_js_formatter = { path = "../../crates/rome_js_formatter", optional = true }
 rome_json_formatter = { path = "../../crates/rome_json_formatter", optional = true }
@@ -34,6 +36,6 @@ schemars = { version = "0.8.10", optional = true }
 serde_json = { version = "1.0.74", optional = true }
 
 [features]
-configuration = ["rome_analyze", "rome_js_analyze", "rome_js_syntax", "pulldown-cmark"]
+configuration = ["rome_analyze", "rome_js_analyze", "rome_js_syntax", "rome_json_analyze", "rome_json_syntax", "pulldown-cmark"]
 website = ["rome_service"]
 schema = ["schemars", "serde_json", "rome_rowan", "rome_service", "rome_js_syntax", "rome_js_factory", "rome_js_formatter", "rome_json_formatter", "rome_json_parser", "rome_diagnostics"]

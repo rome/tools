@@ -57,7 +57,7 @@ pub trait RegistryVisitor<L: Language> {
 
 /// Stores metadata information for all the rules in the registry, sorted
 /// alphabetically
-#[derive(Default)]
+#[derive(Debug, Default)]
 pub struct MetadataRegistry {
     inner: BTreeSet<MetadataKey>,
 }
