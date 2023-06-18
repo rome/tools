@@ -29,7 +29,7 @@ export enum QuoteProperties {
 
 export enum TrailingComma {
 	All = "all",
-	ES5 = "es5",
+	Es5 = "es5",
 	None = "none",
 }
 

@@ -12,7 +12,7 @@ interface Props {
 
 const romeFormatterIrCodeMirrorExtension = [RomeFormatterIr()];
 
-export default function FormatterIRTab({ rome, prettier }: Props) {
+export default function FormatterIrTab({ rome, prettier }: Props) {
 	return (
 		<>
 			<Collapsible className="rome" heading={<RomeHeader />}>

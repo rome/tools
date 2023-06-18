@@ -8,7 +8,7 @@ import {
 	TrailingComma,
 	defaultPlaygroundState,
 } from "../types";
-import { isJSONFilename, isTypeScriptFilename } from "../utils";
+import { isJsonFilename, isTypeScriptFilename } from "../utils";
 import prettier, { Options as PrettierOptions } from "prettier";
 // @ts-expect-error
 import parserBabel from "prettier/esm/parser-babel";
@@ -129,7 +129,7 @@ function formatWithPrettier(
 function getPrettierParser(filename: string): string {
 	if (isTypeScriptFilename(filename)) {
 		return "babel-ts";
-	} else if (isJSONFilename(filename)) {
+	} else if (isJsonFilename(filename)) {
 		return "json5";
 	} else {
 		return "babel";

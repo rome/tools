@@ -505,6 +505,22 @@
 				}
 			}
 		},
+		"EnumMemberCase": {
+			"description": "Supported cases for TypeScript `enum` member names.",
+			"oneOf": [
+				{
+					"description": "PascalCase",
+					"type": "string",
+					"enum": ["PascalCase"]
+				},
+				{
+					"description": "CONSTANT_CASE",
+					"type": "string",
+					"enum": ["CONSTANT_CASE"]
+				},
+				{ "description": "camelCase", "type": "string", "enum": ["camelCase"] }
+			]
+		},
 		"FilesConfiguration": {
 			"description": "The configuration of the filesystem",
 			"type": "object",
@@ -697,6 +713,21 @@
 			},
 			"additionalProperties": false
 		},
+		"NamingConventionOptions": {
+			"description": "Rule's options.",
+			"type": "object",
+			"properties": {
+				"enumMemberCase": {
+					"description": "Allowed cases for _TypeScript_ `enum` member names.",
+					"allOf": [{ "$ref": "#/definitions/EnumMemberCase" }]
+				},
+				"strictCase": {
+					"description": "If `false`, then consecutive uppercase are allowed in _camel_ and _pascal_ cases. This does not affect other [Case].",
+					"type": "boolean"
+				}
+			},
+			"additionalProperties": false
+		},
 		"Nursery": {
 			"description": "A list of rules that belong to this group",
 			"type": "object",
@@ -856,6 +887,13 @@
 						{ "type": "null" }
 					]
 				},
+				"useNamingConvention": {
+					"description": "Enforce naming conventions for everything across a codebase.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"useSimpleNumberKeys": {
 					"description": "Disallow number literal object member names which are not base10 or uses underscore as separator",
 					"anyOf": [
@@ -912,6 +950,10 @@
 				{
 					"description": "Options for `useExhaustiveDependencies` and `useHookAtTopLevel` rule",
 					"allOf": [{ "$ref": "#/definitions/HooksOptions" }]
+				},
+				{
+					"description": "Options for `useNamingConvention` rule",
+					"allOf": [{ "$ref": "#/definitions/NamingConventionOptions" }]
 				},
 				{ "description": "No options available", "type": "null" }
 			]

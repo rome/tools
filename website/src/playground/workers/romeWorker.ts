@@ -8,7 +8,7 @@ import {
 	RomeOutput,
 	Semicolons,
 } from "../types";
-import { isJSONFilename } from "../utils";
+import { isJsonFilename } from "../utils";
 import init, {
 	Configuration,
 	DiagnosticPrinter,
@@ -173,7 +173,7 @@ self.addEventListener("message", async (e) => {
 				path,
 			});
 
-			const controlFlowGraph = !isJSONFilename(filename)
+			const controlFlowGraph = !isJsonFilename(filename)
 				? workspace.getControlFlowGraph({
 						path,
 						cursor: cursorPosition,

@@ -3,6 +3,9 @@
 use crate::semantic_analyzers::nursery::use_exhaustive_dependencies::{
     hooks_options, HooksOptions,
 };
+use crate::semantic_analyzers::nursery::use_naming_convention::{
+    naming_convention_options, NamingConventionOptions,
+};
 use bpaf::Bpaf;
 use rome_analyze::options::RuleOptions;
 use rome_analyze::RuleKey;
@@ -21,6 +24,8 @@ use std::str::FromStr;
 pub enum PossibleOptions {
     /// Options for `useExhaustiveDependencies` and `useHookAtTopLevel` rule
     Hooks(#[bpaf(external(hooks_options), hide)] HooksOptions),
+    /// Options for `useNamingConvention` rule
+    NamingConvention(#[bpaf(external(naming_convention_options), hide)] NamingConventionOptions),
     /// No options available
     #[default]
     NoOptions,
@@ -35,18 +40,24 @@ impl FromStr for PossibleOptions {
 }
 
 impl PossibleOptions {
-    const KNOWN_KEYS: &'static [&'static str] = &["hooks"];
+    const KNOWN_KEYS: &'static [&'static str] = &["hooks", "strictCase", "enumMemberCase"];
 
     pub fn extract_option(&self, rule_key: &RuleKey) -> RuleOptions {
         match rule_key.rule_name() {
             "useExhaustiveDependencies" | "useHookAtTopLevel" => {
                 let options = match self {
-                    PossibleOptions::Hooks(hooks) => hooks.clone(),
+                    PossibleOptions::Hooks(options) => options.clone(),
                     _ => HooksOptions::default(),
                 };
                 RuleOptions::new(options)
             }
-
+            "useNamingConvention" => {
+                let options = match self {
+                    PossibleOptions::NamingConvention(options) => *options,
+                    _ => NamingConventionOptions::default(),
+                };
+                RuleOptions::new(options)
+            }
             // TODO: review error
             _ => panic!("This rule {:?} doesn't have options", rule_key),
         }
@@ -69,15 +80,23 @@ impl VisitNode<JsonLanguage> for PossibleOptions {
         value: &SyntaxNode<JsonLanguage>,
         diagnostics: &mut Vec<DeserializationDiagnostic>,
     ) -> Option<()> {
-        let (name, value) = self.get_key_and_value(key, value, diagnostics)?;
-        let name_text = name.text();
-
-        if name_text == "hooks" {
-            let mut options = HooksOptions::default();
-            self.map_to_array(&value, &name, &mut options, diagnostics);
-            *self = PossibleOptions::Hooks(options);
+        let (name, val) = self.get_key_and_value(key, value, diagnostics)?;
+        match name.text() {
+            "hooks" => {
+                let mut options = HooksOptions::default();
+                self.map_to_array(&val, &name, &mut options, diagnostics)?;
+                *self = PossibleOptions::Hooks(options);
+            }
+            "strictCase" | "enumMemberCase" => {
+                let mut options = match self {
+                    PossibleOptions::NamingConvention(options) => *options,
+                    _ => NamingConventionOptions::default(),
+                };
+                options.visit_map(key, value, diagnostics)?;
+                *self = PossibleOptions::NamingConvention(options);
+            }
+            _ => (),
         }
-
         Some(())
     }
 }

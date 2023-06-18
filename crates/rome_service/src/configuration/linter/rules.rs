@@ -1906,6 +1906,10 @@ pub struct Nursery {
     #[bpaf(long("use-literal-keys"), argument("on|off|warn"), optional, hide)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub use_literal_keys: Option<RuleConfiguration>,
+    #[doc = "Enforce naming conventions for everything across a codebase."]
+    #[bpaf(long("use-naming-convention"), argument("on|off|warn"), optional, hide)]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub use_naming_convention: Option<RuleConfiguration>,
     #[doc = "Disallow number literal object member names which are not base10 or uses underscore as separator"]
     #[bpaf(
         long("use-simple-number-keys"),
@@ -1918,7 +1922,7 @@ pub struct Nursery {
 }
 impl Nursery {
     const GROUP_NAME: &'static str = "nursery";
-    pub(crate) const GROUP_RULES: [&'static str; 22] = [
+    pub(crate) const GROUP_RULES: [&'static str; 23] = [
         "noAccumulatingSpread",
         "noAriaUnsupportedElements",
         "noBannedTypes",
@@ -1940,6 +1944,7 @@ impl Nursery {
         "useIsNan",
         "useLiteralEnumMembers",
         "useLiteralKeys",
+        "useNamingConvention",
         "useSimpleNumberKeys",
     ];
     const RECOMMENDED_RULES: [&'static str; 12] = [
@@ -1970,7 +1975,7 @@ impl Nursery {
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[19]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[20]),
     ];
-    const ALL_RULES_AS_FILTERS: [RuleFilter<'static>; 22] = [
+    const ALL_RULES_AS_FILTERS: [RuleFilter<'static>; 23] = [
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[0]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[1]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[2]),
@@ -1993,6 +1998,7 @@ impl Nursery {
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[19]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[20]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[21]),
+        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[22]),
     ];
     #[doc = r" Retrieves the recommended rules"]
     pub(crate) fn is_recommended(&self) -> bool { matches!(self.recommended, Some(true)) }
@@ -2108,9 +2114,14 @@ impl Nursery {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[20]));
             }
         }
-        if let Some(rule) = self.use_simple_number_keys.as_ref() {
+        if let Some(rule) = self.use_naming_convention.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[21]));
+            }
+        }
+        if let Some(rule) = self.use_simple_number_keys.as_ref() {
+            if rule.is_enabled() {
+                index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[22]));
             }
         }
         index_set
@@ -2222,9 +2233,14 @@ impl Nursery {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[20]));
             }
         }
-        if let Some(rule) = self.use_simple_number_keys.as_ref() {
+        if let Some(rule) = self.use_naming_convention.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[21]));
+            }
+        }
+        if let Some(rule) = self.use_simple_number_keys.as_ref() {
+            if rule.is_disabled() {
+                index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[22]));
             }
         }
         index_set
@@ -2238,7 +2254,7 @@ impl Nursery {
     pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 12] {
         Self::RECOMMENDED_RULES_AS_FILTERS
     }
-    pub(crate) fn all_rules_as_filters() -> [RuleFilter<'static>; 22] { Self::ALL_RULES_AS_FILTERS }
+    pub(crate) fn all_rules_as_filters() -> [RuleFilter<'static>; 23] { Self::ALL_RULES_AS_FILTERS }
     #[doc = r" Select preset rules"]
     pub(crate) fn collect_preset_rules(
         &self,
@@ -2280,6 +2296,7 @@ impl Nursery {
             "useIsNan" => self.use_is_nan.as_ref(),
             "useLiteralEnumMembers" => self.use_literal_enum_members.as_ref(),
             "useLiteralKeys" => self.use_literal_keys.as_ref(),
+            "useNamingConvention" => self.use_naming_convention.as_ref(),
             "useSimpleNumberKeys" => self.use_simple_number_keys.as_ref(),
             _ => None,
         }

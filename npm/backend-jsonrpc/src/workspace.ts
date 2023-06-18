@@ -590,6 +590,10 @@ export interface Nursery {
 	 */
 	useLiteralKeys?: RuleConfiguration;
 	/**
+	 * Enforce naming conventions for everything across a codebase.
+	 */
+	useNamingConvention?: RuleConfiguration;
+	/**
 	 * Disallow number literal object member names which are not base10 or uses underscore as separator
 	 */
 	useSimpleNumberKeys?: RuleConfiguration;
@@ -892,7 +896,7 @@ export interface RuleWithOptions {
 	level: RulePlainConfiguration;
 	options?: PossibleOptions;
 }
-export type PossibleOptions = HooksOptions | null;
+export type PossibleOptions = HooksOptions | NamingConventionOptions | null;
 /**
  * Options for the rule `useExhaustiveDependencies` and `useHookAtTopLevel`
  */
@@ -901,6 +905,19 @@ export interface HooksOptions {
 	 * List of safe hooks
 	 */
 	hooks: Hooks[];
+}
+/**
+ * Rule's options.
+ */
+export interface NamingConventionOptions {
+	/**
+	 * Allowed cases for _TypeScript_ `enum` member names.
+	 */
+	enumMemberCase: EnumMemberCase;
+	/**
+	 * If `false`, then consecutive uppercase are allowed in _camel_ and _pascal_ cases. This does not affect other [Case].
+	 */
+	strictCase: boolean;
 }
 export interface Hooks {
 	/**
@@ -918,6 +935,10 @@ export interface Hooks {
 	 */
 	name: string;
 }
+/**
+ * Supported cases for TypeScript `enum` member names.
+ */
+export type EnumMemberCase = "PascalCase" | "CONSTANT_CASE" | "camelCase";
 export interface OpenFileParams {
 	content: string;
 	language_hint?: Language;
@@ -1080,6 +1101,7 @@ export type Category =
 	| "lint/nursery/useLiteralKeys"
 	| "lint/nursery/useSimpleNumberKeys"
 	| "lint/nursery/noStaticOnlyClass"
+	| "lint/nursery/useNamingConvention"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"

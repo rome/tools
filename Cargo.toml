@@ -71,6 +71,7 @@ tests_macros = { path = "./crates/tests_macros" }
 rome_formatter_test = { path = "./crates/rome_formatter_test" }
 rome_js_analyze  = { path = "./crates/rome_js_analyze" }
 schemars = { version = "0.8.10" }
+smallvec = { version = "1.8.0", features = ["union", "const_new"] }
 
 
 [profile.dev.package.rome_wasm]

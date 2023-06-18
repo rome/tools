@@ -24,12 +24,12 @@ export default function ControlFlowTab({ graph }: Props) {
 		theme === "dark" ? "dark" : "default"
 	}'}}%%\n${graph}`;
 
-	const graphSVG = useMemo(() => {
+	const graphSvg = useMemo(() => {
 		return mermaid.render("graph-div", graph);
 	}, [graph]);
 
 	return (
 		// rome-ignore lint/security/noDangerouslySetInnerHtml: SVG should be safe
-		<div className="mermaid" dangerouslySetInnerHTML={{ __html: graphSVG }} />
+		<div className="mermaid" dangerouslySetInnerHTML={{ __html: graphSvg }} />
 	);
 }
