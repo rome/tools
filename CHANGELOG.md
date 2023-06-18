@@ -59,9 +59,9 @@ parameter decorators:
 
 #### Other changes
 
-- `noRedeclare`: allow redeclare of index signatures are in different type members [#4478](https://github.com/rome/tools/issues/4478)
+- [`noRedeclare`](https://docs.rome.tools/lint/rules/noredeclare/): allow redeclare of index signatures are in different type members [#4478](https://github.com/rome/tools/issues/4478)
 
-- Fix a crash in the `NoParameterAssign` rule that occurred when there was a bogus binding. [#4323](https://github.com/rome/tools/issues/4323)
+- Fix a crash in the [`NoParameterAssign`](https://docs.rome.tools/lint/rules/noparameterassign/) rule that occurred when there was a bogus binding. [#4323](https://github.com/rome/tools/issues/4323)
 
 - Improve the diagnostic and the code action of [`useDefaultParameterLast`](https://docs.rome.tools/lint/rules/usedefaultparameterlast/).
 
@@ -173,8 +173,8 @@ the correct rules to apply [#4502](https://github.com/rome/tools/issues/4502)
 
 #### Other changes
 
-- `noInnerDeclarations`: allow function declarations in nested block inside an _ES module_ [#4492](https://github.com/rome/tools/issues/4492).
-- `noInvalidConstructorSuper`: recognize `extends` clauses that use static member access such as `extends mod.C` [#4499](https://github.com/rome/tools/issues/4499)
+- [`noInnerDeclarations`](https://docs.rome.tools/lint/rules/noinnerdeclarations/): allow function declarations in nested block inside an _ES module_ [#4492](https://github.com/rome/tools/issues/4492).
+- [`noInvalidConstructorSuper`](https://docs.rome.tools/lint/rules/noinvalidconstructorsuper/): recognize `extends` clauses that use static member access such as `extends mod.C` [#4499](https://github.com/rome/tools/issues/4499)
 
 ## 12.1.1
 
@@ -195,7 +195,7 @@ the correct rules to apply [#4502](https://github.com/rome/tools/issues/4502)
 
 #### Other changes
 
-- Fix an issue where the `noAssignInExpressions` rule replaced the operator with an invalid token, which caused other lint rules to crash. [#4464](https://github.com/rome/tools/issues/4464)
+- Fix an issue where the [`noAssignInExpressions`](https://docs.rome.tools/lint/rules/noassigninexpressions/) rule replaced the operator with an invalid token, which caused other lint rules to crash. [#4464](https://github.com/rome/tools/issues/4464)
 - Fix an issue that [`noUnusedVariables`](https://docs.rome.tools/lint/rules/nounusedvariables/) rule did not correctly detect exports when a variable and an `interface` had the same name [#4468](https://github.com/rome/tools/pull/4468)
 
 ## 12.1.0
@@ -306,7 +306,7 @@ New rules are promoted, please check [#4431](https://github.com/rome/tools/pull/
 - [lint/suspicious/noSelfCompare](https://docs.rome.tools/lint/rules/noSelfCompare)
 - [lint/suspicious/useNamespaceKeyword](https://docs.rome.tools/lint/rules/useNamespaceKeyword)
 
-Note that, `noExtraSemicolons` and `noExtraLabels` are renamed to `noExtraSemicolon` and `noUselessLabel`.
+Note that, `noExtraSemicolons` and `noExtraLabels` are renamed to [`noExtraSemicolon`](https://docs.rome.tools/lint/rules/noextrasemicolon/) and [`noUselessLabel`](https://docs.rome.tools/lint/rules/nouselesslabel/).
 
 #### Other changes
 
@@ -314,7 +314,7 @@ Note that, `noExtraSemicolons` and `noExtraLabels` are renamed to `noExtraSemico
 	the code action is not formatted.
 - Fixed an issue that [`useShorthandArrayType`](https://docs.rome.tools/lint/rules/useShorthandArrayType) rule did not handle nested ReadonlyArray types correctly and erroneously reported TsObjectType [#4354](https://github.com/rome/tools/issues/4353).
 - [`noUndeclaredVariables`](https://docs.rome.tools/lint/rules/noUndeclaredVariables) detects globals based on the file type.
-- Fix an issue when `noUndeclaredVariables` incorrectly identifies `AggregateError` as an undeclared variable. [#4365](https://github.com/rome/tools/issues/4365)
+- Fix an issue when [`noUndeclaredVariables`](https://docs.rome.tools/lint/rules/noundeclaredvariables/) incorrectly identifies `AggregateError` as an undeclared variable. [#4365](https://github.com/rome/tools/issues/4365)
 - Fix an issue that `useLiteralKeys` rule doesn't ignore valid uses of square bracket notation. [#4370](https://github.com/rome/tools/issues/4370)
 - Fix [#4348](https://github.com/rome/tools/issues/4348) that caused [`noNonNullAssertion`](https://docs.rome.tools/lint/rules/nononnullassertion/) to emit incorrect code action
 - Fix [#4410](https://github.com/rome/tools/issues/4410) that caused [`useButtonType`](https://docs.rome.tools/lint/rules/usebuttontype/) to miss some cases
@@ -514,13 +514,13 @@ emit diagnostics.
 
 ### Linter
 
-- Fixed false positives emitted by `noUselessFragments` [#3668](https://github.com/rome/tools/issues/3668)
-- Fixed `noArrayIndexKey` where some cases were not detected [#3670](https://github.com/rome/tools/issues/3670)
-- Fixed false positives emitted by `noConstAssign` [#3728](https://github.com/rome/tools/issues/3728)
-- Fixed false positives emitted by `noShoutyConstants` [#3867](https://github.com/rome/tools/issues/3867)
-- Fixed false positives emitted by `noUnusedVariables` [#3779](https://github.com/rome/tools/issues/3779)
-- Fixed `noUndeclaredVariables` where some cases were not detected [#3798](https://github.com/rome/tools/issues/3798)
-- Fixed `noUndeclaredVariables` where types were incorrectly detected [#3669](https://github.com/rome/tools/issues/3669)
+- Fixed false positives emitted by [`noUselessFragments`](https://docs.rome.tools/lint/rules/nouselessfragments/) [#3668](https://github.com/rome/tools/issues/3668)
+- Fixed [`noArrayIndexKey`](https://docs.rome.tools/lint/rules/noarrayindexkey/) where some cases were not detected [#3670](https://github.com/rome/tools/issues/3670)
+- Fixed false positives emitted by [`noConstAssign`](https://docs.rome.tools/lint/rules/noconstassign/) [#3728](https://github.com/rome/tools/issues/3728)
+- Fixed false positives emitted by [`noShoutyConstants`](https://docs.rome.tools/lint/rules/noshoutyconstants/) [#3867](https://github.com/rome/tools/issues/3867)
+- Fixed false positives emitted by [`noUnusedVariables`](https://docs.rome.tools/lint/rules/nounusedvariables/) [#3779](https://github.com/rome/tools/issues/3779)
+- Fixed [`noUndeclaredVariables`](https://docs.rome.tools/lint/rules/noundeclaredvariables/) where some cases were not detected [#3798](https://github.com/rome/tools/issues/3798)
+- Fixed [`noUndeclaredVariables`](https://docs.rome.tools/lint/rules/noundeclaredvariables/) where types were incorrectly detected [#3669](https://github.com/rome/tools/issues/3669)
 
 #### Rules
 
@@ -647,7 +647,7 @@ Please give them a try by manually enabling them in your configuration and pleas
 
 ### Linter
 
-- Fixed false positives in `noUselessFragments`, `noArrayIndexKey`, `noChildrenProp`, `noUselessFragments`, `noVoidElementsWithChildren`, `noDangerouslySetInnerHtml`, `noDangerouslySetInnerHtmlWithChildren`, `useValidAnchor`, `noRenderReturnValue`, `noUnusedVariables` and `useKeyWithClickEvents`
+- Fixed false positives in [`noUselessFragments`](https://docs.rome.tools/lint/rules/nouselessfragments/), [`noArrayIndexKey`](https://docs.rome.tools/lint/rules/noarrayindexkey/), [`noChildrenProp`](https://docs.rome.tools/lint/rules/nochildrenprop/), [`noUselessFragments`](https://docs.rome.tools/lint/rules/nouselessfragments/), [`noVoidElementsWithChildren`](https://docs.rome.tools/lint/rules/novoidelementswithchildren/), [`noDangerouslySetInnerHtml`](https://docs.rome.tools/lint/rules/nodangerouslysetinnerhtml/), [`noDangerouslySetInnerHtmlWithChildren`](https://docs.rome.tools/lint/rules/nodangerouslysetinnerhtmlwithchildren/), `useValidAnchor`, [`noRenderReturnValue`](https://docs.rome.tools/lint/rules/norenderreturnvalue/), [`noUnusedVariables`](https://docs.rome.tools/lint/rules/nounusedvariables/) and [`useKeyWithClickEvents`](https://docs.rome.tools/lint/rules/usekeywithclickevents/)
 ([#3592](https://github.com/rome/tools/pull/3592), [#3619](https://github.com/rome/tools/pull/3619), [#3599](https://github.com/rome/tools/pull/3599), [#3626](https://github.com/rome/tools/pull/3626), [#3620](https://github.com/rome/tools/pull/3620) & [#3644](https://github.com/rome/tools/pull/3644))
 
 ### Editors
@@ -691,9 +691,9 @@ Please give them a try by manually enabling them in your configuration and pleas
 ### Linter
 
 - **BREAKING CHANGE**: some rules have been moved to new groups to better reflect their purpose. This may result in Rome failing to load your configuration or suppression comments that now refer to unknown rules. Please check out [#3471](https://github.com/rome/tools/pull/3471) to learn more about the affected rules.
-- Fixed issues in the `noUnreachable` rule
-- Fixed false positive cases for `noNegationElse` [#3141](https://github.com/rome/tools/issues/3141)
-- Fixed false positive cases for `noUnusedVariables` [#3169](https://github.com/rome/tools/issues/3169)
+- Fixed issues in the [`noUnreachable`](https://docs.rome.tools/lint/rules/nounreachable/) rule
+- Fixed false positive cases for [`noNegationElse`](https://docs.rome.tools/lint/rules/nonegationelse/) [#3141](https://github.com/rome/tools/issues/3141)
+- Fixed false positive cases for [`noUnusedVariables`](https://docs.rome.tools/lint/rules/nounusedvariables/) [#3169](https://github.com/rome/tools/issues/3169)
 - Fixed an issue in our CFG [#3390](https://github.com/rome/tools/issues/3390)
 
 #### New rules
@@ -786,7 +786,7 @@ The new groups are heavily inspired from [`clippy`](https://github.com/rust-lang
 - Fixed a code action for `useBlockStatements` [#3199](https://github.com/rome/tools/issues/3199)
 - Improved the rule `useCamelCase` [#3190](https://github.com/rome/tools/pull/3190) [#3210](https://github.com/rome/tools/pull/3210)
 - Fixed invalid code action for `useOptionalChain` [#3257](https://github.com/rome/tools/issues/3257)
-- Fixed bugs in `noUnusedVariables` [#3170](https://github.com/rome/tools/issues/3170), [#3316](https://github.com/rome/tools/pull/3316)
+- Fixed bugs in [`noUnusedVariables`](https://docs.rome.tools/lint/rules/nounusedvariables/) [#3170](https://github.com/rome/tools/issues/3170), [#3316](https://github.com/rome/tools/pull/3316)
 
 #### New rules
 
