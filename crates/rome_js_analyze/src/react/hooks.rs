@@ -1,3 +1,4 @@
+use crate::react::{is_react_call_api, ReactLibrary};
 use std::collections::{HashMap, HashSet};
 
 use rome_js_semantic::{Capture, Closure, ClosureExtensions, SemanticModel};
@@ -109,6 +110,15 @@ pub(crate) fn react_hook_configuration<'a>(
     hooks.get(name)
 }
 
+const HOOKS_WITH_DEPS_API: [&str; 6] = [
+    "useEffect",
+    "useLayoutEffect",
+    "useInsertionEffect",
+    "useCallback",
+    "useMemo",
+    "useImperativeHandle",
+];
+
 /// Returns the [TextRange] of the hook name; the node of the
 /// expression of the argument that correspond to the closure of
 /// the hook; and the node of the dependency list of the hook.
@@ -126,8 +136,10 @@ pub(crate) fn react_hook_configuration<'a>(
 pub(crate) fn react_hook_with_dependency(
     call: &JsCallExpression,
     hooks: &HashMap<String, ReactHookConfiguration>,
+    model: &SemanticModel,
 ) -> Option<ReactCallWithDependencyResult> {
-    let name = match call.callee().ok()? {
+    let expression = call.callee().ok()?;
+    let name = match &expression {
         AnyJsExpression::JsIdentifierExpression(identifier) => {
             Some(identifier.name().ok()?.value_token().ok()?)
         }
@@ -138,6 +150,13 @@ pub(crate) fn react_hook_with_dependency(
     }?;
     let function_name_range = name.text_trimmed_range();
     let name = name.text_trimmed();
+
+    // check if the hooks api is imported from the react library
+    if HOOKS_WITH_DEPS_API.contains(&name)
+        && !is_react_call_api(expression, model, ReactLibrary::React, name)
+    {
+        return None;
+    }
 
     let hook = hooks.get(name)?;
     let closure_index = hook.closure_index?;

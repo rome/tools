@@ -1,6 +1,6 @@
 /* should not generate diagnostics */
 
-import useEffect from 'react';
+import { useEffect } from "react";
 
 // capturing declarations
 function overloaded(s: string): string;

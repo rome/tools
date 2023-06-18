@@ -1,3 +1,6 @@
+import React from "react";
+import { useEffect, useCallback, useMemo, useLayoutEffect, useInsertionEffect, useImperativeHandle } from "react";
+
 function MyComponent1() {
     let a = 1;
     const b = a + 1;

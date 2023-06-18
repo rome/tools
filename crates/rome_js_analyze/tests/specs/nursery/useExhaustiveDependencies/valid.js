@@ -1,5 +1,7 @@
 /* should not generate diagnostics */
 
+import React from "react";
+import { useEffect } from "react";
 import doSomething from 'a';
 
 // No captures
