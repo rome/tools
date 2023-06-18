@@ -29,6 +29,11 @@ export function get() {
 
 /// Generates
 pub(crate) fn generate_files() -> Result<()> {
+    let readme = fs::read_to_string(project_root().join("editors/vscode/README.md"))?;
+    fs::remove_file(project_root().join("website/src/pages/vscode.mdx")).ok();
+    let page = format!("{FRONTMATTER}{readme}");
+    fs::write(project_root().join("website/src/pages/vscode.mdx"), page)?;
+
     if VERSION != "0.0.0" {
         let schema_root_folder = project_root().join("website/src/pages/schemas");
         let schema_version_folder = schema_root_folder.join(VERSION);
@@ -40,12 +45,6 @@ pub(crate) fn generate_files() -> Result<()> {
         fs::create_dir(schema_version_folder.clone())?;
         fs::write(schema_js_file.clone(), SCHEMA_TEMPLATE)?;
     }
-    fs::remove_file(project_root().join("website/src/pages/vscode.mdx")).ok();
-    let readme = fs::read_to_string(project_root().join("editors/vscode/README.md"))?;
-
-    let page = format!("{FRONTMATTER}{readme}");
-
-    fs::write(project_root().join("website/src/pages/vscode.mdx"), page)?;
 
     Ok(())
 }

@@ -104,6 +104,7 @@ If defined here, they should not emit diagnostics.
 	 */
 	globals?: StringSet;
 	organize_imports?: JavascriptOrganizeImports;
+	parser?: JavascriptParser;
 }
 export interface LinterConfiguration {
 	/**
@@ -183,6 +184,14 @@ export interface JavascriptFormatter {
 	trailingComma?: TrailingComma;
 }
 export interface JavascriptOrganizeImports {}
+export interface JavascriptParser {
+	/**
+	* It enables the experimental and unsafe parsing of parameter decorators
+
+These decorators belong to an old proposal, and they are subject to change. 
+	 */
+	unsafeParameterDecoratorsEnabled?: boolean;
+}
 export interface Rules {
 	a11y?: A11y;
 	/**
@@ -318,10 +327,6 @@ export interface Complexity {
 	 * Disallow unnecessary boolean casts
 	 */
 	noExtraBooleanCast?: RuleConfiguration;
-	/**
-	 * Typing mistakes and misunderstandings about where semicolons are required can lead to semicolons that are unnecessary. While not technically an error, extra semicolons can cause confusion when reading code.
-	 */
-	noExtraSemicolon?: RuleConfiguration;
 	/**
 	 * Disallow unclear usage of multiple space characters in regular expression literals
 	 */
@@ -700,7 +705,7 @@ export interface Style {
 	 */
 	useConst?: RuleConfiguration;
 	/**
-	 * Enforce default function parameters and optional parameters to be last.
+	 * Enforce default function parameters and optional function parameters to be last.
 	 */
 	useDefaultParameterLast?: RuleConfiguration;
 	/**
@@ -1016,7 +1021,6 @@ export type Category =
 	| "lint/a11y/useValidAriaProps"
 	| "lint/a11y/useValidLang"
 	| "lint/complexity/noExtraBooleanCast"
-	| "lint/complexity/noExtraSemicolon"
 	| "lint/complexity/noMultipleSpacesInRegularExpressionLiterals"
 	| "lint/complexity/noUselessCatch"
 	| "lint/complexity/noUselessConstructor"

@@ -555,7 +555,6 @@ impl VisitNode<JsonLanguage> for Complexity {
                 "recommended",
                 "all",
                 "noExtraBooleanCast",
-                "noExtraSemicolon",
                 "noMultipleSpacesInRegularExpressionLiterals",
                 "noUselessCatch",
                 "noUselessConstructor",
@@ -597,24 +596,6 @@ impl VisitNode<JsonLanguage> for Complexity {
                     let mut configuration = RuleConfiguration::default();
                     self.map_to_object(&value, name_text, &mut configuration, diagnostics)?;
                     self.no_extra_boolean_cast = Some(configuration);
-                }
-                _ => {
-                    diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
-                        "object or string",
-                        value.range(),
-                    ));
-                }
-            },
-            "noExtraSemicolon" => match value {
-                AnyJsonValue::JsonStringValue(_) => {
-                    let mut configuration = RuleConfiguration::default();
-                    self.map_to_known_string(&value, name_text, &mut configuration, diagnostics)?;
-                    self.no_extra_semicolon = Some(configuration);
-                }
-                AnyJsonValue::JsonObjectValue(_) => {
-                    let mut configuration = RuleConfiguration::default();
-                    self.map_to_object(&value, name_text, &mut configuration, diagnostics)?;
-                    self.no_extra_semicolon = Some(configuration);
                 }
                 _ => {
                     diagnostics.push(DeserializationDiagnostic::new_incorrect_type(

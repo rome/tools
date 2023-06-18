@@ -34,7 +34,6 @@ define_categories! {
 
     // complexity
     "lint/complexity/noExtraBooleanCast": "https://docs.rome.tools/lint/rules/noExtraBooleanCast",
-    "lint/complexity/noExtraSemicolon": "https://docs.rome.tools/lint/rules/noExtraSemicolon",
     "lint/complexity/noMultipleSpacesInRegularExpressionLiterals": "https://docs.rome.tools/lint/rules/noMultipleSpacesInRegularExpressionLiterals",
     "lint/complexity/noUselessCatch": "https://docs.rome.tools/lint/rules/noUselessCatch",
     "lint/complexity/noUselessConstructor": "https://docs.rome.tools/lint/rules/noUselessConstructor",
