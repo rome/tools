@@ -11,36 +11,36 @@ export enum Distribution {
 	/**
 	 * Use this if you want to communicate with the WebAssembly client built for bundlers
 	 */
-	Bundler = 0,
+	BUNDLER = 0,
 	/**
 	 * Use this if you want to communicate with the WebAssembly client built for Node.JS
 	 */
-	Node = 1,
+	NODE = 1,
 	/**
 	 * Use this if you want to communicate with the WebAssembly client built for the Web
 	 */
-	Web = 2,
+	WEB = 2,
 }
 
 const isInitialized = {
-	[Distribution.Bundler]: false,
-	[Distribution.Node]: false,
-	[Distribution.Web]: false,
+	[Distribution.BUNDLER]: false,
+	[Distribution.NODE]: false,
+	[Distribution.WEB]: false,
 };
 
 export async function loadModule(dist: Distribution): Promise<WasmModule> {
 	let modulePromise: Promise<WasmModule>;
 
 	switch (dist) {
-		case Distribution.Bundler: {
+		case Distribution.BUNDLER: {
 			modulePromise = import("@rometools/wasm-bundler");
 			break;
 		}
-		case Distribution.Node: {
+		case Distribution.NODE: {
 			modulePromise = import("@rometools/wasm-nodejs");
 			break;
 		}
-		case Distribution.Web: {
+		case Distribution.WEB: {
 			modulePromise = import("@rometools/wasm-web");
 			break;
 		}

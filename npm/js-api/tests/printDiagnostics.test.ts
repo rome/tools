@@ -14,7 +14,7 @@ describe("Rome WebAssembly DiagnosticPrinter", () => {
 	});
 
 	it("should format content", () => {
-		const code = `const variable = expr();
+		const SOURCE_CODE = `const variable = expr();
 
 if(expr()) {
     statement();
@@ -73,7 +73,7 @@ if(expr()) {
 			],
 			{
 				filePath: "file.js",
-				fileSource: code,
+				fileSource: SOURCE_CODE,
 				verbose: true,
 			},
 		);
