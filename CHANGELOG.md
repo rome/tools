@@ -117,6 +117,8 @@ parameter decorators:
   }
   ```
 
+- [noRedundantUseStrict](https://docs.rome.tools/lint/rules/noredundantusestrict/) check only `'use strict'` directive to resolve false positive diagnostics.
+
 ### Parser
 
 ### VSCode
