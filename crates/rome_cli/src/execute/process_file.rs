@@ -330,13 +330,7 @@ pub(crate) fn process_file(ctx: &TraversalOptions, path: &Path) -> FileResult {
             let should_write = match ctx.execution.traversal_mode() {
                 // In check mode do not run the formatter and return the result immediately,
                 // but only if the argument `--apply` is not passed.
-                TraversalMode::Check { .. } => {
-                    if ctx.execution.as_fix_file_mode().is_some() {
-                        true
-                    } else {
-                        false
-                    }
-                }
+                TraversalMode::Check { .. } => ctx.execution.as_fix_file_mode().is_some(),
                 TraversalMode::CI { .. } => false,
                 TraversalMode::Format { write, .. } => *write,
                 TraversalMode::Migrate { write: dry_run, .. } => *dry_run,

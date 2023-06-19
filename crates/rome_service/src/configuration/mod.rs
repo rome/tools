@@ -333,7 +333,6 @@ pub fn load_config(
             None => PathBuf::new(),
         },
     };
-    let configuration_file_path = configuration_directory.join(config_name);
     let should_error = base_path.is_from_user();
 
     let result = file_system.auto_search(configuration_directory, config_name, should_error)?;
@@ -344,8 +343,7 @@ pub fn load_config(
             directory_path,
             file_path,
         } = auto_search_result;
-        let deserialized = deserialize_from_json_str::<Configuration>(&content)
-            .with_file_path(&configuration_file_path.display().to_string());
+        let deserialized = deserialize_from_json_str::<Configuration>(&content);
         Ok(Some(ConfigurationPayload {
             deserialized,
             configuration_file_path: file_path,

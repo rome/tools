@@ -6,7 +6,7 @@ use crate::{
     TraversalMode,
 };
 use rome_console::{markup, ConsoleExt};
-use rome_diagnostics::PrintDiagnostic;
+use rome_diagnostics::{DiagnosticExt, PrintDiagnostic};
 use rome_service::configuration::organize_imports::OrganizeImports;
 use rome_service::configuration::{FormatterConfiguration, LinterConfiguration};
 use rome_service::workspace::UpdateSettingsParams;
@@ -28,12 +28,20 @@ pub(crate) fn ci(mut session: CliSession, payload: CiCommandPayload) -> Result<(
         mut configuration,
         diagnostics,
         directory_path: configuration_path,
-        ..
+        file_path,
     } = load_configuration(&mut session, &payload.cli_options)?;
 
     if !diagnostics.is_empty() {
         let console = &mut session.app.console;
+        console.log(markup!{
+           <Error>"Found errors in the configuration file, Rome will use its defaults for the sections that are incorrect."</Error>
+        });
         for diagnostic in diagnostics {
+            let diagnostic = if let Some(file_path) = &file_path {
+                diagnostic.with_file_path(file_path.display().to_string())
+            } else {
+                diagnostic
+            };
             console.error(markup! {
 				{if payload.cli_options.verbose { PrintDiagnostic::verbose(&diagnostic) } else { PrintDiagnostic::simple(&diagnostic) }}
             })

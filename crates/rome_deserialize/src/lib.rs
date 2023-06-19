@@ -3,7 +3,7 @@ mod visitor;
 
 pub mod json;
 pub use diagnostics::{DeserializationAdvice, DeserializationDiagnostic};
-use rome_diagnostics::{DiagnosticExt, Error};
+use rome_diagnostics::Error;
 pub use visitor::VisitNode;
 
 /// A small type to interrogate the result of a JSON deserialization
@@ -43,18 +43,5 @@ impl<P> Deserialized<P> {
     /// Consume itself to return the parsed result and its diagnostics
     pub fn consume(self) -> (P, Vec<Error>) {
         (self.deserialized, self.diagnostics)
-    }
-
-    /// It inject the file path to the current diagnostics
-    pub fn with_file_path(self, path: &str) -> Self {
-        let (deserialized, diagnostics) = self.consume();
-
-        Deserialized {
-            deserialized,
-            diagnostics: diagnostics
-                .into_iter()
-                .map(|diagnostic| diagnostic.with_file_path(path))
-                .collect(),
-        }
     }
 }

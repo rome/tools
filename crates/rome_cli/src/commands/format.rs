@@ -42,14 +42,19 @@ pub(crate) fn format(
         mut configuration,
         diagnostics,
         directory_path: configuration_path,
-        ..
+        file_path,
     } = load_configuration(&mut session, &cli_options)?;
     if !diagnostics.is_empty() {
         let console = &mut session.app.console;
         console.log(markup!{
-           <Warn>"Found errors in the configuration file, Rome will use its defaults for the sections that are incorrect."</Warn>
+           <Error>"Found errors in the configuration file, Rome will use its defaults for the sections that are incorrect."</Error>
         });
         for diagnostic in diagnostics {
+            let diagnostic = if let Some(file_path) = &file_path {
+                diagnostic.with_file_path(file_path.display().to_string())
+            } else {
+                diagnostic
+            };
             let diagnostic = diagnostic.with_severity(Severity::Warning);
             console.log(markup! {
                 {PrintDiagnostic::verbose(&diagnostic)}

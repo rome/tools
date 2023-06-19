@@ -547,7 +547,7 @@ mod test {
 
     #[test]
     fn diagnostic_size() {
-        assert_eq!(std::mem::size_of::<WorkspaceError>(), 88)
+        assert_eq!(std::mem::size_of::<WorkspaceError>(), 104)
     }
 
     #[test]
