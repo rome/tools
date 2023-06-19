@@ -2008,6 +2008,7 @@ dependencies = [
  "lazy_static",
  "rome_analyze",
  "rome_console",
+ "rome_deserialize",
  "rome_diagnostics",
  "rome_json_factory",
  "rome_json_parser",
