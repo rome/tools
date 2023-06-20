@@ -121,4 +121,10 @@ Print the help message and exits.
 ### `ROME_BINARY`
 
 Overrides the Rome binary being used. This allows you, for example, to use a system wide Rome binary.
+
 If you don't define this variable, Rome will automatically detect the correct binary for your platform.
+
+```
+# Nix derivation example; the binary path comes from "${pkgs.rome}/bin/rome"
+ROME_BINARY=/nix/store/68fyfw1hidsqkal1839whi3nzgvqv4pa-rome-12.1.0/bin/rome npx rome format . 
+```
