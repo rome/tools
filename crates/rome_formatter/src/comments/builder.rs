@@ -639,7 +639,7 @@ mod tests {
         DecoratedComment, SourceComment,
     };
     use crate::{TextSize, TransformSourceMap, TransformSourceMapBuilder};
-    use rome_js_parser::parse_module;
+    use rome_js_parser::{parse_module, JsParserOptions};
     use rome_js_syntax::{
         JsIdentifierExpression, JsLanguage, JsParameters, JsParenthesizedExpression,
         JsPropertyObjectMember, JsReferenceIdentifier, JsShorthandPropertyObjectMember,
@@ -850,7 +850,7 @@ b;"#;
 
         let source_map = source_map_builder.finish();
 
-        let root = parse_module(source).syntax();
+        let root = parse_module(source, JsParserOptions::default()).syntax();
 
         // A lot of code that simply removes the parenthesized expression and moves the parens
         // trivia to the identifiers leading / trailing trivia.
@@ -1011,7 +1011,7 @@ b;"#;
         Vec<DecoratedComment<JsLanguage>>,
         CommentsMap<SyntaxElementKey, SourceComment<JsLanguage>>,
     ) {
-        let tree = parse_module(source);
+        let tree = parse_module(source, JsParserOptions::default());
 
         let style = TestCommentStyle::default();
         let builder = CommentsBuilderVisitor::new(&style, source_map);

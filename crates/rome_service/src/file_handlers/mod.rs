@@ -168,7 +168,7 @@ pub struct Capabilities {
     pub(crate) formatter: FormatterCapabilities,
 }
 
-type Parse = fn(&RomePath, Language, &str, &mut NodeCache) -> AnyParse;
+type Parse = fn(&RomePath, Language, &str, SettingsHandle, &mut NodeCache) -> AnyParse;
 
 #[derive(Default)]
 pub struct ParserCapabilities {

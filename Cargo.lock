@@ -1962,6 +1962,7 @@ dependencies = [
  "rome_js_unicode_table",
  "rome_parser",
  "rome_rowan",
+ "schemars",
  "smallvec",
  "tests_macros",
  "tracing",

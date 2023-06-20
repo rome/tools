@@ -11,6 +11,7 @@ use rome_console::{
 use rome_diagnostics::termcolor::NoColor;
 use rome_diagnostics::{Diagnostic, DiagnosticExt, PrintDiagnostic};
 use rome_js_analyze::{analyze, visit_registry};
+use rome_js_parser::JsParserOptions;
 use rome_js_syntax::{JsFileSource, JsLanguage, Language, LanguageVariant, ModuleKind};
 use rome_service::settings::WorkspaceSettings;
 use std::{
@@ -543,7 +544,7 @@ fn assert_lint(
 
     match test.block_type {
         BlockType::Js(source_type) => {
-            let parse = rome_js_parser::parse(code, source_type);
+            let parse = rome_js_parser::parse(code, source_type, JsParserOptions::default());
 
             if parse.has_errors() {
                 for diag in parse.into_diagnostics() {

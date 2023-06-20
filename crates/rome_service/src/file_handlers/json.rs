@@ -27,6 +27,7 @@ impl Language for JsonLanguage {
     type LinterSettings = ();
     type FormatOptions = JsonFormatOptions;
     type OrganizeImportsSettings = ();
+    type ParserSettings = ();
 
     fn lookup_settings(language: &LanguagesSettings) -> &LanguageSettings<Self> {
         &language.json
@@ -83,7 +84,13 @@ impl ExtensionHandler for JsonFileHandler {
     }
 }
 
-fn parse(_: &RomePath, _: LanguageId, text: &str, cache: &mut NodeCache) -> AnyParse {
+fn parse(
+    _: &RomePath,
+    _: LanguageId,
+    text: &str,
+    _: SettingsHandle,
+    cache: &mut NodeCache,
+) -> AnyParse {
     let parse = rome_json_parser::parse_json_with_cache(text, cache);
     let root = parse.syntax();
     let diagnostics = parse.into_diagnostics();

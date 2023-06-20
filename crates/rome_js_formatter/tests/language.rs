@@ -5,7 +5,7 @@ use rome_js_formatter::context::{
     JsFormatContext, JsFormatOptions, QuoteProperties, QuoteStyle, Semicolons,
 };
 use rome_js_formatter::{format_node, format_range, JsFormatLanguage};
-use rome_js_parser::parse;
+use rome_js_parser::{parse, JsParserOptions};
 use rome_js_syntax::{JsFileSource, JsLanguage};
 use rome_parser::AnyParse;
 use rome_rowan::{FileSource, SyntaxNode};
@@ -29,7 +29,7 @@ impl TestFormatLanguage for JsTestFormatLanguage {
     type FormatLanguage = JsFormatLanguage;
 
     fn parse(&self, text: &str) -> AnyParse {
-        let parse = parse(text, self.source_type);
+        let parse = parse(text, self.source_type, JsParserOptions::default());
 
         AnyParse::new(
             parse.syntax().as_send().unwrap(),

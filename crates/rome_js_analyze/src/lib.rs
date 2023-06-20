@@ -160,7 +160,7 @@ mod tests {
     use rome_diagnostics::category;
     use rome_diagnostics::termcolor::NoColor;
     use rome_diagnostics::{Diagnostic, DiagnosticExt, PrintDiagnostic, Severity};
-    use rome_js_parser::parse;
+    use rome_js_parser::{parse, JsParserOptions};
     use rome_js_syntax::{JsFileSource, TextRange, TextSize};
     use std::slice;
 
@@ -186,7 +186,7 @@ mod tests {
         	}
         }"#;
 
-        let parsed = parse(SOURCE, JsFileSource::tsx());
+        let parsed = parse(SOURCE, JsFileSource::tsx(), JsParserOptions::default());
 
         let mut error_ranges: Vec<TextRange> = Vec::new();
         let mut options = AnalyzerOptions::default();
@@ -283,7 +283,11 @@ mod tests {
             }
         ";
 
-        let parsed = parse(SOURCE, JsFileSource::js_module());
+        let parsed = parse(
+            SOURCE,
+            JsFileSource::js_module(),
+            JsParserOptions::default(),
+        );
 
         let mut lint_ranges: Vec<TextRange> = Vec::new();
         let mut parse_ranges: Vec<TextRange> = Vec::new();
@@ -365,7 +369,11 @@ mod tests {
             a == b;
         ";
 
-        let parsed = parse(SOURCE, JsFileSource::js_module());
+        let parsed = parse(
+            SOURCE,
+            JsFileSource::js_module(),
+            JsParserOptions::default(),
+        );
 
         let filter = AnalysisFilter {
             categories: RuleCategories::SYNTAX,

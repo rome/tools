@@ -45,7 +45,7 @@ impl<T> Parse<T> {
     /// The syntax node represented by this Parse result
     ///
     /// ```
-    /// use rome_js_parser::parse_script;
+    /// use rome_js_parser::{JsParserOptions, parse_script};
     /// use rome_js_syntax::{JsIfStatement, JsSyntaxKind};
     /// use rome_rowan::{AstNode, AstNodeList};
     ///
@@ -55,6 +55,7 @@ impl<T> Parse<T> {
     ///         /* something */
     ///     }
     /// ",
+    ///  JsParserOptions::default()
     /// );
     ///
     /// // The first stmt in the root syntax node (Script) is the if statement.
@@ -115,8 +116,9 @@ impl<T: AstNode<Language = JsLanguage>> Parse<T> {
 fn parse_common(
     text: &str,
     source_type: JsFileSource,
+    options: JsParserOptions,
 ) -> (Vec<Event<JsSyntaxKind>>, Vec<ParseDiagnostic>, Vec<Trivia>) {
-    let mut parser = JsParser::new(text, source_type);
+    let mut parser = JsParser::new(text, source_type, options);
     syntax::program::parse(&mut parser);
 
     let (events, trivia, errors) = parser.finish();
@@ -128,11 +130,11 @@ fn parse_common(
 /// Or turned into a typed [`JsScript`](JsScript) with [`tree`](Parse::tree).
 ///
 /// ```
-/// use rome_js_parser::parse_script;
+/// use rome_js_parser::{JsParserOptions, parse_script};
 /// use rome_js_syntax::{JsSyntaxToken, JsFileSource, JsSyntaxList, JsComputedMemberExpression};
 /// use rome_rowan::{AstNode, Direction};
 ///
-/// let parse = parse_script("foo.bar[2]");
+/// let parse = parse_script("foo.bar[2]", JsParserOptions::default());
 /// // Parse returns a JS Root which contains two lists, the directives and the statements, let's get the statements
 /// let stmt = parse.syntax().children().nth(1).unwrap();
 /// // The untyped syntax node of `foo.bar[2]`, the root node is `Script`.
@@ -155,10 +157,11 @@ fn parse_common(
 ///
 /// assert_eq!(&tokens, &vec!["foo", ".", "bar", "[", "2", "]"]);
 /// ```
-pub fn parse_script(text: &str) -> Parse<JsScript> {
+pub fn parse_script(text: &str, options: JsParserOptions) -> Parse<JsScript> {
     parse(
         text,
         JsFileSource::js_module().with_module_kind(ModuleKind::Script),
+        options,
     )
     .cast::<JsScript>()
     .unwrap()
@@ -170,14 +173,14 @@ pub fn parse_script(text: &str) -> Parse<JsScript> {
 ///
 /// Check the diagnostics emitted by the code
 /// ```
-/// use rome_js_parser::parse_module;
+/// use rome_js_parser::{JsParserOptions, parse_module};
 /// let source = r#"
 /// import { someModule } from "./someModule.js";
 ///
 /// someModule();
 /// "#;
 ///
-/// let parse = parse_module(source);
+/// let parse = parse_module(source, JsParserOptions::default());
 ///
 /// // Retrieve the diagnostics emitted
 /// assert_eq!(parse.diagnostics().len(), 0);
@@ -185,7 +188,7 @@ pub fn parse_script(text: &str) -> Parse<JsScript> {
 ///
 /// Retrieve the emitted AST and check its kind:
 /// ```
-/// use rome_js_parser::parse_module;
+/// use rome_js_parser::{JsParserOptions, parse_module};
 /// use rome_js_syntax::JsSyntaxKind;
 /// use rome_rowan::AstNode;
 /// let source = r#"
@@ -193,15 +196,15 @@ pub fn parse_script(text: &str) -> Parse<JsScript> {
 ///
 /// someModule();
 /// "#;
-/// let parse = parse_module(source);
+/// let parse = parse_module(source, JsParserOptions::default());
 ///
 /// let tree = parse.tree();
 ///
 /// assert_eq!(tree.syntax().kind(), JsSyntaxKind::JS_MODULE);
 /// ```
 ///
-pub fn parse_module(text: &str) -> Parse<JsModule> {
-    parse(text, JsFileSource::js_module())
+pub fn parse_module(text: &str, options: JsParserOptions) -> Parse<JsModule> {
+    parse(text, JsFileSource::js_module(), options)
         .cast::<JsModule>()
         .unwrap()
 }
@@ -211,27 +214,27 @@ pub fn parse_module(text: &str) -> Parse<JsModule> {
 /// ### Examples
 ///
 /// ```
-/// use rome_js_parser::parse;
+/// use rome_js_parser::{JsParserOptions, parse};
 /// use rome_js_syntax::{LanguageVariant, LanguageVersion, ModuleKind, JsFileSource};
 /// // parse source text as TypeScript
 /// let mut module = JsFileSource::ts();
-/// let mut parsed = parse("type F = {}", module);
+/// let mut parsed = parse("type F = {}", module, JsParserOptions::default());
 /// assert_eq!(parsed.diagnostics().len(), 0);
 /// // parse source text as JSX
 /// module = JsFileSource::jsx();
-/// parsed = parse("<Component></Component>", module);
+/// parsed = parse("<Component></Component>", module, JsParserOptions::default());
 /// assert_eq!(parsed.diagnostics().len(), 0);
 /// // parse source text with granular control
 /// module = JsFileSource::default()
 ///   .with_version(LanguageVersion::ESNext)
 ///   .with_module_kind(ModuleKind::Module)
 ///   .with_variant(LanguageVariant::Jsx);
-/// parsed = parse("foo[bar]", module);
+/// parsed = parse("foo[bar]", module, JsParserOptions::default());
 /// assert_eq!(parsed.diagnostics().len(), 0);
 /// ```
-pub fn parse(text: &str, source_type: JsFileSource) -> Parse<AnyJsRoot> {
+pub fn parse(text: &str, source_type: JsFileSource, options: JsParserOptions) -> Parse<AnyJsRoot> {
     let mut cache = NodeCache::default();
-    parse_js_with_cache(text, source_type, &mut cache)
+    parse_js_with_cache(text, source_type, options, &mut cache)
 }
 
 /// Parses the provided string as a EcmaScript program using the provided syntax features and node cache.
@@ -239,7 +242,7 @@ pub fn parse(text: &str, source_type: JsFileSource) -> Parse<AnyJsRoot> {
 /// ### Examples
 ///
 /// ```
-/// use rome_js_parser::parse_js_with_cache;
+/// use rome_js_parser::{JsParserOptions, parse_js_with_cache};
 /// use rome_js_syntax::JsFileSource;
 /// use rome_rowan::NodeCache;
 ///
@@ -247,20 +250,21 @@ pub fn parse(text: &str, source_type: JsFileSource) -> Parse<AnyJsRoot> {
 /// let mut cache = NodeCache::default();
 /// let mut source = "function f() { return 2 }";
 ///
-/// let parsed = parse_js_with_cache(source, source_type, &mut cache);
+/// let parsed = parse_js_with_cache(source, source_type, JsParserOptions::default(), &mut cache);
 /// assert_eq!(parsed.diagnostics().len(), 0);
 ///
 /// source = "function bar() { return 3 }";
-/// let parsed  = parse_js_with_cache(source, source_type, &mut cache);
+/// let parsed  = parse_js_with_cache(source, source_type, JsParserOptions::default(), &mut cache);
 /// assert_eq!(parsed.diagnostics().len(), 0);
 /// ```
 pub fn parse_js_with_cache(
     text: &str,
     source_type: JsFileSource,
+    options: JsParserOptions,
     cache: &mut NodeCache,
 ) -> Parse<AnyJsRoot> {
     tracing::debug_span!("parse").in_scope(move || {
-        let (events, errors, tokens) = parse_common(text, source_type);
+        let (events, errors, tokens) = parse_common(text, source_type, options);
         let mut tree_sink = JsLosslessTreeSink::with_cache(text, &tokens, cache);
         rome_parser::event::process(&mut tree_sink, events, errors);
         let (green, parse_errors) = tree_sink.finish();
