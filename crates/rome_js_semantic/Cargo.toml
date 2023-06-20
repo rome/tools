@@ -1,10 +1,11 @@
 [package]
 edition.workspace = true
 name = "rome_js_semantic"
-version = "0.0.0"
+version = "0.1.0"
 authors.workspace = true
 license.workspace = true
 description = "Semantic model for the JavaScript language"
+documentation = "https://rustdocs.rome.tools/rome_js_semantic/index.html"
 repository.workspace = true
 
 [dependencies]

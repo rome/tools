@@ -1969,7 +1969,7 @@ dependencies = [
 
 [[package]]
 name = "rome_js_semantic"
-version = "0.0.0"
+version = "0.1.0"
 dependencies = [
  "rome_console",
  "rome_diagnostics",
