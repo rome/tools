@@ -5,7 +5,7 @@ parent: lint/rules/index
 
 # noDuplicateKeys (since vnext)
 
-Disallow two keys with the same name inside an object.
+Disallow two keys with the same name inside a JSON object.
 
 ## Examples
 
@@ -18,9 +18,17 @@ Disallow two keys with the same name inside an object.
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noDuplicateKeys.js:3:3 <a href="https://docs.rome.tools/lint/rules/noDuplicateKeys">lint/nursery/noDuplicateKeys</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">nursery/noDuplicateKeys.js:2:3 <a href="https://docs.rome.tools/lint/rules/noDuplicateKeys">lint/nursery/noDuplicateKeys</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The key </span><span style="color: Tomato;"><strong>title</strong></span><span style="color: Tomato;"> was already declared</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The key </span><span style="color: Tomato;"><strong>title</strong></span><span style="color: Tomato;"> was already declared.</span>
+  
+    <strong>1 │ </strong>{
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>  &quot;title&quot;: &quot;New title&quot;,
+   <strong>   │ </strong>  <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
+    <strong>3 │ </strong>  &quot;title&quot;: &quot;Second title&quot;
+    <strong>4 │ </strong>}
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">This where a duplicated key was declared again.</span>
   
     <strong>1 │ </strong>{
     <strong>2 │ </strong>  &quot;title&quot;: &quot;New title&quot;,
@@ -29,16 +37,18 @@ Disallow two keys with the same name inside an object.
     <strong>4 │ </strong>}
     <strong>5 │ </strong>
   
-<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Remove or rename the key</span>
-  
-    <strong>1 │ </strong>{
-    <strong>2 │ </strong>  &quot;title&quot;: &quot;New title&quot;,
-<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>3 │ </strong>  &quot;title&quot;: &quot;Second title&quot;
-   <strong>   │ </strong>  <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
-    <strong>4 │ </strong>}
-    <strong>5 │ </strong>
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">If a key is defined multiple times, only the last definition takes effect. Previous definitions are ignored.</span>
   
 </code></pre>
+
+### Valid
+
+```
+{
+  "title": "New title",
+  "secondTitle": "Second title"
+}
+```
 
 ## Related links
 

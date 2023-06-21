@@ -16,6 +16,7 @@ declare_rule! {
     ///   "title": "New title",
     ///   "title": "Second title"
     /// }
+    /// ```
     ///
     /// ### Valid
     ///
