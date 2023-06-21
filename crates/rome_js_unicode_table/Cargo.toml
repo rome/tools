@@ -1,12 +1,12 @@
 [package]
-edition.workspace = true
-name = "rome_js_unicode_table"
-version = "0.0.1"
-authors = ["Rome Tools and Contributors"]
-license.workspace = true
-description = "Unicode table for JavaScript IDs"
+edition.workspace    = true
+name                 = "rome_js_unicode_table"
+version              = "0.0.1"
+authors              = ["Rome Tools and Contributors"]
+license.workspace    = true
+description          = "Unicode table for JavaScript IDs"
 repository.workspace = true
-documentation = "https://rustdocs.rome.tools/rome_js_parser/index.html"
+documentation        = "https://rustdocs.rome.tools/rome_js_parser/index.html"
 
 [dependencies]
 

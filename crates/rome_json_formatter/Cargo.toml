@@ -1,34 +1,34 @@
 [package]
-name = "rome_json_formatter"
-version = "0.0.1"
-edition.workspace = true
-authors.workspace = true
+name                 = "rome_json_formatter"
+version              = "0.0.1"
+edition.workspace    = true
+authors.workspace    = true
 repository.workspace = true
-license.workspace = true
-categories = ["development-tools"]
-documentation = "https://rustdocs.rome.tools/rome_js_formatter/index.html"
-description = "Rome's JSON formatter"
-homepage.workspace = true
+license.workspace    = true
+categories           = ["development-tools"]
+documentation        = "https://rustdocs.rome.tools/rome_js_formatter/index.html"
+description          = "Rome's JSON formatter"
+homepage.workspace   = true
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 rome_json_syntax = { workspace = true }
-rome_formatter = { workspace = true }
-rome_rowan = { workspace = true }
+rome_formatter   = { workspace = true }
+rome_rowan       = { workspace = true }
 
 [dev-dependencies]
-rome_parser = { workspace = true }
+rome_parser         = { workspace = true }
 rome_formatter_test = { workspace = true }
-rome_fs = { workspace = true }
-rome_json_parser = { workspace = true }
-rome_json_factory = { workspace = true }
-serde = { version = "1", features = ["derive"] }
-serde_json = "1"
-tests_macros = { workspace = true }
-insta = { workspace = true, features = ["glob"] }
-rome_diagnostics = { workspace = true }
-countme = { workspace = true, features = ["enable"] }
+rome_fs             = { workspace = true }
+rome_json_parser    = { workspace = true }
+rome_json_factory   = { workspace = true }
+serde               = { version = "1", features = ["derive"] }
+serde_json          = "1"
+tests_macros        = { workspace = true }
+insta               = { workspace = true, features = ["glob"] }
+rome_diagnostics    = { workspace = true }
+countme             = { workspace = true, features = ["enable"] }
 
 # cargo-workspaces metadata
 [package.metadata.workspaces]

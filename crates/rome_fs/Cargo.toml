@@ -1,23 +1,23 @@
 [package]
-name = "rome_fs"
-version = "0.0.0"
-edition.workspace = true
-authors.workspace = true
+name                 = "rome_fs"
+version              = "0.0.0"
+edition.workspace    = true
+authors.workspace    = true
 repository.workspace = true
-license.workspace = true
+license.workspace    = true
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 rome_diagnostics = { workspace = true }
-rome_console = { workspace = true }
-indexmap = { workspace = true }
-parking_lot = { version = "0.12.0", features = ["arc_lock"] }
-rayon = "1.5.1"
-crossbeam = "0.8.1"
-tracing = { workspace = true }
-serde = { version = "1.0.136", features = ["derive"], optional = true }
-schemars = { version = "0.8.10", optional = true }
+rome_console     = { workspace = true }
+indexmap         = { workspace = true }
+parking_lot      = { version = "0.12.0", features = ["arc_lock"] }
+rayon            = "1.5.1"
+crossbeam        = "0.8.1"
+tracing          = { workspace = true }
+serde            = { version = "1.0.136", features = ["derive"], optional = true }
+schemars         = { version = "0.8.10", optional = true }
 
 [features]
 serde = ["dep:serde", "schemars", "rome_diagnostics/schema"]

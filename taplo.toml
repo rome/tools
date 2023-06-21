@@ -1,0 +1,6 @@
+include = ["Cargo.toml", "crates/**/Cargo.toml", ".cargo/config.toml"]
+exclude = ["./benchmark/**/*.toml"]
+
+[formatting]
+align_entries = true
+column_width = 120

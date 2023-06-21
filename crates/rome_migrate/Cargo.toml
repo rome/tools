@@ -1,17 +1,16 @@
 [package]
-name = "rome_migrate"
+name    = "rome_migrate"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-rome_rowan = { workspace = true }
+rome_rowan       = { workspace = true }
 rome_json_syntax = { workspace = true }
-rome_analyze = { workspace = true}
-rome_diagnostics = { workspace = true}
-lazy_static = { workspace = true }
+rome_analyze     = { workspace = true }
+rome_diagnostics = { workspace = true }
+lazy_static      = { workspace = true }
 
 [dev-dependencies]
 rome_json_parser = { workspace = true }
-

@@ -1,18 +1,18 @@
 [package]
-name = "rome_text_edit"
-version = "0.0.1"
-authors.workspace = true
-edition.workspace = true
-license = "MIT OR Apache-2.0"
-description = "Simple text editing crate ported from rust-analyzer"
+name                 = "rome_text_edit"
+version              = "0.0.1"
+authors.workspace    = true
+edition.workspace    = true
+license              = "MIT OR Apache-2.0"
+description          = "Simple text editing crate ported from rust-analyzer"
 repository.workspace = true
-documentation = "https://rustdocs.rome.tools/rome_text_edit/index.html"
+documentation        = "https://rustdocs.rome.tools/rome_text_edit/index.html"
 
 [dependencies]
 rome_text_size = { workspace = true, features = ["serde"] }
-serde = { version = "1.0.136", features = ["derive"] }
-schemars = { version = "0.8.10", optional = true }
-similar = { version = "2.1.0", features = ["unicode"] }
+serde          = { version = "1.0.136", features = ["derive"] }
+schemars       = { version = "0.8.10", optional = true }
+similar        = { version = "2.1.0", features = ["unicode"] }
 
 [features]
 schemars = ["dep:schemars", "rome_text_size/schemars"]

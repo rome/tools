@@ -1,15 +1,20 @@
 _default:
   just --list -u
 
+alias f := format
+alias t := test
+alias r := check-ready
+
+
 # Installs the tools needed to develop with Rome
 install-tools:
 	cargo install binstall
-	cargo binstall cargo-insta cargo-nextest wasm-pack
+	cargo binstall cargo-insta cargo-nextest taplo-cli wasm-pack
 
 # Upgrades the tools needed to develop with Rome
 upgrade-tools:
 	cargo install binstall --force
-	cargo binstall cargo-insta cargo-nextest wasm-pack --force
+	cargo binstall cargo-insta cargo-nextest taplo-cli wasm-pack --force
 
 # Generate all files across crates and tools. You rarely want to use it locally.
 codegen:
@@ -47,6 +52,17 @@ promote-rule rulename group:
 	just documentation
 	-cargo test -p rome_js_analyze -- {{snakecase(rulename)}}
 	cargo insta accept
+
+
+# Format Rust files and TOML files
+format:
+	cargo format
+	taplo format
+
+# Run tests of all crates
+test:
+	cargo nextest run
+
 
 [unix]
 _touch file:

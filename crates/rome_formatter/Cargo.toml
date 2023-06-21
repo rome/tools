@@ -1,34 +1,34 @@
 [package]
-name = "rome_formatter"
-version = "0.0.1"
-edition.workspace = true
-authors.workspace = true
+name                 = "rome_formatter"
+version              = "0.0.1"
+edition.workspace    = true
+authors.workspace    = true
 repository.workspace = true
-license.workspace = true
-description = "Rome's formatter shared infrastructure"
-documentation = "https://rustdocs.rome.tools/rome_formatter/index.html"
+license.workspace    = true
+description          = "Rome's formatter shared infrastructure"
+documentation        = "https://rustdocs.rome.tools/rome_formatter/index.html"
 
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-rome_rowan = { workspace = true }
-tracing = { workspace = true }
-serde = { version = "1.0.136", features = ["derive"], optional = true }
-cfg-if = "1.0.0"
-schemars = { version = "0.8.10", optional = true }
-rustc-hash = { workspace = true }
-countme = { workspace = true }
-drop_bomb = "0.1.5"
-indexmap = { workspace = true }
-unicode-width = "0.1.9"
+rome_rowan       = { workspace = true }
+tracing          = { workspace = true }
+serde            = { version = "1.0.136", features = ["derive"], optional = true }
+cfg-if           = "1.0.0"
+schemars         = { version = "0.8.10", optional = true }
+rustc-hash       = { workspace = true }
+countme          = { workspace = true }
+drop_bomb        = "0.1.5"
+indexmap         = { workspace = true }
+unicode-width    = "0.1.9"
 rome_diagnostics = { workspace = true }
-rome_console = { workspace = true }
+rome_console     = { workspace = true }
 
 [dev-dependencies]
 rome_js_parser = { workspace = true }
 rome_js_syntax = { workspace = true }
-insta = { workspace = true }
+insta          = { workspace = true }
 
 [features]
 serde = ["dep:serde", "schemars", "rome_rowan/serde"]
