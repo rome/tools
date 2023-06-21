@@ -5,12 +5,66 @@ parent: lint/rules/index
 
 # noBannedTypes (since v10.0.0)
 
-Disallow certain types.
+Disallow primitive type aliases and misleading types.
 
->Some built-in types have aliases, while some types are considered dangerous or harmful. It's often a good idea to ban certain types to help with consistency and safety.
+- Enforce consistent names for primitive types
+
+Primitive types have aliases.
+For example, `Number` is an alias of `number`.
+The rule recommends the lowercase primitive type names.
 
 
->This rule bans specific types and can suggest alternatives. Note that it doesn't ban the corresponding runtime objects from being used.
+- Disallow the `Function` type
+
+The `Function` type is loosely typed and is thus considered dangerous or harmful.
+`Function` is equivalent to the type `(...rest: any[]) => any` that uses the unsafe `any` type.
+
+
+- Disallow the misleading non-nullable type `{}`
+
+In TypeScript, the type `{}` doesn't represent an empty object.
+It represents any value except `null` and `undefined`.
+The following TypeScript example is perfectly valid:
+
+```ts
+const n: {} = 0
+```
+
+<pre class="language-text"><code class="language-text">nursery/noBannedTypes.js:1:10 <a href="https://docs.rome.tools/lint/rules/noBannedTypes">lint/nursery/noBannedTypes</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Don't use '{}' as a type.</span>
+  
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>const n: {} = 0
+   <strong>   │ </strong>         <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
+    <strong>2 │ </strong>
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Prefer explicitly define the object shape. '{}' means &quot;any non-nullable value&quot;.</span>
+  
+</code></pre>
+
+To represent an empty object, you should use `{ [k: string]: never }` or `Record<string, never>`.
+
+To avoid any confusion, the rule forbids the use of the type `{}`,e except in two situation.
+In type constraints to restrict a generic type to non-nullable types:
+
+```ts
+function f<T extends {}>(x: T) {
+    assert(x != null);
+}
+```
+
+And in a type intersection to narrow a type to its non-nullable equivalent type:
+
+```ts
+type NonNullableMyType = MyType & {};
+```
+
+In this last case, you can also use the `NonNullable` utility type:
+
+```ts
+type NonNullableMyType = NonNullable<MyType>;
+```
+
 
 
 Source: https://typescript-eslint.io/rules/ban-types

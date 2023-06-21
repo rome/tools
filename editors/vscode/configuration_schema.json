@@ -751,7 +751,7 @@
 					]
 				},
 				"noBannedTypes": {
-					"description": "Disallow certain types.",
+					"description": "Disallow primitive type aliases and misleading types.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }

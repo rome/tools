@@ -70,6 +70,30 @@ parameter decorators:
   - inside an export default function
   - for React.use* hooks
 
+- Relax [`noBannedTypes`](https://docs.rome.tools/lint/rules/nobannedtypes/) and improve documentation
+
+  The rule no longer reports a user type that reuses a banned type name.
+  The following code is now allowed:
+
+  ```ts
+  import { Number } from "a-lib";
+  declare const v: Number;
+  ```
+
+  The rule now allows the use of the type `{}` to denote a non-nullable generic type:
+
+  ```ts
+  function f<T extends {}>(x: T) {
+      assert(x != null);
+  }
+  ```
+
+  And in a type intersection for narrowing a type to its non-nullable equivalent type:
+
+  ```ts
+  type NonNullableMyType = MyType & {};
+  ```
+
 - Improve the diagnostic and the code action of [`useDefaultParameterLast`](https://docs.rome.tools/lint/rules/usedefaultparameterlast/).
 
   The diagnostic now reports the last required parameter which should precede optional and default parameters.
