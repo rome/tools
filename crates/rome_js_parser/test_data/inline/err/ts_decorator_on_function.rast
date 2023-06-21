@@ -1,0 +1,1161 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsFunctionDeclaration {
+            async_token: missing (optional),
+            function_token: FUNCTION_KW@0..9 "function" [] [Whitespace(" ")],
+            star_token: missing (optional),
+            id: JsIdentifierBinding {
+                name_token: IDENT@9..15 "method" [] [],
+            },
+            type_parameters: missing (optional),
+            parameters: JsParameters {
+                l_paren_token: L_PAREN@15..16 "(" [] [],
+                items: JsParameterList [
+                    JsBogusParameter {
+                        items: [
+                            JsBogus {
+                                items: [
+                                    JsDecorator {
+                                        at_token: AT@16..17 "@" [] [],
+                                        expression: JsIdentifierExpression {
+                                            name: JsReferenceIdentifier {
+                                                value_token: IDENT@17..21 "dec" [] [Whitespace(" ")],
+                                            },
+                                        },
+                                    },
+                                ],
+                            },
+                            JsIdentifierBinding {
+                                name_token: IDENT@21..22 "x" [] [],
+                            },
+                        ],
+                    },
+                    COMMA@22..24 "," [] [Whitespace(" ")],
+                    JsFormalParameter {
+                        decorators: JsDecoratorList [],
+                        binding: JsIdentifierBinding {
+                            name_token: IDENT@24..30 "second" [] [],
+                        },
+                        question_mark_token: missing (optional),
+                        type_annotation: missing (optional),
+                        initializer: missing (optional),
+                    },
+                    COMMA@30..32 "," [] [Whitespace(" ")],
+                    JsBogusParameter {
+                        items: [
+                            JsBogus {
+                                items: [
+                                    JsDecorator {
+                                        at_token: AT@32..33 "@" [] [],
+                                        expression: JsIdentifierExpression {
+                                            name: JsReferenceIdentifier {
+                                                value_token: IDENT@33..37 "dec" [] [Whitespace(" ")],
+                                            },
+                                        },
+                                    },
+                                ],
+                            },
+                            JsIdentifierBinding {
+                                name_token: IDENT@37..43 "third" [] [Whitespace(" ")],
+                            },
+                            JsInitializerClause {
+                                eq_token: EQ@43..45 "=" [] [Whitespace(" ")],
+                                expression: JsStringLiteralExpression {
+                                    value_token: JS_STRING_LITERAL@45..54 "'default'" [] [],
+                                },
+                            },
+                        ],
+                    },
+                ],
+                r_paren_token: R_PAREN@54..56 ")" [] [Whitespace(" ")],
+            },
+            return_type_annotation: missing (optional),
+            body: JsFunctionBody {
+                l_curly_token: L_CURLY@56..57 "{" [] [],
+                directives: JsDirectiveList [],
+                statements: JsStatementList [],
+                r_curly_token: R_CURLY@57..58 "}" [] [],
+            },
+        },
+        JsFunctionDeclaration {
+            async_token: missing (optional),
+            function_token: FUNCTION_KW@58..68 "function" [Newline("\n")] [Whitespace(" ")],
+            star_token: missing (optional),
+            id: JsIdentifierBinding {
+                name_token: IDENT@68..74 "method" [] [],
+            },
+            type_parameters: missing (optional),
+            parameters: JsParameters {
+                l_paren_token: L_PAREN@74..75 "(" [] [],
+                items: JsParameterList [
+                    JsBogusParameter {
+                        items: [
+                            JsBogus {
+                                items: [
+                                    JsDecorator {
+                                        at_token: AT@75..76 "@" [] [],
+                                        expression: JsCallExpression {
+                                            callee: JsStaticMemberExpression {
+                                                object: JsIdentifierExpression {
+                                                    name: JsReferenceIdentifier {
+                                                        value_token: IDENT@76..79 "dec" [] [],
+                                                    },
+                                                },
+                                                operator_token: DOT@79..80 "." [] [],
+                                                member: JsName {
+                                                    value_token: IDENT@80..82 "fn" [] [],
+                                                },
+                                            },
+                                            optional_chain_token: missing (optional),
+                                            type_arguments: missing (optional),
+                                            arguments: JsCallArguments {
+                                                l_paren_token: L_PAREN@82..83 "(" [] [],
+                                                args: JsCallArgumentList [],
+                                                r_paren_token: R_PAREN@83..85 ")" [] [Whitespace(" ")],
+                                            },
+                                        },
+                                    },
+                                ],
+                            },
+                            JsIdentifierBinding {
+                                name_token: IDENT@85..86 "x" [] [],
+                            },
+                        ],
+                    },
+                    COMMA@86..88 "," [] [Whitespace(" ")],
+                    JsFormalParameter {
+                        decorators: JsDecoratorList [],
+                        binding: JsIdentifierBinding {
+                            name_token: IDENT@88..94 "second" [] [],
+                        },
+                        question_mark_token: missing (optional),
+                        type_annotation: missing (optional),
+                        initializer: missing (optional),
+                    },
+                    COMMA@94..96 "," [] [Whitespace(" ")],
+                    JsBogusParameter {
+                        items: [
+                            JsBogus {
+                                items: [
+                                    JsDecorator {
+                                        at_token: AT@96..97 "@" [] [],
+                                        expression: JsCallExpression {
+                                            callee: JsStaticMemberExpression {
+                                                object: JsIdentifierExpression {
+                                                    name: JsReferenceIdentifier {
+                                                        value_token: IDENT@97..100 "dec" [] [],
+                                                    },
+                                                },
+                                                operator_token: DOT@100..101 "." [] [],
+                                                member: JsName {
+                                                    value_token: IDENT@101..103 "fn" [] [],
+                                                },
+                                            },
+                                            optional_chain_token: missing (optional),
+                                            type_arguments: missing (optional),
+                                            arguments: JsCallArguments {
+                                                l_paren_token: L_PAREN@103..104 "(" [] [],
+                                                args: JsCallArgumentList [],
+                                                r_paren_token: R_PAREN@104..106 ")" [] [Whitespace(" ")],
+                                            },
+                                        },
+                                    },
+                                ],
+                            },
+                            JsIdentifierBinding {
+                                name_token: IDENT@106..112 "third" [] [Whitespace(" ")],
+                            },
+                            JsInitializerClause {
+                                eq_token: EQ@112..114 "=" [] [Whitespace(" ")],
+                                expression: JsStringLiteralExpression {
+                                    value_token: JS_STRING_LITERAL@114..123 "'default'" [] [],
+                                },
+                            },
+                        ],
+                    },
+                ],
+                r_paren_token: R_PAREN@123..125 ")" [] [Whitespace(" ")],
+            },
+            return_type_annotation: missing (optional),
+            body: JsFunctionBody {
+                l_curly_token: L_CURLY@125..126 "{" [] [],
+                directives: JsDirectiveList [],
+                statements: JsStatementList [],
+                r_curly_token: R_CURLY@126..127 "}" [] [],
+            },
+        },
+        JsFunctionDeclaration {
+            async_token: missing (optional),
+            function_token: FUNCTION_KW@127..137 "function" [Newline("\n")] [Whitespace(" ")],
+            star_token: missing (optional),
+            id: JsIdentifierBinding {
+                name_token: IDENT@137..143 "method" [] [],
+            },
+            type_parameters: missing (optional),
+            parameters: JsParameters {
+                l_paren_token: L_PAREN@143..144 "(" [] [],
+                items: JsParameterList [
+                    JsBogusParameter {
+                        items: [
+                            JsBogus {
+                                items: [
+                                    JsDecorator {
+                                        at_token: AT@144..145 "@" [] [],
+                                        expression: JsCallExpression {
+                                            callee: JsIdentifierExpression {
+                                                name: JsReferenceIdentifier {
+                                                    value_token: IDENT@145..148 "dec" [] [],
+                                                },
+                                            },
+                                            optional_chain_token: missing (optional),
+                                            type_arguments: missing (optional),
+                                            arguments: JsCallArguments {
+                                                l_paren_token: L_PAREN@148..149 "(" [] [],
+                                                args: JsCallArgumentList [],
+                                                r_paren_token: R_PAREN@149..151 ")" [] [Whitespace(" ")],
+                                            },
+                                        },
+                                    },
+                                ],
+                            },
+                            JsIdentifierBinding {
+                                name_token: IDENT@151..152 "x" [] [],
+                            },
+                        ],
+                    },
+                    COMMA@152..154 "," [] [Whitespace(" ")],
+                    JsFormalParameter {
+                        decorators: JsDecoratorList [],
+                        binding: JsIdentifierBinding {
+                            name_token: IDENT@154..160 "second" [] [],
+                        },
+                        question_mark_token: missing (optional),
+                        type_annotation: missing (optional),
+                        initializer: missing (optional),
+                    },
+                    COMMA@160..162 "," [] [Whitespace(" ")],
+                    JsBogusParameter {
+                        items: [
+                            JsBogus {
+                                items: [
+                                    JsDecorator {
+                                        at_token: AT@162..163 "@" [] [],
+                                        expression: JsCallExpression {
+                                            callee: JsIdentifierExpression {
+                                                name: JsReferenceIdentifier {
+                                                    value_token: IDENT@163..166 "dec" [] [],
+                                                },
+                                            },
+                                            optional_chain_token: missing (optional),
+                                            type_arguments: missing (optional),
+                                            arguments: JsCallArguments {
+                                                l_paren_token: L_PAREN@166..167 "(" [] [],
+                                                args: JsCallArgumentList [],
+                                                r_paren_token: R_PAREN@167..169 ")" [] [Whitespace(" ")],
+                                            },
+                                        },
+                                    },
+                                ],
+                            },
+                            JsIdentifierBinding {
+                                name_token: IDENT@169..175 "third" [] [Whitespace(" ")],
+                            },
+                            JsInitializerClause {
+                                eq_token: EQ@175..177 "=" [] [Whitespace(" ")],
+                                expression: JsStringLiteralExpression {
+                                    value_token: JS_STRING_LITERAL@177..186 "'default'" [] [],
+                                },
+                            },
+                        ],
+                    },
+                ],
+                r_paren_token: R_PAREN@186..188 ")" [] [Whitespace(" ")],
+            },
+            return_type_annotation: missing (optional),
+            body: JsFunctionBody {
+                l_curly_token: L_CURLY@188..189 "{" [] [],
+                directives: JsDirectiveList [],
+                statements: JsStatementList [],
+                r_curly_token: R_CURLY@189..190 "}" [] [],
+            },
+        },
+        JsVariableStatement {
+            declaration: JsVariableDeclaration {
+                kind: CONST_KW@190..197 "const" [Newline("\n")] [Whitespace(" ")],
+                declarators: JsVariableDeclaratorList [
+                    JsVariableDeclarator {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@197..204 "method" [] [Whitespace(" ")],
+                        },
+                        variable_annotation: missing (optional),
+                        initializer: JsInitializerClause {
+                            eq_token: EQ@204..206 "=" [] [Whitespace(" ")],
+                            expression: JsArrowFunctionExpression {
+                                async_token: missing (optional),
+                                type_parameters: missing (optional),
+                                parameters: JsParameters {
+                                    l_paren_token: L_PAREN@206..207 "(" [] [],
+                                    items: JsParameterList [
+                                        JsBogusParameter {
+                                            items: [
+                                                JsBogus {
+                                                    items: [
+                                                        JsDecorator {
+                                                            at_token: AT@207..208 "@" [] [],
+                                                            expression: JsIdentifierExpression {
+                                                                name: JsReferenceIdentifier {
+                                                                    value_token: IDENT@208..212 "dec" [] [Whitespace(" ")],
+                                                                },
+                                                            },
+                                                        },
+                                                    ],
+                                                },
+                                                JsIdentifierBinding {
+                                                    name_token: IDENT@212..213 "x" [] [],
+                                                },
+                                            ],
+                                        },
+                                        COMMA@213..215 "," [] [Whitespace(" ")],
+                                        JsFormalParameter {
+                                            decorators: JsDecoratorList [],
+                                            binding: JsIdentifierBinding {
+                                                name_token: IDENT@215..221 "second" [] [],
+                                            },
+                                            question_mark_token: missing (optional),
+                                            type_annotation: missing (optional),
+                                            initializer: missing (optional),
+                                        },
+                                        COMMA@221..223 "," [] [Whitespace(" ")],
+                                        JsBogusParameter {
+                                            items: [
+                                                JsBogus {
+                                                    items: [
+                                                        JsDecorator {
+                                                            at_token: AT@223..224 "@" [] [],
+                                                            expression: JsIdentifierExpression {
+                                                                name: JsReferenceIdentifier {
+                                                                    value_token: IDENT@224..228 "dec" [] [Whitespace(" ")],
+                                                                },
+                                                            },
+                                                        },
+                                                    ],
+                                                },
+                                                JsIdentifierBinding {
+                                                    name_token: IDENT@228..234 "third" [] [Whitespace(" ")],
+                                                },
+                                                JsInitializerClause {
+                                                    eq_token: EQ@234..236 "=" [] [Whitespace(" ")],
+                                                    expression: JsStringLiteralExpression {
+                                                        value_token: JS_STRING_LITERAL@236..245 "'default'" [] [],
+                                                    },
+                                                },
+                                            ],
+                                        },
+                                    ],
+                                    r_paren_token: R_PAREN@245..247 ")" [] [Whitespace(" ")],
+                                },
+                                return_type_annotation: missing (optional),
+                                fat_arrow_token: FAT_ARROW@247..250 "=>" [] [Whitespace(" ")],
+                                body: JsFunctionBody {
+                                    l_curly_token: L_CURLY@250..251 "{" [] [],
+                                    directives: JsDirectiveList [],
+                                    statements: JsStatementList [],
+                                    r_curly_token: R_CURLY@251..252 "}" [] [],
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@252..253 ";" [] [],
+        },
+        JsVariableStatement {
+            declaration: JsVariableDeclaration {
+                kind: CONST_KW@253..260 "const" [Newline("\n")] [Whitespace(" ")],
+                declarators: JsVariableDeclaratorList [
+                    JsVariableDeclarator {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@260..267 "method" [] [Whitespace(" ")],
+                        },
+                        variable_annotation: missing (optional),
+                        initializer: JsInitializerClause {
+                            eq_token: EQ@267..269 "=" [] [Whitespace(" ")],
+                            expression: JsArrowFunctionExpression {
+                                async_token: missing (optional),
+                                type_parameters: missing (optional),
+                                parameters: JsParameters {
+                                    l_paren_token: L_PAREN@269..270 "(" [] [],
+                                    items: JsParameterList [
+                                        JsBogusParameter {
+                                            items: [
+                                                JsBogus {
+                                                    items: [
+                                                        JsDecorator {
+                                                            at_token: AT@270..271 "@" [] [],
+                                                            expression: JsCallExpression {
+                                                                callee: JsStaticMemberExpression {
+                                                                    object: JsIdentifierExpression {
+                                                                        name: JsReferenceIdentifier {
+                                                                            value_token: IDENT@271..274 "dec" [] [],
+                                                                        },
+                                                                    },
+                                                                    operator_token: DOT@274..275 "." [] [],
+                                                                    member: JsName {
+                                                                        value_token: IDENT@275..277 "fn" [] [],
+                                                                    },
+                                                                },
+                                                                optional_chain_token: missing (optional),
+                                                                type_arguments: missing (optional),
+                                                                arguments: JsCallArguments {
+                                                                    l_paren_token: L_PAREN@277..278 "(" [] [],
+                                                                    args: JsCallArgumentList [],
+                                                                    r_paren_token: R_PAREN@278..280 ")" [] [Whitespace(" ")],
+                                                                },
+                                                            },
+                                                        },
+                                                    ],
+                                                },
+                                                JsIdentifierBinding {
+                                                    name_token: IDENT@280..281 "x" [] [],
+                                                },
+                                            ],
+                                        },
+                                        COMMA@281..283 "," [] [Whitespace(" ")],
+                                        JsFormalParameter {
+                                            decorators: JsDecoratorList [],
+                                            binding: JsIdentifierBinding {
+                                                name_token: IDENT@283..289 "second" [] [],
+                                            },
+                                            question_mark_token: missing (optional),
+                                            type_annotation: missing (optional),
+                                            initializer: missing (optional),
+                                        },
+                                        COMMA@289..291 "," [] [Whitespace(" ")],
+                                        JsBogusParameter {
+                                            items: [
+                                                JsBogus {
+                                                    items: [
+                                                        JsDecorator {
+                                                            at_token: AT@291..292 "@" [] [],
+                                                            expression: JsCallExpression {
+                                                                callee: JsStaticMemberExpression {
+                                                                    object: JsIdentifierExpression {
+                                                                        name: JsReferenceIdentifier {
+                                                                            value_token: IDENT@292..295 "dec" [] [],
+                                                                        },
+                                                                    },
+                                                                    operator_token: DOT@295..296 "." [] [],
+                                                                    member: JsName {
+                                                                        value_token: IDENT@296..298 "fn" [] [],
+                                                                    },
+                                                                },
+                                                                optional_chain_token: missing (optional),
+                                                                type_arguments: missing (optional),
+                                                                arguments: JsCallArguments {
+                                                                    l_paren_token: L_PAREN@298..299 "(" [] [],
+                                                                    args: JsCallArgumentList [],
+                                                                    r_paren_token: R_PAREN@299..301 ")" [] [Whitespace(" ")],
+                                                                },
+                                                            },
+                                                        },
+                                                    ],
+                                                },
+                                                JsIdentifierBinding {
+                                                    name_token: IDENT@301..307 "third" [] [Whitespace(" ")],
+                                                },
+                                                JsInitializerClause {
+                                                    eq_token: EQ@307..309 "=" [] [Whitespace(" ")],
+                                                    expression: JsStringLiteralExpression {
+                                                        value_token: JS_STRING_LITERAL@309..318 "'default'" [] [],
+                                                    },
+                                                },
+                                            ],
+                                        },
+                                    ],
+                                    r_paren_token: R_PAREN@318..320 ")" [] [Whitespace(" ")],
+                                },
+                                return_type_annotation: missing (optional),
+                                fat_arrow_token: FAT_ARROW@320..323 "=>" [] [Whitespace(" ")],
+                                body: JsFunctionBody {
+                                    l_curly_token: L_CURLY@323..324 "{" [] [],
+                                    directives: JsDirectiveList [],
+                                    statements: JsStatementList [],
+                                    r_curly_token: R_CURLY@324..325 "}" [] [],
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@325..326 ";" [] [],
+        },
+        JsVariableStatement {
+            declaration: JsVariableDeclaration {
+                kind: CONST_KW@326..333 "const" [Newline("\n")] [Whitespace(" ")],
+                declarators: JsVariableDeclaratorList [
+                    JsVariableDeclarator {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@333..340 "method" [] [Whitespace(" ")],
+                        },
+                        variable_annotation: missing (optional),
+                        initializer: JsInitializerClause {
+                            eq_token: EQ@340..342 "=" [] [Whitespace(" ")],
+                            expression: JsArrowFunctionExpression {
+                                async_token: missing (optional),
+                                type_parameters: missing (optional),
+                                parameters: JsParameters {
+                                    l_paren_token: L_PAREN@342..343 "(" [] [],
+                                    items: JsParameterList [
+                                        JsBogusParameter {
+                                            items: [
+                                                JsBogus {
+                                                    items: [
+                                                        JsDecorator {
+                                                            at_token: AT@343..344 "@" [] [],
+                                                            expression: JsCallExpression {
+                                                                callee: JsIdentifierExpression {
+                                                                    name: JsReferenceIdentifier {
+                                                                        value_token: IDENT@344..347 "dec" [] [],
+                                                                    },
+                                                                },
+                                                                optional_chain_token: missing (optional),
+                                                                type_arguments: missing (optional),
+                                                                arguments: JsCallArguments {
+                                                                    l_paren_token: L_PAREN@347..348 "(" [] [],
+                                                                    args: JsCallArgumentList [],
+                                                                    r_paren_token: R_PAREN@348..350 ")" [] [Whitespace(" ")],
+                                                                },
+                                                            },
+                                                        },
+                                                    ],
+                                                },
+                                                JsIdentifierBinding {
+                                                    name_token: IDENT@350..351 "x" [] [],
+                                                },
+                                            ],
+                                        },
+                                        COMMA@351..353 "," [] [Whitespace(" ")],
+                                        JsFormalParameter {
+                                            decorators: JsDecoratorList [],
+                                            binding: JsIdentifierBinding {
+                                                name_token: IDENT@353..359 "second" [] [],
+                                            },
+                                            question_mark_token: missing (optional),
+                                            type_annotation: missing (optional),
+                                            initializer: missing (optional),
+                                        },
+                                        COMMA@359..361 "," [] [Whitespace(" ")],
+                                        JsBogusParameter {
+                                            items: [
+                                                JsBogus {
+                                                    items: [
+                                                        JsDecorator {
+                                                            at_token: AT@361..362 "@" [] [],
+                                                            expression: JsCallExpression {
+                                                                callee: JsIdentifierExpression {
+                                                                    name: JsReferenceIdentifier {
+                                                                        value_token: IDENT@362..365 "dec" [] [],
+                                                                    },
+                                                                },
+                                                                optional_chain_token: missing (optional),
+                                                                type_arguments: missing (optional),
+                                                                arguments: JsCallArguments {
+                                                                    l_paren_token: L_PAREN@365..366 "(" [] [],
+                                                                    args: JsCallArgumentList [],
+                                                                    r_paren_token: R_PAREN@366..368 ")" [] [Whitespace(" ")],
+                                                                },
+                                                            },
+                                                        },
+                                                    ],
+                                                },
+                                                JsIdentifierBinding {
+                                                    name_token: IDENT@368..374 "third" [] [Whitespace(" ")],
+                                                },
+                                                JsInitializerClause {
+                                                    eq_token: EQ@374..376 "=" [] [Whitespace(" ")],
+                                                    expression: JsStringLiteralExpression {
+                                                        value_token: JS_STRING_LITERAL@376..385 "'default'" [] [],
+                                                    },
+                                                },
+                                            ],
+                                        },
+                                    ],
+                                    r_paren_token: R_PAREN@385..387 ")" [] [Whitespace(" ")],
+                                },
+                                return_type_annotation: missing (optional),
+                                fat_arrow_token: FAT_ARROW@387..390 "=>" [] [Whitespace(" ")],
+                                body: JsFunctionBody {
+                                    l_curly_token: L_CURLY@390..391 "{" [] [],
+                                    directives: JsDirectiveList [],
+                                    statements: JsStatementList [],
+                                    r_curly_token: R_CURLY@391..392 "}" [] [],
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@392..393 ";" [] [],
+        },
+    ],
+    eof_token: EOF@393..394 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..394
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..393
+    0: JS_FUNCTION_DECLARATION@0..58
+      0: (empty)
+      1: FUNCTION_KW@0..9 "function" [] [Whitespace(" ")]
+      2: (empty)
+      3: JS_IDENTIFIER_BINDING@9..15
+        0: IDENT@9..15 "method" [] []
+      4: (empty)
+      5: JS_PARAMETERS@15..56
+        0: L_PAREN@15..16 "(" [] []
+        1: JS_PARAMETER_LIST@16..54
+          0: JS_BOGUS_PARAMETER@16..22
+            0: JS_BOGUS@16..21
+              0: JS_DECORATOR@16..21
+                0: AT@16..17 "@" [] []
+                1: JS_IDENTIFIER_EXPRESSION@17..21
+                  0: JS_REFERENCE_IDENTIFIER@17..21
+                    0: IDENT@17..21 "dec" [] [Whitespace(" ")]
+            1: JS_IDENTIFIER_BINDING@21..22
+              0: IDENT@21..22 "x" [] []
+          1: COMMA@22..24 "," [] [Whitespace(" ")]
+          2: JS_FORMAL_PARAMETER@24..30
+            0: JS_DECORATOR_LIST@24..24
+            1: JS_IDENTIFIER_BINDING@24..30
+              0: IDENT@24..30 "second" [] []
+            2: (empty)
+            3: (empty)
+            4: (empty)
+          3: COMMA@30..32 "," [] [Whitespace(" ")]
+          4: JS_BOGUS_PARAMETER@32..54
+            0: JS_BOGUS@32..37
+              0: JS_DECORATOR@32..37
+                0: AT@32..33 "@" [] []
+                1: JS_IDENTIFIER_EXPRESSION@33..37
+                  0: JS_REFERENCE_IDENTIFIER@33..37
+                    0: IDENT@33..37 "dec" [] [Whitespace(" ")]
+            1: JS_IDENTIFIER_BINDING@37..43
+              0: IDENT@37..43 "third" [] [Whitespace(" ")]
+            2: JS_INITIALIZER_CLAUSE@43..54
+              0: EQ@43..45 "=" [] [Whitespace(" ")]
+              1: JS_STRING_LITERAL_EXPRESSION@45..54
+                0: JS_STRING_LITERAL@45..54 "'default'" [] []
+        2: R_PAREN@54..56 ")" [] [Whitespace(" ")]
+      6: (empty)
+      7: JS_FUNCTION_BODY@56..58
+        0: L_CURLY@56..57 "{" [] []
+        1: JS_DIRECTIVE_LIST@57..57
+        2: JS_STATEMENT_LIST@57..57
+        3: R_CURLY@57..58 "}" [] []
+    1: JS_FUNCTION_DECLARATION@58..127
+      0: (empty)
+      1: FUNCTION_KW@58..68 "function" [Newline("\n")] [Whitespace(" ")]
+      2: (empty)
+      3: JS_IDENTIFIER_BINDING@68..74
+        0: IDENT@68..74 "method" [] []
+      4: (empty)
+      5: JS_PARAMETERS@74..125
+        0: L_PAREN@74..75 "(" [] []
+        1: JS_PARAMETER_LIST@75..123
+          0: JS_BOGUS_PARAMETER@75..86
+            0: JS_BOGUS@75..85
+              0: JS_DECORATOR@75..85
+                0: AT@75..76 "@" [] []
+                1: JS_CALL_EXPRESSION@76..85
+                  0: JS_STATIC_MEMBER_EXPRESSION@76..82
+                    0: JS_IDENTIFIER_EXPRESSION@76..79
+                      0: JS_REFERENCE_IDENTIFIER@76..79
+                        0: IDENT@76..79 "dec" [] []
+                    1: DOT@79..80 "." [] []
+                    2: JS_NAME@80..82
+                      0: IDENT@80..82 "fn" [] []
+                  1: (empty)
+                  2: (empty)
+                  3: JS_CALL_ARGUMENTS@82..85
+                    0: L_PAREN@82..83 "(" [] []
+                    1: JS_CALL_ARGUMENT_LIST@83..83
+                    2: R_PAREN@83..85 ")" [] [Whitespace(" ")]
+            1: JS_IDENTIFIER_BINDING@85..86
+              0: IDENT@85..86 "x" [] []
+          1: COMMA@86..88 "," [] [Whitespace(" ")]
+          2: JS_FORMAL_PARAMETER@88..94
+            0: JS_DECORATOR_LIST@88..88
+            1: JS_IDENTIFIER_BINDING@88..94
+              0: IDENT@88..94 "second" [] []
+            2: (empty)
+            3: (empty)
+            4: (empty)
+          3: COMMA@94..96 "," [] [Whitespace(" ")]
+          4: JS_BOGUS_PARAMETER@96..123
+            0: JS_BOGUS@96..106
+              0: JS_DECORATOR@96..106
+                0: AT@96..97 "@" [] []
+                1: JS_CALL_EXPRESSION@97..106
+                  0: JS_STATIC_MEMBER_EXPRESSION@97..103
+                    0: JS_IDENTIFIER_EXPRESSION@97..100
+                      0: JS_REFERENCE_IDENTIFIER@97..100
+                        0: IDENT@97..100 "dec" [] []
+                    1: DOT@100..101 "." [] []
+                    2: JS_NAME@101..103
+                      0: IDENT@101..103 "fn" [] []
+                  1: (empty)
+                  2: (empty)
+                  3: JS_CALL_ARGUMENTS@103..106
+                    0: L_PAREN@103..104 "(" [] []
+                    1: JS_CALL_ARGUMENT_LIST@104..104
+                    2: R_PAREN@104..106 ")" [] [Whitespace(" ")]
+            1: JS_IDENTIFIER_BINDING@106..112
+              0: IDENT@106..112 "third" [] [Whitespace(" ")]
+            2: JS_INITIALIZER_CLAUSE@112..123
+              0: EQ@112..114 "=" [] [Whitespace(" ")]
+              1: JS_STRING_LITERAL_EXPRESSION@114..123
+                0: JS_STRING_LITERAL@114..123 "'default'" [] []
+        2: R_PAREN@123..125 ")" [] [Whitespace(" ")]
+      6: (empty)
+      7: JS_FUNCTION_BODY@125..127
+        0: L_CURLY@125..126 "{" [] []
+        1: JS_DIRECTIVE_LIST@126..126
+        2: JS_STATEMENT_LIST@126..126
+        3: R_CURLY@126..127 "}" [] []
+    2: JS_FUNCTION_DECLARATION@127..190
+      0: (empty)
+      1: FUNCTION_KW@127..137 "function" [Newline("\n")] [Whitespace(" ")]
+      2: (empty)
+      3: JS_IDENTIFIER_BINDING@137..143
+        0: IDENT@137..143 "method" [] []
+      4: (empty)
+      5: JS_PARAMETERS@143..188
+        0: L_PAREN@143..144 "(" [] []
+        1: JS_PARAMETER_LIST@144..186
+          0: JS_BOGUS_PARAMETER@144..152
+            0: JS_BOGUS@144..151
+              0: JS_DECORATOR@144..151
+                0: AT@144..145 "@" [] []
+                1: JS_CALL_EXPRESSION@145..151
+                  0: JS_IDENTIFIER_EXPRESSION@145..148
+                    0: JS_REFERENCE_IDENTIFIER@145..148
+                      0: IDENT@145..148 "dec" [] []
+                  1: (empty)
+                  2: (empty)
+                  3: JS_CALL_ARGUMENTS@148..151
+                    0: L_PAREN@148..149 "(" [] []
+                    1: JS_CALL_ARGUMENT_LIST@149..149
+                    2: R_PAREN@149..151 ")" [] [Whitespace(" ")]
+            1: JS_IDENTIFIER_BINDING@151..152
+              0: IDENT@151..152 "x" [] []
+          1: COMMA@152..154 "," [] [Whitespace(" ")]
+          2: JS_FORMAL_PARAMETER@154..160
+            0: JS_DECORATOR_LIST@154..154
+            1: JS_IDENTIFIER_BINDING@154..160
+              0: IDENT@154..160 "second" [] []
+            2: (empty)
+            3: (empty)
+            4: (empty)
+          3: COMMA@160..162 "," [] [Whitespace(" ")]
+          4: JS_BOGUS_PARAMETER@162..186
+            0: JS_BOGUS@162..169
+              0: JS_DECORATOR@162..169
+                0: AT@162..163 "@" [] []
+                1: JS_CALL_EXPRESSION@163..169
+                  0: JS_IDENTIFIER_EXPRESSION@163..166
+                    0: JS_REFERENCE_IDENTIFIER@163..166
+                      0: IDENT@163..166 "dec" [] []
+                  1: (empty)
+                  2: (empty)
+                  3: JS_CALL_ARGUMENTS@166..169
+                    0: L_PAREN@166..167 "(" [] []
+                    1: JS_CALL_ARGUMENT_LIST@167..167
+                    2: R_PAREN@167..169 ")" [] [Whitespace(" ")]
+            1: JS_IDENTIFIER_BINDING@169..175
+              0: IDENT@169..175 "third" [] [Whitespace(" ")]
+            2: JS_INITIALIZER_CLAUSE@175..186
+              0: EQ@175..177 "=" [] [Whitespace(" ")]
+              1: JS_STRING_LITERAL_EXPRESSION@177..186
+                0: JS_STRING_LITERAL@177..186 "'default'" [] []
+        2: R_PAREN@186..188 ")" [] [Whitespace(" ")]
+      6: (empty)
+      7: JS_FUNCTION_BODY@188..190
+        0: L_CURLY@188..189 "{" [] []
+        1: JS_DIRECTIVE_LIST@189..189
+        2: JS_STATEMENT_LIST@189..189
+        3: R_CURLY@189..190 "}" [] []
+    3: JS_VARIABLE_STATEMENT@190..253
+      0: JS_VARIABLE_DECLARATION@190..252
+        0: CONST_KW@190..197 "const" [Newline("\n")] [Whitespace(" ")]
+        1: JS_VARIABLE_DECLARATOR_LIST@197..252
+          0: JS_VARIABLE_DECLARATOR@197..252
+            0: JS_IDENTIFIER_BINDING@197..204
+              0: IDENT@197..204 "method" [] [Whitespace(" ")]
+            1: (empty)
+            2: JS_INITIALIZER_CLAUSE@204..252
+              0: EQ@204..206 "=" [] [Whitespace(" ")]
+              1: JS_ARROW_FUNCTION_EXPRESSION@206..252
+                0: (empty)
+                1: (empty)
+                2: JS_PARAMETERS@206..247
+                  0: L_PAREN@206..207 "(" [] []
+                  1: JS_PARAMETER_LIST@207..245
+                    0: JS_BOGUS_PARAMETER@207..213
+                      0: JS_BOGUS@207..212
+                        0: JS_DECORATOR@207..212
+                          0: AT@207..208 "@" [] []
+                          1: JS_IDENTIFIER_EXPRESSION@208..212
+                            0: JS_REFERENCE_IDENTIFIER@208..212
+                              0: IDENT@208..212 "dec" [] [Whitespace(" ")]
+                      1: JS_IDENTIFIER_BINDING@212..213
+                        0: IDENT@212..213 "x" [] []
+                    1: COMMA@213..215 "," [] [Whitespace(" ")]
+                    2: JS_FORMAL_PARAMETER@215..221
+                      0: JS_DECORATOR_LIST@215..215
+                      1: JS_IDENTIFIER_BINDING@215..221
+                        0: IDENT@215..221 "second" [] []
+                      2: (empty)
+                      3: (empty)
+                      4: (empty)
+                    3: COMMA@221..223 "," [] [Whitespace(" ")]
+                    4: JS_BOGUS_PARAMETER@223..245
+                      0: JS_BOGUS@223..228
+                        0: JS_DECORATOR@223..228
+                          0: AT@223..224 "@" [] []
+                          1: JS_IDENTIFIER_EXPRESSION@224..228
+                            0: JS_REFERENCE_IDENTIFIER@224..228
+                              0: IDENT@224..228 "dec" [] [Whitespace(" ")]
+                      1: JS_IDENTIFIER_BINDING@228..234
+                        0: IDENT@228..234 "third" [] [Whitespace(" ")]
+                      2: JS_INITIALIZER_CLAUSE@234..245
+                        0: EQ@234..236 "=" [] [Whitespace(" ")]
+                        1: JS_STRING_LITERAL_EXPRESSION@236..245
+                          0: JS_STRING_LITERAL@236..245 "'default'" [] []
+                  2: R_PAREN@245..247 ")" [] [Whitespace(" ")]
+                3: (empty)
+                4: FAT_ARROW@247..250 "=>" [] [Whitespace(" ")]
+                5: JS_FUNCTION_BODY@250..252
+                  0: L_CURLY@250..251 "{" [] []
+                  1: JS_DIRECTIVE_LIST@251..251
+                  2: JS_STATEMENT_LIST@251..251
+                  3: R_CURLY@251..252 "}" [] []
+      1: SEMICOLON@252..253 ";" [] []
+    4: JS_VARIABLE_STATEMENT@253..326
+      0: JS_VARIABLE_DECLARATION@253..325
+        0: CONST_KW@253..260 "const" [Newline("\n")] [Whitespace(" ")]
+        1: JS_VARIABLE_DECLARATOR_LIST@260..325
+          0: JS_VARIABLE_DECLARATOR@260..325
+            0: JS_IDENTIFIER_BINDING@260..267
+              0: IDENT@260..267 "method" [] [Whitespace(" ")]
+            1: (empty)
+            2: JS_INITIALIZER_CLAUSE@267..325
+              0: EQ@267..269 "=" [] [Whitespace(" ")]
+              1: JS_ARROW_FUNCTION_EXPRESSION@269..325
+                0: (empty)
+                1: (empty)
+                2: JS_PARAMETERS@269..320
+                  0: L_PAREN@269..270 "(" [] []
+                  1: JS_PARAMETER_LIST@270..318
+                    0: JS_BOGUS_PARAMETER@270..281
+                      0: JS_BOGUS@270..280
+                        0: JS_DECORATOR@270..280
+                          0: AT@270..271 "@" [] []
+                          1: JS_CALL_EXPRESSION@271..280
+                            0: JS_STATIC_MEMBER_EXPRESSION@271..277
+                              0: JS_IDENTIFIER_EXPRESSION@271..274
+                                0: JS_REFERENCE_IDENTIFIER@271..274
+                                  0: IDENT@271..274 "dec" [] []
+                              1: DOT@274..275 "." [] []
+                              2: JS_NAME@275..277
+                                0: IDENT@275..277 "fn" [] []
+                            1: (empty)
+                            2: (empty)
+                            3: JS_CALL_ARGUMENTS@277..280
+                              0: L_PAREN@277..278 "(" [] []
+                              1: JS_CALL_ARGUMENT_LIST@278..278
+                              2: R_PAREN@278..280 ")" [] [Whitespace(" ")]
+                      1: JS_IDENTIFIER_BINDING@280..281
+                        0: IDENT@280..281 "x" [] []
+                    1: COMMA@281..283 "," [] [Whitespace(" ")]
+                    2: JS_FORMAL_PARAMETER@283..289
+                      0: JS_DECORATOR_LIST@283..283
+                      1: JS_IDENTIFIER_BINDING@283..289
+                        0: IDENT@283..289 "second" [] []
+                      2: (empty)
+                      3: (empty)
+                      4: (empty)
+                    3: COMMA@289..291 "," [] [Whitespace(" ")]
+                    4: JS_BOGUS_PARAMETER@291..318
+                      0: JS_BOGUS@291..301
+                        0: JS_DECORATOR@291..301
+                          0: AT@291..292 "@" [] []
+                          1: JS_CALL_EXPRESSION@292..301
+                            0: JS_STATIC_MEMBER_EXPRESSION@292..298
+                              0: JS_IDENTIFIER_EXPRESSION@292..295
+                                0: JS_REFERENCE_IDENTIFIER@292..295
+                                  0: IDENT@292..295 "dec" [] []
+                              1: DOT@295..296 "." [] []
+                              2: JS_NAME@296..298
+                                0: IDENT@296..298 "fn" [] []
+                            1: (empty)
+                            2: (empty)
+                            3: JS_CALL_ARGUMENTS@298..301
+                              0: L_PAREN@298..299 "(" [] []
+                              1: JS_CALL_ARGUMENT_LIST@299..299
+                              2: R_PAREN@299..301 ")" [] [Whitespace(" ")]
+                      1: JS_IDENTIFIER_BINDING@301..307
+                        0: IDENT@301..307 "third" [] [Whitespace(" ")]
+                      2: JS_INITIALIZER_CLAUSE@307..318
+                        0: EQ@307..309 "=" [] [Whitespace(" ")]
+                        1: JS_STRING_LITERAL_EXPRESSION@309..318
+                          0: JS_STRING_LITERAL@309..318 "'default'" [] []
+                  2: R_PAREN@318..320 ")" [] [Whitespace(" ")]
+                3: (empty)
+                4: FAT_ARROW@320..323 "=>" [] [Whitespace(" ")]
+                5: JS_FUNCTION_BODY@323..325
+                  0: L_CURLY@323..324 "{" [] []
+                  1: JS_DIRECTIVE_LIST@324..324
+                  2: JS_STATEMENT_LIST@324..324
+                  3: R_CURLY@324..325 "}" [] []
+      1: SEMICOLON@325..326 ";" [] []
+    5: JS_VARIABLE_STATEMENT@326..393
+      0: JS_VARIABLE_DECLARATION@326..392
+        0: CONST_KW@326..333 "const" [Newline("\n")] [Whitespace(" ")]
+        1: JS_VARIABLE_DECLARATOR_LIST@333..392
+          0: JS_VARIABLE_DECLARATOR@333..392
+            0: JS_IDENTIFIER_BINDING@333..340
+              0: IDENT@333..340 "method" [] [Whitespace(" ")]
+            1: (empty)
+            2: JS_INITIALIZER_CLAUSE@340..392
+              0: EQ@340..342 "=" [] [Whitespace(" ")]
+              1: JS_ARROW_FUNCTION_EXPRESSION@342..392
+                0: (empty)
+                1: (empty)
+                2: JS_PARAMETERS@342..387
+                  0: L_PAREN@342..343 "(" [] []
+                  1: JS_PARAMETER_LIST@343..385
+                    0: JS_BOGUS_PARAMETER@343..351
+                      0: JS_BOGUS@343..350
+                        0: JS_DECORATOR@343..350
+                          0: AT@343..344 "@" [] []
+                          1: JS_CALL_EXPRESSION@344..350
+                            0: JS_IDENTIFIER_EXPRESSION@344..347
+                              0: JS_REFERENCE_IDENTIFIER@344..347
+                                0: IDENT@344..347 "dec" [] []
+                            1: (empty)
+                            2: (empty)
+                            3: JS_CALL_ARGUMENTS@347..350
+                              0: L_PAREN@347..348 "(" [] []
+                              1: JS_CALL_ARGUMENT_LIST@348..348
+                              2: R_PAREN@348..350 ")" [] [Whitespace(" ")]
+                      1: JS_IDENTIFIER_BINDING@350..351
+                        0: IDENT@350..351 "x" [] []
+                    1: COMMA@351..353 "," [] [Whitespace(" ")]
+                    2: JS_FORMAL_PARAMETER@353..359
+                      0: JS_DECORATOR_LIST@353..353
+                      1: JS_IDENTIFIER_BINDING@353..359
+                        0: IDENT@353..359 "second" [] []
+                      2: (empty)
+                      3: (empty)
+                      4: (empty)
+                    3: COMMA@359..361 "," [] [Whitespace(" ")]
+                    4: JS_BOGUS_PARAMETER@361..385
+                      0: JS_BOGUS@361..368
+                        0: JS_DECORATOR@361..368
+                          0: AT@361..362 "@" [] []
+                          1: JS_CALL_EXPRESSION@362..368
+                            0: JS_IDENTIFIER_EXPRESSION@362..365
+                              0: JS_REFERENCE_IDENTIFIER@362..365
+                                0: IDENT@362..365 "dec" [] []
+                            1: (empty)
+                            2: (empty)
+                            3: JS_CALL_ARGUMENTS@365..368
+                              0: L_PAREN@365..366 "(" [] []
+                              1: JS_CALL_ARGUMENT_LIST@366..366
+                              2: R_PAREN@366..368 ")" [] [Whitespace(" ")]
+                      1: JS_IDENTIFIER_BINDING@368..374
+                        0: IDENT@368..374 "third" [] [Whitespace(" ")]
+                      2: JS_INITIALIZER_CLAUSE@374..385
+                        0: EQ@374..376 "=" [] [Whitespace(" ")]
+                        1: JS_STRING_LITERAL_EXPRESSION@376..385
+                          0: JS_STRING_LITERAL@376..385 "'default'" [] []
+                  2: R_PAREN@385..387 ")" [] [Whitespace(" ")]
+                3: (empty)
+                4: FAT_ARROW@387..390 "=>" [] [Whitespace(" ")]
+                5: JS_FUNCTION_BODY@390..392
+                  0: L_CURLY@390..391 "{" [] []
+                  1: JS_DIRECTIVE_LIST@391..391
+                  2: JS_STATEMENT_LIST@391..391
+                  3: R_CURLY@391..392 "}" [] []
+      1: SEMICOLON@392..393 ";" [] []
+  3: EOF@393..394 "" [Newline("\n")] []
+--
+ts_decorator_on_function.ts:1:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Decorators are not valid here.
+  
+  > 1 │ function method(@dec x, second, @dec third = 'default') {}
+      │                 ^^^^
+    2 │ function method(@dec.fn() x, second, @dec.fn() third = 'default') {}
+    3 │ function method(@dec() x, second, @dec() third = 'default') {}
+  
+  i Decorators are only valid on class declarations, class expressions, and class methods.
+  
+--
+ts_decorator_on_function.ts:1:33 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Decorators are not valid here.
+  
+  > 1 │ function method(@dec x, second, @dec third = 'default') {}
+      │                                 ^^^^
+    2 │ function method(@dec.fn() x, second, @dec.fn() third = 'default') {}
+    3 │ function method(@dec() x, second, @dec() third = 'default') {}
+  
+  i Decorators are only valid on class declarations, class expressions, and class methods.
+  
+--
+ts_decorator_on_function.ts:2:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Decorators are not valid here.
+  
+    1 │ function method(@dec x, second, @dec third = 'default') {}
+  > 2 │ function method(@dec.fn() x, second, @dec.fn() third = 'default') {}
+      │                 ^^^^^^^^^
+    3 │ function method(@dec() x, second, @dec() third = 'default') {}
+    4 │ const method = (@dec x, second, @dec third = 'default') => {};
+  
+  i Decorators are only valid on class declarations, class expressions, and class methods.
+  
+--
+ts_decorator_on_function.ts:2:38 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Decorators are not valid here.
+  
+    1 │ function method(@dec x, second, @dec third = 'default') {}
+  > 2 │ function method(@dec.fn() x, second, @dec.fn() third = 'default') {}
+      │                                      ^^^^^^^^^
+    3 │ function method(@dec() x, second, @dec() third = 'default') {}
+    4 │ const method = (@dec x, second, @dec third = 'default') => {};
+  
+  i Decorators are only valid on class declarations, class expressions, and class methods.
+  
+--
+ts_decorator_on_function.ts:3:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Decorators are not valid here.
+  
+    1 │ function method(@dec x, second, @dec third = 'default') {}
+    2 │ function method(@dec.fn() x, second, @dec.fn() third = 'default') {}
+  > 3 │ function method(@dec() x, second, @dec() third = 'default') {}
+      │                 ^^^^^^
+    4 │ const method = (@dec x, second, @dec third = 'default') => {};
+    5 │ const method = (@dec.fn() x, second, @dec.fn() third = 'default') => {};
+  
+  i Decorators are only valid on class declarations, class expressions, and class methods.
+  
+--
+ts_decorator_on_function.ts:3:35 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Decorators are not valid here.
+  
+    1 │ function method(@dec x, second, @dec third = 'default') {}
+    2 │ function method(@dec.fn() x, second, @dec.fn() third = 'default') {}
+  > 3 │ function method(@dec() x, second, @dec() third = 'default') {}
+      │                                   ^^^^^^
+    4 │ const method = (@dec x, second, @dec third = 'default') => {};
+    5 │ const method = (@dec.fn() x, second, @dec.fn() third = 'default') => {};
+  
+  i Decorators are only valid on class declarations, class expressions, and class methods.
+  
+--
+ts_decorator_on_function.ts:4:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Decorators are not valid here.
+  
+    2 │ function method(@dec.fn() x, second, @dec.fn() third = 'default') {}
+    3 │ function method(@dec() x, second, @dec() third = 'default') {}
+  > 4 │ const method = (@dec x, second, @dec third = 'default') => {};
+      │                 ^^^^
+    5 │ const method = (@dec.fn() x, second, @dec.fn() third = 'default') => {};
+    6 │ const method = (@dec() x, second, @dec() third = 'default') => {};
+  
+  i Decorators are only valid on class declarations, class expressions, and class methods.
+  
+--
+ts_decorator_on_function.ts:4:33 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Decorators are not valid here.
+  
+    2 │ function method(@dec.fn() x, second, @dec.fn() third = 'default') {}
+    3 │ function method(@dec() x, second, @dec() third = 'default') {}
+  > 4 │ const method = (@dec x, second, @dec third = 'default') => {};
+      │                                 ^^^^
+    5 │ const method = (@dec.fn() x, second, @dec.fn() third = 'default') => {};
+    6 │ const method = (@dec() x, second, @dec() third = 'default') => {};
+  
+  i Decorators are only valid on class declarations, class expressions, and class methods.
+  
+--
+ts_decorator_on_function.ts:5:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Decorators are not valid here.
+  
+    3 │ function method(@dec() x, second, @dec() third = 'default') {}
+    4 │ const method = (@dec x, second, @dec third = 'default') => {};
+  > 5 │ const method = (@dec.fn() x, second, @dec.fn() third = 'default') => {};
+      │                 ^^^^^^^^^
+    6 │ const method = (@dec() x, second, @dec() third = 'default') => {};
+    7 │ 
+  
+  i Decorators are only valid on class declarations, class expressions, and class methods.
+  
+--
+ts_decorator_on_function.ts:5:38 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Decorators are not valid here.
+  
+    3 │ function method(@dec() x, second, @dec() third = 'default') {}
+    4 │ const method = (@dec x, second, @dec third = 'default') => {};
+  > 5 │ const method = (@dec.fn() x, second, @dec.fn() third = 'default') => {};
+      │                                      ^^^^^^^^^
+    6 │ const method = (@dec() x, second, @dec() third = 'default') => {};
+    7 │ 
+  
+  i Decorators are only valid on class declarations, class expressions, and class methods.
+  
+--
+ts_decorator_on_function.ts:6:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Decorators are not valid here.
+  
+    4 │ const method = (@dec x, second, @dec third = 'default') => {};
+    5 │ const method = (@dec.fn() x, second, @dec.fn() third = 'default') => {};
+  > 6 │ const method = (@dec() x, second, @dec() third = 'default') => {};
+      │                 ^^^^^^
+    7 │ 
+  
+  i Decorators are only valid on class declarations, class expressions, and class methods.
+  
+--
+ts_decorator_on_function.ts:6:35 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Decorators are not valid here.
+  
+    4 │ const method = (@dec x, second, @dec third = 'default') => {};
+    5 │ const method = (@dec.fn() x, second, @dec.fn() third = 'default') => {};
+  > 6 │ const method = (@dec() x, second, @dec() third = 'default') => {};
+      │                                   ^^^^^^
+    7 │ 
+  
+  i Decorators are only valid on class declarations, class expressions, and class methods.
+  
+--
+function method(@dec x, second, @dec third = 'default') {}
+function method(@dec.fn() x, second, @dec.fn() third = 'default') {}
+function method(@dec() x, second, @dec() third = 'default') {}
+const method = (@dec x, second, @dec third = 'default') => {};
+const method = (@dec.fn() x, second, @dec.fn() third = 'default') => {};
+const method = (@dec() x, second, @dec() third = 'default') => {};

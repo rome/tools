@@ -1494,8 +1494,12 @@ pub fn js_for_variable_declaration(
         ],
     ))
 }
-pub fn js_formal_parameter(binding: AnyJsBindingPattern) -> JsFormalParameterBuilder {
+pub fn js_formal_parameter(
+    decorators: JsDecoratorList,
+    binding: AnyJsBindingPattern,
+) -> JsFormalParameterBuilder {
     JsFormalParameterBuilder {
+        decorators,
         binding,
         question_mark_token: None,
         type_annotation: None,
@@ -1503,6 +1507,7 @@ pub fn js_formal_parameter(binding: AnyJsBindingPattern) -> JsFormalParameterBui
     }
 }
 pub struct JsFormalParameterBuilder {
+    decorators: JsDecoratorList,
     binding: AnyJsBindingPattern,
     question_mark_token: Option<SyntaxToken>,
     type_annotation: Option<TsTypeAnnotation>,
@@ -1525,6 +1530,7 @@ impl JsFormalParameterBuilder {
         JsFormalParameter::unwrap_cast(SyntaxNode::new_detached(
             JsSyntaxKind::JS_FORMAL_PARAMETER,
             [
+                Some(SyntaxElement::Node(self.decorators.into_syntax())),
                 Some(SyntaxElement::Node(self.binding.into_syntax())),
                 self.question_mark_token
                     .map(|token| SyntaxElement::Token(token)),
@@ -2915,16 +2921,19 @@ pub fn js_regex_literal_expression(value_token: SyntaxToken) -> JsRegexLiteralEx
     ))
 }
 pub fn js_rest_parameter(
+    decorators: JsDecoratorList,
     dotdotdot_token: SyntaxToken,
     binding: AnyJsBindingPattern,
 ) -> JsRestParameterBuilder {
     JsRestParameterBuilder {
+        decorators,
         dotdotdot_token,
         binding,
         type_annotation: None,
     }
 }
 pub struct JsRestParameterBuilder {
+    decorators: JsDecoratorList,
     dotdotdot_token: SyntaxToken,
     binding: AnyJsBindingPattern,
     type_annotation: Option<TsTypeAnnotation>,
@@ -2938,6 +2947,7 @@ impl JsRestParameterBuilder {
         JsRestParameter::unwrap_cast(SyntaxNode::new_detached(
             JsSyntaxKind::JS_REST_PARAMETER,
             [
+                Some(SyntaxElement::Node(self.decorators.into_syntax())),
                 Some(SyntaxElement::Token(self.dotdotdot_token)),
                 Some(SyntaxElement::Node(self.binding.into_syntax())),
                 self.type_annotation
@@ -5737,12 +5747,14 @@ pub fn ts_predicate_return_type(
     ))
 }
 pub fn ts_property_parameter(
+    decorators: JsDecoratorList,
     modifiers: TsPropertyParameterModifierList,
     formal_parameter: AnyJsFormalParameter,
 ) -> TsPropertyParameter {
     TsPropertyParameter::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::TS_PROPERTY_PARAMETER,
         [
+            Some(SyntaxElement::Node(decorators.into_syntax())),
             Some(SyntaxElement::Node(modifiers.into_syntax())),
             Some(SyntaxElement::Node(formal_parameter.into_syntax())),
         ],

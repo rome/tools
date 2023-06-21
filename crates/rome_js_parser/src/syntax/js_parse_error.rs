@@ -283,6 +283,10 @@ pub(crate) fn invalid_decorator_error(p: &JsParser, range: TextRange) -> ParseDi
     )
 }
 
+pub(crate) fn parameter_decorators_not_allowed(p: &JsParser, range: TextRange) -> ParseDiagnostic {
+    decorators_not_allowed(p, range).hint("You can enable parameter decorators by setting the `unsafeParameterDecoratorsEnabled` option to `true` in your configuration file.")
+}
+
 pub(crate) fn decorators_not_allowed(p: &JsParser, range: TextRange) -> ParseDiagnostic {
     p.err_builder("Decorators are not valid here.", range).hint(
         "Decorators are only valid on class declarations, class expressions, and class methods.",

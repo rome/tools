@@ -1269,6 +1269,7 @@ JsModule {
                     },
                     l_paren_token: L_PAREN@949..950 "(" [] [],
                     parameter: JsFormalParameter {
+                        decorators: JsDecoratorList [],
                         binding: JsIdentifierBinding {
                             name_token: IDENT@950..953 "val" [] [],
                         },
@@ -1333,6 +1334,7 @@ JsModule {
                     },
                     l_paren_token: L_PAREN@990..991 "(" [] [],
                     parameter: JsFormalParameter {
+                        decorators: JsDecoratorList [],
                         binding: JsIdentifierBinding {
                             name_token: IDENT@991..994 "val" [] [],
                         },
@@ -1368,6 +1370,7 @@ JsModule {
                     },
                     l_paren_token: L_PAREN@1018..1019 "(" [] [],
                     parameter: JsFormalParameter {
+                        decorators: JsDecoratorList [],
                         binding: JsIdentifierBinding {
                             name_token: IDENT@1019..1022 "val" [] [],
                         },
@@ -1435,6 +1438,7 @@ JsModule {
                     },
                     l_paren_token: L_PAREN@1066..1067 "(" [] [],
                     parameter: JsFormalParameter {
+                        decorators: JsDecoratorList [],
                         binding: JsIdentifierBinding {
                             name_token: IDENT@1067..1070 "val" [] [],
                         },
@@ -1470,6 +1474,7 @@ JsModule {
                     },
                     l_paren_token: L_PAREN@1094..1095 "(" [] [],
                     parameter: JsFormalParameter {
+                        decorators: JsDecoratorList [],
                         binding: JsIdentifierBinding {
                             name_token: IDENT@1095..1098 "val" [] [],
                         },
@@ -1537,6 +1542,7 @@ JsModule {
                     },
                     l_paren_token: L_PAREN@1142..1143 "(" [] [],
                     parameter: JsFormalParameter {
+                        decorators: JsDecoratorList [],
                         binding: JsIdentifierBinding {
                             name_token: IDENT@1143..1146 "val" [] [],
                         },
@@ -1572,6 +1578,7 @@ JsModule {
                     },
                     l_paren_token: L_PAREN@1172..1173 "(" [] [],
                     parameter: JsFormalParameter {
+                        decorators: JsDecoratorList [],
                         binding: JsIdentifierBinding {
                             name_token: IDENT@1173..1176 "val" [] [],
                         },
@@ -1639,6 +1646,7 @@ JsModule {
                     },
                     l_paren_token: L_PAREN@1222..1223 "(" [] [],
                     parameter: JsFormalParameter {
+                        decorators: JsDecoratorList [],
                         binding: JsIdentifierBinding {
                             name_token: IDENT@1223..1226 "val" [] [],
                         },
@@ -2548,11 +2556,12 @@ JsModule {
             0: IDENT@946..949 "foo" [] []
           3: L_PAREN@949..950 "(" [] []
           4: JS_FORMAL_PARAMETER@950..953
-            0: JS_IDENTIFIER_BINDING@950..953
+            0: JS_DECORATOR_LIST@950..950
+            1: JS_IDENTIFIER_BINDING@950..953
               0: IDENT@950..953 "val" [] []
-            1: (empty)
             2: (empty)
             3: (empty)
+            4: (empty)
           5: R_PAREN@953..955 ")" [] [Whitespace(" ")]
           6: JS_FUNCTION_BODY@955..957
             0: L_CURLY@955..956 "{" [] []
@@ -2593,11 +2602,12 @@ JsModule {
             0: IDENT@987..990 "foo" [] []
           3: L_PAREN@990..991 "(" [] []
           4: JS_FORMAL_PARAMETER@991..994
-            0: JS_IDENTIFIER_BINDING@991..994
+            0: JS_DECORATOR_LIST@991..991
+            1: JS_IDENTIFIER_BINDING@991..994
               0: IDENT@991..994 "val" [] []
-            1: (empty)
             2: (empty)
             3: (empty)
+            4: (empty)
           5: R_PAREN@994..996 ")" [] [Whitespace(" ")]
           6: JS_FUNCTION_BODY@996..998
             0: L_CURLY@996..997 "{" [] []
@@ -2618,11 +2628,12 @@ JsModule {
             0: IDENT@1015..1018 "foo" [] []
           3: L_PAREN@1018..1019 "(" [] []
           4: JS_FORMAL_PARAMETER@1019..1022
-            0: JS_IDENTIFIER_BINDING@1019..1022
+            0: JS_DECORATOR_LIST@1019..1019
+            1: JS_IDENTIFIER_BINDING@1019..1022
               0: IDENT@1019..1022 "val" [] []
-            1: (empty)
             2: (empty)
             3: (empty)
+            4: (empty)
           5: R_PAREN@1022..1024 ")" [] [Whitespace(" ")]
           6: JS_FUNCTION_BODY@1024..1026
             0: L_CURLY@1024..1025 "{" [] []
@@ -2665,11 +2676,12 @@ JsModule {
             0: IDENT@1063..1066 "foo" [] []
           3: L_PAREN@1066..1067 "(" [] []
           4: JS_FORMAL_PARAMETER@1067..1070
-            0: JS_IDENTIFIER_BINDING@1067..1070
+            0: JS_DECORATOR_LIST@1067..1067
+            1: JS_IDENTIFIER_BINDING@1067..1070
               0: IDENT@1067..1070 "val" [] []
-            1: (empty)
             2: (empty)
             3: (empty)
+            4: (empty)
           5: R_PAREN@1070..1072 ")" [] [Whitespace(" ")]
           6: JS_FUNCTION_BODY@1072..1074
             0: L_CURLY@1072..1073 "{" [] []
@@ -2690,11 +2702,12 @@ JsModule {
             0: IDENT@1091..1094 "foo" [] []
           3: L_PAREN@1094..1095 "(" [] []
           4: JS_FORMAL_PARAMETER@1095..1098
-            0: JS_IDENTIFIER_BINDING@1095..1098
+            0: JS_DECORATOR_LIST@1095..1095
+            1: JS_IDENTIFIER_BINDING@1095..1098
               0: IDENT@1095..1098 "val" [] []
-            1: (empty)
             2: (empty)
             3: (empty)
+            4: (empty)
           5: R_PAREN@1098..1100 ")" [] [Whitespace(" ")]
           6: JS_FUNCTION_BODY@1100..1102
             0: L_CURLY@1100..1101 "{" [] []
@@ -2737,11 +2750,12 @@ JsModule {
             0: IDENT@1139..1142 "foo" [] []
           3: L_PAREN@1142..1143 "(" [] []
           4: JS_FORMAL_PARAMETER@1143..1146
-            0: JS_IDENTIFIER_BINDING@1143..1146
+            0: JS_DECORATOR_LIST@1143..1143
+            1: JS_IDENTIFIER_BINDING@1143..1146
               0: IDENT@1143..1146 "val" [] []
-            1: (empty)
             2: (empty)
             3: (empty)
+            4: (empty)
           5: R_PAREN@1146..1148 ")" [] [Whitespace(" ")]
           6: JS_FUNCTION_BODY@1148..1150
             0: L_CURLY@1148..1149 "{" [] []
@@ -2762,11 +2776,12 @@ JsModule {
             0: IDENT@1169..1172 "foo" [] []
           3: L_PAREN@1172..1173 "(" [] []
           4: JS_FORMAL_PARAMETER@1173..1176
-            0: JS_IDENTIFIER_BINDING@1173..1176
+            0: JS_DECORATOR_LIST@1173..1173
+            1: JS_IDENTIFIER_BINDING@1173..1176
               0: IDENT@1173..1176 "val" [] []
-            1: (empty)
             2: (empty)
             3: (empty)
+            4: (empty)
           5: R_PAREN@1176..1178 ")" [] [Whitespace(" ")]
           6: JS_FUNCTION_BODY@1178..1180
             0: L_CURLY@1178..1179 "{" [] []
@@ -2809,11 +2824,12 @@ JsModule {
             0: IDENT@1219..1222 "foo" [] []
           3: L_PAREN@1222..1223 "(" [] []
           4: JS_FORMAL_PARAMETER@1223..1226
-            0: JS_IDENTIFIER_BINDING@1223..1226
+            0: JS_DECORATOR_LIST@1223..1223
+            1: JS_IDENTIFIER_BINDING@1223..1226
               0: IDENT@1223..1226 "val" [] []
-            1: (empty)
             2: (empty)
             3: (empty)
+            4: (empty)
           5: R_PAREN@1226..1228 ")" [] [Whitespace(" ")]
           6: JS_FUNCTION_BODY@1228..1230
             0: L_CURLY@1228..1229 "{" [] []

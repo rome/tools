@@ -59,6 +59,7 @@ JsModule {
                                     l_paren_token: L_PAREN@39..40 "(" [] [],
                                     items: JsParameterList [
                                         JsFormalParameter {
+                                            decorators: JsDecoratorList [],
                                             binding: JsIdentifierBinding {
                                                 name_token: IDENT@40..42 "a" [] [Whitespace(" ")],
                                             },
@@ -120,6 +121,7 @@ JsModule {
                                     l_paren_token: L_PAREN@73..74 "(" [] [],
                                     items: JsParameterList [
                                         JsFormalParameter {
+                                            decorators: JsDecoratorList [],
                                             binding: JsIdentifierBinding {
                                                 name_token: IDENT@74..76 "a" [] [Whitespace(" ")],
                                             },
@@ -210,11 +212,12 @@ JsModule {
                   0: L_PAREN@39..40 "(" [] []
                   1: JS_PARAMETER_LIST@40..49
                     0: JS_FORMAL_PARAMETER@40..49
-                      0: JS_IDENTIFIER_BINDING@40..42
+                      0: JS_DECORATOR_LIST@40..40
+                      1: JS_IDENTIFIER_BINDING@40..42
                         0: IDENT@40..42 "a" [] [Whitespace(" ")]
-                      1: (empty)
                       2: (empty)
-                      3: JS_INITIALIZER_CLAUSE@42..49
+                      3: (empty)
+                      4: JS_INITIALIZER_CLAUSE@42..49
                         0: EQ@42..44 "=" [] [Whitespace(" ")]
                         1: JS_BOGUS_EXPRESSION@44..49
                           0: JS_BOGUS@44..49
@@ -252,11 +255,12 @@ JsModule {
                   0: L_PAREN@73..74 "(" [] []
                   1: JS_PARAMETER_LIST@74..86
                     0: JS_FORMAL_PARAMETER@74..86
-                      0: JS_IDENTIFIER_BINDING@74..76
+                      0: JS_DECORATOR_LIST@74..74
+                      1: JS_IDENTIFIER_BINDING@74..76
                         0: IDENT@74..76 "a" [] [Whitespace(" ")]
-                      1: (empty)
                       2: (empty)
-                      3: JS_INITIALIZER_CLAUSE@76..86
+                      3: (empty)
+                      4: JS_INITIALIZER_CLAUSE@76..86
                         0: EQ@76..78 "=" [] [Whitespace(" ")]
                         1: JS_BOGUS_EXPRESSION@78..86
                           0: AWAIT_KW@78..84 "await" [] [Whitespace(" ")]

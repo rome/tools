@@ -94,6 +94,7 @@ JsModule {
                             },
                             L_PAREN@106..107 "(" [] [],
                             JsFormalParameter {
+                                decorators: JsDecoratorList [],
                                 binding: JsIdentifierBinding {
                                     name_token: IDENT@107..108 "v" [] [],
                                 },
@@ -214,6 +215,7 @@ JsModule {
                                         },
                                         L_PAREN@260..261 "(" [] [],
                                         JsFormalParameter {
+                                            decorators: JsDecoratorList [],
                                             binding: JsIdentifierBinding {
                                                 name_token: IDENT@261..262 "v" [] [],
                                             },
@@ -313,11 +315,12 @@ JsModule {
               0: IDENT@102..106 "test" [] []
             3: L_PAREN@106..107 "(" [] []
             4: JS_FORMAL_PARAMETER@107..108
-              0: JS_IDENTIFIER_BINDING@107..108
+              0: JS_DECORATOR_LIST@107..107
+              1: JS_IDENTIFIER_BINDING@107..108
                 0: IDENT@107..108 "v" [] []
-              1: (empty)
               2: (empty)
               3: (empty)
+              4: (empty)
             5: R_PAREN@108..110 ")" [] [Whitespace(" ")]
             6: JS_FUNCTION_BODY@110..112
               0: L_CURLY@110..111 "{" [] []
@@ -399,11 +402,12 @@ JsModule {
                     0: IDENT@256..260 "test" [] []
                   3: L_PAREN@260..261 "(" [] []
                   4: JS_FORMAL_PARAMETER@261..262
-                    0: JS_IDENTIFIER_BINDING@261..262
+                    0: JS_DECORATOR_LIST@261..261
+                    1: JS_IDENTIFIER_BINDING@261..262
                       0: IDENT@261..262 "v" [] []
-                    1: (empty)
                     2: (empty)
                     3: (empty)
+                    4: (empty)
                   5: R_PAREN@262..264 ")" [] [Whitespace(" ")]
                   6: JS_FUNCTION_BODY@264..266
                     0: L_CURLY@264..265 "{" [] []

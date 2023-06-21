@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 96
 expression: invalid.js
 ---
 # Input
@@ -17,7 +16,7 @@ class A { foo() {} 'foo'() {} }
 class A { static constructor() {} static 'constructor'() {} }
 class A { foo; accessor foo; }
 class A { get foo () {} accessor foo; }
-class A { set foo () {} accessor foo; }
+class A { set foo (value) {} accessor foo; }
 class A { foo() {} foo() {} bar() {} bar() {} }
 class A { get foo() {} get foo() {} }
 class A { foo() {} "foo"() {} }
@@ -199,7 +198,7 @@ invalid.js:11:16 lint/suspicious/noDuplicateClassMembers ━━━━━━━�
   > 11 │ class A { foo; accessor foo; }
        │                ^^^^^^^^^^^^^
     12 │ class A { get foo () {} accessor foo; }
-    13 │ class A { set foo () {} accessor foo; }
+    13 │ class A { set foo (value) {} accessor foo; }
   
 
 ```
@@ -213,21 +212,21 @@ invalid.js:12:25 lint/suspicious/noDuplicateClassMembers ━━━━━━━�
     11 │ class A { foo; accessor foo; }
   > 12 │ class A { get foo () {} accessor foo; }
        │                         ^^^^^^^^^^^^^
-    13 │ class A { set foo () {} accessor foo; }
+    13 │ class A { set foo (value) {} accessor foo; }
     14 │ class A { foo() {} foo() {} bar() {} bar() {} }
   
 
 ```
 
 ```
-invalid.js:13:25 lint/suspicious/noDuplicateClassMembers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:13:30 lint/suspicious/noDuplicateClassMembers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Duplicate class member name "foo"
   
     11 │ class A { foo; accessor foo; }
     12 │ class A { get foo () {} accessor foo; }
-  > 13 │ class A { set foo () {} accessor foo; }
-       │                         ^^^^^^^^^^^^^
+  > 13 │ class A { set foo (value) {} accessor foo; }
+       │                              ^^^^^^^^^^^^^
     14 │ class A { foo() {} foo() {} bar() {} bar() {} }
     15 │ class A { get foo() {} get foo() {} }
   
@@ -240,7 +239,7 @@ invalid.js:14:20 lint/suspicious/noDuplicateClassMembers ━━━━━━━�
   ! Duplicate class member name "foo"
   
     12 │ class A { get foo () {} accessor foo; }
-    13 │ class A { set foo () {} accessor foo; }
+    13 │ class A { set foo (value) {} accessor foo; }
   > 14 │ class A { foo() {} foo() {} bar() {} bar() {} }
        │                    ^^^^^^^^
     15 │ class A { get foo() {} get foo() {} }
@@ -255,7 +254,7 @@ invalid.js:14:38 lint/suspicious/noDuplicateClassMembers ━━━━━━━�
   ! Duplicate class member name "bar"
   
     12 │ class A { get foo () {} accessor foo; }
-    13 │ class A { set foo () {} accessor foo; }
+    13 │ class A { set foo (value) {} accessor foo; }
   > 14 │ class A { foo() {} foo() {} bar() {} bar() {} }
        │                                      ^^^^^^^^
     15 │ class A { get foo() {} get foo() {} }
@@ -269,7 +268,7 @@ invalid.js:15:24 lint/suspicious/noDuplicateClassMembers ━━━━━━━�
 
   ! Duplicate class member name "foo"
   
-    13 │ class A { set foo () {} accessor foo; }
+    13 │ class A { set foo (value) {} accessor foo; }
     14 │ class A { foo() {} foo() {} bar() {} bar() {} }
   > 15 │ class A { get foo() {} get foo() {} }
        │                        ^^^^^^^^^^^^

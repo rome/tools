@@ -64,21 +64,30 @@ class MyContainerComponent {
 ```diff
 --- Prettier
 +++ Rome
-@@ -30,11 +30,10 @@
-   constructor(
-     @d1 private x: number,
-     @d2(foo) private y: number,
+@@ -27,15 +27,14 @@
+   @d3.bar fieldC;
+   @d4.baz() fieldD;
+ 
+-  constructor(
+-    @d1 private x: number,
+-    @d2(foo) private y: number,
 -    @d3("foo") private z: number,
-+    @d3('foo') private z: number,
-     @d4({
+-    @d4({
 -      x: string,
 -    })
 -    private a: string,
+-  ) {}
++  constructor (
++        @d1 private x: number,
++        @d2(foo) private y: number,
++        @d3('foo') private z: number,
++        @d4({
 +            x: string
 +        }) private a: string,
-   ) {}
++    ) {}
  }
  
+ @decorated
 ```
 
 # Output
@@ -113,14 +122,14 @@ class Class3 {
   @d3.bar fieldC;
   @d4.baz() fieldD;
 
-  constructor(
-    @d1 private x: number,
-    @d2(foo) private y: number,
-    @d3('foo') private z: number,
-    @d4({
+  constructor (
+        @d1 private x: number,
+        @d2(foo) private y: number,
+        @d3('foo') private z: number,
+        @d4({
             x: string
         }) private a: string,
-  ) {}
+    ) {}
 }
 
 @decorated
@@ -134,6 +143,65 @@ class MyContainerComponent {
   @ContentChildren(MyComponent)
   components: QueryListSomeBigName<MyComponentThat>;
 }
+```
+
+# Errors
+```
+inline-decorators.ts:32:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Decorators are not valid here.
+  
+    31 │     constructor (
+  > 32 │         @d1 private x: number,
+       │         ^^^
+    33 │         @d2(foo) private y: number,
+    34 │         @d3('foo') private z: number,
+  
+  i You can enable parameter decorators by setting the `unsafeParameterDecoratorsEnabled` option to `true` in your configuration file.
+  
+inline-decorators.ts:33:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Decorators are not valid here.
+  
+    31 │     constructor (
+    32 │         @d1 private x: number,
+  > 33 │         @d2(foo) private y: number,
+       │         ^^^^^^^^
+    34 │         @d3('foo') private z: number,
+    35 │         @d4({
+  
+  i You can enable parameter decorators by setting the `unsafeParameterDecoratorsEnabled` option to `true` in your configuration file.
+  
+inline-decorators.ts:34:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Decorators are not valid here.
+  
+    32 │         @d1 private x: number,
+    33 │         @d2(foo) private y: number,
+  > 34 │         @d3('foo') private z: number,
+       │         ^^^^^^^^^^
+    35 │         @d4({
+    36 │             x: string
+  
+  i You can enable parameter decorators by setting the `unsafeParameterDecoratorsEnabled` option to `true` in your configuration file.
+  
+inline-decorators.ts:35:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Decorators are not valid here.
+  
+    33 │         @d2(foo) private y: number,
+    34 │         @d3('foo') private z: number,
+  > 35 │         @d4({
+       │         ^^^^^
+  > 36 │             x: string
+  > 37 │         }) private a: string,
+       │         ^^
+    38 │     ) {}
+    39 │ }
+  
+  i You can enable parameter decorators by setting the `unsafeParameterDecoratorsEnabled` option to `true` in your configuration file.
+  
+
 ```
 
 

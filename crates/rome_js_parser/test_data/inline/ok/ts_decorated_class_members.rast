@@ -110,6 +110,7 @@ JsModule {
                     },
                     l_paren_token: L_PAREN@97..98 "(" [] [],
                     parameter: JsFormalParameter {
+                        decorators: JsDecoratorList [],
                         binding: JsIdentifierBinding {
                             name_token: IDENT@98..99 "a" [] [],
                         },
@@ -215,11 +216,12 @@ JsModule {
             0: IDENT@91..97 "setter" [] []
           3: L_PAREN@97..98 "(" [] []
           4: JS_FORMAL_PARAMETER@98..99
-            0: JS_IDENTIFIER_BINDING@98..99
+            0: JS_DECORATOR_LIST@98..98
+            1: JS_IDENTIFIER_BINDING@98..99
               0: IDENT@98..99 "a" [] []
-            1: (empty)
             2: (empty)
             3: (empty)
+            4: (empty)
           5: R_PAREN@99..101 ")" [] [Whitespace(" ")]
           6: JS_FUNCTION_BODY@101..103
             0: L_CURLY@101..102 "{" [] []

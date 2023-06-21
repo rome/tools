@@ -1,3 +1,4 @@
+use crate::test_utils::has_bogus_nodes_or_empty_slots;
 use crate::{parse, parse_module, test_utils::assert_errors_are_absent, JsParserOptions, Parse};
 use expect_test::expect_file;
 use rome_console::fmt::{Formatter, Termcolor};
@@ -58,7 +59,11 @@ fn try_parse(path: &str, text: &str) -> Parse<AnyJsRoot> {
             path.try_into().unwrap()
         };
 
-        let parse = parse(text, source_type, JsParserOptions::default());
+        let parse = parse(
+            text,
+            source_type,
+            JsParserOptions::default().with_parse_class_parameter_decorators(),
+        );
 
         assert_eq!(
             parse.syntax().to_string(),
@@ -391,13 +396,22 @@ fn diagnostics_print_correctly() {
 #[test]
 pub fn quick_test() {
     let code = r#"
-class Foo {
-    @decorator declare a: number;
-    @decorator declare [b]: number;
-}
-    "#;
-    let root = parse(code, JsFileSource::ts(), JsParserOptions::default());
-    let syntax = root.syntax();
 
-    dbg!(syntax, root.diagnostics());
+
+        (@dec a) => {}
+    "#;
+    let root = parse(
+        code,
+        JsFileSource::ts(),
+        JsParserOptions::default().with_parse_class_parameter_decorators(),
+    );
+    let syntax = root.syntax();
+    dbg!(&syntax, root.diagnostics(), root.has_errors());
+
+    if has_bogus_nodes_or_empty_slots(&syntax) {
+        panic!(
+            "modified tree has bogus nodes or empty slots:\n{syntax:#?} \n\n {}",
+            syntax
+        )
+    }
 }

@@ -58,6 +58,7 @@ JsModule {
                                             },
                                             l_paren_token: L_PAREN@95..96 "(" [] [],
                                             parameter: JsFormalParameter {
+                                                decorators: JsDecoratorList [],
                                                 binding: JsIdentifierBinding {
                                                     name_token: IDENT@96..99 "val" [] [],
                                                 },
@@ -179,6 +180,7 @@ JsModule {
                                                 },
                                                 l_paren_token: L_PAREN@245..246 "(" [] [],
                                                 parameter: JsFormalParameter {
+                                                    decorators: JsDecoratorList [],
                                                     binding: JsIdentifierBinding {
                                                         name_token: IDENT@246..249 "val" [] [],
                                                     },
@@ -300,11 +302,12 @@ JsModule {
                         0: IDENT@94..95 "y" [] []
                       2: L_PAREN@95..96 "(" [] []
                       3: JS_FORMAL_PARAMETER@96..99
-                        0: JS_IDENTIFIER_BINDING@96..99
+                        0: JS_DECORATOR_LIST@96..96
+                        1: JS_IDENTIFIER_BINDING@96..99
                           0: IDENT@96..99 "val" [] []
-                        1: (empty)
                         2: (empty)
                         3: (empty)
+                        4: (empty)
                       4: R_PAREN@99..101 ")" [] [Whitespace(" ")]
                       5: JS_FUNCTION_BODY@101..126
                         0: L_CURLY@101..102 "{" [] []
@@ -385,11 +388,12 @@ JsModule {
                           0: IDENT@244..245 "y" [] []
                         2: L_PAREN@245..246 "(" [] []
                         3: JS_FORMAL_PARAMETER@246..249
-                          0: JS_IDENTIFIER_BINDING@246..249
+                          0: JS_DECORATOR_LIST@246..246
+                          1: JS_IDENTIFIER_BINDING@246..249
                             0: IDENT@246..249 "val" [] []
-                          1: (empty)
                           2: (empty)
                           3: (empty)
+                          4: (empty)
                         4: R_PAREN@249..251 ")" [] [Whitespace(" ")]
                         5: JS_FUNCTION_BODY@251..276
                           0: L_CURLY@251..252 "{" [] []

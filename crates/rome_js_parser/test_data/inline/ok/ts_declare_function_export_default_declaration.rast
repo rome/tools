@@ -26,6 +26,7 @@ JsModule {
                                         l_paren_token: L_PAREN@46..47 "(" [] [],
                                         items: JsParameterList [
                                             JsFormalParameter {
+                                                decorators: JsDecoratorList [],
                                                 binding: JsIdentifierBinding {
                                                     name_token: IDENT@47..53 "option" [] [],
                                                 },
@@ -83,6 +84,7 @@ JsModule {
                                         l_paren_token: L_PAREN@119..120 "(" [] [],
                                         items: JsParameterList [
                                             JsFormalParameter {
+                                                decorators: JsDecoratorList [],
                                                 binding: JsIdentifierBinding {
                                                     name_token: IDENT@120..126 "option" [] [],
                                                 },
@@ -145,14 +147,15 @@ JsModule {
                     0: L_PAREN@46..47 "(" [] []
                     1: JS_PARAMETER_LIST@47..58
                       0: JS_FORMAL_PARAMETER@47..58
-                        0: JS_IDENTIFIER_BINDING@47..53
+                        0: JS_DECORATOR_LIST@47..47
+                        1: JS_IDENTIFIER_BINDING@47..53
                           0: IDENT@47..53 "option" [] []
-                        1: (empty)
-                        2: TS_TYPE_ANNOTATION@53..58
+                        2: (empty)
+                        3: TS_TYPE_ANNOTATION@53..58
                           0: COLON@53..55 ":" [] [Whitespace(" ")]
                           1: TS_ANY_TYPE@55..58
                             0: ANY_KW@55..58 "any" [] []
-                        3: (empty)
+                        4: (empty)
                     2: R_PAREN@58..59 ")" [] []
                   5: TS_RETURN_TYPE_ANNOTATION@59..65
                     0: COLON@59..61 ":" [] [Whitespace(" ")]
@@ -185,14 +188,15 @@ JsModule {
                     0: L_PAREN@119..120 "(" [] []
                     1: JS_PARAMETER_LIST@120..131
                       0: JS_FORMAL_PARAMETER@120..131
-                        0: JS_IDENTIFIER_BINDING@120..126
+                        0: JS_DECORATOR_LIST@120..120
+                        1: JS_IDENTIFIER_BINDING@120..126
                           0: IDENT@120..126 "option" [] []
-                        1: (empty)
-                        2: TS_TYPE_ANNOTATION@126..131
+                        2: (empty)
+                        3: TS_TYPE_ANNOTATION@126..131
                           0: COLON@126..128 ":" [] [Whitespace(" ")]
                           1: TS_ANY_TYPE@128..131
                             0: ANY_KW@128..131 "any" [] []
-                        3: (empty)
+                        4: (empty)
                     2: R_PAREN@131..132 ")" [] []
                   5: TS_RETURN_TYPE_ANNOTATION@132..138
                     0: COLON@132..134 ":" [] [Whitespace(" ")]

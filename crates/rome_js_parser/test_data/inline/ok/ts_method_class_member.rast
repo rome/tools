@@ -66,6 +66,7 @@ JsModule {
                         l_paren_token: L_PAREN@38..39 "(" [] [],
                         items: JsParameterList [
                             JsFormalParameter {
+                                decorators: JsDecoratorList [],
                                 binding: JsIdentifierBinding {
                                     name_token: IDENT@39..40 "a" [] [],
                                 },
@@ -83,6 +84,7 @@ JsModule {
                             },
                             COMMA@43..45 "," [] [Whitespace(" ")],
                             JsFormalParameter {
+                                decorators: JsDecoratorList [],
                                 binding: JsIdentifierBinding {
                                     name_token: IDENT@45..46 "b" [] [],
                                 },
@@ -179,28 +181,30 @@ JsModule {
             0: L_PAREN@38..39 "(" [] []
             1: JS_PARAMETER_LIST@39..49
               0: JS_FORMAL_PARAMETER@39..43
-                0: JS_IDENTIFIER_BINDING@39..40
+                0: JS_DECORATOR_LIST@39..39
+                1: JS_IDENTIFIER_BINDING@39..40
                   0: IDENT@39..40 "a" [] []
-                1: (empty)
-                2: TS_TYPE_ANNOTATION@40..43
+                2: (empty)
+                3: TS_TYPE_ANNOTATION@40..43
                   0: COLON@40..42 ":" [] [Whitespace(" ")]
                   1: TS_REFERENCE_TYPE@42..43
                     0: JS_REFERENCE_IDENTIFIER@42..43
                       0: IDENT@42..43 "A" [] []
                     1: (empty)
-                3: (empty)
+                4: (empty)
               1: COMMA@43..45 "," [] [Whitespace(" ")]
               2: JS_FORMAL_PARAMETER@45..49
-                0: JS_IDENTIFIER_BINDING@45..46
+                0: JS_DECORATOR_LIST@45..45
+                1: JS_IDENTIFIER_BINDING@45..46
                   0: IDENT@45..46 "b" [] []
-                1: (empty)
-                2: TS_TYPE_ANNOTATION@46..49
+                2: (empty)
+                3: TS_TYPE_ANNOTATION@46..49
                   0: COLON@46..48 ":" [] [Whitespace(" ")]
                   1: TS_REFERENCE_TYPE@48..49
                     0: JS_REFERENCE_IDENTIFIER@48..49
                       0: IDENT@48..49 "B" [] []
                     1: (empty)
-                3: (empty)
+                4: (empty)
             2: R_PAREN@49..50 ")" [] []
           7: TS_RETURN_TYPE_ANNOTATION@50..54
             0: COLON@50..52 ":" [] [Whitespace(" ")]

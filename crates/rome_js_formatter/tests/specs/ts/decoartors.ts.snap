@@ -78,11 +78,7 @@ class Test {
 	@readonly
 	prop: string;
 
-	constructor(
-		@param test,
-		@readonly private other,
-		@aVeryLongDecoratorNameLetsSeeWhatHappensWithIt last,
-	) {}
+	constructor(@param test, @readonly private other, @aVeryLongDecoratorNameLetsSeeWhatHappensWithIt last) {}
 
 	method(@param a) {}
 
@@ -113,13 +109,9 @@ class Test2 {
 }
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    6: 	constructor(@param test, @readonly private other, @aVeryLongDecoratorNameLetsSeeWhatHappensWithIt last) {}
+```
 
-
-## Unimplemented nodes/tokens
-
-"\t\t@par" => 62..68
-"\t\t@readon" => 77..86
-"\t\t@aVeryLongDecoratorNameLetsSeeWhatHappensWith" => 104..151
-"@param" => 175..181
-"@param" => 219..225
 

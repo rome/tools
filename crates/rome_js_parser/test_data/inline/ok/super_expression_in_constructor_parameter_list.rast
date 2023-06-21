@@ -31,6 +31,7 @@ JsModule {
                         l_paren_token: L_PAREN@31..32 "(" [] [],
                         parameters: JsConstructorParameterList [
                             JsFormalParameter {
+                                decorators: JsDecoratorList [],
                                 binding: JsIdentifierBinding {
                                     name_token: IDENT@32..34 "c" [] [Whitespace(" ")],
                                 },
@@ -97,11 +98,12 @@ JsModule {
             0: L_PAREN@31..32 "(" [] []
             1: JS_CONSTRUCTOR_PARAMETER_LIST@32..43
               0: JS_FORMAL_PARAMETER@32..43
-                0: JS_IDENTIFIER_BINDING@32..34
+                0: JS_DECORATOR_LIST@32..32
+                1: JS_IDENTIFIER_BINDING@32..34
                   0: IDENT@32..34 "c" [] [Whitespace(" ")]
-                1: (empty)
                 2: (empty)
-                3: JS_INITIALIZER_CLAUSE@34..43
+                3: (empty)
+                4: JS_INITIALIZER_CLAUSE@34..43
                   0: EQ@34..36 "=" [] [Whitespace(" ")]
                   1: JS_CALL_EXPRESSION@36..43
                     0: JS_SUPER_EXPRESSION@36..41

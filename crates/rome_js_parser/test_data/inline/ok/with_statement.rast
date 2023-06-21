@@ -14,6 +14,7 @@ JsScript {
                 l_paren_token: L_PAREN@20..21 "(" [] [],
                 items: JsParameterList [
                     JsFormalParameter {
+                        decorators: JsDecoratorList [],
                         binding: JsIdentifierBinding {
                             name_token: IDENT@21..22 "x" [] [],
                         },
@@ -23,6 +24,7 @@ JsScript {
                     },
                     COMMA@22..24 "," [] [Whitespace(" ")],
                     JsFormalParameter {
+                        decorators: JsDecoratorList [],
                         binding: JsIdentifierBinding {
                             name_token: IDENT@24..25 "o" [] [],
                         },
@@ -106,18 +108,20 @@ JsScript {
         0: L_PAREN@20..21 "(" [] []
         1: JS_PARAMETER_LIST@21..25
           0: JS_FORMAL_PARAMETER@21..22
-            0: JS_IDENTIFIER_BINDING@21..22
+            0: JS_DECORATOR_LIST@21..21
+            1: JS_IDENTIFIER_BINDING@21..22
               0: IDENT@21..22 "x" [] []
-            1: (empty)
             2: (empty)
             3: (empty)
+            4: (empty)
           1: COMMA@22..24 "," [] [Whitespace(" ")]
           2: JS_FORMAL_PARAMETER@24..25
-            0: JS_IDENTIFIER_BINDING@24..25
+            0: JS_DECORATOR_LIST@24..24
+            1: JS_IDENTIFIER_BINDING@24..25
               0: IDENT@24..25 "o" [] []
-            1: (empty)
             2: (empty)
             3: (empty)
+            4: (empty)
         2: R_PAREN@25..27 ")" [] [Whitespace(" ")]
       6: (empty)
       7: JS_FUNCTION_BODY@27..67

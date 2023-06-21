@@ -1,0 +1,116 @@
+---
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info: typescript/decorators/argument-list-preserve-line.ts
+---
+
+# Input
+
+```ts
+class Foo {
+    constructor(
+        @inject(Bar)
+        private readonly bar: IBar,
+
+        @inject(MyProcessor)
+        private readonly myProcessor: IMyProcessor,
+
+        @inject(InjectionTypes.AnotherThing)
+
+        private readonly anotherThing: IAnotherThing | undefined,
+    ) { }
+}
+
+```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,12 +1,13 @@
+ class Foo {
+   constructor(
+-    @inject(Bar)
+-    private readonly bar: IBar,
++        @inject(Bar)
++        private readonly bar: IBar,
+ 
+-    @inject(MyProcessor)
+-    private readonly myProcessor: IMyProcessor,
++        @inject(MyProcessor)
++        private readonly myProcessor: IMyProcessor,
+ 
+-    @inject(InjectionTypes.AnotherThing)
+-    private readonly anotherThing: IAnotherThing | undefined,
+-  ) {}
++        @inject(InjectionTypes.AnotherThing)
++
++        private readonly anotherThing: IAnotherThing | undefined,
++    ) { }
+ }
+```
+
+# Output
+
+```ts
+class Foo {
+  constructor(
+        @inject(Bar)
+        private readonly bar: IBar,
+
+        @inject(MyProcessor)
+        private readonly myProcessor: IMyProcessor,
+
+        @inject(InjectionTypes.AnotherThing)
+
+        private readonly anotherThing: IAnotherThing | undefined,
+    ) { }
+}
+```
+
+# Errors
+```
+argument-list-preserve-line.ts:3:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Decorators are not valid here.
+  
+    1 │ class Foo {
+    2 │     constructor(
+  > 3 │         @inject(Bar)
+      │         ^^^^^^^^^^^^
+    4 │         private readonly bar: IBar,
+    5 │ 
+  
+  i You can enable parameter decorators by setting the `unsafeParameterDecoratorsEnabled` option to `true` in your configuration file.
+  
+argument-list-preserve-line.ts:6:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Decorators are not valid here.
+  
+    4 │         private readonly bar: IBar,
+    5 │ 
+  > 6 │         @inject(MyProcessor)
+      │         ^^^^^^^^^^^^^^^^^^^^
+    7 │         private readonly myProcessor: IMyProcessor,
+    8 │ 
+  
+  i You can enable parameter decorators by setting the `unsafeParameterDecoratorsEnabled` option to `true` in your configuration file.
+  
+argument-list-preserve-line.ts:9:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Decorators are not valid here.
+  
+     7 │         private readonly myProcessor: IMyProcessor,
+     8 │ 
+   > 9 │         @inject(InjectionTypes.AnotherThing)
+       │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    10 │ 
+    11 │         private readonly anotherThing: IAnotherThing | undefined,
+  
+  i You can enable parameter decorators by setting the `unsafeParameterDecoratorsEnabled` option to `true` in your configuration file.
+  
+
+```
+
+

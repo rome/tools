@@ -7,7 +7,7 @@ use crate::syntax::binding::{
     is_at_identifier_binding, is_nth_at_identifier_binding, parse_binding, parse_identifier_binding,
 };
 use crate::syntax::class::{
-    is_at_export_class_declaration, is_at_export_default_class_declaration,
+    empty_decorator_list, is_at_export_class_declaration, is_at_export_default_class_declaration,
     is_at_ts_abstract_class_declaration, parse_class_declaration,
     parse_class_export_default_declaration, parse_decorators,
 };
@@ -721,10 +721,7 @@ pub(super) fn parse_export(p: &mut JsParser, decorators_list: ParsedSyntax) -> P
     }
 
     let stmt_start = p.cur_range().start();
-    let decorators_list = decorators_list.or_else(|| {
-        let m = p.start();
-        Present(m.complete(p, JS_DECORATOR_LIST))
-    });
+    let decorators_list = decorators_list.or_else(|| empty_decorator_list(p));
 
     let m = decorators_list.precede(p);
 

@@ -52,6 +52,7 @@ JsModule {
                                     l_paren_token: L_PAREN@38..39 "(" [] [],
                                     items: JsParameterList [
                                         JsFormalParameter {
+                                            decorators: JsDecoratorList [],
                                             binding: JsIdentifierBinding {
                                                 name_token: IDENT@39..42 "bar" [] [],
                                             },
@@ -85,6 +86,7 @@ JsModule {
                     l_paren_token: L_PAREN@56..57 "(" [] [],
                     items: JsParameterList [
                         JsFormalParameter {
+                            decorators: JsDecoratorList [],
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@57..60 "foo" [] [],
                             },
@@ -94,6 +96,7 @@ JsModule {
                         },
                         COMMA@60..62 "," [] [Whitespace(" ")],
                         JsFormalParameter {
+                            decorators: JsDecoratorList [],
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@62..65 "bar" [] [],
                             },
@@ -103,6 +106,7 @@ JsModule {
                         },
                         COMMA@65..67 "," [] [Whitespace(" ")],
                         JsRestParameter {
+                            decorators: JsDecoratorList [],
                             dotdotdot_token: DOT3@67..70 "..." [] [],
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@70..73 "baz" [] [],
@@ -170,11 +174,12 @@ JsModule {
                   0: L_PAREN@38..39 "(" [] []
                   1: JS_PARAMETER_LIST@39..42
                     0: JS_FORMAL_PARAMETER@39..42
-                      0: JS_IDENTIFIER_BINDING@39..42
+                      0: JS_DECORATOR_LIST@39..39
+                      1: JS_IDENTIFIER_BINDING@39..42
                         0: IDENT@39..42 "bar" [] []
-                      1: (empty)
                       2: (empty)
                       3: (empty)
+                      4: (empty)
                   2: R_PAREN@42..44 ")" [] [Whitespace(" ")]
                 3: (empty)
                 4: FAT_ARROW@44..47 "=>" [] [Whitespace(" ")]
@@ -192,24 +197,27 @@ JsModule {
           0: L_PAREN@56..57 "(" [] []
           1: JS_PARAMETER_LIST@57..73
             0: JS_FORMAL_PARAMETER@57..60
-              0: JS_IDENTIFIER_BINDING@57..60
+              0: JS_DECORATOR_LIST@57..57
+              1: JS_IDENTIFIER_BINDING@57..60
                 0: IDENT@57..60 "foo" [] []
-              1: (empty)
               2: (empty)
               3: (empty)
+              4: (empty)
             1: COMMA@60..62 "," [] [Whitespace(" ")]
             2: JS_FORMAL_PARAMETER@62..65
-              0: JS_IDENTIFIER_BINDING@62..65
+              0: JS_DECORATOR_LIST@62..62
+              1: JS_IDENTIFIER_BINDING@62..65
                 0: IDENT@62..65 "bar" [] []
-              1: (empty)
               2: (empty)
               3: (empty)
+              4: (empty)
             3: COMMA@65..67 "," [] [Whitespace(" ")]
             4: JS_REST_PARAMETER@67..73
-              0: DOT3@67..70 "..." [] []
-              1: JS_IDENTIFIER_BINDING@70..73
+              0: JS_DECORATOR_LIST@67..67
+              1: DOT3@67..70 "..." [] []
+              2: JS_IDENTIFIER_BINDING@70..73
                 0: IDENT@70..73 "baz" [] []
-              2: (empty)
+              3: (empty)
           2: R_PAREN@73..75 ")" [] [Whitespace(" ")]
         3: (empty)
         4: FAT_ARROW@75..78 "=>" [] [Whitespace(" ")]

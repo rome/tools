@@ -13,12 +13,9 @@ mod language {
 // use this test check if your snippet prints as you wish, without using a snapshot
 fn quick_test() {
     let src = r#"
-(
-  <div
-    attr=''
-    atrr={''}
-    />
-)
+      class A { constructor(private x, protected y, public z) {} }
+        class B { constructor(readonly w, private readonly x, protected readonly y, public readonly z) {} }
+        class C { constructor(private x: string, readonly y?, z = "default", ...rest) {} }
 "#;
     let syntax = JsFileSource::tsx();
     let tree = parse(src, syntax, JsParserOptions::default());

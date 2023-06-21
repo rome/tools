@@ -57,6 +57,7 @@ JsModule {
                             parameters: JsConstructorParameterList [
                                 JsBogusParameter {
                                     items: [
+                                        JsDecoratorList [],
                                         JsBogus {
                                             items: [
                                                 TsDeclareModifier {
@@ -68,6 +69,7 @@ JsModule {
                                             ],
                                         },
                                         JsFormalParameter {
+                                            decorators: JsDecoratorList [],
                                             binding: JsIdentifierBinding {
                                                 name_token: IDENT@84..88 "prop" [] [],
                                             },
@@ -134,6 +136,7 @@ JsModule {
                         },
                         L_PAREN@151..152 "(" [] [],
                         JsFormalParameter {
+                            decorators: JsDecoratorList [],
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@152..157 "value" [] [],
                             },
@@ -255,17 +258,19 @@ JsModule {
             0: L_PAREN@66..67 "(" [] []
             1: JS_CONSTRUCTOR_PARAMETER_LIST@67..88
               0: JS_BOGUS_PARAMETER@67..88
-                0: JS_BOGUS@67..84
+                0: JS_DECORATOR_LIST@67..67
+                1: JS_BOGUS@67..84
                   0: TS_DECLARE_MODIFIER@67..75
                     0: DECLARE_KW@67..75 "declare" [] [Whitespace(" ")]
                   1: TS_READONLY_MODIFIER@75..84
                     0: READONLY_KW@75..84 "readonly" [] [Whitespace(" ")]
-                1: JS_FORMAL_PARAMETER@84..88
-                  0: JS_IDENTIFIER_BINDING@84..88
+                2: JS_FORMAL_PARAMETER@84..88
+                  0: JS_DECORATOR_LIST@84..84
+                  1: JS_IDENTIFIER_BINDING@84..88
                     0: IDENT@84..88 "prop" [] []
-                  1: (empty)
                   2: (empty)
                   3: (empty)
+                  4: (empty)
             2: R_PAREN@88..90 ")" [] [Whitespace(" ")]
           3: JS_FUNCTION_BODY@90..92
             0: L_CURLY@90..91 "{" [] []
@@ -300,14 +305,15 @@ JsModule {
             0: IDENT@147..151 "test" [] []
           3: L_PAREN@151..152 "(" [] []
           4: JS_FORMAL_PARAMETER@152..165
-            0: JS_IDENTIFIER_BINDING@152..157
+            0: JS_DECORATOR_LIST@152..152
+            1: JS_IDENTIFIER_BINDING@152..157
               0: IDENT@152..157 "value" [] []
-            1: (empty)
-            2: TS_TYPE_ANNOTATION@157..165
+            2: (empty)
+            3: TS_TYPE_ANNOTATION@157..165
               0: COLON@157..159 ":" [] [Whitespace(" ")]
               1: TS_STRING_TYPE@159..165
                 0: STRING_KW@159..165 "string" [] []
-            3: (empty)
+            4: (empty)
           5: R_PAREN@165..167 ")" [] [Whitespace(" ")]
           6: JS_FUNCTION_BODY@167..169
             0: L_CURLY@167..168 "{" [] []

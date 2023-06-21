@@ -24,12 +24,14 @@ JsModule {
                         parameters: JsConstructorParameterList [
                             JsBogusParameter {
                                 items: [
+                                    JsDecoratorList [],
                                     TsPropertyParameterModifierList [
                                         TsReadonlyModifier {
                                             modifier_token: READONLY_KW@22..31 "readonly" [] [Whitespace(" ")],
                                         },
                                     ],
                                     JsFormalParameter {
+                                        decorators: JsDecoratorList [],
                                         binding: JsIdentifierBinding {
                                             name_token: IDENT@31..32 "b" [] [],
                                         },
@@ -79,15 +81,17 @@ JsModule {
             0: L_PAREN@21..22 "(" [] []
             1: JS_CONSTRUCTOR_PARAMETER_LIST@22..32
               0: JS_BOGUS_PARAMETER@22..32
-                0: TS_PROPERTY_PARAMETER_MODIFIER_LIST@22..31
+                0: JS_DECORATOR_LIST@22..22
+                1: TS_PROPERTY_PARAMETER_MODIFIER_LIST@22..31
                   0: TS_READONLY_MODIFIER@22..31
                     0: READONLY_KW@22..31 "readonly" [] [Whitespace(" ")]
-                1: JS_FORMAL_PARAMETER@31..32
-                  0: JS_IDENTIFIER_BINDING@31..32
+                2: JS_FORMAL_PARAMETER@31..32
+                  0: JS_DECORATOR_LIST@31..31
+                  1: JS_IDENTIFIER_BINDING@31..32
                     0: IDENT@31..32 "b" [] []
-                  1: (empty)
                   2: (empty)
                   3: (empty)
+                  4: (empty)
             2: R_PAREN@32..34 ")" [] [Whitespace(" ")]
           3: JS_FUNCTION_BODY@34..37
             0: L_CURLY@34..35 "{" [] []

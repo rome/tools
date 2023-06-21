@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 96
 expression: invalid.jsonc
 ---
 # Input
@@ -433,17 +432,17 @@ invalid.jsonc:1:32 lint/correctness/noInnerDeclarations ━━━━━━━━
 
 # Input
 ```js
-class C { set x() { if(test) { var foo; } } }
+class C { set x(value) { if(test) { var foo; } } }
 ```
 
 # Diagnostics
 ```
-invalid.jsonc:1:32 lint/correctness/noInnerDeclarations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsonc:1:37 lint/correctness/noInnerDeclarations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This var should be declared at the root of the enclosing function.
   
-  > 1 │ class C { set x() { if(test) { var foo; } } }
-      │                                ^^^^^^^
+  > 1 │ class C { set x(value) { if(test) { var foo; } } }
+      │                                     ^^^^^^^
   
   i The var is accessible in the whole body of the enclosing function.
     To avoid confusion, it should be declared at the root of the enclosing function.

@@ -43,14 +43,15 @@ impl TestCase for BabelTypescriptTestCase {
 
     fn run(&self) -> TestRunOutcome {
         let source_type = JsFileSource::ts().with_variant(self.variant);
+        let options = JsParserOptions::default().with_parse_class_parameter_decorators();
         let files = TestCaseFiles::single(
             self.name().to_string(),
             self.code.clone(),
             source_type,
-            JsParserOptions::default(),
+            options.clone(),
         );
 
-        let result = rome_js_parser::parse(&self.code, source_type, JsParserOptions::default());
+        let result = rome_js_parser::parse(&self.code, source_type, options);
 
         if self.expected_to_fail && result.diagnostics().is_empty() {
             TestRunOutcome::IncorrectlyPassed(files)

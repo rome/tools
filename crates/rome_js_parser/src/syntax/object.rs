@@ -4,6 +4,7 @@ use crate::parser::ParsedSyntax::{Absent, Present};
 use crate::parser::{ParsedSyntax, RecoveryResult};
 use crate::prelude::*;
 use crate::state::{EnterParameters, SignatureFlags};
+use crate::syntax::class::parse_decorators;
 use crate::syntax::expr::{
     is_nth_at_reference_identifier, parse_assignment_expression_or_higher, parse_expression,
     parse_reference_identifier, ExpressionContext,
@@ -12,6 +13,7 @@ use crate::syntax::function::{
     parse_formal_parameter, parse_function_body, parse_parameter_list, ParameterContext,
 };
 use crate::syntax::js_parse_error;
+use crate::syntax::js_parse_error::decorators_not_allowed;
 use crate::syntax::typescript::ts_parse_error::{
     ts_accessor_type_parameters_error, ts_only_syntax_error, ts_set_accessor_return_type_error,
 };
@@ -298,8 +300,26 @@ fn parse_setter_object_member(p: &mut JsParser) -> ParsedSyntax {
     let has_l_paren = p.expect(T!['(']);
 
     p.with_state(EnterParameters(SignatureFlags::empty()), |p| {
+        // test_err ts ts_decorator_object
+        // ({
+        //     method(@dec x, second, @dec third = 'default') {}
+        //     method(@dec.fn() x, second, @dec.fn() third = 'default') {}
+        //     method(@dec() x, second, @dec() third = 'default') {}
+        //     set val(@dec x) {}
+        //     set val(@dec.fn() x) {}
+        //     set val(@dec() x) {}
+        // })
+        let decorator_list = parse_decorators(p)
+            .add_diagnostic_if_present(p, decorators_not_allowed)
+            .map(|mut decorator_list| {
+                decorator_list.change_to_bogus(p);
+                decorator_list
+            })
+            .into();
+
         parse_formal_parameter(
             p,
+            decorator_list,
             ParameterContext::Setter,
             ExpressionContext::default().and_object_expression_allowed(has_l_paren),
         )

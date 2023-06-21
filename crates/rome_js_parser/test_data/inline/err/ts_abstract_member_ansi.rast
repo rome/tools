@@ -80,6 +80,7 @@ JsModule {
                     },
                     l_paren_token: L_PAREN@101..102 "(" [] [],
                     parameter: JsFormalParameter {
+                        decorators: JsDecoratorList [],
                         binding: JsIdentifierBinding {
                             name_token: IDENT@102..107 "value" [] [],
                         },
@@ -169,11 +170,12 @@ JsModule {
             0: IDENT@95..101 "setter" [] []
           3: L_PAREN@101..102 "(" [] []
           4: JS_FORMAL_PARAMETER@102..107
-            0: JS_IDENTIFIER_BINDING@102..107
+            0: JS_DECORATOR_LIST@102..102
+            1: JS_IDENTIFIER_BINDING@102..107
               0: IDENT@102..107 "value" [] []
-            1: (empty)
             2: (empty)
             3: (empty)
+            4: (empty)
           5: R_PAREN@107..109 ")" [] [Whitespace(" ")]
           6: (empty)
         4: TS_PROPERTY_SIGNATURE_CLASS_MEMBER@109..123

@@ -165,7 +165,7 @@ impl ParsedSyntax {
     }
 
     /// Adds a diagnostic at the current parser position if the syntax is present and return its marker.
-    #[allow(unused)]
+    #[inline]
     pub fn add_diagnostic_if_present<P, E, D>(
         self,
         p: &mut P,

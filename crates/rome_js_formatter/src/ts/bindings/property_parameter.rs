@@ -9,10 +9,19 @@ pub struct FormatTsPropertyParameter;
 impl FormatNodeRule<TsPropertyParameter> for FormatTsPropertyParameter {
     fn fmt_fields(&self, node: &TsPropertyParameter, f: &mut JsFormatter) -> FormatResult<()> {
         let TsPropertyParameterFields {
+            decorators,
             modifiers,
             formal_parameter,
         } = node.as_fields();
 
-        write![f, [modifiers.format(), space(), formal_parameter.format()]]
+        write![
+            f,
+            [
+                decorators.format(),
+                modifiers.format(),
+                space(),
+                formal_parameter.format()
+            ]
+        ]
     }
 }

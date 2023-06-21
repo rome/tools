@@ -29,6 +29,7 @@ JsModule {
                             l_paren_token: L_PAREN@24..25 "(" [] [],
                             items: JsParameterList [
                                 JsFormalParameter {
+                                    decorators: JsDecoratorList [],
                                     binding: JsIdentifierBinding {
                                         name_token: IDENT@25..26 "a" [] [],
                                     },
@@ -99,16 +100,17 @@ JsModule {
           0: L_PAREN@24..25 "(" [] []
           1: JS_PARAMETER_LIST@25..29
             0: JS_FORMAL_PARAMETER@25..29
-              0: JS_IDENTIFIER_BINDING@25..26
+              0: JS_DECORATOR_LIST@25..25
+              1: JS_IDENTIFIER_BINDING@25..26
                 0: IDENT@25..26 "a" [] []
-              1: (empty)
-              2: TS_TYPE_ANNOTATION@26..29
+              2: (empty)
+              3: TS_TYPE_ANNOTATION@26..29
                 0: COLON@26..28 ":" [] [Whitespace(" ")]
                 1: TS_REFERENCE_TYPE@28..29
                   0: JS_REFERENCE_IDENTIFIER@28..29
                     0: IDENT@28..29 "A" [] []
                   1: (empty)
-              3: (empty)
+              4: (empty)
           2: R_PAREN@29..30 ")" [] []
         4: TS_RETURN_TYPE_ANNOTATION@30..39
           0: COLON@30..32 ":" [] [Whitespace(" ")]

@@ -23,6 +23,7 @@ JsModule {
                         },
                         L_PAREN@22..23 "(" [] [],
                         JsFormalParameter {
+                            decorators: JsDecoratorList [],
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@23..28 "value" [] [],
                             },
@@ -79,14 +80,15 @@ JsModule {
             0: IDENT@21..22 "a" [] []
           3: L_PAREN@22..23 "(" [] []
           4: JS_FORMAL_PARAMETER@23..36
-            0: JS_IDENTIFIER_BINDING@23..28
+            0: JS_DECORATOR_LIST@23..23
+            1: JS_IDENTIFIER_BINDING@23..28
               0: IDENT@23..28 "value" [] []
-            1: (empty)
-            2: TS_TYPE_ANNOTATION@28..36
+            2: (empty)
+            3: TS_TYPE_ANNOTATION@28..36
               0: COLON@28..30 ":" [] [Whitespace(" ")]
               1: TS_STRING_TYPE@30..36
                 0: STRING_KW@30..36 "string" [] []
-            3: (empty)
+            4: (empty)
           5: R_PAREN@36..37 ")" [] []
           6: TS_RETURN_TYPE_ANNOTATION@37..44
             0: COLON@37..39 ":" [] [Whitespace(" ")]

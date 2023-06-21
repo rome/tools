@@ -4,12 +4,16 @@ use crate::state::{EnterFunction, EnterParameters, SignatureFlags};
 use crate::syntax::binding::{
     is_at_identifier_binding, is_nth_at_identifier_binding, parse_binding, parse_binding_pattern,
 };
-use crate::syntax::class::{parse_initializer_clause, skip_ts_decorators};
+use crate::syntax::class::{
+    empty_decorator_list, parse_initializer_clause, parse_parameter_decorators,
+};
 use crate::syntax::expr::{
     is_nth_at_identifier, parse_assignment_expression_or_higher, ExpressionContext,
 };
 use crate::syntax::js_parse_error;
-use crate::syntax::js_parse_error::{expected_binding, expected_parameter, expected_parameters};
+use crate::syntax::js_parse_error::{
+    decorators_not_allowed, expected_binding, expected_parameter, expected_parameters,
+};
 use crate::syntax::stmt::{is_semi, parse_block_impl, semi, StatementContext};
 use crate::syntax::typescript::ts_parse_error::ts_only_syntax_error;
 use crate::syntax::typescript::{
@@ -551,6 +555,10 @@ fn try_parse_parenthesized_arrow_function_head(
         return Err(m);
     }
 
+    // test_err ts ts_decorator_on_arrow_function
+    // const method = (@dec x, second, @dec third = 'default') => {};
+    // const method = (@dec.fn() x, second, @dec.fn() third = 'default') => {};
+    // const method = (@dec() x, second, @dec() third = 'default') => {};
     parse_parameter_list(
         p,
         ParameterContext::Arrow,
@@ -698,6 +706,8 @@ fn is_parenthesized_arrow_function_expression_impl(
                 // '([ ...', '({ ... } can either be a parenthesized object or array expression or a destructing parameter
                 T!['['] | T!['{'] => IsParenthesizedArrowFunctionExpression::Unknown,
 
+                // '(@' can be a decorator or a parenthesized arrow function
+                T![@] => IsParenthesizedArrowFunctionExpression::True,
                 // '(a...'
                 _ if is_nth_at_identifier_binding(p, n + 1) || p.nth_at(n + 1, T![this]) => {
                     match p.nth(n + 2) {
@@ -871,13 +881,28 @@ fn parse_arrow_body(p: &mut JsParser, mut flags: SignatureFlags) -> ParsedSyntax
 
 pub(crate) fn parse_any_parameter(
     p: &mut JsParser,
+    decorator_list: ParsedSyntax,
     parameter_context: ParameterContext,
     expression_context: ExpressionContext,
 ) -> ParsedSyntax {
     let parameter = match p.cur() {
-        T![...] => parse_rest_parameter(p, expression_context),
-        T![this] => parse_ts_this_parameter(p),
-        _ => parse_formal_parameter(p, parameter_context, expression_context),
+        T![...] => parse_rest_parameter(p, decorator_list, expression_context),
+        T![this] => {
+            // test_err ts ts_decorator_this_parameter
+            // class A {
+            //   method(@dec this) {}
+            //   method(@dec(val) this) {}
+            //   method(@dec.fn(val) this) {}
+            // }
+            decorator_list
+                .add_diagnostic_if_present(p, decorators_not_allowed)
+                .map(|mut decorator_list| {
+                    decorator_list.change_to_bogus(p);
+                    decorator_list
+                });
+            parse_ts_this_parameter(p)
+        }
+        _ => parse_formal_parameter(p, decorator_list, parameter_context, expression_context),
     };
 
     parameter.map(|mut parameter| {
@@ -904,12 +929,18 @@ pub(crate) fn parse_any_parameter(
     })
 }
 
-pub(crate) fn parse_rest_parameter(p: &mut JsParser, context: ExpressionContext) -> ParsedSyntax {
+pub(crate) fn parse_rest_parameter(
+    p: &mut JsParser,
+    decorator_list: ParsedSyntax,
+    context: ExpressionContext,
+) -> ParsedSyntax {
     if !p.at(T![...]) {
         return Absent;
     }
 
-    let m = p.start();
+    let m = decorator_list
+        .or_else(|| empty_decorator_list(p))
+        .precede(p);
     p.bump(T![...]);
     parse_binding_pattern(p, context).or_add_diagnostic(p, expected_binding);
 
@@ -976,6 +1007,9 @@ pub(crate) fn parse_ts_this_parameter(p: &mut JsParser) -> ParsedSyntax {
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
 pub(crate) enum ParameterContext {
+    /// Regular parameter in a class method implementation: `class A { method(a) {} }`
+    ClassImplementation,
+
     /// Regular parameter in a function / method implementation: `function x(a) {}`
     Implementation,
 
@@ -985,6 +1019,9 @@ pub(crate) enum ParameterContext {
     /// Parameter of a setter function: `set a(b: string)`
     Setter,
 
+    /// Parameter of a class setter method: `class A { set a(b: string) }`
+    ClassSetter,
+
     /// Parameter of an arrow function
     Arrow,
 
@@ -993,8 +1030,24 @@ pub(crate) enum ParameterContext {
 }
 
 impl ParameterContext {
+    pub fn is_any_setter(&self) -> bool {
+        self.is_setter() || self.is_class_setter()
+    }
+
     pub fn is_setter(&self) -> bool {
         self == &ParameterContext::Setter
+    }
+
+    pub fn is_class_setter(&self) -> bool {
+        self == &ParameterContext::ClassSetter
+    }
+
+    pub fn is_class_method_implementation(&self) -> bool {
+        self == &ParameterContext::ClassImplementation
+    }
+
+    pub fn is_any_class_method(&self) -> bool {
+        self.is_class_method_implementation() || self.is_class_setter()
     }
 
     pub fn is_parameter_property(&self) -> bool {
@@ -1021,21 +1074,30 @@ impl ParameterContext {
 // function b(x?) {}
 pub(crate) fn parse_formal_parameter(
     p: &mut JsParser,
+    decorator_list: ParsedSyntax,
     parameter_context: ParameterContext,
     expression_context: ExpressionContext,
 ) -> ParsedSyntax {
     // test ts ts_formal_parameter_decorator
-    // function a(@dec x) {}
     // class Foo {
     //    constructor(@dec x) {}
     //    method(@dec x) {}
     // }
-    skip_ts_decorators(p);
 
-    parse_binding_pattern(p, expression_context).map(|binding| {
+    // test_err ts ts_formal_parameter_decorator
+    // function a(@dec x) {}
+
+    // we use a checkpoint to avoid bogus nodes if the binding pattern fails to parse.
+    let checkpoint = p.checkpoint();
+
+    let m = decorator_list
+        .or_else(|| empty_decorator_list(p))
+        .precede(p);
+
+    if let Present(binding) = parse_binding_pattern(p, expression_context) {
         let binding_kind = binding.kind(p);
         let binding_range = binding.range(p);
-        let m = binding.precede(p);
+
         let mut valid = true;
 
         let is_optional = if p.at(T![?]) {
@@ -1046,7 +1108,7 @@ pub(crate) fn parse_formal_parameter(
                     p.cur_range(),
                 ));
                 valid = false;
-            } else if parameter_context.is_setter() {
+            } else if parameter_context.is_any_setter() {
                 p.error(p.err_builder(
                     "A 'set' accessor cannot have an optional parameter.",
                     p.cur_range(),
@@ -1087,7 +1149,7 @@ pub(crate) fn parse_formal_parameter(
             .ok();
 
         if let Present(initializer) = parse_initializer_clause(p, expression_context) {
-            if valid && parameter_context.is_setter() && TypeScript.is_supported(p) {
+            if valid && parameter_context.is_any_setter() && TypeScript.is_supported(p) {
                 p.error(p.err_builder(
                     "A 'set' accessor parameter cannot have an initializer.",
                     initializer.range(p),
@@ -1106,8 +1168,12 @@ pub(crate) fn parse_formal_parameter(
             parameter.change_to_bogus(p);
         }
 
-        parameter
-    })
+        Present(parameter)
+    } else {
+        m.abandon(p);
+        p.rewind(checkpoint);
+        Absent
+    }
 }
 
 /// Skips over the binding token of a parameter. Useful in the context of lookaheads to determine
@@ -1116,7 +1182,6 @@ pub(crate) fn parse_formal_parameter(
 /// is not positioned at a binding.
 pub(super) fn skip_parameter_start(p: &mut JsParser) -> bool {
     if is_at_identifier_binding(p) || p.at(T![this]) {
-        // a
         p.bump_any();
         return true;
     }
@@ -1146,7 +1211,69 @@ pub(super) fn parse_parameter_list(
     parse_parameters_list(
         p,
         flags,
-        |p, expression_context| parse_any_parameter(p, parameter_context, expression_context),
+        |p, expression_context| {
+            let decorator_list = parse_parameter_decorators(p);
+
+            let decorator_list = if parameter_context.is_any_class_method() {
+                // test ts ts_decorator_on_class_method
+                // class A {
+                //     method(@dec x, second, @dec third = 'default') {}
+                //     method(@dec.fn() x, second, @dec.fn() third = 'default') {}
+                //     method(@dec() x, second, @dec() third = 'default') {}
+                //     static method(@dec x, second, @dec third = 'default') {}
+                //     static method(@dec.fn() x, second, @dec.fn() third = 'default') {}
+                //     static method(@dec() x, second, @dec() third = 'default') {}
+                // }
+                decorator_list
+            } else {
+                // test_err ts ts_decorator_on_function_declaration
+                // function method(@dec x, second, @dec third = 'default') {}
+                // function method(@dec.fn() x, second, @dec.fn() third = 'default') {}
+                // function method(@dec() x, second, @dec() third = 'default') {}
+
+                // test_err ts ts_decorator_on_function_expression
+                // const expr = function method(@dec x, second, @dec third = 'default') {}
+                // const expr = function method(@dec.fn() x, second, @dec.fn() third = 'default') {}
+                // const expr = function method(@dec() x, second, @dec() third = 'default') {}
+
+                // test_err ts ts_decorator_on_function_type
+                // type I = (@dec x, second, @dec third = 'default') => string;
+                // type I = (@dec.fn() x, second, @dec.fn() third = 'default') => string;
+                // type I = (@dec() x, second, @dec() third = 'default') => string;
+
+                // test_err ts ts_decorator_on_constructor_type
+                // type I = new(@dec x, second, @dec third = 'default') => string;
+                // type I = abstract new(@dec.fn() x, second, @dec.fn() third = 'default') => string;
+                // type I = abstract new(@dec() x, second, @dec() third = 'default') => string;
+
+                // test_err ts ts_decorator_on_signature_member
+                // type A = {new (@dec x, second, @dec third = 'default'): string; }
+                // type B = {method(@dec.fn() x, second, @dec.fn() third = 'default'): string; }
+                // type C = {
+                //  new(@dec() x, second, @dec() third = 'default'): string;
+                //	method(@dec.fn() x, second, @dec.fn() third = 'default'): string;
+                // }
+
+                // test_err ts ts_decorator_on_ambient_function
+                // declare module a {
+                // 		function method(@dec x, second, @dec third = 'default') {}
+                // 		function method(@dec.fn() x, second, @dec.fn() third = 'default') {}
+                // 		function method(@dec() x, second, @dec() third = 'default') {}
+                // }
+                // declare function method(@dec x, second, @dec third = 'default')
+                // declare function method(@dec.fn() x, second, @dec.fn() third = 'default')
+                // declare function method(@dec() x, second, @dec() third = 'default')
+                decorator_list
+                    .add_diagnostic_if_present(p, decorators_not_allowed)
+                    .map(|mut decorator_list| {
+                        decorator_list.change_to_bogus(p);
+                        decorator_list
+                    })
+                    .into()
+            };
+
+            parse_any_parameter(p, decorator_list, parameter_context, expression_context)
+        },
         JS_PARAMETER_LIST,
     );
 

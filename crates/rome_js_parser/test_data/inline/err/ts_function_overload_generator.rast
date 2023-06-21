@@ -13,6 +13,7 @@ JsModule {
                     l_paren_token: L_PAREN@14..15 "(" [] [],
                     items: JsParameterList [
                         JsFormalParameter {
+                            decorators: JsDecoratorList [],
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@15..16 "a" [] [],
                             },
@@ -43,6 +44,7 @@ JsModule {
                 l_paren_token: L_PAREN@41..42 "(" [] [],
                 items: JsParameterList [
                     JsFormalParameter {
+                        decorators: JsDecoratorList [],
                         binding: JsIdentifierBinding {
                             name_token: IDENT@42..43 "a" [] [],
                         },
@@ -83,14 +85,15 @@ JsModule {
         0: L_PAREN@14..15 "(" [] []
         1: JS_PARAMETER_LIST@15..24
           0: JS_FORMAL_PARAMETER@15..24
-            0: JS_IDENTIFIER_BINDING@15..16
+            0: JS_DECORATOR_LIST@15..15
+            1: JS_IDENTIFIER_BINDING@15..16
               0: IDENT@15..16 "a" [] []
-            1: (empty)
-            2: TS_TYPE_ANNOTATION@16..24
+            2: (empty)
+            3: TS_TYPE_ANNOTATION@16..24
               0: COLON@16..18 ":" [] [Whitespace(" ")]
               1: TS_STRING_TYPE@18..24
                 0: STRING_KW@18..24 "string" [] []
-            3: (empty)
+            4: (empty)
         2: R_PAREN@24..25 ")" [] []
       4: SEMICOLON@25..26 ";" [] []
     1: JS_FUNCTION_DECLARATION@26..55
@@ -104,14 +107,15 @@ JsModule {
         0: L_PAREN@41..42 "(" [] []
         1: JS_PARAMETER_LIST@42..51
           0: JS_FORMAL_PARAMETER@42..51
-            0: JS_IDENTIFIER_BINDING@42..43
+            0: JS_DECORATOR_LIST@42..42
+            1: JS_IDENTIFIER_BINDING@42..43
               0: IDENT@42..43 "a" [] []
-            1: (empty)
-            2: TS_TYPE_ANNOTATION@43..51
+            2: (empty)
+            3: TS_TYPE_ANNOTATION@43..51
               0: COLON@43..45 ":" [] [Whitespace(" ")]
               1: TS_STRING_TYPE@45..51
                 0: STRING_KW@45..51 "string" [] []
-            3: (empty)
+            4: (empty)
         2: R_PAREN@51..53 ")" [] [Whitespace(" ")]
       6: (empty)
       7: JS_FUNCTION_BODY@53..55

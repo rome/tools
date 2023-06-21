@@ -5,6 +5,7 @@ codegen:
   cargo codegen all
   cargo codegen-configuration
   just codegen-bindings
+  cargo format
 
 codegen-bindings:
   cargo codegen-schema

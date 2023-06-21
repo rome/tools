@@ -2263,8 +2263,15 @@ impl SyntaxFactory for JsSyntaxFactory {
             }
             JS_FORMAL_PARAMETER => {
                 let mut elements = (&children).into_iter();
-                let mut slots: RawNodeSlots<4usize> = RawNodeSlots::default();
+                let mut slots: RawNodeSlots<5usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
+                if let Some(element) = &current_element {
+                    if JsDecoratorList::can_cast(element.kind()) {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
                 if let Some(element) = &current_element {
                     if AnyJsBindingPattern::can_cast(element.kind()) {
                         slots.mark_present();
@@ -4357,8 +4364,15 @@ impl SyntaxFactory for JsSyntaxFactory {
             }
             JS_REST_PARAMETER => {
                 let mut elements = (&children).into_iter();
-                let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
+                let mut slots: RawNodeSlots<4usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
+                if let Some(element) = &current_element {
+                    if JsDecoratorList::can_cast(element.kind()) {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
                 if let Some(element) = &current_element {
                     if element.kind() == T ! [...] {
                         slots.mark_present();
@@ -8667,8 +8681,15 @@ impl SyntaxFactory for JsSyntaxFactory {
             }
             TS_PROPERTY_PARAMETER => {
                 let mut elements = (&children).into_iter();
-                let mut slots: RawNodeSlots<2usize> = RawNodeSlots::default();
+                let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
+                if let Some(element) = &current_element {
+                    if JsDecoratorList::can_cast(element.kind()) {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
                 if let Some(element) = &current_element {
                     if TsPropertyParameterModifierList::can_cast(element.kind()) {
                         slots.mark_present();

@@ -691,6 +691,7 @@ AnyJsConstructorParameter =
 // constructor(private a: string)
 //             ^^^^^^^^^^^^^^^^^
 TsPropertyParameter =
+	decorators: JsDecoratorList
 	modifiers: TsPropertyParameterModifierList
 	formal_parameter: AnyJsFormalParameter
 
@@ -1596,6 +1597,7 @@ AnyJsParameter =
 // (a?: string) => {}
 //  ^^^^^^^^^^
 JsFormalParameter =
+	decorators: JsDecoratorList
 	binding: AnyJsBindingPattern
 	'?'?
 	type_annotation: TsTypeAnnotation?
@@ -1604,6 +1606,7 @@ JsFormalParameter =
 // (...a) => {}
 //  ^^^^
 JsRestParameter =
+	decorators: JsDecoratorList
 	'...'
 	binding: AnyJsBindingPattern
 	type_annotation: TsTypeAnnotation?
