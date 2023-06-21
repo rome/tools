@@ -66,7 +66,7 @@ impl Rule for NoDuplicateKeys {
         let duplicated_keys: Vec<_> = names
             .into_values()
             .filter(|ranges| !ranges.is_empty())
-            .flat_map(|ranges| ranges.into_iter().map(move |range| range))
+            .flatten()
             .collect();
 
         if !duplicated_keys.is_empty() {
