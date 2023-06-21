@@ -17,19 +17,19 @@ declare_rule! {
     /// ```js,expect_diagnostic
     /// var x = a => 1 ? 2 : 3;
     /// ```
-    /// ```js,expect_diagnostic
-    /// var x = (a) => 1 ? 2 : 3;
-    /// ```
     ///
     /// ## Valid
     ///
     /// ```js
+    /// var x = (a) => 1 ? 2 : 3;
+    ///
     /// var x = a => (1 ? 2 : 3);
+    ///
     /// var x = (a) => (1 ? 2 : 3);
-    /// var x = (a) => {
-    ///     return 1 ? 2 : 3;
-    /// };
+    ///
     /// var x = a => { return 1 ? 2 : 3; };
+    ///
+    /// var x = (a) => { return 1 ? 2 : 3; };
     /// ```
     ///
     pub(crate) NoConfusingArrow {
@@ -47,7 +47,10 @@ impl Rule for NoConfusingArrow {
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let arrow_fn = ctx.query();
-
+        if arrow_fn.parameters().ok()?.as_js_parameters().is_some() {
+            // Don't report arrow functions that enclose its parameters with parenthesis.
+            return None;
+        }
         arrow_fn
             .body()
             .ok()?

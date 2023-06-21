@@ -75,6 +75,21 @@ parameter decorators:
 
   The code action now removes any whitespace between the parameter name and its initialization.
 
+- Relax [noConfusingArrow](https://docs.rome.tools/lint/rules/noconfusingarrow/)
+
+  All arrow functions that enclose its parameter with parenthesis are allowed.
+  Thus, the following snippet no longer trigger the rule:
+
+  ```js
+  var x = (a) => 1 ? 2 : 3;
+  ```
+
+  The following snippet still triggers the rule:
+
+  ```js
+  var x = a => 1 ? 2 : 3;
+  ```
+
 - The rules [`useExhaustiveDependencies`](https://docs.rome.tools/lint/rules/useexhaustivedependencies/) and [`useHookAtTopLevel`](https://docs.rome.tools/lint/rules/usehookattoplevel/) accept a different shape of options
 
   Old configuration
