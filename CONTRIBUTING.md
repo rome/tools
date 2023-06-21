@@ -22,8 +22,6 @@ Rome can be used via the `rome` bin in the `rome_cli` package:
 cargo run --bin rome -- --help
 ```
 
-Rome can be used as a language server by following the instructions below.
-
 ## Testing
 
 To run the tests, just run
