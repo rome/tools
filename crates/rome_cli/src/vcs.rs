@@ -77,7 +77,7 @@ pub(crate) fn read_vcs_ignore_file(
 
             if let Some((buffer, _)) = buffer {
                 return Ok(buffer
-                    .split('\n')
+                    .lines()
                     // remove empty lines
                     .filter(|line| !line.is_empty())
                     .filter_map(|item| {
