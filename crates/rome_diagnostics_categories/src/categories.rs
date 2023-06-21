@@ -97,6 +97,7 @@ define_categories! {
     "lint/nursery/useLiteralKeys": "https://docs.rome.tools/lint/rules/useLiteralKeys",
     "lint/nursery/useSimpleNumberKeys": "https://docs.rome.tools/lint/rules/useSimpleNumberKeys",
     "lint/nursery/noStaticOnlyClass": "https://docs.rome.tools/lint/rules/noStaticOnlyClass",
+    "lint/nursery/noDuplicateJsonKeys": "https://docs.rome.tools/lint/rules/noDuplicateJsonKeys",
     "lint/nursery/useNamingConvention": "https://docs.rome.tools/lint/rules/useNamingConvention",
     // Insert new nursery rule here
 

@@ -23,7 +23,7 @@ rome_aria = { workspace = true }
 roaring = "0.10.1"
 rustc-hash = { workspace = true }
 serde = { version = "1.0.136", features = ["derive"] }
-serde_json = { version = "1.0.74", features = ["raw_value"] }
+serde_json = { version = "1.0.74" }
 lazy_static = { workspace = true }
 natord = "1.0.9"
 bpaf.workspace = true

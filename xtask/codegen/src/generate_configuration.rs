@@ -5,8 +5,8 @@ use quote::quote;
 use rome_analyze::{
     GroupCategory, Queryable, RegistryVisitor, Rule, RuleCategory, RuleGroup, RuleMetadata,
 };
-use rome_js_analyze::visit_registry;
 use rome_js_syntax::JsLanguage;
+use rome_json_syntax::JsonLanguage;
 use std::collections::BTreeMap;
 use xtask::*;
 use xtask_codegen::{to_lower_snake_case, update};
@@ -42,8 +42,29 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
         }
     }
 
+    impl RegistryVisitor<JsonLanguage> for LintRulesVisitor {
+        fn record_category<C: GroupCategory<Language = JsonLanguage>>(&mut self) {
+            if matches!(C::CATEGORY, RuleCategory::Lint) {
+                C::record_groups(self);
+            }
+        }
+
+        fn record_rule<R>(&mut self)
+        where
+            R: Rule + 'static,
+            R::Query: Queryable<Language = JsonLanguage>,
+            <R::Query as Queryable>::Output: Clone,
+        {
+            self.groups
+                .entry(<R::Group as RuleGroup>::NAME)
+                .or_insert_with(BTreeMap::new)
+                .insert(R::METADATA.name, R::METADATA);
+        }
+    }
+
     let mut visitor = LintRulesVisitor::default();
-    visit_registry(&mut visitor);
+    rome_js_analyze::visit_registry(&mut visitor);
+    rome_json_analyze::visit_registry(&mut visitor);
 
     let LintRulesVisitor { groups } = visitor;
 
