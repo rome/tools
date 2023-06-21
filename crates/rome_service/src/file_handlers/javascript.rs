@@ -29,6 +29,7 @@ use rome_js_formatter::context::{
     trailing_comma::TrailingComma, QuoteProperties, QuoteStyle, Semicolons,
 };
 use rome_js_formatter::{context::JsFormatOptions, format_node};
+use rome_js_parser::JsParserOptions;
 use rome_js_semantic::{semantic_model, SemanticModelOptions};
 use rome_js_syntax::{
     AnyJsRoot, JsFileSource, JsLanguage, JsSyntaxNode, TextRange, TextSize, TokenAtOffset,
@@ -45,9 +46,16 @@ use tracing::{debug, trace};
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct JsFormatterSettings {
     pub quote_style: Option<QuoteStyle>,
+    pub jsx_quote_style: Option<QuoteStyle>,
     pub quote_properties: Option<QuoteProperties>,
     pub trailing_comma: Option<TrailingComma>,
     pub semicolons: Option<Semicolons>,
+}
+
+#[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+pub struct JsParserSettings {
+    pub parse_class_parameter_decorators: bool,
 }
 
 #[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
@@ -65,6 +73,7 @@ impl Language for JsLanguage {
     type LinterSettings = JsLinterSettings;
     type FormatOptions = JsFormatOptions;
     type OrganizeImportsSettings = JsOrganizeImportsSettings;
+    type ParserSettings = JsParserSettings;
 
     fn lookup_settings(languages: &LanguagesSettings) -> &LanguageSettings<Self> {
         &languages.javascript
@@ -79,6 +88,7 @@ impl Language for JsLanguage {
             .with_indent_style(global.indent_style.unwrap_or_default())
             .with_line_width(global.line_width.unwrap_or_default())
             .with_quote_style(language.quote_style.unwrap_or_default())
+            .with_jsx_quote_style(language.jsx_quote_style.unwrap_or_default())
             .with_quote_properties(language.quote_properties.unwrap_or_default())
             .with_trailing_comma(language.trailing_comma.unwrap_or_default())
             .with_semicolons(language.semicolons.unwrap_or_default())
@@ -141,6 +151,7 @@ fn parse(
     rome_path: &RomePath,
     language_hint: LanguageId,
     text: &str,
+    settings: SettingsHandle,
     cache: &mut NodeCache,
 ) -> AnyParse {
     let source_type =
@@ -150,8 +161,11 @@ fn parse(
             LanguageId::TypeScriptReact => JsFileSource::tsx(),
             _ => JsFileSource::js_module(),
         });
-
-    let parse = rome_js_parser::parse_js_with_cache(text, source_type, cache);
+    let settings = &settings.as_ref().languages.javascript.parser;
+    let options = JsParserOptions {
+        parse_class_parameter_decorators: settings.parse_class_parameter_decorators,
+    };
+    let parse = rome_js_parser::parse_js_with_cache(text, source_type, options, cache);
     let root = parse.syntax();
     let diagnostics = parse.into_diagnostics();
     AnyParse::new(

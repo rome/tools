@@ -12,7 +12,7 @@ import {
 	classnames,
 	createPlaygroundSettingsSetter,
 	getFileState,
-	isJSXFilename,
+	isJsxFilename,
 	isScriptFilename,
 	isTypeScriptFilename,
 	modifyFilename,
@@ -39,6 +39,7 @@ export default function SettingsTab({
 			indentWidth,
 			indentStyle,
 			quoteStyle,
+			jsxQuoteStyle,
 			quoteProperties,
 			trailingComma,
 			semicolons,
@@ -63,6 +64,10 @@ export default function SettingsTab({
 	const setQuoteStyle = createPlaygroundSettingsSetter(
 		setPlaygroundState,
 		"quoteStyle",
+	);
+	const setJsxQuoteStyle = createPlaygroundSettingsSetter(
+		setPlaygroundState,
+		"jsxQuoteStyle",
 	);
 	const setQuoteProperties = createPlaygroundSettingsSetter(
 		setPlaygroundState,
@@ -220,6 +225,8 @@ export default function SettingsTab({
 				setIndentWidth={setIndentWidth}
 				quoteStyle={quoteStyle}
 				setQuoteStyle={setQuoteStyle}
+				jsxQuoteStyle={jsxQuoteStyle}
+				setJsxQuoteStyle={setJsxQuoteStyle}
 				quoteProperties={quoteProperties}
 				setQuoteProperties={setQuoteProperties}
 				trailingComma={trailingComma}
@@ -459,7 +466,7 @@ function SyntaxSettings({
 						onChange={(e) => {
 							setFilename(
 								modifyFilename(filename, {
-									jsx: isJSXFilename(filename),
+									jsx: isJsxFilename(filename),
 									typescript: e.target.checked,
 									script: false,
 								}),
@@ -475,7 +482,7 @@ function SyntaxSettings({
 						id="jsx"
 						name="jsx"
 						type="checkbox"
-						checked={isJSXFilename(filename)}
+						checked={isJsxFilename(filename)}
 						onChange={(e) => {
 							setFilename(
 								modifyFilename(filename, {
@@ -503,6 +510,8 @@ function FormatterSettings({
 	setIndentWidth,
 	quoteStyle,
 	setQuoteStyle,
+	jsxQuoteStyle,
+	setJsxQuoteStyle,
 	quoteProperties,
 	setQuoteProperties,
 	trailingComma,
@@ -518,6 +527,8 @@ function FormatterSettings({
 	setIndentWidth: (value: number) => void;
 	quoteStyle: QuoteStyle;
 	setQuoteStyle: (value: QuoteStyle) => void;
+	jsxQuoteStyle: QuoteStyle;
+	setJsxQuoteStyle: (value: QuoteStyle) => void;
 	quoteProperties: QuoteProperties;
 	setQuoteProperties: (value: QuoteProperties) => void;
 	trailingComma: TrailingComma;
@@ -573,6 +584,19 @@ function FormatterSettings({
 				</div>
 
 				<div className="field-row">
+					<label htmlFor="jsxQuoteStyle">Jsx Quote Style</label>
+					<select
+						id="jsxQuoteStyle"
+						name="jsxQuoteStyle"
+						value={jsxQuoteStyle ?? ""}
+						onChange={(e) => setJsxQuoteStyle(e.target.value as QuoteStyle)}
+					>
+						<option value={QuoteStyle.Double}>Double</option>
+						<option value={QuoteStyle.Single}>Single</option>
+					</select>
+				</div>
+
+				<div className="field-row">
 					<label htmlFor="quoteProperties">Quote Properties</label>
 					<select
 						id="quoteProperties"
@@ -596,7 +620,7 @@ function FormatterSettings({
 						onChange={(e) => setTrailingComma(e.target.value as TrailingComma)}
 					>
 						<option value={TrailingComma.All}>All</option>
-						<option value={TrailingComma.ES5}>ES5</option>
+						<option value={TrailingComma.Es5}>ES5</option>
 						<option value={TrailingComma.None}>None</option>
 					</select>
 				</div>

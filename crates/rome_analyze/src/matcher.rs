@@ -1,9 +1,8 @@
 use crate::{
-    AnalyzerSignal, Phases, QueryMatch, Rule, RuleFilter, RuleGroup, ServiceBag,
+    AnalyzerOptions, AnalyzerSignal, Phases, QueryMatch, Rule, RuleFilter, RuleGroup, ServiceBag,
     SuppressionCommentEmitter,
 };
 use rome_rowan::{Language, TextRange};
-use std::path::Path;
 use std::{
     any::{Any, TypeId},
     cmp::Ordering,
@@ -27,8 +26,7 @@ pub struct MatchQueryParams<'phase, 'query, L: Language> {
     pub services: &'phase ServiceBag,
     pub signal_queue: &'query mut BinaryHeap<SignalEntry<'phase, L>>,
     pub apply_suppression_comment: SuppressionCommentEmitter<L>,
-    pub globals: &'phase [&'phase str],
-    pub file_path: &'phase Path,
+    pub options: &'phase AnalyzerOptions,
 }
 
 /// Wrapper type for a [QueryMatch]
@@ -198,24 +196,20 @@ where
 
 #[cfg(test)]
 mod tests {
-    use std::convert::Infallible;
-    use std::path::Path;
-
+    use super::MatchQueryParams;
+    use crate::{
+        signals::DiagnosticSignal, Analyzer, AnalyzerContext, AnalyzerSignal, ControlFlow,
+        MetadataRegistry, Never, Phases, QueryMatcher, RuleKey, ServiceBag, SignalEntry,
+        SyntaxVisitor,
+    };
+    use crate::{AnalyzerOptions, SuppressionKind};
     use rome_diagnostics::{category, DiagnosticExt};
     use rome_diagnostics::{Diagnostic, Severity};
     use rome_rowan::{
         raw_language::{RawLanguage, RawLanguageKind, RawLanguageRoot, RawSyntaxTreeBuilder},
         AstNode, SyntaxNode, TextRange, TextSize, TriviaPiece, TriviaPieceKind,
     };
-
-    use crate::SuppressionKind;
-    use crate::{
-        signals::DiagnosticSignal, Analyzer, AnalyzerContext, AnalyzerSignal, ControlFlow,
-        MetadataRegistry, Never, Phases, QueryMatcher, RuleKey, ServiceBag, SignalEntry,
-        SyntaxVisitor,
-    };
-
-    use super::MatchQueryParams;
+    use std::convert::Infallible;
 
     struct SuppressionMatcher;
 
@@ -383,8 +377,7 @@ mod tests {
             root,
             range: None,
             services: ServiceBag::default(),
-            globals: &[],
-            file_path: Path::new(""),
+            options: &AnalyzerOptions::default(),
         };
 
         let result: Option<Never> = analyzer.run(ctx);

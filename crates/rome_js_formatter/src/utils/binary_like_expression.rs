@@ -896,13 +896,13 @@ impl FusedIterator for BinaryLikePreorder {}
 mod tests {
     use crate::utils::binary_like_expression::{BinaryLikePreorder, VisitEvent};
     use crate::utils::AnyJsBinaryLikeExpression;
-    use rome_js_parser::parse_module;
+    use rome_js_parser::{parse_module, JsParserOptions};
     use rome_js_syntax::JsLogicalExpression;
     use rome_rowan::AstNode;
 
     #[test]
     fn in_order_visits_every_binary_like_expression() {
-        let parse = parse_module("a && b && c || d");
+        let parse = parse_module("a && b && c || d", JsParserOptions::default());
         let root = parse
             .syntax()
             .descendants()
@@ -950,7 +950,7 @@ mod tests {
 
     #[test]
     fn in_order_skip_subtree() {
-        let parse = parse_module("a && b && c || d");
+        let parse = parse_module("a && b && c || d", JsParserOptions::default());
         let root = parse
             .syntax()
             .descendants()

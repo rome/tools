@@ -3,10 +3,10 @@ use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Ast, Rule
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_syntax::{
-    AnyJsExpression, AnyTsPropertyAnnotation, AnyTsType, AnyTsVariableAnnotation,
-    JsFormalParameter, JsInitializerClause, JsPropertyClassMember, JsSyntaxKind,
-    JsVariableDeclaration, JsVariableDeclarator, JsVariableDeclaratorList, TsPropertyParameter,
-    TsReadonlyModifier, TsTypeAnnotation,
+    AnyJsExpression, AnyTsPropertyAnnotation, AnyTsVariableAnnotation, JsFormalParameter,
+    JsInitializerClause, JsPropertyClassMember, JsSyntaxKind, JsVariableDeclaration,
+    JsVariableDeclarator, JsVariableDeclaratorList, TsPropertyParameter, TsReadonlyModifier,
+    TsTypeAnnotation,
 };
 use rome_rowan::chain_trivia_pieces;
 use rome_rowan::AstNode;
@@ -149,9 +149,7 @@ impl Rule for NoInferrableTypes {
                 //
                 // In non-const contexts, wide type annotation are rejected.
                 // e.g. `let x: number = <literal>`
-                if (is_const && is_literal_type(&ty).is_some())
-                    || (!is_const && is_literal_wide_type(&ty).is_some())
-                {
+                if (is_const && ty.is_literal_type()) || (!is_const && ty.is_primitive_type()) {
                     return Some(type_annotation);
                 }
             }
@@ -208,28 +206,6 @@ fn has_trivially_inferrable_type(expr: &AnyJsExpression) -> Option<()> {
                 _ => None,
             }
         }
-        _ => None,
-    }
-}
-
-fn is_literal_type(ty: &AnyTsType) -> Option<()> {
-    match ty {
-        AnyTsType::TsBooleanLiteralType(_)
-        | AnyTsType::TsBigintLiteralType(_)
-        | AnyTsType::TsNullLiteralType(_)
-        | AnyTsType::TsNumberLiteralType(_)
-        | AnyTsType::TsStringLiteralType(_)
-        | AnyTsType::TsUndefinedType(_) => Some(()),
-        _ => None,
-    }
-}
-
-fn is_literal_wide_type(ty: &AnyTsType) -> Option<()> {
-    match ty {
-        AnyTsType::TsBooleanType(_)
-        | AnyTsType::TsBigintType(_)
-        | AnyTsType::TsNumberType(_)
-        | AnyTsType::TsStringType(_) => Some(()),
         _ => None,
     }
 }

@@ -5,7 +5,7 @@ use rome_js_formatter::context::{
     JsFormatContext, JsFormatOptions, QuoteProperties, QuoteStyle, Semicolons,
 };
 use rome_js_formatter::{format_node, format_range, JsFormatLanguage};
-use rome_js_parser::parse;
+use rome_js_parser::{parse, JsParserOptions};
 use rome_js_syntax::{JsFileSource, JsLanguage};
 use rome_parser::AnyParse;
 use rome_rowan::{FileSource, SyntaxNode};
@@ -29,7 +29,7 @@ impl TestFormatLanguage for JsTestFormatLanguage {
     type FormatLanguage = JsFormatLanguage;
 
     fn parse(&self, text: &str) -> AnyParse {
-        let parse = parse(text, self.source_type);
+        let parse = parse(text, self.source_type, JsParserOptions::default());
 
         AnyParse::new(
             parse.syntax().as_send().unwrap(),
@@ -159,6 +159,9 @@ pub struct JsSerializableFormatOptions {
     /// The style for quotes. Defaults to double.
     pub quote_style: Option<JsSerializableQuoteStyle>,
 
+    /// The style for JSX quotes. Defaults to double.
+    pub jsx_quote_style: Option<JsSerializableQuoteStyle>,
+
     /// When properties in objects are quoted. Defaults to as-needed.
     pub quote_properties: Option<JsSerializableQuoteProperties>,
 
@@ -179,6 +182,10 @@ impl JsSerializableFormatOptions {
                 self.line_width
                     .and_then(|width| LineWidth::try_from(width).ok())
                     .unwrap_or_default(),
+            )
+            .with_jsx_quote_style(
+                self.jsx_quote_style
+                    .map_or_else(|| QuoteStyle::Double, |value| value.into()),
             )
             .with_quote_style(
                 self.quote_style

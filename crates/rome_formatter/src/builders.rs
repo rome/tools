@@ -2233,7 +2233,7 @@ impl<Context> Format<Context> for BestFitting<'_, Context> {
         // SAFETY: The constructor guarantees that there are always at least two variants. It's, therefore,
         // safe to call into the unsafe `from_vec_unchecked` function
         let element = unsafe {
-            FormatElement::BestFitting(format_element::BestFitting::from_vec_unchecked(
+            FormatElement::BestFitting(format_element::BestFittingElement::from_vec_unchecked(
                 formatted_variants,
             ))
         };

@@ -2,7 +2,7 @@ use crate::runner::{
     create_bogus_node_in_tree_diagnostic, TestCase, TestCaseFiles, TestRunOutcome, TestSuite,
 };
 use regex::Regex;
-use rome_js_parser::parse;
+use rome_js_parser::{parse, JsParserOptions};
 use rome_js_syntax::JsFileSource;
 use rome_rowan::syntax::SyntaxKind;
 use rome_rowan::AstNode;
@@ -97,9 +97,14 @@ impl Test262TestCase {
             .filter(|neg| neg.phase == Phase::Parse)
             .is_some();
 
-        let files = TestCaseFiles::single(self.name.clone(), self.code.clone(), source_type);
+        let files = TestCaseFiles::single(
+            self.name.clone(),
+            self.code.clone(),
+            source_type,
+            JsParserOptions::default(),
+        );
 
-        match parse(&code, source_type).ok() {
+        match parse(&code, source_type, JsParserOptions::default()).ok() {
             Ok(root) if !should_fail => {
                 if let Some(bogus) = root
                     .syntax()

@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 function MyComponent() {
     let a = 1;
     useEffect(() => {

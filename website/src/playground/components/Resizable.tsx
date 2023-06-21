@@ -20,7 +20,7 @@ type ResizeHandler = {
 };
 
 const handlers: {
-	[key in Props["direction"]]: ResizeHandler;
+	[K in Props["direction"]]: ResizeHandler;
 } = {
 	top: {
 		resizingCursor: "row-resize",
@@ -123,7 +123,7 @@ export default function Resizable({
 			window.removeEventListener("mouseup", onMouseUp);
 			window.removeEventListener("mousemove", onMouseMove);
 		};
-	});
+	}, [ref, isResizing, canResize, handler, sizeStore]);
 
 	useEffect(() => {
 		if (cursor === undefined) {

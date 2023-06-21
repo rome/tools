@@ -1,21 +1,23 @@
 use crate::react::hooks::*;
 use crate::semantic_services::Semantic;
-use rome_analyze::{
-    context::RuleContext, declare_rule, DeserializableRuleOptions, Rule, RuleDiagnostic,
-};
+use bpaf::Bpaf;
+use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_deserialize::json::{
-    deserialize_from_json_str, has_only_known_keys, JsonDeserialize, VisitJsonNode,
-};
-use rome_deserialize::{DeserializationDiagnostic, Deserialized, VisitNode};
+use rome_deserialize::json::{has_only_known_keys, VisitJsonNode};
+use rome_deserialize::{DeserializationDiagnostic, VisitNode};
 use rome_js_semantic::{Capture, SemanticModel};
 use rome_js_syntax::{
     binding_ext::AnyJsBindingDeclaration, JsCallExpression, JsStaticMemberExpression, JsSyntaxKind,
     JsSyntaxNode, JsVariableDeclaration, TextRange,
 };
-use rome_json_syntax::{JsonLanguage, JsonRoot, JsonSyntaxNode};
-use rome_rowan::{AstNode, AstSeparatedList, SyntaxNodeCast};
+use rome_json_syntax::{AnyJsonValue, JsonLanguage, JsonSyntaxNode};
+use rome_rowan::{AstNode, AstSeparatedList, SyntaxNode, SyntaxNodeCast};
+use serde::{Deserialize, Serialize};
 use std::collections::{BTreeMap, HashMap, HashSet};
+use std::str::FromStr;
+
+#[cfg(feature = "schemars")]
+use schemars::JsonSchema;
 
 declare_rule! {
     /// Enforce all dependencies are correctly specified.
@@ -25,6 +27,8 @@ declare_rule! {
     /// ### Invalid
     ///
     /// ```js,expect_diagnostic
+    /// import { useEffect } from "react";
+    ///
     /// function component() {
     ///     let a = 1;
     ///     useEffect(() => {
@@ -34,6 +38,8 @@ declare_rule! {
     /// ```
     ///
     /// ```js,expect_diagnostic
+    /// import { useEffect } from "react";
+    ///
     /// function component() {
     ///     let b = 1;
     ///     useEffect(() => {
@@ -42,6 +48,8 @@ declare_rule! {
     /// ```
     ///
     /// ```js,expect_diagnostic
+    /// import { useEffect, useState } from "react";
+    ///
     /// function component() {
     ///     const [name, setName] = useState();
     ///     useEffect(() => {
@@ -52,6 +60,8 @@ declare_rule! {
     /// ```
     ///
     /// ```js,expect_diagnostic
+    /// import { useEffect } from "react";
+    ///
     /// function component() {
     ///     let a = 1;
     ///     const b = a + 1;
@@ -64,6 +74,8 @@ declare_rule! {
     /// ## Valid
     ///
     /// ```js
+    /// import { useEffect } from "react";
+    ///
     /// function component() {
     ///     let a = 1;
     ///     useEffect(() => {
@@ -73,6 +85,8 @@ declare_rule! {
     /// ```
     ///
     /// ```js
+    /// import { useEffect } from "react";
+    ///
     /// function component() {
     ///     const a = 1;
     ///     useEffect(() => {
@@ -82,6 +96,8 @@ declare_rule! {
     /// ```
     ///
     /// ```js
+    /// import { useEffect } from "react";
+    ///
     /// function component() {
     ///     const [name, setName] = useState();
     ///     useEffect(() => {
@@ -100,17 +116,12 @@ declare_rule! {
     ///     "//": "...",
     ///     "options": {
     ///         "hooks": [
-    ///             ["useLocation", 0, 1],
-    ///             ["useQuery", 1, 0]
+    ///             { "name": "useLocation", "closureIndex": 0, "dependenciesIndex": 1},
+    ///             { "name": "useQuery", "closureIndex": 1, "dependenciesIndex": 0}
     ///         ]
     ///     }
     /// }
     /// ```
-    ///
-    /// The following items mean:
-    /// 1. the name of the hook
-    /// 2. the index of the closure
-    /// 3. the index of the array of dependencies
     ///
     /// Given the previous example, your hooks be used like this:
     ///
@@ -183,8 +194,88 @@ impl Default for ReactExtensiveDependenciesOptions {
     }
 }
 
-#[derive(Debug, Default, Clone)]
-pub struct HooksOptions(Vec<(String, Option<usize>, Option<usize>)>);
+/// Options for the rule `useExhaustiveDependencies` and `useHookAtTopLevel`
+#[derive(Default, Deserialize, Serialize, Debug, Clone, Bpaf)]
+#[cfg_attr(feature = "schemars", derive(JsonSchema))]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct HooksOptions {
+    #[bpaf(external, hide, many)]
+    /// List of safe hooks
+    pub hooks: Vec<Hooks>,
+}
+
+impl FromStr for HooksOptions {
+    type Err = ();
+
+    fn from_str(_s: &str) -> Result<Self, Self::Err> {
+        Ok(HooksOptions::default())
+    }
+}
+
+#[derive(Default, Deserialize, Serialize, Debug, Clone, Bpaf)]
+#[cfg_attr(feature = "schemars", derive(JsonSchema))]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct Hooks {
+    #[bpaf(hide)]
+    /// The name of the hook
+    pub name: String,
+    #[bpaf(hide)]
+    /// The "position" of the closure function, starting from zero.
+    ///
+    /// ### Example
+    pub closure_index: Option<usize>,
+    #[bpaf(hide)]
+    /// The "position" of the array of dependencies, starting from zero.
+    pub dependencies_index: Option<usize>,
+}
+
+impl Hooks {
+    const KNOWN_KEYS: &'static [&'static str] = &["name", "closureIndex", "dependenciesIndex"];
+}
+
+impl VisitJsonNode for Hooks {}
+impl VisitNode<JsonLanguage> for Hooks {
+    fn visit_member_name(
+        &mut self,
+        node: &JsonSyntaxNode,
+        diagnostics: &mut Vec<DeserializationDiagnostic>,
+    ) -> Option<()> {
+        has_only_known_keys(node, Hooks::KNOWN_KEYS, diagnostics)
+    }
+
+    fn visit_map(
+        &mut self,
+        key: &JsonSyntaxNode,
+        value: &JsonSyntaxNode,
+        diagnostics: &mut Vec<DeserializationDiagnostic>,
+    ) -> Option<()> {
+        let (name, value) = self.get_key_and_value(key, value, diagnostics)?;
+        let name_text = name.text();
+        match name_text {
+            "name" => {
+                self.name = self.map_to_string(&value, name_text, diagnostics)?;
+            }
+            "closureIndex" => {
+                self.closure_index = self.map_to_usize(&value, name_text, usize::MAX, diagnostics);
+            }
+            "dependenciesIndex" => {
+                self.dependencies_index =
+                    self.map_to_usize(&value, name_text, usize::MAX, diagnostics);
+            }
+            _ => {}
+        }
+
+        Some(())
+    }
+}
+
+impl FromStr for Hooks {
+    type Err = ();
+
+    fn from_str(_s: &str) -> Result<Self, Self::Err> {
+        Ok(Hooks::default())
+    }
+}
 
 impl VisitJsonNode for HooksOptions {}
 impl VisitNode<JsonLanguage> for HooksOptions {
@@ -194,6 +285,27 @@ impl VisitNode<JsonLanguage> for HooksOptions {
         diagnostics: &mut Vec<DeserializationDiagnostic>,
     ) -> Option<()> {
         has_only_known_keys(node, &["hooks"], diagnostics)
+    }
+
+    fn visit_array_member(
+        &mut self,
+        element: &SyntaxNode<JsonLanguage>,
+        diagnostics: &mut Vec<DeserializationDiagnostic>,
+    ) -> Option<()> {
+        let mut hook = Hooks::default();
+        let element = AnyJsonValue::cast(element.clone())?;
+        self.map_to_object(&element, "hooks", &mut hook, diagnostics)?;
+        if hook.name.is_empty() {
+            diagnostics.push(
+                DeserializationDiagnostic::new(markup!(
+                    "The field "<Emphasis>"name"</Emphasis>" is mandatory"
+                ))
+                .with_range(element.range()),
+            )
+        } else {
+            self.hooks.push(hook);
+        }
+        Some(())
     }
 
     fn visit_map(
@@ -253,49 +365,26 @@ impl VisitNode<JsonLanguage> for HooksOptions {
                     None
                 };
 
-                self.0.push((hook_name, closure_index, dependencies_index));
+                self.hooks.push(Hooks {
+                    name: hook_name,
+                    closure_index,
+                    dependencies_index,
+                });
             }
         }
         Some(())
     }
 }
 
-impl JsonDeserialize for HooksOptions {
-    fn deserialize_from_ast(
-        root: JsonRoot,
-        visitor: &mut impl VisitJsonNode,
-        diagnostics: &mut Vec<DeserializationDiagnostic>,
-    ) -> Option<()> {
-        let object = root.value().ok()?;
-        let object = object.as_json_object_value()?;
-        for element in object.json_member_list() {
-            let element = element.ok()?;
-            visitor.visit_map(
-                element.name().ok()?.syntax(),
-                element.value().ok()?.syntax(),
-                diagnostics,
-            )?;
-        }
-
-        Some(())
-    }
-}
-
-impl DeserializableRuleOptions for HooksOptions {
-    fn from(value: String) -> Deserialized<Self> {
-        deserialize_from_json_str(&value)
-    }
-}
-
 impl ReactExtensiveDependenciesOptions {
     pub fn new(hooks: HooksOptions) -> Self {
         let mut default = ReactExtensiveDependenciesOptions::default();
-        for (k, closure_index, dependencies_index) in hooks.0.into_iter() {
+        for hook in hooks.hooks.into_iter() {
             default.hooks_config.insert(
-                k,
+                hook.name,
                 ReactHookConfiguration {
-                    closure_index,
-                    dependencies_index,
+                    closure_index: hook.closure_index,
+                    dependencies_index: hook.dependencies_index,
                 },
             );
         }
@@ -414,6 +503,7 @@ fn function_of_hook_call(call: &JsCallExpression) -> Option<JsSyntaxNode> {
         matches!(
             x.kind(),
             JsSyntaxKind::JS_FUNCTION_DECLARATION
+                | JsSyntaxKind::JS_FUNCTION_EXPORT_DEFAULT_DECLARATION
                 | JsSyntaxKind::JS_FUNCTION_EXPRESSION
                 | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION
         )
@@ -433,9 +523,9 @@ impl Rule for UseExhaustiveDependencies {
         let mut signals = vec![];
 
         let call = ctx.query();
-        if let Some(result) = react_hook_with_dependency(call, &options.hooks_config) {
-            let model = ctx.model();
+        let model = ctx.model();
 
+        if let Some(result) = react_hook_with_dependency(call, &options.hooks_config, model) {
             let Some(component_function) = function_of_hook_call(call) else {
                 return vec![]
             };

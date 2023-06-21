@@ -29,7 +29,7 @@ export enum QuoteProperties {
 
 export enum TrailingComma {
 	All = "all",
-	ES5 = "es5",
+	Es5 = "es5",
 	None = "none",
 }
 
@@ -101,6 +101,7 @@ export interface PlaygroundSettings {
 	indentStyle: IndentStyle;
 	indentWidth: number;
 	quoteStyle: QuoteStyle;
+	jsxQuoteStyle: QuoteStyle;
 	quoteProperties: QuoteProperties;
 	trailingComma: TrailingComma;
 	semicolons: Semicolons;
@@ -141,6 +142,7 @@ export const defaultPlaygroundState: PlaygroundState = {
 		indentWidth: 2,
 		indentStyle: IndentStyle.Tab,
 		quoteStyle: QuoteStyle.Double,
+		jsxQuoteStyle: QuoteStyle.Double,
 		quoteProperties: QuoteProperties.AsNeeded,
 		trailingComma: TrailingComma.All,
 		semicolons: Semicolons.Always,

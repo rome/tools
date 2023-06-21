@@ -48,7 +48,7 @@ class Manager {
 	isNavCollapsed: boolean;
 	lastActiveHeading: undefined | number;
 
-	handleTOCClick(event: MouseEvent) {
+	handleTocClick(event: MouseEvent) {
 		const target = event.target;
 		event.preventDefault();
 		if (!(target instanceof HTMLElement)) {
@@ -335,7 +335,7 @@ class Manager {
 		}
 
 		if (target.closest(".toc") != null) {
-			this.handleTOCClick(event);
+			this.handleTocClick(event);
 		} else if (target.matches('.content a[href^="#"]')) {
 			this.handleHeadingAnchorClick(event, target);
 		} else if (target.matches("a")) {

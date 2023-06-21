@@ -98,11 +98,11 @@ mod tests {
         AstNode, SyntaxNode,
     };
     use std::convert::Infallible;
-    use std::path::Path;
 
     use crate::{
-        matcher::MatchQueryParams, registry::Phases, Analyzer, AnalyzerContext, AnalyzerSignal,
-        ControlFlow, MetadataRegistry, Never, QueryMatcher, ServiceBag, SyntaxVisitor,
+        matcher::MatchQueryParams, registry::Phases, Analyzer, AnalyzerContext, AnalyzerOptions,
+        AnalyzerSignal, ControlFlow, MetadataRegistry, Never, QueryMatcher, ServiceBag,
+        SyntaxVisitor,
     };
 
     #[derive(Default)]
@@ -165,8 +165,7 @@ mod tests {
             root,
             range: None,
             services: ServiceBag::default(),
-            globals: &[],
-            file_path: Path::new(""),
+            options: &AnalyzerOptions::default(),
         };
 
         let result: Option<Never> = analyzer.run(ctx);

@@ -1,4 +1,4 @@
-use crate::{parse, parse_module, test_utils::assert_errors_are_absent, Parse};
+use crate::{parse, parse_module, test_utils::assert_errors_are_absent, JsParserOptions, Parse};
 use expect_test::expect_file;
 use rome_console::fmt::{Formatter, Termcolor};
 use rome_console::markup;
@@ -17,7 +17,7 @@ fn parser_smoke_test() {
 import "x" with { type: "json" }
 "#;
 
-    let module = parse(src, JsFileSource::tsx());
+    let module = parse(src, JsFileSource::tsx(), JsParserOptions::default());
     assert_errors_are_absent(&module, Path::new("parser_smoke_test"));
 }
 
@@ -27,7 +27,7 @@ fn parser_missing_smoke_test() {
         console.log("Hello world";
     "#;
 
-    let module = parse_module(src);
+    let module = parse_module(src, JsParserOptions::default());
 
     let arg_list = module
         .syntax()
@@ -58,7 +58,7 @@ fn try_parse(path: &str, text: &str) -> Parse<AnyJsRoot> {
             path.try_into().unwrap()
         };
 
-        let parse = parse(text, source_type);
+        let parse = parse(text, source_type, JsParserOptions::default());
 
         assert_eq!(
             parse.syntax().to_string(),
@@ -160,7 +160,7 @@ fn assert_errors_are_present(program: &Parse<AnyJsRoot>, path: &Path) {
 #[test]
 pub fn test_trivia_attached_to_tokens() {
     let text = "/**/let a = 1; // nice variable \n /*hey*/ let \t b = 2; // another nice variable";
-    let m = parse_module(text);
+    let m = parse_module(text, JsParserOptions::default());
     let mut tokens = m.syntax().descendants_tokens(Direction::Next);
 
     let is_let = |x: &JsSyntaxToken| x.text_trimmed() == "let";
@@ -194,7 +194,7 @@ pub fn test_trivia_attached_to_tokens() {
 #[test]
 pub fn jsroot_display_text_and_trimmed() {
     let code = " let a = 1; \n ";
-    let root = parse_module(code);
+    let root = parse_module(code, JsParserOptions::default());
     let syntax = root.syntax();
 
     assert_eq!(format!("{}", syntax), code);
@@ -210,7 +210,7 @@ pub fn jsroot_display_text_and_trimmed() {
 pub fn jsroot_ranges() {
     //               0123456789A
     let code = " let a = 1;";
-    let root = parse_module(code);
+    let root = parse_module(code, JsParserOptions::default());
     let syntax = root.syntax();
 
     let first_let = syntax.first_token().unwrap();
@@ -239,7 +239,7 @@ pub fn jsroot_ranges() {
 pub fn node_range_must_be_correct() {
     //               0123456789A123456789B123456789
     let text = " function foo() { let a = 1; }";
-    let root = parse_module(text);
+    let root = parse_module(text, JsParserOptions::default());
 
     let var_decl = root
         .syntax()
@@ -260,7 +260,7 @@ pub fn node_range_must_be_correct() {
 pub fn last_trivia_must_be_appended_to_eof() {
     //               0123456789A123456789B123456789CC
     let text = " function foo() { let a = 1; }\n";
-    let root = parse_module(text);
+    let root = parse_module(text, JsParserOptions::default());
     let syntax = root.syntax();
 
     let range = syntax.text_range();
@@ -275,7 +275,7 @@ pub fn last_trivia_must_be_appended_to_eof() {
 pub fn just_trivia_must_be_appended_to_eof() {
     //               0123456789A123456789B123456789C123
     let text = "// just trivia... nothing else....";
-    let root = parse_module(text);
+    let root = parse_module(text, JsParserOptions::default());
     let syntax = root.syntax();
 
     let range = syntax.text_range();
@@ -289,7 +289,7 @@ pub fn just_trivia_must_be_appended_to_eof() {
 #[test]
 pub fn node_contains_comments() {
     let text = "true && true // comment";
-    let root = parse_module(text);
+    let root = parse_module(text, JsParserOptions::default());
     let syntax = root.syntax();
 
     assert!(syntax.has_comments_descendants());
@@ -298,7 +298,7 @@ pub fn node_contains_comments() {
 #[test]
 fn parser_regexp_after_operator() {
     fn assert_no_errors(src: &str) {
-        let module = parse(src, JsFileSource::js_script());
+        let module = parse(src, JsFileSource::js_script(), JsParserOptions::default());
         assert_errors_are_absent(&module, Path::new("parser_regexp_after_operator"));
     }
     assert_no_errors(r#"a=/a/"#);
@@ -311,7 +311,7 @@ fn parser_regexp_after_operator() {
 #[test]
 pub fn node_contains_trailing_comments() {
     let text = "true && (3 - 2 == 0) // comment";
-    let root = parse_module(text);
+    let root = parse_module(text, JsParserOptions::default());
     let syntax = root.syntax();
     let node = syntax
         .descendants()
@@ -330,7 +330,7 @@ pub fn node_contains_leading_comments() {
     let text = r"true &&
 // comment
 (3 - 2 == 0)";
-    let root = parse_module(text);
+    let root = parse_module(text, JsParserOptions::default());
     let syntax = root.syntax();
     let node = syntax
         .descendants()
@@ -349,7 +349,7 @@ pub fn node_has_comments() {
     let text = r"true &&
 // comment
 (3 - 2 == 0)";
-    let root = parse_module(text);
+    let root = parse_module(text, JsParserOptions::default());
     let syntax = root.syntax();
     let node = syntax
         .descendants()
@@ -366,7 +366,7 @@ pub fn node_has_comments() {
 fn diagnostics_print_correctly() {
     let text = r"const a";
 
-    let root = parse_module(text);
+    let root = parse_module(text, JsParserOptions::default());
     for diagnostic in root.diagnostics() {
         let mut write = rome_diagnostics::termcolor::Buffer::no_color();
         let error = diagnostic
@@ -396,7 +396,7 @@ class Foo {
     @decorator declare [b]: number;
 }
     "#;
-    let root = parse(code, JsFileSource::ts());
+    let root = parse(code, JsFileSource::ts(), JsParserOptions::default());
     let syntax = root.syntax();
 
     dbg!(syntax, root.diagnostics());

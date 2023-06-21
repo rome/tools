@@ -91,6 +91,9 @@ impl Rule for NoRedundantUseStrict {
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
+        if node.inner_string_text().ok()? != "use strict" {
+            return None;
+        }
         let mut outer_most: Option<AnyJsStrictModeNode> = None;
         let root = ctx.root();
         match root {

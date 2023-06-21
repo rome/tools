@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 100
 expression: valid.js
 ---
 # Input
@@ -7,10 +8,13 @@ expression: valid.js
 /* should not generate diagnostics */
 
 var x = a => (1 ? 2 : 3);
+
+var x = (a) => 1 ? 2 : 3;
+
 var x = (a) => (1 ? 2 : 3);
-var x = (a) => {
-    return 1 ? 2 : 3;
-};
+
+var x = (a) => { return 1 ? 2 : 3; };
+
 var x = a => { return 1 ? 2 : 3; };
 
 ```

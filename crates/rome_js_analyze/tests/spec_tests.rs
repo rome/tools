@@ -1,19 +1,24 @@
 use json_comments::StripComments;
 use rome_analyze::{
-    AnalysisFilter, AnalyzerAction, AnalyzerOptions, ControlFlow, Never, RuleFilter, RuleKey,
+    AnalysisFilter, AnalyzerAction, AnalyzerOptions, ControlFlow, Never, RuleFilter,
 };
 use rome_console::{
     fmt::{Formatter, Termcolor},
     markup, Markup,
 };
+use rome_deserialize::json::deserialize_from_json_str;
 use rome_diagnostics::advice::CodeSuggestionAdvice;
 use rome_diagnostics::termcolor::NoColor;
 use rome_diagnostics::{DiagnosticExt, Error, PrintDiagnostic, Severity};
 use rome_js_parser::{
     parse,
     test_utils::{assert_errors_are_absent, has_bogus_nodes_or_empty_slots},
+    JsParserOptions,
 };
 use rome_js_syntax::{JsFileSource, JsLanguage};
+use rome_service::configuration::to_analyzer_configuration;
+use rome_service::settings::WorkspaceSettings;
+use rome_service::Configuration;
 use similar::TextDiff;
 use std::{
     ffi::OsStr, fmt::Write, fs::read_to_string, os::raw::c_int, path::Path, slice, sync::Once,
@@ -70,6 +75,7 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
                 file_name,
                 input_file,
                 CheckActionType::Lint,
+                JsParserOptions::default(),
             );
         }
 
@@ -86,6 +92,7 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
             file_name,
             input_file,
             CheckActionType::Lint,
+            JsParserOptions::default(),
         )
     };
 
@@ -112,6 +119,7 @@ impl CheckActionType {
     }
 }
 
+#[allow(clippy::too_many_arguments)]
 pub(crate) fn write_analysis_to_snapshot(
     snapshot: &mut String,
     input_code: &str,
@@ -120,30 +128,48 @@ pub(crate) fn write_analysis_to_snapshot(
     file_name: &str,
     input_file: &Path,
     check_action_type: CheckActionType,
+    parser_options: JsParserOptions,
 ) -> usize {
-    let parsed = parse(input_code, source_type);
+    let parsed = parse(input_code, source_type, parser_options.clone());
     let root = parsed.tree();
 
     let mut diagnostics = Vec::new();
     let mut code_fixes = Vec::new();
     let mut options = AnalyzerOptions::default();
-
     // We allow a test file to configure its rule using a special
     // file with the same name as the test but with extension ".options.json"
     // that configures that specific rule.
     let options_file = input_file.with_extension("options.json");
-    if let Ok(json) = std::fs::read_to_string(options_file) {
-        //RuleKey needs 'static string, so we must leak them here
-        let (group, rule) = parse_test_path(input_file);
-        let group = Box::leak(Box::new(group.to_string()));
-        let rule = Box::leak(Box::new(rule.to_string()));
-        let rule_key = RuleKey::new(group, rule);
+    if let Ok(json) = std::fs::read_to_string(options_file.clone()) {
+        let deserialized = deserialize_from_json_str::<Configuration>(json.as_str());
+        if deserialized.has_errors() {
+            diagnostics.extend(
+                deserialized
+                    .into_diagnostics()
+                    .into_iter()
+                    .map(|diagnostic| {
+                        diagnostic_to_string(
+                            options_file.file_stem().unwrap().to_str().unwrap(),
+                            &json,
+                            diagnostic,
+                        )
+                    })
+                    .collect::<Vec<_>>(),
+            );
+            None
+        } else {
+            let configuration = deserialized.into_deserialized();
+            let mut settings = WorkspaceSettings::default();
+            settings.merge_with_configuration(configuration).unwrap();
+            let configuration =
+                to_analyzer_configuration(&settings.linter, &settings.languages, |_| vec![]);
+            options = AnalyzerOptions {
+                configuration,
+                ..AnalyzerOptions::default()
+            };
 
-        options
-            .configuration
-            .rules
-            .push_rule(rule_key, json.clone());
-        Some(json)
+            Some(json)
+        }
     } else {
         None
     };
@@ -153,11 +179,23 @@ pub(crate) fn write_analysis_to_snapshot(
             for action in event.actions() {
                 if check_action_type.is_suppression() {
                     if action.is_suppression() {
-                        check_code_action(input_file, input_code, source_type, &action);
+                        check_code_action(
+                            input_file,
+                            input_code,
+                            source_type,
+                            &action,
+                            parser_options.clone(),
+                        );
                         diag = diag.add_code_suggestion(CodeSuggestionAdvice::from(action));
                     }
                 } else if !action.is_suppression() {
-                    check_code_action(input_file, input_code, source_type, &action);
+                    check_code_action(
+                        input_file,
+                        input_code,
+                        source_type,
+                        &action,
+                        parser_options.clone(),
+                    );
                     diag = diag.add_code_suggestion(CodeSuggestionAdvice::from(action));
                 }
             }
@@ -170,11 +208,23 @@ pub(crate) fn write_analysis_to_snapshot(
         for action in event.actions() {
             if check_action_type.is_suppression() {
                 if action.category.matches("quickfix.suppressRule") {
-                    check_code_action(input_file, input_code, source_type, &action);
+                    check_code_action(
+                        input_file,
+                        input_code,
+                        source_type,
+                        &action,
+                        parser_options.clone(),
+                    );
                     code_fixes.push(code_fix_to_string(input_code, action));
                 }
             } else if !action.category.matches("quickfix.suppressRule") {
-                check_code_action(input_file, input_code, source_type, &action);
+                check_code_action(
+                    input_file,
+                    input_code,
+                    source_type,
+                    &action,
+                    parser_options.clone(),
+                );
                 code_fixes.push(code_fix_to_string(input_code, action));
             }
         }
@@ -253,6 +303,7 @@ fn check_code_action(
     source: &str,
     source_type: JsFileSource,
     action: &AnalyzerAction<JsLanguage>,
+    options: JsParserOptions,
 ) {
     let (_, text_edit) = action.mutation.as_text_edits().unwrap_or_default();
 
@@ -277,7 +328,7 @@ fn check_code_action(
     }
 
     // Re-parse the modified code and panic if the resulting tree has syntax errors
-    let re_parse = parse(&output, source_type);
+    let re_parse = parse(&output, source_type, options);
     assert_errors_are_absent(&re_parse, path);
 }
 
@@ -340,6 +391,7 @@ pub(crate) fn run_suppression_test(input: &'static str, _: &str, _: &str, _: &st
         file_name,
         input_file,
         CheckActionType::Suppression,
+        JsParserOptions::default(),
     );
 
     insta::with_settings!({

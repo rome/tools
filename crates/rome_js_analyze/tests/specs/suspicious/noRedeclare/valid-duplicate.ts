@@ -15,3 +15,6 @@ class A {
 	f(): void {}
 	f(): void {}
 }
+
+let a: { [key: string]: string };
+let b: { [key: string]: string };

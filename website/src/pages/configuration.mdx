@@ -37,6 +37,33 @@ Here's an example:
 
 This configuration file enables the formatter and sets the preferred indent style and width. The linter is disabled.
 
+## Configuration file resolution
+
+Rome uses auto discovery to find the nearest `rome.json` file. It starts looking for `rome.json` in the current
+working directory, and then it starts looking in the parent directories until:
+- it finds a `rome.json` file;
+- it applies Rome's defaults if **no `rome.json` is found**;
+
+Here's an example:
+
+```
+└── app
+    ├── backend
+    │   ├── package.json
+    │   └── rome.json
+    └── frontend
+        ├── legacy
+        │   └── package.json
+        ├── new
+        │   └── package.json
+        └── rome.json
+
+```
+
+- rome commands that run in `app/backend/package.json` will use the configuration file `app/backend/rome.json`;
+- rome commands that run in `app/frontend/legacy/package.json` and `app/frontend/new/package.json`
+will use the configuration file `app/frontend/rome.json`;
+
 ## `$schema`
 
 Allows to pass a path to a JSON schema file.
@@ -331,6 +358,12 @@ These options apply only to JavaScript (and TypeScript) files.
 ### `javascript.formatter.quoteStyle`
 
 The type of quote used when representing string literals. It can be `single` or `double`.
+
+> Default: `double`
+
+### `javascript.formatter.jsxQuoteStyle`
+
+The type of quote used when representing jsx string literals. It can be `single` or `double`.
 
 > Default: `double`
 

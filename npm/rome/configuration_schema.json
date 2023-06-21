@@ -226,13 +226,6 @@
 						{ "type": "null" }
 					]
 				},
-				"noExtraSemicolon": {
-					"description": "Typing mistakes and misunderstandings about where semicolons are required can lead to semicolons that are unnecessary. While not technically an error, extra semicolons can cause confusion when reading code.",
-					"anyOf": [
-						{ "$ref": "#/definitions/RuleConfiguration" },
-						{ "type": "null" }
-					]
-				},
 				"noMultipleSpacesInRegularExpressionLiterals": {
 					"description": "Disallow unclear usage of multiple space characters in regular expression literals",
 					"anyOf": [
@@ -512,6 +505,22 @@
 				}
 			}
 		},
+		"EnumMemberCase": {
+			"description": "Supported cases for TypeScript `enum` member names.",
+			"oneOf": [
+				{
+					"description": "PascalCase",
+					"type": "string",
+					"enum": ["PascalCase"]
+				},
+				{
+					"description": "CONSTANT_CASE",
+					"type": "string",
+					"enum": ["CONSTANT_CASE"]
+				},
+				{ "description": "camelCase", "type": "string", "enum": ["camelCase"] }
+			]
+		},
 		"FilesConfiguration": {
 			"description": "The configuration of the filesystem",
 			"type": "object",
@@ -519,6 +528,10 @@
 				"ignore": {
 					"description": "A list of Unix shell style patterns. Rome tools will ignore files/folders that will match these patterns.",
 					"anyOf": [{ "$ref": "#/definitions/StringSet" }, { "type": "null" }]
+				},
+				"ignoreUnknown": {
+					"description": "Tells Rome to not emit diagnostics when handling files that doesn't know",
+					"type": ["boolean", "null"]
 				},
 				"maxSize": {
 					"description": "The maximum allowed size for source code files in bytes. Files above this limit will be ignored for performance reason. Defaults to 1 MiB",
@@ -567,6 +580,39 @@
 			},
 			"additionalProperties": false
 		},
+		"Hooks": {
+			"type": "object",
+			"required": ["name"],
+			"properties": {
+				"closureIndex": {
+					"description": "The \"position\" of the closure function, starting from zero.\n\n### Example",
+					"type": ["integer", "null"],
+					"format": "uint",
+					"minimum": 0.0
+				},
+				"dependenciesIndex": {
+					"description": "The \"position\" of the array of dependencies, starting from zero.",
+					"type": ["integer", "null"],
+					"format": "uint",
+					"minimum": 0.0
+				},
+				"name": { "description": "The name of the hook", "type": "string" }
+			},
+			"additionalProperties": false
+		},
+		"HooksOptions": {
+			"description": "Options for the rule `useExhaustiveDependencies` and `useHookAtTopLevel`",
+			"type": "object",
+			"required": ["hooks"],
+			"properties": {
+				"hooks": {
+					"description": "List of safe hooks",
+					"type": "array",
+					"items": { "$ref": "#/definitions/Hooks" }
+				}
+			},
+			"additionalProperties": false
+		},
 		"JavascriptConfiguration": {
 			"type": "object",
 			"properties": {
@@ -585,6 +631,12 @@
 						{ "$ref": "#/definitions/JavascriptOrganizeImports" },
 						{ "type": "null" }
 					]
+				},
+				"parser": {
+					"anyOf": [
+						{ "$ref": "#/definitions/JavascriptParser" },
+						{ "type": "null" }
+					]
 				}
 			},
 			"additionalProperties": false
@@ -592,9 +644,12 @@
 		"JavascriptFormatter": {
 			"type": "object",
 			"properties": {
+				"jsxQuoteStyle": {
+					"description": "The style for JSX quotes. Defaults to double.",
+					"anyOf": [{ "$ref": "#/definitions/QuoteStyle" }, { "type": "null" }]
+				},
 				"quoteProperties": {
 					"description": "When properties in objects are quoted. Defaults to asNeeded.",
-					"default": null,
 					"anyOf": [
 						{ "$ref": "#/definitions/QuoteProperties" },
 						{ "type": "null" }
@@ -602,17 +657,14 @@
 				},
 				"quoteStyle": {
 					"description": "The style for quotes. Defaults to double.",
-					"default": null,
 					"anyOf": [{ "$ref": "#/definitions/QuoteStyle" }, { "type": "null" }]
 				},
 				"semicolons": {
 					"description": "Whether the formatter prints semicolons for all statements or only in for statements where it is necessary because of ASI.",
-					"default": null,
 					"anyOf": [{ "$ref": "#/definitions/Semicolons" }, { "type": "null" }]
 				},
 				"trailingComma": {
 					"description": "Print trailing commas wherever possible in multi-line comma-separated syntactic structures. Defaults to \"all\".",
-					"default": null,
 					"anyOf": [
 						{ "$ref": "#/definitions/TrailingComma" },
 						{ "type": "null" }
@@ -623,6 +675,16 @@
 		},
 		"JavascriptOrganizeImports": {
 			"type": "object",
+			"additionalProperties": false
+		},
+		"JavascriptParser": {
+			"type": "object",
+			"properties": {
+				"unsafeParameterDecoratorsEnabled": {
+					"description": "It enables the experimental and unsafe parsing of parameter decorators\n\nThese decorators belong to an old proposal, and they are subject to change.",
+					"type": ["boolean", "null"]
+				}
+			},
 			"additionalProperties": false
 		},
 		"LineWidth": {
@@ -647,6 +709,21 @@
 					"description": "List of rules",
 					"default": { "recommended": true },
 					"anyOf": [{ "$ref": "#/definitions/Rules" }, { "type": "null" }]
+				}
+			},
+			"additionalProperties": false
+		},
+		"NamingConventionOptions": {
+			"description": "Rule's options.",
+			"type": "object",
+			"properties": {
+				"enumMemberCase": {
+					"description": "Allowed cases for _TypeScript_ `enum` member names.",
+					"allOf": [{ "$ref": "#/definitions/EnumMemberCase" }]
+				},
+				"strictCase": {
+					"description": "If `false`, then consecutive uppercase are allowed in _camel_ and _pascal_ cases. This does not affect other [Case].",
+					"type": "boolean"
 				}
 			},
 			"additionalProperties": false
@@ -736,6 +813,13 @@
 						{ "type": "null" }
 					]
 				},
+				"noStaticOnlyClass": {
+					"description": "This rule reports when a class has no non-static members, such as for a class used exclusively as a static namespace.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"recommended": {
 					"description": "It enables the recommended rules for this group",
 					"type": ["boolean", "null"]
@@ -803,6 +887,13 @@
 						{ "type": "null" }
 					]
 				},
+				"useNamingConvention": {
+					"description": "Enforce naming conventions for everything across a codebase.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"useSimpleNumberKeys": {
 					"description": "Disallow number literal object member names which are not base10 or uses underscore as separator",
 					"anyOf": [
@@ -854,6 +945,19 @@
 				{ "description": "Space", "type": "string", "enum": ["space"] }
 			]
 		},
+		"PossibleOptions": {
+			"anyOf": [
+				{
+					"description": "Options for `useExhaustiveDependencies` and `useHookAtTopLevel` rule",
+					"allOf": [{ "$ref": "#/definitions/HooksOptions" }]
+				},
+				{
+					"description": "Options for `useNamingConvention` rule",
+					"allOf": [{ "$ref": "#/definitions/NamingConventionOptions" }]
+				},
+				{ "description": "No options available", "type": "null" }
+			]
+		},
 		"QuoteProperties": { "type": "string", "enum": ["asNeeded", "preserve"] },
 		"QuoteStyle": { "type": "string", "enum": ["double", "single"] },
 		"RuleConfiguration": {
@@ -868,10 +972,15 @@
 		},
 		"RuleWithOptions": {
 			"type": "object",
-			"required": ["level", "options"],
+			"required": ["level"],
 			"properties": {
 				"level": { "$ref": "#/definitions/RulePlainConfiguration" },
-				"options": true
+				"options": {
+					"anyOf": [
+						{ "$ref": "#/definitions/PossibleOptions" },
+						{ "type": "null" }
+					]
+				}
 			},
 			"additionalProperties": false
 		},
@@ -1065,7 +1174,7 @@
 					]
 				},
 				"useDefaultParameterLast": {
-					"description": "Enforce default function parameters and optional parameters to be last.",
+					"description": "Enforce default function parameters and optional function parameters to be last.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }

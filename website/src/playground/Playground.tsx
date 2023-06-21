@@ -7,15 +7,15 @@ import ControlFlowTab from "./tabs/ControlFlowTab";
 import DiagnosticsConsoleTab from "./tabs/DiagnosticsConsoleTab";
 import DiagnosticsListTab from "./tabs/DiagnosticsListTab";
 import FormatterCodeTab from "./tabs/FormatterCodeTab";
-import FormatterIRTab from "./tabs/FormatterIRTab";
+import FormatterIrTab from "./tabs/FormatterIrTab";
 import SettingsTab from "./tabs/SettingsTab";
 import SyntaxTab from "./tabs/SyntaxTab";
 import type { PlaygroundProps, RomeAstSyntacticData } from "./types";
 import {
 	getCurrentCode,
 	getFileState,
-	isJSONFilename,
-	isJSXFilename,
+	isJsonFilename,
+	isJsxFilename,
 	isTypeScriptFilename,
 	useWindowSize,
 } from "./utils";
@@ -25,7 +25,7 @@ import { EditorSelection } from "@codemirror/state";
 import type { ViewUpdate } from "@codemirror/view";
 import ImportSortingTab from "@src/playground/tabs/ImportSortingTab";
 import type { ReactCodeMirrorRef } from "@uiw/react-codemirror";
-import * as codeMirrorLangRomeAST from "codemirror-lang-rome-ast";
+import * as codeMirrorLangRomeAst from "codemirror-lang-rome-ast";
 import {
 	createRef,
 	useCallback,
@@ -49,12 +49,12 @@ export default function PlaygroundLoader({
 	const prettierOutput = file.prettier;
 
 	const codeMirrorExtensions = useMemo(() => {
-		if (isJSONFilename(playgroundState.currentFile)) {
+		if (isJsonFilename(playgroundState.currentFile)) {
 			return [json()];
 		} else {
 			return [
 				javascript({
-					jsx: isJSXFilename(playgroundState.currentFile),
+					jsx: isJsxFilename(playgroundState.currentFile),
 					typescript: isTypeScriptFilename(playgroundState.currentFile),
 				}),
 			];
@@ -69,19 +69,22 @@ export default function PlaygroundLoader({
 		if (clipboardStatus !== "normal") {
 			setClipboardStatus("normal");
 		}
-	}, [romeOutput.formatter.ir]);
+	}, [clipboardStatus]);
 
-	const onUpdate = useCallback((viewUpdate: ViewUpdate) => {
-		const cursorPosition = viewUpdate.state.selection.ranges[0]?.from ?? 0;
-		setPlaygroundState((state) =>
-			state.cursorPosition !== cursorPosition
-				? {
-						...state,
-						cursorPosition,
-				  }
-				: state,
-		);
-	}, []);
+	const onUpdate = useCallback(
+		(viewUpdate: ViewUpdate) => {
+			const cursorPosition = viewUpdate.state.selection.ranges[0]?.from ?? 0;
+			setPlaygroundState((state) =>
+				state.cursorPosition !== cursorPosition
+					? {
+							...state,
+							cursorPosition,
+					  }
+					: state,
+			);
+		},
+		[setPlaygroundState],
+	);
 
 	useEffect(() => {
 		scrollAstNodeIntoView(playgroundState.cursorPosition);
@@ -90,7 +93,7 @@ export default function PlaygroundLoader({
 	// We update the syntactic data of `RomeJsAst` only AstSource(`Display` string of our original AstRepresentation) changed.
 	useEffect(() => {
 		const ast = romeOutput.syntax.ast;
-		const tree = codeMirrorLangRomeAST.parser.parse(ast);
+		const tree = codeMirrorLangRomeAst.parser.parse(ast);
 		const rangeMap = new Map();
 		romeAstSyntacticDataRef.current = {
 			ast: tree,
@@ -125,18 +128,21 @@ export default function PlaygroundLoader({
 		});
 	}, [romeOutput.syntax.ast]);
 
-	const onChange = useCallback((value: string) => {
-		setPlaygroundState((state) => ({
-			...state,
-			files: {
-				...state.files,
-				[state.currentFile]: {
-					...getFileState(state, state.currentFile),
-					content: value,
+	const onChange = useCallback(
+		(value: string) => {
+			setPlaygroundState((state) => ({
+				...state,
+				files: {
+					...state.files,
+					[state.currentFile]: {
+						...getFileState(state, state.currentFile),
+						content: value,
+					},
 				},
-			},
-		}));
-	}, []);
+			}));
+		},
+		[setPlaygroundState],
+	);
 
 	const { width } = useWindowSize();
 	const hasNarrowViewport = width !== undefined && width <= 1000;
@@ -196,7 +202,7 @@ export default function PlaygroundLoader({
 					key: "formatter-ir",
 					title: "Formatter IR",
 					children: (
-						<FormatterIRTab
+						<FormatterIrTab
 							rome={romeOutput.formatter.ir}
 							prettier={prettierOutput}
 						/>

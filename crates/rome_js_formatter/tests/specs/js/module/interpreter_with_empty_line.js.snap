@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: js/module/interpreter_with_empty_line.js
+info: js/module/interpreter_with_empty_line.js
 ---
 
 # Input
@@ -24,6 +23,7 @@ console.log(1)
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 Semicolons: Always

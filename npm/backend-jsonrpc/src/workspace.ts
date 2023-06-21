@@ -61,6 +61,10 @@ export interface FilesConfiguration {
 	 */
 	ignore?: StringSet;
 	/**
+	 * Tells Rome to not emit diagnostics when handling files that doesn't know
+	 */
+	ignoreUnknown?: boolean;
+	/**
 	 * The maximum allowed size for source code files in bytes. Files above this limit will be ignored for performance reason. Defaults to 1 MiB
 	 */
 	maxSize?: number;
@@ -100,6 +104,7 @@ If defined here, they should not emit diagnostics.
 	 */
 	globals?: StringSet;
 	organize_imports?: JavascriptOrganizeImports;
+	parser?: JavascriptParser;
 }
 export interface LinterConfiguration {
 	/**
@@ -158,6 +163,10 @@ The allowed range of values is 1..=320
 export type LineWidth = number;
 export interface JavascriptFormatter {
 	/**
+	 * The style for JSX quotes. Defaults to double.
+	 */
+	jsxQuoteStyle?: QuoteStyle;
+	/**
 	 * When properties in objects are quoted. Defaults to asNeeded.
 	 */
 	quoteProperties?: QuoteProperties;
@@ -175,6 +184,14 @@ export interface JavascriptFormatter {
 	trailingComma?: TrailingComma;
 }
 export interface JavascriptOrganizeImports {}
+export interface JavascriptParser {
+	/**
+	* It enables the experimental and unsafe parsing of parameter decorators
+
+These decorators belong to an old proposal, and they are subject to change. 
+	 */
+	unsafeParameterDecoratorsEnabled?: boolean;
+}
 export interface Rules {
 	a11y?: A11y;
 	/**
@@ -194,8 +211,8 @@ export interface Rules {
 	suspicious?: Suspicious;
 }
 export type VcsClientKind = "git";
-export type QuoteProperties = "asNeeded" | "preserve";
 export type QuoteStyle = "double" | "single";
+export type QuoteProperties = "asNeeded" | "preserve";
 export type Semicolons = "always" | "asNeeded";
 /**
  * Print trailing commas wherever possible in multi-line comma-separated syntactic structures.
@@ -310,10 +327,6 @@ export interface Complexity {
 	 * Disallow unnecessary boolean casts
 	 */
 	noExtraBooleanCast?: RuleConfiguration;
-	/**
-	 * Typing mistakes and misunderstandings about where semicolons are required can lead to semicolons that are unnecessary. While not technically an error, extra semicolons can cause confusion when reading code.
-	 */
-	noExtraSemicolon?: RuleConfiguration;
 	/**
 	 * Disallow unclear usage of multiple space characters in regular expression literals
 	 */
@@ -533,6 +546,10 @@ export interface Nursery {
 	 */
 	noSelfAssign?: RuleConfiguration;
 	/**
+	 * This rule reports when a class has no non-static members, such as for a class used exclusively as a static namespace.
+	 */
+	noStaticOnlyClass?: RuleConfiguration;
+	/**
 	 * It enables the recommended rules for this group
 	 */
 	recommended?: boolean;
@@ -572,6 +589,10 @@ export interface Nursery {
 	 * Enforce the usage of a literal access to properties over computed property access.
 	 */
 	useLiteralKeys?: RuleConfiguration;
+	/**
+	 * Enforce naming conventions for everything across a codebase.
+	 */
+	useNamingConvention?: RuleConfiguration;
 	/**
 	 * Disallow number literal object member names which are not base10 or uses underscore as separator
 	 */
@@ -688,7 +709,7 @@ export interface Style {
 	 */
 	useConst?: RuleConfiguration;
 	/**
-	 * Enforce default function parameters and optional parameters to be last.
+	 * Enforce default function parameters and optional function parameters to be last.
 	 */
 	useDefaultParameterLast?: RuleConfiguration;
 	/**
@@ -873,8 +894,51 @@ export type RuleConfiguration = RulePlainConfiguration | RuleWithOptions;
 export type RulePlainConfiguration = "warn" | "error" | "off";
 export interface RuleWithOptions {
 	level: RulePlainConfiguration;
-	options: any;
+	options?: PossibleOptions;
 }
+export type PossibleOptions = HooksOptions | NamingConventionOptions | null;
+/**
+ * Options for the rule `useExhaustiveDependencies` and `useHookAtTopLevel`
+ */
+export interface HooksOptions {
+	/**
+	 * List of safe hooks
+	 */
+	hooks: Hooks[];
+}
+/**
+ * Rule's options.
+ */
+export interface NamingConventionOptions {
+	/**
+	 * Allowed cases for _TypeScript_ `enum` member names.
+	 */
+	enumMemberCase: EnumMemberCase;
+	/**
+	 * If `false`, then consecutive uppercase are allowed in _camel_ and _pascal_ cases. This does not affect other [Case].
+	 */
+	strictCase: boolean;
+}
+export interface Hooks {
+	/**
+	* The "position" of the closure function, starting from zero.
+
+### Example 
+	 */
+	closureIndex?: number;
+	/**
+	 * The "position" of the array of dependencies, starting from zero.
+	 */
+	dependenciesIndex?: number;
+	/**
+	 * The name of the hook
+	 */
+	name: string;
+}
+/**
+ * Supported cases for TypeScript `enum` member names.
+ */
+export type EnumMemberCase = "PascalCase" | "CONSTANT_CASE" | "camelCase";
 export interface OpenFileParams {
 	content: string;
 	language_hint?: Language;
@@ -978,7 +1042,6 @@ export type Category =
 	| "lint/a11y/useValidAriaProps"
 	| "lint/a11y/useValidLang"
 	| "lint/complexity/noExtraBooleanCast"
-	| "lint/complexity/noExtraSemicolon"
 	| "lint/complexity/noMultipleSpacesInRegularExpressionLiterals"
 	| "lint/complexity/noUselessCatch"
 	| "lint/complexity/noUselessConstructor"
@@ -1037,6 +1100,8 @@ export type Category =
 	| "lint/nursery/useLiteralEnumMembers"
 	| "lint/nursery/useLiteralKeys"
 	| "lint/nursery/useSimpleNumberKeys"
+	| "lint/nursery/noStaticOnlyClass"
+	| "lint/nursery/useNamingConvention"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"

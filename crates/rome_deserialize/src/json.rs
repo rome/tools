@@ -151,6 +151,46 @@ pub trait VisitJsonNode: VisitNode<JsonLanguage> {
         }
     }
 
+    /// It attempts to map a [AnyJsonValue] to a [usize].
+    ///
+    /// ## Errors
+    ///
+    /// It will fail if:
+    /// - `value` can't be cast to [JsonNumberValue]
+    /// - the value of the node can't be parsed to [usize]
+    fn map_to_usize(
+        &self,
+        value: &AnyJsonValue,
+        name: &str,
+        maximum: usize,
+        diagnostics: &mut Vec<DeserializationDiagnostic>,
+    ) -> Option<usize> {
+        let value = JsonNumberValue::cast_ref(value.syntax()).or_else(|| {
+            diagnostics.push(DeserializationDiagnostic::new_incorrect_type_for_value(
+                name,
+                "number",
+                value.range(),
+            ));
+            None
+        })?;
+        let value = value.value_token().ok()?;
+        let result = value.text_trimmed().parse::<usize>().map_err(|err| {
+            emit_diagnostic_form_number(
+                err,
+                value.text_trimmed(),
+                value.text_trimmed_range(),
+                maximum,
+            )
+        });
+        match result {
+            Ok(number) => Some(number),
+            Err(err) => {
+                diagnostics.push(err);
+                None
+            }
+        }
+    }
+
     /// It attempts to map a [AnyJsonValue] to a [u16].
     ///
     /// ## Errors
@@ -339,6 +379,35 @@ pub trait VisitJsonNode: VisitNode<JsonLanguage> {
                 diagnostics,
             )?;
         }
+        Some(())
+    }
+
+    fn map_to_array<V>(
+        &mut self,
+        value: &AnyJsonValue,
+        name: &str,
+        visitor: &mut V,
+        diagnostics: &mut Vec<DeserializationDiagnostic>,
+    ) -> Option<()>
+    where
+        V: VisitNode<JsonLanguage>,
+    {
+        let array = JsonArrayValue::cast_ref(value.syntax()).or_else(|| {
+            diagnostics.push(DeserializationDiagnostic::new_incorrect_type_for_value(
+                name,
+                "array",
+                value.range(),
+            ));
+            None
+        })?;
+        if array.elements().is_empty() {
+            return None;
+        }
+        for element in array.elements() {
+            let element = element.ok()?;
+            visitor.visit_array_member(element.syntax(), diagnostics);
+        }
+
         Some(())
     }
 }

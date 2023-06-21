@@ -1,11 +1,11 @@
+use super::use_exhaustive_dependencies::ReactExtensiveDependenciesOptions;
+use crate::semantic_analyzers::nursery::use_exhaustive_dependencies::HooksOptions;
 use crate::{react::hooks::react_hook_configuration, semantic_services::Semantic};
 use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_semantic::CallsExtensions;
 use rome_js_syntax::{AnyJsFunction, JsCallExpression, JsFunctionBody, JsSyntaxKind, TextRange};
 use rome_rowan::AstNode;
-
-use super::use_exhaustive_dependencies::{HooksOptions, ReactExtensiveDependenciesOptions};
 
 declare_rule! {
     /// Enforce that all React hooks are being called from the Top Level
@@ -30,6 +30,31 @@ declare_rule! {
     /// ```js
     /// function Component1() {
     ///     useEffect();
+    /// }
+    /// ```
+    ///
+    /// ## Options
+    ///
+    /// Allows to specify custom hooks - from libraries or internal projects - that can be considered stable.
+    ///
+    /// ```json
+    /// {
+    ///     "//": "...",
+    ///     "options": {
+    ///         "hooks": [
+    ///             { "name": "useLocation", "closureIndex": 0, "dependenciesIndex": 1},
+    ///             { "name": "useQuery", "closureIndex": 1, "dependenciesIndex": 0}
+    ///         ]
+    ///     }
+    /// }
+    /// ```
+    ///
+    /// Given the previous example, your hooks be used like this:
+    ///
+    /// ```js
+    /// function Foo() {
+    ///     const location = useLocation(() => {}, []);
+    ///     const query = useQuery([], () => {});
     /// }
     /// ```
     ///

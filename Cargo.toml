@@ -70,3 +70,18 @@ rome_json_factory = { version = "0.0.1", path = "./crates/rome_json_factory" }
 tests_macros = { path = "./crates/tests_macros" }
 rome_formatter_test = { path = "./crates/rome_formatter_test" }
 rome_js_analyze  = { path = "./crates/rome_js_analyze" }
+schemars = { version = "0.8.10" }
+smallvec = { version = "1.8.0", features = ["union", "const_new"] }
+
+
+[profile.dev.package.rome_wasm]
+opt-level = 1
+debug = true
+
+[profile.test.package.rome_wasm]
+opt-level = 1
+debug = true
+
+[profile.release.package.rome_wasm]
+opt-level = 3
+debug = false

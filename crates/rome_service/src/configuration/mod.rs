@@ -244,10 +244,15 @@ pub struct FilesConfiguration {
     #[serde(skip_serializing_if = "Option::is_none")]
     #[bpaf(hide)]
     pub ignore: Option<StringSet>,
+
+    /// Tells Rome to not emit diagnostics when handling files that doesn't know
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(long("files-ignore-unknown"), argument("true|false"), optional)]
+    pub ignore_unknown: Option<bool>,
 }
 
 impl FilesConfiguration {
-    const KNOWN_KEYS: &'static [&'static str] = &["maxSize", "ignore"];
+    const KNOWN_KEYS: &'static [&'static str] = &["maxSize", "ignore", "ignoreUnknown"];
 }
 
 impl MergeWith<FilesConfiguration> for FilesConfiguration {
@@ -257,6 +262,9 @@ impl MergeWith<FilesConfiguration> for FilesConfiguration {
         }
         if let Some(max_size) = other.max_size {
             self.max_size = Some(max_size)
+        }
+        if let Some(ignore_unknown) = other.ignore_unknown {
+            self.ignore_unknown = Some(ignore_unknown)
         }
     }
 }

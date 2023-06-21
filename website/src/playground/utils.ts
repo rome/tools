@@ -120,11 +120,11 @@ export function getFileState(
 }
 
 export function createPlaygroundSettingsSetter<
-	Key extends keyof PlaygroundSettings,
+	K extends keyof PlaygroundSettings,
 >(
 	setPlaygroundState: Dispatch<SetStateAction<PlaygroundState>>,
-	field: Key,
-): (value: PlaygroundSettings[Key]) => void {
+	field: K,
+): (value: PlaygroundSettings[K]) => void {
 	return function (param: PlaygroundSettings[typeof field]) {
 		setPlaygroundState((state) => {
 			return {
@@ -204,7 +204,7 @@ export function isTypeScriptFilename(filename: string): boolean {
 	);
 }
 
-export function isJSXFilename(filename: string): boolean {
+export function isJsxFilename(filename: string): boolean {
 	return filename.endsWith(".tsx") || filename.endsWith(".jsx");
 }
 
@@ -222,7 +222,7 @@ export function isModuleFilename(filename: string): boolean {
 	);
 }
 
-export function isJSONFilename(filename: string): boolean {
+export function isJsonFilename(filename: string): boolean {
 	return filename.endsWith(".json");
 }
 
@@ -270,8 +270,8 @@ export function isValidExtension(filename: string): boolean {
 		isScriptFilename(filename) ||
 		isModuleFilename(filename) ||
 		isTypeScriptFilename(filename) ||
-		isJSXFilename(filename) ||
-		isJSONFilename(filename)
+		isJsxFilename(filename) ||
+		isJsonFilename(filename)
 	);
 }
 

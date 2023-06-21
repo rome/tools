@@ -1,9 +1,11 @@
+use crate::react::{is_react_call_api, ReactLibrary};
 use std::collections::{HashMap, HashSet};
 
-use rome_js_semantic::{Capture, ClosureExtensions, SemanticModel};
+use rome_js_semantic::{Capture, Closure, ClosureExtensions, SemanticModel};
 use rome_js_syntax::{
     binding_ext::AnyJsIdentifierBinding, AnyJsExpression, JsArrayBindingPattern,
-    JsArrayBindingPatternElementList, JsCallExpression, JsVariableDeclarator, TextRange,
+    JsArrayBindingPatternElementList, JsArrowFunctionExpression, JsCallExpression,
+    JsFunctionExpression, JsVariableDeclarator, TextRange,
 };
 use rome_rowan::AstNode;
 use serde::{Deserialize, Serialize};
@@ -15,15 +17,45 @@ pub(crate) struct ReactCallWithDependencyResult {
     pub(crate) dependencies_node: Option<AnyJsExpression>,
 }
 
+pub enum AnyJsFunctionExpression {
+    JsArrowFunctionExpression(JsArrowFunctionExpression),
+    JsFunctionExpression(JsFunctionExpression),
+}
+
+impl AnyJsFunctionExpression {
+    fn closure(&self, model: &SemanticModel) -> Closure {
+        match self {
+            Self::JsArrowFunctionExpression(arrow_function) => arrow_function.closure(model),
+            Self::JsFunctionExpression(function) => function.closure(model),
+        }
+    }
+}
+
+impl TryFrom<AnyJsExpression> for AnyJsFunctionExpression {
+    type Error = ();
+
+    fn try_from(expression: AnyJsExpression) -> Result<Self, Self::Error> {
+        match expression {
+            AnyJsExpression::JsArrowFunctionExpression(arrow_function) => {
+                Ok(Self::JsArrowFunctionExpression(arrow_function))
+            }
+            AnyJsExpression::JsFunctionExpression(function) => {
+                Ok(Self::JsFunctionExpression(function))
+            }
+            _ => Err(()),
+        }
+    }
+}
+
 impl ReactCallWithDependencyResult {
     /// Returns all [Reference] captured by the closure argument of the React hook.
     /// See [react_hook_with_dependency].
     pub fn all_captures(&self, model: &SemanticModel) -> impl Iterator<Item = Capture> {
         self.closure_node
             .as_ref()
-            .and_then(|node| node.as_js_arrow_function_expression())
-            .map(|arrow_function| {
-                let closure = arrow_function.closure(model);
+            .and_then(|node| AnyJsFunctionExpression::try_from(node.clone()).ok())
+            .map(|function_expression| {
+                let closure = function_expression.closure(model);
                 let range = *closure.closure_range();
                 closure
                     .descendents()
@@ -78,6 +110,15 @@ pub(crate) fn react_hook_configuration<'a>(
     hooks.get(name)
 }
 
+const HOOKS_WITH_DEPS_API: [&str; 6] = [
+    "useEffect",
+    "useLayoutEffect",
+    "useInsertionEffect",
+    "useCallback",
+    "useMemo",
+    "useImperativeHandle",
+];
+
 /// Returns the [TextRange] of the hook name; the node of the
 /// expression of the argument that correspond to the closure of
 /// the hook; and the node of the dependency list of the hook.
@@ -95,17 +136,27 @@ pub(crate) fn react_hook_configuration<'a>(
 pub(crate) fn react_hook_with_dependency(
     call: &JsCallExpression,
     hooks: &HashMap<String, ReactHookConfiguration>,
+    model: &SemanticModel,
 ) -> Option<ReactCallWithDependencyResult> {
-    let name = call
-        .callee()
-        .ok()?
-        .as_js_identifier_expression()?
-        .name()
-        .ok()?
-        .value_token()
-        .ok()?;
+    let expression = call.callee().ok()?;
+    let name = match &expression {
+        AnyJsExpression::JsIdentifierExpression(identifier) => {
+            Some(identifier.name().ok()?.value_token().ok()?)
+        }
+        AnyJsExpression::JsStaticMemberExpression(member) => {
+            Some(member.member().ok()?.as_js_name()?.value_token().ok()?)
+        }
+        _ => None,
+    }?;
     let function_name_range = name.text_trimmed_range();
     let name = name.text_trimmed();
+
+    // check if the hooks api is imported from the react library
+    if HOOKS_WITH_DEPS_API.contains(&name)
+        && !is_react_call_api(expression, model, ReactLibrary::React, name)
+    {
+        return None;
+    }
 
     let hook = hooks.get(name)?;
     let closure_index = hook.closure_index?;
@@ -208,11 +259,16 @@ pub fn is_binding_react_stable(
 #[cfg(test)]
 mod test {
     use super::*;
+    use rome_js_parser::JsParserOptions;
     use rome_js_syntax::JsFileSource;
 
     #[test]
     pub fn ok_react_stable_captures() {
-        let r = rome_js_parser::parse("const ref = useRef();", JsFileSource::js_module());
+        let r = rome_js_parser::parse(
+            "const ref = useRef();",
+            JsFileSource::js_module(),
+            JsParserOptions::default(),
+        );
         let node = r
             .syntax()
             .descendants()

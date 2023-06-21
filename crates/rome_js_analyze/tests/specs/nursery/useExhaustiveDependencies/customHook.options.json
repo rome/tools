@@ -1,9 +1,21 @@
 {
-    "hooks": [
-        [
-            "useMyEffect",
-            0,
-            1
-        ]
-    ]
+	"$schema": "../../../../../../npm/rome/configuration_schema.json",
+	"linter": {
+		"rules": {
+			"nursery": {
+				"useExhaustiveDependencies": {
+					"level": "error",
+					"options": {
+						"hooks": [
+							{
+								"name": "useMyEffect",
+								"closureIndex": 0,
+								"dependenciesIndex": 1
+							}
+						]
+					}
+				}
+			}
+		}
+	}
 }

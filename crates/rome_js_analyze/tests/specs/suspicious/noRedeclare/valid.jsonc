@@ -10,5 +10,6 @@
 	"class C { static { function a(){} } static { function a(){} } }",
 	"class C { static { var a; { let a; } } }",
 	"class C { static { let a; { let a; } } }",
-	"class C { static { { let a; } { let a; } } }"
+	"class C { static { { let a; } { let a; } } }",
+  "interface A { [index: string]: string; [index: number]: string; }"
 ]

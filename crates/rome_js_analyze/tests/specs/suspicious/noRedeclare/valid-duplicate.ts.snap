@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 91
 expression: valid-duplicate.ts
 ---
 # Input
@@ -22,6 +21,9 @@ class A {
 	f(): void {}
 	f(): void {}
 }
+
+let a: { [key: string]: string };
+let b: { [key: string]: string };
 
 ```
 

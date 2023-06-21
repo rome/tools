@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: js/module/import/trailing-comma/import_trailing_comma.js
+info: js/module/import/trailing-comma/import_trailing_comma.js
 ---
 
 # Input
@@ -51,6 +50,7 @@ wrap(import(/* Hello */ "something"));
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 Semicolons: Always
@@ -105,6 +105,7 @@ wrap(import(/* Hello */ "something"));
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: ES5
 Semicolons: Always
@@ -159,6 +160,7 @@ wrap(import(/* Hello */ "something"));
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: None
 Semicolons: Always

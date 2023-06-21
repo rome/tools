@@ -5,7 +5,7 @@ use rome_diagnostics::console::markup;
 use rome_diagnostics::termcolor::Buffer;
 use rome_diagnostics::Error;
 use rome_diagnostics::PrintDiagnostic;
-use rome_js_parser::{parse, Parse};
+use rome_js_parser::{parse, JsParserOptions, Parse};
 use rome_js_syntax::{AnyJsRoot, JsFileSource, JsSyntaxNode};
 use rome_rowan::SyntaxKind;
 use std::fmt::Debug;
@@ -78,11 +78,13 @@ pub(crate) struct TestCaseFile {
 
     /// The source type used to parse the file
     source_type: JsFileSource,
+
+    options: JsParserOptions,
 }
 
 impl TestCaseFile {
     pub(crate) fn parse(&self) -> Parse<AnyJsRoot> {
-        parse(&self.code, self.source_type)
+        parse(&self.code, self.source_type, self.options.clone())
     }
 
     pub(crate) fn name(&self) -> &str {
@@ -109,12 +111,18 @@ pub(crate) struct TestCaseFiles {
 }
 
 impl TestCaseFiles {
-    pub(crate) fn single(name: String, code: String, source_type: JsFileSource) -> Self {
+    pub(crate) fn single(
+        name: String,
+        code: String,
+        source_type: JsFileSource,
+        options: JsParserOptions,
+    ) -> Self {
         Self {
             files: vec![TestCaseFile {
                 name,
                 code,
                 source_type,
+                options,
             }],
         }
     }
@@ -123,11 +131,18 @@ impl TestCaseFiles {
         Self { files: vec![] }
     }
 
-    pub(crate) fn add(&mut self, name: String, code: String, source_type: JsFileSource) {
+    pub(crate) fn add(
+        &mut self,
+        name: String,
+        code: String,
+        source_type: JsFileSource,
+        options: JsParserOptions,
+    ) {
         self.files.push(TestCaseFile {
             name,
             code,
             source_type,
+            options,
         })
     }
 

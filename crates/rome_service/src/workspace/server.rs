@@ -75,13 +75,17 @@ impl WorkspaceServer {
 
     /// Get the supported capabilities for a given file path
     fn get_capabilities(&self, path: &RomePath) -> Capabilities {
-        let language = self
-            .documents
-            .get(path)
-            .map(|doc| doc.language_hint)
-            .unwrap_or_default();
+        let language = self.get_language(path);
 
         self.features.get_capabilities(path, language)
+    }
+
+    /// Retrieves the supported language of a file
+    fn get_language(&self, path: &RomePath) -> Language {
+        self.documents
+            .get(path)
+            .map(|doc| doc.language_hint)
+            .unwrap_or_default()
     }
 
     /// Return an error factory function for unsupported features at a given path
@@ -176,10 +180,12 @@ impl WorkspaceServer {
                     ));
                 }
 
+                let settings = self.settings();
                 let parsed = parse(
                     rome_path,
                     document.language_hint,
                     document.content.as_str(),
+                    settings,
                     &mut document.node_cache,
                 );
 
@@ -199,6 +205,13 @@ impl Workspace for WorkspaceServer {
         let mut file_features = FileFeaturesResult::new()
             .with_capabilities(&capabilities)
             .with_settings(&settings);
+
+        if settings.files.ignore_unknown {
+            let language = self.get_language(&params.path);
+            if language == Language::Unknown {
+                file_features.ignore_not_supported();
+            }
+        }
 
         for feature in params.feature {
             let is_ignored = self.is_path_ignored(IsPathIgnoredParams {

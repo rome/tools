@@ -34,7 +34,6 @@ define_categories! {
 
     // complexity
     "lint/complexity/noExtraBooleanCast": "https://docs.rome.tools/lint/rules/noExtraBooleanCast",
-    "lint/complexity/noExtraSemicolon": "https://docs.rome.tools/lint/rules/noExtraSemicolon",
     "lint/complexity/noMultipleSpacesInRegularExpressionLiterals": "https://docs.rome.tools/lint/rules/noMultipleSpacesInRegularExpressionLiterals",
     "lint/complexity/noUselessCatch": "https://docs.rome.tools/lint/rules/noUselessCatch",
     "lint/complexity/noUselessConstructor": "https://docs.rome.tools/lint/rules/noUselessConstructor",
@@ -96,7 +95,9 @@ define_categories! {
     "lint/nursery/useIsNan": "https://docs.rome.tools/lint/rules/useIsNan",
     "lint/nursery/useLiteralEnumMembers": "https://docs.rome.tools/lint/rules/useLiteralEnumMembers",
     "lint/nursery/useLiteralKeys": "https://docs.rome.tools/lint/rules/useLiteralKeys",
-"lint/nursery/useSimpleNumberKeys": "https://docs.rome.tools/lint/rules/useSimpleNumberKeys",
+    "lint/nursery/useSimpleNumberKeys": "https://docs.rome.tools/lint/rules/useSimpleNumberKeys",
+    "lint/nursery/noStaticOnlyClass": "https://docs.rome.tools/lint/rules/noStaticOnlyClass",
+    "lint/nursery/useNamingConvention": "https://docs.rome.tools/lint/rules/useNamingConvention",
     // Insert new nursery rule here
 
 

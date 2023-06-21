@@ -12,8 +12,6 @@ license.workspace = true
 rome_rowan = { workspace = true }
 rome_console = { workspace = true }
 rome_diagnostics = { workspace = true }
-rome_json_parser = { workspace = true }
-rome_deserialize = { workspace = true}
 bitflags.workspace = true
 rustc-hash = { workspace = true }
 serde = { version = "1.0.136", features = ["derive"] }

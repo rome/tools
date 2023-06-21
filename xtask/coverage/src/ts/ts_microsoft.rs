@@ -3,6 +3,7 @@ use crate::runner::{
     create_bogus_node_in_tree_diagnostic, TestCase, TestCaseFiles, TestRunOutcome, TestSuite,
 };
 use regex::Regex;
+use rome_js_parser::JsParserOptions;
 use rome_js_syntax::{JsFileSource, ModuleKind};
 use rome_rowan::{AstNode, SyntaxKind};
 use std::convert::TryFrom;
@@ -184,7 +185,7 @@ fn add_file_if_supported(files: &mut TestCaseFiles, name: String, content: Strin
             source_type = source_type.with_module_kind(ModuleKind::Script);
         }
 
-        files.add(name, content, source_type)
+        files.add(name, content, source_type, JsParserOptions::default())
     }
 }
 

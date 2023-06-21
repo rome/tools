@@ -1,11 +1,11 @@
-import ReactDOM, { render } from "react-dom";
+import ReactDom, { render } from "react-dom";
 
-ReactDOM.render(<div />, document.body);
+ReactDom.render(<div />, document.body);
 function render1() {
-    ReactDOM.render(<div />, document.body);
+    ReactDom.render(<div />, document.body);
 }
 const render2 = () => {
-    ReactDOM.render(<div />, document.body);
+    ReactDom.render(<div />, document.body);
 }
 
 render(<div />, document.body);

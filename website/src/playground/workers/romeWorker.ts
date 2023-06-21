@@ -8,7 +8,7 @@ import {
 	RomeOutput,
 	Semicolons,
 } from "../types";
-import { isJSONFilename } from "../utils";
+import { isJsonFilename } from "../utils";
 import init, {
 	Configuration,
 	DiagnosticPrinter,
@@ -65,6 +65,7 @@ self.addEventListener("message", async (e) => {
 				indentStyle,
 				indentWidth,
 				quoteStyle,
+				jsxQuoteStyle,
 				quoteProperties,
 				lintRules,
 				enabledLinting,
@@ -93,6 +94,8 @@ self.addEventListener("message", async (e) => {
 				javascript: {
 					formatter: {
 						quoteStyle: quoteStyle === QuoteStyle.Double ? "double" : "single",
+						jsxQuoteStyle:
+							jsxQuoteStyle === QuoteStyle.Double ? "double" : "single",
 						quoteProperties:
 							quoteProperties === QuoteProperties.Preserve
 								? "preserve"
@@ -170,7 +173,7 @@ self.addEventListener("message", async (e) => {
 				path,
 			});
 
-			const controlFlowGraph = !isJSONFilename(filename)
+			const controlFlowGraph = !isJsonFilename(filename)
 				? workspace.getControlFlowGraph({
 						path,
 						cursor: cursorPosition,
