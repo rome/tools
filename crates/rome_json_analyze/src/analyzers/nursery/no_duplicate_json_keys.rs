@@ -26,9 +26,9 @@ declare_rule! {
     ///   "secondTitle": "Second title"
     /// }
     /// ```
-    pub(crate) NoDuplicateKeys {
+    pub(crate) NoDuplicateJsonKeys {
         version: "next",
-        name: "noDuplicateKeys",
+        name: "noDuplicateJsonKeys",
         recommended: true,
     }
 }
@@ -40,7 +40,7 @@ pub(crate) struct DuplicatedKeys {
     duplicated_keys: Vec<TextRange>,
 }
 
-impl Rule for NoDuplicateKeys {
+impl Rule for NoDuplicateJsonKeys {
     type Query = Ast<JsonObjectValue>;
     type State = DuplicatedKeys;
     type Signals = Option<Self::State>;

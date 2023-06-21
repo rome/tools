@@ -778,15 +778,15 @@
 						{ "type": "null" }
 					]
 				},
-				"noDuplicateJsxProps": {
-					"description": "Prevents JSX properties to be assigned multiple times.",
+				"noDuplicateJsonKeys": {
+					"description": "Disallow two keys with the same name inside a JSON object.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }
 					]
 				},
-				"noDuplicateKeys": {
-					"description": "Disallow two keys with the same name inside a JSON object.",
+				"noDuplicateJsxProps": {
+					"description": "Prevents JSX properties to be assigned multiple times.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }

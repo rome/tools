@@ -526,13 +526,13 @@ export interface Nursery {
 	 */
 	noConstantCondition?: RuleConfiguration;
 	/**
+	 * Disallow two keys with the same name inside a JSON object.
+	 */
+	noDuplicateJsonKeys?: RuleConfiguration;
+	/**
 	 * Prevents JSX properties to be assigned multiple times.
 	 */
 	noDuplicateJsxProps?: RuleConfiguration;
-	/**
-	 * Disallow two keys with the same name inside a JSON object.
-	 */
-	noDuplicateKeys?: RuleConfiguration;
 	/**
 	 * Prefer for...of statement instead of Array.forEach.
 	 */
@@ -1105,7 +1105,7 @@ export type Category =
 	| "lint/nursery/useLiteralKeys"
 	| "lint/nursery/useSimpleNumberKeys"
 	| "lint/nursery/noStaticOnlyClass"
-	| "lint/nursery/noDuplicateKeys"
+	| "lint/nursery/noDuplicateJsonKeys"
 	| "lint/nursery/useNamingConvention"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"

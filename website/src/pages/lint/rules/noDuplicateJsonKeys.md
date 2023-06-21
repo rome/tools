@@ -1,9 +1,9 @@
 ---
-title: Lint Rule noDuplicateKeys
+title: Lint Rule noDuplicateJsonKeys
 parent: lint/rules/index
 ---
 
-# noDuplicateKeys (since vnext)
+# noDuplicateJsonKeys (since vnext)
 
 Disallow two keys with the same name inside a JSON object.
 
@@ -18,7 +18,7 @@ Disallow two keys with the same name inside a JSON object.
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noDuplicateKeys.js:2:3 <a href="https://docs.rome.tools/lint/rules/noDuplicateKeys">lint/nursery/noDuplicateKeys</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">nursery/noDuplicateJsonKeys.js:2:3 <a href="https://docs.rome.tools/lint/rules/noDuplicateJsonKeys">lint/nursery/noDuplicateJsonKeys</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The key </span><span style="color: Tomato;"><strong>title</strong></span><span style="color: Tomato;"> was already declared.</span>
   

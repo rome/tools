@@ -1821,6 +1821,15 @@ pub struct Nursery {
     #[bpaf(long("no-constant-condition"), argument("on|off|warn"), optional, hide)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub no_constant_condition: Option<RuleConfiguration>,
+    #[doc = "Disallow two keys with the same name inside a JSON object."]
+    #[bpaf(
+        long("no-duplicate-json-keys"),
+        argument("on|off|warn"),
+        optional,
+        hide
+    )]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub no_duplicate_json_keys: Option<RuleConfiguration>,
     #[doc = "Prevents JSX properties to be assigned multiple times."]
     #[bpaf(
         long("no-duplicate-jsx-props"),
@@ -1830,10 +1839,6 @@ pub struct Nursery {
     )]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub no_duplicate_jsx_props: Option<RuleConfiguration>,
-    #[doc = "Disallow two keys with the same name inside a JSON object."]
-    #[bpaf(long("no-duplicate-keys"), argument("on|off|warn"), optional, hide)]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub no_duplicate_keys: Option<RuleConfiguration>,
     #[doc = "Prefer for...of statement instead of Array.forEach."]
     #[bpaf(long("no-for-each"), argument("on|off|warn"), optional, hide)]
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -1933,8 +1938,8 @@ impl Nursery {
         "noConfusingArrow",
         "noConsoleLog",
         "noConstantCondition",
+        "noDuplicateJsonKeys",
         "noDuplicateJsxProps",
-        "noDuplicateKeys",
         "noForEach",
         "noNoninteractiveTabindex",
         "noRedundantRoles",
@@ -1956,8 +1961,8 @@ impl Nursery {
         "noAriaUnsupportedElements",
         "noBannedTypes",
         "noConstantCondition",
+        "noDuplicateJsonKeys",
         "noDuplicateJsxProps",
-        "noDuplicateKeys",
         "noRedundantRoles",
         "noSelfAssign",
         "noStaticOnlyClass",
@@ -2047,12 +2052,12 @@ impl Nursery {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[5]));
             }
         }
-        if let Some(rule) = self.no_duplicate_jsx_props.as_ref() {
+        if let Some(rule) = self.no_duplicate_json_keys.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[6]));
             }
         }
-        if let Some(rule) = self.no_duplicate_keys.as_ref() {
+        if let Some(rule) = self.no_duplicate_jsx_props.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[7]));
             }
@@ -2171,12 +2176,12 @@ impl Nursery {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[5]));
             }
         }
-        if let Some(rule) = self.no_duplicate_jsx_props.as_ref() {
+        if let Some(rule) = self.no_duplicate_json_keys.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[6]));
             }
         }
-        if let Some(rule) = self.no_duplicate_keys.as_ref() {
+        if let Some(rule) = self.no_duplicate_jsx_props.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[7]));
             }
@@ -2299,8 +2304,8 @@ impl Nursery {
             "noConfusingArrow" => self.no_confusing_arrow.as_ref(),
             "noConsoleLog" => self.no_console_log.as_ref(),
             "noConstantCondition" => self.no_constant_condition.as_ref(),
+            "noDuplicateJsonKeys" => self.no_duplicate_json_keys.as_ref(),
             "noDuplicateJsxProps" => self.no_duplicate_jsx_props.as_ref(),
-            "noDuplicateKeys" => self.no_duplicate_keys.as_ref(),
             "noForEach" => self.no_for_each.as_ref(),
             "noNoninteractiveTabindex" => self.no_noninteractive_tabindex.as_ref(),
             "noRedundantRoles" => self.no_redundant_roles.as_ref(),

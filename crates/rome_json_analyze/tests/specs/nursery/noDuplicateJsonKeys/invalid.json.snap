@@ -15,7 +15,7 @@ expression: invalid.json
 
 # Diagnostics
 ```
-invalid.json:2:2 lint/nursery/noDuplicateKeys ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.json:2:2 lint/nursery/noDuplicateJsonKeys ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The key foo was already declared.
   
