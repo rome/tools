@@ -786,7 +786,7 @@
 					]
 				},
 				"noDuplicateKeys": {
-					"description": "Disallow two keys with the same name inside an object.",
+					"description": "Disallow two keys with the same name inside a JSON object.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }

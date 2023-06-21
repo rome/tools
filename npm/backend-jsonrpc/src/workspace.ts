@@ -530,7 +530,7 @@ export interface Nursery {
 	 */
 	noDuplicateJsxProps?: RuleConfiguration;
 	/**
-	 * Disallow two keys with the same name inside an object.
+	 * Disallow two keys with the same name inside a JSON object.
 	 */
 	noDuplicateKeys?: RuleConfiguration;
 	/**

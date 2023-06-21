@@ -1830,7 +1830,7 @@ pub struct Nursery {
     )]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub no_duplicate_jsx_props: Option<RuleConfiguration>,
-    #[doc = "Disallow two keys with the same name inside an object."]
+    #[doc = "Disallow two keys with the same name inside a JSON object."]
     #[bpaf(long("no-duplicate-keys"), argument("on|off|warn"), optional, hide)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub no_duplicate_keys: Option<RuleConfiguration>,
