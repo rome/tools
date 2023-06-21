@@ -69,19 +69,22 @@ export default function PlaygroundLoader({
 		if (clipboardStatus !== "normal") {
 			setClipboardStatus("normal");
 		}
-	}, [romeOutput.formatter.ir]);
+	}, [clipboardStatus]);
 
-	const onUpdate = useCallback((viewUpdate: ViewUpdate) => {
-		const cursorPosition = viewUpdate.state.selection.ranges[0]?.from ?? 0;
-		setPlaygroundState((state) =>
-			state.cursorPosition !== cursorPosition
-				? {
-						...state,
-						cursorPosition,
-				  }
-				: state,
-		);
-	}, []);
+	const onUpdate = useCallback(
+		(viewUpdate: ViewUpdate) => {
+			const cursorPosition = viewUpdate.state.selection.ranges[0]?.from ?? 0;
+			setPlaygroundState((state) =>
+				state.cursorPosition !== cursorPosition
+					? {
+							...state,
+							cursorPosition,
+					  }
+					: state,
+			);
+		},
+		[setPlaygroundState],
+	);
 
 	useEffect(() => {
 		scrollAstNodeIntoView(playgroundState.cursorPosition);
@@ -125,18 +128,21 @@ export default function PlaygroundLoader({
 		});
 	}, [romeOutput.syntax.ast]);
 
-	const onChange = useCallback((value: string) => {
-		setPlaygroundState((state) => ({
-			...state,
-			files: {
-				...state.files,
-				[state.currentFile]: {
-					...getFileState(state, state.currentFile),
-					content: value,
+	const onChange = useCallback(
+		(value: string) => {
+			setPlaygroundState((state) => ({
+				...state,
+				files: {
+					...state.files,
+					[state.currentFile]: {
+						...getFileState(state, state.currentFile),
+						content: value,
+					},
 				},
-			},
-		}));
-	}, []);
+			}));
+		},
+		[setPlaygroundState],
+	);
 
 	const { width } = useWindowSize();
 	const hasNarrowViewport = width !== undefined && width <= 1000;

@@ -1,10 +1,13 @@
+import React from "react";
+import { useEffect, useCallback, useMemo, useLayoutEffect, useInsertionEffect, useImperativeHandle } from "react";
+
 function MyComponent1() {
     let a = 1;
     const b = a + 1;
     useEffect(() => {
       console.log(a, b);
     });
-  }
+}
 
 // interaction with other react hooks
 
@@ -82,3 +85,41 @@ const MyComponent8 = React.memo(({ a }) => {
       console.log(a);
   });
 });
+
+// exported functions
+export function MyComponent9() {
+  let a = 1;
+  useEffect(() => {
+      console.log(a);
+  });
+}
+
+export default function MyComponent10() {
+  let a = 1;
+  useEffect(() => {
+      console.log(a);
+  });
+}
+
+// named function
+function MyComponent11() {
+  let a = 1;
+  useEffect(function inner() {
+      console.log(a);
+  });
+}
+
+function MyComponent12() {
+  let a = 1;
+  useEffect(async function inner() {
+      console.log(a);
+  });
+}
+
+// React.useXXX case
+function MyComponent13() {
+  let a = 1;
+  React.useEffect(() => {
+      console.log(a);
+  });
+}

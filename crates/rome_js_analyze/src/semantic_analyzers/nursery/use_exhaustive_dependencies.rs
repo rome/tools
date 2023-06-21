@@ -27,6 +27,8 @@ declare_rule! {
     /// ### Invalid
     ///
     /// ```js,expect_diagnostic
+    /// import { useEffect } from "react";
+    ///
     /// function component() {
     ///     let a = 1;
     ///     useEffect(() => {
@@ -36,6 +38,8 @@ declare_rule! {
     /// ```
     ///
     /// ```js,expect_diagnostic
+    /// import { useEffect } from "react";
+    ///
     /// function component() {
     ///     let b = 1;
     ///     useEffect(() => {
@@ -44,6 +48,8 @@ declare_rule! {
     /// ```
     ///
     /// ```js,expect_diagnostic
+    /// import { useEffect, useState } from "react";
+    ///
     /// function component() {
     ///     const [name, setName] = useState();
     ///     useEffect(() => {
@@ -54,6 +60,8 @@ declare_rule! {
     /// ```
     ///
     /// ```js,expect_diagnostic
+    /// import { useEffect } from "react";
+    ///
     /// function component() {
     ///     let a = 1;
     ///     const b = a + 1;
@@ -66,6 +74,8 @@ declare_rule! {
     /// ## Valid
     ///
     /// ```js
+    /// import { useEffect } from "react";
+    ///
     /// function component() {
     ///     let a = 1;
     ///     useEffect(() => {
@@ -75,6 +85,8 @@ declare_rule! {
     /// ```
     ///
     /// ```js
+    /// import { useEffect } from "react";
+    ///
     /// function component() {
     ///     const a = 1;
     ///     useEffect(() => {
@@ -84,6 +96,8 @@ declare_rule! {
     /// ```
     ///
     /// ```js
+    /// import { useEffect } from "react";
+    ///
     /// function component() {
     ///     const [name, setName] = useState();
     ///     useEffect(() => {
@@ -489,6 +503,7 @@ fn function_of_hook_call(call: &JsCallExpression) -> Option<JsSyntaxNode> {
         matches!(
             x.kind(),
             JsSyntaxKind::JS_FUNCTION_DECLARATION
+                | JsSyntaxKind::JS_FUNCTION_EXPORT_DEFAULT_DECLARATION
                 | JsSyntaxKind::JS_FUNCTION_EXPRESSION
                 | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION
         )
@@ -508,9 +523,9 @@ impl Rule for UseExhaustiveDependencies {
         let mut signals = vec![];
 
         let call = ctx.query();
-        if let Some(result) = react_hook_with_dependency(call, &options.hooks_config) {
-            let model = ctx.model();
+        let model = ctx.model();
 
+        if let Some(result) = react_hook_with_dependency(call, &options.hooks_config, model) {
             let Some(component_function) = function_of_hook_call(call) else {
                 return vec![]
             };

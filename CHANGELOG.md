@@ -57,11 +57,17 @@ parameter decorators:
   The _Rome_ formatter takes care of removing extra semicolons.
   Thus, there is no need for this rule.
 
+
 #### Other changes
 
 - [`noRedeclare`](https://docs.rome.tools/lint/rules/noredeclare/): allow redeclare of index signatures are in different type members [#4478](https://github.com/rome/tools/issues/4478)
 
 - Fix a crash in the [`NoParameterAssign`](https://docs.rome.tools/lint/rules/noparameterassign/) rule that occurred when there was a bogus binding. [#4323](https://github.com/rome/tools/issues/4323)
+
+- Fix [`useExhaustiveDependencies`](https://docs.rome.tools/lint/rules/useexhaustivedependencies/) rule in the following cases [#4330](https://github.com/rome/tools/issues/4330)
+  - when the first argument of hooks is a named function
+  - inside an export default function
+  - for React.use* hooks
 
 - Improve the diagnostic and the code action of [`useDefaultParameterLast`](https://docs.rome.tools/lint/rules/usedefaultparameterlast/).
 
