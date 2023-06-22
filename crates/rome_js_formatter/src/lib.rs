@@ -179,6 +179,7 @@ mod parentheses;
 pub(crate) mod separated;
 mod syntax_rewriter;
 
+use rome_formatter::format_element::tag::Label;
 use rome_formatter::prelude::*;
 use rome_formatter::{
     comments::Comments, write, CstFormatContext, Format, FormatLanguage, FormatToken,
@@ -535,6 +536,23 @@ pub fn format_node(
 /// It returns a [Formatted] result
 pub fn format_sub_tree(options: JsFormatOptions, root: &JsSyntaxNode) -> FormatResult<Printed> {
     rome_formatter::format_sub_tree(root, JsFormatLanguage::new(options))
+}
+
+#[derive(Copy, Clone, Debug)]
+pub(crate) enum JsLabels {
+    MemberChain,
+}
+
+impl Label for JsLabels {
+    fn id(&self) -> u64 {
+        *self as u64
+    }
+
+    fn debug_name(&self) -> &'static str {
+        match self {
+            JsLabels::MemberChain => "MemberChain",
+        }
+    }
 }
 
 #[cfg(test)]

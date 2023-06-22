@@ -2,7 +2,7 @@ use crate::prelude::*;
 
 use crate::js::expressions::computed_member_expression::AnyJsComputedMemberLike;
 use crate::parentheses::NeedsParentheses;
-use crate::utils::member_chain::MemberChainLabel;
+use crate::JsLabels;
 use rome_formatter::{format_args, write};
 use rome_js_syntax::{
     AnyJsAssignment, AnyJsAssignmentPattern, AnyJsExpression, AnyJsName, JsAssignmentExpression,
@@ -45,7 +45,7 @@ impl Format<JsFormatContext> for AnyJsStaticMemberLike {
 
             recording
                 .stop()
-                .has_label(LabelId::of::<MemberChainLabel>())
+                .has_label(LabelId::of(JsLabels::MemberChain))
         };
 
         let layout = self.layout(is_member_chain)?;
@@ -60,7 +60,7 @@ impl Format<JsFormatContext> for AnyJsStaticMemberLike {
                     write!(
                         f,
                         [labelled(
-                            LabelId::of::<MemberChainLabel>(),
+                            LabelId::of(JsLabels::MemberChain),
                             &format_no_break
                         )]
                     )

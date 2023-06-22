@@ -114,6 +114,7 @@ use crate::utils::member_chain::groups::{
     MemberChainGroup, MemberChainGroupsBuilder, TailChainGroups,
 };
 use crate::utils::member_chain::simple_argument::SimpleArgument;
+use crate::JsLabels;
 use rome_formatter::{write, Buffer};
 use rome_js_syntax::{
     AnyJsCallArgument, AnyJsExpression, AnyJsLiteralExpression, JsCallExpression,
@@ -121,8 +122,6 @@ use rome_js_syntax::{
 };
 use rome_rowan::{AstNode, SyntaxResult};
 use std::iter::FusedIterator;
-
-pub(crate) enum MemberChainLabel {}
 
 #[derive(Debug, Clone)]
 pub(crate) struct MemberChain {
@@ -399,7 +398,10 @@ impl Format<JsFormatContext> for MemberChain {
 
         write!(
             f,
-            [labelled(LabelId::of::<MemberChainLabel>(), &format_content)]
+            [labelled(
+                LabelId::of(JsLabels::MemberChain),
+                &format_content
+            )]
         )
     }
 }
