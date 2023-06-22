@@ -1,18 +1,18 @@
 [package]
-name = "rome_markup"
-version = "0.0.1"
-description = "Macro to write text using a HTML-like syntax"
-license.workspace = true
-edition.workspace = true
-authors.workspace = true
+authors.workspace    = true
+description          = "Macro to write text using a HTML-like syntax"
+documentation        = "https://rustdocs.rome.tools/rome_markup/index.html"
+edition.workspace    = true
+license.workspace    = true
+name                 = "rome_markup"
 repository.workspace = true
-documentation = "https://rustdocs.rome.tools/rome_markup/index.html"
+version              = "0.0.1"
 
 
 [lib]
 proc-macro = true
 
 [dependencies]
-proc-macro2 = "1.0.36"
-quote = "1.0.14"
 proc-macro-error = { version = "1.0.4", default-features = false }
+proc-macro2      = "1.0.36"
+quote            = "1.0.14"

@@ -1,12 +1,14 @@
 [alias]
-lint = "clippy --workspace --all-targets --verbose -- --deny warnings -W clippy::cargo -W clippy::dbg_macro -A clippy::cargo_common_metadata -A clippy::multiple_crate_versions"
-format = "fmt --all --verbose"
+bench_analyzer = "run -p xtask_bench --release -- --feature analyzer"
+bench_formatter = "run -p xtask_bench --release -- --feature formatter"
+bench_parser = "run -p xtask_bench --release -- --feature parser"
 codegen = "run -p xtask_codegen --"
+codegen-bindings = "run -p xtask_codegen --features schema -- bindings"
 codegen-configuration = "run -p xtask_codegen --features configuration -- configuration"
 codegen-schema = "run -p xtask_codegen --features schema -- schema"
-codegen-bindings = "run -p xtask_codegen --features schema -- bindings"
 codegen-website = "run -p xtask_codegen --features website -- website"
-lintdoc = "run -p xtask_lintdoc --"
+contributors = "run -p xtask_contributors --"
+coverage = "run -p xtask_coverage --profile=release-with-debug --"
 documentation = """
     doc \
     -p rome_*formatter \
@@ -27,13 +29,11 @@ documentation = """
     -p rome_rowan
     --no-deps
 """
-bench_parser = "run -p xtask_bench --release -- --feature parser"
-bench_formatter = "run -p xtask_bench --release -- --feature formatter"
-bench_analyzer = "run -p xtask_bench --release -- --feature analyzer"
-coverage = "run -p xtask_coverage --profile=release-with-debug --"
+format = "fmt --all --verbose"
+lint = "clippy --workspace --all-targets --verbose -- --deny warnings -W clippy::cargo -W clippy::dbg_macro -A clippy::cargo_common_metadata -A clippy::multiple_crate_versions"
+lintdoc = "run -p xtask_lintdoc --"
 rome-cli = "run -p rome_cli --release --"
 rome-cli-dev = "run -p rome_cli --"
-contributors = "run -p xtask_contributors --"
 
 [profile.release]
 lto = true

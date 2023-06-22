@@ -1,19 +1,19 @@
 [package]
-edition.workspace = true
-name = "rome_js_syntax"
-version = "0.0.2"
-authors.workspace = true
-description = "SyntaxKind and common rowan definitions for rome_js_parser"
-license.workspace = true
+authors.workspace    = true
+description          = "SyntaxKind and common rowan definitions for rome_js_parser"
+documentation        = "https://rustdocs.rome.tools/rome_js_syntax/index.html"
+edition.workspace    = true
+license.workspace    = true
+name                 = "rome_js_syntax"
 repository.workspace = true
-documentation = "https://rustdocs.rome.tools/rome_js_syntax/index.html"
+version              = "0.0.2"
 
 [dependencies]
-rome_rowan = { workspace = true }
+rome_console     = { workspace = true }
 rome_diagnostics = { workspace = true }
-rome_console = { workspace = true }
-serde = { version = "1.0.136", features = ["derive"], optional = true }
-schemars = { version = "0.8.10", optional = true }
+rome_rowan       = { workspace = true }
+schemars         = { version = "0.8.10", optional = true }
+serde            = { version = "1.0.136", features = ["derive"], optional = true }
 
 [dev-dependencies]
 rome_js_factory = { workspace = true }

@@ -1,22 +1,22 @@
 [package]
-name = "rome_analyze"
-version = "0.0.0"
-edition.workspace = true
-authors.workspace = true
+authors.workspace    = true
+edition.workspace    = true
+license.workspace    = true
+name                 = "rome_analyze"
 repository.workspace = true
-license.workspace = true
+version              = "0.0.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-rome_rowan = { workspace = true }
-rome_console = { workspace = true }
-rome_diagnostics = { workspace = true }
 bitflags.workspace = true
-rustc-hash = { workspace = true }
-serde = { version = "1.0.136", features = ["derive"] }
-schemars = { version = "0.8.10", optional = true }
-tracing = { workspace = true }
+rome_console       = { workspace = true }
+rome_diagnostics   = { workspace = true }
+rome_rowan         = { workspace = true }
+rustc-hash         = { workspace = true }
+schemars           = { version = "0.8.10", optional = true }
+serde              = { version = "1.0.136", features = ["derive"] }
+tracing            = { workspace = true }
 
 
 [features]

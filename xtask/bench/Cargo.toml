@@ -14,14 +14,14 @@ rome_json_parser = { path = "../../crates/rome_json_parser" }
 rome_json_syntax = { path = "../../crates/rome_json_syntax" }
 rome_parser = { path = "../../crates/rome_parser" }
 rome_diagnostics = { path = "../../crates/rome_diagnostics" }
-rome_formatter = { path = "../../crates/rome_formatter"}
-rome_js_formatter = { path = "../../crates/rome_js_formatter"}
-rome_analyze = { path = "../../crates/rome_analyze"}
-rome_js_analyze = { path = "../../crates/rome_js_analyze"}
-rome_rowan = { path = "../../crates/rome_rowan"}
+rome_formatter = { path = "../../crates/rome_formatter" }
+rome_js_formatter = { path = "../../crates/rome_js_formatter" }
+rome_analyze = { path = "../../crates/rome_analyze" }
+rome_js_analyze = { path = "../../crates/rome_js_analyze" }
+rome_rowan = { path = "../../crates/rome_rowan" }
 
 
-pico-args = { version = "0.5.0", features=["eq-separator"] }
+pico-args = { version = "0.5.0", features = ["eq-separator"] }
 timing = "0.2.3"
 criterion = "0.4.0"
 regex = "1.5.5"
@@ -34,7 +34,7 @@ countme = { workspace = true }
 
 # dhat-on
 dhat = { version = "0.3.0", optional = true }
-humansize = {version = "2.1.2", optional = true }
+humansize = { version = "2.1.2", optional = true }
 
 [target.'cfg(target_os = "windows")'.dependencies]
 mimalloc = "0.1.29"
