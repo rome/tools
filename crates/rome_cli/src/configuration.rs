@@ -1,14 +1,15 @@
 use crate::cli_options::CliOptions;
 use crate::{CliDiagnostic, CliSession};
-use rome_console::markup;
+use rome_console::{markup, Console, ConsoleExt};
 use rome_deserialize::json::deserialize_from_json_str;
 use rome_deserialize::Deserialized;
-use rome_diagnostics::Error;
+use rome_diagnostics::{DiagnosticExt, Error, PrintDiagnostic};
 use rome_fs::{FileSystem, OpenOptions};
 use rome_service::configuration::diagnostics::CantLoadExtendFile;
 use rome_service::configuration::ConfigurationPayload;
 use rome_service::{
-    load_config, Configuration, ConfigurationBasePath, DynRef, MergeWith, WorkspaceError,
+    load_config, Configuration, ConfigurationBasePath, ConfigurationDiagnostic, DynRef, MergeWith,
+    WorkspaceError,
 };
 use std::path::PathBuf;
 
@@ -75,6 +76,32 @@ impl LoadedConfiguration {
             deserialized_configurations.push(deserialized)
         }
         Ok(deserialized_configurations)
+    }
+
+    pub fn or_diagnostic(
+        self,
+        console: &mut dyn Console,
+        verbose: bool,
+    ) -> Result<Self, CliDiagnostic> {
+        if !self.diagnostics.is_empty() {
+            for diagnostic in self.diagnostics {
+                let diagnostic = if let Some(file_path) = &self.file_path {
+                    diagnostic.with_file_path(file_path.display().to_string())
+                } else {
+                    diagnostic
+                };
+                console.error(markup! {
+					{if verbose { PrintDiagnostic::verbose(&diagnostic) } else { PrintDiagnostic::simple(&diagnostic) }}
+            	})
+            }
+            return Err(CliDiagnostic::workspace_error(
+                WorkspaceError::Configuration(ConfigurationDiagnostic::invalid_configuration(
+                    "Rome exited because the configuration resulted in errors. Please fix them.",
+                )),
+            ));
+        }
+
+        Ok(self)
     }
 }
 

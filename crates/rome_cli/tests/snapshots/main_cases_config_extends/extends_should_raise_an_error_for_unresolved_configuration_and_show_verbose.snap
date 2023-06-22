@@ -31,7 +31,7 @@ debugger; console.log("string");
 ```block
 formatTYPO.json configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! path "formatTYPO.json" does not exists in memory filesystem
+  × path "formatTYPO.json" does not exists in memory filesystem
   
   Verbose advice
   

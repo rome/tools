@@ -18,19 +18,15 @@ expression: content
 # Termination Message
 
 ```block
-internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × No files were processed in the specified paths.
+  × Rome exited because the configuration resulted in errors. Please fix them.
   
 
 
 ```
 
 # Emitted Messages
-
-```block
-Found errors in the configuration file, Rome will use its defaults for the sections that are incorrect.
-```
 
 ```block
 rome.json:6:17 deserialize ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -45,10 +41,6 @@ rome.json:6:17 deserialize ━━━━━━━━━━━━━━━━━�
     8 │ }
   
 
-```
-
-```block
-Checked 0 file(s) in <TIME>
 ```
 
 

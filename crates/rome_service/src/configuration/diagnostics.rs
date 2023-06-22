@@ -25,6 +25,9 @@ pub enum ConfigurationDiagnostic {
     /// - incorrect values
     Deserialization(DeserializationDiagnostic),
 
+    /// When something is wrong with the configuration
+    InvalidConfiguration(InvalidConfiguration),
+
     /// Thrown when the pattern inside the `ignore` field errors
     InvalidIgnorePattern(InvalidIgnorePattern),
 
@@ -64,8 +67,14 @@ impl ConfigurationDiagnostic {
         })
     }
 
-    pub(crate) fn new_already_exists() -> Self {
+    pub fn new_already_exists() -> Self {
         Self::ConfigAlreadyExists(ConfigAlreadyExists {})
+    }
+
+    pub fn invalid_configuration(message: impl Display) -> Self {
+        Self::InvalidConfiguration(InvalidConfiguration {
+            message: MessageAndDescription::from(markup! {{message}}.to_owned()),
+        })
     }
 }
 
@@ -89,6 +98,7 @@ impl Diagnostic for ConfigurationDiagnostic {
             ConfigurationDiagnostic::Deserialization(error) => error.severity(),
             ConfigurationDiagnostic::InvalidIgnorePattern(error) => error.severity(),
             ConfigurationDiagnostic::CantLoadExtendFile(error) => error.severity(),
+            ConfigurationDiagnostic::InvalidConfiguration(error) => error.severity(),
         }
     }
 
@@ -99,6 +109,7 @@ impl Diagnostic for ConfigurationDiagnostic {
             ConfigurationDiagnostic::Deserialization(error) => error.category(),
             ConfigurationDiagnostic::InvalidIgnorePattern(error) => error.category(),
             ConfigurationDiagnostic::CantLoadExtendFile(error) => error.category(),
+            ConfigurationDiagnostic::InvalidConfiguration(error) => error.category(),
         }
     }
 
@@ -109,6 +120,7 @@ impl Diagnostic for ConfigurationDiagnostic {
             ConfigurationDiagnostic::Deserialization(error) => error.tags(),
             ConfigurationDiagnostic::InvalidIgnorePattern(error) => error.tags(),
             ConfigurationDiagnostic::CantLoadExtendFile(error) => error.tags(),
+            ConfigurationDiagnostic::InvalidConfiguration(error) => error.tags(),
         }
     }
 
@@ -119,6 +131,7 @@ impl Diagnostic for ConfigurationDiagnostic {
             ConfigurationDiagnostic::Deserialization(error) => error.location(),
             ConfigurationDiagnostic::InvalidIgnorePattern(error) => error.location(),
             ConfigurationDiagnostic::CantLoadExtendFile(error) => error.location(),
+            ConfigurationDiagnostic::InvalidConfiguration(error) => error.location(),
         }
     }
 
@@ -129,6 +142,7 @@ impl Diagnostic for ConfigurationDiagnostic {
             ConfigurationDiagnostic::Deserialization(error) => error.source(),
             ConfigurationDiagnostic::InvalidIgnorePattern(error) => error.source(),
             ConfigurationDiagnostic::CantLoadExtendFile(error) => error.source(),
+            ConfigurationDiagnostic::InvalidConfiguration(error) => error.source(),
         }
     }
 
@@ -139,6 +153,7 @@ impl Diagnostic for ConfigurationDiagnostic {
             ConfigurationDiagnostic::Deserialization(error) => error.message(fmt),
             ConfigurationDiagnostic::InvalidIgnorePattern(error) => error.message(fmt),
             ConfigurationDiagnostic::CantLoadExtendFile(error) => error.message(fmt),
+            ConfigurationDiagnostic::InvalidConfiguration(error) => error.message(fmt),
         }
     }
 
@@ -149,6 +164,7 @@ impl Diagnostic for ConfigurationDiagnostic {
             ConfigurationDiagnostic::Deserialization(error) => error.description(fmt),
             ConfigurationDiagnostic::InvalidIgnorePattern(error) => error.description(fmt),
             ConfigurationDiagnostic::CantLoadExtendFile(error) => error.description(fmt),
+            ConfigurationDiagnostic::InvalidConfiguration(error) => error.description(fmt),
         }
     }
 
@@ -159,6 +175,7 @@ impl Diagnostic for ConfigurationDiagnostic {
             ConfigurationDiagnostic::Deserialization(error) => error.advices(visitor),
             ConfigurationDiagnostic::InvalidIgnorePattern(error) => error.advices(visitor),
             ConfigurationDiagnostic::CantLoadExtendFile(error) => error.advices(visitor),
+            ConfigurationDiagnostic::InvalidConfiguration(error) => error.advices(visitor),
         }
     }
 
@@ -169,6 +186,7 @@ impl Diagnostic for ConfigurationDiagnostic {
             ConfigurationDiagnostic::Deserialization(error) => error.verbose_advices(visitor),
             ConfigurationDiagnostic::InvalidIgnorePattern(error) => error.verbose_advices(visitor),
             ConfigurationDiagnostic::CantLoadExtendFile(error) => error.verbose_advices(visitor),
+            ConfigurationDiagnostic::InvalidConfiguration(error) => error.verbose_advices(visitor),
         }
     }
 }
@@ -218,7 +236,7 @@ pub struct InvalidIgnorePattern {
 #[derive(Debug, Serialize, Deserialize, Diagnostic)]
 #[diagnostic(
 	category = "configuration",
-	severity = Warning,
+	severity = Error,
 )]
 pub struct CantLoadExtendFile {
     #[location(resource)]
@@ -252,6 +270,17 @@ impl From<CantLoadExtendFile> for WorkspaceError {
     fn from(value: CantLoadExtendFile) -> Self {
         WorkspaceError::Configuration(ConfigurationDiagnostic::CantLoadExtendFile(value))
     }
+}
+
+#[derive(Debug, Serialize, Deserialize, Diagnostic)]
+#[diagnostic(
+	category = "configuration",
+	severity = Error,
+)]
+pub struct InvalidConfiguration {
+    #[message]
+    #[description]
+    message: MessageAndDescription,
 }
 
 #[cfg(test)]

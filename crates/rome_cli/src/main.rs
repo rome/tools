@@ -37,7 +37,6 @@ fn main() -> ExitCode {
             let result = run_workspace(&mut console, command);
             match result {
                 Err(termination) => {
-                    dbg!(&is_verbose);
                     console.error(markup! {
 						{if is_verbose { PrintDiagnostic::verbose(&termination) } else { PrintDiagnostic::simple(&termination) }}
             		});

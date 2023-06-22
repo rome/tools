@@ -1,6 +1,5 @@
 ---
 source: crates/rome_cli/tests/snap_test.rs
-assertion_line: 346
 expression: content
 ---
 ## `rome.json`
@@ -48,6 +47,18 @@ console.log('rome is cool');
 ```
 
 # Emitted Messages
+
+```block
+file1.js format ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Formatter would have printed the following content:
+  
+    1   │ - blah.call();
+      1 │ + blah.call();
+      2 │ + 
+  
+
+```
 
 ```block
 Checked 1 file(s) in <TIME>

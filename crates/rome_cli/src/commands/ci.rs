@@ -5,8 +5,6 @@ use crate::{
     configuration::load_configuration, execute_mode, CliDiagnostic, CliSession, Execution,
     TraversalMode,
 };
-use rome_console::{markup, ConsoleExt};
-use rome_diagnostics::{DiagnosticExt, PrintDiagnostic};
 use rome_service::configuration::organize_imports::OrganizeImports;
 use rome_service::configuration::{FormatterConfiguration, LinterConfiguration};
 use rome_service::workspace::UpdateSettingsParams;
@@ -26,30 +24,10 @@ pub(crate) struct CiCommandPayload {
 pub(crate) fn ci(mut session: CliSession, payload: CiCommandPayload) -> Result<(), CliDiagnostic> {
     let LoadedConfiguration {
         mut configuration,
-        diagnostics,
         directory_path: configuration_path,
-        file_path,
-    } = load_configuration(&mut session, &payload.cli_options)?;
-
-    if !diagnostics.is_empty() {
-        let console = &mut session.app.console;
-        console.log(markup!{
-           <Error>"Found errors in the configuration file, Rome will use its defaults for the sections that are incorrect."</Error>
-        });
-        for diagnostic in diagnostics {
-            let diagnostic = if let Some(file_path) = &file_path {
-                diagnostic.with_file_path(file_path.display().to_string())
-            } else {
-                diagnostic
-            };
-            console.error(markup! {
-				{if payload.cli_options.verbose { PrintDiagnostic::verbose(&diagnostic) } else { PrintDiagnostic::simple(&diagnostic) }}
-            })
-        }
-        return Err(CliDiagnostic::incompatible_end_configuration(
-            "The deserialization of the configuration resulted into an error.",
-        ));
-    }
+        ..
+    } = load_configuration(&mut session, &payload.cli_options)?
+        .or_diagnostic(session.app.console, payload.cli_options.verbose)?;
 
     let formatter = configuration
         .formatter
