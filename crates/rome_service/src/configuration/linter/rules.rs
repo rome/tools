@@ -1805,7 +1805,7 @@ pub struct Nursery {
     )]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub no_aria_unsupported_elements: Option<RuleConfiguration>,
-    #[doc = "Disallow certain types."]
+    #[doc = "Disallow primitive type aliases and misleading types."]
     #[bpaf(long("no-banned-types"), argument("on|off|warn"), optional, hide)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub no_banned_types: Option<RuleConfiguration>,

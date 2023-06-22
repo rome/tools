@@ -17,3 +17,16 @@ let tuple: [boolean, string] = [true, "hello"];
 type Props = {
 	foo: string;
 }
+
+namespace X {
+	// Allow user aliases
+	type Number = number
+	function f(): Number {
+		return 0;
+	}
+}
+
+type PhoneNumber = number | null | undefined;
+type NonNullablePhoneNumber = PhoneNumber & {};
+
+function consumeNonNullableValue<T extends {}>(value: T) {}

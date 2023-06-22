@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 100
 expression: invalid.ts
 ---
 # Input
@@ -88,7 +87,7 @@ invalid.ts:3:8 lint/nursery/noBannedTypes ━━━━━━━━━━━━�
     4 │ 
     5 │ let b: { c: String };
   
-  i Prefer explicitly define the object shape. This type means "any non-nullish value", which is slightly better than 'unknown', but it's still a broad type.
+  i Prefer explicitly define the object shape. This type means "any non-nullable value", which is slightly better than 'unknown', but it's still a broad type.
   
 
 ```
@@ -235,7 +234,7 @@ invalid.ts:11:58 lint/nursery/noBannedTypes ━━━━━━━━━━━━
     12 │   constructor(foo: String | Object) {}
     13 │ 
   
-  i Prefer explicitly define the object shape. This type means "any non-nullish value", which is slightly better than 'unknown', but it's still a broad type.
+  i Prefer explicitly define the object shape. This type means "any non-nullable value", which is slightly better than 'unknown', but it's still a broad type.
   
 
 ```
@@ -276,7 +275,7 @@ invalid.ts:12:29 lint/nursery/noBannedTypes ━━━━━━━━━━━━
     13 │ 
     14 │   exit(): Array<String> {
   
-  i Prefer explicitly define the object shape. This type means "any non-nullish value", which is slightly better than 'unknown', but it's still a broad type.
+  i Prefer explicitly define the object shape. This type means "any non-nullable value", which is slightly better than 'unknown', but it's still a broad type.
   
 
 ```
@@ -421,7 +420,7 @@ invalid.ts:23:14 lint/nursery/noBannedTypes ━━━━━━━━━━━━
     24 │ 
     25 │ let fn: Function = () => true
   
-  i Prefer explicitly define the object shape. '{}' means "any non-nullish value".
+  i Prefer explicitly define the object shape. '{}' means "any non-nullable value".
   
 
 ```
@@ -585,7 +584,7 @@ invalid.ts:37:17 lint/nursery/noBannedTypes ━━━━━━━━━━━━
     38 │ 
     39 │ const capitalObj: Object = { a: 'string' };
   
-  i Prefer explicitly define the object shape. This type means "any non-nullish value", which is slightly better than 'unknown', but it's still a broad type.
+  i Prefer explicitly define the object shape. This type means "any non-nullable value", which is slightly better than 'unknown', but it's still a broad type.
   
 
 ```
@@ -602,7 +601,7 @@ invalid.ts:39:19 lint/nursery/noBannedTypes ━━━━━━━━━━━━
     40 │ 
     41 │ const curly1: {
   
-  i Prefer explicitly define the object shape. This type means "any non-nullish value", which is slightly better than 'unknown', but it's still a broad type.
+  i Prefer explicitly define the object shape. This type means "any non-nullable value", which is slightly better than 'unknown', but it's still a broad type.
   
 
 ```
@@ -622,7 +621,7 @@ invalid.ts:41:15 lint/nursery/noBannedTypes ━━━━━━━━━━━━
     44 │ 
     45 │ const curly2: {} = { a: 'string' };
   
-  i Prefer explicitly define the object shape. '{}' means "any non-nullish value".
+  i Prefer explicitly define the object shape. '{}' means "any non-nullable value".
   
 
 ```
@@ -638,7 +637,7 @@ invalid.ts:45:15 lint/nursery/noBannedTypes ━━━━━━━━━━━━
        │               ^^
     46 │ 
   
-  i Prefer explicitly define the object shape. '{}' means "any non-nullish value".
+  i Prefer explicitly define the object shape. '{}' means "any non-nullable value".
   
 
 ```

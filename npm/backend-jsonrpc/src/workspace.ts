@@ -510,7 +510,7 @@ export interface Nursery {
 	 */
 	noAriaUnsupportedElements?: RuleConfiguration;
 	/**
-	 * Disallow certain types.
+	 * Disallow primitive type aliases and misleading types.
 	 */
 	noBannedTypes?: RuleConfiguration;
 	/**
