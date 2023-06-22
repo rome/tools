@@ -1,17 +1,17 @@
 [package]
+description       = ""
+edition.workspace = true
+license.workspace = true
 name              = "tests_macros"
 version           = "0.0.0"
-description       = ""
-license.workspace = true
-edition.workspace = true
 
 [lib]
 proc-macro = true
 
 [dependencies]
-proc-macro2      = "1.0.36"
-syn              = "1.0.85"
-globwalk         = "0.8.1"
 case             = "1.0.0"
-quote            = "1.0.14"
+globwalk         = "0.8.1"
 proc-macro-error = "1.0.4"
+proc-macro2      = "1.0.36"
+quote            = "1.0.14"
+syn              = "1.0.85"

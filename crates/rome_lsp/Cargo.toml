@@ -1,33 +1,33 @@
 [package]
-name                 = "rome_lsp"
-version              = "0.0.0"
-edition.workspace    = true
 authors.workspace    = true
-repository.workspace = true
+edition.workspace    = true
 license.workspace    = true
+name                 = "rome_lsp"
+repository.workspace = true
+version              = "0.0.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-serde_json        = "1.0.74"
-serde             = { version = "1.0.133", features = ["derive"] }
 anyhow            = "1.0.52"
+futures           = "0.3"
 indexmap          = { workspace = true }
-rome_fs           = { workspace = true }
-rome_service      = { workspace = true }
-rome_js_formatter = { workspace = true }
-rome_formatter    = { workspace = true }
 rome_analyze      = { workspace = true }
-rome_diagnostics  = { workspace = true }
-rome_rowan        = { workspace = true }
 rome_console      = { workspace = true }
+rome_diagnostics  = { workspace = true }
+rome_formatter    = { workspace = true }
+rome_fs           = { workspace = true }
+rome_js_formatter = { workspace = true }
+rome_rowan        = { workspace = true }
+rome_service      = { workspace = true }
 rome_text_edit    = { workspace = true }
+serde             = { version = "1.0.133", features = ["derive"] }
+serde_json        = "1.0.74"
 tokio             = { workspace = true, features = ["rt", "io-std"] }
 tower-lsp         = { version = "0.19.0" }
 tracing           = { workspace = true, features = ["attributes"] }
-futures           = "0.3"
 
 [dev-dependencies]
-tower    = { version = "0.4.12", features = ["timeout"] }
-tokio    = { workspace = true, features = ["rt", "rt-multi-thread", "macros"] }
 proptest = "1.0.0"
+tokio    = { workspace = true, features = ["rt", "rt-multi-thread", "macros"] }
+tower    = { version = "0.4.12", features = ["timeout"] }

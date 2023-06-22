@@ -3,7 +3,7 @@ _default:
 
 alias f := format
 alias t := test
-alias r := check-ready
+alias r := ready
 
 
 # Installs the tools needed to develop with Rome
@@ -59,9 +59,6 @@ format:
 	cargo format
 	taplo format
 
-# Run tests of all crates
-test:
-	cargo nextest run
 
 
 [unix]
@@ -72,6 +69,18 @@ _touch file:
 _touch file:
   (gci {{file}}).LastWriteTime = Get-Date
 
+# Run tests of all crates
+test:
+	cargo nextest run
+
+# Run tests for the crate passed as argument e.g. just test-create rome_cli
+test-crate name:
+	cargo nextest run -E 'package({{name}})'
+
+# Run doc tests
+test-doc:
+	cargo test --doc
+
 # Tests a lint rule. The name of the rule needs to be camel case
 test-lintrule name:
   just _touch crates/rome_js_analyze/tests/spec_tests.rs
@@ -80,7 +89,7 @@ test-lintrule name:
   cargo test -p rome_json_analyze -- {{snakecase(name)}}
 
 # When you finished coding, run this command to run the same commands in the CI.
-check-ready:
+ready:
   git diff --exit-code --quiet
   just codegen
   just documentation

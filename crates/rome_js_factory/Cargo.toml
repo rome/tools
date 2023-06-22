@@ -1,15 +1,15 @@
 [package]
-name                 = "rome_js_factory"
-version              = "0.0.2"
-edition.workspace    = true
 authors.workspace    = true
-license.workspace    = true
 description          = "Utilities to create JavaScript AST for rome_js_parser"
-repository.workspace = true
 documentation        = "https://rustdocs.rome.tools/rome_js_factory/index.html"
+edition.workspace    = true
+license.workspace    = true
+name                 = "rome_js_factory"
+repository.workspace = true
+version              = "0.0.2"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-rome_rowan     = { workspace = true }
 rome_js_syntax = { workspace = true }
+rome_rowan     = { workspace = true }

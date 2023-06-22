@@ -1,10 +1,10 @@
 [package]
-name                 = "rome_cli"
-version              = "0.0.0"
-edition.workspace    = true
 authors.workspace    = true
-repository.workspace = true
+edition.workspace    = true
 license.workspace    = true
+name                 = "rome_cli"
+repository.workspace = true
+version              = "0.0.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [[bin]]
@@ -12,37 +12,37 @@ name = "rome"
 path = "src/main.rs"
 
 [dependencies]
-rome_formatter      = { workspace = true }
-rome_diagnostics    = { workspace = true }
-rome_service        = { workspace = true }
-rome_flags          = { workspace = true }
-rome_fs             = { workspace = true }
-rome_console        = { workspace = true }
-rome_text_edit      = { workspace = true }
-rome_lsp            = { workspace = true }
-rome_deserialize    = { workspace = true }
-pico-args           = { version = "0.5.0", features = ["eq-separator"] }
+anyhow              = "1.0.52"
 bpaf                = { workspace = true }
-tracing             = { workspace = true }
-tracing-tree        = "0.2.2"
-tracing-subscriber  = { version = "0.3.16", features = ["env-filter"] }
-tracing-appender    = "0.2"
-lazy_static         = { workspace = true }
-hdrhistogram        = { version = "7.5.0", default-features = false }
 crossbeam           = "0.8.1"
+dashmap             = { workspace = true }
+hdrhistogram        = { version = "7.5.0", default-features = false }
+indexmap            = { workspace = true }
+lazy_static         = { workspace = true }
+pico-args           = { version = "0.5.0", features = ["eq-separator"] }
 rayon               = "1.5.1"
+rome_console        = { workspace = true }
+rome_deserialize    = { workspace = true }
+rome_diagnostics    = { workspace = true }
+rome_flags          = { workspace = true }
+rome_formatter      = { workspace = true }
+rome_fs             = { workspace = true }
+rome_json_formatter = { workspace = true }
+rome_json_parser    = { workspace = true }
+rome_json_syntax    = { workspace = true }
+rome_lsp            = { workspace = true }
+rome_migrate        = { workspace = true }
+rome_rowan          = { workspace = true }
+rome_service        = { workspace = true }
+rome_text_edit      = { workspace = true }
+rome_text_size      = { workspace = true }
 serde               = { version = "1.0.133", features = ["derive"] }
 serde_json          = { version = "1.0.74" }
 tokio               = { workspace = true, features = ["io-std", "io-util", "net", "time", "rt", "sync", "rt-multi-thread", "macros"] }
-anyhow              = "1.0.52"
-dashmap             = { workspace = true }
-rome_text_size      = { workspace = true }
-rome_json_parser    = { workspace = true }
-rome_json_formatter = { workspace = true }
-rome_json_syntax    = { workspace = true }
-rome_migrate        = { workspace = true }
-rome_rowan          = { workspace = true }
-indexmap            = { workspace = true }
+tracing             = { workspace = true }
+tracing-appender    = "0.2"
+tracing-subscriber  = { version = "0.3.16", features = ["env-filter"] }
+tracing-tree        = "0.2.2"
 
 [target.'cfg(unix)'.dependencies]
 libc  = "0.2.127"
@@ -56,7 +56,7 @@ tikv-jemallocator = "0.5.0"
 
 [dev-dependencies]
 insta               = { workspace = true }
-tokio               = { workspace = true, features = ["io-util"] }
-rome_json_formatter = { workspace = true }
 rome_js_formatter   = { workspace = true }
+rome_json_formatter = { workspace = true }
 rome_json_parser    = { workspace = true }
+tokio               = { workspace = true, features = ["io-util"] }

@@ -1,40 +1,40 @@
 [package]
-name                 = "rome_service"
-version              = "0.0.0"
-edition.workspace    = true
 authors.workspace    = true
-repository.workspace = true
+edition.workspace    = true
 license.workspace    = true
+name                 = "rome_service"
+repository.workspace = true
+version              = "0.0.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+bpaf                = { workspace = true }
 dashmap             = { workspace = true }
-serde               = { version = "1.0.133", features = ["derive"] }
-serde_json          = { version = "1.0.74", features = ["raw_value"] }
+indexmap            = { workspace = true, features = ["serde"] }
 rome_analyze        = { workspace = true, features = ["serde"] }
 rome_console        = { workspace = true }
+rome_deserialize    = { workspace = true }
 rome_diagnostics    = { workspace = true }
+rome_flags          = { workspace = true }
 rome_formatter      = { workspace = true, features = ["serde"] }
 rome_fs             = { workspace = true, features = ["serde"] }
-rome_flags          = { workspace = true }
 rome_js_analyze     = { workspace = true }
-rome_js_syntax      = { workspace = true, features = ["serde"] }
-rome_parser         = { workspace = true }
-rome_js_parser      = { workspace = true }
 rome_js_factory     = { workspace = true, optional = true }
 rome_js_formatter   = { workspace = true, features = ["serde"] }
+rome_js_parser      = { workspace = true }
 rome_js_semantic    = { workspace = true }
+rome_js_syntax      = { workspace = true, features = ["serde"] }
+rome_json_formatter = { workspace = true }
 rome_json_parser    = { workspace = true }
 rome_json_syntax    = { workspace = true }
-rome_json_formatter = { workspace = true }
-rome_deserialize    = { workspace = true }
+rome_parser         = { workspace = true }
 rome_rowan          = { workspace = true, features = ["serde"] }
 rome_text_edit      = { workspace = true }
-indexmap            = { workspace = true, features = ["serde"] }
 schemars            = { version = "0.8.10", features = ["indexmap1"], optional = true }
+serde               = { version = "1.0.133", features = ["derive"] }
+serde_json          = { version = "1.0.74", features = ["raw_value"] }
 tracing             = { workspace = true, features = ["attributes"] }
-bpaf                = { workspace = true }
 
 [features]
 schemars = [

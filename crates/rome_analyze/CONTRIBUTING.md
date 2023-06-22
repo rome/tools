@@ -296,7 +296,7 @@ Stage and commit your changes:
 To test if everything is ready, run the following command:
 
 ```shell
-> just check-ready
+just ready
 ```
 
 ### Rule configuration

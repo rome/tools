@@ -1,45 +1,45 @@
 [package]
-name                 = "rome_js_analyze"
-version              = "0.0.0"
-edition.workspace    = true
 authors.workspace    = true
-repository.workspace = true
+edition.workspace    = true
 license.workspace    = true
+name                 = "rome_js_analyze"
+repository.workspace = true
+version              = "0.0.0"
 
 [dependencies]
-rome_analyze          = { workspace = true }
-rome_control_flow     = { workspace = true }
-rome_rowan            = { workspace = true }
-rome_js_semantic      = { workspace = true }
-rome_js_syntax        = { workspace = true }
-rome_js_factory       = { workspace = true }
-rome_js_unicode_table = { workspace = true }
-rome_json_syntax      = { workspace = true }
-rome_json_factory     = { workspace = true }
-rome_console          = { workspace = true }
-rome_diagnostics      = { workspace = true }
-rome_deserialize      = { workspace = true }
-rome_aria             = { workspace = true }
-roaring               = "0.10.1"
-rustc-hash            = { workspace = true }
-serde                 = { version = "1.0.136", features = ["derive"] }
-serde_json            = { version = "1.0.74" }
+bpaf.workspace        = true
 lazy_static           = { workspace = true }
 natord                = "1.0.9"
-bpaf.workspace        = true
+roaring               = "0.10.1"
+rome_analyze          = { workspace = true }
+rome_aria             = { workspace = true }
+rome_console          = { workspace = true }
+rome_control_flow     = { workspace = true }
+rome_deserialize      = { workspace = true }
+rome_diagnostics      = { workspace = true }
+rome_js_factory       = { workspace = true }
+rome_js_semantic      = { workspace = true }
+rome_js_syntax        = { workspace = true }
+rome_js_unicode_table = { workspace = true }
+rome_json_factory     = { workspace = true }
+rome_json_syntax      = { workspace = true }
+rome_rowan            = { workspace = true }
+rustc-hash            = { workspace = true }
 schemars              = { workspace = true, optional = true }
+serde                 = { version = "1.0.136", features = ["derive"] }
+serde_json            = { version = "1.0.74" }
 smallvec              = { workspace = true }
 
 [dev-dependencies]
-tests_macros     = { workspace = true }
-rome_text_edit   = { workspace = true }
-rome_js_parser   = { workspace = true, features = ["tests"] }
-insta            = { workspace = true, features = ["glob"] }
 countme          = { workspace = true, features = ["enable"] }
-similar          = "2.1.0"
+insta            = { workspace = true, features = ["glob"] }
 json_comments    = "0.2.1"
-rome_service     = { path = "../rome_service" }
+rome_js_parser   = { workspace = true, features = ["tests"] }
 rome_json_parser = { path = "../rome_json_parser" }
+rome_service     = { path = "../rome_service" }
+rome_text_edit   = { workspace = true }
+similar          = "2.1.0"
+tests_macros     = { workspace = true }
 
 [features]
 schemars = ["dep:schemars"]

@@ -1,40 +1,40 @@
 [package]
-edition.workspace    = true
-name                 = "rome_js_parser"
-version              = "0.0.2"
 authors.workspace    = true
-license.workspace    = true
-description          = "An extremely fast ECMAScript parser for Rome, forked from the RSlint project"
-repository.workspace = true
-documentation        = "https://rustdocs.rome.tools/rome_js_parser/index.html"
 categories           = ["parser-implementations", "development-tools"]
+description          = "An extremely fast ECMAScript parser for Rome, forked from the RSlint project"
+documentation        = "https://rustdocs.rome.tools/rome_js_parser/index.html"
+edition.workspace    = true
 homepage.workspace   = true
+license.workspace    = true
+name                 = "rome_js_parser"
+repository.workspace = true
+version              = "0.0.2"
 
 [dependencies]
+bitflags.workspace    = true
+cfg-if                = "1.0.0"
+drop_bomb             = "0.1.5"
+indexmap              = { workspace = true }
 rome_console          = { workspace = true }
 rome_diagnostics      = { workspace = true }
-rome_js_syntax        = { workspace = true }
 rome_js_factory       = { workspace = true }
+rome_js_syntax        = { workspace = true }
 rome_js_unicode_table = { workspace = true }
-rome_rowan            = { workspace = true }
 rome_parser           = { workspace = true }
-drop_bomb             = "0.1.5"
-bitflags.workspace    = true
-indexmap              = { workspace = true }
-cfg-if                = "1.0.0"
+rome_rowan            = { workspace = true }
+schemars              = { workspace = true, optional = true }
 smallvec              = { workspace = true }
 tracing               = { workspace = true }
-schemars              = { workspace = true, optional = true }
 
 [dev-dependencies]
-tests_macros      = { workspace = true }
 expect-test       = "1.2.2"
 quickcheck        = "1.0.3"
 quickcheck_macros = "1.0.0"
+tests_macros      = { workspace = true }
 
 [features]
-serde    = ["rome_js_syntax/serde"]
 schemars = ["dep:schemars"]
+serde    = ["rome_js_syntax/serde"]
 tests    = []
 
 # cargo-workspaces metadata

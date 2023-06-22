@@ -22,45 +22,67 @@ Rome can be used via the `rome` bin in the `rome_cli` package:
 cargo run --bin rome -- --help
 ```
 
+## Install the required tools
+
+We use [Just](https://just.systems/man/en/) to run scripts or tasks, to make our
+life easier.
+
+You can install `just` using cargo:
+
+```shell
+cargo install just
+```
+
+But we **highly recommend** to [install it using an OS package manager](https://github.com/casey/just#packages),
+so you won't need to prefix the every command with `cargo`.
+
+Once installed, run the following command install the required tools:
+
+```shell
+just install-tools
+```
+
+And you're good to go hack with Rome and Rust! 🚀
+
 ## Testing
 
 To run the tests, just run
 
 ```shell
-cargo test
+just test
 ```
 
-Or
+If you want to test the tests for a single crate:
 
 ```shell
-cargo t
-```
-
-If you want to test run tests for a single crates, just change path inside the root of the crate you want to test.
-For example, if you want to run the tests of the `rome_cli` crate, you would run:
-
-```shell
-cd ./crates/rome_cli
-cargo t
+just test-crate rome_cli
 ```
 
 If you to run only the doctests, you would need to pass an argument to the command:
 ```shell
-cargo test --doc
+jus test-doc
 ```
 
 In some crates, we use snapshot testing. The majority of snapshot testing is done using [`insta`](https://insta.rs).
-
-Make sure to install it globally via `cargo`:
-
-```shell
-cargo install cargo-insta
-```
+`insta` is already installed by the command `just install-tools`.
 
 When a snapshot test fails, you can run:
 - `cargo insta accept` to accept all the changes and update all the snapshots;
 - `cargo insta reject` to reject all the changes;
 - `cargo insta review` to review snapshots singularly;
+
+## Checks
+
+When you finished your work, and you are ready to **commit and open a PR**,
+run the following command:
+
+```shell
+just ready
+```
+
+This command will run the same commands of the CI: format, lint, tests and code generation.
+Eventually everything should be "green" 🟢 and commit all the code that was
+generated.
 
 ## Language Server and VS Code Extension Development
 
@@ -144,12 +166,6 @@ cd website
 pnpm install
 pnpm start
 ```
-
-## Checks
-
-- `cargo lint` is a cargo alias that runs [`clippy`](https://github.com/rust-lang/rust-clippy) - rust official linter - under the hood;
-- `cargo format` is a cargo alias that runs [`rust-fmt`](https://github.com/rust-lang/rustfmt) - rust official formatter - under the hood;
-- `cargo test` will run the suite; make sure to run this command from the root of the project, so it will run the tests of all the internal crates;
 
 ### Generated files
 
@@ -299,45 +315,3 @@ Even minor versions are dedicated to official releases, e.g. `*.6.*`.
 ### Playground
 
 - [run the playground locally](/website/playground/README.md)
-
-### Using just
-
-A lot of the commands above are mor easily accessible using our [Just](https://just.systems/man/en/) recipes. For example:
-
-### Install just
-
-You can install `just` using cargo:
-
-```shell
-cargo install just
-```
-
-Or, using different methods, like explained in their [documentation](https://just.systems/man/en/chapter_4.html).
-
-It's advised to install `just` using a package manager, so
-you can run `just` as a binary.
-
-### Usage
-
-```ignore
-❯ just
-just --list -u
-Available recipes:
-    codegen
-    documentation
-    new-lintrule path name
-    test-lintrule name
-    check-ready
-```
-
-All the necessary `codegen` can be called using
-
-```shell
-just codegen
-```
-
-After all changes are done, the code can be checked if is ready to be pushed with
-
-```shell
-just check-ready
-```
