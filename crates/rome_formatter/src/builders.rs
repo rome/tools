@@ -501,8 +501,8 @@ impl<Context> Format<Context> for LineSuffixBoundary {
 ///     Main
 /// }
 ///
-/// impl tag::LabelDefinition for MyLabels {
-///     fn value(&self) -> u64 {
+/// impl tag::Label for MyLabels {
+///     fn id(&self) -> u64 {
 ///         *self as u64
 ///     }
 ///

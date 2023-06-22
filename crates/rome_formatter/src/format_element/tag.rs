@@ -259,9 +259,9 @@ impl PartialEq for LabelId {
 }
 
 impl LabelId {
-    pub fn of<T: LabelDefinition>(label: T) -> Self {
+    pub fn of<T: Label>(label: T) -> Self {
         Self {
-            value: label.value(),
+            value: label.id(),
             #[cfg(debug_assertions)]
             name: label.debug_name(),
         }
@@ -270,9 +270,9 @@ impl LabelId {
 
 /// Defines the valid labels of a language. You want to have at most one implementation per formatter
 /// project.
-pub trait LabelDefinition {
+pub trait Label {
     /// Returns the `u64` uniquely identifying this specific label.
-    fn value(&self) -> u64;
+    fn id(&self) -> u64;
 
     /// Returns the name of the label that is shown in debug builds.
     fn debug_name(&self) -> &'static str;
