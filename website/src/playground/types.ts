@@ -108,6 +108,7 @@ export interface PlaygroundSettings {
 	lintRules: LintRules;
 	enabledLinting: boolean;
 	importSortingEnabled: boolean;
+	unsafeParameterDecoratorsEnabled: boolean;
 }
 
 export interface PlaygroundFileState {
@@ -149,6 +150,7 @@ export const defaultPlaygroundState: PlaygroundState = {
 		lintRules: LintRules.Recommended,
 		enabledLinting: true,
 		importSortingEnabled: true,
+		unsafeParameterDecoratorsEnabled: true,
 	},
 };
 

@@ -1,7 +1,7 @@
 import CodeMirror from "./CodeMirror";
 import DiagnosticsPane from "./components/DiagnosticsPane";
 import Resizable from "./components/Resizable";
-import SettingsPane from "./components/SettingsPane";
+import SettingsPanel from "./components/SettingsPanel";
 import Tabs from "./components/Tabs";
 import ControlFlowTab from "./tabs/ControlFlowTab";
 import DiagnosticsConsoleTab from "./tabs/DiagnosticsConsoleTab";
@@ -266,7 +266,7 @@ export default function PlaygroundLoader({
 
 	return (
 		<>
-			<SettingsPane
+			<SettingsPanel
 				onReset={resetPlaygroundState}
 				state={playgroundState}
 				setPlaygroundState={setPlaygroundState}

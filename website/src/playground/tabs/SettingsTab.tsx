@@ -46,6 +46,7 @@ export default function SettingsTab({
 			lintRules,
 			enabledLinting,
 			importSortingEnabled,
+			unsafeParameterDecoratorsEnabled,
 		},
 	},
 }: SettingsTabProps) {
@@ -93,6 +94,11 @@ export default function SettingsTab({
 	const setImportSorting = createPlaygroundSettingsSetter(
 		setPlaygroundState,
 		"importSortingEnabled",
+	);
+
+	const setUnsafeParameterDecoratorsEnabled = createPlaygroundSettingsSetter(
+		setPlaygroundState,
+		"unsafeParameterDecoratorsEnabled",
 	);
 
 	function setCurrentFilename(newFilename: string) {
@@ -244,7 +250,14 @@ export default function SettingsTab({
 				importSortingEnabled={importSortingEnabled}
 				setImportSorting={setImportSorting}
 			/>
-			<SyntaxSettings filename={currentFile} setFilename={setCurrentFilename} />
+			<SyntaxSettings
+				filename={currentFile}
+				setFilename={setCurrentFilename}
+				unsafeParameterDecoratorsEnabled={unsafeParameterDecoratorsEnabled}
+				setUnsafeParameterDecoratorsEnabled={
+					setUnsafeParameterDecoratorsEnabled
+				}
+			/>
 		</div>
 	);
 }
@@ -426,9 +439,13 @@ function FilenameInput({
 function SyntaxSettings({
 	filename,
 	setFilename,
+	unsafeParameterDecoratorsEnabled,
+	setUnsafeParameterDecoratorsEnabled,
 }: {
 	filename: string;
 	setFilename: (filename: string) => void;
+	unsafeParameterDecoratorsEnabled: boolean;
+	setUnsafeParameterDecoratorsEnabled: (value: boolean) => void;
 }) {
 	const isScript = isScriptFilename(filename);
 
@@ -495,6 +512,21 @@ function SyntaxSettings({
 						disabled={isScript}
 					/>
 					<label htmlFor="jsx">JSX</label>
+				</div>
+
+				<div className="field-row">
+					<input
+						id="parameter-decorators"
+						name="parameter-decorators"
+						type="checkbox"
+						checked={unsafeParameterDecoratorsEnabled}
+						onChange={(e) =>
+							setUnsafeParameterDecoratorsEnabled(e.target.checked)
+						}
+					/>
+					<label htmlFor="parameter-decorators">
+						Parameter decorators enabled
+					</label>
 				</div>
 			</section>
 		</>
