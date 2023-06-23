@@ -185,7 +185,12 @@ fn add_file_if_supported(files: &mut TestCaseFiles, name: String, content: Strin
             source_type = source_type.with_module_kind(ModuleKind::Script);
         }
 
-        files.add(name, content, source_type, JsParserOptions::default())
+        files.add(
+            name,
+            content,
+            source_type,
+            JsParserOptions::default().with_parse_class_parameter_decorators(),
+        )
     }
 }
 

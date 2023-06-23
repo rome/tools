@@ -2697,22 +2697,24 @@ impl JsFormalParameter {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> JsFormalParameterFields {
         JsFormalParameterFields {
+            decorators: self.decorators(),
             binding: self.binding(),
             question_mark_token: self.question_mark_token(),
             type_annotation: self.type_annotation(),
             initializer: self.initializer(),
         }
     }
+    pub fn decorators(&self) -> JsDecoratorList { support::list(&self.syntax, 0usize) }
     pub fn binding(&self) -> SyntaxResult<AnyJsBindingPattern> {
-        support::required_node(&self.syntax, 0usize)
+        support::required_node(&self.syntax, 1usize)
     }
     pub fn question_mark_token(&self) -> Option<SyntaxToken> {
-        support::token(&self.syntax, 1usize)
+        support::token(&self.syntax, 2usize)
     }
     pub fn type_annotation(&self) -> Option<TsTypeAnnotation> {
-        support::node(&self.syntax, 2usize)
+        support::node(&self.syntax, 3usize)
     }
-    pub fn initializer(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 3usize) }
+    pub fn initializer(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 4usize) }
 }
 #[cfg(feature = "serde")]
 impl Serialize for JsFormalParameter {
@@ -2725,6 +2727,7 @@ impl Serialize for JsFormalParameter {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsFormalParameterFields {
+    pub decorators: JsDecoratorList,
     pub binding: SyntaxResult<AnyJsBindingPattern>,
     pub question_mark_token: Option<SyntaxToken>,
     pub type_annotation: Option<TsTypeAnnotation>,
@@ -5302,19 +5305,21 @@ impl JsRestParameter {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> JsRestParameterFields {
         JsRestParameterFields {
+            decorators: self.decorators(),
             dotdotdot_token: self.dotdotdot_token(),
             binding: self.binding(),
             type_annotation: self.type_annotation(),
         }
     }
+    pub fn decorators(&self) -> JsDecoratorList { support::list(&self.syntax, 0usize) }
     pub fn dotdotdot_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 0usize)
+        support::required_token(&self.syntax, 1usize)
     }
     pub fn binding(&self) -> SyntaxResult<AnyJsBindingPattern> {
-        support::required_node(&self.syntax, 1usize)
+        support::required_node(&self.syntax, 2usize)
     }
     pub fn type_annotation(&self) -> Option<TsTypeAnnotation> {
-        support::node(&self.syntax, 2usize)
+        support::node(&self.syntax, 3usize)
     }
 }
 #[cfg(feature = "serde")]
@@ -5328,6 +5333,7 @@ impl Serialize for JsRestParameter {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsRestParameterFields {
+    pub decorators: JsDecoratorList,
     pub dotdotdot_token: SyntaxResult<SyntaxToken>,
     pub binding: SyntaxResult<AnyJsBindingPattern>,
     pub type_annotation: Option<TsTypeAnnotation>,
@@ -10816,15 +10822,17 @@ impl TsPropertyParameter {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> TsPropertyParameterFields {
         TsPropertyParameterFields {
+            decorators: self.decorators(),
             modifiers: self.modifiers(),
             formal_parameter: self.formal_parameter(),
         }
     }
+    pub fn decorators(&self) -> JsDecoratorList { support::list(&self.syntax, 0usize) }
     pub fn modifiers(&self) -> TsPropertyParameterModifierList {
-        support::list(&self.syntax, 0usize)
+        support::list(&self.syntax, 1usize)
     }
     pub fn formal_parameter(&self) -> SyntaxResult<AnyJsFormalParameter> {
-        support::required_node(&self.syntax, 1usize)
+        support::required_node(&self.syntax, 2usize)
     }
 }
 #[cfg(feature = "serde")]
@@ -10838,6 +10846,7 @@ impl Serialize for TsPropertyParameter {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsPropertyParameterFields {
+    pub decorators: JsDecoratorList,
     pub modifiers: TsPropertyParameterModifierList,
     pub formal_parameter: SyntaxResult<AnyJsFormalParameter>,
 }
@@ -17456,6 +17465,7 @@ impl AstNode for JsFormalParameter {
 impl std::fmt::Debug for JsFormalParameter {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("JsFormalParameter")
+            .field("decorators", &self.decorators())
             .field("binding", &support::DebugSyntaxResult(self.binding()))
             .field(
                 "question_mark_token",
@@ -19539,6 +19549,7 @@ impl AstNode for JsRestParameter {
 impl std::fmt::Debug for JsRestParameter {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("JsRestParameter")
+            .field("decorators", &self.decorators())
             .field(
                 "dotdotdot_token",
                 &support::DebugSyntaxResult(self.dotdotdot_token()),
@@ -24137,6 +24148,7 @@ impl AstNode for TsPropertyParameter {
 impl std::fmt::Debug for TsPropertyParameter {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("TsPropertyParameter")
+            .field("decorators", &self.decorators())
             .field("modifiers", &self.modifiers())
             .field(
                 "formal_parameter",

@@ -186,6 +186,7 @@ JsModule {
                 l_paren_token: L_PAREN@173..174 "(" [] [],
                 items: JsParameterList [
                     JsFormalParameter {
+                        decorators: JsDecoratorList [],
                         binding: JsBogusBinding {
                             items: [
                                 IDENT@174..179 "await" [] [],
@@ -218,6 +219,7 @@ JsModule {
                 l_paren_token: L_PAREN@197..198 "(" [] [],
                 items: JsParameterList [
                     JsFormalParameter {
+                        decorators: JsDecoratorList [],
                         binding: JsBogusBinding {
                             items: [
                                 IDENT@198..203 "yield" [] [],
@@ -391,11 +393,12 @@ JsModule {
         0: L_PAREN@173..174 "(" [] []
         1: JS_PARAMETER_LIST@174..179
           0: JS_FORMAL_PARAMETER@174..179
-            0: JS_BOGUS_BINDING@174..179
+            0: JS_DECORATOR_LIST@174..174
+            1: JS_BOGUS_BINDING@174..179
               0: IDENT@174..179 "await" [] []
-            1: (empty)
             2: (empty)
             3: (empty)
+            4: (empty)
         2: R_PAREN@179..181 ")" [] [Whitespace(" ")]
       6: (empty)
       7: JS_FUNCTION_BODY@181..183
@@ -414,11 +417,12 @@ JsModule {
         0: L_PAREN@197..198 "(" [] []
         1: JS_PARAMETER_LIST@198..203
           0: JS_FORMAL_PARAMETER@198..203
-            0: JS_BOGUS_BINDING@198..203
+            0: JS_DECORATOR_LIST@198..198
+            1: JS_BOGUS_BINDING@198..203
               0: IDENT@198..203 "yield" [] []
-            1: (empty)
             2: (empty)
             3: (empty)
+            4: (empty)
         2: R_PAREN@203..205 ")" [] [Whitespace(" ")]
       6: (empty)
       7: JS_FUNCTION_BODY@205..207

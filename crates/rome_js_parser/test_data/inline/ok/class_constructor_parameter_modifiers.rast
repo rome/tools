@@ -80,12 +80,14 @@ JsModule {
                         l_paren_token: L_PAREN@82..83 "(" [] [],
                         parameters: JsConstructorParameterList [
                             TsPropertyParameter {
+                                decorators: JsDecoratorList [],
                                 modifiers: TsPropertyParameterModifierList [
                                     TsAccessibilityModifier {
                                         modifier_token: PRIVATE_KW@83..91 "private" [] [Whitespace(" ")],
                                     },
                                 ],
                                 formal_parameter: JsFormalParameter {
+                                    decorators: JsDecoratorList [],
                                     binding: JsIdentifierBinding {
                                         name_token: IDENT@91..95 "priv" [] [],
                                     },
@@ -101,12 +103,14 @@ JsModule {
                             },
                             COMMA@103..105 "," [] [Whitespace(" ")],
                             TsPropertyParameter {
+                                decorators: JsDecoratorList [],
                                 modifiers: TsPropertyParameterModifierList [
                                     TsAccessibilityModifier {
                                         modifier_token: PROTECTED_KW@105..115 "protected" [] [Whitespace(" ")],
                                     },
                                 ],
                                 formal_parameter: JsFormalParameter {
+                                    decorators: JsDecoratorList [],
                                     binding: JsIdentifierBinding {
                                         name_token: IDENT@115..119 "prot" [] [],
                                     },
@@ -122,12 +126,14 @@ JsModule {
                             },
                             COMMA@127..129 "," [] [Whitespace(" ")],
                             TsPropertyParameter {
+                                decorators: JsDecoratorList [],
                                 modifiers: TsPropertyParameterModifierList [
                                     TsAccessibilityModifier {
                                         modifier_token: PUBLIC_KW@129..136 "public" [] [Whitespace(" ")],
                                     },
                                 ],
                                 formal_parameter: JsFormalParameter {
+                                    decorators: JsDecoratorList [],
                                     binding: JsIdentifierBinding {
                                         name_token: IDENT@136..139 "pub" [] [],
                                     },
@@ -143,12 +149,14 @@ JsModule {
                             },
                             COMMA@147..149 "," [] [Whitespace(" ")],
                             TsPropertyParameter {
+                                decorators: JsDecoratorList [],
                                 modifiers: TsPropertyParameterModifierList [
                                     TsOverrideModifier {
                                         modifier_token: OVERRIDE_KW@149..158 "override" [] [Whitespace(" ")],
                                     },
                                 ],
                                 formal_parameter: JsFormalParameter {
+                                    decorators: JsDecoratorList [],
                                     binding: JsIdentifierBinding {
                                         name_token: IDENT@158..162 "name" [] [],
                                     },
@@ -164,12 +172,14 @@ JsModule {
                             },
                             COMMA@170..172 "," [] [Whitespace(" ")],
                             TsPropertyParameter {
+                                decorators: JsDecoratorList [],
                                 modifiers: TsPropertyParameterModifierList [
                                     TsReadonlyModifier {
                                         modifier_token: READONLY_KW@172..181 "readonly" [] [Whitespace(" ")],
                                     },
                                 ],
                                 formal_parameter: JsFormalParameter {
+                                    decorators: JsDecoratorList [],
                                     binding: JsIdentifierBinding {
                                         name_token: IDENT@181..185 "read" [] [],
                                     },
@@ -185,6 +195,7 @@ JsModule {
                             },
                             COMMA@193..195 "," [] [Whitespace(" ")],
                             TsPropertyParameter {
+                                decorators: JsDecoratorList [],
                                 modifiers: TsPropertyParameterModifierList [
                                     TsAccessibilityModifier {
                                         modifier_token: PROTECTED_KW@195..205 "protected" [] [Whitespace(" ")],
@@ -197,6 +208,7 @@ JsModule {
                                     },
                                 ],
                                 formal_parameter: JsFormalParameter {
+                                    decorators: JsDecoratorList [],
                                     binding: JsIdentifierBinding {
                                         name_token: IDENT@223..228 "other" [] [],
                                     },
@@ -307,92 +319,104 @@ JsModule {
             0: L_PAREN@82..83 "(" [] []
             1: JS_CONSTRUCTOR_PARAMETER_LIST@83..236
               0: TS_PROPERTY_PARAMETER@83..103
-                0: TS_PROPERTY_PARAMETER_MODIFIER_LIST@83..91
+                0: JS_DECORATOR_LIST@83..83
+                1: TS_PROPERTY_PARAMETER_MODIFIER_LIST@83..91
                   0: TS_ACCESSIBILITY_MODIFIER@83..91
                     0: PRIVATE_KW@83..91 "private" [] [Whitespace(" ")]
-                1: JS_FORMAL_PARAMETER@91..103
-                  0: JS_IDENTIFIER_BINDING@91..95
+                2: JS_FORMAL_PARAMETER@91..103
+                  0: JS_DECORATOR_LIST@91..91
+                  1: JS_IDENTIFIER_BINDING@91..95
                     0: IDENT@91..95 "priv" [] []
-                  1: (empty)
-                  2: TS_TYPE_ANNOTATION@95..103
+                  2: (empty)
+                  3: TS_TYPE_ANNOTATION@95..103
                     0: COLON@95..97 ":" [] [Whitespace(" ")]
                     1: TS_STRING_TYPE@97..103
                       0: STRING_KW@97..103 "string" [] []
-                  3: (empty)
+                  4: (empty)
               1: COMMA@103..105 "," [] [Whitespace(" ")]
               2: TS_PROPERTY_PARAMETER@105..127
-                0: TS_PROPERTY_PARAMETER_MODIFIER_LIST@105..115
+                0: JS_DECORATOR_LIST@105..105
+                1: TS_PROPERTY_PARAMETER_MODIFIER_LIST@105..115
                   0: TS_ACCESSIBILITY_MODIFIER@105..115
                     0: PROTECTED_KW@105..115 "protected" [] [Whitespace(" ")]
-                1: JS_FORMAL_PARAMETER@115..127
-                  0: JS_IDENTIFIER_BINDING@115..119
+                2: JS_FORMAL_PARAMETER@115..127
+                  0: JS_DECORATOR_LIST@115..115
+                  1: JS_IDENTIFIER_BINDING@115..119
                     0: IDENT@115..119 "prot" [] []
-                  1: (empty)
-                  2: TS_TYPE_ANNOTATION@119..127
+                  2: (empty)
+                  3: TS_TYPE_ANNOTATION@119..127
                     0: COLON@119..121 ":" [] [Whitespace(" ")]
                     1: TS_STRING_TYPE@121..127
                       0: STRING_KW@121..127 "string" [] []
-                  3: (empty)
+                  4: (empty)
               3: COMMA@127..129 "," [] [Whitespace(" ")]
               4: TS_PROPERTY_PARAMETER@129..147
-                0: TS_PROPERTY_PARAMETER_MODIFIER_LIST@129..136
+                0: JS_DECORATOR_LIST@129..129
+                1: TS_PROPERTY_PARAMETER_MODIFIER_LIST@129..136
                   0: TS_ACCESSIBILITY_MODIFIER@129..136
                     0: PUBLIC_KW@129..136 "public" [] [Whitespace(" ")]
-                1: JS_FORMAL_PARAMETER@136..147
-                  0: JS_IDENTIFIER_BINDING@136..139
+                2: JS_FORMAL_PARAMETER@136..147
+                  0: JS_DECORATOR_LIST@136..136
+                  1: JS_IDENTIFIER_BINDING@136..139
                     0: IDENT@136..139 "pub" [] []
-                  1: (empty)
-                  2: TS_TYPE_ANNOTATION@139..147
+                  2: (empty)
+                  3: TS_TYPE_ANNOTATION@139..147
                     0: COLON@139..141 ":" [] [Whitespace(" ")]
                     1: TS_STRING_TYPE@141..147
                       0: STRING_KW@141..147 "string" [] []
-                  3: (empty)
+                  4: (empty)
               5: COMMA@147..149 "," [] [Whitespace(" ")]
               6: TS_PROPERTY_PARAMETER@149..170
-                0: TS_PROPERTY_PARAMETER_MODIFIER_LIST@149..158
+                0: JS_DECORATOR_LIST@149..149
+                1: TS_PROPERTY_PARAMETER_MODIFIER_LIST@149..158
                   0: TS_OVERRIDE_MODIFIER@149..158
                     0: OVERRIDE_KW@149..158 "override" [] [Whitespace(" ")]
-                1: JS_FORMAL_PARAMETER@158..170
-                  0: JS_IDENTIFIER_BINDING@158..162
+                2: JS_FORMAL_PARAMETER@158..170
+                  0: JS_DECORATOR_LIST@158..158
+                  1: JS_IDENTIFIER_BINDING@158..162
                     0: IDENT@158..162 "name" [] []
-                  1: (empty)
-                  2: TS_TYPE_ANNOTATION@162..170
+                  2: (empty)
+                  3: TS_TYPE_ANNOTATION@162..170
                     0: COLON@162..164 ":" [] [Whitespace(" ")]
                     1: TS_STRING_TYPE@164..170
                       0: STRING_KW@164..170 "string" [] []
-                  3: (empty)
+                  4: (empty)
               7: COMMA@170..172 "," [] [Whitespace(" ")]
               8: TS_PROPERTY_PARAMETER@172..193
-                0: TS_PROPERTY_PARAMETER_MODIFIER_LIST@172..181
+                0: JS_DECORATOR_LIST@172..172
+                1: TS_PROPERTY_PARAMETER_MODIFIER_LIST@172..181
                   0: TS_READONLY_MODIFIER@172..181
                     0: READONLY_KW@172..181 "readonly" [] [Whitespace(" ")]
-                1: JS_FORMAL_PARAMETER@181..193
-                  0: JS_IDENTIFIER_BINDING@181..185
+                2: JS_FORMAL_PARAMETER@181..193
+                  0: JS_DECORATOR_LIST@181..181
+                  1: JS_IDENTIFIER_BINDING@181..185
                     0: IDENT@181..185 "read" [] []
-                  1: (empty)
-                  2: TS_TYPE_ANNOTATION@185..193
+                  2: (empty)
+                  3: TS_TYPE_ANNOTATION@185..193
                     0: COLON@185..187 ":" [] [Whitespace(" ")]
                     1: TS_STRING_TYPE@187..193
                       0: STRING_KW@187..193 "string" [] []
-                  3: (empty)
+                  4: (empty)
               9: COMMA@193..195 "," [] [Whitespace(" ")]
               10: TS_PROPERTY_PARAMETER@195..236
-                0: TS_PROPERTY_PARAMETER_MODIFIER_LIST@195..223
+                0: JS_DECORATOR_LIST@195..195
+                1: TS_PROPERTY_PARAMETER_MODIFIER_LIST@195..223
                   0: TS_ACCESSIBILITY_MODIFIER@195..205
                     0: PROTECTED_KW@195..205 "protected" [] [Whitespace(" ")]
                   1: TS_OVERRIDE_MODIFIER@205..214
                     0: OVERRIDE_KW@205..214 "override" [] [Whitespace(" ")]
                   2: TS_READONLY_MODIFIER@214..223
                     0: READONLY_KW@214..223 "readonly" [] [Whitespace(" ")]
-                1: JS_FORMAL_PARAMETER@223..236
-                  0: JS_IDENTIFIER_BINDING@223..228
+                2: JS_FORMAL_PARAMETER@223..236
+                  0: JS_DECORATOR_LIST@223..223
+                  1: JS_IDENTIFIER_BINDING@223..228
                     0: IDENT@223..228 "other" [] []
-                  1: (empty)
-                  2: TS_TYPE_ANNOTATION@228..236
+                  2: (empty)
+                  3: TS_TYPE_ANNOTATION@228..236
                     0: COLON@228..230 ":" [] [Whitespace(" ")]
                     1: TS_STRING_TYPE@230..236
                       0: STRING_KW@230..236 "string" [] []
-                  3: (empty)
+                  4: (empty)
             2: R_PAREN@236..238 ")" [] [Whitespace(" ")]
           3: JS_FUNCTION_BODY@238..256
             0: L_CURLY@238..239 "{" [] []

@@ -1399,27 +1399,33 @@ impl JsForVariableDeclaration {
     }
 }
 impl JsFormalParameter {
-    pub fn with_binding(self, element: AnyJsBindingPattern) -> Self {
+    pub fn with_decorators(self, element: JsDecoratorList) -> Self {
         Self::unwrap_cast(
             self.syntax
                 .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
+    pub fn with_binding(self, element: AnyJsBindingPattern) -> Self {
+        Self::unwrap_cast(
+            self.syntax
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
+        )
+    }
     pub fn with_question_mark_token(self, element: Option<SyntaxToken>) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(element.map(|element| element.into()))),
+                .splice_slots(2usize..=2usize, once(element.map(|element| element.into()))),
         )
     }
     pub fn with_type_annotation(self, element: Option<TsTypeAnnotation>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
-            2usize..=2usize,
+            3usize..=3usize,
             once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_initializer(self, element: Option<JsInitializerClause>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
-            3usize..=3usize,
+            4usize..=4usize,
             once(element.map(|element| element.into_syntax().into())),
         ))
     }
@@ -2705,21 +2711,27 @@ impl JsRegexLiteralExpression {
     }
 }
 impl JsRestParameter {
+    pub fn with_decorators(self, element: JsDecoratorList) -> Self {
+        Self::unwrap_cast(
+            self.syntax
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
+        )
+    }
     pub fn with_dotdotdot_token(self, element: SyntaxToken) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into()))),
         )
     }
     pub fn with_binding(self, element: AnyJsBindingPattern) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_type_annotation(self, element: Option<TsTypeAnnotation>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
-            2usize..=2usize,
+            3usize..=3usize,
             once(element.map(|element| element.into_syntax().into())),
         ))
     }
@@ -5339,16 +5351,22 @@ impl TsPredicateReturnType {
     }
 }
 impl TsPropertyParameter {
-    pub fn with_modifiers(self, element: TsPropertyParameterModifierList) -> Self {
+    pub fn with_decorators(self, element: JsDecoratorList) -> Self {
         Self::unwrap_cast(
             self.syntax
                 .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
-    pub fn with_formal_parameter(self, element: AnyJsFormalParameter) -> Self {
+    pub fn with_modifiers(self, element: TsPropertyParameterModifierList) -> Self {
         Self::unwrap_cast(
             self.syntax
                 .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
+        )
+    }
+    pub fn with_formal_parameter(self, element: AnyJsFormalParameter) -> Self {
+        Self::unwrap_cast(
+            self.syntax
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
 }

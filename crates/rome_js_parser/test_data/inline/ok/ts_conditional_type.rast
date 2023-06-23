@@ -510,6 +510,7 @@ JsModule {
                             l_paren_token: L_PAREN@500..501 "(" [] [],
                             items: JsParameterList [
                                 JsRestParameter {
+                                    decorators: JsDecoratorList [],
                                     dotdotdot_token: DOT3@501..504 "..." [] [],
                                     binding: JsIdentifierBinding {
                                         name_token: IDENT@504..505 "a" [] [],
@@ -935,10 +936,11 @@ JsModule {
               0: L_PAREN@500..501 "(" [] []
               1: JS_PARAMETER_LIST@501..512
                 0: JS_REST_PARAMETER@501..512
-                  0: DOT3@501..504 "..." [] []
-                  1: JS_IDENTIFIER_BINDING@504..505
+                  0: JS_DECORATOR_LIST@501..501
+                  1: DOT3@501..504 "..." [] []
+                  2: JS_IDENTIFIER_BINDING@504..505
                     0: IDENT@504..505 "a" [] []
-                  2: TS_TYPE_ANNOTATION@505..512
+                  3: TS_TYPE_ANNOTATION@505..512
                     0: COLON@505..507 ":" [] [Whitespace(" ")]
                     1: TS_ARRAY_TYPE@507..512
                       0: TS_ANY_TYPE@507..510

@@ -16,7 +16,7 @@ use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{
     decorator_must_precede_modifier, decorators_not_allowed, expected_binding, expected_expression,
     invalid_decorator_error, modifier_already_seen, modifier_cannot_be_used_with_modifier,
-    modifier_must_precede_modifier,
+    modifier_must_precede_modifier, parameter_decorators_not_allowed,
 };
 use crate::syntax::object::{
     is_at_literal_member_name, parse_computed_member_name, parse_literal_member_name,
@@ -227,10 +227,7 @@ impl From<ClassKind> for JsSyntaxKind {
 // class abstract {}
 #[inline]
 fn parse_class(p: &mut JsParser, kind: ClassKind, decorator_list: ParsedSyntax) -> CompletedMarker {
-    let decorator_list = decorator_list.or_else(|| {
-        let m = p.start();
-        Present(m.complete(p, JS_DECORATOR_LIST))
-    });
+    let decorator_list = decorator_list.or_else(|| empty_decorator_list(p));
 
     let m = decorator_list.precede(p);
     let is_abstract = p.eat(T![abstract]);
@@ -732,9 +729,18 @@ fn parse_class_member_impl(
         } else {
             let has_l_paren = p.expect(T!['(']);
             p.with_state(EnterParameters(SignatureFlags::empty()), |p| {
+                let decorator_list = parse_parameter_decorators(p);
+
+                // test ts ts_decorator_on_class_setter
+                // class A {
+                //     set val(@dec x) {}
+                //     set val(@dec.fn() x) {}
+                //     set val(@dec() x) {}
+                // }
                 parse_formal_parameter(
                     p,
-                    ParameterContext::Setter,
+                    decorator_list,
+                    ParameterContext::ClassSetter,
                     ExpressionContext::default().and_object_expression_allowed(has_l_paren),
                 )
             })
@@ -1217,7 +1223,7 @@ fn parse_method_class_member_rest(
     } else {
         // Not perfect. It may turn out that this is a method overload without a body in which case
         // this isn't an implementation.
-        ParameterContext::Implementation
+        ParameterContext::ClassImplementation
     };
 
     parse_parameter_list(p, parameter_context, flags)
@@ -1543,7 +1549,16 @@ fn parse_constructor_parameter(p: &mut JsParser, context: ExpressionContext) -> 
     // class C {
     //     constructor(@foo readonly x: number) {}
     // }
-    skip_ts_decorators(p);
+    // class CC {
+    //     constructor(@foo @dec(arg) readonly x: number) {}
+    // }
+    // class CC {
+    //     constructor(@foo @dec.method(arg) readonly x: number) {}
+    // }
+    // class CCC {
+    //     constructor(@foo @dec.method(arg) private readonly x: number) {}
+    // }
+    let decorator_list = parse_parameter_decorators(p);
 
     if is_nth_at_modifier(p, 0, true) {
         // test ts ts_property_parameter
@@ -1553,14 +1568,17 @@ fn parse_constructor_parameter(p: &mut JsParser, context: ExpressionContext) -> 
         //
         // test_err ts ts_property_parameter_pattern
         // class A { constructor(private { x, y }, protected [a, b]) {} }
-        let property_parameter = p.start();
+        let property_parameter = decorator_list
+            .or_else(|| empty_decorator_list(p))
+            .precede(p);
 
         // test_err class_constructor_parameter_readonly
         // class B { constructor(readonly b) {} }
 
         let modifiers = parse_class_member_modifiers(p, true);
 
-        parse_formal_parameter(p, ParameterContext::ParameterProperty, context)
+        // we pass decorator list as Absent because TsPropertyParameter has its own decorator list
+        parse_formal_parameter(p, Absent, ParameterContext::ParameterProperty, context)
             .or_add_diagnostic(p, expected_binding);
 
         let kind = if modifiers.validate_and_complete(p, TS_PROPERTY_PARAMETER) {
@@ -1571,7 +1589,13 @@ fn parse_constructor_parameter(p: &mut JsParser, context: ExpressionContext) -> 
 
         Present(property_parameter.complete(p, kind))
     } else {
-        parse_any_parameter(p, ParameterContext::Implementation, context).map(|mut parameter| {
+        parse_any_parameter(
+            p,
+            decorator_list,
+            ParameterContext::ClassImplementation,
+            context,
+        )
+        .map(|mut parameter| {
             // test_err ts ts_constructor_this_parameter
             // class C { constructor(this) {} }
             if parameter.kind(p) == TS_THIS_PARAMETER {
@@ -2612,12 +2636,36 @@ pub(crate) fn parse_decorators(p: &mut JsParser) -> ParsedSyntax {
     }
 
     let decorators = p.start();
+    let mut progress = ParserProgress::default();
 
     while p.at(T![@]) {
+        progress.assert_progressing(p);
+
         parse_decorator(p).ok();
     }
 
     Present(decorators.complete(p, JS_DECORATOR_LIST))
+}
+
+pub(crate) fn parse_parameter_decorators(p: &mut JsParser) -> ParsedSyntax {
+    let decorator_list = parse_decorators(p);
+
+    if p.options().should_parse_parameter_decorators() {
+        decorator_list
+    } else {
+        decorator_list
+            .add_diagnostic_if_present(p, parameter_decorators_not_allowed)
+            .map(|mut decorator_list| {
+                decorator_list.change_to_bogus(p);
+                decorator_list
+            })
+            .into()
+    }
+}
+
+pub(crate) fn empty_decorator_list(p: &mut JsParser) -> ParsedSyntax {
+    let m = p.start();
+    Present(m.complete(p, JS_DECORATOR_LIST))
 }
 
 fn parse_decorator(p: &mut JsParser) -> ParsedSyntax {
@@ -2644,30 +2692,4 @@ fn parse_decorator(p: &mut JsParser) -> ParsedSyntax {
     }
 
     Present(m.complete(p, JS_DECORATOR))
-}
-
-/// Skips over any TypeScript decorator syntax.
-pub(crate) fn skip_ts_decorators(p: &mut JsParser) {
-    if !p.at(T![@]) {
-        return;
-    }
-
-    p.parse_as_skipped_trivia_tokens(|p| {
-        while p.at(T![@]) {
-            parse_decorator_bogus(p).ok();
-        }
-    });
-}
-
-fn parse_decorator_bogus(p: &mut JsParser) -> ParsedSyntax {
-    if p.at(T![@]) {
-        let m = p.start();
-        p.bump(T![@]);
-        parse_lhs_expr(p, ExpressionContext::default().and_in_decorator(true))
-            .or_add_diagnostic(p, expected_expression);
-
-        Present(m.complete(p, JS_BOGUS))
-    } else {
-        Absent
-    }
 }

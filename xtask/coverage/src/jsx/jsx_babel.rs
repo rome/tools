@@ -36,13 +36,15 @@ impl TestCase for BabelJsxTestCase {
 
     fn run(&self) -> TestRunOutcome {
         let source_type = JsFileSource::jsx().with_module_kind(ModuleKind::Script);
+        let options = JsParserOptions::default().with_parse_class_parameter_decorators();
+
         let files = TestCaseFiles::single(
             self.name().to_string(),
             self.code.clone(),
             source_type,
-            JsParserOptions::default(),
+            options.clone(),
         );
-        let result = parse(&self.code, source_type, JsParserOptions::default());
+        let result = parse(&self.code, source_type, options);
 
         if result.diagnostics().is_empty() {
             if let Some(bogus) = result

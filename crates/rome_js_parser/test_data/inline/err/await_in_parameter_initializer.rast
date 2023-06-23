@@ -14,6 +14,7 @@ JsModule {
                 l_paren_token: L_PAREN@19..20 "(" [] [],
                 items: JsParameterList [
                     JsFormalParameter {
+                        decorators: JsDecoratorList [],
                         binding: JsIdentifierBinding {
                             name_token: IDENT@20..22 "a" [] [Whitespace(" ")],
                         },
@@ -65,6 +66,7 @@ JsModule {
                 l_paren_token: L_PAREN@52..53 "(" [] [],
                 items: JsParameterList [
                     JsFormalParameter {
+                        decorators: JsDecoratorList [],
                         binding: JsIdentifierBinding {
                             name_token: IDENT@53..55 "a" [] [Whitespace(" ")],
                         },
@@ -123,11 +125,12 @@ JsModule {
         0: L_PAREN@19..20 "(" [] []
         1: JS_PARAMETER_LIST@20..33
           0: JS_FORMAL_PARAMETER@20..33
-            0: JS_IDENTIFIER_BINDING@20..22
+            0: JS_DECORATOR_LIST@20..20
+            1: JS_IDENTIFIER_BINDING@20..22
               0: IDENT@20..22 "a" [] [Whitespace(" ")]
-            1: (empty)
             2: (empty)
-            3: JS_INITIALIZER_CLAUSE@22..33
+            3: (empty)
+            4: JS_INITIALIZER_CLAUSE@22..33
               0: EQ@22..24 "=" [] [Whitespace(" ")]
               1: JS_BOGUS_EXPRESSION@24..33
                 0: AWAIT_KW@24..30 "await" [] [Whitespace(" ")]
@@ -159,11 +162,12 @@ JsModule {
         0: L_PAREN@52..53 "(" [] []
         1: JS_PARAMETER_LIST@53..66
           0: JS_FORMAL_PARAMETER@53..66
-            0: JS_IDENTIFIER_BINDING@53..55
+            0: JS_DECORATOR_LIST@53..53
+            1: JS_IDENTIFIER_BINDING@53..55
               0: IDENT@53..55 "a" [] [Whitespace(" ")]
-            1: (empty)
             2: (empty)
-            3: JS_INITIALIZER_CLAUSE@55..66
+            3: (empty)
+            4: JS_INITIALIZER_CLAUSE@55..66
               0: EQ@55..57 "=" [] [Whitespace(" ")]
               1: JS_BOGUS_EXPRESSION@57..66
                 0: AWAIT_KW@57..63 "await" [] [Whitespace(" ")]

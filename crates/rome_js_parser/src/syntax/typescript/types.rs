@@ -11,8 +11,9 @@ use crate::syntax::function::{
     parse_formal_parameter, parse_parameter_list, skip_parameter_start, ParameterContext,
 };
 use crate::syntax::js_parse_error::{
-    expected_identifier, expected_object_member_name, expected_parameter, expected_parameters,
-    expected_property_or_signature, modifier_already_seen, modifier_must_precede_modifier,
+    decorators_not_allowed, expected_identifier, expected_object_member_name, expected_parameter,
+    expected_parameters, expected_property_or_signature, modifier_already_seen,
+    modifier_must_precede_modifier,
 };
 use crate::syntax::object::{
     is_at_object_member_name, is_nth_at_type_member_name, parse_object_member_name,
@@ -30,6 +31,7 @@ use smallvec::SmallVec;
 
 use crate::lexer::{LexContext, ReLexContext};
 use crate::span::Span;
+use crate::syntax::class::parse_decorators;
 use crate::JsSyntaxFeature::TypeScript;
 use crate::{Absent, JsParser, ParseRecovery, ParsedSyntax, Present};
 use rome_js_syntax::JsSyntaxKind::TS_TYPE_ANNOTATION;
@@ -1210,8 +1212,27 @@ fn parse_ts_setter_signature_type_member(p: &mut JsParser) -> ParsedSyntax {
     p.expect(T![set]);
     parse_object_member_name(p).or_add_diagnostic(p, expected_object_member_name);
     p.expect(T!['(']);
-    parse_formal_parameter(p, ParameterContext::Setter, ExpressionContext::default())
-        .or_add_diagnostic(p, expected_parameter);
+
+    // test_err ts ts_decorator_setter_signature
+    // type A = { set a(@dec b: number) }
+    // type B = { set a(@dec(val) b) }
+    // type AA = { set a(@dec b: number) }
+    // type BB = { set a(@dec(val) b) }
+    let decorator_list = parse_decorators(p)
+        .add_diagnostic_if_present(p, decorators_not_allowed)
+        .map(|mut decorator_list| {
+            decorator_list.change_to_bogus(p);
+            decorator_list
+        })
+        .into();
+
+    parse_formal_parameter(
+        p,
+        decorator_list,
+        ParameterContext::Setter,
+        ExpressionContext::default(),
+    )
+    .or_add_diagnostic(p, expected_parameter);
     p.expect(T![')']);
     parse_ts_type_member_semi(p);
     Present(m.complete(p, TS_SETTER_SIGNATURE_TYPE_MEMBER))

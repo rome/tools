@@ -97,14 +97,15 @@ impl Test262TestCase {
             .filter(|neg| neg.phase == Phase::Parse)
             .is_some();
 
+        let options = JsParserOptions::default().with_parse_class_parameter_decorators();
         let files = TestCaseFiles::single(
             self.name.clone(),
             self.code.clone(),
             source_type,
-            JsParserOptions::default(),
+            options.clone(),
         );
 
-        match parse(&code, source_type, JsParserOptions::default()).ok() {
+        match parse(&code, source_type, options).ok() {
             Ok(root) if !should_fail => {
                 if let Some(bogus) = root
                     .syntax()

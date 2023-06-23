@@ -16,6 +16,7 @@ JsModule {
                     l_paren_token: L_PAREN@20..21 "(" [] [],
                     items: JsParameterList [
                         JsFormalParameter {
+                            decorators: JsDecoratorList [],
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@21..22 "a" [] [],
                             },
@@ -55,6 +56,7 @@ JsModule {
                     l_paren_token: L_PAREN@61..62 "(" [] [],
                     items: JsParameterList [
                         JsFormalParameter {
+                            decorators: JsDecoratorList [],
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@62..63 "a" [] [],
                             },
@@ -122,14 +124,15 @@ JsModule {
           0: L_PAREN@20..21 "(" [] []
           1: JS_PARAMETER_LIST@21..30
             0: JS_FORMAL_PARAMETER@21..30
-              0: JS_IDENTIFIER_BINDING@21..22
+              0: JS_DECORATOR_LIST@21..21
+              1: JS_IDENTIFIER_BINDING@21..22
                 0: IDENT@21..22 "a" [] []
-              1: (empty)
-              2: TS_TYPE_ANNOTATION@22..30
+              2: (empty)
+              3: TS_TYPE_ANNOTATION@22..30
                 0: COLON@22..24 ":" [] [Whitespace(" ")]
                 1: TS_STRING_TYPE@24..30
                   0: STRING_KW@24..30 "string" [] []
-              3: (empty)
+              4: (empty)
           2: R_PAREN@30..31 ")" [] []
         5: TS_RETURN_TYPE_ANNOTATION@31..39
           0: COLON@31..33 ":" [] [Whitespace(" ")]
@@ -150,10 +153,11 @@ JsModule {
           0: L_PAREN@61..62 "(" [] []
           1: JS_PARAMETER_LIST@62..83
             0: JS_FORMAL_PARAMETER@62..83
-              0: JS_IDENTIFIER_BINDING@62..63
+              0: JS_DECORATOR_LIST@62..62
+              1: JS_IDENTIFIER_BINDING@62..63
                 0: IDENT@62..63 "a" [] []
-              1: (empty)
-              2: TS_TYPE_ANNOTATION@63..83
+              2: (empty)
+              3: TS_TYPE_ANNOTATION@63..83
                 0: COLON@63..65 ":" [] [Whitespace(" ")]
                 1: TS_UNION_TYPE@65..83
                   0: (empty)
@@ -163,7 +167,7 @@ JsModule {
                     1: PIPE@72..74 "|" [] [Whitespace(" ")]
                     2: TS_UNDEFINED_TYPE@74..83
                       0: UNDEFINED_KW@74..83 "undefined" [] []
-              3: (empty)
+              4: (empty)
           2: R_PAREN@83..84 ")" [] []
         6: TS_RETURN_TYPE_ANNOTATION@84..93
           0: COLON@84..86 ":" [] [Whitespace(" ")]

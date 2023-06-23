@@ -15,6 +15,7 @@ JsModule {
                 items: JsParameterList [
                     JsBogusParameter {
                         items: [
+                            JsDecoratorList [],
                             JsIdentifierBinding {
                                 name_token: IDENT@11..12 "x" [] [],
                             },
@@ -52,6 +53,7 @@ JsModule {
                 items: JsParameterList [
                     JsBogusParameter {
                         items: [
+                            JsDecoratorList [],
                             JsIdentifierBinding {
                                 name_token: IDENT@36..37 "x" [] [],
                             },
@@ -88,9 +90,10 @@ JsModule {
         0: L_PAREN@10..11 "(" [] []
         1: JS_PARAMETER_LIST@11..20
           0: JS_BOGUS_PARAMETER@11..20
-            0: JS_IDENTIFIER_BINDING@11..12
+            0: JS_DECORATOR_LIST@11..11
+            1: JS_IDENTIFIER_BINDING@11..12
               0: IDENT@11..12 "x" [] []
-            1: JS_BOGUS@12..20
+            2: JS_BOGUS@12..20
               0: COLON@12..14 ":" [] [Whitespace(" ")]
               1: TS_STRING_TYPE@14..20
                 0: STRING_KW@14..20 "string" [] []
@@ -112,9 +115,10 @@ JsModule {
         0: L_PAREN@35..36 "(" [] []
         1: JS_PARAMETER_LIST@36..38
           0: JS_BOGUS_PARAMETER@36..38
-            0: JS_IDENTIFIER_BINDING@36..37
+            0: JS_DECORATOR_LIST@36..36
+            1: JS_IDENTIFIER_BINDING@36..37
               0: IDENT@36..37 "x" [] []
-            1: QUESTION@37..38 "?" [] []
+            2: QUESTION@37..38 "?" [] []
         2: R_PAREN@38..40 ")" [] [Whitespace(" ")]
       6: (empty)
       7: JS_FUNCTION_BODY@40..42

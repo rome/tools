@@ -35,7 +35,6 @@ pub struct JsParser<'source> {
     pub source_type: JsFileSource,
     context: ParserContext<JsSyntaxKind>,
     source: JsTokenSource<'source>,
-    #[allow(dead_code)]
     options: JsParserOptions,
 }
 
@@ -55,6 +54,10 @@ impl<'source> JsParser<'source> {
 
     pub(crate) fn state(&self) -> &ParserState {
         &self.state
+    }
+
+    pub(crate) fn options(&self) -> &JsParserOptions {
+        &self.options
     }
 
     pub(crate) fn state_mut(&mut self) -> &mut ParserState {

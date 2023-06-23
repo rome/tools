@@ -33,6 +33,7 @@ impl TestCase for SymbolsMicrosoftTestCase {
     }
 
     fn run(&self) -> TestRunOutcome {
+        let options = JsParserOptions::default().with_parse_class_parameter_decorators();
         let symbols = check_file_encoding(&self.path).unwrap();
         let expected = load_symbols_file(&symbols);
 
@@ -63,7 +64,7 @@ impl TestCase for SymbolsMicrosoftTestCase {
                             self.name.clone(),
                             "".to_string(),
                             JsFileSource::tsx(),
-                            JsParserOptions::default(),
+                            options,
                         ),
                         errors: vec![],
                     }
@@ -75,10 +76,10 @@ impl TestCase for SymbolsMicrosoftTestCase {
             self.name.clone(),
             code.clone(),
             JsFileSource::tsx(),
-            JsParserOptions::default(),
+            options.clone(),
         );
 
-        let r = rome_js_parser::parse(&code, JsFileSource::tsx(), JsParserOptions::default());
+        let r = rome_js_parser::parse(&code, JsFileSource::tsx(), options);
         let mut actual: Vec<_> = rome_js_semantic::semantic_events(r.syntax())
             .into_iter()
             .filter(|x| {

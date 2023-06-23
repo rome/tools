@@ -21,7 +21,7 @@
 	"const doSomething = () => { if (test) { var foo = 42; } }",
 	"class C { constructor() { if(test) { var foo; } } }",
 	"class C { get x() { if(test) { var foo; } } }",
-	"class C { set x() { if(test) { var foo; } } }",
+	"class C { set x(value) { if(test) { var foo; } } }",
 	"class C { method() { if(test) { var foo; } } }",
 	"class C { static { if (test) { function foo() {} } } }",
 	"class C { static { if (test) { var foo; } } }",

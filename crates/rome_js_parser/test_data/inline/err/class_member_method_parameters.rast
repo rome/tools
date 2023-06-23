@@ -27,6 +27,7 @@ JsModule {
                         l_paren_token: L_PAREN@13..14 "(" [] [],
                         items: JsParameterList [
                             JsFormalParameter {
+                                decorators: JsDecoratorList [],
                                 binding: JsIdentifierBinding {
                                     name_token: IDENT@14..16 "a" [] [Whitespace(" ")],
                                 },
@@ -36,6 +37,7 @@ JsModule {
                             },
                             missing separator,
                             JsFormalParameter {
+                                decorators: JsDecoratorList [],
                                 binding: JsObjectBindingPattern {
                                     l_curly_token: L_CURLY@16..17 "{" [] [],
                                     properties: JsObjectBindingPatternPropertyList [],
@@ -91,20 +93,22 @@ JsModule {
             0: L_PAREN@13..14 "(" [] []
             1: JS_PARAMETER_LIST@14..20
               0: JS_FORMAL_PARAMETER@14..16
-                0: JS_IDENTIFIER_BINDING@14..16
+                0: JS_DECORATOR_LIST@14..14
+                1: JS_IDENTIFIER_BINDING@14..16
                   0: IDENT@14..16 "a" [] [Whitespace(" ")]
-                1: (empty)
                 2: (empty)
                 3: (empty)
+                4: (empty)
               1: (empty)
               2: JS_FORMAL_PARAMETER@16..19
-                0: JS_OBJECT_BINDING_PATTERN@16..19
+                0: JS_DECORATOR_LIST@16..16
+                1: JS_OBJECT_BINDING_PATTERN@16..19
                   0: L_CURLY@16..17 "{" [] []
                   1: JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST@17..17
                   2: R_CURLY@17..19 "}" [] [Whitespace(" ")]
-                1: (empty)
                 2: (empty)
                 3: (empty)
+                4: (empty)
               3: (empty)
               4: JS_BOGUS_PARAMETER@19..20
                 0: R_CURLY@19..20 "}" [] []

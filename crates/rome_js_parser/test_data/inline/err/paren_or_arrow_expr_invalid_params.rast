@@ -36,6 +36,7 @@ JsModule {
                     l_paren_token: L_PAREN@13..15 "(" [Newline("\n")] [],
                     items: JsParameterList [
                         JsFormalParameter {
+                            decorators: JsDecoratorList [],
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@15..16 "a" [] [],
                             },
@@ -47,6 +48,7 @@ JsModule {
                         missing element,
                         COMMA@18..19 "," [] [],
                         JsFormalParameter {
+                            decorators: JsDecoratorList [],
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@19..20 "b" [] [],
                             },
@@ -76,6 +78,7 @@ JsModule {
                     l_paren_token: L_PAREN@27..29 "(" [Newline("\n")] [],
                     items: JsParameterList [
                         JsFormalParameter {
+                            decorators: JsDecoratorList [],
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@29..30 "a" [] [],
                             },
@@ -85,6 +88,7 @@ JsModule {
                         },
                         COMMA@30..32 "," [] [Whitespace(" ")],
                         JsFormalParameter {
+                            decorators: JsDecoratorList [],
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@32..33 "b" [] [],
                             },
@@ -110,6 +114,7 @@ JsModule {
                     items: JsParameterList [
                         JsBogusParameter {
                             items: [
+                                JsDecoratorList [],
                                 JsIdentifierBinding {
                                     name_token: IDENT@40..41 "a" [] [],
                                 },
@@ -140,6 +145,7 @@ JsModule {
                     l_paren_token: L_PAREN@50..52 "(" [Newline("\n")] [],
                     items: JsParameterList [
                         JsFormalParameter {
+                            decorators: JsDecoratorList [],
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@52..53 "a" [] [],
                             },
@@ -149,6 +155,7 @@ JsModule {
                         },
                         COMMA@53..55 "," [] [Whitespace(" ")],
                         JsFormalParameter {
+                            decorators: JsDecoratorList [],
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@55..56 "b" [] [],
                             },
@@ -203,20 +210,22 @@ JsModule {
           0: L_PAREN@13..15 "(" [Newline("\n")] []
           1: JS_PARAMETER_LIST@15..20
             0: JS_FORMAL_PARAMETER@15..16
-              0: JS_IDENTIFIER_BINDING@15..16
+              0: JS_DECORATOR_LIST@15..15
+              1: JS_IDENTIFIER_BINDING@15..16
                 0: IDENT@15..16 "a" [] []
-              1: (empty)
               2: (empty)
               3: (empty)
+              4: (empty)
             1: COMMA@16..18 "," [] [Whitespace(" ")]
             2: (empty)
             3: COMMA@18..19 "," [] []
             4: JS_FORMAL_PARAMETER@19..20
-              0: JS_IDENTIFIER_BINDING@19..20
+              0: JS_DECORATOR_LIST@19..19
+              1: JS_IDENTIFIER_BINDING@19..20
                 0: IDENT@19..20 "b" [] []
-              1: (empty)
               2: (empty)
               3: (empty)
+              4: (empty)
           2: R_PAREN@20..22 ")" [] [Whitespace(" ")]
         3: (empty)
         4: FAT_ARROW@22..25 "=>" [] [Whitespace(" ")]
@@ -234,18 +243,20 @@ JsModule {
           0: L_PAREN@27..29 "(" [Newline("\n")] []
           1: JS_PARAMETER_LIST@29..33
             0: JS_FORMAL_PARAMETER@29..30
-              0: JS_IDENTIFIER_BINDING@29..30
+              0: JS_DECORATOR_LIST@29..29
+              1: JS_IDENTIFIER_BINDING@29..30
                 0: IDENT@29..30 "a" [] []
-              1: (empty)
               2: (empty)
               3: (empty)
+              4: (empty)
             1: COMMA@30..32 "," [] [Whitespace(" ")]
             2: JS_FORMAL_PARAMETER@32..33
-              0: JS_IDENTIFIER_BINDING@32..33
+              0: JS_DECORATOR_LIST@32..32
+              1: JS_IDENTIFIER_BINDING@32..33
                 0: IDENT@32..33 "b" [] []
-              1: (empty)
               2: (empty)
               3: (empty)
+              4: (empty)
           2: R_PAREN@33..35 ")" [] [Whitespace(" ")]
         3: (empty)
         4: FAT_ARROW@35..37 "=>" [] []
@@ -259,9 +270,10 @@ JsModule {
           0: L_PAREN@38..40 "(" [Newline("\n")] []
           1: JS_PARAMETER_LIST@40..49
             0: JS_BOGUS_PARAMETER@40..49
-              0: JS_IDENTIFIER_BINDING@40..41
+              0: JS_DECORATOR_LIST@40..40
+              1: JS_IDENTIFIER_BINDING@40..41
                 0: IDENT@40..41 "a" [] []
-              1: JS_BOGUS@41..49
+              2: JS_BOGUS@41..49
                 0: COLON@41..43 ":" [] [Whitespace(" ")]
                 1: TS_STRING_TYPE@43..49
                   0: STRING_KW@43..49 "string" [] []
@@ -278,18 +290,20 @@ JsModule {
           0: L_PAREN@50..52 "(" [Newline("\n")] []
           1: JS_PARAMETER_LIST@52..56
             0: JS_FORMAL_PARAMETER@52..53
-              0: JS_IDENTIFIER_BINDING@52..53
+              0: JS_DECORATOR_LIST@52..52
+              1: JS_IDENTIFIER_BINDING@52..53
                 0: IDENT@52..53 "a" [] []
-              1: (empty)
               2: (empty)
               3: (empty)
+              4: (empty)
             1: COMMA@53..55 "," [] [Whitespace(" ")]
             2: JS_FORMAL_PARAMETER@55..56
-              0: JS_IDENTIFIER_BINDING@55..56
+              0: JS_DECORATOR_LIST@55..55
+              1: JS_IDENTIFIER_BINDING@55..56
                 0: IDENT@55..56 "b" [] []
-              1: (empty)
               2: (empty)
               3: (empty)
+              4: (empty)
           2: R_PAREN@56..57 ")" [] []
         3: (empty)
         4: FAT_ARROW@57..62 "=>" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")]

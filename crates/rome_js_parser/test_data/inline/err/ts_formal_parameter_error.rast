@@ -14,6 +14,7 @@ JsModule {
                 l_paren_token: L_PAREN@10..11 "(" [] [],
                 items: JsParameterList [
                     JsFormalParameter {
+                        decorators: JsDecoratorList [],
                         binding: JsIdentifierBinding {
                             name_token: IDENT@11..12 "x" [] [],
                         },
@@ -55,6 +56,7 @@ JsModule {
                 items: JsParameterList [
                     JsBogusParameter {
                         items: [
+                            JsDecoratorList [],
                             DOT3@46..49 "..." [] [],
                             JsIdentifierBinding {
                                 name_token: IDENT@49..53 "rest" [] [],
@@ -101,6 +103,7 @@ JsModule {
                 items: JsParameterList [
                     JsBogusParameter {
                         items: [
+                            JsDecoratorList [],
                             DOT3@88..91 "..." [] [],
                             JsIdentifierBinding {
                                 name_token: IDENT@91..95 "rest" [] [],
@@ -109,6 +112,7 @@ JsModule {
                     },
                     COMMA@95..97 "," [] [Whitespace(" ")],
                     JsFormalParameter {
+                        decorators: JsDecoratorList [],
                         binding: JsIdentifierBinding {
                             name_token: IDENT@97..98 "b" [] [],
                         },
@@ -151,14 +155,15 @@ JsModule {
         0: L_PAREN@10..11 "(" [] []
         1: JS_PARAMETER_LIST@11..30
           0: JS_FORMAL_PARAMETER@11..30
-            0: JS_IDENTIFIER_BINDING@11..12
+            0: JS_DECORATOR_LIST@11..11
+            1: JS_IDENTIFIER_BINDING@11..12
               0: IDENT@11..12 "x" [] []
-            1: QUESTION@12..13 "?" [] []
-            2: TS_TYPE_ANNOTATION@13..22
+            2: QUESTION@12..13 "?" [] []
+            3: TS_TYPE_ANNOTATION@13..22
               0: COLON@13..15 ":" [] [Whitespace(" ")]
               1: TS_STRING_TYPE@15..22
                 0: STRING_KW@15..22 "string" [] [Whitespace(" ")]
-            3: JS_INITIALIZER_CLAUSE@22..30
+            4: JS_INITIALIZER_CLAUSE@22..30
               0: EQ@22..24 "=" [] [Whitespace(" ")]
               1: JS_STRING_LITERAL_EXPRESSION@24..30
                 0: JS_STRING_LITERAL@24..30 "\"test\"" [] []
@@ -180,17 +185,18 @@ JsModule {
         0: L_PAREN@45..46 "(" [] []
         1: JS_PARAMETER_LIST@46..72
           0: JS_BOGUS_PARAMETER@46..72
-            0: DOT3@46..49 "..." [] []
-            1: JS_IDENTIFIER_BINDING@49..53
+            0: JS_DECORATOR_LIST@46..46
+            1: DOT3@46..49 "..." [] []
+            2: JS_IDENTIFIER_BINDING@49..53
               0: IDENT@49..53 "rest" [] []
-            2: TS_TYPE_ANNOTATION@53..64
+            3: TS_TYPE_ANNOTATION@53..64
               0: COLON@53..55 ":" [] [Whitespace(" ")]
               1: TS_ARRAY_TYPE@55..64
                 0: TS_STRING_TYPE@55..61
                   0: STRING_KW@55..61 "string" [] []
                 1: L_BRACK@61..62 "[" [] []
                 2: R_BRACK@62..64 "]" [] [Whitespace(" ")]
-            3: JS_INITIALIZER_CLAUSE@64..72
+            4: JS_INITIALIZER_CLAUSE@64..72
               0: EQ@64..66 "=" [] [Whitespace(" ")]
               1: JS_STRING_LITERAL_EXPRESSION@66..72
                 0: JS_STRING_LITERAL@66..72 "\"init\"" [] []
@@ -212,19 +218,21 @@ JsModule {
         0: L_PAREN@87..88 "(" [] []
         1: JS_PARAMETER_LIST@88..106
           0: JS_BOGUS_PARAMETER@88..95
-            0: DOT3@88..91 "..." [] []
-            1: JS_IDENTIFIER_BINDING@91..95
+            0: JS_DECORATOR_LIST@88..88
+            1: DOT3@88..91 "..." [] []
+            2: JS_IDENTIFIER_BINDING@91..95
               0: IDENT@91..95 "rest" [] []
           1: COMMA@95..97 "," [] [Whitespace(" ")]
           2: JS_FORMAL_PARAMETER@97..106
-            0: JS_IDENTIFIER_BINDING@97..98
+            0: JS_DECORATOR_LIST@97..97
+            1: JS_IDENTIFIER_BINDING@97..98
               0: IDENT@97..98 "b" [] []
-            1: (empty)
-            2: TS_TYPE_ANNOTATION@98..106
+            2: (empty)
+            3: TS_TYPE_ANNOTATION@98..106
               0: COLON@98..100 ":" [] [Whitespace(" ")]
               1: TS_STRING_TYPE@100..106
                 0: STRING_KW@100..106 "string" [] []
-            3: (empty)
+            4: (empty)
         2: R_PAREN@106..108 ")" [] [Whitespace(" ")]
       6: (empty)
       7: JS_FUNCTION_BODY@108..110

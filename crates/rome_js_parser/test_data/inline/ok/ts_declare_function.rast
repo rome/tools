@@ -46,6 +46,7 @@ JsModule {
                     l_paren_token: L_PAREN@30..31 "(" [] [],
                     items: JsParameterList [
                         JsFormalParameter {
+                            decorators: JsDecoratorList [],
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@31..32 "a" [] [],
                             },
@@ -63,6 +64,7 @@ JsModule {
                         },
                         COMMA@35..37 "," [] [Whitespace(" ")],
                         JsFormalParameter {
+                            decorators: JsDecoratorList [],
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@37..38 "b" [] [],
                             },
@@ -106,6 +108,7 @@ JsModule {
                     l_paren_token: L_PAREN@69..70 "(" [] [],
                     items: JsParameterList [
                         JsFormalParameter {
+                            decorators: JsDecoratorList [],
                             binding: JsObjectBindingPattern {
                                 l_curly_token: L_CURLY@70..72 "{" [] [Whitespace(" ")],
                                 properties: JsObjectBindingPatternPropertyList [
@@ -223,28 +226,30 @@ JsModule {
           0: L_PAREN@30..31 "(" [] []
           1: JS_PARAMETER_LIST@31..41
             0: JS_FORMAL_PARAMETER@31..35
-              0: JS_IDENTIFIER_BINDING@31..32
+              0: JS_DECORATOR_LIST@31..31
+              1: JS_IDENTIFIER_BINDING@31..32
                 0: IDENT@31..32 "a" [] []
-              1: (empty)
-              2: TS_TYPE_ANNOTATION@32..35
+              2: (empty)
+              3: TS_TYPE_ANNOTATION@32..35
                 0: COLON@32..34 ":" [] [Whitespace(" ")]
                 1: TS_REFERENCE_TYPE@34..35
                   0: JS_REFERENCE_IDENTIFIER@34..35
                     0: IDENT@34..35 "A" [] []
                   1: (empty)
-              3: (empty)
+              4: (empty)
             1: COMMA@35..37 "," [] [Whitespace(" ")]
             2: JS_FORMAL_PARAMETER@37..41
-              0: JS_IDENTIFIER_BINDING@37..38
+              0: JS_DECORATOR_LIST@37..37
+              1: JS_IDENTIFIER_BINDING@37..38
                 0: IDENT@37..38 "b" [] []
-              1: (empty)
-              2: TS_TYPE_ANNOTATION@38..41
+              2: (empty)
+              3: TS_TYPE_ANNOTATION@38..41
                 0: COLON@38..40 ":" [] [Whitespace(" ")]
                 1: TS_REFERENCE_TYPE@40..41
                   0: JS_REFERENCE_IDENTIFIER@40..41
                     0: IDENT@40..41 "B" [] []
                   1: (empty)
-              3: (empty)
+              4: (empty)
           2: R_PAREN@41..42 ")" [] []
         5: TS_RETURN_TYPE_ANNOTATION@42..45
           0: COLON@42..44 ":" [] [Whitespace(" ")]
@@ -265,7 +270,8 @@ JsModule {
           0: L_PAREN@69..70 "(" [] []
           1: JS_PARAMETER_LIST@70..93
             0: JS_FORMAL_PARAMETER@70..93
-              0: JS_OBJECT_BINDING_PATTERN@70..75
+              0: JS_DECORATOR_LIST@70..70
+              1: JS_OBJECT_BINDING_PATTERN@70..75
                 0: L_CURLY@70..72 "{" [] [Whitespace(" ")]
                 1: JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST@72..74
                   0: JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY@72..74
@@ -273,8 +279,8 @@ JsModule {
                       0: IDENT@72..74 "a" [] [Whitespace(" ")]
                     1: (empty)
                 2: R_CURLY@74..75 "}" [] []
-              1: QUESTION@75..76 "?" [] []
-              2: TS_TYPE_ANNOTATION@76..93
+              2: QUESTION@75..76 "?" [] []
+              3: TS_TYPE_ANNOTATION@76..93
                 0: COLON@76..78 ":" [] [Whitespace(" ")]
                 1: TS_OBJECT_TYPE@78..93
                   0: L_CURLY@78..80 "{" [] [Whitespace(" ")]
@@ -290,7 +296,7 @@ JsModule {
                           0: JS_STRING_LITERAL@83..92 "\"string\"" [] [Whitespace(" ")]
                       4: (empty)
                   2: R_CURLY@92..93 "}" [] []
-              3: (empty)
+              4: (empty)
           2: R_PAREN@93..94 ")" [] []
         5: (empty)
         6: (empty)

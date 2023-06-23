@@ -68,6 +68,7 @@ JsModule {
                         },
                         l_paren_token: L_PAREN@88..89 "(" [] [],
                         parameter: JsFormalParameter {
+                            decorators: JsDecoratorList [],
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@89..90 "v" [] [],
                             },
@@ -156,6 +157,7 @@ JsModule {
                                     },
                                     l_paren_token: L_PAREN@219..220 "(" [] [],
                                     parameter: JsFormalParameter {
+                                        decorators: JsDecoratorList [],
                                         binding: JsIdentifierBinding {
                                             name_token: IDENT@220..221 "v" [] [],
                                         },
@@ -236,11 +238,12 @@ JsModule {
               0: IDENT@84..88 "test" [] []
             3: L_PAREN@88..89 "(" [] []
             4: JS_FORMAL_PARAMETER@89..90
-              0: JS_IDENTIFIER_BINDING@89..90
+              0: JS_DECORATOR_LIST@89..89
+              1: JS_IDENTIFIER_BINDING@89..90
                 0: IDENT@89..90 "v" [] []
-              1: (empty)
               2: (empty)
               3: (empty)
+              4: (empty)
             5: R_PAREN@90..91 ")" [] []
             6: SEMICOLON@91..92 ";" [] []
         9: R_CURLY@92..94 "}" [Newline("\n")] []
@@ -305,11 +308,12 @@ JsModule {
                     0: IDENT@215..219 "test" [] []
                   3: L_PAREN@219..220 "(" [] []
                   4: JS_FORMAL_PARAMETER@220..221
-                    0: JS_IDENTIFIER_BINDING@220..221
+                    0: JS_DECORATOR_LIST@220..220
+                    1: JS_IDENTIFIER_BINDING@220..221
                       0: IDENT@220..221 "v" [] []
-                    1: (empty)
                     2: (empty)
                     3: (empty)
+                    4: (empty)
                   5: R_PAREN@221..222 ")" [] []
                   6: (empty)
               9: R_CURLY@222..229 "}" [Newline("\n"), Whitespace("     ")] []

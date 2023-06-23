@@ -39,6 +39,7 @@ JsModule {
                                             l_paren_token: L_PAREN@57..58 "(" [] [],
                                             items: JsParameterList [
                                                 JsFormalParameter {
+                                                    decorators: JsDecoratorList [],
                                                     binding: JsIdentifierBinding {
                                                         name_token: IDENT@58..64 "errors" [] [],
                                                     },
@@ -70,6 +71,7 @@ JsModule {
                                                 },
                                                 COMMA@94..96 "," [] [Whitespace(" ")],
                                                 JsFormalParameter {
+                                                    decorators: JsDecoratorList [],
                                                     binding: JsObjectBindingPattern {
                                                         l_curly_token: L_CURLY@96..98 "{" [] [Whitespace(" ")],
                                                         properties: JsObjectBindingPatternPropertyList [
@@ -163,10 +165,11 @@ JsModule {
                       0: L_PAREN@57..58 "(" [] []
                       1: JS_PARAMETER_LIST@58..138
                         0: JS_FORMAL_PARAMETER@58..94
-                          0: JS_IDENTIFIER_BINDING@58..64
+                          0: JS_DECORATOR_LIST@58..58
+                          1: JS_IDENTIFIER_BINDING@58..64
                             0: IDENT@58..64 "errors" [] []
-                          1: QUESTION@64..65 "?" [] []
-                          2: TS_TYPE_ANNOTATION@65..94
+                          2: QUESTION@64..65 "?" [] []
+                          3: TS_TYPE_ANNOTATION@65..94
                             0: COLON@65..67 ":" [] [Whitespace(" ")]
                             1: TS_UNION_TYPE@67..94
                               0: (empty)
@@ -182,10 +185,11 @@ JsModule {
                                 3: PIPE@83..85 "|" [] [Whitespace(" ")]
                                 4: TS_UNDEFINED_TYPE@85..94
                                   0: UNDEFINED_KW@85..94 "undefined" [] []
-                          3: (empty)
+                          4: (empty)
                         1: COMMA@94..96 "," [] [Whitespace(" ")]
                         2: JS_FORMAL_PARAMETER@96..138
-                          0: JS_OBJECT_BINDING_PATTERN@96..118
+                          0: JS_DECORATOR_LIST@96..96
+                          1: JS_OBJECT_BINDING_PATTERN@96..118
                             0: L_CURLY@96..98 "{" [] [Whitespace(" ")]
                             1: JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST@98..117
                               0: JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY@98..107
@@ -198,14 +202,14 @@ JsModule {
                                   0: IDENT@109..117 "dataVar" [] [Whitespace(" ")]
                                 1: (empty)
                             2: R_CURLY@117..118 "}" [] []
-                          1: QUESTION@118..119 "?" [] []
-                          2: TS_TYPE_ANNOTATION@119..138
+                          2: QUESTION@118..119 "?" [] []
+                          3: TS_TYPE_ANNOTATION@119..138
                             0: COLON@119..121 ":" [] [Whitespace(" ")]
                             1: TS_REFERENCE_TYPE@121..138
                               0: JS_REFERENCE_IDENTIFIER@121..138
                                 0: IDENT@121..138 "ErrorsTextOptions" [] []
                               1: (empty)
-                          3: (empty)
+                          4: (empty)
                       2: R_PAREN@138..139 ")" [] []
                     6: TS_RETURN_TYPE_ANNOTATION@139..147
                       0: COLON@139..141 ":" [] [Whitespace(" ")]

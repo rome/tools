@@ -50,6 +50,7 @@ JsModule {
                             l_paren_token: L_PAREN@44..45 "(" [] [],
                             items: JsParameterList [
                                 JsFormalParameter {
+                                    decorators: JsDecoratorList [],
                                     binding: JsIdentifierBinding {
                                         name_token: IDENT@45..46 "a" [] [],
                                     },
@@ -64,6 +65,7 @@ JsModule {
                                 },
                                 COMMA@54..56 "," [] [Whitespace(" ")],
                                 JsFormalParameter {
+                                    decorators: JsDecoratorList [],
                                     binding: JsIdentifierBinding {
                                         name_token: IDENT@56..57 "b" [] [],
                                     },
@@ -126,6 +128,7 @@ JsModule {
                             l_paren_token: L_PAREN@90..91 "(" [] [],
                             items: JsParameterList [
                                 JsFormalParameter {
+                                    decorators: JsDecoratorList [],
                                     binding: JsIdentifierBinding {
                                         name_token: IDENT@91..92 "a" [] [],
                                     },
@@ -143,6 +146,7 @@ JsModule {
                                 },
                                 COMMA@95..97 "," [] [Whitespace(" ")],
                                 JsFormalParameter {
+                                    decorators: JsDecoratorList [],
                                     binding: JsIdentifierBinding {
                                         name_token: IDENT@97..98 "b" [] [],
                                     },
@@ -221,24 +225,26 @@ JsModule {
               0: L_PAREN@44..45 "(" [] []
               1: JS_PARAMETER_LIST@45..65
                 0: JS_FORMAL_PARAMETER@45..54
-                  0: JS_IDENTIFIER_BINDING@45..46
+                  0: JS_DECORATOR_LIST@45..45
+                  1: JS_IDENTIFIER_BINDING@45..46
                     0: IDENT@45..46 "a" [] []
-                  1: (empty)
-                  2: TS_TYPE_ANNOTATION@46..54
+                  2: (empty)
+                  3: TS_TYPE_ANNOTATION@46..54
                     0: COLON@46..48 ":" [] [Whitespace(" ")]
                     1: TS_STRING_TYPE@48..54
                       0: STRING_KW@48..54 "string" [] []
-                  3: (empty)
+                  4: (empty)
                 1: COMMA@54..56 "," [] [Whitespace(" ")]
                 2: JS_FORMAL_PARAMETER@56..65
-                  0: JS_IDENTIFIER_BINDING@56..57
+                  0: JS_DECORATOR_LIST@56..56
+                  1: JS_IDENTIFIER_BINDING@56..57
                     0: IDENT@56..57 "b" [] []
-                  1: (empty)
-                  2: TS_TYPE_ANNOTATION@57..65
+                  2: (empty)
+                  3: TS_TYPE_ANNOTATION@57..65
                     0: COLON@57..59 ":" [] [Whitespace(" ")]
                     1: TS_NUMBER_TYPE@59..65
                       0: NUMBER_KW@59..65 "number" [] []
-                  3: (empty)
+                  4: (empty)
               2: R_PAREN@65..67 ")" [] [Whitespace(" ")]
             3: (empty)
             4: (empty)
@@ -276,28 +282,30 @@ JsModule {
               0: L_PAREN@90..91 "(" [] []
               1: JS_PARAMETER_LIST@91..101
                 0: JS_FORMAL_PARAMETER@91..95
-                  0: JS_IDENTIFIER_BINDING@91..92
+                  0: JS_DECORATOR_LIST@91..91
+                  1: JS_IDENTIFIER_BINDING@91..92
                     0: IDENT@91..92 "a" [] []
-                  1: (empty)
-                  2: TS_TYPE_ANNOTATION@92..95
+                  2: (empty)
+                  3: TS_TYPE_ANNOTATION@92..95
                     0: COLON@92..94 ":" [] [Whitespace(" ")]
                     1: TS_REFERENCE_TYPE@94..95
                       0: JS_REFERENCE_IDENTIFIER@94..95
                         0: IDENT@94..95 "A" [] []
                       1: (empty)
-                  3: (empty)
+                  4: (empty)
                 1: COMMA@95..97 "," [] [Whitespace(" ")]
                 2: JS_FORMAL_PARAMETER@97..101
-                  0: JS_IDENTIFIER_BINDING@97..98
+                  0: JS_DECORATOR_LIST@97..97
+                  1: JS_IDENTIFIER_BINDING@97..98
                     0: IDENT@97..98 "b" [] []
-                  1: (empty)
-                  2: TS_TYPE_ANNOTATION@98..101
+                  2: (empty)
+                  3: TS_TYPE_ANNOTATION@98..101
                     0: COLON@98..100 ":" [] [Whitespace(" ")]
                     1: TS_REFERENCE_TYPE@100..101
                       0: JS_REFERENCE_IDENTIFIER@100..101
                         0: IDENT@100..101 "B" [] []
                       1: (empty)
-                  3: (empty)
+                  4: (empty)
               2: R_PAREN@101..102 ")" [] []
             3: TS_TYPE_ANNOTATION@102..111
               0: COLON@102..104 ":" [] [Whitespace(" ")]

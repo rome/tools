@@ -13,6 +13,7 @@ pub(crate) struct FormatJsFormalParameter;
 impl FormatNodeRule<JsFormalParameter> for FormatJsFormalParameter {
     fn fmt_fields(&self, node: &JsFormalParameter, f: &mut JsFormatter) -> FormatResult<()> {
         let JsFormalParameterFields {
+            decorators,
             binding,
             question_mark_token,
             type_annotation,
@@ -23,6 +24,7 @@ impl FormatNodeRule<JsFormalParameter> for FormatJsFormalParameter {
             write![
                 f,
                 [
+                    decorators.format(),
                     binding.format(),
                     question_mark_token.format(),
                     type_annotation.format()

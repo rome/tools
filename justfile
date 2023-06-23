@@ -21,6 +21,7 @@ codegen:
   cargo codegen all
   cargo codegen-configuration
   just codegen-bindings
+  cargo format
 
 # Generates TypeScript types and JSON schema of the configuration
 codegen-bindings:

@@ -23,6 +23,7 @@ JsModule {
                         l_paren_token: L_PAREN@25..26 "(" [] [],
                         parameters: JsConstructorParameterList [
                             JsFormalParameter {
+                                decorators: JsDecoratorList [],
                                 binding: JsIdentifierBinding {
                                     name_token: IDENT@26..27 "a" [] [],
                                 },
@@ -85,6 +86,7 @@ JsModule {
                         l_paren_token: L_PAREN@80..81 "(" [] [],
                         parameters: JsConstructorParameterList [
                             JsFormalParameter {
+                                decorators: JsDecoratorList [],
                                 binding: JsIdentifierBinding {
                                     name_token: IDENT@81..82 "b" [] [],
                                 },
@@ -153,11 +155,12 @@ JsModule {
             0: L_PAREN@25..26 "(" [] []
             1: JS_CONSTRUCTOR_PARAMETER_LIST@26..27
               0: JS_FORMAL_PARAMETER@26..27
-                0: JS_IDENTIFIER_BINDING@26..27
+                0: JS_DECORATOR_LIST@26..26
+                1: JS_IDENTIFIER_BINDING@26..27
                   0: IDENT@26..27 "a" [] []
-                1: (empty)
                 2: (empty)
                 3: (empty)
+                4: (empty)
             2: R_PAREN@27..29 ")" [] [Whitespace(" ")]
           3: JS_FUNCTION_BODY@29..50
             0: L_CURLY@29..30 "{" [] []
@@ -197,11 +200,12 @@ JsModule {
             0: L_PAREN@80..81 "(" [] []
             1: JS_CONSTRUCTOR_PARAMETER_LIST@81..82
               0: JS_FORMAL_PARAMETER@81..82
-                0: JS_IDENTIFIER_BINDING@81..82
+                0: JS_DECORATOR_LIST@81..81
+                1: JS_IDENTIFIER_BINDING@81..82
                   0: IDENT@81..82 "b" [] []
-                1: (empty)
                 2: (empty)
                 3: (empty)
+                4: (empty)
             2: R_PAREN@82..84 ")" [] [Whitespace(" ")]
           3: JS_FUNCTION_BODY@84..105
             0: L_CURLY@84..85 "{" [] []
