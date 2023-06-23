@@ -26,6 +26,19 @@ type A = { a: string }; type B = Partial<A>
 # Emitted Messages
 
 ```block
+file.ts format ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Formatter would have printed the following content:
+  
+    1   │ - type·A·=·{·a:·string·};·type·B·=·Partial<A>
+      1 │ + type·A·=·{·a:·string·};
+      2 │ + type·B·=·Partial<A>;
+      3 │ + 
+  
+
+```
+
+```block
 Checked 1 file(s) in <TIME>
 ```
 

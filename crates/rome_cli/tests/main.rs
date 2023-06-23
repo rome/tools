@@ -1,3 +1,4 @@
+mod cases;
 mod commands;
 mod configs;
 #[cfg(test)]

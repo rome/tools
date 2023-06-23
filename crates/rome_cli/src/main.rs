@@ -33,12 +33,14 @@ fn main() -> ExitCode {
         Ok(command) => {
             let color_mode = to_color_mode(command.get_color());
             console.set_color(color_mode);
+            let is_verbose = command.is_verbose();
             let result = run_workspace(&mut console, command);
             match result {
                 Err(termination) => {
                     console.error(markup! {
-                        {PrintDiagnostic::verbose(&termination)}
-                    });
+						{if is_verbose { PrintDiagnostic::verbose(&termination) } else { PrintDiagnostic::simple(&termination) }}
+            		});
+
                     termination.report()
                 }
                 Ok(_) => ExitCode::SUCCESS,

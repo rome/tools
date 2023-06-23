@@ -21,6 +21,19 @@ foo.call(); bar.call();
 # Emitted Messages
 
 ```block
+fix.js format ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Formatter would have printed the following content:
+  
+    1   │ - foo.call();·bar.call();
+      1 │ + foo.call();
+      2 │ + bar.call();
+      3 │ + 
+  
+
+```
+
+```block
 Checked 1 file(s) in <TIME>
 ```
 

@@ -15,9 +15,9 @@ expression: content
 # Termination Message
 
 ```block
-internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × No files were processed in the specified paths.
+  × Rome exited because the configuration resulted in errors. Please fix them.
   
 
 
@@ -26,13 +26,9 @@ internalError/io ━━━━━━━━━━━━━━━━━━━━━
 # Emitted Messages
 
 ```block
-Found errors in the configuration file, Rome will use its defaults for the sections that are incorrect.
-```
-
-```block
 rome.json:3:18 deserialize ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! The line width exceeds the maximum value (320)
+  × The line width exceeds the maximum value (320)
   
   
     1 │ {
@@ -45,10 +41,6 @@ rome.json:3:18 deserialize ━━━━━━━━━━━━━━━━━�
   i Maximum value accepted is 320
   
 
-```
-
-```block
-Compared 0 file(s) in <TIME>
 ```
 
 

@@ -26,7 +26,7 @@ inherits = "release"
 [workspace.dependencies]
 countme    = "3.0.1"
 dashmap    = "5.4.0"
-indexmap   = "1.9.1"
+indexmap   = "1.9.3"
 rustc-hash = "1.1.0"
 tracing    = { version = "0.1.31", default-features = false, features = ["std"] }
 # pinning to version 1.18 to avoid multiple versions of windows-sys as dependency

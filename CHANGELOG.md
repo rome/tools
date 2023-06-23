@@ -4,16 +4,28 @@
 
 ### CLI
 
+#### BREAKING CHANGES
+
+- The CLI now exists with an error then there's an error inside the configuration.
+
+	Previously, rome would raise warnings and continue the execution, by applying its defaults.
+
+	This wasn't ideal for users, because this could have created false positives in linting, or formatted
+	code with a configuration that wasn't the of the user.
+
+
 #### Other changes
 
-- Fixes [#4556](https://github.com/rome/tools/issues/4556) using `lines()` to enable OS independent line parsing when processing the .gitignore file.
-- Add a new option to ignore unknown files
+- The command `rome check` now shows formatter diagnostics when checking the code.
+- Fix [#4556](https://github.com/rome/tools/issues/4556), which correctly handles new lines in the
+`.gitignore` file across OS.
+- Add a new option to ignore unknown files.
 
 	```shell
 	rome format ./src --files-ignore-unknown=true
 	```
 
-	Doing so, Rome won't emit diagnostics for file that it doesn't know how to handle.
+	Doing so, Rome won't emit diagnostics for files that doesn't know how to handle.
 
 ### Configuration
 
@@ -30,7 +42,7 @@
 	```
 	Doing so, Rome won't emit diagnostics for file that it doesn't know how to handle.
 
-- Add a new `"javascript"` option to support the usafe/experimental
+- Add a new `"javascript"` option to support the unsafe/experimental
 parameter decorators:
 
 	```json
@@ -42,6 +54,17 @@ parameter decorators:
 		}
 	}
 	```
+- Add a new `"extends"` option, useful to split the configuration file in
+multiple files:
+
+  ```json
+  {
+    "extends": ["../sharedFormatter.json", "linter.json"]
+  }
+  ```
+
+  The resolution of the files is file system based, Rome doesn't know how to
+  resolve dependencies yet.
 
 ### Editors
 
@@ -118,7 +141,7 @@ parameter decorators:
 - The rules [`useExhaustiveDependencies`](https://docs.rome.tools/lint/rules/useexhaustivedependencies/) and [`useHookAtTopLevel`](https://docs.rome.tools/lint/rules/usehookattoplevel/) accept a different shape of options
 
   Old configuration
-  
+
   ```json
   {
   	"linter": {
@@ -139,7 +162,7 @@ parameter decorators:
   ```
 
   New configuration
-  
+
   ```json
   {
   	"linter": {

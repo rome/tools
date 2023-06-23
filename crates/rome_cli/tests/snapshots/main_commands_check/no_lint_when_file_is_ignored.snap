@@ -35,7 +35,19 @@ internalError/io ━━━━━━━━━━━━━━━━━━━━━
 # Emitted Messages
 
 ```block
-Fixed 0 file(s) in <TIME>
+test.js lint ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × The file test.js was ignored
+  
+
+```
+
+```block
+Fixed 1 file(s) in <TIME>
+```
+
+```block
+Skipped 1 file(s)
 ```
 
 

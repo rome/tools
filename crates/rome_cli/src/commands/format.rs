@@ -1,10 +1,8 @@
 use crate::cli_options::CliOptions;
-use crate::configuration::load_configuration;
+use crate::configuration::{load_configuration, LoadedConfiguration};
 use crate::execute::ReportMode;
 use crate::vcs::store_path_to_ignore_from_vcs;
 use crate::{execute_mode, CliDiagnostic, CliSession, Execution, TraversalMode};
-use rome_console::{markup, ConsoleExt};
-use rome_diagnostics::{DiagnosticExt, PrintDiagnostic, Severity};
 use rome_service::configuration::vcs::VcsConfiguration;
 use rome_service::configuration::{FilesConfiguration, FormatterConfiguration};
 use rome_service::workspace::UpdateSettingsParams;
@@ -38,20 +36,12 @@ pub(crate) fn format(
         files_configuration,
         write,
     } = payload;
-    let (mut configuration, diagnostics, configuration_path) =
-        load_configuration(&mut session, &cli_options)?.consume();
-    if !diagnostics.is_empty() {
-        let console = &mut session.app.console;
-        console.log(markup!{
-           <Warn>"Found errors in the configuration file, Rome will use its defaults for the sections that are incorrect."</Warn>
-        });
-        for diagnostic in diagnostics {
-            let diagnostic = diagnostic.with_severity(Severity::Warning);
-            console.log(markup! {
-                {PrintDiagnostic::verbose(&diagnostic)}
-            })
-        }
-    }
+    let LoadedConfiguration {
+        mut configuration,
+        directory_path: configuration_path,
+        ..
+    } = load_configuration(&mut session, &cli_options)?
+        .or_diagnostic(session.app.console, cli_options.verbose)?;
 
     configuration.merge_with(javascript_formatter);
     configuration.merge_with(formatter_configuration);

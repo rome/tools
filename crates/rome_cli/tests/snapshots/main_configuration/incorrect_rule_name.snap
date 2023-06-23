@@ -1,6 +1,5 @@
 ---
 source: crates/rome_cli/tests/snap_test.rs
-assertion_line: 346
 expression: content
 ---
 ## `rome.json`
@@ -24,9 +23,9 @@ expression: content
 # Termination Message
 
 ```block
-internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × No files were processed in the specified paths.
+  × Rome exited because the configuration resulted in errors. Please fix them.
   
 
 
@@ -35,13 +34,9 @@ internalError/io ━━━━━━━━━━━━━━━━━━━━━
 # Emitted Messages
 
 ```block
-Found errors in the configuration file, Rome will use its defaults for the sections that are incorrect.
-```
-
-```block
 rome.json:6:13 deserialize ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Found an unknown key `foo_rule`.
+  × Found an unknown key `foo_rule`.
   
     4 │     "rules": {
     5 │         "correctness": {
@@ -81,10 +76,6 @@ rome.json:6:13 deserialize ━━━━━━━━━━━━━━━━━�
   - useYield
   
 
-```
-
-```block
-Checked 0 file(s) in <TIME>
 ```
 
 

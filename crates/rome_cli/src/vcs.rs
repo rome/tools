@@ -71,12 +71,13 @@ pub(crate) fn read_vcs_ignore_file(
             }
         }
         if !configuration.ignore_file_disabled() {
-            let buffer = file_system
+            let result = file_system
                 .auto_search(current_directory, client_kind.ignore_file(), false)
                 .map_err(WorkspaceError::from)?;
 
-            if let Some((buffer, _)) = buffer {
-                return Ok(buffer
+            if let Some(result) = result {
+                return Ok(result
+                    .content
                     .lines()
                     // remove empty lines
                     .filter(|line| !line.is_empty())

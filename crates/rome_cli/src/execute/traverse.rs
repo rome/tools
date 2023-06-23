@@ -666,7 +666,10 @@ impl<'ctx, 'app> TraversalContext for TraversalOptions<'ctx, 'app> {
         };
 
         match self.execution.traversal_mode() {
-            TraversalMode::Check { .. } => file_features.supports_for(&FeatureName::Lint),
+            TraversalMode::Check { .. } => {
+                file_features.supports_for(&FeatureName::Lint)
+                    || file_features.supports_for(&FeatureName::Format)
+            }
             TraversalMode::CI { .. } => {
                 file_features.supports_for(&FeatureName::Lint)
                     || file_features.supports_for(&FeatureName::Format)

@@ -30,6 +30,19 @@ file.js:1:1 suppressions/deprecatedSyntax  FIXABLE  ━━━━━━━━━�
 ```
 
 ```block
+file.js format ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Formatter would have printed the following content:
+  
+    1 1 │   // rome-ignore lint(suspicious/noDoubleEquals): test
+    2   │ - a·==·b;
+      2 │ + a·==·b;
+      3 │ + 
+  
+
+```
+
+```block
 Checked 1 file(s) in <TIME>
 ```
 

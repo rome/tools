@@ -90,17 +90,18 @@ pub enum RomeCommand {
         #[bpaf(external, optional, hide_usage)]
         files_configuration: Option<FilesConfiguration>,
 
-        /// A file name with its extension to pass when reading from standard in, e.g. echo 'let a;' | rome format --stdin-file-path=file.js"
+        /// A file name with its extension to pass when reading from standard in, e.g. echo 'let a;' | rome format --stdin-file-path=file.js".
         #[bpaf(long("stdin-file-path"), argument("PATH"), hide_usage)]
         stdin_file_path: Option<String>,
 
         #[bpaf(external, hide_usage)]
         cli_options: CliOptions,
 
+        /// Writes formatted files to file system.
         #[bpaf(switch)]
         write: bool,
 
-        /// Single file, single path or list of paths
+        /// Single file, single path or list of paths.
         #[bpaf(positional("PATH"), many)]
         paths: Vec<OsString>,
     },
@@ -188,6 +189,23 @@ impl RomeCommand {
 
     pub const fn has_metrics(&self) -> bool {
         false
+    }
+
+    pub fn is_verbose(&self) -> bool {
+        match self {
+            RomeCommand::Version(_) => false,
+            RomeCommand::Rage(_) => false,
+            RomeCommand::Start => false,
+            RomeCommand::Stop => false,
+            RomeCommand::Check { cli_options, .. } => cli_options.verbose,
+            RomeCommand::Format { cli_options, .. } => cli_options.verbose,
+            RomeCommand::Ci { cli_options, .. } => cli_options.verbose,
+            RomeCommand::Init => false,
+            RomeCommand::LspProxy(cli_options) => cli_options.verbose,
+            RomeCommand::Migrate(cli_options, _) => cli_options.verbose,
+            RomeCommand::RunServer { .. } => false,
+            RomeCommand::PrintSocket => false,
+        }
     }
 }
 

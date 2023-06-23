@@ -20,21 +20,23 @@ expression: content
 
 ```
 
-# Termination Message
-
-```block
-internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × No files were processed in the specified paths.
-  
-
-
-```
-
 # Emitted Messages
 
 ```block
-Checked 0 file(s) in <TIME>
+fix.js format ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Formatter would have printed the following content:
+  
+    1   │ - 
+    2   │ - (1·>=·-0)
+      1 │ + 1·>=·-0;
+    3 2 │   
+  
+
+```
+
+```block
+Checked 1 file(s) in <TIME>
 ```
 
 

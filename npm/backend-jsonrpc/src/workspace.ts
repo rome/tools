@@ -28,6 +28,10 @@ export interface Configuration {
 	 */
 	$schema?: string;
 	/**
+	 * A list of paths to other JSON files, used to extends the current configuration.
+	 */
+	extends?: StringSet;
+	/**
 	 * The configuration of the filesystem
 	 */
 	files?: FilesConfiguration;
@@ -52,6 +56,7 @@ export interface Configuration {
 	 */
 	vcs?: VcsConfiguration;
 }
+export type StringSet = string[];
 /**
  * The configuration of the filesystem
  */
@@ -153,7 +158,6 @@ If Rome can't find the configuration, it will attempt to use the current working
 	 */
 	useIgnoreFile?: boolean;
 }
-export type StringSet = string[];
 export type PlainIndentStyle = "tab" | "space";
 /**
 	* Validated value for the `line_width` formatter options

@@ -2,7 +2,7 @@ use crate::file_handlers::Language;
 use crate::ConfigurationDiagnostic;
 use rome_console::fmt::Bytes;
 use rome_console::markup;
-use rome_diagnostics::{category, Category, Diagnostic, DiagnosticTags, Location, Severity};
+use rome_diagnostics::{category, Category, Diagnostic, DiagnosticTags, Location, Severity, Visit};
 use rome_formatter::{FormatError, PrintError};
 use rome_fs::FileSystemDiagnostic;
 use rome_js_analyze::utils::rename::RenameError;
@@ -258,6 +258,47 @@ impl Diagnostic for WorkspaceError {
             WorkspaceError::FileSystem(error) => Diagnostic::source(error),
         }
     }
+
+    fn advices(&self, visitor: &mut dyn Visit) -> std::io::Result<()> {
+        match self {
+            WorkspaceError::FormatError(err) => err.advices(visitor),
+            WorkspaceError::PrintError(err) => err.advices(visitor),
+            WorkspaceError::RuleError(error) => error.advices(visitor),
+            WorkspaceError::Configuration(error) => error.advices(visitor),
+            WorkspaceError::RenameError(error) => error.advices(visitor),
+            WorkspaceError::TransportError(error) => error.advices(visitor),
+            WorkspaceError::ReportNotSerializable(error) => error.advices(visitor),
+            WorkspaceError::DirtyWorkspace(error) => error.advices(visitor),
+            WorkspaceError::NotFound(error) => error.advices(visitor),
+            WorkspaceError::SourceFileNotSupported(error) => error.advices(visitor),
+            WorkspaceError::FormatWithErrorsDisabled(error) => error.advices(visitor),
+            WorkspaceError::CantReadDirectory(error) => error.advices(visitor),
+            WorkspaceError::CantReadFile(error) => error.advices(visitor),
+            WorkspaceError::FileIgnored(error) => error.advices(visitor),
+            WorkspaceError::FileTooLarge(error) => error.advices(visitor),
+            WorkspaceError::FileSystem(error) => error.advices(visitor),
+        }
+    }
+    fn verbose_advices(&self, visitor: &mut dyn Visit) -> std::io::Result<()> {
+        match self {
+            WorkspaceError::FormatError(err) => err.verbose_advices(visitor),
+            WorkspaceError::PrintError(err) => err.verbose_advices(visitor),
+            WorkspaceError::RuleError(error) => error.verbose_advices(visitor),
+            WorkspaceError::Configuration(error) => error.verbose_advices(visitor),
+            WorkspaceError::RenameError(error) => error.verbose_advices(visitor),
+            WorkspaceError::TransportError(error) => error.verbose_advices(visitor),
+            WorkspaceError::ReportNotSerializable(error) => error.verbose_advices(visitor),
+            WorkspaceError::DirtyWorkspace(error) => error.verbose_advices(visitor),
+            WorkspaceError::NotFound(error) => error.verbose_advices(visitor),
+            WorkspaceError::SourceFileNotSupported(error) => error.verbose_advices(visitor),
+            WorkspaceError::FormatWithErrorsDisabled(error) => error.verbose_advices(visitor),
+            WorkspaceError::CantReadDirectory(error) => error.verbose_advices(visitor),
+            WorkspaceError::CantReadFile(error) => error.verbose_advices(visitor),
+            WorkspaceError::FileIgnored(error) => error.verbose_advices(visitor),
+            WorkspaceError::FileTooLarge(error) => error.verbose_advices(visitor),
+            WorkspaceError::FileSystem(error) => error.verbose_advices(visitor),
+        }
+    }
 }
 
 impl From<FormatError> for WorkspaceError {
@@ -506,7 +547,7 @@ mod test {
 
     #[test]
     fn diagnostic_size() {
-        assert_eq!(std::mem::size_of::<WorkspaceError>(), 88)
+        assert_eq!(std::mem::size_of::<WorkspaceError>(), 104)
     }
 
     #[test]
