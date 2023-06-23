@@ -707,7 +707,7 @@ fn is_parenthesized_arrow_function_expression_impl(
                 T!['['] | T!['{'] => IsParenthesizedArrowFunctionExpression::Unknown,
 
                 // '(@' can be a decorator or a parenthesized arrow function
-                T![@] => IsParenthesizedArrowFunctionExpression::True,
+                T![@] => IsParenthesizedArrowFunctionExpression::Unknown,
                 // '(a...'
                 _ if is_nth_at_identifier_binding(p, n + 1) || p.nth_at(n + 1, T![this]) => {
                     match p.nth(n + 2) {
