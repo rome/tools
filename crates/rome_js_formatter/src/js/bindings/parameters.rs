@@ -1,11 +1,9 @@
 use crate::prelude::*;
 use rome_formatter::{write, CstFormatContext};
 
-use crate::js::lists::parameter_list::{
-    AnyJsParameterList, AnyParameter, FormatJsAnyParameterList,
-};
-
+use crate::js::lists::parameter_list::FormatJsAnyParameterList;
 use crate::utils::test_call::is_test_call_argument;
+use rome_js_syntax::parameter_ext::{AnyJsParameterList, AnyParameter};
 use rome_js_syntax::{
     AnyJsConstructorParameter, AnyJsFormalParameter, AnyTsType, JsConstructorParameters,
     JsParameters, JsSyntaxToken,

@@ -1,6 +1,7 @@
 use crate::js::bindings::parameters::ParameterLayout;
-use crate::js::lists::parameter_list::{AnyJsParameterList, FormatJsAnyParameterList};
+use crate::js::lists::parameter_list::FormatJsAnyParameterList;
 use crate::prelude::*;
+use rome_js_syntax::parameter_ext::AnyJsParameterList;
 use rome_js_syntax::JsConstructorParameterList;
 
 #[derive(Debug, Clone, Default)]
