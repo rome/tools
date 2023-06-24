@@ -68,6 +68,10 @@ multiple files:
 
 ### Editors
 
+#### Other changes
+
+- The Rome LSP is now able to show diagnostics that belong to JSON lint rules.
+
 ### Formatter
 
 - Added a new option called `--jsx-quote-style` to the formatter. This option allows you to choose between single and double quotes for JSX attributes. [#4486](https://github.com/rome/tools/issues/4486)
@@ -95,6 +99,8 @@ multiple files:
 
   This rule proposes turning function expressions into arrow functions.
   Function expressions that use `this` are ignored.
+
+- [`noDuplicateJsonKeys`](https://docs.rome.tools/lint/rules/noDuplicateJsonKeys/)
 
 #### Other changes
 

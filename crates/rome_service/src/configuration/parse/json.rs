@@ -18,7 +18,7 @@ use rome_rowan::AstNode;
 
 impl JsonDeserialize for Configuration {
     fn deserialize_from_ast(
-        root: JsonRoot,
+        root: &JsonRoot,
         visitor: &mut impl VisitJsonNode,
         diagnostics: &mut Vec<DeserializationDiagnostic>,
     ) -> Option<()> {

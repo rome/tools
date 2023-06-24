@@ -2169,6 +2169,7 @@ dependencies = [
  "rome_js_parser",
  "rome_js_semantic",
  "rome_js_syntax",
+ "rome_json_analyze",
  "rome_json_formatter",
  "rome_json_parser",
  "rome_json_syntax",
@@ -2867,9 +2868,9 @@ dependencies = [
 
 [[package]]
 name = "trybuild"
-version = "1.0.79"
+version = "1.0.80"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "db3115bddce1b5f52dd4b5e0ec8298a66ce733e4cc6759247dc2d1c11508ec38"
+checksum = "501dbdbb99861e4ab6b60eb6a7493956a9defb644fd034bc4a5ef27c693c8a3a"
 dependencies = [
  "basic-toml",
  "glob",

@@ -94,7 +94,8 @@ ready:
   git diff --exit-code --quiet
   just codegen
   just documentation
+  just format
   cargo lint
-  cargo fmt
-  cargo test
+  just t
+  cargo test --doc
   git diff --exit-code --quiet

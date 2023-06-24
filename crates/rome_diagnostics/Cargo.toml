@@ -45,4 +45,4 @@ schema = ["schemars", "rome_text_edit/schemars", "rome_diagnostics_categories/sc
 
 [dev-dependencies]
 serde_json = "1.0.74"
-trybuild   = "1.0"
+trybuild   = "1.0.80"
