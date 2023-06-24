@@ -234,7 +234,7 @@ Please use the template provided.
 
 #### Changelog
 
-If the PR you're about to open is a bugfix/feature around Rome, you should add a new line to the `CHANGELOG.md`.
+If the PR you're about to open is a bugfix/feature around Rome, you can add a new line to the `CHANGELOG.md`, but it's not mandatory.
 
 At the top of the file you will see a `[Unreleased]` section. The headings divide the sections by "feature", make sure
 to add a new bullet point.
@@ -273,16 +273,7 @@ how the new formatting changes, and so on.
 #### Documentation
 
 If your PR requires some update on the website (new features, breaking changes, etc.), you should create a new PR once the previous PR is successfully merged.
-
-Go to the issues section and check the pinned issues.
-You will find a _**pinned issue**_ that starts with "Documentation and Focus". Inside, you will find the details of:
-- the name of the branch where to point the PR that updates the documentation;
-- the PR that we will merge when the release is ready;
-
-If you can't create a new PR, please let the team know.
-The template should help to give all the information to the team.
-
-Here are some other scripts that you might find useful.
+When adding new features, the documentation should be part of a new PR, which will be merged right before the release.
 
 #### Magic comments
 
