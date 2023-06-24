@@ -273,7 +273,7 @@ how the new formatting changes, and so on.
 #### Documentation
 
 If your PR requires some update on the website (new features, breaking changes, etc.), you should create a new PR once the previous PR is successfully merged.
-When addition new features, the documentation should be part of a new PR, which will be merged right before the release.
+When adding new features, the documentation should be part of a new PR, which will be merged right before the release.
 
 #### Magic comments
 
