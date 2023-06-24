@@ -542,6 +542,10 @@ export interface Nursery {
 	 */
 	noForEach?: RuleConfiguration;
 	/**
+	 * Use Number.isNaN instead of global isNaN.
+	 */
+	noGlobalIsNan?: RuleConfiguration;
+	/**
 	 * Enforce that tabIndex is not assigned to non-interactive HTML elements.
 	 */
 	noNoninteractiveTabindex?: RuleConfiguration;
@@ -1111,6 +1115,7 @@ export type Category =
 	| "lint/nursery/noStaticOnlyClass"
 	| "lint/nursery/noDuplicateJsonKeys"
 	| "lint/nursery/useNamingConvention"
+	| "lint/nursery/noGlobalIsNan"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"

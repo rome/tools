@@ -803,6 +803,13 @@
 						{ "type": "null" }
 					]
 				},
+				"noGlobalIsNan": {
+					"description": "Use Number.isNaN instead of global isNaN.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"noNoninteractiveTabindex": {
 					"description": "Enforce that tabIndex is not assigned to non-interactive HTML elements.",
 					"anyOf": [
