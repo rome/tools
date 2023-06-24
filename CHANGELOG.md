@@ -81,6 +81,11 @@ multiple files:
   The _Rome_ formatter takes care of removing extra semicolons.
   Thus, there is no need for this rule.
 
+#### New rules
+
+- Add [`noGlobalThis`](https://docs.rome.tools/lint/rules/noglobalthis/)
+
+  This rule recommends using `Number.isNaN` instead of the global and unsafe `isNaN` that attempts a type coercion.
 
 #### Other changes
 
