@@ -100,6 +100,7 @@ define_categories! {
     "lint/nursery/noDuplicateJsonKeys": "https://docs.rome.tools/lint/rules/noDuplicateJsonKeys",
     "lint/nursery/useNamingConvention": "https://docs.rome.tools/lint/rules/useNamingConvention",
 "lint/nursery/noGlobalIsNan": "https://docs.rome.tools/lint/rules/noGlobalIsNan",
+"lint/nursery/noGlobalIsFinite": "https://docs.rome.tools/lint/rules/noGlobalIsFinite",
     // Insert new nursery rule here
 
 

@@ -542,6 +542,10 @@ export interface Nursery {
 	 */
 	noForEach?: RuleConfiguration;
 	/**
+	 * Use Number.isFinite instead of global isFinite.
+	 */
+	noGlobalIsFinite?: RuleConfiguration;
+	/**
 	 * Use Number.isNaN instead of global isNaN.
 	 */
 	noGlobalIsNan?: RuleConfiguration;
@@ -1116,6 +1120,7 @@ export type Category =
 	| "lint/nursery/noDuplicateJsonKeys"
 	| "lint/nursery/useNamingConvention"
 	| "lint/nursery/noGlobalIsNan"
+	| "lint/nursery/noGlobalIsFinite"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"

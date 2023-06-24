@@ -7,35 +7,34 @@ use rome_js_syntax::{AnyJsExpression, T};
 use rome_rowan::{AstNode, BatchMutationExt};
 
 declare_rule! {
-    /// Use `Number.isNaN` instead of global `isNaN`.
+    /// Use `Number.isFinite` instead of global `isFinite`.
     ///
-    /// `Number.isNaN()` and `isNaN()` [have not the same behavior](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/isNaN#description).
-    /// When the argument to `isNaN()` is not a number, the value is first coerced to a number.
-    /// `Number.isNaN()` does not perform this coercion.
-    /// Therefore, it is a more reliable way to test whether a value is `NaN`.
+    /// `Number.isFinite()` and `isFinite()` [have not the same behavior](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isFinite#difference_between_number.isfinite_and_global_isfinite).
+    /// When the argument to `isFinite()` is not a number, the value is first coerced to a number.
+    /// `Number.isFinite()` does not perform this coercion.
+    /// Therefore, it is a more reliable way to test whether a number is finite.
     ///
     /// ## Examples
     ///
     /// ### Invalid
     ///
     /// ```js,expect_diagnostic
-    /// isNaN({}); // true
+    /// isFinite(false); // true
     /// ```
     ///
     /// ## Valid
     ///
     /// ```js
-    /// Number.isNaN({}); // false
+    /// Number.isFinite(false); // false
     /// ```
-    ///
-    pub(crate) NoGlobalIsNan {
+    pub(crate) NoGlobalIsFinite {
         version: "next",
-        name: "noGlobalIsNan",
+        name: "noGlobalIsFinite",
         recommended: true,
     }
 }
 
-impl Rule for NoGlobalIsNan {
+impl Rule for NoGlobalIsFinite {
     type Query = Semantic<AnyJsExpression>;
     type State = ();
     type Signals = Option<Self::State>;
@@ -47,7 +46,7 @@ impl Rule for NoGlobalIsNan {
         match node {
             AnyJsExpression::JsIdentifierExpression(expression) => {
                 let name = expression.name().ok()?;
-                if name.has_name("isNaN") && model.binding(&name).is_none() {
+                if name.has_name("isFinite") && model.binding(&name).is_none() {
                     return Some(());
                 }
             }
@@ -62,7 +61,7 @@ impl Rule for NoGlobalIsNan {
                 let member = expression.member().ok()?;
                 if object_name.is_global_this()
                     && model.binding(&object_name).is_none()
-                    && member.as_js_name()?.value_token().ok()?.text_trimmed() == "isNaN"
+                    && member.as_js_name()?.value_token().ok()?.text_trimmed() == "isFinite"
                 {
                     return Some(());
                 }
@@ -81,7 +80,7 @@ impl Rule for NoGlobalIsNan {
                     .as_js_string_literal_expression()?;
                 if object_name.is_global_this()
                     && model.binding(&object_name).is_none()
-                    && member.inner_string_text().ok()?.text() == "isNaN"
+                    && member.inner_string_text().ok()?.text() == "isFinite"
                 {
                     return Some(());
                 }
@@ -98,11 +97,11 @@ impl Rule for NoGlobalIsNan {
                 rule_category!(),
                 node.range(),
                 markup! {
-                    <Emphasis>"isNaN"</Emphasis>" is unsafe. It attempts a type coercion. Use "<Emphasis>"Number.isNaN"</Emphasis>" instead."
+                    <Emphasis>"isFinite"</Emphasis>" is unsafe. It attempts a type coercion. Use "<Emphasis>"Number.isFinite"</Emphasis>" instead."
                 },
             )
             .note(markup! {
-                "See "<Hyperlink href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/isNaN#description">"the MDN documentation"</Hyperlink>" for more details."
+                "See "<Hyperlink href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/isFinite#description">"the MDN documentation"</Hyperlink>" for more details."
             }),
         )
     }
@@ -153,7 +152,7 @@ impl Rule for NoGlobalIsNan {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
             message: markup! {
-                "Use "<Emphasis>"Number.isNaN"</Emphasis>" instead."
+                "Use "<Emphasis>"Number.isFinite"</Emphasis>" instead."
             }
             .to_owned(),
             mutation,

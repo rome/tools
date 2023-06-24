@@ -803,6 +803,13 @@
 						{ "type": "null" }
 					]
 				},
+				"noGlobalIsFinite": {
+					"description": "Use Number.isFinite instead of global isFinite.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"noGlobalIsNan": {
 					"description": "Use Number.isNaN instead of global isNaN.",
 					"anyOf": [
