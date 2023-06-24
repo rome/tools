@@ -69,7 +69,7 @@ declare_rule! {
     /// }
     /// ```
     pub(crate) NoUselessConstructor {
-        version: "next",
+        version: "12.1.0",
         name: "noUselessConstructor",
         recommended: true,
     }

@@ -3,7 +3,7 @@ title: Lint Rule noUselessConstructor
 parent: lint/rules/index
 ---
 
-# noUselessConstructor (since vnext)
+# noUselessConstructor (since v12.1.0)
 
 > This rule is recommended by Rome.
 
