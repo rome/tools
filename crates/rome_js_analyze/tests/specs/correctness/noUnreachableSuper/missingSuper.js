@@ -71,3 +71,27 @@ class G extends A {
         this.field = "value";
     }
 }
+
+// valid
+class H extends A {
+    constructor() {
+        super();
+        if (flag1) {
+            if (flag2) {
+                console.log("This is not a loop.");
+            }
+        }
+    }
+}
+
+// invalid
+class I extends A {
+    constructor() {
+        super();
+        if (flag1) {
+            if (flag2) {
+                super();
+            }
+        }
+    }
+  }
