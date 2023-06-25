@@ -83,7 +83,11 @@ multiple files:
 
 #### New rules
 
-- Add [`noGlobalThis`](https://docs.rome.tools/lint/rules/noglobalthis/)
+- Add [`noGlobalIsFinite`](https://docs.rome.tools/lint/rules/noglobalisfinite/)
+
+  This rule recommends using `Number.isFinite` instead of the global and unsafe `isFinite` that attempts a type coercion.
+
+- Add [`noGlobalIsNan`](https://docs.rome.tools/lint/rules/noglobalisnan/)
 
   This rule recommends using `Number.isNaN` instead of the global and unsafe `isNaN` that attempts a type coercion.
 

@@ -92,7 +92,7 @@ invalid.js:5:1 lint/nursery/noGlobalIsNan  FIXABLE  ━━━━━━━━━�
      3  3 │   (isNaN)({});
      4  4 │   
      5    │ - globalThis.isNaN({});
-        5 │ + Number.isNaN({});
+        5 │ + globalThis.Number.isNaN({});
      6  6 │   
      7  7 │   (globalThis).isNaN({});
   
@@ -118,10 +118,57 @@ invalid.js:7:1 lint/nursery/noGlobalIsNan  FIXABLE  ━━━━━━━━━�
      5  5 │   globalThis.isNaN({});
      6  6 │   
      7    │ - (globalThis).isNaN({});
-        7 │ + Number.isNaN({});
+        7 │ + (globalThis).Number.isNaN({});
      8  8 │   
      9  9 │   globalThis["isNaN"]({});
   
+
+```
+
+```
+invalid.js:9:1 lint/nursery/noGlobalIsNan  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! isNaN is unsafe. It attempts a type coercion. Use Number.isNaN instead.
+  
+     7 │ (globalThis).isNaN({});
+     8 │ 
+   > 9 │ globalThis["isNaN"]({});
+       │ ^^^^^^^^^^^^^^^^^^^
+    10 │ 
+    11 │ (globalThis)[("isNaN")]({});
+  
+  i See the MDN documentation for more details.
+  
+  i Suggested fix: Use Number.isNaN instead.
+  
+     7  7 │   (globalThis).isNaN({});
+     8  8 │   
+     9    │ - globalThis["isNaN"]({});
+        9 │ + globalThis.Number["isNaN"]({});
+    10 10 │   
+    11 11 │   (globalThis)[("isNaN")]({});
+  
+
+```
+
+```
+invalid.js:11:1 lint/nursery/noGlobalIsNan  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! isNaN is unsafe. It attempts a type coercion. Use Number.isNaN instead.
+  
+     9 │ globalThis["isNaN"]({});
+    10 │ 
+  > 11 │ (globalThis)[("isNaN")]({});
+       │ ^^^^^^^^^^^^^^^^^^^^^^^
+    12 │ 
+    13 │ function localIsNaN(isNaN) {
+  
+  i See the MDN documentation for more details.
+  
+  i Suggested fix: Use Number.isNaN instead.
+  
+    11 │ (globalThis).Number[("isNaN")]({});
+       │             +++++++                
 
 ```
 
@@ -143,7 +190,7 @@ invalid.js:14:5 lint/nursery/noGlobalIsNan  FIXABLE  ━━━━━━━━━
     12 12 │   
     13 13 │   function localIsNaN(isNaN) {
     14    │ - ····globalThis.isNaN({});
-       14 │ + ····Number.isNaN({});
+       14 │ + ····globalThis.Number.isNaN({});
     15 15 │   }
     16 16 │   
   
