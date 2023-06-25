@@ -856,6 +856,13 @@
 						{ "type": "null" }
 					]
 				},
+				"useArrowFunction": {
+					"description": "Use arrow functions over function expressions.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"useCamelCase": {
 					"description": "Enforce camel case naming convention.",
 					"anyOf": [

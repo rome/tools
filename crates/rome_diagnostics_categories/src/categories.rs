@@ -101,6 +101,7 @@ define_categories! {
     "lint/nursery/useNamingConvention": "https://docs.rome.tools/lint/rules/useNamingConvention",
 "lint/nursery/noGlobalIsNan": "https://docs.rome.tools/lint/rules/noGlobalIsNan",
 "lint/nursery/noGlobalIsFinite": "https://docs.rome.tools/lint/rules/noGlobalIsFinite",
+"lint/nursery/useArrowFunction": "https://docs.rome.tools/lint/rules/useArrowFunction",
     // Insert new nursery rule here
 
 
