@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 96
 expression: missingSuper.js
 ---
 # Input
@@ -79,6 +78,30 @@ class G extends A {
     }
 }
 
+// valid
+class H extends A {
+    constructor() {
+        super();
+        if (flag1) {
+            if (flag2) {
+                console.log("This is not a loop.");
+            }
+        }
+    }
+}
+
+// invalid
+class I extends A {
+    constructor() {
+        super();
+        if (flag1) {
+            if (flag2) {
+                super();
+            }
+        }
+    }
+  }
+
 ```
 
 # Diagnostics
@@ -153,6 +176,44 @@ missingSuper.js:41:5 lint/correctness/noUnreachableSuper ━━━━━━━�
     45 │ 
   
   i If this is intentional, add an explicit throw statement in unsupported paths.
+  
+
+```
+
+```
+missingSuper.js:89:5 lint/correctness/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This constructor has code paths where `super()` is called more than once.
+  
+    87 │ // invalid
+    88 │ class I extends A {
+  > 89 │     constructor() {
+       │     ^^^^^^^^^^^^^^^
+  > 90 │         super();
+        ...
+  > 95 │         }
+  > 96 │     }
+       │     ^
+    97 │   }
+    98 │ 
+  
+  i `super()` is first called here:
+  
+    88 │ class I extends A {
+    89 │     constructor() {
+  > 90 │         super();
+       │         ^^^^^
+    91 │         if (flag1) {
+    92 │             if (flag2) {
+  
+  i `super()` is then called again here:
+  
+    91 │         if (flag1) {
+    92 │             if (flag2) {
+  > 93 │                 super();
+       │                 ^^^^^
+    94 │             }
+    95 │         }
   
 
 ```

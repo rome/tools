@@ -157,11 +157,8 @@ impl Rule for NoUnreachableSuper {
                 .insert(prev_block, super_expression)
                 .filter(|previous_node| *previous_node == super_expression);
 
-            if let Some(previous_node) = previous_node {
-                return Some(RuleState::DuplicateSuper {
-                    first: previous_node.syntax().text_trimmed_range(),
-                    second: super_expression.syntax().text_trimmed_range(),
-                });
+            if previous_node.is_some() {
+                continue;
             }
 
             if let Some(outgoing_edges) = outgoing_edges.get(block_id) {

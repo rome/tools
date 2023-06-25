@@ -196,6 +196,11 @@ multiple files:
   React introduce new directives, "use client" and "use server".
   The rule raises false positive errors about these directives.
 
+- Fix false positive diagnostics ([#4483](https://github.com/rome/tools/issues/4483)) that  [`NoUnreachableSuper`](https://docs.rome.tools/lint/rules/nounreachablesuper/) caused to nested if statement.
+
+  The rule no longer reports `This constructor calls super() in a loop`
+  when using nested if statements in a constructor.
+
 ### Parser
 
 ### VSCode
