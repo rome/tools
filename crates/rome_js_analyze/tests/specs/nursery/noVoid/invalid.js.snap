@@ -25,6 +25,8 @@ invalid.js:1:1 lint/nursery/noVoid ━━━━━━━━━━━━━━━
     2 │ function f() {
     3 │ 	return void 0;
   
+  i If you use void to alter the return type of a function or return `undefined`, use the global `undefined` instead.
+  
 
 ```
 
@@ -39,6 +41,8 @@ invalid.js:3:9 lint/nursery/noVoid ━━━━━━━━━━━━━━━
       │ 	       ^^^^^^
     4 │ }
     5 │ var foo = void 0;
+  
+  i If you use void to alter the return type of a function or return `undefined`, use the global `undefined` instead.
   
 
 ```
@@ -55,6 +59,8 @@ invalid.js:5:11 lint/nursery/noVoid ━━━━━━━━━━━━━━�
     6 │ void(0);
     7 │ 
   
+  i If you use void to alter the return type of a function or return `undefined`, use the global `undefined` instead.
+  
 
 ```
 
@@ -68,6 +74,8 @@ invalid.js:6:1 lint/nursery/noVoid ━━━━━━━━━━━━━━━
   > 6 │ void(0);
       │ ^^^^^^^
     7 │ 
+  
+  i If you use void to alter the return type of a function or return `undefined`, use the global `undefined` instead.
   
 
 ```
