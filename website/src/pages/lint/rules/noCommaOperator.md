@@ -22,22 +22,18 @@ Source: https://eslint.org/docs/latest/rules/no-sequences
 ### Invalid
 
 ```jsx
-const foo = doSomething(), 0;
+const foo = (doSomething(), 0);
 ```
 
-<pre class="language-text"><code class="language-text">style/noCommaOperator.js:1:28 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">style/noCommaOperator.js:1:27 <a href="https://docs.rome.tools/lint/rules/noCommaOperator">lint/style/noCommaOperator</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">expected an identifier, an array pattern, or an object pattern but instead found '0'</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The comma operator is disallowed.</span>
   
-<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>const foo = doSomething(), 0;
-   <strong>   │ </strong>                           <strong><span style="color: Tomato;">^</span></strong>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>const foo = (doSomething(), 0);
+   <strong>   │ </strong>                          <strong><span style="color: Tomato;">^</span></strong>
     <strong>2 │ </strong>
   
-<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Expected an identifier, an array pattern, or an object pattern here</span>
-  
-<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>const foo = doSomething(), 0;
-   <strong>   │ </strong>                           <strong><span style="color: Tomato;">^</span></strong>
-    <strong>2 │ </strong>
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Its use is often confusing and obscures side effects.</span>
   
 </code></pre>
 
