@@ -202,7 +202,7 @@ pub(crate) fn traverse(
     }
 
     // Processing emitted error diagnostics, exit with a non-zero code
-    if count.saturating_sub(skipped) == 0 {
+    if count.saturating_sub(skipped) == 0 && !cli_options.no_errors_on_unmatched {
         Err(CliDiagnostic::no_files_processed())
     } else if errors > 0 {
         if execution.is_check_apply() {

@@ -1692,3 +1692,25 @@ fn ignores_unknown_file() {
         result,
     ));
 }
+
+#[test]
+fn doesnt_error_if_no_files_were_processed() {
+    let mut console = BufferConsole::default();
+    let mut fs = MemoryFileSystem::default();
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Args::from(&[("format"), "--no-errors-on-unmatched", ("file.js")]),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "doesnt_error_if_no_files_were_processed",
+        fs,
+        console,
+        result,
+    ));
+}
