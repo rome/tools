@@ -334,6 +334,9 @@ function initState(
 			importSortingEnabled:
 				searchParams.get("importSortingEnabled") === "true" ||
 				defaultPlaygroundState.settings.importSortingEnabled,
+			unsafeParameterDecoratorsEnabled:
+				searchParams.get("unsafeParameterDecoratorsEnabled") === "true" ||
+				defaultPlaygroundState.settings.unsafeParameterDecoratorsEnabled,
 		},
 	};
 }

@@ -72,6 +72,7 @@ self.addEventListener("message", async (e) => {
 				trailingComma,
 				semicolons,
 				importSortingEnabled,
+				unsafeParameterDecoratorsEnabled,
 			} = e.data.settings as PlaygroundSettings;
 
 			configuration = {
@@ -103,6 +104,9 @@ self.addEventListener("message", async (e) => {
 						trailingComma,
 						semicolons:
 							semicolons === Semicolons.Always ? "always" : "asNeeded",
+					},
+					parser: {
+						unsafeParameterDecoratorsEnabled,
 					},
 				},
 			};

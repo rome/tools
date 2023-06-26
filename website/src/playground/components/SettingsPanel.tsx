@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 const isCollapsedStore = createLocalStorage("settings-collapsed");
 
-export default function SettingsPane(props: SettingsTabProps) {
+export default function SettingsPanel(props: SettingsTabProps) {
 	const [isCollapsed, setIsCollapsed] = useState(isCollapsedStore.getBoolean());
 
 	function collapseToggle() {
@@ -17,7 +17,7 @@ export default function SettingsPane(props: SettingsTabProps) {
 	}, [isCollapsed]);
 
 	return (
-		<div className="settings-pane">
+		<div className="settings-panel">
 			{!isCollapsed && (
 				<div className="fields">
 					<SettingsTab {...props} />
