@@ -4,7 +4,7 @@ use regex::Regex;
 use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
-use rome_js_syntax::{AnyJsLiteralExpression, JsSyntaxKind, JsSyntaxToken};
+use rome_js_syntax::{JsStringLiteralExpression, JsSyntaxKind, JsSyntaxToken};
 use rome_rowan::{AstNode, BatchMutationExt, TextRange, TextSize};
 use std::{error::Error, ops::Range};
 
@@ -71,13 +71,8 @@ pub(crate) struct RuleState {
     replace_string_range: Range<usize>,
 }
 
-fn extract_value_text(node: &AnyJsLiteralExpression) -> Option<String> {
-    let value_token = node.as_js_string_literal_expression()?.value_token().ok()?;
-    Some(value_token.text().to_string())
-}
-
 impl Rule for NoNonoctalDecimalEscape {
-    type Query = Ast<AnyJsLiteralExpression>;
+    type Query = Ast<JsStringLiteralExpression>;
     type State = RuleState;
     type Signals = Vec<Self::State>;
     type Options = ();
@@ -85,9 +80,10 @@ impl Rule for NoNonoctalDecimalEscape {
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
         let mut signals: Self::Signals = Vec::new();
-        let Some(text) = extract_value_text(node) else {
+        let Some(token) = node.value_token().ok() else {
 			return signals
 		};
+        let text = token.text();
         if !is_octal_escape_sequence(&text) {
             return signals;
         }
@@ -189,7 +185,7 @@ impl Rule for NoNonoctalDecimalEscape {
     ) -> Option<JsRuleAction> {
         let mut mutation = ctx.root().begin();
         let node = ctx.query();
-        let prev_token = node.as_js_string_literal_expression()?.value_token().ok()?;
+        let prev_token = node.value_token().ok()?;
         let replaced = safe_replace_by_range(
             prev_token.text().to_string(),
             replace_string_range.to_owned(),
