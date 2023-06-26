@@ -8,7 +8,7 @@ expression: content
 Acts as a server for the Language Server Protocol over stdin/stdout
 
 Usage: [--colors off|force] [--use-server] [--verbose] [--config-path PATH] [--max-diagnostics
-NUMBER] [--skip-errors]
+NUMBER] [--suppress-warnings] [--skip-errors]
 
 Available options:
   Global options applied to all commands
@@ -20,6 +20,7 @@ Available options:
         --config-path <PATH>  Set the filesystem path to the directory of the rome.json configuration
                        file
         --max-diagnostics <NUMBER>  Cap the amount of diagnostics displayed (default: 20)
+        --suppress-warnings  Do not emit warning diagnostics
         --skip-errors  Skip over files containing syntax errors instead of emitting an error
                        diagnostic.
         --json         Reports information using the JSON format

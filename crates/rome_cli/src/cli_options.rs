@@ -24,6 +24,10 @@ pub struct CliOptions {
     #[bpaf(long("max-diagnostics"), argument("NUMBER"), optional)]
     pub max_diagnostics: Option<u16>,
 
+    /// Do not emit warning diagnostics
+    #[bpaf(long("suppress-warnings"), switch)]
+    pub suppress_warnings: bool,
+
     /// Skip over files containing syntax errors instead of emitting an error diagnostic.
     #[bpaf(long("skip-errors"), switch)]
     pub skip_errors: bool,

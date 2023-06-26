@@ -32,6 +32,7 @@ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
 "#;
 
 const NO_DEBUGGER: &str = "debugger;";
+
 const NEW_SYMBOL: &str = "new Symbol(\"\");";
 
 const FIX_BEFORE: &str = "
@@ -1328,6 +1329,67 @@ fn print_verbose() {
     ));
 }
 
+#[test]
+fn suppress_warnings() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let rome_path = Path::new("rome.json");
+    fs.insert(
+        rome_path.into(),
+        CONFIG_LINTER_DOWNGRADE_DIAGNOSTIC.as_bytes(),
+    );
+
+    let file_path = Path::new("file.ts");
+
+    const DEBUG_AND_ANY: &str = "debugger; const a: any = 1;";
+
+    fs.insert(file_path.into(), DEBUG_AND_ANY.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Args::from(&[
+            ("check"),
+            ("--suppress-warnings"),
+            file_path.as_os_str().to_str().unwrap(),
+        ]),
+    );
+    assert!(result.is_err(), "run_cli returned {result:?}");
+
+    let messages = &console.out_buffer;
+
+    assert_eq!(
+        messages
+            .iter()
+            .filter(|m| m.level == LogLevel::Error)
+            .filter(|m| {
+                let content = format!("{:#?}", m.content);
+                content.contains("suspicious/noExplicitAny")
+            })
+            .count(),
+        1
+    );
+
+    assert_eq!(
+        messages
+            .iter()
+            .filter(|m| {
+                let content = format!("{:#?}", m.content);
+                content.contains("suspicious/noDebugger")
+            })
+            .count(),
+        0
+    );
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "suppress_warnings",
+        fs,
+        console,
+        result,
+    ));
+}
 #[test]
 fn unsupported_file() {
     let mut fs = MemoryFileSystem::default();

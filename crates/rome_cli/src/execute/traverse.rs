@@ -102,6 +102,7 @@ pub(crate) fn traverse(
                     errors: &mut errors,
                     report: &mut report,
                     verbose: cli_options.verbose,
+                    suppress_warnings: cli_options.suppress_warnings,
                 });
             })
             .expect("failed to spawn console thread");
@@ -266,6 +267,8 @@ struct ProcessMessagesOptions<'ctx> {
     report: &'ctx mut Report,
     /// Whether the console thread should print diagnostics in verbose mode
     verbose: bool,
+    /// Whether the console thread should skip printing warning diagnostics
+    suppress_warnings: bool,
 }
 
 /// This thread receives [Message]s from the workers through the `recv_msgs`
@@ -282,6 +285,7 @@ fn process_messages(options: ProcessMessagesOptions) {
         errors,
         report,
         verbose,
+        suppress_warnings,
     } = options;
 
     let mut paths: HashSet<String> = HashSet::new();
@@ -422,6 +426,10 @@ fn process_messages(options: ProcessMessagesOptions) {
                             *errors += 1;
                         }
 
+                        if diag.severity() == Severity::Warning && suppress_warnings {
+                            continue;
+                        }
+
                         let diag = diag.with_file_path(&name).with_file_source_code(&content);
                         console.error(markup! {
                             {if verbose { PrintDiagnostic::verbose(&diag) } else { PrintDiagnostic::simple(&diag) }}
@@ -434,7 +442,11 @@ fn process_messages(options: ProcessMessagesOptions) {
                             *errors += 1;
                         }
 
-                        let should_print = printed_diagnostics < max_diagnostics;
+                        let should_suppress = severity == Severity::Warning && suppress_warnings;
+
+                        let should_print =
+                            printed_diagnostics < max_diagnostics && !should_suppress;
+
                         if should_print {
                             printed_diagnostics += 1;
                             remaining_diagnostics.store(

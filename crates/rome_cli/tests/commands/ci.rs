@@ -1,11 +1,14 @@
-use crate::configs::{CONFIG_DISABLED_FORMATTER, CONFIG_FILE_SIZE_LIMIT, CONFIG_LINTER_DISABLED};
+use crate::configs::{
+    CONFIG_DISABLED_FORMATTER, CONFIG_FILE_SIZE_LIMIT, CONFIG_LINTER_DISABLED,
+    CONFIG_LINTER_DOWNGRADE_DIAGNOSTIC,
+};
 use crate::snap_test::SnapshotPayload;
 use crate::{
     assert_cli_snapshot, run_cli, CUSTOM_FORMAT_BEFORE, FORMATTED, LINT_ERROR, PARSE_ERROR,
     UNFORMATTED,
 };
 use bpaf::Args;
-use rome_console::{BufferConsole, MarkupBuf};
+use rome_console::{BufferConsole, LogLevel, MarkupBuf};
 use rome_fs::{FileSystemExt, MemoryFileSystem};
 use rome_service::DynRef;
 use std::path::{Path, PathBuf};
@@ -696,6 +699,68 @@ fn print_verbose() {
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
         "print_verbose",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn suppress_warnings() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let rome_path = Path::new("rome.json");
+    fs.insert(
+        rome_path.into(),
+        CONFIG_LINTER_DOWNGRADE_DIAGNOSTIC.as_bytes(),
+    );
+
+    let file_path = Path::new("file.ts");
+
+    const DEBUG_AND_ANY: &str = "debugger; const a: any = 1;";
+
+    fs.insert(file_path.into(), DEBUG_AND_ANY.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Args::from(&[
+            ("ci"),
+            ("--suppress-warnings"),
+            file_path.as_os_str().to_str().unwrap(),
+        ]),
+    );
+    assert!(result.is_err(), "run_cli returned {result:?}");
+
+    let messages = &console.out_buffer;
+
+    assert_eq!(
+        messages
+            .iter()
+            .filter(|m| m.level == LogLevel::Error)
+            .filter(|m| {
+                let content = format!("{:#?}", m.content);
+                content.contains("suspicious/noExplicitAny")
+            })
+            .count(),
+        1
+    );
+
+    assert_eq!(
+        messages
+            .iter()
+            .filter(|m| {
+                let content = format!("{:#?}", m.content);
+                content.contains("suspicious/noDebugger")
+            })
+            .count(),
+        0
+    );
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "suppress_warnings",
         fs,
         console,
         result,
