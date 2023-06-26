@@ -99,9 +99,10 @@ define_categories! {
     "lint/nursery/noStaticOnlyClass": "https://docs.rome.tools/lint/rules/noStaticOnlyClass",
     "lint/nursery/noDuplicateJsonKeys": "https://docs.rome.tools/lint/rules/noDuplicateJsonKeys",
     "lint/nursery/useNamingConvention": "https://docs.rome.tools/lint/rules/useNamingConvention",
-"lint/nursery/noGlobalIsNan": "https://docs.rome.tools/lint/rules/noGlobalIsNan",
-"lint/nursery/noGlobalIsFinite": "https://docs.rome.tools/lint/rules/noGlobalIsFinite",
-"lint/nursery/useArrowFunction": "https://docs.rome.tools/lint/rules/useArrowFunction",
+    "lint/nursery/noGlobalIsNan": "https://docs.rome.tools/lint/rules/noGlobalIsNan",
+    "lint/nursery/noGlobalIsFinite": "https://docs.rome.tools/lint/rules/noGlobalIsFinite",
+    "lint/nursery/useArrowFunction": "https://docs.rome.tools/lint/rules/useArrowFunction",
+    "lint/nursery/noVoid": "https://docs.rome.tools/lint/rules/noVoid",
     // Insert new nursery rule here
 
 

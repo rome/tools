@@ -100,7 +100,13 @@ multiple files:
   This rule proposes turning function expressions into arrow functions.
   Function expressions that use `this` are ignored.
 
-- [`noDuplicateJsonKeys`](https://docs.rome.tools/lint/rules/noDuplicateJsonKeys/)
+- Add [`noDuplicateJsonKeys`](https://docs.rome.tools/lint/rules/noDuplicateJsonKeys/)
+
+	This rule disallow duplicate keys in a JSON object.
+
+- Add [`noVoid`](https://docs.rome.tools/lint/rules/novoid/)
+
+	This rules disallow the use of `void`.
 
 #### Other changes
 

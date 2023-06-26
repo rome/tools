@@ -566,6 +566,10 @@ export interface Nursery {
 	 */
 	noStaticOnlyClass?: RuleConfiguration;
 	/**
+	 * Disallow the use of void operators, which is not a familiar operator.
+	 */
+	noVoid?: RuleConfiguration;
+	/**
 	 * It enables the recommended rules for this group
 	 */
 	recommended?: boolean;
@@ -1126,6 +1130,7 @@ export type Category =
 	| "lint/nursery/noGlobalIsNan"
 	| "lint/nursery/noGlobalIsFinite"
 	| "lint/nursery/useArrowFunction"
+	| "lint/nursery/noVoid"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"

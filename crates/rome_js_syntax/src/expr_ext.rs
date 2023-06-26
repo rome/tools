@@ -353,6 +353,12 @@ impl JsUnaryExpression {
         })
     }
 
+    pub fn is_void(&self) -> SyntaxResult<bool> {
+        let operator = self.operator()?;
+
+        Ok(matches!(operator, JsUnaryOperator::Void))
+    }
+
     /// This function checks that `JsUnaryExpression` is a signed numeric literal:
     /// ```js
     ///     +123
