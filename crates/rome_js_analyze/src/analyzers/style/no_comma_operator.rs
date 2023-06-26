@@ -19,7 +19,7 @@ declare_rule! {
     /// ### Invalid
     ///
     /// ```js,expect_diagnostic
-    /// const foo = doSomething(), 0;
+    /// const foo = (doSomething(), 0);
     /// ```
     ///
     /// ```js,expect_diagnostic
