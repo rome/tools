@@ -4,7 +4,7 @@ use rome_js_syntax::JsUnaryExpression;
 use rome_rowan::AstNode;
 
 declare_rule! {
-    /// Disallow the use of `void`.
+    /// Disallow the use of `void` operators, which is not a familiar operator.
     ///
     /// > The `void` operator is often used merely to obtain the undefined primitive value,
     /// > usually using `void(0)` (which is equivalent to `void 0`). In these cases, the global variable `undefined` can be used.
@@ -49,6 +49,10 @@ impl Rule for NoVoid {
             markup! {
                 "The use of "<Emphasis>"void"</Emphasis>" is not allowed."
             },
-        ))
+        ).note(
+			markup!{
+				"If you use "<Emphasis>"void"</Emphasis>" to alter the return type of a function or return `undefined`, use the global `undefined` instead."
+			}
+		))
     }
 }

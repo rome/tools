@@ -846,7 +846,7 @@
 					]
 				},
 				"noVoid": {
-					"description": "Disallow the use of void.",
+					"description": "Disallow the use of void operators, which is not a familiar operator.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }

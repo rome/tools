@@ -5,7 +5,7 @@ parent: lint/rules/index
 
 # noVoid (since vnext)
 
-Disallow the use of `void`.
+Disallow the use of `void` operators, which is not a familiar operator.
 
 >The `void` operator is often used merely to obtain the undefined primitive value,
 usually using `void(0)` (which is equivalent to `void 0`). In these cases, the global variable `undefined` can be used.
@@ -28,6 +28,8 @@ void 0;
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>void 0;
    <strong>   │ </strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
     <strong>2 │ </strong>
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">If you use </span><span style="color: rgb(38, 148, 255);"><strong>void</strong></span><span style="color: rgb(38, 148, 255);"> to alter the return type of a function or return `undefined`, use the global `undefined` instead.</span>
   
 </code></pre>
 
