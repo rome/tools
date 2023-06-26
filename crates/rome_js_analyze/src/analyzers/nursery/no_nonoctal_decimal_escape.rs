@@ -99,13 +99,14 @@ impl Rule for NoNonoctalDecimalEscape {
             let decimal_escape_range_start = text_range_start + decimal_escape_string_start;
             let decimal_escape_range_end = decimal_escape_range_start + decimal_escape.len();
             let Some(decimal_escape_range) = try_new_text_range(decimal_escape_range_start, decimal_escape_range_end) else { continue };
+
             let Some(decimal_char) = decimal_escape.chars().nth(1) else { continue };
 
             let replace_string_range = *decimal_escape_string_start..*decimal_escape_string_end;
 
             if let Some(previous_escape) = previous_escape {
                 if *previous_escape == "\\0" {
-                    if let Some(unicode_escape) = get_unicode_escape("\0") {
+                    if let Some(unicode_escape) = get_unicode_escape('\0') {
                         let Some(previous_escape_range_start) = text.find(previous_escape) else { continue };
                         let Some(unicode_escape_text_range) = try_new_text_range(
                             text_range_start + previous_escape_range_start,
@@ -125,7 +126,7 @@ impl Rule for NoNonoctalDecimalEscape {
                         });
                     }
 
-                    let Some(decimal_char_unicode_escaped) = get_unicode_escape(&decimal_char.to_string()) else { continue };
+                    let Some(decimal_char_unicode_escaped) = get_unicode_escape(decimal_char) else { continue };
                     // \8 -> \u0038
                     signals.push(RuleState {
                         kind: FixSuggestionKind::Refactor,
@@ -233,7 +234,7 @@ fn safe_replace_by_range(
 fn is_octal_escape_sequence(input: &str) -> bool {
     let mut in_regex = false;
     let mut prev_char_was_escape = false;
-    for ch in input.chars().peekable() {
+    for ch in input.chars() {
         match ch {
             '/' if !prev_char_was_escape => in_regex = !in_regex,
             '8' | '9' if prev_char_was_escape && !in_regex => return true,
@@ -276,8 +277,7 @@ fn try_new_text_range(start_index: usize, end_index: usize) -> Option<TextRange>
 }
 
 /// Returns unicode escape sequence "\uXXXX" that represents the given character
-pub(crate) fn get_unicode_escape(character: &str) -> Option<String> {
-    let ch = character.chars().next()?;
+pub(crate) fn get_unicode_escape(ch: char) -> Option<String> {
     Some(format!("\\u{:04x}", ch as u32))
 }
 
@@ -301,9 +301,9 @@ mod tests {
 
     #[test]
     fn test_get_unicode_escape() {
-        assert_eq!(get_unicode_escape("\0"), Some("\\u0000".to_string()));
-        assert_eq!(get_unicode_escape("a"), Some("\\u0061".to_string()));
-        assert_eq!(get_unicode_escape("👍"), Some("\\u1f44d".to_string()));
+        assert_eq!(get_unicode_escape('\0'), Some("\\u0000".to_string()));
+        assert_eq!(get_unicode_escape('a'), Some("\\u0061".to_string()));
+        assert_eq!(get_unicode_escape('👍'), Some("\\u1f44d".to_string()));
     }
 
     #[test]
