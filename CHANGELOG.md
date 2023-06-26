@@ -19,13 +19,20 @@
 - The command `rome check` now shows formatter diagnostics when checking the code.
 - Fix [#4556](https://github.com/rome/tools/issues/4556), which correctly handles new lines in the
 `.gitignore` file across OS.
-- Add a new option to ignore unknown files.
+- Add a new option to ignore unknown files `--files-ignore-unknown`:
 
 	```shell
-	rome format ./src --files-ignore-unknown=true
+	rome format ./src --files-ignore-unknown
 	```
 
 	Doing so, Rome won't emit diagnostics for files that doesn't know how to handle.
+- Add a new option `--no-errors-on-unmatched`:
+
+	```shell
+	rome format ./src --no-errors-on-unmatched
+	```
+
+	Rome won't exit with an error code in case no files were processed in the given paths.
 
 ### Configuration
 

@@ -28,6 +28,10 @@ pub struct CliOptions {
     #[bpaf(long("skip-errors"), switch)]
     pub skip_errors: bool,
 
+    /// Silence errors that would be emitted in case no files were processed during the execution of the command.
+    #[bpaf(long("no-errors-on-unmatched"), switch)]
+    pub no_errors_on_unmatched: bool,
+
     /// Reports information using the JSON format
     #[bpaf(long("json"), switch, hide_usage)]
     pub json: bool,
