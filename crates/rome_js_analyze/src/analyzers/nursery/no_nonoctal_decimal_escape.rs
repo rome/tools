@@ -4,6 +4,7 @@ use regex::Regex;
 use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
+use rome_js_factory::make;
 use rome_js_syntax::{JsStringLiteralExpression, JsSyntaxKind, JsSyntaxToken};
 use rome_rowan::{AstNode, BatchMutationExt, TextRange, TextSize};
 use std::{error::Error, ops::Range};
@@ -87,7 +88,7 @@ impl Rule for NoNonoctalDecimalEscape {
         if !is_octal_escape_sequence(text) {
             return signals;
         }
-        let matches = parse_escape_sequences(text, &PATTERN);
+        let matches = parse_escape_sequences(text);
 
         for EscapeSequence {
             previous_escape,
@@ -194,8 +195,7 @@ impl Rule for NoNonoctalDecimalEscape {
         )
         .ok()?;
 
-        let next_token =
-            JsSyntaxToken::new_detached(JsSyntaxKind::JS_STRING_LITERAL, &replaced, [], []);
+        let next_token = make::ident(&replaced);
 
         mutation.replace_token(prev_token, next_token);
 
@@ -252,9 +252,9 @@ struct EscapeSequence {
     decimal_escape_range: (usize, usize),
 }
 
-fn parse_escape_sequences(input: &str, pattern: &Regex) -> Vec<EscapeSequence> {
+fn parse_escape_sequences(input: &str) -> Vec<EscapeSequence> {
     let mut result = vec![];
-    for cap in pattern.captures_iter(input) {
+    for cap in PATTERN.captures_iter(input) {
         let previous_escape = cap.get(1).map(|m| m.as_str().to_string());
         let Some(decimal_escape) = cap.get(2) else { continue };
         result.push(EscapeSequence {
@@ -309,7 +309,7 @@ mod tests {
     #[test]
     fn test_parse_escape_sequences() {
         assert_eq!(
-            parse_escape_sequences("test\\8\\9", &PATTERN),
+            parse_escape_sequences("test\\8\\9"),
             vec![
                 EscapeSequence {
                     previous_escape: Some("t".to_string()),
@@ -324,7 +324,7 @@ mod tests {
             ]
         );
         assert_eq!(
-            parse_escape_sequences("\\0\\8", &PATTERN),
+            parse_escape_sequences("\\0\\8"),
             vec![EscapeSequence {
                 previous_escape: Some("\\0".to_string()),
                 decimal_escape: "\\8".to_string(),
