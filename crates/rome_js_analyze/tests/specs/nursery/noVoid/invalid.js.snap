@@ -8,6 +8,9 @@ void 0;
 function f() {
 	return void 0;
 }
+var foo = void 0;
+void(0);
+
 
 ```
 
@@ -35,7 +38,36 @@ invalid.js:3:9 lint/nursery/noVoid ━━━━━━━━━━━━━━━
   > 3 │ 	return void 0;
       │ 	       ^^^^^^
     4 │ }
-    5 │ 
+    5 │ var foo = void 0;
+  
+
+```
+
+```
+invalid.js:5:11 lint/nursery/noVoid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The use of void is not allowed.
+  
+    3 │ 	return void 0;
+    4 │ }
+  > 5 │ var foo = void 0;
+      │           ^^^^^^
+    6 │ void(0);
+    7 │ 
+  
+
+```
+
+```
+invalid.js:6:1 lint/nursery/noVoid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The use of void is not allowed.
+  
+    4 │ }
+    5 │ var foo = void 0;
+  > 6 │ void(0);
+      │ ^^^^^^^
+    7 │ 
   
 
 ```
