@@ -15,7 +15,7 @@ pub trait JsonDeserialize: Sized {
     /// It accepts a JSON AST and a visitor. The visitor is the [default](Default) implementation of the data
     /// type that implements this trait.
     fn deserialize_from_ast(
-        root: JsonRoot,
+        root: &JsonRoot,
         visitor: &mut impl VisitJsonNode,
         diagnostics: &mut Vec<DeserializationDiagnostic>,
     ) -> Option<()>;
@@ -23,7 +23,7 @@ pub trait JsonDeserialize: Sized {
 
 impl JsonDeserialize for () {
     fn deserialize_from_ast(
-        _root: JsonRoot,
+        _root: &JsonRoot,
         _visitor: &mut impl VisitJsonNode,
         _diagnostics: &mut Vec<DeserializationDiagnostic>,
     ) -> Option<()> {
@@ -526,14 +526,14 @@ pub fn with_only_known_variants(
 ///         use rome_deserialize::Deserialized;
 ///         let mut output = Self::default();
 ///         let mut diagnostics = vec![];
-///         NewConfiguration::deserialize_from_ast(root, &mut output, &mut diagnostics);
+///         NewConfiguration::deserialize_from_ast(&root, &mut output, &mut diagnostics);
 ///         Deserialized::new(output, diagnostics)
 ///     }
 /// }
 ///
 ///
 /// impl JsonDeserialize for NewConfiguration {
-///     fn deserialize_from_ast(root: JsonRoot, visitor: &mut impl VisitJsonNode, diagnostics: &mut Vec<DeserializationDiagnostic>) -> Option<()> {
+///     fn deserialize_from_ast(root: &JsonRoot, visitor: &mut impl VisitJsonNode, diagnostics: &mut Vec<DeserializationDiagnostic>) -> Option<()> {
 ///         let object = root.value().ok()?;
 ///         let object = object.as_json_object_value()?;
 ///         for member in object.json_member_list() {
@@ -561,7 +561,7 @@ where
     let mut output = Output::default();
     let mut diagnostics = vec![];
     let parse = parse_json(source);
-    Output::deserialize_from_ast(parse.tree(), &mut output, &mut diagnostics);
+    Output::deserialize_from_ast(&parse.tree(), &mut output, &mut diagnostics);
     let mut errors = parse
         .into_diagnostics()
         .into_iter()
@@ -580,7 +580,7 @@ where
 }
 
 /// Attempts to deserialize a JSON AST, given the `Output`.
-pub fn deserialize_from_json_ast<Output>(parse: JsonRoot) -> Deserialized<Output>
+pub fn deserialize_from_json_ast<Output>(parse: &JsonRoot) -> Deserialized<Output>
 where
     Output: Default + VisitJsonNode + JsonDeserialize,
 {

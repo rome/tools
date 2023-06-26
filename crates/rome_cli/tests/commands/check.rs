@@ -2398,3 +2398,46 @@ fn ignores_unknown_file() {
         result,
     ));
 }
+
+#[test]
+fn check_json_files() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let file_path1 = Path::new("test.json");
+    fs.insert(
+        file_path1.into(),
+        r#"{ "foo": true, "foo": true }"#.as_bytes(),
+    );
+
+    let configuration = Path::new("rome.json");
+    fs.insert(
+        configuration.into(),
+        r#"{
+	"linter": {
+		"rules": {
+			"nursery": {
+				"noDuplicateJsonKeys": "error"
+			}
+		}
+	}
+	 }"#
+        .as_bytes(),
+    );
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Args::from(&[("check"), file_path1.as_os_str().to_str().unwrap()]),
+    );
+
+    assert!(result.is_err(), "run_cli returned {result:?}");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "check_json_files",
+        fs,
+        console,
+        result,
+    ));
+}
