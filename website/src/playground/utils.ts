@@ -125,7 +125,7 @@ export function createPlaygroundSettingsSetter<
 	setPlaygroundState: Dispatch<SetStateAction<PlaygroundState>>,
 	field: K,
 ): (value: PlaygroundSettings[K]) => void {
-	return function (param: PlaygroundSettings[typeof field]) {
+	return (param: PlaygroundSettings[typeof field]) => {
 		setPlaygroundState((state) => {
 			return {
 				...state,

@@ -318,7 +318,7 @@ class Manager {
 			return;
 		}
 
-		this.scrollToHeading(href, function () {
+		this.scrollToHeading(href, () => {
 			event.preventDefault();
 			location.hash = href;
 		});

@@ -143,7 +143,7 @@ function inlineIntegration(): AstroIntegration {
 }
 
 function remarkDefaultLayoutPlugin() {
-	return function (tree, file) {
+	return (tree, file) => {
 		const { frontmatter } = file.data.astro;
 		frontmatter.layout = frontmatter.layout ?? "@src/layouts/Layout.astro";
 	};

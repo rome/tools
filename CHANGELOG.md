@@ -91,6 +91,11 @@ multiple files:
 
   This rule recommends using `Number.isNaN` instead of the global and unsafe `isNaN` that attempts a type coercion.
 
+- Add [`useArrowFunction`](https://docs.rome.tools/lint/rules/usearrowfunction/)
+
+  This rule proposes turning function expressions into arrow functions.
+  Function expressions that use `this` are ignored.
+
 #### Other changes
 
 - [`noRedeclare`](https://docs.rome.tools/lint/rules/noredeclare/): allow redeclare of index signatures are in different type members [#4478](https://github.com/rome/tools/issues/4478)

@@ -574,6 +574,10 @@ export interface Nursery {
 	 */
 	useAriaPropTypes?: RuleConfiguration;
 	/**
+	 * Use arrow functions over function expressions.
+	 */
+	useArrowFunction?: RuleConfiguration;
+	/**
 	 * Enforce camel case naming convention.
 	 */
 	useCamelCase?: RuleConfiguration;
@@ -1121,6 +1125,7 @@ export type Category =
 	| "lint/nursery/useNamingConvention"
 	| "lint/nursery/noGlobalIsNan"
 	| "lint/nursery/noGlobalIsFinite"
+	| "lint/nursery/useArrowFunction"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"
