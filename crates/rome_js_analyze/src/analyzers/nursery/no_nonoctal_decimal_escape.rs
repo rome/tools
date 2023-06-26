@@ -84,10 +84,10 @@ impl Rule for NoNonoctalDecimalEscape {
 			return signals
 		};
         let text = token.text();
-        if !is_octal_escape_sequence(&text) {
+        if !is_octal_escape_sequence(text) {
             return signals;
         }
-        let matches = parse_escape_sequences(&text, &PATTERN);
+        let matches = parse_escape_sequences(text, &PATTERN);
 
         for EscapeSequence {
             previous_escape,
