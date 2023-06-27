@@ -261,6 +261,7 @@ fn is_octal_escape_sequence(input: &str) -> bool {
 struct EscapeSequence {
     previous_escape: Option<String>,
     decimal_escape: String,
+    /// The range of the decimal escape sequence in the string literal
     decimal_escape_range: (usize, usize),
 }
 
