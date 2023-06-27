@@ -204,8 +204,7 @@ impl Rule for NoNonoctalDecimalEscape {
             prev_token.text().to_string(),
             replace_string_range.to_owned(),
             replace_to,
-        )
-        .ok()?;
+        )?;
 
         let next_token = make::ident(&replaced);
 
@@ -229,17 +228,16 @@ impl Rule for NoNonoctalDecimalEscape {
 
 fn safe_replace_by_range(
     mut target: String,
-    range: std::ops::Range<usize>,
+    range: Range<usize>,
     replace_with: &str,
-) -> Result<String, Box<dyn Error>> {
-    if target.len() < range.end {
-        return Err("Range out of bounds".into());
-    }
-    if !target.is_char_boundary(range.start) || !target.is_char_boundary(range.end) {
-        return Err("Range does not fall on char boundary".into());
-    }
+) -> Option<String> {
+    debug_assert!(target.len() >= range.end, "Range out of bounds");
+    debug_assert!(
+        target.is_char_boundary(range.start) && target.is_char_boundary(range.end),
+        "Range does not fall on char boundary"
+    );
     target.replace_range(range, replace_with);
-    Ok(target)
+    Some(target)
 }
 
 /// Returns true if input is octal decimal escape sequence and is not in JavaScript regular expression
