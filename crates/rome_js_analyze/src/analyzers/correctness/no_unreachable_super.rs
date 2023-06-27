@@ -158,6 +158,7 @@ impl Rule for NoUnreachableSuper {
                 .filter(|previous_node| *previous_node == super_expression);
 
             if previous_node.is_some() {
+                println!("found duplicate super");
                 continue;
             }
 
@@ -183,6 +184,11 @@ impl Rule for NoUnreachableSuper {
         }
 
         // For each block containing a `this`, check that it has a predecessor for each of its incoming edges
+        println!("this_blocks: {:?}", this_blocks);
+        println!("super_blocks: {:?}", super_blocks);
+        println!("return_blocks: {:?}", return_blocks);
+        println!("predecessors: {:?}", predecessors);
+        println!("outgoing_edges: {:?}", incoming_edges);
         for (block_id, this_expression) in &this_blocks {
             if super_blocks.contains_key(block_id) {
                 continue;
@@ -191,12 +197,14 @@ impl Rule for NoUnreachableSuper {
             if let Some(predecessors) = predecessors.get(block_id) {
                 if let Some(incoming_edges) = incoming_edges.get(block_id) {
                     if predecessors.len() != incoming_edges.len() {
+                        println!("if block A");
                         return Some(RuleState::ThisWithoutSuper {
                             this: this_expression.syntax().text_trimmed_range(),
                         });
                     }
                 }
             } else {
+                print!("if block B");
                 return Some(RuleState::ThisWithoutSuper {
                     this: this_expression.syntax().text_trimmed_range(),
                 });
@@ -421,6 +429,7 @@ fn inspect_block(
 }
 
 /// Fast implementation of `Map<u32, T>` backed by a vector
+#[derive(Debug)]
 struct BlockMap<T> {
     storage: Vec<Option<T>>,
 }

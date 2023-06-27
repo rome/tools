@@ -1,0 +1,100 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 103
+expression: test.js
+---
+# Input
+```js
+class A {
+  constructor() {
+    console.log("Constructing A!")
+  }
+}
+
+class B extends A {
+  constructor(n) {
+    super();
+    if (typeof n === "string") {
+      if (n === "default") {
+        return;
+      } else {
+        this.n = parseInt(n);
+        return;
+      }
+    }
+    this.n = n
+  }
+}
+
+class C extends A {
+  constructor(n) {
+    super();
+    try {} catch {}
+    this.props = 0;
+  }
+}
+
+```
+
+# Diagnostics
+```
+test.js:8:3 lint/correctness/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This constructor has code paths accessing `this` without calling `super()` first.
+  
+     7 │ class B extends A {
+   > 8 │   constructor(n) {
+       │   ^^^^^^^^^^^^^^^^
+   > 9 │     super();
+        ...
+  > 18 │     this.n = n
+  > 19 │   }
+       │   ^
+    20 │ }
+    21 │ 
+  
+  i `this` is accessed here:
+  
+    16 │       }
+    17 │     }
+  > 18 │     this.n = n
+       │     ^^^^
+    19 │   }
+    20 │ }
+  
+  i If this is intentional, add an explicit throw statement in unsupported paths.
+  
+
+```
+
+```
+test.js:23:3 lint/correctness/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This constructor has code paths accessing `this` without calling `super()` first.
+  
+    22 │ class C extends A {
+  > 23 │   constructor(n) {
+       │   ^^^^^^^^^^^^^^^^
+  > 24 │     super();
+  > 25 │     try {} catch {}
+  > 26 │     this.props = 0;
+  > 27 │   }
+       │   ^
+    28 │ }
+    29 │ 
+  
+  i `this` is accessed here:
+  
+    24 │     super();
+    25 │     try {} catch {}
+  > 26 │     this.props = 0;
+       │     ^^^^
+    27 │   }
+    28 │ }
+  
+  i If this is intentional, add an explicit throw statement in unsupported paths.
+  
+
+```
+
+
