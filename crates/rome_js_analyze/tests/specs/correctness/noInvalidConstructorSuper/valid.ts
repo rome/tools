@@ -1,10 +1,3 @@
----
-source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 96
-expression: valid.js
----
-# Input
-```js
 class A  extends B {
     constructor() {
         super()
@@ -49,6 +42,40 @@ export class A extends mod.B {
     }
 }
 
-```
+// Regression test for https://github.com/rome/tools/issues/4624
+class ExtendGeneric
+    extends A<number>
+    implements I {
 
+        constructor() {
+		super();
+	}
+}
 
+class ExtendTaggesTemplate extends tag`something` {
+	constructor() {
+		super();
+	}
+}
+
+class ExtendUntaggedTemplate extends `something` {
+	constructor() {}
+}
+
+class ExtendNullAssertion extends A! {
+    constructor() {
+		super();
+	}
+}
+
+class ExtendTypeAssertion extends (A as A) {
+    constructor() {
+		super();
+	}
+}
+
+class ExtendStatisfiesExpression extends (A satisfies A) {
+    constructor() {
+		super();
+	}
+}

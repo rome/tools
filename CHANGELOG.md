@@ -126,6 +126,8 @@ multiple files:
   - inside an export default function
   - for React.use* hooks
 
+- Fix [`noInvalidConstructorSuper`](https://docs.rome.tools/lint/rules/noinvalidconstructorsuper/) rule that erroneously reported generic parents [#4624](https://github.com/rome/tools/issues/4624).
+
 - Relax [`noBannedTypes`](https://docs.rome.tools/lint/rules/nobannedtypes/) and improve documentation
 
   The rule no longer reports a user type that reuses a banned type name.
