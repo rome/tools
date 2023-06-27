@@ -5,9 +5,9 @@ use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Ast, Rule
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_syntax::{JsStringLiteralExpression, JsSyntaxKind, JsSyntaxToken};
+use rome_js_syntax::JsStringLiteralExpression;
 use rome_rowan::{AstNode, BatchMutationExt, TextRange, TextSize};
-use std::{error::Error, ops::Range};
+use std::ops::Range;
 
 lazy_static! {
     static ref PATTERN: Regex =
@@ -108,7 +108,7 @@ impl Rule for NoNonoctalDecimalEscape {
             decimal_escape_range: (decimal_escape_string_start, decimal_escape_string_end),
         } in matches.iter()
         {
-            let text_range_start = usize::from(node.syntax().text_range().start());
+            let text_range_start = usize::from(node.range().start());
             let decimal_escape_range_start = text_range_start + decimal_escape_string_start;
             let decimal_escape_range_end = decimal_escape_range_start + decimal_escape.len();
             let Some(decimal_escape_range) = try_new_text_range(decimal_escape_range_start, decimal_escape_range_end) else { continue };
