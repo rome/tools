@@ -1,18 +1,11 @@
 use crate::JsRuleAction;
-use lazy_static::lazy_static;
-use regex::Regex;
 use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::JsStringLiteralExpression;
-use rome_rowan::{AstNode, BatchMutationExt, TextRange, TextSize};
+use rome_rowan::{AstNode, BatchMutationExt, TextRange};
 use std::ops::Range;
-
-lazy_static! {
-    static ref PATTERN: Regex =
-        Regex::new(r"(\\0|[^\\])*?(\\[89])").expect("regex is not initialized");
-}
 
 declare_rule! {
     /// Disallow `\8` and `\9` escape sequences in string literals.
@@ -100,7 +93,7 @@ impl Rule for NoNonoctalDecimalEscape {
         if !is_octal_escape_sequence(text) {
             return signals;
         }
-        let matches = parse_escape_sequences(text);
+        let matches = lex_escape_sequences(text);
 
         for EscapeSequence {
             previous_escape,
@@ -268,16 +261,40 @@ struct EscapeSequence {
     decimal_escape_range: (usize, usize),
 }
 
-fn parse_escape_sequences(input: &str) -> Vec<EscapeSequence> {
-    let mut result = vec![];
-    for cap in PATTERN.captures_iter(input) {
-        let previous_escape = cap.get(1).map(|m| m.as_str().to_string());
-        let Some(decimal_escape) = cap.get(2) else { continue };
-        result.push(EscapeSequence {
-            previous_escape,
-            decimal_escape: decimal_escape.as_str().to_string(),
-            decimal_escape_range: (decimal_escape.start(), decimal_escape.end()),
-        });
+/// Returns a list of escape sequences in the given string literal
+fn lex_escape_sequences(input: &str) -> Vec<EscapeSequence> {
+    let mut result = Vec::new();
+    let mut previous_escape = None;
+    let mut decimal_escape_start = None;
+    let mut chars = input.char_indices().peekable();
+
+    while let Some((i, ch)) = chars.next() {
+        match ch {
+            '\\' => match chars.peek() {
+                Some((_, '0')) => {
+                    previous_escape = Some("\\0".to_string());
+                    // Consume '0'
+                    let _ = chars.next();
+                }
+                Some((_, '8'..='9')) => {
+                    decimal_escape_start = Some(i);
+                }
+                _ => (),
+            },
+            '8' | '9' if decimal_escape_start.is_some() => {
+                result.push(EscapeSequence {
+                    previous_escape: previous_escape.take(),
+                    decimal_escape: match ch {
+                        '8' => "\\8".to_string(),
+                        '9' => "\\9".to_string(),
+                        _ => unreachable!(),
+                    },
+                    decimal_escape_range: (decimal_escape_start.unwrap(), i + ch.len_utf8()),
+                });
+                decimal_escape_start = None;
+            }
+            _ => previous_escape = Some(ch.to_string()),
+        }
     }
     result
 }
@@ -315,7 +332,7 @@ mod tests {
     #[test]
     fn test_parse_escape_sequences() {
         assert_eq!(
-            parse_escape_sequences("test\\8\\9"),
+            lex_escape_sequences("test\\8\\9"),
             vec![
                 EscapeSequence {
                     previous_escape: Some("t".to_string()),
@@ -330,12 +347,35 @@ mod tests {
             ]
         );
         assert_eq!(
-            parse_escape_sequences("\\0\\8"),
+            lex_escape_sequences("\\0\\8"),
             vec![EscapeSequence {
                 previous_escape: Some("\\0".to_string()),
                 decimal_escape: "\\8".to_string(),
                 decimal_escape_range: (2, 4)
             },]
         );
+        assert_eq!(
+            lex_escape_sequences("👍\\8\\9"),
+            vec![
+                EscapeSequence {
+                    previous_escape: Some("👍".to_string()),
+                    decimal_escape: "\\8".to_string(),
+                    decimal_escape_range: (4, 6)
+                },
+                EscapeSequence {
+                    previous_escape: None,
+                    decimal_escape: "\\9".to_string(),
+                    decimal_escape_range: (6, 8)
+                }
+            ]
+        );
+        assert_eq!(
+            lex_escape_sequences("\\\\ \\8"),
+            vec![EscapeSequence {
+                previous_escape: Some(" ".to_string()),
+                decimal_escape: "\\8".to_string(),
+                decimal_escape_range: (3, 5)
+            },]
+        )
     }
 }

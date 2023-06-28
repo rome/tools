@@ -416,6 +416,27 @@ invalid.js:9:12 lint/nursery/noNonoctalDecimalEscape  FIXABLE  ━━━━━�
   
   i The nonoctal decimal escape is a deprecated syntax that is left for compatibility and should not be used.
   
+  i Suggested fix: Replace \8 with 8. This maintains the current functionality.
+  
+    9 │ let·x·=·"\\\8"
+      │            -  
+
+```
+
+```
+invalid.js:9:12 lint/nursery/noNonoctalDecimalEscape  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use `\8` and `\9` escape sequences in string literals.
+  
+     7 │ let x = "foo\8bar"
+     8 │ let x = "👍\8"
+   > 9 │ let x = "\\\8"
+       │            ^^
+    10 │ let x = "\\\\\9"
+    11 │ let x = "foo\\\8"
+  
+  i The nonoctal decimal escape is a deprecated syntax that is left for compatibility and should not be used.
+  
   i Suggested fix: Replace \8 with \\8 to include the actual backslash character.
   
     9 │ let·x·=·"\\\\8"
@@ -437,10 +458,52 @@ invalid.js:10:14 lint/nursery/noNonoctalDecimalEscape  FIXABLE  ━━━━━�
   
   i The nonoctal decimal escape is a deprecated syntax that is left for compatibility and should not be used.
   
+  i Suggested fix: Replace \9 with 9. This maintains the current functionality.
+  
+    10 │ let·x·=·"\\\\\9"
+       │              -  
+
+```
+
+```
+invalid.js:10:14 lint/nursery/noNonoctalDecimalEscape  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use `\8` and `\9` escape sequences in string literals.
+  
+     8 │ let x = "👍\8"
+     9 │ let x = "\\\8"
+  > 10 │ let x = "\\\\\9"
+       │              ^^
+    11 │ let x = "foo\\\8"
+    12 │ let x = "\\ \8"
+  
+  i The nonoctal decimal escape is a deprecated syntax that is left for compatibility and should not be used.
+  
   i Suggested fix: Replace \9 with \\9 to include the actual backslash character.
   
     10 │ let·x·=·"\\\\\\9"
        │               +  
+
+```
+
+```
+invalid.js:11:15 lint/nursery/noNonoctalDecimalEscape  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use `\8` and `\9` escape sequences in string literals.
+  
+     9 │ let x = "\\\8"
+    10 │ let x = "\\\\\9"
+  > 11 │ let x = "foo\\\8"
+       │               ^^
+    12 │ let x = "\\ \8"
+    13 │ let x = "\\1\9"
+  
+  i The nonoctal decimal escape is a deprecated syntax that is left for compatibility and should not be used.
+  
+  i Suggested fix: Replace \8 with 8. This maintains the current functionality.
+  
+    11 │ let·x·=·"foo\\\8"
+       │               -  
 
 ```
 
@@ -798,6 +861,27 @@ invalid.js:19:12 lint/nursery/noNonoctalDecimalEscape  FIXABLE  ━━━━━�
   
   i The nonoctal decimal escape is a deprecated syntax that is left for compatibility and should not be used.
   
+  i Suggested fix: Replace \8 with 8. This maintains the current functionality.
+  
+    19 │ let·x·=·"\\\8\9"
+       │            -    
+
+```
+
+```
+invalid.js:19:12 lint/nursery/noNonoctalDecimalEscape  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use `\8` and `\9` escape sequences in string literals.
+  
+    17 │ let x = "\\n.\\nn\8\\n"
+    18 │ let x = "\\👍\8"
+  > 19 │ let x = "\\\8\9"
+       │            ^^
+    20 │ let x = "\8\\\9"
+    21 │ let x = "\8 \\\9"
+  
+  i The nonoctal decimal escape is a deprecated syntax that is left for compatibility and should not be used.
+  
   i Suggested fix: Replace \8 with \\8 to include the actual backslash character.
   
     19 │ let·x·=·"\\\\8\9"
@@ -949,6 +1033,27 @@ invalid.js:21:15 lint/nursery/noNonoctalDecimalEscape  FIXABLE  ━━━━━�
   
     21 │ let·x·=·"\8·\\\\9"
        │                +  
+
+```
+
+```
+invalid.js:21:15 lint/nursery/noNonoctalDecimalEscape  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use `\8` and `\9` escape sequences in string literals.
+  
+    19 │ let x = "\\\8\9"
+    20 │ let x = "\8\\\9"
+  > 21 │ let x = "\8 \\\9"
+       │               ^^
+    22 │ let x = "\8\8"
+    23 │ let x = "\9\8"
+  
+  i The nonoctal decimal escape is a deprecated syntax that is left for compatibility and should not be used.
+  
+  i Suggested fix: Replace \9 with 9. This maintains the current functionality.
+  
+    21 │ let·x·=·"\8·\\\9"
+       │               -  
 
 ```
 
@@ -1300,6 +1405,27 @@ invalid.js:26:10 lint/nursery/noNonoctalDecimalEscape  FIXABLE  ━━━━━�
   
     26 │ let·x·=·"\\9\\n9\\\9\9"
        │           +            
+
+```
+
+```
+invalid.js:26:18 lint/nursery/noNonoctalDecimalEscape  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use `\8` and `\9` escape sequences in string literals.
+  
+    24 │ let x = "foo\8bar\9baz"
+    25 │ let x = "\8\\1\9"
+  > 26 │ let x = "\9\\n9\\\9\9"
+       │                  ^^
+    27 │ let x = "\8\\\\\9"
+    28 │ let x = "var foo = '\8'; bar('\9')"
+  
+  i The nonoctal decimal escape is a deprecated syntax that is left for compatibility and should not be used.
+  
+  i Suggested fix: Replace \9 with 9. This maintains the current functionality.
+  
+    26 │ let·x·=·"\9\\n9\\\9\9"
+       │                  -    
 
 ```
 

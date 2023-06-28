@@ -1893,7 +1893,6 @@ dependencies = [
  "json_comments",
  "lazy_static",
  "natord",
- "regex",
  "roaring",
  "rome_analyze",
  "rome_aria",

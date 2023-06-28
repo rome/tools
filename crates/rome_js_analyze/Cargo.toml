@@ -29,7 +29,6 @@ schemars              = { workspace = true, optional = true }
 serde                 = { version = "1.0.136", features = ["derive"] }
 serde_json            = { version = "1.0.74" }
 smallvec              = { workspace = true }
-regex                 = "1.8.4"
 
 [dev-dependencies]
 countme          = { workspace = true, features = ["enable"] }
