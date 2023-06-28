@@ -10,7 +10,7 @@ use rome_formatter::format_node;
 use rome_js_analyze::analyze;
 use rome_js_formatter::context::JsFormatOptions;
 use rome_js_formatter::JsFormatLanguage;
-use rome_js_parser::parse;
+use rome_js_parser::{JsParserOptions, parse};
 use rome_js_syntax::JsFileSource;
 use rome_json_formatter::context::JsonFormatOptions;
 use rome_json_formatter::JsonFormatLanguage;
@@ -23,7 +23,7 @@ use std::sync::OnceLock;
 pub fn fuzz_js_parser_with_source_type(data: &[u8], source: JsFileSource) -> Corpus {
     let Ok(code1) = std::str::from_utf8(data) else { return Corpus::Reject; };
 
-    let parse1 = parse(code1, source);
+    let parse1 = parse(code1, source, JsParserOptions::default());
     if !parse1.has_errors() {
         let syntax1 = parse1.syntax();
         let code2 = syntax1.to_string();
@@ -70,7 +70,7 @@ pub fn fuzz_js_formatter_with_source_type(data: &[u8], source: JsFileSource) -> 
     let rule_filters = ANALYSIS_RULE_FILTERS
         .get_or_init(|| rules.as_enabled_rules().into_iter().collect::<Vec<_>>());
 
-    let parse1 = parse(code1, source);
+    let parse1 = parse(code1, source, JsParserOptions::default());
     if !parse1.has_errors() {
         let language = JsFormatLanguage::new(JsFormatOptions::new(source));
         let tree1 = parse1.tree();
@@ -97,7 +97,7 @@ pub fn fuzz_js_formatter_with_source_type(data: &[u8], source: JsFileSource) -> 
         if let Ok(formatted1) = format_node(&syntax1, language.clone()) {
             if let Ok(printed1) = formatted1.print() {
                 let code2 = printed1.as_code();
-                let parse2 = parse(code2, source);
+                let parse2 = parse(code2, source, JsParserOptions::default());
                 assert!(
                     !parse2.has_errors(),
                     "formatter introduced errors:\n{}",
