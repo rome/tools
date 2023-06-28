@@ -14,6 +14,7 @@ pub(crate) mod ci;
 pub(crate) mod daemon;
 pub(crate) mod format;
 pub(crate) mod init;
+pub(crate) mod lint;
 pub(crate) mod migrate;
 pub(crate) mod rage;
 pub(crate) mod version;
@@ -69,6 +70,26 @@ pub enum RomeCommand {
         #[bpaf(external, hide_usage)]
         cli_options: CliOptions,
         /// A file name with its extension to pass when reading from standard in, e.g. echo 'let a;' | rome check --stdin-file-path=file.js"
+        #[bpaf(long("stdin-file-path"), argument("PATH"), hide_usage)]
+        stdin_file_path: Option<String>,
+        /// Single file, single path or list of paths
+        #[bpaf(positional("PATH"), many)]
+        paths: Vec<OsString>,
+    },
+    /// Run various checks on a set of files.
+    #[bpaf(command)]
+    Lint {
+        /// Apply safe fixes, formatting
+        #[bpaf(long("apply"), switch)]
+        apply: bool,
+        /// Apply safe fixes and unsafe fixes, formatting and import sorting
+        #[bpaf(long("apply-unsafe"), switch)]
+        apply_unsafe: bool,
+        #[bpaf(external, hide_usage, optional)]
+        configuration: Option<Configuration>,
+        #[bpaf(external, hide_usage)]
+        cli_options: CliOptions,
+        /// A file name with its extension to pass when reading from standard in, e.g. echo 'let a;' | rome lint --stdin-file-path=file.js"
         #[bpaf(long("stdin-file-path"), argument("PATH"), hide_usage)]
         stdin_file_path: Option<String>,
         /// Single file, single path or list of paths
@@ -160,6 +181,7 @@ impl RomeCommand {
             RomeCommand::Start => None,
             RomeCommand::Stop => None,
             RomeCommand::Check { cli_options, .. } => cli_options.colors.as_ref(),
+            RomeCommand::Lint { cli_options, .. } => cli_options.colors.as_ref(),
             RomeCommand::Ci { cli_options, .. } => cli_options.colors.as_ref(),
             RomeCommand::Format { cli_options, .. } => cli_options.colors.as_ref(),
             RomeCommand::Init => None,
@@ -177,6 +199,7 @@ impl RomeCommand {
             RomeCommand::Start => false,
             RomeCommand::Stop => false,
             RomeCommand::Check { cli_options, .. } => cli_options.use_server,
+            RomeCommand::Lint { cli_options, .. } => cli_options.use_server,
             RomeCommand::Ci { cli_options, .. } => cli_options.use_server,
             RomeCommand::Format { cli_options, .. } => cli_options.use_server,
             RomeCommand::Init => false,
@@ -198,6 +221,7 @@ impl RomeCommand {
             RomeCommand::Start => false,
             RomeCommand::Stop => false,
             RomeCommand::Check { cli_options, .. } => cli_options.verbose,
+            RomeCommand::Lint { cli_options, .. } => cli_options.verbose,
             RomeCommand::Format { cli_options, .. } => cli_options.verbose,
             RomeCommand::Ci { cli_options, .. } => cli_options.verbose,
             RomeCommand::Init => false,

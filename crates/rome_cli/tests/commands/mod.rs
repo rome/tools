@@ -2,6 +2,7 @@ mod check;
 mod ci;
 mod format;
 mod init;
+mod lint;
 mod lsp_proxy;
 mod migrate;
 mod rage;

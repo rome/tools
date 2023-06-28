@@ -1,4 +1,5 @@
 use crate::execute::diagnostics::{ResultExt, ResultIoExt, SkippedDiagnostic, UnhandledDiagnostic};
+use crate::execute::lint_file::{lint_file, LintFile};
 use crate::execute::traverse::TraversalOptions;
 use crate::execute::TraversalMode;
 use crate::{CliDiagnostic, FormatterReportFileDetail};
@@ -156,6 +157,7 @@ pub(crate) fn process_file(ctx: &TraversalOptions, path: &Path) -> FileResult {
                         }),
                 ),
             TraversalMode::Format { .. } => file_features.support_kind_for(&FeatureName::Format),
+            TraversalMode::Lint { .. } => file_features.support_kind_for(&FeatureName::Lint),
             TraversalMode::Migrate { .. } => None,
         };
 
@@ -171,6 +173,20 @@ pub(crate) fn process_file(ctx: &TraversalOptions, path: &Path) -> FileResult {
                 }
                 SupportKind::Supported => {}
             };
+        }
+
+        // NOTE: this is a work in progress that will be refactored over time
+        //
+        // With time, we will create a separate file for each traversal mode. Reason to do so
+        // is to keep the business logics of each traversal separate. Doing so would allow us to
+        // lower the changes to break the business logic of other traversal.
+        //
+        // This would definitely repeat the code, but it's worth the effort in the long run.
+        if let TraversalMode::Lint { .. } = ctx.execution.traversal_mode {
+            // the unsupported case should be handled already at this point
+            if file_features.supports_for(&FeatureName::Lint) {
+                return lint_file(LintFile { ctx, path });
+            }
         }
 
         let open_options = OpenOptions::default()
@@ -201,7 +217,7 @@ pub(crate) fn process_file(ctx: &TraversalOptions, path: &Path) -> FileResult {
 
         if let Some(fix_mode) = ctx.execution.as_fix_file_mode() {
             let fixed = file_guard
-                .fix_file(*fix_mode)
+                .fix_file(*fix_mode, file_features.supports_for(&FeatureName::Format))
                 .with_file_path_and_code(path.display().to_string(), category!("lint"))?;
 
             ctx.push_message(Message::SkippedFixes {
@@ -330,7 +346,9 @@ pub(crate) fn process_file(ctx: &TraversalOptions, path: &Path) -> FileResult {
             let should_write = match ctx.execution.traversal_mode() {
                 // In check mode do not run the formatter and return the result immediately,
                 // but only if the argument `--apply` is not passed.
-                TraversalMode::Check { .. } => ctx.execution.as_fix_file_mode().is_some(),
+                TraversalMode::Check { .. } | TraversalMode::Lint { .. } => {
+                    ctx.execution.as_fix_file_mode().is_some()
+                }
                 TraversalMode::CI { .. } => false,
                 TraversalMode::Format { write, .. } => *write,
                 TraversalMode::Migrate { write: dry_run, .. } => *dry_run,
