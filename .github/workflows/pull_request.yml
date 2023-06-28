@@ -85,7 +85,7 @@ jobs:
         run: cargo test --doc
 
   fuzz-all:
-    name: Build and init fuzzers
+    name: Briefly run fuzzers
     runs-on: ubuntu-latest
 
     steps:
