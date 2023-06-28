@@ -236,3 +236,23 @@ class Class3 {
 
 }
 
+// comments
+class Foo {
+	constructor(
+		//leading own line
+		/*leading same line*/ @Decorator /*trailing*/
+		//leading own line between
+		/*leading same line between*/ @dec //trailing
+			/*leading parameter*/
+			parameter: number
+	) {}
+
+	method(
+	//leading own line
+	/*leading same line*/ @Decorator /*trailing*/
+	//leading own line between
+	/*leading same line between*/ @dec //trailing
+	/*leading parameter*/
+	parameter
+	) {}
+}

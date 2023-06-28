@@ -13,14 +13,14 @@ mod language {
 // use this test check if your snippet prints as you wish, without using a snapshot
 fn quick_test() {
     let src = r#"
-class Class3 {
-  method(
-    @dec @dec
-    { prop1_1, prop1_2 }: Type,
-  ) {
-    doSomething();
-  }
-}
+class Foo {
+				constructor(
+				@dec
+				/*leading parameter*/ private parameter
+				) {	}
+			}
+
+
 "#;
     let syntax = JsFileSource::tsx();
     let tree = parse(
