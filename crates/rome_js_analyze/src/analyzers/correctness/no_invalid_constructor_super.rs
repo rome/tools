@@ -152,6 +152,9 @@ impl Rule for NoInvalidConstructorSuper {
 
 fn is_valid_constructor(expression: AnyJsExpression) -> Option<bool> {
     match expression.omit_parentheses() {
+        AnyJsExpression::JsAwaitExpression(await_expression) => {
+            is_valid_constructor(await_expression.argument().ok()?)
+        }
         AnyJsExpression::JsThisExpression(_)
         | AnyJsExpression::JsFunctionExpression(_)
         | AnyJsExpression::JsCallExpression(_)
@@ -168,7 +171,6 @@ fn is_valid_constructor(expression: AnyJsExpression) -> Option<bool> {
         }
         AnyJsExpression::JsAssignmentExpression(assignment) => {
             let operator = assignment.operator().ok()?;
-
             if matches!(
                 operator,
                 JsAssignmentOperator::Assign
@@ -195,6 +197,40 @@ fn is_valid_constructor(expression: AnyJsExpression) -> Option<bool> {
         AnyJsExpression::JsSequenceExpression(sequence_expression) => {
             is_valid_constructor(sequence_expression.right().ok()?)
         }
-        _ => Some(false),
+        AnyJsExpression::JsTemplateExpression(template_expression) => {
+            // Tagged templates can return anything
+            Some(template_expression.tag().is_some())
+        }
+        AnyJsExpression::TsInstantiationExpression(instantiation_expression) => {
+            is_valid_constructor(instantiation_expression.expression().ok()?)
+        }
+        AnyJsExpression::TsAsExpression(type_assertion) => {
+            is_valid_constructor(type_assertion.expression().ok()?)
+        }
+        AnyJsExpression::TsNonNullAssertionExpression(type_assertion) => {
+            is_valid_constructor(type_assertion.expression().ok()?)
+        }
+        AnyJsExpression::TsSatisfiesExpression(type_assertion) => {
+            is_valid_constructor(type_assertion.expression().ok()?)
+        }
+        AnyJsExpression::TsTypeAssertionExpression(type_assertion) => {
+            is_valid_constructor(type_assertion.expression().ok()?)
+        }
+        AnyJsExpression::JsComputedMemberExpression(_)
+        | AnyJsExpression::AnyJsLiteralExpression(_)
+        | AnyJsExpression::JsArrayExpression(_)
+        | AnyJsExpression::JsArrowFunctionExpression(_)
+        | AnyJsExpression::JsBinaryExpression(_)
+        | AnyJsExpression::JsBogusExpression(_)
+        | AnyJsExpression::JsInstanceofExpression(_)
+        | AnyJsExpression::JsObjectExpression(_)
+        | AnyJsExpression::JsPostUpdateExpression(_)
+        | AnyJsExpression::JsPreUpdateExpression(_)
+        | AnyJsExpression::JsSuperExpression(_)
+        | AnyJsExpression::JsUnaryExpression(_)
+        | AnyJsExpression::JsxTagExpression(_) => Some(false),
+        AnyJsExpression::JsInExpression(_) => None,
+        // Should not be triggered because we called `omit_parentheses`
+        AnyJsExpression::JsParenthesizedExpression(_) => None,
     }
 }
