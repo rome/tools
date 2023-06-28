@@ -182,9 +182,13 @@ impl Rule for NoNonoctalDecimalEscape {
             rule_category!(),
             diagnostics_text_range,
             markup! {
-                r"Don't use `\8` and `\9` escape sequences in string literals."
+                "Don't use "<Emphasis>"`\\8`"</Emphasis>" and "<Emphasis>"`\\9`"</Emphasis>" escape sequences in string literals."
             },
-        ))
+        ).note(
+			markup! {
+				"The nonoctal decimal escape is a deprecated syntax that is left for compatibility and should not be used."
+			}
+		))
     }
 
     fn action(
