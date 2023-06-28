@@ -111,7 +111,8 @@ impl Rule for NoNonoctalDecimalEscape {
             let text_range_start = usize::from(node.range().start());
             let decimal_escape_range_start = text_range_start + decimal_escape_string_start;
             let decimal_escape_range_end = decimal_escape_range_start + decimal_escape.len();
-            let Some(decimal_escape_range) = try_new_text_range(decimal_escape_range_start, decimal_escape_range_end) else { continue };
+            let Some(decimal_escape_range) =
+                TextRange::try_from((decimal_escape_range_start, decimal_escape_range_end)).ok() else { continue };
 
             let Some(decimal_char) = decimal_escape.chars().nth(1) else { continue };
 
@@ -121,10 +122,10 @@ impl Rule for NoNonoctalDecimalEscape {
                 if *previous_escape == "\\0" {
                     if let Some(unicode_escape) = get_unicode_escape('\0') {
                         let Some(previous_escape_range_start) = text.find(previous_escape) else { continue };
-                        let Some(unicode_escape_text_range) = try_new_text_range(
+                        let Some(unicode_escape_text_range) = TextRange::try_from((
                             text_range_start + previous_escape_range_start,
-                            decimal_escape_range_end,
-                        ) else { continue };
+                            decimal_escape_range_end
+						)).ok() else { continue };
 
                         let replace_string_range =
                             previous_escape_range_start..*decimal_escape_string_end;
@@ -279,16 +280,6 @@ fn parse_escape_sequences(input: &str) -> Vec<EscapeSequence> {
         });
     }
     result
-}
-
-fn try_new_text_range(start_index: usize, end_index: usize) -> Option<TextRange> {
-    match (
-        TextSize::try_from(start_index).ok(),
-        TextSize::try_from(end_index).ok(),
-    ) {
-        (Some(start), Some(end)) => Some(TextRange::new(start, end)),
-        _ => None,
-    }
 }
 
 /// Returns unicode escape sequence "\uXXXX" that represents the given character
