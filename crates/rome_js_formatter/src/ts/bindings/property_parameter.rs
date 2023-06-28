@@ -14,14 +14,22 @@ impl FormatNodeRule<TsPropertyParameter> for FormatTsPropertyParameter {
             formal_parameter,
         } = node.as_fields();
 
-        write![
-            f,
-            [
-                decorators.format(),
-                modifiers.format(),
-                space(),
-                formal_parameter.format()
+        let content = format_with(|f| {
+            write![
+                f,
+                [
+                    decorators.format(),
+                    modifiers.format(),
+                    space(),
+                    formal_parameter.format()
+                ]
             ]
-        ]
+        });
+
+        if decorators.is_empty() {
+            write![f, [content]]
+        } else {
+            write![f, [group(&content)]]
+        }
     }
 }

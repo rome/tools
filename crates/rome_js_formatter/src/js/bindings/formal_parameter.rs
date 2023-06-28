@@ -24,7 +24,6 @@ impl FormatNodeRule<JsFormalParameter> for FormatJsFormalParameter {
             write![
                 f,
                 [
-                    decorators.format(),
                     binding.format(),
                     question_mark_token.format(),
                     type_annotation.format()
@@ -40,10 +39,12 @@ impl FormatNodeRule<JsFormalParameter> for FormatJsFormalParameter {
                 should_hug_function_parameters(&parameters, f.comments()).unwrap_or(false)
             });
 
-        if is_hug_parameter {
-            write![f, [content]]?;
+        if is_hug_parameter && decorators.is_empty() {
+            write![f, [decorators.format(), content]]?;
+        } else if decorators.is_empty() {
+            write![f, [decorators.format(), group(&content)]]?;
         } else {
-            write![f, [group(&content)]]?;
+            write![f, [group(&decorators.format()), group(&content)]]?;
         }
 
         write![f, [FormatInitializerClause::new(initializer.as_ref())]]
