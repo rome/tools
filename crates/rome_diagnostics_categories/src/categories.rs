@@ -101,12 +101,9 @@ define_categories! {
     "lint/nursery/useNamingConvention": "https://docs.rome.tools/lint/rules/useNamingConvention",
     "lint/nursery/noGlobalIsNan": "https://docs.rome.tools/lint/rules/noGlobalIsNan",
     "lint/nursery/noGlobalIsFinite": "https://docs.rome.tools/lint/rules/noGlobalIsFinite",
-<<<<<<< HEAD
     "lint/nursery/useArrowFunction": "https://docs.rome.tools/lint/rules/useArrowFunction",
     "lint/nursery/noVoid": "https://docs.rome.tools/lint/rules/noVoid",
-=======
     "lint/nursery/noNonoctalDecimalEscape": "https://docs.rome.tools/lint/rules/noNonoctalDecimalEscape",
->>>>>>> 96622b3272 (feat(rome_js_analyze): noNonoctalDecimalEscape)
     // Insert new nursery rule here
 
 

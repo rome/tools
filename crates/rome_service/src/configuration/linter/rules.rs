@@ -1956,11 +1956,7 @@ pub struct Nursery {
 }
 impl Nursery {
     const GROUP_NAME: &'static str = "nursery";
-<<<<<<< HEAD
-    pub(crate) const GROUP_RULES: [&'static str; 28] = [
-=======
-    pub(crate) const GROUP_RULES: [&'static str; 27] = [
->>>>>>> 96622b3272 (feat(rome_js_analyze): noNonoctalDecimalEscape)
+    pub(crate) const GROUP_RULES: [&'static str; 29] = [
         "noAccumulatingSpread",
         "noAriaUnsupportedElements",
         "noBannedTypes",
@@ -1991,7 +1987,7 @@ impl Nursery {
         "useNamingConvention",
         "useSimpleNumberKeys",
     ];
-    const RECOMMENDED_RULES: [&'static str; 16] = [
+    const RECOMMENDED_RULES: [&'static str; 17] = [
         "noAriaUnsupportedElements",
         "noBannedTypes",
         "noConstantCondition",
@@ -2010,7 +2006,7 @@ impl Nursery {
         "useLiteralEnumMembers",
         "useLiteralKeys",
     ];
-    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 16] = [
+    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 17] = [
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[1]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[2]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[5]),
@@ -2021,25 +2017,15 @@ impl Nursery {
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[12]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[13]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[14]),
-<<<<<<< HEAD
-        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[17]),
-        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[19]),
-        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[20]),
-        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[23]),
-        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[24]),
-        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[25]),
-    ];
-    const ALL_RULES_AS_FILTERS: [RuleFilter<'static>; 28] = [
-=======
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[15]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[18]),
-        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[19]),
-        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[22]),
-        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[23]),
+        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[20]),
+        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[21]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[24]),
+        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[25]),
+        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[26]),
     ];
-    const ALL_RULES_AS_FILTERS: [RuleFilter<'static>; 27] = [
->>>>>>> 96622b3272 (feat(rome_js_analyze): noNonoctalDecimalEscape)
+    const ALL_RULES_AS_FILTERS: [RuleFilter<'static>; 29] = [
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[0]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[1]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[2]),
@@ -2067,10 +2053,8 @@ impl Nursery {
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[24]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[25]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[26]),
-<<<<<<< HEAD
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[27]),
-=======
->>>>>>> 96622b3272 (feat(rome_js_analyze): noNonoctalDecimalEscape)
+        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[28]),
     ];
     #[doc = r" Retrieves the recommended rules"]
     pub(crate) fn is_recommended(&self) -> bool { matches!(self.recommended, Some(true)) }
@@ -2156,118 +2140,76 @@ impl Nursery {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[14]));
             }
         }
-<<<<<<< HEAD
-        if let Some(rule) = self.no_void.as_ref() {
-=======
         if let Some(rule) = self.no_static_only_class.as_ref() {
->>>>>>> 96622b3272 (feat(rome_js_analyze): noNonoctalDecimalEscape)
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[15]));
             }
         }
-        if let Some(rule) = self.use_aria_prop_types.as_ref() {
+        if let Some(rule) = self.no_void.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[16]));
             }
         }
-<<<<<<< HEAD
-        if let Some(rule) = self.use_arrow_function.as_ref() {
-=======
-        if let Some(rule) = self.use_camel_case.as_ref() {
->>>>>>> 96622b3272 (feat(rome_js_analyze): noNonoctalDecimalEscape)
+        if let Some(rule) = self.use_aria_prop_types.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[17]));
             }
         }
-<<<<<<< HEAD
-        if let Some(rule) = self.use_camel_case.as_ref() {
-=======
-        if let Some(rule) = self.use_exhaustive_dependencies.as_ref() {
->>>>>>> 96622b3272 (feat(rome_js_analyze): noNonoctalDecimalEscape)
+        if let Some(rule) = self.use_arrow_function.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[18]));
             }
         }
-<<<<<<< HEAD
-        if let Some(rule) = self.use_exhaustive_dependencies.as_ref() {
-=======
-        if let Some(rule) = self.use_grouped_type_import.as_ref() {
->>>>>>> 96622b3272 (feat(rome_js_analyze): noNonoctalDecimalEscape)
+        if let Some(rule) = self.use_camel_case.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[19]));
             }
         }
-<<<<<<< HEAD
-        if let Some(rule) = self.use_grouped_type_import.as_ref() {
-=======
-        if let Some(rule) = self.use_heading_content.as_ref() {
->>>>>>> 96622b3272 (feat(rome_js_analyze): noNonoctalDecimalEscape)
+        if let Some(rule) = self.use_exhaustive_dependencies.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[20]));
             }
         }
-<<<<<<< HEAD
-        if let Some(rule) = self.use_heading_content.as_ref() {
-=======
-        if let Some(rule) = self.use_hook_at_top_level.as_ref() {
->>>>>>> 96622b3272 (feat(rome_js_analyze): noNonoctalDecimalEscape)
+        if let Some(rule) = self.use_grouped_type_import.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[21]));
             }
         }
-<<<<<<< HEAD
-        if let Some(rule) = self.use_hook_at_top_level.as_ref() {
-=======
-        if let Some(rule) = self.use_is_nan.as_ref() {
->>>>>>> 96622b3272 (feat(rome_js_analyze): noNonoctalDecimalEscape)
+        if let Some(rule) = self.use_heading_content.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[22]));
             }
         }
-<<<<<<< HEAD
-        if let Some(rule) = self.use_is_nan.as_ref() {
-=======
-        if let Some(rule) = self.use_literal_enum_members.as_ref() {
->>>>>>> 96622b3272 (feat(rome_js_analyze): noNonoctalDecimalEscape)
+        if let Some(rule) = self.use_hook_at_top_level.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[23]));
             }
         }
-<<<<<<< HEAD
-        if let Some(rule) = self.use_literal_enum_members.as_ref() {
-=======
-        if let Some(rule) = self.use_literal_keys.as_ref() {
->>>>>>> 96622b3272 (feat(rome_js_analyze): noNonoctalDecimalEscape)
+        if let Some(rule) = self.use_is_nan.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[24]));
             }
         }
-<<<<<<< HEAD
-        if let Some(rule) = self.use_literal_keys.as_ref() {
-=======
-        if let Some(rule) = self.use_naming_convention.as_ref() {
->>>>>>> 96622b3272 (feat(rome_js_analyze): noNonoctalDecimalEscape)
+        if let Some(rule) = self.use_literal_enum_members.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[25]));
             }
         }
-<<<<<<< HEAD
-        if let Some(rule) = self.use_naming_convention.as_ref() {
-=======
-        if let Some(rule) = self.use_simple_number_keys.as_ref() {
->>>>>>> 96622b3272 (feat(rome_js_analyze): noNonoctalDecimalEscape)
+        if let Some(rule) = self.use_literal_keys.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[26]));
             }
         }
-<<<<<<< HEAD
-        if let Some(rule) = self.use_simple_number_keys.as_ref() {
+        if let Some(rule) = self.use_naming_convention.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[27]));
             }
         }
-=======
->>>>>>> 96622b3272 (feat(rome_js_analyze): noNonoctalDecimalEscape)
+        if let Some(rule) = self.use_simple_number_keys.as_ref() {
+            if rule.is_enabled() {
+                index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[28]));
+            }
+        }
         index_set
     }
     pub(crate) fn get_disabled_rules(&self) -> IndexSet<RuleFilter> {
@@ -2347,118 +2289,76 @@ impl Nursery {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[14]));
             }
         }
-<<<<<<< HEAD
-        if let Some(rule) = self.no_void.as_ref() {
-=======
         if let Some(rule) = self.no_static_only_class.as_ref() {
->>>>>>> 96622b3272 (feat(rome_js_analyze): noNonoctalDecimalEscape)
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[15]));
             }
         }
-        if let Some(rule) = self.use_aria_prop_types.as_ref() {
+        if let Some(rule) = self.no_void.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[16]));
             }
         }
-<<<<<<< HEAD
-        if let Some(rule) = self.use_arrow_function.as_ref() {
-=======
-        if let Some(rule) = self.use_camel_case.as_ref() {
->>>>>>> 96622b3272 (feat(rome_js_analyze): noNonoctalDecimalEscape)
+        if let Some(rule) = self.use_aria_prop_types.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[17]));
             }
         }
-<<<<<<< HEAD
-        if let Some(rule) = self.use_camel_case.as_ref() {
-=======
-        if let Some(rule) = self.use_exhaustive_dependencies.as_ref() {
->>>>>>> 96622b3272 (feat(rome_js_analyze): noNonoctalDecimalEscape)
+        if let Some(rule) = self.use_arrow_function.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[18]));
             }
         }
-<<<<<<< HEAD
-        if let Some(rule) = self.use_exhaustive_dependencies.as_ref() {
-=======
-        if let Some(rule) = self.use_grouped_type_import.as_ref() {
->>>>>>> 96622b3272 (feat(rome_js_analyze): noNonoctalDecimalEscape)
+        if let Some(rule) = self.use_camel_case.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[19]));
             }
         }
-<<<<<<< HEAD
-        if let Some(rule) = self.use_grouped_type_import.as_ref() {
-=======
-        if let Some(rule) = self.use_heading_content.as_ref() {
->>>>>>> 96622b3272 (feat(rome_js_analyze): noNonoctalDecimalEscape)
+        if let Some(rule) = self.use_exhaustive_dependencies.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[20]));
             }
         }
-<<<<<<< HEAD
-        if let Some(rule) = self.use_heading_content.as_ref() {
-=======
-        if let Some(rule) = self.use_hook_at_top_level.as_ref() {
->>>>>>> 96622b3272 (feat(rome_js_analyze): noNonoctalDecimalEscape)
+        if let Some(rule) = self.use_grouped_type_import.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[21]));
             }
         }
-<<<<<<< HEAD
-        if let Some(rule) = self.use_hook_at_top_level.as_ref() {
-=======
-        if let Some(rule) = self.use_is_nan.as_ref() {
->>>>>>> 96622b3272 (feat(rome_js_analyze): noNonoctalDecimalEscape)
+        if let Some(rule) = self.use_heading_content.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[22]));
             }
         }
-<<<<<<< HEAD
-        if let Some(rule) = self.use_is_nan.as_ref() {
-=======
-        if let Some(rule) = self.use_literal_enum_members.as_ref() {
->>>>>>> 96622b3272 (feat(rome_js_analyze): noNonoctalDecimalEscape)
+        if let Some(rule) = self.use_hook_at_top_level.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[23]));
             }
         }
-<<<<<<< HEAD
-        if let Some(rule) = self.use_literal_enum_members.as_ref() {
-=======
-        if let Some(rule) = self.use_literal_keys.as_ref() {
->>>>>>> 96622b3272 (feat(rome_js_analyze): noNonoctalDecimalEscape)
+        if let Some(rule) = self.use_is_nan.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[24]));
             }
         }
-<<<<<<< HEAD
-        if let Some(rule) = self.use_literal_keys.as_ref() {
-=======
-        if let Some(rule) = self.use_naming_convention.as_ref() {
->>>>>>> 96622b3272 (feat(rome_js_analyze): noNonoctalDecimalEscape)
+        if let Some(rule) = self.use_literal_enum_members.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[25]));
             }
         }
-<<<<<<< HEAD
-        if let Some(rule) = self.use_naming_convention.as_ref() {
-=======
-        if let Some(rule) = self.use_simple_number_keys.as_ref() {
->>>>>>> 96622b3272 (feat(rome_js_analyze): noNonoctalDecimalEscape)
+        if let Some(rule) = self.use_literal_keys.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[26]));
             }
         }
-<<<<<<< HEAD
-        if let Some(rule) = self.use_simple_number_keys.as_ref() {
+        if let Some(rule) = self.use_naming_convention.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[27]));
             }
         }
-=======
->>>>>>> 96622b3272 (feat(rome_js_analyze): noNonoctalDecimalEscape)
+        if let Some(rule) = self.use_simple_number_keys.as_ref() {
+            if rule.is_disabled() {
+                index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[28]));
+            }
+        }
         index_set
     }
     #[doc = r" Checks if, given a rule name, matches one of the rules contained in this category"]
@@ -2467,14 +2367,10 @@ impl Nursery {
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
     }
-    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 16] {
+    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 17] {
         Self::RECOMMENDED_RULES_AS_FILTERS
     }
-<<<<<<< HEAD
-    pub(crate) fn all_rules_as_filters() -> [RuleFilter<'static>; 28] { Self::ALL_RULES_AS_FILTERS }
-=======
-    pub(crate) fn all_rules_as_filters() -> [RuleFilter<'static>; 27] { Self::ALL_RULES_AS_FILTERS }
->>>>>>> 96622b3272 (feat(rome_js_analyze): noNonoctalDecimalEscape)
+    pub(crate) fn all_rules_as_filters() -> [RuleFilter<'static>; 29] { Self::ALL_RULES_AS_FILTERS }
     #[doc = r" Select preset rules"]
     pub(crate) fn collect_preset_rules(
         &self,

@@ -1133,12 +1133,9 @@ export type Category =
 	| "lint/nursery/useNamingConvention"
 	| "lint/nursery/noGlobalIsNan"
 	| "lint/nursery/noGlobalIsFinite"
-<<<<<<< HEAD
 	| "lint/nursery/useArrowFunction"
 	| "lint/nursery/noVoid"
-=======
 	| "lint/nursery/noNonoctalDecimalEscape"
->>>>>>> 96622b3272 (feat(rome_js_analyze): noNonoctalDecimalEscape)
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"
