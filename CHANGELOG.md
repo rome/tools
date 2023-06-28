@@ -8,10 +8,11 @@
 
 - The CLI now exists with an error then there's an error inside the configuration.
 
-  Previously, rome would raise warnings and continue the execution, by applying its defaults.
+	Previously, rome would raise warnings and continue the execution, by applying its defaults.
 
-  This wasn't ideal for users, because this could have created false positives in linting, or formatted
-  code with a configuration that wasn't the of the user.
+	This wasn't ideal for users, because this could have created false positives in linting, or formatted
+	code with a configuration that wasn't the of the user.
+
 
 #### Other changes
 
@@ -39,35 +40,33 @@
 
 - Add a new option to ignore unknown files:
 
-  ```json
-  {
-  	"files": {
-  		"ignoreUnknown": true
-  	}
-  }
-  ```
-
-  Doing so, Rome won't emit diagnostics for file that it doesn't know how to handle.
+	```json
+	{
+		"files": {
+			"ignoreUnknown": true
+		}
+	}
+	```
+	Doing so, Rome won't emit diagnostics for file that it doesn't know how to handle.
 
 - Add a new `"javascript"` option to support the unsafe/experimental
-  parameter decorators:
+parameter decorators:
 
-      ```json
-      {
-      	"javascript": {
-      		"parser": {
-      			"unsafeParameterDecoratorsEnabled": true
-      		}
-      	}
-      }
-      ```
-
+	```json
+	{
+		"javascript": {
+			"parser": {
+				"unsafeParameterDecoratorsEnabled": true
+			}
+		}
+	}
+	```
 - Add a new `"extends"` option, useful to split the configuration file in
-  multiple files:
+multiple files:
 
   ```json
   {
-  	"extends": ["../sharedFormatter.json", "linter.json"]
+    "extends": ["../sharedFormatter.json", "linter.json"]
   }
   ```
 
@@ -118,7 +117,7 @@
 
 - Add [`noNonoctalDecimalEscape`](https://docs.rome.tools/lint/rules/nononoctaldecimalescape/)
 
-  This rule disallows `\8` and `\9` escape sequences in string literals.
+	This rule disallows `\8` and `\9` escape sequences in string literals.
 
 #### Other changes
 
@@ -127,10 +126,9 @@
 - Fix a crash in the [`NoParameterAssign`](https://docs.rome.tools/lint/rules/noparameterassign/) rule that occurred when there was a bogus binding. [#4323](https://github.com/rome/tools/issues/4323)
 
 - Fix [`useExhaustiveDependencies`](https://docs.rome.tools/lint/rules/useexhaustivedependencies/) rule in the following cases [#4330](https://github.com/rome/tools/issues/4330)
-
   - when the first argument of hooks is a named function
   - inside an export default function
-  - for React.use\* hooks
+  - for React.use* hooks
 
 - Fix [`noInvalidConstructorSuper`](https://docs.rome.tools/lint/rules/noinvalidconstructorsuper/) rule that erroneously reported generic parents [#4624](https://github.com/rome/tools/issues/4624).
 
@@ -148,7 +146,7 @@
 
   ```ts
   function f<T extends {}>(x: T) {
-  	assert(x != null);
+      assert(x != null);
   }
   ```
 
@@ -170,13 +168,13 @@
   Thus, the following snippet no longer trigger the rule:
 
   ```js
-  var x = (a) => (1 ? 2 : 3);
+  var x = (a) => 1 ? 2 : 3;
   ```
 
   The following snippet still triggers the rule:
 
   ```js
-  var x = (a) => (1 ? 2 : 3);
+  var x = a => 1 ? 2 : 3;
   ```
 
 - The rules [`useExhaustiveDependencies`](https://docs.rome.tools/lint/rules/useexhaustivedependencies/) and [`useHookAtTopLevel`](https://docs.rome.tools/lint/rules/usehookattoplevel/) accept a different shape of options
@@ -191,7 +189,9 @@
   				"useExhaustiveDependencies": {
   					"level": "error",
   					"options": {
-  						"hooks": [["useMyEffect", 0, 1]]
+  						"hooks": [
+  							["useMyEffect", 0, 1]
+  						]
   					}
   				}
   			}
@@ -230,7 +230,7 @@
   React introduce new directives, "use client" and "use server".
   The rule raises false positive errors about these directives.
 
-- Fix false positive diagnostics ([#4483](https://github.com/rome/tools/issues/4483)) that [`NoUnreachableSuper`](https://docs.rome.tools/lint/rules/nounreachablesuper/) caused to nested if statement.
+- Fix false positive diagnostics ([#4483](https://github.com/rome/tools/issues/4483)) that  [`NoUnreachableSuper`](https://docs.rome.tools/lint/rules/nounreachablesuper/) caused to nested if statement.
 
   The rule no longer reports `This constructor calls super() in a loop`
   when using nested if statements in a constructor.
@@ -240,6 +240,7 @@
 ### VSCode
 
 ### JavaScript APIs
+
 
 ## 12.1.3
 
@@ -256,7 +257,7 @@
 #### Other changes
 
 - Fix an issue where all the `nursery` were enabled when the `"nursery": {}` object
-  was defined [#4479](https://github.com/rome/tools/issues/4479)
+was defined [#4479](https://github.com/rome/tools/issues/4479)
 
 ### Formatter
 
@@ -273,6 +274,7 @@
 
 - Revert [#4359](https://github.com/rome/tools/issues/4359)
 
+
 ## 12.1.2
 
 ### Configuration
@@ -280,12 +282,11 @@
 #### Other changes
 
 - Fix regression where a specific combination of configuration didn't load
-  the correct rules to apply [#4502](https://github.com/rome/tools/issues/4502)
+the correct rules to apply [#4502](https://github.com/rome/tools/issues/4502)
 
 ### Linter
 
 #### New rules
-
 - [`noUselessTypeConstraint`](https://docs.rome.tools/lint/rules/noUselessTypeConstraint/)
 
 #### Other changes
@@ -300,6 +301,7 @@
 #### Other changes
 
 - Fix regression where the command `lsp-proxy` was renamed `lsp_proxy` [#4489](https://github.com/rome/tools/issues/4489)
+
 
 ### Configuration
 
@@ -321,14 +323,14 @@
 #### Other changes
 
 - Refactored the underling argument parsing logic. Changed the look and feel of the help
-  output. [#4405](https://github.com/rome/tools/pull/4405).
+output. [#4405](https://github.com/rome/tools/pull/4405).
 - The command `rome check` can accept input from `stdin`.
 - Add the argument `--stdin-file-path` to use when running `rome check` via `stdin`.
 - Add the argument `--formatter-enabled` to the command `rome check` to control the formatter via CLI.
 - Add the argument `--linter-enabled` to the command `rome check` to control the linter via CLI.
 - Add the argument `--organize-imports-enabled` to the command `rome check` to control the import sorting via CLI.
 - Add new command `rome migrate` the transform the configuration file `rome.json`
-  when there are breaking changes.
+	when there are breaking changes.
 
 ### Configuration
 
@@ -352,12 +354,10 @@
 
 - Fix an issue where formatting of JSX string literals property values were using incorrect quotes [#4054](https://github.com/rome/tools/issues/4054)
 - Changed import assertion grammar to the new import attribute assertion
-
 ```diff
 - import "module" assert {}
 + import "module" with {}
 ```
-
 - Fix an issue where JSON formatter does not respect `lineWidth` for arrays [#4351](https://github.com/rome/tools/issues/4351)
 - Add support for decorators
 
@@ -379,6 +379,7 @@
 - [`useHeadingContent`](https://docs.rome.tools/lint/rules/useHeadingContent/)
 - [`noAccumulatingSpread`](https://docs.rome.tools/lint/rules/noAccumulatingSpread/)
 - [`useSimpleNumberKeys`](https://docs.rome.tools/lint/rules/useSimpleNumberKeys/)
+
 
 #### Promoted rules
 
@@ -428,7 +429,7 @@ Note that, `noExtraSemicolons` and `noExtraLabels` are renamed to [`noExtraSemic
 #### Other changes
 
 - Code actions are formatted using Rome's formatter. If the formatter is disabled,
-  the code action is not formatted.
+	the code action is not formatted.
 - Fixed an issue that [`useShorthandArrayType`](https://docs.rome.tools/lint/rules/useShorthandArrayType) rule did not handle nested ReadonlyArray types correctly and erroneously reported TsObjectType [#4354](https://github.com/rome/tools/issues/4353).
 - [`noUndeclaredVariables`](https://docs.rome.tools/lint/rules/noUndeclaredVariables) detects globals based on the file type.
 - Fix an issue when [`noUndeclaredVariables`](https://docs.rome.tools/lint/rules/noundeclaredvariables/) incorrectly identifies `AggregateError` as an undeclared variable. [#4365](https://github.com/rome/tools/issues/4365)
@@ -442,18 +443,17 @@ Note that, `noExtraSemicolons` and `noExtraLabels` are renamed to [`noExtraSemic
 - Fix false positive diagnostics that [`noHeadeScope`](https://docs.rome.tools/lint/rules/noheaderscope/) caused to custom components
 - Fix false negative diagnostics that [`noNoninteractiveElementToInteractiveRole`](https://docs.rome.tools/lint/rules/nononinteractiveelementtointeractiverole/) and [`noNoninteractiveTabindex`](https://docs.rome.tools/lint/rules/nononinteractivetabindex/) caused to non-interactive elements.
 
+
 ### Parser
 
 #### Other changes
 
 - Allow module syntax in `cts` files
 - Changed import assertion grammar to the new import attribute assertion
-
 ```diff
 - import "module" assert {}
 + import "module" with {}
 ```
-
 - Allow decorators before `export` and `export default`. [#4252](https://github.com/rome/tools/issues/4252)
 - Add support for Stage 3 decorators
 
@@ -468,56 +468,56 @@ Note that, `noExtraSemicolons` and `noExtraLabels` are renamed to [`noExtraSemic
 ##### Breaking changes
 
 - Review how the traversal of the file system works. Now Rome won't navigate folders that are ignored.
-  While this change is a bug fix, this could affect how the `ignore` entries are defined inside a project. We suggest to review them
-  and make sure they still work.
+	While this change is a bug fix, this could affect how the `ignore` entries are defined inside a project. We suggest to review them
+	and make sure they still work.
 - `--apply-suggested` is now called `--apply-unsafe`
 - `rome check --apply` and `rome check --apply-unsafe` exits with non-zero code (error code)
-  if there are still diagnostics to be addressed.
+if there are still diagnostics to be addressed.
 
 ##### Other changes
 
 - `rome check` now checks import statements. This is an experimental feature that needs to be
-  enabled via configuration. Import can be sorted using `rome check --apply-unsafe`
+	enabled via configuration. Import can be sorted using `rome check --apply-unsafe`
 - Rome is able to auto discover the configuration file. If Rome doesn't fine a configuration in the
-  working directory, it will try to find one in the parent directories.
+working directory, it will try to find one in the parent directories.
 - Add a new global options called `--config-path`. It tells Rome to try and discover a `rome.json` file
-  in the given path.
-  `shell
-rome format --config-path=../../other/path/
-rome check --config-path=../../other/path/
-`
+in the given path.
+	```shell
+	rome format --config-path=../../other/path/
+	rome check --config-path=../../other/path/
+	```
 
 ### Configuration
 
 #### Other changes
 
 - Rome now uses the internal JSON parser to validate the configuration file. This means Rome won't
-  exit anymore if there are issues with the `rome.json` file, instead it will apply its defaults
-  to the sections that are incorrect.
+	exit anymore if there are issues with the `rome.json` file, instead it will apply its defaults
+	to the sections that are incorrect.
 - Add `javascript.organizeImports`. This is an experimental feature and users need to opt-in.
 
 ```json
 {
-	"organizeImports": {
-		"enabled": true,
-		"ignore": ["trickyFile.js"]
-	}
+  "organizeImports": {
+    "enabled": true,
+    "ignore": ["trickyFile.js"]
+  }
 }
 ```
-
 - Add `linter.rules.all` and `linter.rules.[group].all`. These options allow to enable or disable **all**
-  rules, or all rules for a **given group**. `all` and `recommended` can't be both `true`.
+rules, or all rules for a **given group**. `all` and `recommended` can't be both `true`.
+
 
 ```json
 {
-	"linter": {
-		"rules": {
-			"all": true,
-			"style": {
-				"all": false
-			}
-		}
-	}
+  "linter": {
+    "rules": {
+      "all": true,
+      "style" : {
+        "all": false
+      }
+    }
+  }
 }
 ```
 
@@ -542,7 +542,6 @@ The previous example will enable all rules and disable all rules that belong to 
 
 New rules are promoted, please check [#4239](https://github.com/rome/tools/pull/4239) for more
 details.
-
 - [lint/correctness/noUnsafeFinally](https://docs.rome.tools/lint/rules/noUnsafeFinally)
 - [lint/correctness/noConstructorReturn](https://docs.rome.tools/lint/rules/noConstructorReturn)
 - [lint/correctness/noPrecisionLoss](https://docs.rome.tools/lint/rules/noPrecisionLoss)
@@ -567,6 +566,7 @@ details.
 - [lint/suspicious/useDefaultSwitchClauseLast](https://docs.rome.tools/lint/rules/useDefaultSwitchClauseLast)
 - [lint/suspicious/noDuplicateObjectKeys](https://docs.rome.tools/lint/rules/noDuplicateObjectKeys)
 
+
 ### Parser
 
 - Support for TypeScript 4.7
@@ -575,10 +575,9 @@ details.
 ### VSCode
 
 ##### Other changes
-
 - Add a new option called `requireConfiguration`. Enabling this option will force Rome to require
-  a configuration file in your workspace/project. If Rome doesn't find a `rome.json` file, it won't
-  emit diagnostics.
+a configuration file in your workspace/project. If Rome doesn't find a `rome.json` file, it won't
+emit diagnostics.
 
 ## 11.0.0
 
@@ -630,6 +629,7 @@ details.
 
 - Added [support](https://docs.rome.tools/configuration/#javascriptformattersemicolon) for omitting semicolons.
 
+
 ### Linter
 
 - Fixed false positives emitted by [`noUselessFragments`](https://docs.rome.tools/lint/rules/nouselessfragments/) [#3668](https://github.com/rome/tools/issues/3668)
@@ -643,7 +643,6 @@ details.
 #### Rules
 
 The following rules have been stabilized:
-
 - `nursery/useFlatMap` -> `complexity/useFlatMap`
 - `nursery/useValidForDirection` -> `correctness/useValidForDirection`
 - `nursery/noExplicitAny` -> `suspicious/noExplicitAny`
@@ -652,7 +651,6 @@ The following rules have been stabilized:
 These rules are all recommended, so they will be enabled by default. You can simply remove those entries from your configuration file if you had enabled them manually from the `nursery` group.
 
 The following rules have been renamed:
-
 - `a11y/useBlankTarget` -> `a11y/noBlankTarget`
 - `correctness/noMultipleSpacesInRegularExpressionLiterals` -> `complexity/noMultipleSpacesInRegularExpressionLiterals`
 - `style/useOptionalChain` -> `complexity/useOptionalChain`
@@ -682,7 +680,6 @@ The following rules have been renamed:
 If you were not changing the severity level of any of these rules in your configuration file, or suppressing a diagnostic emitted by those rules using suppression comments, you do not have to do anything. But if you did, Rome will now emit diagnostics for the parts of your configuration or suppression comments you need to update.
 
 The following rules are no longer recommended:
-
 - `style/noImplicitBoolean`
 - `style/noNegationElse`
 - `style/useBlockStatements`
@@ -694,18 +691,17 @@ The styling decisions imposed by these rules were not deemed to be idiomatic eno
 
 ```json
 {
-	"linter": {
-		"rules": {
-			"style": {
-				"useBlockStatements": "warn"
-			}
-		}
-	}
+  "linter": {
+    "rules": {
+        "style": {
+            "useBlockStatements": "warn"
+        }
+    }
+  }
 }
 ```
 
 Finally, the following new rules have been introduced to the nursery group in this release:
-
 - [`nursery/noAccessKey`](https://docs.rome.tools/lint/rules/noAccessKey)
 - [`nursery/noConditionalAssignment`](https://docs.rome.tools/lint/rules/noConditionalAssignment)
 - [`nursery/noConstEnum`](https://docs.rome.tools/lint/rules/noConstEnum)
@@ -770,7 +766,7 @@ Please give them a try by manually enabling them in your configuration and pleas
 ### Linter
 
 - Fixed false positives in [`noUselessFragments`](https://docs.rome.tools/lint/rules/nouselessfragments/), [`noArrayIndexKey`](https://docs.rome.tools/lint/rules/noarrayindexkey/), [`noChildrenProp`](https://docs.rome.tools/lint/rules/nochildrenprop/), [`noUselessFragments`](https://docs.rome.tools/lint/rules/nouselessfragments/), [`noVoidElementsWithChildren`](https://docs.rome.tools/lint/rules/novoidelementswithchildren/), [`noDangerouslySetInnerHtml`](https://docs.rome.tools/lint/rules/nodangerouslysetinnerhtml/), [`noDangerouslySetInnerHtmlWithChildren`](https://docs.rome.tools/lint/rules/nodangerouslysetinnerhtmlwithchildren/), `useValidAnchor`, [`noRenderReturnValue`](https://docs.rome.tools/lint/rules/norenderreturnvalue/), [`noUnusedVariables`](https://docs.rome.tools/lint/rules/nounusedvariables/) and [`useKeyWithClickEvents`](https://docs.rome.tools/lint/rules/usekeywithclickevents/)
-  ([#3592](https://github.com/rome/tools/pull/3592), [#3619](https://github.com/rome/tools/pull/3619), [#3599](https://github.com/rome/tools/pull/3599), [#3626](https://github.com/rome/tools/pull/3626), [#3620](https://github.com/rome/tools/pull/3620) & [#3644](https://github.com/rome/tools/pull/3644))
+([#3592](https://github.com/rome/tools/pull/3592), [#3619](https://github.com/rome/tools/pull/3619), [#3599](https://github.com/rome/tools/pull/3599), [#3626](https://github.com/rome/tools/pull/3626), [#3620](https://github.com/rome/tools/pull/3620) & [#3644](https://github.com/rome/tools/pull/3644))
 
 ### Editors
 
@@ -800,6 +796,7 @@ Please give them a try by manually enabling them in your configuration and pleas
 
 - Fix false positive for unknown lint rule in suppression comments during formatting [#3406](https://github.com/rome/tools/issues/3406).
 - Correctly handle empty lines when printing code diffs [#3375](https://github.com/rome/tools/issues/3375).
+
 
 ### Formatter
 
@@ -851,19 +848,18 @@ Please give them a try by manually enabling them in your configuration and pleas
 - Added the new command `Restart LSP Server`
 - The LSP server is now able to listen to changes of `rome.json` and apply the new configuration
 
+
+
 ## 0.10.1
 
 ### CLI
-
 - Fixed a poor diagnostic that was emitted when navigating a symbolic symbol [#3329](https://github.com/rome/tools/issues/3329)
 - Added a size limit when inspecting files [#3330](https://github.com/rome/tools/issues/3330)
 
 ### Diagnostics
-
 - Do not print tabs and spaces for unchanged lines [#3327](https://github.com/rome/tools/issues/3327)
 
 ### VSCode
-
 - Fixed the calculation of text diffs inside the LSP [#3350](https://github.com/rome/tools/pull/3350)
 
 ## 0.10.0
@@ -880,12 +876,12 @@ You can now ignore folders and files using the Unix shell style patterns:
 
 ```json
 {
-	"formatter": {
-		"ignore": ["scripts/*.js"]
-	},
-	"linter": {
-		"ignore": ["src/**.test.{ts,js}"]
-	}
+  "formatter": {
+    "ignore": ["scripts/*.js"]
+  },
+  "linter": {
+    "ignore": ["src/**.test.{ts,js}"]
+  }
 }
 ```
 
@@ -899,9 +895,9 @@ You can now ignore folders and files using the Unix shell style patterns:
 ### Linter
 
 - **BREAKING CHANGE**: This release changes the naming of the lint rule groups with the goal to make them language agnostic and avoid confusion among users and contributors.
-  were named after a language, and this caused confusion among users and contributors. Please
-  check our [website](https://rome.tools/docs/lint/rules/) to know better about the new groups.
-  The new groups are heavily inspired from [`clippy`](https://github.com/rust-lang/rust-clippy#clippy)
+were named after a language, and this caused confusion among users and contributors. Please
+check our [website](https://rome.tools/docs/lint/rules/) to know better about the new groups.
+The new groups are heavily inspired from [`clippy`](https://github.com/rust-lang/rust-clippy#clippy)
 - Added a new group called `nursery`, this group incubates new rules that are being developed.
 - Added a new group called `style`, this group incubates rules that orbits around styling.
 - Added a new group called `correctness`, this group incubates rules that orbits catching possible bugs.
@@ -924,6 +920,7 @@ You can now ignore folders and files using the Unix shell style patterns:
 - [`noUndeclaredVariables`](https://rome.tools/docs/lint/rules/noUndeclaredVariables/)
 - [`noDangerouslySetInnerHtmlWithChildren`](https://rome.tools/docs/lint/rules/noDangerouslySetInnerHtmlWithChildren/)
 
+
 ### Parser
 
 - Fixed an issue where the parser was _not_ emitting a diagnostic on a certain TypeScript syntax [#3115](https://github.com/rome/tools/issues/3115)
@@ -932,7 +929,8 @@ You can now ignore folders and files using the Unix shell style patterns:
 
 - The setting `lspBin` can be also expressed as **relative path**
 - The rules have been added to the configuration schema, allowing users to receive autocomplete
-  when editing the `rome.json` for the [`rules`](https://rome.tools/#linterrulescorrectness) section
+when editing the `rome.json` for the [`rules`](https://rome.tools/#linterrulescorrectness) section
+
 
 ## 0.9.2
 
@@ -956,24 +954,20 @@ You can now ignore folders and files using the Unix shell style patterns:
 ### CLI
 
 - You can now format content from standard input when using the command `rome format`:
-
 ```shell
 echo "function f() { return {} }" | rome format --stdin-file-path example.js
 ```
-
-the argument `--stdin-file-path` is mandatory when formatting from standard in. The path should represent a
+the argument  `--stdin-file-path` is mandatory when formatting from standard in. The path should represent a
 file name with its extension.
-
 - Added `--apply-suggested` argument to the `rome check` command, to apply suggested and safe fixes.
-  Suggested fixes should be considered **unstable** and applied with care.
+Suggested fixes should be considered **unstable** and applied with care.
 - Added the `rome start` and `rome stop` commands to control the Rome daemon server process.
 - Added the `--use-server` global flag to the command line to make the CLI connect to a running instance of the
-  Rome daemon server.
+Rome daemon server.
 
 ### Configuration
 
 - **BREAKING CHANGE**: removed the second `"rules"` field from a field group.
-
 ```diff
 {
   "linter": {
@@ -989,24 +983,23 @@ file name with its extension.
   }
 }
 ```
-
 - fixed a problem that was incorrectly turning off rules in certain circumstances
 
 ### Formatter
 
 Significantly improved formatting and prettier compatibility of:
 
-- JSX [#3144](https://github.com/rome/tools/pull/3144)
-- Conditional expression and conditional types [#2427](https://github.com/rome/tools/issues/2427)
-- Function signatures [#2993](https://github.com/rome/tools/pull/2993), [#2990](https://github.com/rome/tools/pull/2990)
-- Return and throw statements [#2986](https://github.com/rome/tools/pull/2986)
-- Logical and binary expressions [#3079](https://github.com/rome/tools/pull/3079)
-- Templates [#3063](https://github.com/rome/tools/pull/3063)
-- Arrow expression chains [#3122](https://github.com/rome/tools/pull/3122)
-- Member expression assignments [#3061](https://github.com/rome/tools/pull/3061)
-- Array expressions [#3126](https://github.com/rome/tools/pull/3126)
-- Parenthesized expressions and types, including inserting parentheses to improve readability [#3057](https://github.com/rome/tools/pull/3057), [#3083](https://github.com/rome/tools/pull/3083), [#3108](https://github.com/rome/tools/pull/3108)
-- Doc comments [#3129](https://github.com/rome/tools/pull/3129)
+* JSX [#3144](https://github.com/rome/tools/pull/3144)
+* Conditional expression and conditional types [#2427](https://github.com/rome/tools/issues/2427)
+* Function signatures [#2993](https://github.com/rome/tools/pull/2993), [#2990](https://github.com/rome/tools/pull/2990)
+* Return and throw statements [#2986](https://github.com/rome/tools/pull/2986)
+* Logical and binary expressions [#3079](https://github.com/rome/tools/pull/3079)
+* Templates [#3063](https://github.com/rome/tools/pull/3063)
+* Arrow expression chains [#3122](https://github.com/rome/tools/pull/3122)
+* Member expression assignments [#3061](https://github.com/rome/tools/pull/3061)
+* Array expressions [#3126](https://github.com/rome/tools/pull/3126)
+* Parenthesized expressions and types, including inserting parentheses to improve readability [#3057](https://github.com/rome/tools/pull/3057), [#3083](https://github.com/rome/tools/pull/3083), [#3108](https://github.com/rome/tools/pull/3108)
+* Doc comments [#3129](https://github.com/rome/tools/pull/3129)
 
 ### Linter
 
@@ -1036,23 +1029,21 @@ Significantly improved formatting and prettier compatibility of:
 ### Configuration
 
 - You can create a configuration file called `rome.json` to customize Rome's default options.
-  This will work from both CLI and LSP.
+This will work from both CLI and LSP.
 
 ### Formatter
 
 - You can now use the configuration file `rome.json` to change Rome's defaults:
 
   Example:
-
   ```json
   {
-  	"root": true,
-  	"formatter": {
-  		"indentStyle": "space"
-  	}
+    "root": true,
+    "formatter": {
+      "indentStyle": "space"
+    }
   }
   ```
-
 - Fixed some edge cases where the comment suppressions were not working as expected.
 
 ### Linter
@@ -1060,10 +1051,11 @@ Significantly improved formatting and prettier compatibility of:
 The linter is now marked as "alpha" and it can be used to lint code from the CLI and
 from the LSP.
 
+
 ### VSCode
 
 - **BREAKING CHANGE**: Removed the majority of settings that were available in the extension, use the
-  configuration file `rome.json` to change the Rome's defaults.
+configuration file `rome.json` to change the Rome's defaults.
 - The extension now allows to rename variables;
 
 ## 0.7.0
@@ -1102,28 +1094,26 @@ Fixes a regression introduced in the `rome format` command ([#2670](https://gith
 
 - TypeScript's formatting is better in line with what Prettier does.
 - Better formatting of string literals.
-  Removing unnecessary quotes in string literals and quotes from member names.
-  Correctly choose the correct quote based on quantity of quotes inside a literal:
-
+Removing unnecessary quotes in string literals and quotes from member names.
+Correctly choose the correct quote based on quantity of quotes inside a literal:
   ```js
   // original code
   let a = {
-  	something: 3,
-  };
-  let b = "cool isn't it";
-  let c = '"content" \' ';
+    "something": 3
+  }
+  let b = "cool isn\'t it";
+  let c = "\"content\" ' ";
 
   // formatted code
   let a = {
-  	something: 3,
-  };
+    something: 3
+  }
   let b = "cool isn't it";
   let c = '"content" \' ';
   ```
-
 - Better formatting of various statements
 - Improved the performance of the formatter an average of 20%-30%! Check the relevant
-  PRs [1](https://github.com/rome/tools/pull/2456), [2](https://github.com/rome/tools/pull/2638), [3](https://github.com/rome/tools/pull/2612), [4](https://github.com/rome/tools/pull/2462), [5](https://github.com/rome/tools/pull/2634) if you're interested in what the team did.
+PRs [1](https://github.com/rome/tools/pull/2456), [2](https://github.com/rome/tools/pull/2638), [3](https://github.com/rome/tools/pull/2612), [4](https://github.com/rome/tools/pull/2462), [5](https://github.com/rome/tools/pull/2634) if you're interested in what the team did.
 
 To reach better compatibility with Prettier, the team had to revise the foundation of our printer,
 which caused some regressions around how comments are printed. These are known issues that we
@@ -1140,11 +1130,11 @@ Refer to the [website](https://rome.tools/#linter) to learn how to start using i
 
 - BREAKING CHANGES: the `format` command doesn't write on disk by default. Now the command prints on terminal.
 
-  **Migration**: add the `--write` argument when calling `rome format`
+    **Migration**: add the `--write` argument when calling `rome format`
 
-  ```shell
-  rome format --write
-  ```
+    ```shell
+    rome format --write
+    ```
 
 - Added a new option called `--quote-style` to the formatter. This option is also available on VSCode.
 
