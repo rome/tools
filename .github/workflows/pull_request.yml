@@ -97,6 +97,10 @@ jobs:
           bins: cargo-fuzz
       - name: Run init-fuzzer
         run: bash fuzz/init-fuzzer.sh
+      - name: Run JS fuzzer for 5 minutes
+        run: timeout 5m cargo fuzz run --strip-dead-code --features rome_all -s none rome_format_all -- -timeout=5 || [[ $? -eq 124 ]]
+      - name: Run JSON fuzzer for 5 minutes
+        run: timeout 5m cargo fuzz run --strip-dead-code -s none rome_format_json -- -timeout=5 || [[ $? -eq 124 ]]
 
   test-node-api:
     name: Test node.js API
