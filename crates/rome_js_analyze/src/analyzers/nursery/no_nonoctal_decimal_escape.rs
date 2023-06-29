@@ -118,7 +118,7 @@ impl Rule for NoNonoctalDecimalEscape {
                         let Some(unicode_escape_text_range) = TextRange::try_from((
                             text_range_start + previous_escape_range_start,
                             decimal_escape_range_end
-						)).ok() else { continue };
+                         )).ok() else { continue };
 
                         let replace_string_range =
                             previous_escape_range_start..*decimal_escape_string_end;
