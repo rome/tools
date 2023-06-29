@@ -7,10 +7,10 @@ use rome_js_syntax::{
 };
 
 declare_rule! {
-    /// Disallow fallthrough of case statements
+    /// Disallow fallthrough of case statements.
     ///
     /// Case statements in switch statements fall through by default. This can lead to unexpected behavior when forgotten.
-    /// This rule disallows fallthrough of case statements.
+    /// This rule disallows the fallthrough of case statements.
     ///
     /// Source: https://eslint.org/docs/latest/rules/no-fallthrough
     ///
@@ -82,7 +82,7 @@ impl Rule for NoFallthroughSwitchClause {
                 },
             )
             .note(markup! {
-                "Add a `break` statement to the end of this case to prevent fallthrough."
+                "Add a `break` or `return` statement to the end of this case to prevent fallthrough."
             }),
         )
     }
