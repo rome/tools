@@ -3,7 +3,7 @@ use rome_rowan::AstNode;
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::{
-    AnyJsSwitchClause, JsBreakStatement, JsReturnStatement, JsSwitchStatement, JsThrowStatement,
+    AnyJsSwitchClause, JsBreakStatement, JsReturnStatement, JsSwitchStatement, JsThrowStatement, JsContinueStatement
 };
 
 declare_rule! {
@@ -99,6 +99,7 @@ fn case_fell(case: &AnyJsSwitchClause) -> bool {
         JsBreakStatement::can_cast(node.kind())
             | JsReturnStatement::can_cast(node.kind())
             | JsThrowStatement::can_cast(node.kind())
+            | JsContinueStatement::can_cast(node.kind())
     });
 
     !has_fall_blocker
