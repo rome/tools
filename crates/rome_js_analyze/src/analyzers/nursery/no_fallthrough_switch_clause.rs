@@ -89,9 +89,9 @@ impl Rule for NoFallthroughSwitchClause {
 }
 
 fn case_fell(case: &AnyJsSwitchClause) -> bool {
-    let children = &mut case.consequent().syntax().children();
+    let mut children = case.consequent().syntax().children();
 
-    if children.peekable().peek().is_none() {
+    if children.clone().into_iter().count() == 0 {
         return false;
     }
 
