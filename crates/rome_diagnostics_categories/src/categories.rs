@@ -103,6 +103,7 @@ define_categories! {
     "lint/nursery/noGlobalIsFinite": "https://docs.rome.tools/lint/rules/noGlobalIsFinite",
     "lint/nursery/useArrowFunction": "https://docs.rome.tools/lint/rules/useArrowFunction",
     "lint/nursery/noVoid": "https://docs.rome.tools/lint/rules/noVoid",
+"lint/nursery/noExcessiveComplexity": "https://docs.rome.tools/lint/rules/noExcessiveComplexity",
     // Insert new nursery rule here
 
 

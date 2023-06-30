@@ -538,6 +538,10 @@ export interface Nursery {
 	 */
 	noDuplicateJsxProps?: RuleConfiguration;
 	/**
+	 * Succinct description of the rule.
+	 */
+	noExcessiveComplexity?: RuleConfiguration;
+	/**
 	 * Prefer for...of statement instead of Array.forEach.
 	 */
 	noForEach?: RuleConfiguration;
@@ -1131,6 +1135,7 @@ export type Category =
 	| "lint/nursery/noGlobalIsFinite"
 	| "lint/nursery/useArrowFunction"
 	| "lint/nursery/noVoid"
+	| "lint/nursery/noExcessiveComplexity"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"
