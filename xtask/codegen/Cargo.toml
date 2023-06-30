@@ -9,7 +9,7 @@ xtask = { path = '../', version = "0.0" }
 anyhow = "1.0.52"
 pico-args = { version = "0.5.0", features = ["eq-separator"] }
 quote = "1.0.14"
-proc-macro2 = { version = "1.0.36", features = ["span-locations"] }
+proc-macro2 = { version = "1.0.63", features = ["span-locations"] }
 ungrammar = "1.14.9"
 walkdir = "2.3.2"
 ureq = "2.4.0"
