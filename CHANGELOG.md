@@ -123,6 +123,8 @@ multiple files:
 
 #### Other changes
 
+- Add new TypeScript globals (`AsyncDisposable`, `Awaited`, `DecoratorContext`, and others) [4643](https://github.com/rome/tools/issues/4643).
+
 - [`noRedeclare`](https://docs.rome.tools/lint/rules/noredeclare/): allow redeclare of index signatures are in different type members [#4478](https://github.com/rome/tools/issues/4478)
 
 - Fix a crash in the [`NoParameterAssign`](https://docs.rome.tools/lint/rules/noparameterassign/) rule that occurred when there was a bogus binding. [#4323](https://github.com/rome/tools/issues/4323)
