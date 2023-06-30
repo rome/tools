@@ -8,12 +8,12 @@ alias r := ready
 
 # Installs the tools needed to develop with Rome
 install-tools:
-	cargo install binstall
+	cargo install cargo-binstall
 	cargo binstall cargo-insta cargo-nextest taplo-cli wasm-pack
 
 # Upgrades the tools needed to develop with Rome
 upgrade-tools:
-	cargo install binstall --force
+	cargo install cargo-binstall --force
 	cargo binstall cargo-insta cargo-nextest taplo-cli wasm-pack --force
 
 # Generate all files across crates and tools. You rarely want to use it locally.

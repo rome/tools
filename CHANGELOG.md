@@ -85,6 +85,8 @@ multiple files:
 
 ### Linter
 
+- [`noDuplicateParameters`](https://docs.rome.tools/lint/rules/noduplicateparameters/): enhanced rule to manage constructor parameters.
+
 #### BREAKING CHANGES
 
 - Remove `lint/complexity/noExtraSemicolon` ([#4553](https://github.com/rome/tools/issues/4553))

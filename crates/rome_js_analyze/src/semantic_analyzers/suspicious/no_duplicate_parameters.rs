@@ -1,12 +1,11 @@
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
+use rome_js_syntax::parameter_ext::{AnyJsParameterList, AnyJsParameters, AnyParameter};
 use rome_js_syntax::{
-    AnyJsArrayBindingPatternElement, AnyJsBinding, AnyJsBindingPattern, AnyJsFormalParameter,
-    AnyJsObjectBindingPatternMember, AnyJsParameter, JsArrowFunctionExpression,
-    JsFunctionDeclaration, JsFunctionExportDefaultDeclaration, JsFunctionExpression,
-    JsIdentifierBinding, JsMethodClassMember, JsMethodObjectMember,
+    AnyJsArrayBindingPatternElement, AnyJsBinding, AnyJsBindingPattern,
+    AnyJsObjectBindingPatternMember, JsIdentifierBinding,
 };
-use rome_rowan::{declare_node_union, AstNode};
+use rome_rowan::AstNode;
 use rustc_hash::FxHashSet;
 
 declare_rule! {
@@ -47,28 +46,26 @@ declare_rule! {
 }
 
 impl Rule for NoDuplicateParameters {
-    type Query = Ast<AnyJsFunctionAndMethod>;
+    type Query = Ast<AnyJsParameters>;
     type State = JsIdentifierBinding;
     type Signals = Option<Self::State>;
     type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let function = ctx.query();
-        let args = match function {
-            AnyJsFunctionAndMethod::JsArrowFunctionExpression(func) => {
-                func.parameters().ok()?.as_js_parameters()?.clone()
+        let parameters = ctx.query();
+
+        let list = match parameters {
+            AnyJsParameters::JsParameters(parameters) => {
+                AnyJsParameterList::from(parameters.items())
             }
-            AnyJsFunctionAndMethod::JsFunctionDeclaration(func) => func.parameters().ok()?,
-            AnyJsFunctionAndMethod::JsFunctionExportDefaultDeclaration(func) => {
-                func.parameters().ok()?
+            AnyJsParameters::JsConstructorParameters(parameters) => {
+                AnyJsParameterList::from(parameters.parameters())
             }
-            AnyJsFunctionAndMethod::JsFunctionExpression(func) => func.parameters().ok()?,
-            AnyJsFunctionAndMethod::JsMethodClassMember(member) => member.parameters().ok()?,
-            AnyJsFunctionAndMethod::JsMethodObjectMember(member) => member.parameters().ok()?,
         };
+
         let mut set = FxHashSet::default();
         // Traversing the parameters of the function in preorder and checking for duplicates,
-        args.items().into_iter().find_map(|parameter| {
+        list.iter().find_map(|parameter| {
             let parameter = parameter.ok()?;
             traverse_parameter(parameter, &mut set)
         })
@@ -92,21 +89,12 @@ impl Rule for NoDuplicateParameters {
 /// Traverse the parameter recursively and check if it is duplicated.
 /// Return `Some(JsIdentifierBinding)` if it is duplicated.
 fn traverse_parameter(
-    parameter: AnyJsParameter,
+    parameter: AnyParameter,
     tracked_bindings: &mut FxHashSet<String>,
 ) -> Option<JsIdentifierBinding> {
-    match parameter {
-        AnyJsParameter::AnyJsFormalParameter(p) => match p {
-            AnyJsFormalParameter::JsFormalParameter(parameter) => {
-                traverse_binding(parameter.binding().ok()?, tracked_bindings)
-            }
-            AnyJsFormalParameter::JsBogusParameter(_) => None,
-        },
-        AnyJsParameter::JsRestParameter(rest_parameter) => {
-            traverse_binding(rest_parameter.binding().ok()?, tracked_bindings)
-        }
-        AnyJsParameter::TsThisParameter(_) => None,
-    }
+    parameter
+        .binding()
+        .and_then(|binding| traverse_binding(binding, tracked_bindings))
 }
 
 /// Traverse a [JsAnyBindingPattern] in preorder and check if the name of [JsIdentifierBinding] has seem before.
@@ -197,9 +185,4 @@ fn track_binding(
         tracked_bindings.insert(binding_text);
         false
     }
-}
-
-declare_node_union! {
-    /// A union of all possible FunctionLike `JsAstNode` in the JS grammar.
-    pub(crate) AnyJsFunctionAndMethod = JsArrowFunctionExpression| JsFunctionDeclaration| JsFunctionExportDefaultDeclaration | JsFunctionExpression | JsMethodClassMember | JsMethodObjectMember
 }
