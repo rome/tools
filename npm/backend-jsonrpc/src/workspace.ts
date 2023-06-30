@@ -1398,6 +1398,7 @@ export interface FormatOnTypeParams {
 export interface FixFileParams {
 	fix_file_mode: FixFileMode;
 	path: RomePath;
+	should_format: boolean;
 }
 /**
  * Which fixes should be applied during the analyzing phase

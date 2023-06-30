@@ -373,6 +373,7 @@ pub enum FixFileMode {
 pub struct FixFileParams {
     pub path: RomePath,
     pub fix_file_mode: FixFileMode,
+    pub should_format: bool,
 }
 
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
@@ -667,10 +668,15 @@ impl<'app, W: Workspace + ?Sized> FileGuard<'app, W> {
         })
     }
 
-    pub fn fix_file(&self, fix_file_mode: FixFileMode) -> Result<FixFileResult, WorkspaceError> {
+    pub fn fix_file(
+        &self,
+        fix_file_mode: FixFileMode,
+        should_format: bool,
+    ) -> Result<FixFileResult, WorkspaceError> {
         self.workspace.fix_file(FixFileParams {
             path: self.path.clone(),
             fix_file_mode,
+            should_format,
         })
     }
 

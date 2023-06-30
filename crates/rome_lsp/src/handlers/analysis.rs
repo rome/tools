@@ -162,9 +162,17 @@ fn fix_all(
     line_index: &LineIndex,
     diagnostics: &[lsp::Diagnostic],
 ) -> Result<Option<CodeActionOrCommand>, WorkspaceError> {
+    let should_format = session
+        .workspace
+        .file_features(SupportsFeatureParams {
+            path: rome_path.clone(),
+            feature: vec![FeatureName::Format],
+        })?
+        .supports_for(&FeatureName::Format);
     let fixed = session.workspace.fix_file(FixFileParams {
         path: rome_path,
         fix_file_mode: FixFileMode::SafeFixes,
+        should_format,
     })?;
 
     if fixed.actions.is_empty() {

@@ -66,7 +66,7 @@ pub(crate) fn traverse(
     if inputs.is_empty() && execution.as_stdin_file().is_none() {
         return Err(CliDiagnostic::missing_argument(
             "<INPUT>",
-            execution.traversal_mode_subcommand(),
+            format!("{}", execution.traversal_mode),
         ));
     }
 
@@ -130,7 +130,7 @@ pub(crate) fn traverse(
 
     if execution.should_report_to_terminal() {
         match execution.traversal_mode() {
-            TraversalMode::Check { .. } => {
+            TraversalMode::Check { .. } | TraversalMode::Lint { .. } => {
                 if execution.as_fix_file_mode().is_some() {
                     console.log(markup! {
                         <Info>"Fixed "{count}" file(s) in "{duration}</Info>
@@ -676,6 +676,7 @@ impl<'ctx, 'app> TraversalContext for TraversalOptions<'ctx, 'app> {
                     || file_features.supports_for(&FeatureName::OrganizeImports)
             }
             TraversalMode::Format { .. } => file_features.supports_for(&FeatureName::Format),
+            TraversalMode::Lint { .. } => file_features.supports_for(&FeatureName::Lint),
             // Imagine if Rome can't handle its own configuration file...
             TraversalMode::Migrate { .. } => true,
         }

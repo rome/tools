@@ -1,0 +1,36 @@
+---
+source: crates/rome_cli/tests/snap_test.rs
+expression: content
+---
+## `file.js`
+
+```js
+// rome-ignore lint(suspicious/noDoubleEquals): test
+a == b;
+```
+
+# Emitted Messages
+
+```block
+file.js:1:1 suppressions/deprecatedSyntax  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Suppression is using a deprecated syntax
+  
+  > 1 │ // rome-ignore lint(suspicious/noDoubleEquals): test
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    2 │ a == b;
+  
+  i Safe fix: Rewrite suppression to use the newer syntax
+  
+    1   │ - //·rome-ignore·lint(suspicious/noDoubleEquals):·test
+      1 │ + //·rome-ignore·lint/suspicious/noDoubleEquals:·test
+    2 2 │   a == b;
+  
+
+```
+
+```block
+Checked 1 file(s) in <TIME>
+```
+
+
