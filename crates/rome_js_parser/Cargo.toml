@@ -11,7 +11,7 @@ repository.workspace = true
 version              = "0.0.2"
 
 [dependencies]
-bitflags.workspace    = true
+bitflags              = { workspace = true }
 cfg-if                = "1.0.0"
 drop_bomb             = "0.1.5"
 indexmap              = { workspace = true }

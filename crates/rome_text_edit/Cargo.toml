@@ -10,8 +10,8 @@ version              = "0.0.1"
 
 [dependencies]
 rome_text_size = { workspace = true, features = ["serde"] }
-schemars       = { version = "0.8.10", optional = true }
-serde          = { version = "1.0.136", features = ["derive"] }
+schemars       = { workspace = true, optional = true }
+serde          = { workspace = true, features = ["derive"] }
 similar        = { version = "2.1.0", features = ["unicode"] }
 
 [features]

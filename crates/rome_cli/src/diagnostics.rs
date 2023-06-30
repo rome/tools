@@ -1,6 +1,6 @@
 use rome_console::fmt::{Display, Formatter};
 use rome_console::markup;
-use rome_diagnostics::adapters::{BpafError, IoError, PicoArgsError};
+use rome_diagnostics::adapters::{BpafError, IoError};
 use rome_diagnostics::{
     Advices, Category, Diagnostic, DiagnosticTags, Error, Location, LogCategory,
     MessageAndDescription, Severity, Visit,
@@ -343,14 +343,6 @@ impl CliDiagnostic {
         Self::IncompatibleArguments(IncompatibleArguments {
             first_argument: first_argument.into(),
             second_argument: second_argument.into(),
-        })
-    }
-
-    /// To throw when there's been an error while parsing an argument
-    pub fn parse_error(argument: impl Into<String>, source: pico_args::Error) -> Self {
-        Self::ParseError(ParseDiagnostic {
-            source: Some(Error::from(PicoArgsError::from(source))),
-            message: MessageAndDescription::from(argument.into()),
         })
     }
 
