@@ -6,8 +6,8 @@ use rome_deserialize::{
     DeserializationDiagnostic, VisitNode,
 };
 use rome_js_syntax::JsModuleSource;
-use rome_json_syntax::{JsonLanguage, JsonSyntaxNode};
-use rome_rowan::{AstNode, SyntaxTokenText};
+use rome_json_syntax::{AnyJsonValue, JsonLanguage, JsonSyntaxNode};
+use rome_rowan::{AstNode, SyntaxNode, SyntaxTokenText};
 use serde::{Deserialize, Serialize};
 use std::{path::Path, str::FromStr};
 
@@ -143,29 +143,22 @@ impl VisitNode<JsonLanguage> for ImportOptions {
         has_only_known_keys(node, &["allowedExtensions"], diagnostics)
     }
 
-    fn visit_map(
+    fn visit_array_member(
         &mut self,
-        key: &JsonSyntaxNode,
-        value: &JsonSyntaxNode,
+        element: &SyntaxNode<JsonLanguage>,
         diagnostics: &mut Vec<DeserializationDiagnostic>,
     ) -> Option<()> {
-        let (name, value) = self.get_key_and_value(key, value, diagnostics)?;
-        let name_text = name.text();
-        if name_text == "allowedExtensions" {
-            let array = value.as_json_array_value()?;
-
-            for element in array.elements() {
-                let element = element.ok()?;
-
-                if let Some(extension) = element.as_json_string_value() {
-                    self.allowed_extensions.push(extension.to_string());
-                } else {
-                    diagnostics.push(DeserializationDiagnostic::new(markup! {
-                        "The field "<Emphasis>"allowedExtensions"</Emphasis>" must contain an array of strings"
-                    })
-                    .with_range(element.range()));
-                }
-            }
+        let element = AnyJsonValue::cast(element.clone())?;
+        if let Some(extension) = element
+            .as_json_string_value()
+            .and_then(|extension| extension.inner_string_text().ok())
+        {
+            self.allowed_extensions.push(extension.to_string());
+        } else {
+            diagnostics.push(DeserializationDiagnostic::new(markup! {
+                "The field "<Emphasis>"allowedExtensions"</Emphasis>" must contain an array of strings"
+            })
+            .with_range(element.range()));
         }
         Some(())
     }

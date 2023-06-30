@@ -1,0 +1,13 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: allowedExtensions.js
+---
+# Input
+```js
+/* should not generate diagnostics */
+
+import "./resources/allowed_icon.png";
+
+```
+
+

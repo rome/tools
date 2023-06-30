@@ -43,7 +43,8 @@ impl FromStr for PossibleOptions {
 }
 
 impl PossibleOptions {
-    const KNOWN_KEYS: &'static [&'static str] = &["hooks", "strictCase", "enumMemberCase"];
+    const KNOWN_KEYS: &'static [&'static str] =
+        &["allowedExtensions", "hooks", "strictCase", "enumMemberCase"];
 
     pub fn extract_option(&self, rule_key: &RuleKey) -> RuleOptions {
         match rule_key.rule_name() {
@@ -92,7 +93,7 @@ impl VisitNode<JsonLanguage> for PossibleOptions {
     ) -> Option<()> {
         let (name, val) = self.get_key_and_value(key, value, diagnostics)?;
         match name.text() {
-            "allowed_extensions" => {
+            "allowedExtensions" => {
                 let mut options = ImportOptions::default();
                 self.map_to_array(&val, &name, &mut options, diagnostics)?;
                 *self = PossibleOptions::Imports(options);

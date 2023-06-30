@@ -1,0 +1,17 @@
+{
+    "$schema": "../../../../../../npm/rome/configuration_schema.json",
+    "linter": {
+        "rules": {
+            "nursery": {
+                "noNestedModuleImports": {
+                    "level": "error",
+                    "options": {
+                        "allowedExtensions": [
+                            7
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}

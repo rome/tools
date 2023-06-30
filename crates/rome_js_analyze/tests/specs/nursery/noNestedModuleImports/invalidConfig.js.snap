@@ -1,0 +1,26 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: invalidConfig.js
+---
+# Input
+```js
+
+```
+
+# Diagnostics
+```
+invalidConfig.options:10:29 deserialize ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × The field allowedExtensions must contain an array of strings
+  
+     8 │                     "options": {
+     9 │                         "allowedExtensions": [
+  > 10 │                             7
+       │                             ^
+    11 │                         ]
+    12 │                     }
+  
+
+```
+
+
