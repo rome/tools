@@ -420,7 +420,7 @@
 					]
 				},
 				"noUndeclaredVariables": {
-					"description": "Prevents the usage of variables that haven't been declared inside the document",
+					"description": "Prevents the usage of variables that haven't been declared inside the document.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }

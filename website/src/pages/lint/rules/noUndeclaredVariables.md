@@ -5,7 +5,9 @@ parent: lint/rules/index
 
 # noUndeclaredVariables (since v0.10.0)
 
-Prevents the usage of variables that haven't been declared inside the document
+Prevents the usage of variables that haven't been declared inside the document.
+
+If you need to allow-list some global bindings, you can use the [`javascript.globals`](/configuration/#javascriptglobals) configuration.
 
 ## Examples
 
