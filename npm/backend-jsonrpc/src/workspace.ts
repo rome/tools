@@ -445,7 +445,7 @@ export interface Correctness {
 	 */
 	noSwitchDeclarations?: RuleConfiguration;
 	/**
-	 * Prevents the usage of variables that haven't been declared inside the document
+	 * Prevents the usage of variables that haven't been declared inside the document.
 	 */
 	noUndeclaredVariables?: RuleConfiguration;
 	/**

@@ -1270,7 +1270,7 @@ pub struct Correctness {
     )]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub no_switch_declarations: Option<RuleConfiguration>,
-    #[doc = "Prevents the usage of variables that haven't been declared inside the document"]
+    #[doc = "Prevents the usage of variables that haven't been declared inside the document."]
     #[bpaf(
         long("no-undeclared-variables"),
         argument("on|off|warn"),
