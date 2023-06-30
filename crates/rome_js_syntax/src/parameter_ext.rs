@@ -343,6 +343,80 @@ impl AnyJsParameterList {
             }
         })
     }
+
+    ///
+    /// This method checks if any parameters in the given list are decorated.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rome_js_factory::make;
+    /// use rome_js_syntax::parameter_ext::{AnyJsParameterList, AnyParameter};
+    /// use rome_js_syntax::{
+    ///     AnyJsBinding, AnyJsBindingPattern, AnyJsConstructorParameter, AnyJsDecorator,
+    ///     AnyJsFormalParameter, AnyJsParameter, T,
+    /// };
+    /// use rome_rowan::SyntaxResult;
+    ///
+    /// let parameter_list = make::js_parameter_list(
+    ///     Some(AnyJsParameter::AnyJsFormalParameter(
+    ///         AnyJsFormalParameter::JsFormalParameter(
+    ///             make::js_formal_parameter(
+    ///                 make::js_decorator_list(std::iter::empty()),
+    ///                 AnyJsBindingPattern::AnyJsBinding(AnyJsBinding::JsIdentifierBinding(
+    ///                     make::js_identifier_binding(make::ident("param1")),
+    ///                 )),
+    ///             )
+    ///             .build(),
+    ///         ),
+    ///     )),
+    ///     None,
+    /// );
+    ///
+    /// let params = AnyJsParameterList::JsParameterList(parameter_list);
+    /// let has_any_decorated_parameter = params.has_any_decorated_parameter();
+    /// assert_eq!(has_any_decorated_parameter, false);
+    ///
+    /// let decorator = make::js_decorator(
+    ///     make::token(T![@]),
+    ///     AnyJsDecorator::JsIdentifierExpression(make::js_identifier_expression(
+    ///         make::js_reference_identifier(make::ident("decorator")),
+    ///     )),
+    /// );
+    /// let parameter_list = make::js_parameter_list(
+    ///     Some(AnyJsParameter::AnyJsFormalParameter(
+    ///         AnyJsFormalParameter::JsFormalParameter(
+    ///             make::js_formal_parameter(
+    ///                 make::js_decorator_list(Some(decorator)),
+    ///                 AnyJsBindingPattern::AnyJsBinding(AnyJsBinding::JsIdentifierBinding(
+    ///                     make::js_identifier_binding(make::ident("param1")),
+    ///                 )),
+    ///             )
+    ///             .build(),
+    ///         ),
+    ///     )),
+    ///     None,
+    /// );
+    ///
+    /// let params = AnyJsParameterList::JsParameterList(parameter_list);
+    /// let has_any_decorated_parameter = params.has_any_decorated_parameter();
+    /// assert_eq!(has_any_decorated_parameter, true);
+    /// ```
+    ///
+    /// # Returns
+    ///
+    /// Returns `true` if the list contains any decorated parameters.
+    ///
+    pub fn has_any_decorated_parameter(&self) -> bool {
+        self.iter().any(|parameter| {
+            parameter.map_or(false, |parameter| match parameter {
+                AnyParameter::AnyJsConstructorParameter(parameter) => {
+                    parameter.has_any_decorated_parameter()
+                }
+                AnyParameter::AnyJsParameter(parameter) => parameter.has_any_decorated_parameter(),
+            })
+        })
+    }
 }
 
 /// An iterator over the parameters in an `AnyJsParameterList`.
