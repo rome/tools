@@ -550,6 +550,10 @@ export interface Nursery {
 	 */
 	noGlobalIsNan?: RuleConfiguration;
 	/**
+	 * Forbids importing from nested modules.
+	 */
+	noNestedModuleImports?: RuleConfiguration;
+	/**
 	 * Enforce that tabIndex is not assigned to non-interactive HTML elements.
 	 */
 	noNoninteractiveTabindex?: RuleConfiguration;
@@ -920,7 +924,11 @@ export interface RuleWithOptions {
 	level: RulePlainConfiguration;
 	options?: PossibleOptions;
 }
-export type PossibleOptions = HooksOptions | NamingConventionOptions | null;
+export type PossibleOptions =
+	| HooksOptions
+	| ImportOptions
+	| NamingConventionOptions
+	| null;
 /**
  * Options for the rule `useExhaustiveDependencies` and `useHookAtTopLevel`
  */
@@ -929,6 +937,15 @@ export interface HooksOptions {
 	 * List of safe hooks
 	 */
 	hooks: Hooks[];
+}
+/**
+ * Options for the rule `noNestedModuleImports`.
+ */
+export interface ImportOptions {
+	/**
+	 * List of extensions that are always allowed to be imported.
+	 */
+	allowedExtensions: string[];
 }
 /**
  * Rule's options.
@@ -1131,6 +1148,7 @@ export type Category =
 	| "lint/nursery/noGlobalIsFinite"
 	| "lint/nursery/useArrowFunction"
 	| "lint/nursery/noVoid"
+	| "lint/nursery/noNestedModuleImports"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"

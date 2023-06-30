@@ -617,6 +617,19 @@
 			},
 			"additionalProperties": false
 		},
+		"ImportOptions": {
+			"description": "Options for the rule `noNestedModuleImports`.",
+			"type": "object",
+			"required": ["allowedExtensions"],
+			"properties": {
+				"allowedExtensions": {
+					"description": "List of extensions that are always allowed to be imported.",
+					"type": "array",
+					"items": { "type": "string" }
+				}
+			},
+			"additionalProperties": false
+		},
 		"JavascriptConfiguration": {
 			"type": "object",
 			"properties": {
@@ -817,6 +830,13 @@
 						{ "type": "null" }
 					]
 				},
+				"noNestedModuleImports": {
+					"description": "Forbids importing from nested modules.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"noNoninteractiveTabindex": {
 					"description": "Enforce that tabIndex is not assigned to non-interactive HTML elements.",
 					"anyOf": [
@@ -989,6 +1009,10 @@
 				{
 					"description": "Options for `useExhaustiveDependencies` and `useHookAtTopLevel` rule",
 					"allOf": [{ "$ref": "#/definitions/HooksOptions" }]
+				},
+				{
+					"description": "Options for `noNestedModuleImports` rule",
+					"allOf": [{ "$ref": "#/definitions/ImportOptions" }]
 				},
 				{
 					"description": "Options for `useNamingConvention` rule",

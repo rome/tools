@@ -1,0 +1,44 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: invalid.js
+---
+# Input
+```js
+
+import "../aunt/cousin";
+import { someSymbol } from "./module/private";
+
+```
+
+# Diagnostics
+```
+invalid.js:2:8 lint/nursery/noNestedModuleImports ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Importing from nested modules is not allowed.
+  
+  > 2 │ import "../aunt/cousin";
+      │        ^^^^^^^^^^^^^^^^
+    3 │ import { someSymbol } from "./module/private";
+    4 │ 
+  
+  i Please import from ../aunt instead (you may need to re-export from ../aunt/cousin).
+  
+
+```
+
+```
+invalid.js:3:28 lint/nursery/noNestedModuleImports ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Importing from nested modules is not allowed.
+  
+    2 │ import "../aunt/cousin";
+  > 3 │ import { someSymbol } from "./module/private";
+      │                            ^^^^^^^^^^^^^^^^^^
+    4 │ 
+  
+  i Please import from ./module instead (you may need to re-export from ./module/private).
+  
+
+```
+
+
