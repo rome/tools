@@ -32,15 +32,7 @@ impl Format<JsFormatContext> for FormatAnyJsParameters {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
         let list = self.list();
 
-        let has_any_decorated_parameter = list.iter().any(|node| match node {
-            Ok(node) => node.syntax().first_token().map_or(false, |token| {
-                token
-                    .leading_trivia()
-                    .pieces()
-                    .any(|piece| piece.is_skipped())
-            }),
-            Err(_) => false,
-        });
+        let has_any_decorated_parameter = list.has_any_decorated_parameter();
 
         let can_hug = should_hug_function_parameters(self, f.context().comments())?
             && !has_any_decorated_parameter;

@@ -1,9 +1,10 @@
 use crate::{
-    AnyJsBindingPattern, AnyJsConstructorParameter, AnyJsParameter, JsConstructorParameterList,
-    JsConstructorParameters, JsLanguage, JsParameterList, JsParameters,
+    AnyJsBindingPattern, AnyJsConstructorParameter, AnyJsFormalParameter, AnyJsParameter,
+    JsConstructorParameterList, JsConstructorParameters, JsDecoratorList, JsLanguage,
+    JsParameterList, JsParameters,
 };
 use rome_rowan::{
-    declare_node_union, AstSeparatedList, AstSeparatedListNodesIterator, SyntaxResult,
+    declare_node_union, AstNodeList, AstSeparatedList, AstSeparatedListNodesIterator, SyntaxResult,
 };
 
 /// An enumeration representing different types of JavaScript/TypeScript parameter lists.
@@ -342,6 +343,80 @@ impl AnyJsParameterList {
             }
         })
     }
+
+    ///
+    /// This method checks if any parameters in the given list are decorated.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rome_js_factory::make;
+    /// use rome_js_syntax::parameter_ext::{AnyJsParameterList, AnyParameter};
+    /// use rome_js_syntax::{
+    ///     AnyJsBinding, AnyJsBindingPattern, AnyJsConstructorParameter, AnyJsDecorator,
+    ///     AnyJsFormalParameter, AnyJsParameter, T,
+    /// };
+    /// use rome_rowan::SyntaxResult;
+    ///
+    /// let parameter_list = make::js_parameter_list(
+    ///     Some(AnyJsParameter::AnyJsFormalParameter(
+    ///         AnyJsFormalParameter::JsFormalParameter(
+    ///             make::js_formal_parameter(
+    ///                 make::js_decorator_list(std::iter::empty()),
+    ///                 AnyJsBindingPattern::AnyJsBinding(AnyJsBinding::JsIdentifierBinding(
+    ///                     make::js_identifier_binding(make::ident("param1")),
+    ///                 )),
+    ///             )
+    ///             .build(),
+    ///         ),
+    ///     )),
+    ///     None,
+    /// );
+    ///
+    /// let params = AnyJsParameterList::JsParameterList(parameter_list);
+    /// let has_any_decorated_parameter = params.has_any_decorated_parameter();
+    /// assert_eq!(has_any_decorated_parameter, false);
+    ///
+    /// let decorator = make::js_decorator(
+    ///     make::token(T![@]),
+    ///     AnyJsDecorator::JsIdentifierExpression(make::js_identifier_expression(
+    ///         make::js_reference_identifier(make::ident("decorator")),
+    ///     )),
+    /// );
+    /// let parameter_list = make::js_parameter_list(
+    ///     Some(AnyJsParameter::AnyJsFormalParameter(
+    ///         AnyJsFormalParameter::JsFormalParameter(
+    ///             make::js_formal_parameter(
+    ///                 make::js_decorator_list(Some(decorator)),
+    ///                 AnyJsBindingPattern::AnyJsBinding(AnyJsBinding::JsIdentifierBinding(
+    ///                     make::js_identifier_binding(make::ident("param1")),
+    ///                 )),
+    ///             )
+    ///             .build(),
+    ///         ),
+    ///     )),
+    ///     None,
+    /// );
+    ///
+    /// let params = AnyJsParameterList::JsParameterList(parameter_list);
+    /// let has_any_decorated_parameter = params.has_any_decorated_parameter();
+    /// assert_eq!(has_any_decorated_parameter, true);
+    /// ```
+    ///
+    /// # Returns
+    ///
+    /// Returns `true` if the list contains any decorated parameters.
+    ///
+    pub fn has_any_decorated_parameter(&self) -> bool {
+        self.iter().any(|parameter| {
+            parameter.map_or(false, |parameter| match parameter {
+                AnyParameter::AnyJsConstructorParameter(parameter) => {
+                    parameter.has_any_decorated_parameter()
+                }
+                AnyParameter::AnyJsParameter(parameter) => parameter.has_any_decorated_parameter(),
+            })
+        })
+    }
 }
 
 /// An iterator over the parameters in an `AnyJsParameterList`.
@@ -409,4 +484,50 @@ declare_node_union! {
     /// or a JavaScript/TypeScript constructor parameters. This is useful in contexts where a
     /// function could accept either type of parameters.
     pub AnyJsParameters = JsParameters | JsConstructorParameters
+}
+
+impl AnyJsConstructorParameter {
+    /// This method returns a list of decorators for a parameter if it exists.
+    pub fn decorators(&self) -> Option<JsDecoratorList> {
+        match self {
+            AnyJsConstructorParameter::AnyJsFormalParameter(parameter) => parameter.decorators(),
+            AnyJsConstructorParameter::JsRestParameter(parameter) => Some(parameter.decorators()),
+            AnyJsConstructorParameter::TsPropertyParameter(parameter) => {
+                Some(parameter.decorators())
+            }
+        }
+    }
+
+    /// This method checks if any parameters in the given list are decorated.
+    pub fn has_any_decorated_parameter(&self) -> bool {
+        self.decorators()
+            .map_or(false, |decorators| !decorators.is_empty())
+    }
+}
+
+impl AnyJsParameter {
+    /// This method returns a list of decorators for a parameter if it exists.
+    pub fn decorators(&self) -> Option<JsDecoratorList> {
+        match self {
+            AnyJsParameter::AnyJsFormalParameter(parameter) => parameter.decorators(),
+            AnyJsParameter::JsRestParameter(parameter) => Some(parameter.decorators()),
+            AnyJsParameter::TsThisParameter(_) => None,
+        }
+    }
+
+    /// This method checks if any parameters in the given list are decorated.
+    pub fn has_any_decorated_parameter(&self) -> bool {
+        self.decorators()
+            .map_or(false, |decorators| !decorators.is_empty())
+    }
+}
+
+impl AnyJsFormalParameter {
+    /// This method returns a list of decorators for a parameter if it exists.
+    pub fn decorators(&self) -> Option<JsDecoratorList> {
+        match self {
+            AnyJsFormalParameter::JsBogusParameter(_) => None,
+            AnyJsFormalParameter::JsFormalParameter(parameter) => Some(parameter.decorators()),
+        }
+    }
 }

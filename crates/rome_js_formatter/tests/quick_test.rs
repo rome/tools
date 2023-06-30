@@ -13,12 +13,22 @@ mod language {
 // use this test check if your snippet prints as you wish, without using a snapshot
 fn quick_test() {
     let src = r#"
-      class A { constructor(private x, protected y, public z) {} }
-        class B { constructor(readonly w, private readonly x, protected readonly y, public readonly z) {} }
-        class C { constructor(private x: string, readonly y?, z = "default", ...rest) {} }
+class Foo {
+				constructor(
+				@dec
+				/*leading parameter*/ private parameter
+				) {	}
+			}
+
+
 "#;
     let syntax = JsFileSource::tsx();
-    let tree = parse(src, syntax, JsParserOptions::default());
+    let tree = parse(
+        src,
+        syntax,
+        JsParserOptions::default().with_parse_class_parameter_decorators(),
+    );
+    dbg!(tree.syntax());
     let options = JsFormatOptions::new(syntax)
         .with_semicolons(Semicolons::AsNeeded)
         .with_quote_style(QuoteStyle::Double)

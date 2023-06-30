@@ -62,7 +62,7 @@ where
 }
 
 /// This function expands decorators enclosing a group if there is a newline between decorators or after the last decorator.
-fn should_expand_decorators<List, Node>(list: &List) -> bool
+pub(crate) fn should_expand_decorators<List, Node>(list: &List) -> bool
 where
     Node: AstNode<Language = JsLanguage>,
     List: AstNodeList<Language = JsLanguage, Node = Node>,

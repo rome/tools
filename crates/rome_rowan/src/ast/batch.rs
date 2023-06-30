@@ -9,7 +9,6 @@ use std::{
     collections::BinaryHeap,
     iter::{empty, once},
 };
-use tracing::debug;
 
 pub trait BatchMutationExt<L>: AstNode<Language = L>
 where
@@ -291,7 +290,7 @@ where
         });
         let parent_depth = parent.as_ref().map(|p| p.ancestors().count()).unwrap_or(0);
 
-        debug!("pushing change...");
+        tracing::debug!("pushing change...");
         self.changes.push(CommitChange {
             parent_depth,
             parent,
@@ -307,7 +306,7 @@ where
     pub fn as_text_edits(&self) -> Option<(TextRange, TextEdit)> {
         let mut range = None;
 
-        debug!(" changes {:?}", &self.changes);
+        tracing::debug!(" changes {:?}", &self.changes);
 
         for change in &self.changes {
             let parent = change.parent.as_ref().unwrap_or(&self.root);
