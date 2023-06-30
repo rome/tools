@@ -117,6 +117,10 @@ multiple files:
 
 	This rules disallow the use of `void`.
 
+- Add [`noNonoctalDecimalEscape`](https://docs.rome.tools/lint/rules/nononoctaldecimalescape/)
+
+	This rule disallows `\8` and `\9` escape sequences in string literals.
+
 #### Other changes
 
 - [`noRedeclare`](https://docs.rome.tools/lint/rules/noredeclare/): allow redeclare of index signatures are in different type members [#4478](https://github.com/rome/tools/issues/4478)
