@@ -26,8 +26,8 @@ rome_json_syntax      = { workspace = true }
 rome_rowan            = { workspace = true }
 rustc-hash            = { workspace = true }
 schemars              = { workspace = true, optional = true }
-serde                 = { version = "1.0.136", features = ["derive"] }
-serde_json            = { version = "1.0.74" }
+serde                 = { workspace = true, features = ["derive"] }
+serde_json            = { workspace = true }
 smallvec              = { workspace = true }
 
 [dev-dependencies]

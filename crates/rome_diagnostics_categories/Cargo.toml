@@ -9,8 +9,8 @@ repository.workspace = true
 version              = "0.0.1"
 
 [dependencies]
-schemars = { version = "0.8.10", optional = true }
-serde    = { version = "1.0.136", optional = true }
+schemars = { workspace = true, optional = true }
+serde    = { workspace = true, optional = true }
 
 [build-dependencies]
 quote = "1.0.14"

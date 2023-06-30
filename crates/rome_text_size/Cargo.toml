@@ -11,8 +11,8 @@ repository.workspace = true
 
 
 [dependencies]
-schemars = { version = "0.8.10", optional = true }
-serde    = { version = "1.0", optional = true, default_features = false }
+schemars = { workspace = true, optional = true }
+serde    = { workspace = true, optional = true, default_features = false }
 
 [dev-dependencies]
 serde_test        = "1.0"

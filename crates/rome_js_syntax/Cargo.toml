@@ -12,8 +12,8 @@ version              = "0.0.2"
 rome_console     = { workspace = true }
 rome_diagnostics = { workspace = true }
 rome_rowan       = { workspace = true }
-schemars         = { version = "0.8.10", optional = true }
-serde            = { version = "1.0.136", features = ["derive"], optional = true }
+schemars         = { workspace = true, optional = true }
+serde            = { workspace = true, features = ["derive"], optional = true }
 
 [dev-dependencies]
 rome_js_factory = { workspace = true }

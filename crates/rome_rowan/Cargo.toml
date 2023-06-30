@@ -15,15 +15,15 @@ memoffset      = "0.8.0"
 rome_text_edit = { workspace = true }
 rome_text_size = { workspace = true }
 rustc-hash     = { workspace = true }
-schemars       = { version = "0.8.10", optional = true }
-serde          = { version = "1.0.133", optional = true, default-features = false }
+schemars       = { workspace = true, optional = true }
+serde          = { workspace = true, optional = true, default-features = false }
 tracing        = { workspace = true }
 
 [dev-dependencies]
 iai               = "0.1.1"
 quickcheck        = "1.0.3"
 quickcheck_macros = "1.0.0"
-serde_json        = "1.0.79"
+serde_json        = { workspace = true }
 
 [features]
 serde = ["dep:serde", "schemars", "rome_text_size/serde"]
