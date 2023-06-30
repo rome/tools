@@ -137,7 +137,7 @@ pub(super) enum DiagnosticTag {
 }
 
 bitflags! {
-    #[derive(Debug, Copy, Clone)]
+    #[derive(Default, Debug, Copy, Clone, Eq, PartialEq)]
     pub struct DiagnosticTags: u8 {
         /// This diagnostic has a fix suggestion.
         const FIXABLE = 1 << DiagnosticTag::Fixable as u8;

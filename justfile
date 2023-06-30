@@ -4,6 +4,7 @@ _default:
 alias f := format
 alias t := test
 alias r := ready
+alias l := lint
 
 
 # Installs the tools needed to develop with Rome
@@ -88,6 +89,10 @@ test-lintrule name:
   just _touch crates/rome_json_analyze/tests/spec_tests.rs
   cargo test -p rome_js_analyze -- {{snakecase(name)}}
   cargo test -p rome_json_analyze -- {{snakecase(name)}}
+
+# Alias for `cargo lint`, it runs clippy on the whole codebase
+lint:
+	cargo lint
 
 # When you finished coding, run this command to run the same commands in the CI.
 ready:
