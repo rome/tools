@@ -13,6 +13,7 @@ pub mod import_ext;
 pub mod jsx_ext;
 pub mod modifier_ext;
 pub mod numbers;
+pub mod parameter_ext;
 pub mod static_value;
 pub mod stmt_ext;
 pub mod suppression;
