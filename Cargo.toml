@@ -55,6 +55,7 @@ rome_lsp                    = { path = "./crates/rome_lsp" }
 rome_markup                 = { version = "0.0.1", path = "./crates/rome_markup" }
 rome_migrate                = { path = "./crates/rome_migrate" }
 rome_parser                 = { version = "0.0.1", path = "./crates/rome_parser" }
+rome_project                = { path = "./crates/rome_project" }
 rome_rowan                  = { version = "0.0.1", path = "./crates/rome_rowan" }
 rome_service                = { path = "./crates/rome_service" }
 rome_text_edit              = { version = "0.0.1", path = "./crates/rome_text_edit" }
