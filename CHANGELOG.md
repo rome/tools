@@ -237,6 +237,10 @@ multiple files:
   The rule no longer reports `This constructor calls super() in a loop`
   when using nested if statements in a constructor.
 
+- Fix [useHookAtTopLevel](https://docs.rome.tools/lint/rules/usehookattoplevel/) 's false positive diagnostics ([#4637](https://github.com/rome/tools/issues/4637))
+
+  The rule no longer reports false positive diagnostics when accessing properties directly from a hook and calling a hook inside function arguments.
+
 ### Parser
 
 ### VSCode
