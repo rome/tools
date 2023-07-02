@@ -117,7 +117,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-       os: [windows-latest, ubuntu-latest]
+        os: [windows-latest, ubuntu-latest]
 
     steps:
       # ref: https://github.com/orgs/community/discussions/26952
