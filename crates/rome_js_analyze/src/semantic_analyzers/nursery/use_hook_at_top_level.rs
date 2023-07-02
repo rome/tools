@@ -84,6 +84,9 @@ fn enclosing_function_if_call_is_at_top_level(call: &JsCallExpression) -> Option
                 | JsSyntaxKind::JS_EXPRESSION_STATEMENT
                 | JsSyntaxKind::JS_RETURN_STATEMENT
                 | JsSyntaxKind::JS_CALL_EXPRESSION
+                | JsSyntaxKind::JS_CALL_ARGUMENT_LIST
+                | JsSyntaxKind::JS_CALL_ARGUMENTS
+                | JsSyntaxKind::JS_STATIC_MEMBER_EXPRESSION
                 | JsSyntaxKind::JS_INITIALIZER_CLAUSE
                 | JsSyntaxKind::JS_VARIABLE_DECLARATOR
                 | JsSyntaxKind::JS_VARIABLE_DECLARATOR_LIST

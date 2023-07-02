@@ -35,3 +35,8 @@ export default function Component5() {
 const Component6 = () => {
     return useState();
 };
+
+const Component7 = () => {
+    const value = useRef().value;
+    const [_val, _setter] = useState(useMemo('hello'));
+}
