@@ -106,4 +106,4 @@ jobs:
             ${{ steps.comparison.outputs.comment }}
 
       - name: Clean cache
-        run: cargo install cargo-cache --no-default-features --features ci-autoclean && cargo-cache
+        run: cargo cache --autoclean
