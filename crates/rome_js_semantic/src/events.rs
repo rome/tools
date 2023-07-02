@@ -457,6 +457,9 @@ impl SemanticEventExtractor {
                 self.push_binding_into_scope(hoisted_scope_id, &name_token, &parent_kind);
                 self.export_declaration(node, &parent);
             }
+            TS_INDEX_SIGNATURE_PARAMETER => {
+                // semantic analyzer skip type variable.
+            }
             _ => {
                 self.push_binding_into_scope(None, &name_token, &parent_kind);
             }
