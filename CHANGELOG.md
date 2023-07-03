@@ -34,6 +34,8 @@
 
 	Rome won't exit with an error code in case no files were processed in the given paths.
 
+- Fixed the diagnostics emitted when running the `rome format` command;
+
 ### Configuration
 
 #### Other changes
