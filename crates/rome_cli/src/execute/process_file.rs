@@ -1,5 +1,9 @@
+mod format_file;
+mod lint_file;
+
 use crate::execute::diagnostics::{ResultExt, ResultIoExt, SkippedDiagnostic, UnhandledDiagnostic};
-use crate::execute::lint_file::{lint_file, LintFile};
+use crate::execute::process_file::format_file::{format_file, FormatFile};
+use crate::execute::process_file::lint_file::{lint_file, LintFile};
 use crate::execute::traverse::TraversalOptions;
 use crate::execute::TraversalMode;
 use crate::{CliDiagnostic, FormatterReportFileDetail};
@@ -182,11 +186,20 @@ pub(crate) fn process_file(ctx: &TraversalOptions, path: &Path) -> FileResult {
         // lower the changes to break the business logic of other traversal.
         //
         // This would definitely repeat the code, but it's worth the effort in the long run.
-        if let TraversalMode::Lint { .. } = ctx.execution.traversal_mode {
-            // the unsupported case should be handled already at this point
-            if file_features.supports_for(&FeatureName::Lint) {
-                return lint_file(LintFile { ctx, path });
+        match ctx.execution.traversal_mode {
+            TraversalMode::Lint { .. } => {
+                // the unsupported case should be handled already at this point
+                if file_features.supports_for(&FeatureName::Lint) {
+                    return lint_file(LintFile { ctx, path });
+                }
             }
+            TraversalMode::Format { .. } => {
+                // the unsupported case should be handled already at this point
+                if file_features.supports_for(&FeatureName::Format) {
+                    return format_file(FormatFile { ctx, path });
+                }
+            }
+            _ => {}
         }
 
         let open_options = OpenOptions::default()

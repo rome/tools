@@ -1,5 +1,4 @@
 mod diagnostics;
-mod lint_file;
 mod migrate;
 mod process_file;
 mod std_in;
