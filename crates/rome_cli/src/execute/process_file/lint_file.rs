@@ -41,6 +41,9 @@ pub(crate) fn lint_file(payload: LintFile) -> FileResult {
         },
     )
     .with_file_path_and_code(path.display().to_string(), category!("internalError/fs"))?;
+
+    ctx.increment_processed();
+
     if let Some(fix_mode) = ctx.execution.as_fix_file_mode() {
         let fixed = file_guard
             .fix_file(*fix_mode, false)
@@ -74,7 +77,7 @@ pub(crate) fn lint_file(payload: LintFile) -> FileResult {
             skipped_diagnostics: result.skipped_diagnostics,
         })
     };
-    ctx.increment_processed();
+
     if errors > 0 {
         return Ok(FileStatus::Message(Message::ApplyError(
             CliDiagnostic::file_apply_error(path.display().to_string()),
