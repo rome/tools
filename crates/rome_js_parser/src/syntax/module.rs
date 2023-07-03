@@ -40,7 +40,7 @@ use std::collections::HashMap;
 
 use super::auxiliary::{is_nth_at_declaration_clause, parse_declaration_clause};
 
-// test module
+// test js module
 // import a from "b";
 // export { a };
 // c();
@@ -126,7 +126,7 @@ fn parse_module_item(p: &mut JsParser) -> ParsedSyntax {
                     if is_at_export_class_declaration(p)
                         || is_at_export_default_class_declaration(p) =>
                 {
-                    // test decorator_export_top_level
+                    // test js decorator_export_top_level
                     // @decorator
                     // export class Foo { }
                     // @first.field @second @(() => decorator)()
@@ -160,7 +160,7 @@ fn parse_module_item(p: &mut JsParser) -> ParsedSyntax {
                     parse_export(p, decorator_list)
                 }
                 T![class] => {
-                    // test decorator_class_declaration_top_level
+                    // test js decorator_class_declaration_top_level
                     // @decorator
                     // class Foo { }
                     // @first.field @second @(() => decorator)()
@@ -187,7 +187,7 @@ fn parse_module_item(p: &mut JsParser) -> ParsedSyntax {
                     )
                 }
                 _ => {
-                    // test_err decorator_class_declaration_top_level
+                    // test_err js decorator_class_declaration_top_level
                     // @decorator
                     // let a;
                     // @decorator1 @decorator2
@@ -225,7 +225,7 @@ pub(crate) fn parse_import_or_import_equals_declaration(p: &mut JsParser) -> Par
             ts_only_syntax_error(p, "'import =' declarations", decl.range(p))
         })
     } else {
-        // test_err import_err
+        // test_err js import_err
         // import;
         // import *;
         // import * as c, { a, b } from "c";
@@ -256,7 +256,7 @@ pub(crate) fn parse_import_or_import_equals_declaration(p: &mut JsParser) -> Par
     statement
 }
 
-// test import_default_clause
+// test js import_default_clause
 // import foo from "test";
 fn parse_import_clause(p: &mut JsParser) -> ParsedSyntax {
     if p.at(JS_STRING_LITERAL) {
@@ -347,7 +347,7 @@ fn parse_import_default_or_named_clause_rest(
     }
 }
 
-// test import_bare_clause
+// test js import_bare_clause
 // import "test";
 // import "no_semicolon"
 fn parse_import_bare_clause(p: &mut JsParser) -> ParsedSyntax {
@@ -358,7 +358,7 @@ fn parse_import_bare_clause(p: &mut JsParser) -> ParsedSyntax {
     })
 }
 
-// test import_decl
+// test js import_decl
 // import * as foo from "bla";
 fn parse_import_namespace_clause_rest(p: &mut JsParser, m: Marker) -> CompletedMarker {
     p.expect(T![*]);
@@ -372,7 +372,7 @@ fn parse_import_namespace_clause_rest(p: &mut JsParser, m: Marker) -> CompletedM
     m.complete(p, JS_IMPORT_NAMESPACE_CLAUSE)
 }
 
-// test import_named_clause
+// test js import_named_clause
 // import {} from "a";
 // import { a, b, c, } from "b";
 // import e, { f } from "b";
@@ -499,14 +499,14 @@ fn parse_any_named_import_specifier(p: &mut JsParser) -> ParsedSyntax {
     let specifier =
         if metadata.has_alias || p.at(JS_STRING_LITERAL) || p.cur().is_non_contextual_keyword() {
             if metadata.is_local_name_missing {
-                // test_err import_as_identifier_err
+                // test_err js import_as_identifier_err
                 // import { as c } from "test";
                 p.error(expected_literal_export_name(
                     p,
                     TextRange::new(p.cur_range().start(), p.cur_range().start()),
                 ));
             } else {
-                // test import_as_as_as_identifier
+                // test js import_as_as_as_identifier
                 // import { as as as } from "test";
                 parse_literal_export_name(p).or_add_diagnostic(p, expected_literal_export_name);
             }
@@ -515,7 +515,7 @@ fn parse_any_named_import_specifier(p: &mut JsParser) -> ParsedSyntax {
             parse_binding(p).or_add_diagnostic(p, expected_binding);
             m.complete(p, JS_NAMED_IMPORT_SPECIFIER)
         } else {
-            // test import_as_identifier
+            // test js import_as_identifier
             // import { as } from "test";
             parse_binding(p).or_add_diagnostic(p, expected_identifier);
             m.complete(p, JS_SHORTHAND_NAMED_IMPORT_SPECIFIER)
@@ -530,7 +530,7 @@ fn parse_any_named_import_specifier(p: &mut JsParser) -> ParsedSyntax {
     }
 }
 
-// test import_assertion
+// test js import_assertion
 // import "x" assert { type: "json" }
 // import "foo" assert { "type": "json" };
 // import foo from "foo.json" assert { type: "json" };
@@ -539,7 +539,7 @@ fn parse_any_named_import_specifier(p: &mut JsParser) -> ParsedSyntax {
 // import "x" assert
 // { type: "json" }
 
-// test import_attribute
+// test js import_attribute
 // import "x" with { type: "json" }
 // import "foo" with { "type": "json" };
 // import foo from "foo.json" with { type: "json" };
@@ -548,7 +548,7 @@ fn parse_any_named_import_specifier(p: &mut JsParser) -> ParsedSyntax {
 // import "x" with
 // { type: "json" }
 
-// test_err import_assertion_err
+// test_err js import_assertion_err
 // import "foo" assert { type, "json" };
 // import "bar" \u{61}ssert { type: "json" };
 // import { foo } assert { type: "json" };
@@ -559,7 +559,7 @@ fn parse_any_named_import_specifier(p: &mut JsParser) -> ParsedSyntax {
 // import ipsum from "ipsum.json" assert { type: "json", lazy: true, startAtLine: 1 };
 // import { a } from "a.json" assert
 
-// test_err import_attribute_err
+// test_err js import_attribute_err
 // import "foo" with { type, "json" };
 // import { foo } with { type: "json" };
 // import "lorem"
@@ -700,10 +700,10 @@ fn parse_import_assertion_entry(
     Present(entry)
 }
 
-// test_err export_err
+// test_err js export_err
 // export
 //
-// test_err ts_export_syntax_in_js
+// test_err js ts_export_syntax_in_js
 // let a, b, c;
 // export type { a };
 // export { type b };
@@ -712,7 +712,7 @@ fn parse_import_assertion_entry(
 // export { type e } from "./e";
 // export { type e as ee } from "./e";
 
-// test_err export_huge_function_in_script
+// test_err js export_huge_function_in_script
 // // SCRIPT
 // export function A () { return "Kinsmen hot Moria tea serves. Sticky camp spell covering forged they're Oakenshield vines. Admirable relatives march regained wheel Ere eternally on rest parts unhappy? Leave hundreds market's Argonath answered avail grieve doing goodness! Wrong miserable well-wishers wander stood immediately neither Agreed goat poison holes fire? Nobody tosses a Dwarf. Brigands Bilbo Baggins prisoner stinker birthday injuries. Kili's loosened shy spiders till. Gandalf's death was not in vain. Nor would he have you give up hope. Bread kindly ghost Beorn's jelly. Andûril two-faced bitterness biding seemed says drinking splendor feed light unnoticed one! Carven nearest Eärendil fireworks former. Mattress smelling wandering teaching appear taste wise Mithril uprooted winter forebearers wheel. Let's beside Proudfoots succumbed! Excuse Anárion stolen helpless nudge study shown holding form? Changes point Snowbourn material side outer highest eaves flash-flame relic descendant lurking. Thousand death Agreed oppose whole? Glóin head's hurts feasting fight shiny legacy. Thror's broken odds suffice believe well-protected? Rightfully manners begged Maggot's fairer. Unheard-of grog shields sad wondering gardener killed gone Galadriel! Pan Frodo fingers spreads magic parting amount interest idly naked. It's some form of Elvish. I can't read it. Silverwork Wraiths riddled enchantment apple anywhere."; }
 pub(super) fn parse_export(p: &mut JsParser, decorators_list: ParsedSyntax) -> ParsedSyntax {
@@ -728,11 +728,11 @@ pub(super) fn parse_export(p: &mut JsParser, decorators_list: ParsedSyntax) -> P
     p.bump(T![export]);
 
     let clause = if is_nth_at_declaration_clause(p, 0) {
-        // test export_class_clause
+        // test js export_class_clause
         // export class A {}
         // export class A extends B {}
 
-        // test export_function_clause
+        // test js export_function_clause
         // export function test(a, b) {}
         // export function* test2(a, b) {}
         // export async function test3(a, b, ) {}
@@ -789,12 +789,12 @@ fn parse_export_named_or_named_from_clause(p: &mut JsParser) -> ParsedSyntax {
     }
 }
 
-// test export_named_clause
+// test js export_named_clause
 // export { a };
 // export { a as z, b as "y", c as default }
 // export { as };
 //
-// test_err export_named_clause_err
+// test_err js export_named_clause_err
 // export { default as "b" };
 // export { "a" as b };
 // export { as b };
@@ -893,7 +893,7 @@ fn parse_any_export_named_specifier(p: &mut JsParser) -> ParsedSyntax {
         p.expect(T![type]);
     }
 
-    // test_err export_as_identifier_err
+    // test_err js export_as_identifier_err
     // export { as c }
 
     if metadata.is_local_name_missing {
@@ -929,7 +929,7 @@ fn parse_any_export_named_specifier(p: &mut JsParser) -> ParsedSyntax {
         }
     }
 
-    // test export_as_identifier
+    // test js export_as_identifier
     // export { as };
     // export { as as as }
     //
@@ -1031,7 +1031,7 @@ where
     metadata
 }
 
-// test export_from_clause
+// test js export_from_clause
 // export {
 //     default as a } from "b";
 // export { default as a } from "b";
@@ -1042,7 +1042,7 @@ where
 // export type * from "types";
 // export type * as types from "types";
 //
-// test_err export_from_clause_err
+// test_err js export_from_clause_err
 // export *;
 // export * from 5;
 // export as from "test";
@@ -1071,7 +1071,7 @@ fn parse_export_from_clause(p: &mut JsParser) -> ParsedSyntax {
     Present(m.complete(p, JS_EXPORT_FROM_CLAUSE))
 }
 
-// test export_named_from_clause
+// test js export_named_from_clause
 // export { a, default } from "mod";
 // export { a as z, b as "y", c as default } from "mod"
 // export { as } from "mod";
@@ -1083,7 +1083,7 @@ fn parse_export_from_clause(p: &mut JsParser) -> ParsedSyntax {
 //      "a"
 // } from "./mod";
 //
-// test_err export_named_from_clause_err
+// test_err js export_named_from_clause_err
 // export { as b } from "mod";
 // export { a as 5 } from "mod";
 // export { a b c } from "mod";
@@ -1092,7 +1092,7 @@ fn parse_export_from_clause(p: &mut JsParser) -> ParsedSyntax {
 // test ts ts_export_type_named_from
 // export type { A } from "a";
 //
-// test_err escaped_from
+// test_err js escaped_from
 // export {} \u0066rom "./escaped-from.js";
 fn parse_export_named_from_clause(p: &mut JsParser) -> ParsedSyntax {
     if !matches!(p.cur(), T!['{'] | T![type]) {
@@ -1289,7 +1289,7 @@ fn parse_export_default_clause(p: &mut JsParser) -> ParsedSyntax {
     };
 
     clause.map(|mut clause| {
-        // test_err multiple_default_exports_err
+        // test_err js multiple_default_exports_err
         // export default (class {})
         // export default a + b;
         // export default (function a() {})
@@ -1414,10 +1414,10 @@ fn parse_ts_enum_export_default_declaration_clause(
     )
 }
 
-// test export_default_expression_clause
+// test js export_default_expression_clause
 // export default a;
 //
-// test_err export_default_expression_clause_err
+// test_err js export_default_expression_clause_err
 // export default a, b;
 fn parse_export_default_expression_clause(
     p: &mut JsParser,

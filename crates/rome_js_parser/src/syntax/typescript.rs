@@ -84,7 +84,7 @@ pub(crate) fn parse_ts_implements_clause(p: &mut JsParser) -> ParsedSyntax {
         return Absent;
     }
 
-    // test_err class_implements
+    // test_err js class_implements
     // class B implements C {}
 
     let m = p.start();

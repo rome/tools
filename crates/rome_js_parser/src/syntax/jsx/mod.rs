@@ -33,7 +33,7 @@ use super::typescript::parse_ts_type_arguments;
 // test jsx jsx_element_as_statements
 // <div />
 
-// test_err jsx_or_type_assertion
+// test_err js jsx_or_type_assertion
 // // SCRIPT
 // function f() {
 //     let a = <div>a</div>; // JSX

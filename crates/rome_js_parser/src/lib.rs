@@ -63,7 +63,7 @@
 //! Parser tests are comments that start with `test` or `test_err` followed by the test name, and then the code on its own line.
 //!
 //! ```rust,ignore
-//! // test feature_name
+//! // test js feature_name
 //! // let a = { new_feature : "" }
 //! // let b = { new_feature : "" }
 //! fn parse_new_feature(p: &mut Parser) -> ParsedSyntax {}

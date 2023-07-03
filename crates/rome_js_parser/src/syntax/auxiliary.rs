@@ -16,12 +16,12 @@ use rome_js_syntax::JsSyntaxKind::{JS_BOGUS_STATEMENT, JS_VARIABLE_DECLARATION_C
 use rome_js_syntax::T;
 use rome_rowan::{TextRange, TextSize};
 
-// test export_variable_clause
+// test js export_variable_clause
 // export let a;
 // export const b = 3;
 // export var c, d, e = 3;
 //
-// test_err export_variable_clause_error
+// test_err js export_variable_clause_error
 // export let a = ;
 // export const b;
 // export let d, c;
@@ -82,7 +82,7 @@ pub(crate) fn parse_declaration_clause(p: &mut JsParser, stmt_start_pos: TextSiz
 
             match p.cur() {
                 T![class] | T![abstract] if !p.state().in_ambient_context() => {
-                    // test decorator_export_class_clause
+                    // test js decorator_export_class_clause
                     // export @decorator class Bar {};
                     // export @first @second class Foo {
                     //     constructor() {}
@@ -96,7 +96,7 @@ pub(crate) fn parse_declaration_clause(p: &mut JsParser, stmt_start_pos: TextSiz
                     parse_class_declaration(p, decorator_list, StatementContext::StatementList)
                 }
                 _ => {
-                    // test_err decorator_export_class_clause
+                    // test_err js decorator_export_class_clause
                     // @decorator
                     // export let a;
                     // @decorator1 @decorator2

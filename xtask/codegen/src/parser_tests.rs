@@ -67,6 +67,14 @@ pub fn generate_parser_tests(mode: Mode) -> Result<()> {
             if let crate::UpdateResult::Updated = update(&path, &test.text, &mode)? {
                 some_file_was_updated = true;
             }
+
+            if let Some(options) = &test.options {
+                let path = tests_dir.join(name).with_extension("options.json");
+
+                if let crate::UpdateResult::Updated = update(&path, options, &mode)? {
+                    some_file_was_updated = true;
+                }
+            }
         }
 
         Ok(some_file_was_updated)
@@ -97,6 +105,7 @@ struct Test {
     pub text: String,
     pub ok: bool,
     pub language: Language,
+    pub options: Option<String>,
 }
 
 #[derive(Debug)]
@@ -154,14 +163,19 @@ fn collect_tests(s: &str) -> Vec<Test> {
             _ => continue,
         };
 
-        let (language, name) = match suffix.split_once(' ') {
-            Some(("jsx", name)) => (Language::Jsx, name),
-            Some(("js", name)) => (Language::JavaScript, name),
-            Some(("ts", name)) => (Language::TypeScript, name),
-            Some(("d.ts", name)) => (Language::TypeScriptDefinition, name),
-            Some(("tsx", name)) => (Language::Tsx, name),
-            Some((name, _)) => (Language::JavaScript, name),
-            _ => (Language::JavaScript, suffix),
+        let (language, suffix) = match suffix.split_once(' ') {
+            Some(("jsx", suffix)) => (Language::Jsx, suffix),
+            Some(("js", suffix)) => (Language::JavaScript, suffix),
+            Some(("ts", suffix)) => (Language::TypeScript, suffix),
+            Some(("d.ts", suffix)) => (Language::TypeScriptDefinition, suffix),
+            Some(("tsx", suffix)) => (Language::Tsx, suffix),
+            Some((_, suffix)) => (Language::JavaScript, suffix),
+            _ => panic!("wrong test configuration: {:?}", suffix),
+        };
+
+        let (name, options) = match suffix.split_once(' ') {
+            Some((name, options)) => (name, Some(options.to_string())),
+            _ => (suffix, None),
         };
 
         let text: String = comment_block[1..]
@@ -174,6 +188,7 @@ fn collect_tests(s: &str) -> Vec<Test> {
         assert!(!text.trim().is_empty() && text.ends_with('\n'));
         res.push(Test {
             name: name.to_string(),
+            options,
             text,
             ok,
             language,
@@ -228,6 +243,7 @@ fn existing_tests(dir: &Path, ok: bool) -> Result<HashMap<String, (PathBuf, Test
             let text = fs::read_to_string(&path)?;
             let test = Test {
                 name: name.clone(),
+                options: None,
                 text,
                 ok,
                 language,

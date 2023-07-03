@@ -39,7 +39,7 @@ pub(crate) fn parse_binding(p: &mut JsParser) -> ParsedSyntax {
     parse_identifier_binding(p)
 }
 
-// test_err binding_identifier_invalid
+// test_err js binding_identifier_invalid
 // async () => { let await = 5; }
 // function *foo() {
 //    let yield = 5;
@@ -49,7 +49,7 @@ pub(crate) fn parse_binding(p: &mut JsParser) -> ParsedSyntax {
 // const let = 5;
 // let a, a;
 //
-// test_err binding_identifier_invalid_script
+// test_err js binding_identifier_invalid_script
 // // SCRIPT
 // let let = 5;
 // const let = 5;
@@ -159,7 +159,7 @@ impl ParseWithDefaultPattern for BindingPatternWithDefault {
 
 struct ArrayBindingPattern;
 
-// test array_binding
+// test js array_binding
 // let a = "b";
 // let [c, b] = [1, 2];
 // let [d, ...abcd] = [1];
@@ -167,18 +167,18 @@ struct ArrayBindingPattern;
 // let [, f, ...rest] = []
 // let [[...rest2], { g }] = []
 //
-// test_err array_binding_err
+// test_err js array_binding_err
 // let [a b] = [1, 2];
 // let [="default"] = [1, 2];
 // let ["default"] = [1, 2];
 // let [[c ] = [];
 //
-// test array_binding_rest
+// test js array_binding_rest
 // let [ ...abcd ] = a;
 // let [ ...[x, y] ] = b;
 // let [ ...[ ...a ] ] = c;
 //
-// test_err array_binding_rest_err
+// test_err js array_binding_rest_err
 // let [ ... ] = a;
 // let [ ...c = "default" ] = a;
 // let [ ...rest, other_assignment ] = a;
@@ -222,7 +222,7 @@ impl ParseArrayPattern<BindingPatternWithDefault> for ArrayBindingPattern {
     }
 }
 
-// test_err object_binding_pattern
+// test_err js object_binding_pattern
 // let { 5 } } = { eval: "foo" };
 // let { eval } = { eval: "foo" };
 // let { 5, 6 } = { eval: "foo" };
@@ -249,20 +249,20 @@ impl ParseObjectPattern for ObjectBindingPattern {
         expected_any(&["identifier", "member name", "rest pattern"], range).into_diagnostic(p)
     }
 
-    // test object_property_binding
+    // test js object_property_binding
     // let { foo: bar  } = {}
     // let { foo: bar_bar = baz } = {}
     //
-    // test_err object_property_binding_err
+    // test_err js object_property_binding_err
     // let { foo: , bar } = {}
     // let { : lorem = "test" } = {}
     // let { , ipsum: bazz } = {}
     //
-    // test object_shorthand_property
+    // test js object_shorthand_property
     // let { a, b } = c
     // let { d = "default", e = call() } = c
     //
-    // test_err object_shorthand_property_err
+    // test_err js object_shorthand_property_err
     // let { a b } = c
     // let { = "test" } = c
     // let { , d } = c
@@ -285,7 +285,7 @@ impl ParseObjectPattern for ObjectBindingPattern {
             JS_OBJECT_BINDING_PATTERN_PROPERTY
         };
 
-        // test destructuring_initializer_binding
+        // test js destructuring_initializer_binding
         // const { value, f = (value) => value } = item
         let parent = p.state_mut().duplicate_binding_parent.take();
         parse_initializer_clause(p, ExpressionContext::default()).ok();
@@ -294,11 +294,11 @@ impl ParseObjectPattern for ObjectBindingPattern {
         Present(m.complete(p, kind))
     }
 
-    // test rest_property_binding
+    // test js rest_property_binding
     // let { ...abcd } = a;
     // let { b: { ...a } } = c;
     //
-    // test_err rest_property_binding_err
+    // test_err js rest_property_binding_err
     // let { ... } = a;
     // let { ...c = "default" } = a;
     // let { ...{a} } = b;

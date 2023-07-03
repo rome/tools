@@ -48,7 +48,7 @@ fn parser_missing_smoke_test() {
     assert_eq!(closing, None);
 }
 
-fn try_parse(path: &str, text: &str) -> Parse<AnyJsRoot> {
+fn try_parse(path: &str, text: &str, options: JsParserOptions) -> Parse<AnyJsRoot> {
     let res = catch_unwind(|| {
         let path = Path::new(path);
         // Files containing a // SCRIPT comment are parsed as script and not as module
@@ -59,11 +59,7 @@ fn try_parse(path: &str, text: &str) -> Parse<AnyJsRoot> {
             path.try_into().unwrap()
         };
 
-        let parse = parse(
-            text,
-            source_type,
-            JsParserOptions::default().with_parse_class_parameter_decorators(),
-        );
+        let parse = parse(text, source_type, options);
 
         assert_eq!(
             parse.syntax().to_string(),
@@ -78,9 +74,13 @@ fn try_parse(path: &str, text: &str) -> Parse<AnyJsRoot> {
     res.unwrap()
 }
 
-fn try_parse_with_printed_ast(path: &str, text: &str) -> (Parse<AnyJsRoot>, String) {
+fn try_parse_with_printed_ast(
+    path: &str,
+    text: &str,
+    options: JsParserOptions,
+) -> (Parse<AnyJsRoot>, String) {
     catch_unwind(|| {
-        let parse = try_parse(path, text);
+        let parse = try_parse(path, text, options.clone());
         let formatted = format!("{:#?}", &parse.tree());
         (parse, formatted)
     })
@@ -89,7 +89,7 @@ fn try_parse_with_printed_ast(path: &str, text: &str) -> (Parse<AnyJsRoot>, Stri
         // unwind safe. That's why the same `ParseResult` can't be reused here.
         // This should be fine because this code is only executed for local tests. No checked-in
         // test should ever hit this line.
-        let re_parsed = try_parse(path, text);
+        let re_parsed = try_parse(path, text, options);
         panic!(
             "Printing the AST for `{}` panicked. That means it is malformed. Err: {:?}\n{:#?}",
             path,
@@ -104,7 +104,13 @@ fn run_and_expect_no_errors(path: &str, _: &str, _: &str, _: &str) {
     let path = PathBuf::from(path);
     let text = std::fs::read_to_string(&path).unwrap();
 
-    let (parse, ast) = try_parse_with_printed_ast(path.to_str().unwrap(), &text);
+    let options_path = path.with_extension("options.json");
+    let options: JsParserOptions = std::fs::read_to_string(options_path)
+        .ok()
+        .and_then(|options| serde_json::from_str(&options).ok())
+        .unwrap_or_default();
+
+    let (parse, ast) = try_parse_with_printed_ast(path.to_str().unwrap(), &text, options);
     assert_errors_are_absent(&parse, &path);
     let actual = format!("{}\n\n{:#?}", ast, parse.syntax());
 
@@ -117,7 +123,13 @@ fn run_and_expect_errors(path: &str, _: &str, _: &str, _: &str) {
     let path = PathBuf::from(path);
     let text = std::fs::read_to_string(&path).unwrap();
 
-    let (parse, ast) = try_parse_with_printed_ast(path.to_str().unwrap(), &text);
+    let options_path = path.with_extension("options.json");
+    let options: JsParserOptions = std::fs::read_to_string(options_path)
+        .ok()
+        .and_then(|options| serde_json::from_str(&options).ok())
+        .unwrap_or_default();
+
+    let (parse, ast) = try_parse_with_printed_ast(path.to_str().unwrap(), &text, options);
     assert_errors_are_present(&parse, &path);
     let mut actual = format!("{}\n\n{:#?}", ast, parse.syntax());
     for diag in parse.diagnostics() {
