@@ -2,8 +2,8 @@ use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_semantic::SemanticModel;
 use rome_js_syntax::{
-    AnyJsFunction, JsCallArgumentList, JsCallArguments, JsCallExpression, JsFormalParameter,
-    JsParameterList, JsParameters, JsSpread,
+    AnyJsFunction, AnyJsMemberExpression, JsCallArgumentList, JsCallArguments, JsCallExpression,
+    JsFormalParameter, JsParameterList, JsParameters, JsSpread,
 };
 use rome_rowan::AstNode;
 
@@ -89,7 +89,6 @@ fn is_known_accumulator(node: &JsSpread, model: &SemanticModel) -> Option<bool> 
         .as_js_identifier_expression()?
         .name()
         .ok()?;
-
     let parameter = model
         .binding(&reference)
         .and_then(|declaration| declaration.syntax().parent())
@@ -102,21 +101,11 @@ fn is_known_accumulator(node: &JsSpread, model: &SemanticModel) -> Option<bool> 
         .parent::<JsCallArgumentList>()
         .and_then(|arguments| arguments.parent::<JsCallArguments>())
         .and_then(|arguments| arguments.parent::<JsCallExpression>())?;
-
-    let name = call_expression
-        .callee()
-        .ok()?
-        .as_js_static_member_expression()?
-        .member()
-        .ok()?
-        .as_js_name()?
-        .value_token()
-        .ok()?;
-    let name = name.text_trimmed();
-
-    if matches!(name, "reduce" | "reduceRight") {
-        Some(parameter.syntax().index() == 0)
-    } else {
-        None
+    let callee = call_expression.callee().ok()?;
+    let member_expression = AnyJsMemberExpression::cast_ref(callee.syntax())?;
+    let member_name = member_expression.member_name()?;
+    if !matches!(member_name.text(), "reduce" | "reduceRight") {
+        return None;
     }
+    Some(parameter.syntax().index() == 0)
 }

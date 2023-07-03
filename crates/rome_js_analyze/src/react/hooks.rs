@@ -3,9 +3,10 @@ use std::collections::{HashMap, HashSet};
 
 use rome_js_semantic::{Capture, Closure, ClosureExtensions, SemanticModel};
 use rome_js_syntax::{
-    binding_ext::AnyJsIdentifierBinding, AnyJsExpression, JsArrayBindingPattern,
-    JsArrayBindingPatternElementList, JsArrowFunctionExpression, JsCallExpression,
-    JsFunctionExpression, JsVariableDeclarator, TextRange,
+    binding_ext::AnyJsIdentifierBinding, static_value::StaticStringValue, AnyJsExpression,
+    AnyJsMemberExpression, JsArrayBindingPattern, JsArrayBindingPatternElementList,
+    JsArrowFunctionExpression, JsCallExpression, JsFunctionExpression, JsVariableDeclarator,
+    TextRange,
 };
 use rome_rowan::AstNode;
 use serde::{Deserialize, Serialize};
@@ -139,17 +140,17 @@ pub(crate) fn react_hook_with_dependency(
     model: &SemanticModel,
 ) -> Option<ReactCallWithDependencyResult> {
     let expression = call.callee().ok()?;
-    let name = match &expression {
-        AnyJsExpression::JsIdentifierExpression(identifier) => {
-            Some(identifier.name().ok()?.value_token().ok()?)
-        }
-        AnyJsExpression::JsStaticMemberExpression(member) => {
-            Some(member.member().ok()?.as_js_name()?.value_token().ok()?)
-        }
-        _ => None,
+    let name = if let AnyJsExpression::JsIdentifierExpression(identifier) = expression.clone() {
+        Some(StaticStringValue::Unquoted(
+            identifier.name().ok()?.value_token().ok()?,
+        ))
+    } else if let Some(member_expr) = AnyJsMemberExpression::cast_ref(expression.syntax()) {
+        Some(member_expr.member_name()?)
+    } else {
+        None
     }?;
-    let function_name_range = name.text_trimmed_range();
-    let name = name.text_trimmed();
+    let function_name_range = name.token().text_trimmed_range();
+    let name = name.text();
 
     // check if the hooks api is imported from the react library
     if HOOKS_WITH_DEPS_API.contains(&name)

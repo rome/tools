@@ -33,6 +33,10 @@ Number.NaN >= "abc";
 x === Number?.NaN;
 x === Number['NaN'];
 
+123 == globalThis.NaN;
+123 == window.NaN;
+123 == globalThis.Number.NaN;
+
 // switch-case
 switch(NaN) { case foo: break; }
 switch(NaN) {}

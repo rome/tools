@@ -191,13 +191,15 @@ pub(crate) fn is_react_call_api(
 
     let expr = expression.omit_parentheses();
     if let Some(callee) = AnyJsMemberExpression::cast_ref(expr.syntax()) {
-        let Some(object) = callee.get_object_reference_identifier() else { return false };
-        if !callee.has_member_name(api_name) {
+        let Some(object) = callee.object().ok() else { return false };
+        let Some(reference) = object.omit_parentheses().as_reference_identifier() else { return false };
+        let Some(member_name) = callee.member_name() else { return false };
+        if member_name.text() != api_name {
             return false;
         }
-        return match model.binding(&object) {
+        return match model.binding(&reference) {
             Some(decl) => is_react_export(decl, lib),
-            None => object.has_name(lib.global_name()),
+            None => reference.has_name(lib.global_name()),
         };
     }
 

@@ -1,7 +1,7 @@
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_syntax::{AnyJsExpression, JsCallExpression, TextRange};
-use rome_rowan::AstNodeList;
+use rome_js_syntax::{AnyJsMemberExpression, JsCallExpression, TextRange};
+use rome_rowan::AstNode;
 
 declare_rule! {
     /// Disallow direct use of `Object.prototype` builtins.
@@ -60,47 +60,15 @@ impl Rule for NoPrototypeBuiltins {
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let call_expr = ctx.query();
         let callee = call_expr.callee().ok()?.omit_parentheses();
-
-        match callee {
-            AnyJsExpression::JsComputedMemberExpression(expr) => {
-                let expr = expr.member().ok()?;
-                match expr {
-                    AnyJsExpression::AnyJsLiteralExpression(expr) => {
-                        let literal_expr = expr.as_js_string_literal_expression()?;
-                        let token_text = literal_expr.inner_string_text().ok()?;
-                        let token = literal_expr.value_token().ok()?;
-
-                        is_prototype_builtins(token_text.text()).then_some(RuleState {
-                            prototype_builtins_method_name: token_text.to_string(),
-                            text_range: token.text_range(),
-                        })
-                    }
-                    AnyJsExpression::JsTemplateExpression(expr) => {
-                        let template_element = expr.as_fields().elements.first()?;
-                        let template_chunk_token = template_element
-                            .as_js_template_chunk_element()?
-                            .template_chunk_token()
-                            .ok()?;
-                        let token_text = template_chunk_token.text();
-                        is_prototype_builtins(token_text).then_some(RuleState {
-                            prototype_builtins_method_name: token_text.to_string(),
-                            text_range: template_chunk_token.text_trimmed_range(),
-                        })
-                    }
-                    _ => None,
-                }
-            }
-            AnyJsExpression::JsStaticMemberExpression(expr) => {
-                let member = expr.as_fields().member.ok()?;
-                let value_token = member.as_js_name()?.value_token().ok()?;
-                let token_text = value_token.text();
-                is_prototype_builtins(token_text).then_some(RuleState {
-                    prototype_builtins_method_name: token_text.to_string(),
-                    text_range: value_token.text_range(),
-                })
-            }
-            _ => None,
+        if let Some(member_expr) = AnyJsMemberExpression::cast_ref(callee.syntax()) {
+            let member_name = member_expr.member_name()?;
+            let member_name_text = member_name.text();
+            return is_prototype_builtins(member_name_text).then_some(RuleState {
+                prototype_builtins_method_name: member_name_text.to_string(),
+                text_range: member_name.token().text_trimmed_range(),
+            });
         }
+        None
     }
 
     fn diagnostic(_ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {

@@ -127,6 +127,14 @@ multiple files:
 
 - [`noRedeclare`](https://docs.rome.tools/lint/rules/noredeclare/): allow redeclare of index signatures are in different type members [#4478](https://github.com/rome/tools/issues/4478)
 
+- Improve [`noConsoleLog`](https://docs.rome.tools/lint/rules/noconsolelog/), [`noGlobalObjectCalls`](https://docs.rome.tools/lint/rules/noglobalobjectcalls/), [`useIsNan`](https://docs.rome.tools/lint/rules/useisnan/), and [`useNumericLiterals`](https://docs.rome.tools/lint/rules/usenumericliterals/) by handling `globalThis` and `window` namespaces.
+
+  For instance, the following code is now reported by `noConsoleLog`:
+
+  ```js
+  globalThis.console.log("log")
+  ```
+
 - Fix a crash in the [`NoParameterAssign`](https://docs.rome.tools/lint/rules/noparameterassign/) rule that occurred when there was a bogus binding. [#4323](https://github.com/rome/tools/issues/4323)
 
 - Fix [`useExhaustiveDependencies`](https://docs.rome.tools/lint/rules/useexhaustivedependencies/) rule in the following cases [#4330](https://github.com/rome/tools/issues/4330)

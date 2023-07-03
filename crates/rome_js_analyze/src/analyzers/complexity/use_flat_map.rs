@@ -4,7 +4,7 @@ use rome_analyze::{declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make::{ident, js_name};
-use rome_js_syntax::{AnyJsExpression, AnyJsName, JsCallExpression};
+use rome_js_syntax::{AnyJsExpression, AnyJsMemberExpression, AnyJsName, JsCallExpression};
 use rome_rowan::{AstNode, AstSeparatedList, BatchMutationExt};
 
 declare_rule! {
@@ -46,8 +46,8 @@ impl Rule for UseFlatMap {
     type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
-        let node = ctx.query();
-        let arguments = node.arguments().ok()?.args();
+        let flat_call = ctx.query();
+        let arguments = flat_call.arguments().ok()?.args();
         // Probably not a `flat` call.
         if arguments.len() > 1 {
             return None;
@@ -63,39 +63,19 @@ impl Rule for UseFlatMap {
                 return None;
             }
         }
-        let static_member_expression = node.callee().ok()?;
-        let static_member_expression = static_member_expression.as_js_static_member_expression()?;
-        let flat_member_name = static_member_expression
-            .member()
-            .ok()?
-            .as_js_name()?
-            .value_token()
-            .ok()?;
-        if flat_member_name.text_trimmed() == "flat" {
-            let call_expression = static_member_expression.object().ok()?;
-            let call_expression = call_expression.as_js_call_expression()?;
-            let map_call_arguments = call_expression.arguments().ok()?.args();
-
-            // probably not a `.map` all coming from an array
-            if map_call_arguments.len() > 2 || map_call_arguments.len() < 1 {
-                return None;
-            }
-
-            let map_static_member_expression = call_expression.callee().ok()?;
-            let map_static_member_expression =
-                map_static_member_expression.as_js_static_member_expression()?;
-            let map_member_name = map_static_member_expression
-                .member()
-                .ok()?
-                .as_js_name()?
-                .value_token()
-                .ok()?;
-
-            if map_member_name.text_trimmed() == "map" {
-                return Some(call_expression.clone());
+        let flat_member_expression =
+            AnyJsMemberExpression::cast_ref(flat_call.callee().ok()?.syntax())?;
+        if flat_member_expression.member_name()?.text() == "flat" {
+            let object = flat_member_expression.object().ok()?;
+            let map_call = object.as_js_call_expression()?;
+            let map_call_arguments = map_call.arguments().ok()?.args();
+            let map_member_expression =
+                AnyJsMemberExpression::cast_ref(map_call.callee().ok()?.syntax())?;
+            if map_member_expression.member_name()?.text() == "map" && map_call_arguments.len() == 1
+            {
+                return Some(map_call.clone());
             }
         }
-
         None
     }
 
