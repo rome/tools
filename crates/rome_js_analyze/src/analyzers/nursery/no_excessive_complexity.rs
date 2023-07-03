@@ -6,11 +6,12 @@ use rome_deserialize::{
     DeserializationDiagnostic, VisitNode,
 };
 use rome_js_syntax::{
-    AnyJsExpression, AnyJsFunction, AnyJsFunctionBody, AnyJsStatement, JsBlockStatement,
-    JsStatementList, JsSwitchCaseList,
+    AnyJsExpression, AnyJsForInitializer, AnyJsFunction, AnyJsFunctionBody, AnyJsStatement,
+    JsConditionalExpression, JsIfStatement, JsLogicalOperator, JsStatementList, JsSwitchCaseList,
+    JsUnaryOperator, JsVariableDeclaration,
 };
 use rome_json_syntax::{JsonLanguage, JsonSyntaxNode};
-use rome_rowan::AstNode;
+use rome_rowan::{AstNode, SyntaxResult};
 use serde::{Deserialize, Serialize};
 use std::str::FromStr;
 
@@ -180,66 +181,311 @@ fn calculate_for_block(statements: &JsStatementList, nesting_score: usize) -> us
 }
 
 fn calculate_for_expression(expression: &AnyJsExpression, nesting_score: usize) -> usize {
-    0 // FIXME: Implement this.
+    calculate_for_fallible_expression(expression, nesting_score, None).unwrap_or_default()
+}
+
+#[derive(PartialEq)]
+enum Operator {
+    Logical(JsLogicalOperator),
+    Unary(JsUnaryOperator),
+}
+
+fn calculate_for_fallible_expression(
+    expression: &AnyJsExpression,
+    nesting_score: usize,
+    last_seen_operator: Option<Operator>,
+) -> SyntaxResult<usize> {
+    let score = match expression {
+        AnyJsExpression::AnyJsLiteralExpression(_) => 0,
+        AnyJsExpression::JsArrayExpression(_) => 0,
+        AnyJsExpression::JsArrowFunctionExpression(_) => 0,
+        AnyJsExpression::JsAssignmentExpression(js_assignment) => {
+            // TODO: calculate_for_expression(&js_assignment.left()?, nesting_score) +
+            calculate_for_expression(&js_assignment.right()?, nesting_score)
+        }
+        AnyJsExpression::JsAwaitExpression(_) => 0,
+        AnyJsExpression::JsBinaryExpression(js_binary_expression) => {
+            calculate_for_expression(&js_binary_expression.left()?, nesting_score)
+                + calculate_for_expression(&js_binary_expression.right()?, nesting_score)
+        }
+        AnyJsExpression::JsBogusExpression(_) => 0,
+        AnyJsExpression::JsCallExpression(_) => 0,
+        AnyJsExpression::JsClassExpression(_) => 0,
+        AnyJsExpression::JsComputedMemberExpression(_) => 0,
+        AnyJsExpression::JsConditionalExpression(js_conditional) => {
+            calculate_for_conditional_expression(js_conditional, nesting_score)
+        }
+        AnyJsExpression::JsFunctionExpression(_) => 0,
+        AnyJsExpression::JsIdentifierExpression(_) => 0,
+        AnyJsExpression::JsImportCallExpression(_) => 0,
+        AnyJsExpression::JsImportMetaExpression(_) => 0,
+        AnyJsExpression::JsInExpression(_) => 0,
+        AnyJsExpression::JsInstanceofExpression(_) => 0,
+        AnyJsExpression::JsLogicalExpression(js_logical_expression) => {
+            let operator = js_logical_expression.operator()?;
+            let penalty = if last_seen_operator == Some(Operator::Logical(operator)) {
+                0
+            } else {
+                1
+            };
+
+            penalty
+                + calculate_for_fallible_expression(
+                    &js_logical_expression.left()?,
+                    nesting_score,
+                    Some(Operator::Logical(operator)),
+                )?
+                + calculate_for_fallible_expression(
+                    &js_logical_expression.right()?,
+                    nesting_score,
+                    Some(Operator::Logical(operator)),
+                )?
+        }
+        AnyJsExpression::JsNewExpression(_) => 0,
+        AnyJsExpression::JsNewTargetExpression(_) => 0,
+        AnyJsExpression::JsObjectExpression(_) => 0,
+        AnyJsExpression::JsParenthesizedExpression(_) => 0,
+        AnyJsExpression::JsPostUpdateExpression(_) => 0,
+        AnyJsExpression::JsPreUpdateExpression(_) => 0,
+        AnyJsExpression::JsSequenceExpression(_) => 0,
+        AnyJsExpression::JsStaticMemberExpression(_) => 0,
+        AnyJsExpression::JsSuperExpression(_) => 0,
+        AnyJsExpression::JsTemplateExpression(_) => 0,
+        AnyJsExpression::JsThisExpression(_) => 0,
+        AnyJsExpression::JsUnaryExpression(js_unary_expression) => {
+            let operator = js_unary_expression.operator()?;
+            let penalty = if operator == JsUnaryOperator::LogicalNot
+                && last_seen_operator != Some(Operator::Unary(operator))
+            {
+                1
+            } else {
+                0
+            };
+
+            penalty
+                + calculate_for_fallible_expression(
+                    &js_unary_expression.argument()?,
+                    nesting_score,
+                    Some(Operator::Unary(operator)),
+                )?
+        }
+        AnyJsExpression::JsYieldExpression(_) => 0,
+        AnyJsExpression::JsxTagExpression(_) => 0,
+        AnyJsExpression::TsAsExpression(_) => 0,
+        AnyJsExpression::TsInstantiationExpression(_) => 0,
+        AnyJsExpression::TsNonNullAssertionExpression(_) => 0,
+        AnyJsExpression::TsSatisfiesExpression(_) => 0,
+        AnyJsExpression::TsTypeAssertionExpression(_) => 0,
+    };
+
+    Ok(score)
+}
+
+fn calculate_for_conditional_expression(
+    js_conditional: &JsConditionalExpression,
+    nesting_score: usize,
+) -> usize {
+    calculate_for_fallible_conditional_expression(js_conditional, nesting_score).unwrap_or_default()
+}
+
+fn calculate_for_fallible_conditional_expression(
+    js_conditional: &JsConditionalExpression,
+    nesting_score: usize,
+) -> SyntaxResult<usize> {
+    let score = 1
+        + nesting_score
+        + calculate_for_expression(&js_conditional.test()?, nesting_score)
+        + calculate_for_expression(&js_conditional.consequent()?, nesting_score + 1)
+        + match js_conditional.alternate()? {
+            AnyJsExpression::JsConditionalExpression(conditional_alternate) => {
+                calculate_for_conditional_expression(&conditional_alternate, nesting_score)
+            }
+            alternate => calculate_for_expression(&alternate, nesting_score + 1),
+        };
+
+    Ok(score)
 }
 
 fn calculate_for_statement(statement: &AnyJsStatement, nesting_score: usize) -> usize {
-    if let Some(block) = statement.as_js_block_statement() {
-        return calculate_for_block(&block.statements(), nesting_score);
-    } else if let Some(_continue_statement) = statement.as_js_continue_statement() {
-        return 1;
-    } else if let Some(for_statement) = statement.as_js_for_statement() {
-        if let Ok(body) = for_statement.body() {
-            return 1 + nesting_score + calculate_for_statement(&body, nesting_score + 1);
+    calculate_for_fallible_statement(statement, nesting_score).unwrap_or_default()
+}
+
+fn calculate_for_fallible_statement(
+    statement: &AnyJsStatement,
+    nesting_score: usize,
+) -> SyntaxResult<usize> {
+    let score = match statement {
+        AnyJsStatement::JsBlockStatement(js_block) => {
+            calculate_for_block(&js_block.statements(), nesting_score)
         }
-    } else if let Some(for_in_statement) = statement.as_js_for_in_statement() {
-        if let Ok(body) = for_in_statement.body() {
-            return 1 + nesting_score + calculate_for_statement(&body, nesting_score + 1);
+        AnyJsStatement::JsBogusStatement(_) => 0,
+        AnyJsStatement::JsBreakStatement(js_break) => match js_break.label_token() {
+            Some(_label) => 1,
+            None => 0,
+        },
+        AnyJsStatement::JsClassDeclaration(_) => 0,
+        AnyJsStatement::JsContinueStatement(js_continue) => match js_continue.label_token() {
+            Some(_label) => 1,
+            None => 0,
+        },
+        AnyJsStatement::JsDebuggerStatement(_) => 0,
+        AnyJsStatement::JsDoWhileStatement(js_do_while) => {
+            1 + nesting_score + calculate_for_statement(&js_do_while.body()?, nesting_score + 1)
         }
-    } else if let Some(for_of_statement) = statement.as_js_for_of_statement() {
-        if let Ok(body) = for_of_statement.body() {
-            return 1 + nesting_score + calculate_for_statement(&body, nesting_score + 1);
+        AnyJsStatement::JsEmptyStatement(_) => 0,
+        AnyJsStatement::JsExpressionStatement(js_expression) => {
+            calculate_for_expression(&js_expression.expression()?, nesting_score)
         }
-    } else if let Some(if_statement) = statement.as_js_if_statement() {
-        if let Ok(consequent) = if_statement.consequent() {
-            return 1
-                + nesting_score
-                + calculate_for_statement(&consequent, nesting_score + 1)
-                + if_statement
-                    .else_clause()
-                    .and_then(|else_clause| else_clause.alternate().ok())
-                    .map(|alternate| calculate_for_statement(&alternate, nesting_score))
-                    .unwrap_or_default();
+        AnyJsStatement::JsForInStatement(js_for_in) => {
+            1 + nesting_score
+                + calculate_for_expression(&js_for_in.expression()?, nesting_score)
+                + calculate_for_statement(&js_for_in.body()?, nesting_score + 1)
         }
-    } else if let Some(labeled_statement) = statement.as_js_labeled_statement() {
-        if let Ok(body) = labeled_statement.body() {
-            return calculate_for_statement(&body, nesting_score);
+        AnyJsStatement::JsForOfStatement(js_for_of) => {
+            1 + nesting_score
+                + calculate_for_expression(&js_for_of.expression()?, nesting_score)
+                + calculate_for_statement(&js_for_of.body()?, nesting_score + 1)
         }
-    } else if let Some(switch_statement) = statement.as_js_switch_statement() {
-        return 1
-            + nesting_score
-            + calculate_for_switch_cases(&switch_statement.cases(), nesting_score + 1);
-    } else if let Some(try_statement) = statement.as_js_try_statement() {
-        if let Ok(block) = try_statement.body() {
-            return calculate_for_block(&block.statements(), nesting_score)
-                + try_statement
+        AnyJsStatement::JsForStatement(js_for) => {
+            1 + nesting_score
+                + js_for
+                    .initializer()
+                    .map(|initializer| match initializer {
+                        AnyJsForInitializer::AnyJsExpression(expression) => {
+                            calculate_for_expression(&expression, nesting_score)
+                        }
+                        AnyJsForInitializer::JsVariableDeclaration(declaration) => {
+                            calculate_for_variable_declaration(&declaration, nesting_score)
+                        }
+                    })
+                    .unwrap_or_default()
+                + js_for
+                    .test()
+                    .map(|test| calculate_for_expression(&test, nesting_score))
+                    .unwrap_or_default()
+                + js_for
+                    .update()
+                    .map(|update| calculate_for_expression(&update, nesting_score))
+                    .unwrap_or_default()
+                + calculate_for_statement(&js_for.body()?, nesting_score + 1)
+        }
+        AnyJsStatement::JsFunctionDeclaration(_) => 0,
+        AnyJsStatement::JsIfStatement(js_if) => calculate_for_if_statement(js_if, nesting_score),
+        AnyJsStatement::JsLabeledStatement(js_labeled_statement) => {
+            calculate_for_statement(&js_labeled_statement.body()?, nesting_score)
+        }
+        AnyJsStatement::JsReturnStatement(js_return) => js_return
+            .argument()
+            .map(|arg| calculate_for_expression(&arg, nesting_score))
+            .unwrap_or_default(),
+        AnyJsStatement::JsSwitchStatement(js_switch) => {
+            1 + nesting_score
+                + calculate_for_expression(&js_switch.discriminant()?, nesting_score)
+                + calculate_for_switch_cases(&js_switch.cases(), nesting_score + 1)
+        }
+        AnyJsStatement::JsThrowStatement(js_throw) => {
+            calculate_for_expression(&js_throw.argument()?, nesting_score)
+        }
+        AnyJsStatement::JsTryFinallyStatement(js_try_finally) => {
+            calculate_for_block(&js_try_finally.body()?.statements(), nesting_score)
+                + js_try_finally
+                    .catch_clause()
+                    .and_then(|catch_clause| catch_clause.body().ok())
+                    .map(|catch| {
+                        1 + nesting_score
+                            + calculate_for_block(&catch.statements(), nesting_score + 1)
+                    })
+                    .unwrap_or_default()
+                + calculate_for_block(
+                    &js_try_finally.finally_clause()?.body()?.statements(),
+                    nesting_score + 1,
+                )
+        }
+        AnyJsStatement::JsTryStatement(js_try) => {
+            calculate_for_block(&js_try.body()?.statements(), nesting_score)
+                + js_try
                     .catch_clause()
                     .and_then(|catch_clause| catch_clause.body())
                     .map(|catch| {
                         1 + nesting_score
                             + calculate_for_block(&catch.statements(), nesting_score + 1)
                     })
-                    .unwrap_or_default();
+                    .unwrap_or_default()
         }
-    }
+        AnyJsStatement::JsVariableStatement(js_variable) => {
+            calculate_for_variable_declaration(&js_variable.declaration()?, nesting_score)
+        }
+        AnyJsStatement::JsWhileStatement(js_while) => {
+            1 + nesting_score
+                + calculate_for_expression(&js_while.test()?, nesting_score)
+                + calculate_for_statement(&js_while.body()?, nesting_score + 1)
+        }
+        AnyJsStatement::JsWithStatement(js_with) => {
+            1 + calculate_for_statement(&js_with.body()?, nesting_score)
+        }
+        AnyJsStatement::TsDeclareFunctionDeclaration(_) => 0,
+        AnyJsStatement::TsDeclareStatement(_) => 0,
+        AnyJsStatement::TsEnumDeclaration(_) => 0,
+        AnyJsStatement::TsExternalModuleDeclaration(_) => 0,
+        AnyJsStatement::TsGlobalDeclaration(_) => 0,
+        AnyJsStatement::TsImportEqualsDeclaration(_) => 0,
+        AnyJsStatement::TsInterfaceDeclaration(_) => 0,
+        AnyJsStatement::TsModuleDeclaration(_) => 0,
+        AnyJsStatement::TsTypeAliasDeclaration(_) => 0,
+    };
 
-    0
+    Ok(score)
+}
+
+fn calculate_for_if_statement(js_if: &JsIfStatement, nesting_score: usize) -> usize {
+    calculate_for_fallible_if_statement(js_if, nesting_score).unwrap_or_default()
+}
+
+fn calculate_for_fallible_if_statement(
+    js_if: &JsIfStatement,
+    nesting_score: usize,
+) -> SyntaxResult<usize> {
+    let score = 1
+        + nesting_score
+        + calculate_for_expression(&js_if.test()?, nesting_score)
+        + calculate_for_statement(&js_if.consequent()?, nesting_score + 1)
+        + js_if
+            .else_clause()
+            .and_then(|else_clause| else_clause.alternate().ok())
+            .map(|alternate| match alternate {
+                AnyJsStatement::JsIfStatement(else_if) => {
+                    calculate_for_if_statement(&else_if, nesting_score)
+                }
+                _ => calculate_for_statement(&alternate, nesting_score + 1),
+            })
+            .unwrap_or_default();
+
+    Ok(score)
 }
 
 fn calculate_for_switch_cases(cases: &JsSwitchCaseList, nesting_score: usize) -> usize {
     cases
         .into_iter()
         .map(|case| calculate_for_block(&case.consequent(), nesting_score))
+        .sum()
+}
+
+fn calculate_for_variable_declaration(
+    declaration: &JsVariableDeclaration,
+    nesting_score: usize,
+) -> usize {
+    declaration
+        .declarators()
+        .into_iter()
+        .filter_map(Result::ok)
+        .filter_map(|declarator| {
+            declarator
+                .initializer()
+                .and_then(|initializer| initializer.expression().ok())
+        })
+        .map(|initializer_expression| {
+            calculate_for_expression(&initializer_expression, nesting_score)
+        })
         .sum()
 }
 
@@ -264,6 +510,32 @@ mod tests {
             }",
         );
         assert_eq!(calculate_cognitive_complexity(&body), 2);
+    }
+
+    #[test]
+    fn test_cognitive_complexity_of_boolean_operators() {
+        let body = parse_function(
+            "function booleanOperators() {
+                if (a                                     // +1 for `if`
+                    && b && c                             // +1
+                    || d || e                             // +1
+                    && f) {                               // +1
+                    return true;
+                }
+            }",
+        );
+        assert_eq!(calculate_cognitive_complexity(&body), 4);
+
+        let body = parse_function(
+            "function booleanOperators2() {
+                if (a                                     // +1 for `if`
+                    &&                                    // +1
+                    !(b && c)) {                          // +1
+                    return true;
+                }
+            }",
+        );
+        assert_eq!(calculate_cognitive_complexity(&body), 3);
     }
 
     #[test]
@@ -302,6 +574,112 @@ mod tests {
             }"#,
         );
         assert_eq!(calculate_cognitive_complexity(&body), 1);
+    }
+
+    #[test]
+    fn test_cognitive_complexity_of_complex_event_handler() {
+        let body = parse_function(
+            r#"function handleArrowDown(event: React.KeyboardEvent) {
+                const state = getState();
+                const focusedCell = selectFocusedCellOrSurrogate(state);
+                if (!focusedCell) {
+                    return;
+                }
+              
+                const extendSelection = event.shiftKey;
+              
+                let coordinates: CursorCoordinates | null = null;
+                const focus = selectNotebookFocus(state);
+                const field = getField(focus);
+                const containerEl = getContainerElForCellField(focusedCell.id, field);
+                const containerRect = containerEl && containerEl.getBoundingClientRect();
+                if (containerEl && focus.type !== "none" && !event.altKey) {
+                    const text = selectCellText(state, focusedCell, field);
+                    coordinates = getCoordinatesForOffset(containerEl, text, getFocusOffset(focus));
+              
+                    const lineHeight = getLineHeightForContainer(containerEl);
+                    if (coordinates && coordinates.y + lineHeight < containerRect!.height) {
+                        // Move the cursor within the cell if we can:
+                        const offset = getOffsetForCoordinates(containerEl, text, {
+                            x: coordinates.x,
+                            y: coordinates.y + lineHeight,
+                        });
+                        dispatch(
+                            focusCell({ cellId: focusedCell.id, field, offset, extendSelection })
+                        );
+                        return true;
+                    }
+                }
+              
+                if (!event.altKey) {
+                    const targetField = selectRelativeField(state, focusedCell.id, field, 1);
+                    if (targetField) {
+                        const text = selectCellText(
+                            state,
+                            selectCellOrSurrogate(state, targetField.cellId)!,
+                            targetField.field
+                        );
+                        dispatch(
+                            focusCell({
+                                cellId: targetField.cellId,
+                                field: targetField.field,
+                                offset: charCount(text),
+                                extendSelection: false,
+                            })
+                        );
+                        return true;
+                    }
+                }
+              
+                const targetCell = selectRelativeCellOrSurrogate(state, focusedCell.id, 1);
+                if (!targetCell) {
+                    return handleEnd(event);
+                }
+              
+                if (event.altKey) {
+                    if (focusedCell.readOnly) {
+                        CellById.get(focusedCell.id)?.shake();
+                        return;
+                    }
+              
+                    if (isSurrogateId(targetCell.id)) {
+                        // TODO: Should we nudge?
+                    } else {
+                        // Swap cells with Alt modifier:
+                        dispatch(swapCells(focusedCell.id, targetCell.id));
+                    }
+                } else if (isContentCell(targetCell)) {
+                    // Move to the cell above and try to maintain the cursor position:
+                    const field = undefined;
+                    const containerBelowEl = getContainerElForCellField(targetCell.id, field);
+                    const extendSelection = event.shiftKey;
+                    if (containerRect && containerBelowEl) {
+                        const deltaX =
+                            containerRect.left - containerBelowEl.getBoundingClientRect().left;
+                        const lineHeight = getLineHeightForContainer(containerEl);
+                        const offset = coordinates
+                            ? getOffsetForCoordinates(containerBelowEl, targetCell.content, {
+                                x: coordinates.x + deltaX,
+                                y: lineHeight / 2,
+                            })
+                            : 0;
+                        dispatch(focusCell({ cellId: targetCell.id, offset, extendSelection }));
+                    } else {
+                        dispatch(focusCell({ cellId: targetCell.id, offset: 0, extendSelection }));
+                    }
+                } else {
+                    // Move to a cell without cursor position:
+                    dispatch(focusCell({ cellId: targetCell.id, extendSelection }));
+                }
+              
+                return true;
+            }"#,
+        );
+        let complexity_calculated_by_sonarjs = 26;
+        assert_eq!(
+            calculate_cognitive_complexity(&body),
+            complexity_calculated_by_sonarjs
+        );
     }
 
     fn parse_function(text: &str) -> AnyJsFunctionBody {
