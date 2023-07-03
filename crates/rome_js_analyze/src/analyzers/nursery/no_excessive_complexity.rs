@@ -6,9 +6,11 @@ use rome_deserialize::{
     DeserializationDiagnostic, VisitNode,
 };
 use rome_js_syntax::{
-    AnyJsExpression, AnyJsForInitializer, AnyJsFunction, AnyJsFunctionBody, AnyJsStatement,
-    JsConditionalExpression, JsIfStatement, JsLogicalOperator, JsStatementList, JsSwitchCaseList,
-    JsUnaryOperator, JsVariableDeclaration,
+    AnyJsCallArgument, AnyJsExpression, AnyJsForInitializer, AnyJsFunction, AnyJsFunctionBody,
+    AnyJsObjectMember, AnyJsStatement, AnyJsTemplateElement, AnyJsxAttribute, AnyJsxAttributeValue,
+    AnyJsxChild, AnyJsxTag, JsCallArguments, JsConditionalExpression, JsIfStatement,
+    JsLogicalOperator, JsStatementList, JsSwitchCaseList, JsVariableDeclaration, JsxAttributeList,
+    JsxChildList, JsxElement,
 };
 use rome_json_syntax::{JsonLanguage, JsonSyntaxNode};
 use rome_rowan::{AstNode, SyntaxResult};
@@ -184,16 +186,10 @@ fn calculate_for_expression(expression: &AnyJsExpression, nesting_score: usize) 
     calculate_for_fallible_expression(expression, nesting_score, None).unwrap_or_default()
 }
 
-#[derive(PartialEq)]
-enum Operator {
-    Logical(JsLogicalOperator),
-    Unary(JsUnaryOperator),
-}
-
 fn calculate_for_fallible_expression(
     expression: &AnyJsExpression,
     nesting_score: usize,
-    last_seen_operator: Option<Operator>,
+    last_seen_logical_operator: Option<JsLogicalOperator>,
 ) -> SyntaxResult<usize> {
     let score = match expression {
         AnyJsExpression::AnyJsLiteralExpression(_) => 0,
@@ -223,7 +219,7 @@ fn calculate_for_fallible_expression(
         AnyJsExpression::JsInstanceofExpression(_) => 0,
         AnyJsExpression::JsLogicalExpression(js_logical_expression) => {
             let operator = js_logical_expression.operator()?;
-            let penalty = if last_seen_operator == Some(Operator::Logical(operator)) {
+            let penalty = if last_seen_logical_operator == Some(operator) {
                 0
             } else {
                 1
@@ -233,45 +229,89 @@ fn calculate_for_fallible_expression(
                 + calculate_for_fallible_expression(
                     &js_logical_expression.left()?,
                     nesting_score,
-                    Some(Operator::Logical(operator)),
+                    Some(operator),
                 )?
                 + calculate_for_fallible_expression(
                     &js_logical_expression.right()?,
                     nesting_score,
-                    Some(Operator::Logical(operator)),
+                    Some(operator),
                 )?
         }
-        AnyJsExpression::JsNewExpression(_) => 0,
+        AnyJsExpression::JsNewExpression(js_new) => {
+            calculate_for_expression(&js_new.callee()?, nesting_score)
+                + js_new
+                    .arguments()
+                    .map(|arguments| calculate_for_call_arguments(&arguments, nesting_score))
+                    .unwrap_or_default()
+        }
         AnyJsExpression::JsNewTargetExpression(_) => 0,
-        AnyJsExpression::JsObjectExpression(_) => 0,
-        AnyJsExpression::JsParenthesizedExpression(_) => 0,
+        AnyJsExpression::JsObjectExpression(js_object_expression) => js_object_expression
+            .members()
+            .into_iter()
+            .filter_map(Result::ok)
+            .map(|member| -> SyntaxResult<usize> {
+                let score = match member {
+                    AnyJsObjectMember::JsBogusMember(_) => 0,
+                    AnyJsObjectMember::JsGetterObjectMember(_) => 0,
+                    AnyJsObjectMember::JsMethodObjectMember(_) => 0,
+                    AnyJsObjectMember::JsPropertyObjectMember(js_property_object_member) => {
+                        calculate_for_expression(&js_property_object_member.value()?, nesting_score)
+                    }
+                    AnyJsObjectMember::JsSetterObjectMember(_) => 0,
+                    AnyJsObjectMember::JsShorthandPropertyObjectMember(_) => 0,
+                    AnyJsObjectMember::JsSpread(js_spread) => {
+                        calculate_for_expression(&js_spread.argument()?, nesting_score)
+                    }
+                };
+
+                Ok(score)
+            })
+            .filter_map(Result::ok)
+            .sum(),
+        AnyJsExpression::JsParenthesizedExpression(js_parenthesized_expression) => {
+            calculate_for_expression(&js_parenthesized_expression.expression()?, nesting_score)
+        }
         AnyJsExpression::JsPostUpdateExpression(_) => 0,
         AnyJsExpression::JsPreUpdateExpression(_) => 0,
         AnyJsExpression::JsSequenceExpression(_) => 0,
         AnyJsExpression::JsStaticMemberExpression(_) => 0,
         AnyJsExpression::JsSuperExpression(_) => 0,
-        AnyJsExpression::JsTemplateExpression(_) => 0,
+        AnyJsExpression::JsTemplateExpression(js_template) => {
+            js_template
+                .tag()
+                .map(|tag| calculate_for_expression(&tag, nesting_score))
+                .unwrap_or_default()
+                + js_template
+                    .elements()
+                    .into_iter()
+                    .map(|element| match element {
+                        AnyJsTemplateElement::JsTemplateChunkElement(_) => 0,
+                        AnyJsTemplateElement::JsTemplateElement(js_template_element) => {
+                            js_template_element
+                                .expression()
+                                .map(|expression| {
+                                    calculate_for_expression(&expression, nesting_score)
+                                })
+                                .unwrap_or_default()
+                        }
+                    })
+                    .sum::<usize>()
+        }
         AnyJsExpression::JsThisExpression(_) => 0,
         AnyJsExpression::JsUnaryExpression(js_unary_expression) => {
-            let operator = js_unary_expression.operator()?;
-            let penalty = if operator == JsUnaryOperator::LogicalNot
-                && last_seen_operator != Some(Operator::Unary(operator))
-            {
-                1
-            } else {
-                0
-            };
-
-            penalty
-                + calculate_for_fallible_expression(
-                    &js_unary_expression.argument()?,
-                    nesting_score,
-                    Some(Operator::Unary(operator)),
-                )?
+            calculate_for_expression(&js_unary_expression.argument()?, nesting_score)
         }
-        AnyJsExpression::JsYieldExpression(_) => 0,
-        AnyJsExpression::JsxTagExpression(_) => 0,
-        AnyJsExpression::TsAsExpression(_) => 0,
+        AnyJsExpression::JsYieldExpression(js_yield) => js_yield
+            .argument()
+            .and_then(|argument| argument.expression().ok())
+            .map(|expression| calculate_for_expression(&expression, nesting_score))
+            .unwrap_or_default(),
+        AnyJsExpression::JsxTagExpression(jsx_tag) => {
+            calculate_for_jsx_tag(&jsx_tag.tag()?, nesting_score)
+        }
+        AnyJsExpression::TsAsExpression(ts_as) => {
+            calculate_for_expression(&ts_as.expression()?, nesting_score)
+        }
         AnyJsExpression::TsInstantiationExpression(_) => 0,
         AnyJsExpression::TsNonNullAssertionExpression(_) => 0,
         AnyJsExpression::TsSatisfiesExpression(_) => 0,
@@ -279,6 +319,23 @@ fn calculate_for_fallible_expression(
     };
 
     Ok(score)
+}
+
+fn calculate_for_call_arguments(arguments: &JsCallArguments, nesting_score: usize) -> usize {
+    arguments
+        .args()
+        .into_iter()
+        .filter_map(Result::ok)
+        .map(|arg| match arg {
+            AnyJsCallArgument::AnyJsExpression(expression) => {
+                calculate_for_expression(&expression, nesting_score)
+            }
+            AnyJsCallArgument::JsSpread(spread) => spread
+                .argument()
+                .map(|arg| calculate_for_expression(&arg, nesting_score))
+                .unwrap_or_default(),
+        })
+        .sum()
 }
 
 fn calculate_for_conditional_expression(
@@ -304,6 +361,79 @@ fn calculate_for_fallible_conditional_expression(
         };
 
     Ok(score)
+}
+
+fn calculate_for_jsx_attributes(attributes: &JsxAttributeList, nesting_score: usize) -> usize {
+    attributes
+        .into_iter()
+        .map(|attribute| match attribute {
+            AnyJsxAttribute::JsxAttribute(jsx_attribute) => jsx_attribute
+                .initializer()
+                .and_then(|initializer| initializer.value().ok())
+                .map(|value| match value {
+                    AnyJsxAttributeValue::AnyJsxTag(jsx_tag) => {
+                        calculate_for_jsx_tag(&jsx_tag, nesting_score)
+                    }
+                    AnyJsxAttributeValue::JsxExpressionAttributeValue(
+                        jsx_expression_attribute_value,
+                    ) => jsx_expression_attribute_value
+                        .expression()
+                        .map(|expression| calculate_for_expression(&expression, nesting_score))
+                        .unwrap_or_default(),
+                    AnyJsxAttributeValue::JsxString(_) => 0,
+                })
+                .unwrap_or_default(),
+            AnyJsxAttribute::JsxSpreadAttribute(jsx_spread_attribute) => jsx_spread_attribute
+                .argument()
+                .map(|argument| calculate_for_expression(&argument, nesting_score))
+                .unwrap_or_default(),
+        })
+        .sum()
+}
+
+fn calculate_for_jsx_children(children: &JsxChildList, nesting_score: usize) -> usize {
+    children
+        .into_iter()
+        .map(|child| match child {
+            AnyJsxChild::JsxElement(jsx_element) => {
+                calculate_for_jsx_element(&jsx_element, nesting_score)
+            }
+            AnyJsxChild::JsxExpressionChild(jsx_expression_child) => jsx_expression_child
+                .expression()
+                .map(|expression| calculate_for_expression(&expression, nesting_score))
+                .unwrap_or_default(),
+            AnyJsxChild::JsxFragment(jsx_fragment) => {
+                calculate_for_jsx_children(&jsx_fragment.children(), nesting_score)
+            }
+            AnyJsxChild::JsxSelfClosingElement(_) => todo!(),
+            AnyJsxChild::JsxSpreadChild(_) => todo!(),
+            AnyJsxChild::JsxText(_) => 0,
+        })
+        .sum()
+}
+
+fn calculate_for_jsx_element(element: &JsxElement, nesting_score: usize) -> usize {
+    element
+        .opening_element()
+        .map(|opening_element| {
+            calculate_for_jsx_attributes(&opening_element.attributes(), nesting_score)
+        })
+        .unwrap_or_default()
+        + calculate_for_jsx_children(&element.children(), nesting_score)
+}
+
+fn calculate_for_jsx_tag(tag: &AnyJsxTag, nesting_score: usize) -> usize {
+    match tag {
+        AnyJsxTag::JsxElement(jsx_element) => {
+            calculate_for_jsx_element(&jsx_element, nesting_score)
+        }
+        AnyJsxTag::JsxFragment(jsx_fragment) => {
+            calculate_for_jsx_children(&jsx_fragment.children(), nesting_score)
+        }
+        AnyJsxTag::JsxSelfClosingElement(jsx_self_closing_element) => {
+            calculate_for_jsx_attributes(&jsx_self_closing_element.attributes(), nesting_score)
+        }
+    }
 }
 
 fn calculate_for_statement(statement: &AnyJsStatement, nesting_score: usize) -> usize {
