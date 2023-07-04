@@ -178,17 +178,16 @@ impl ExpectedStringCase {
         if call.arguments().ok()?.args().len() != 0 {
             return None;
         }
-
         let callee = call.callee().ok()?;
         let member_expr = AnyJsMemberExpression::cast_ref(callee.syntax())?;
-        if member_expr.has_member_name("toLowerCase") {
+        let member_name = member_expr.member_name()?;
+        let member_name = member_name.text();
+        if member_name == "toLowerCase" {
             return Some(Self::Lower);
         }
-
-        if member_expr.has_member_name("toUpperCase") {
+        if member_name == "toUpperCase" {
             return Some(Self::Upper);
         }
-
         None
     }
 

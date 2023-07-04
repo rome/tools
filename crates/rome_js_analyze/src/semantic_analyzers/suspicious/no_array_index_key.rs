@@ -4,9 +4,9 @@ use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::{
-    AnyJsFunction, JsCallArgumentList, JsCallArguments, JsCallExpression, JsFormalParameter,
-    JsIdentifierBinding, JsObjectExpression, JsObjectMemberList, JsParameterList, JsParameters,
-    JsPropertyObjectMember, JsReferenceIdentifier, JsxAttribute,
+    AnyJsFunction, AnyJsMemberExpression, JsCallArgumentList, JsCallArguments, JsCallExpression,
+    JsFormalParameter, JsIdentifierBinding, JsObjectExpression, JsObjectMemberList,
+    JsParameterList, JsParameters, JsPropertyObjectMember, JsReferenceIdentifier, JsxAttribute,
 };
 use rome_rowan::{declare_node_union, AstNode};
 
@@ -211,17 +211,10 @@ fn is_array_method_index(
     parameter: &JsFormalParameter,
     call_expression: &JsCallExpression,
 ) -> Option<bool> {
-    let name = call_expression
-        .callee()
-        .ok()?
-        .as_js_static_member_expression()?
-        .member()
-        .ok()?
-        .as_js_name()?
-        .value_token()
-        .ok()?;
-    let name = name.text_trimmed();
-
+    let member_expression =
+        AnyJsMemberExpression::cast_ref(call_expression.callee().ok()?.syntax())?;
+    let name = member_expression.member_name()?;
+    let name = name.text();
     if matches!(
         name,
         "map" | "flatMap" | "from" | "forEach" | "filter" | "some" | "every" | "find" | "findIndex"

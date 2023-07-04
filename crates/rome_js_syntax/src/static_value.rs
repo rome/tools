@@ -2,7 +2,7 @@ use crate::JsSyntaxToken;
 
 use std::ops::Deref;
 
-#[derive(PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone)]
 pub struct QuotedString(JsSyntaxToken);
 
 /// A string literal that is wrapped in quotes
@@ -55,6 +55,42 @@ impl Deref for QuotedString {
     }
 }
 
+/// Represent a JavaScript name which is either an identifier (unquoted string)
+/// or a literal string (quoted string), or even a template chuck (unquoted string).
+#[derive(Debug, Clone, Eq, PartialEq)]
+pub enum StaticStringValue {
+    Quoted(QuotedString),
+    Unquoted(JsSyntaxToken),
+}
+
+impl StaticStringValue {
+    /// Return a string of the static value
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use rome_js_syntax::static_value::{QuotedString, StaticStringValue};
+    /// use rome_js_factory::make;
+    ///
+    /// let quoted_str = QuotedString::new(make::js_string_literal("str"));
+    /// assert_eq!(StaticStringValue::Quoted(quoted_str).text(), "str");
+    /// ```
+    pub fn text(&self) -> &str {
+        match self {
+            StaticStringValue::Quoted(quoted_string) => quoted_string.text(),
+            StaticStringValue::Unquoted(token) => token.text_trimmed(),
+        }
+    }
+
+    pub fn token(&self) -> &JsSyntaxToken {
+        match self {
+            StaticStringValue::Quoted(token) => &token.0,
+            StaticStringValue::Unquoted(token) => token,
+        }
+    }
+}
+
+#[derive(Debug, Clone, Eq, PartialEq)]
 /// static values defined in JavaScript's expressions
 pub enum StaticValue {
     Boolean(JsSyntaxToken),

@@ -69,7 +69,14 @@ parseInt('1_0', 2);
 Number.parseInt('5_000', 8);
 parseInt('0_1', 16);
 Number.parseInt('0_0', 16);
-
+globalThis.parseInt('11'/**/, 2);
+globalThis.Number.parseInt('11'/**/, 2);
+globalThis.globalThis.parseInt('11'/**/, 2);
+globalThis.globalThis.Number.parseInt('11'/**/, 2);
+window.parseInt('11'/**/, 2);
+window.Number.parseInt('11'/**/, 2);
+window.window.parseInt('11'/**/, 2);
+window.window.Number.parseInt('11'/**/, 2);
 ```
 
 # Diagnostics
@@ -1364,7 +1371,7 @@ invalid.js:64:1 lint/style/useNumericLiterals ━━━━━━━━━━━�
   > 64 │ parseInt('0_1', 16);
        │ ^^^^^^^^^^^^^^^^^^^
     65 │ Number.parseInt('0_0', 16);
-    66 │ 
+    66 │ globalThis.parseInt('11'/**/, 2);
   
 
 ```
@@ -1378,7 +1385,194 @@ invalid.js:65:1 lint/style/useNumericLiterals ━━━━━━━━━━━�
     64 │ parseInt('0_1', 16);
   > 65 │ Number.parseInt('0_0', 16);
        │ ^^^^^^^^^^^^^^^^^^^^^^^^^^
-    66 │ 
+    66 │ globalThis.parseInt('11'/**/, 2);
+    67 │ globalThis.Number.parseInt('11'/**/, 2);
+  
+
+```
+
+```
+invalid.js:66:1 lint/style/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use binary literals instead of parseInt()
+  
+    64 │ parseInt('0_1', 16);
+    65 │ Number.parseInt('0_0', 16);
+  > 66 │ globalThis.parseInt('11'/**/, 2);
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    67 │ globalThis.Number.parseInt('11'/**/, 2);
+    68 │ globalThis.globalThis.parseInt('11'/**/, 2);
+  
+  i Suggested fix: Replace with binary literals
+  
+    64 64 │   parseInt('0_1', 16);
+    65 65 │   Number.parseInt('0_0', 16);
+    66    │ - globalThis.parseInt('11'/**/,·2);
+       66 │ + 0b11;
+    67 67 │   globalThis.Number.parseInt('11'/**/, 2);
+    68 68 │   globalThis.globalThis.parseInt('11'/**/, 2);
+  
+
+```
+
+```
+invalid.js:67:1 lint/style/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use binary literals instead of Number.parseInt()
+  
+    65 │ Number.parseInt('0_0', 16);
+    66 │ globalThis.parseInt('11'/**/, 2);
+  > 67 │ globalThis.Number.parseInt('11'/**/, 2);
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    68 │ globalThis.globalThis.parseInt('11'/**/, 2);
+    69 │ globalThis.globalThis.Number.parseInt('11'/**/, 2);
+  
+  i Suggested fix: Replace with binary literals
+  
+    65 65 │   Number.parseInt('0_0', 16);
+    66 66 │   globalThis.parseInt('11'/**/, 2);
+    67    │ - globalThis.Number.parseInt('11'/**/,·2);
+       67 │ + 0b11;
+    68 68 │   globalThis.globalThis.parseInt('11'/**/, 2);
+    69 69 │   globalThis.globalThis.Number.parseInt('11'/**/, 2);
+  
+
+```
+
+```
+invalid.js:68:1 lint/style/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use binary literals instead of parseInt()
+  
+    66 │ globalThis.parseInt('11'/**/, 2);
+    67 │ globalThis.Number.parseInt('11'/**/, 2);
+  > 68 │ globalThis.globalThis.parseInt('11'/**/, 2);
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    69 │ globalThis.globalThis.Number.parseInt('11'/**/, 2);
+    70 │ window.parseInt('11'/**/, 2);
+  
+  i Suggested fix: Replace with binary literals
+  
+    66 66 │   globalThis.parseInt('11'/**/, 2);
+    67 67 │   globalThis.Number.parseInt('11'/**/, 2);
+    68    │ - globalThis.globalThis.parseInt('11'/**/,·2);
+       68 │ + 0b11;
+    69 69 │   globalThis.globalThis.Number.parseInt('11'/**/, 2);
+    70 70 │   window.parseInt('11'/**/, 2);
+  
+
+```
+
+```
+invalid.js:69:1 lint/style/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use binary literals instead of Number.parseInt()
+  
+    67 │ globalThis.Number.parseInt('11'/**/, 2);
+    68 │ globalThis.globalThis.parseInt('11'/**/, 2);
+  > 69 │ globalThis.globalThis.Number.parseInt('11'/**/, 2);
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    70 │ window.parseInt('11'/**/, 2);
+    71 │ window.Number.parseInt('11'/**/, 2);
+  
+  i Suggested fix: Replace with binary literals
+  
+    67 67 │   globalThis.Number.parseInt('11'/**/, 2);
+    68 68 │   globalThis.globalThis.parseInt('11'/**/, 2);
+    69    │ - globalThis.globalThis.Number.parseInt('11'/**/,·2);
+       69 │ + 0b11;
+    70 70 │   window.parseInt('11'/**/, 2);
+    71 71 │   window.Number.parseInt('11'/**/, 2);
+  
+
+```
+
+```
+invalid.js:70:1 lint/style/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use binary literals instead of parseInt()
+  
+    68 │ globalThis.globalThis.parseInt('11'/**/, 2);
+    69 │ globalThis.globalThis.Number.parseInt('11'/**/, 2);
+  > 70 │ window.parseInt('11'/**/, 2);
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    71 │ window.Number.parseInt('11'/**/, 2);
+    72 │ window.window.parseInt('11'/**/, 2);
+  
+  i Suggested fix: Replace with binary literals
+  
+    68 68 │   globalThis.globalThis.parseInt('11'/**/, 2);
+    69 69 │   globalThis.globalThis.Number.parseInt('11'/**/, 2);
+    70    │ - window.parseInt('11'/**/,·2);
+       70 │ + 0b11;
+    71 71 │   window.Number.parseInt('11'/**/, 2);
+    72 72 │   window.window.parseInt('11'/**/, 2);
+  
+
+```
+
+```
+invalid.js:71:1 lint/style/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use binary literals instead of Number.parseInt()
+  
+    69 │ globalThis.globalThis.Number.parseInt('11'/**/, 2);
+    70 │ window.parseInt('11'/**/, 2);
+  > 71 │ window.Number.parseInt('11'/**/, 2);
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    72 │ window.window.parseInt('11'/**/, 2);
+    73 │ window.window.Number.parseInt('11'/**/, 2);
+  
+  i Suggested fix: Replace with binary literals
+  
+    69 69 │   globalThis.globalThis.Number.parseInt('11'/**/, 2);
+    70 70 │   window.parseInt('11'/**/, 2);
+    71    │ - window.Number.parseInt('11'/**/,·2);
+       71 │ + 0b11;
+    72 72 │   window.window.parseInt('11'/**/, 2);
+    73 73 │   window.window.Number.parseInt('11'/**/, 2);
+  
+
+```
+
+```
+invalid.js:72:1 lint/style/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use binary literals instead of parseInt()
+  
+    70 │ window.parseInt('11'/**/, 2);
+    71 │ window.Number.parseInt('11'/**/, 2);
+  > 72 │ window.window.parseInt('11'/**/, 2);
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    73 │ window.window.Number.parseInt('11'/**/, 2);
+  
+  i Suggested fix: Replace with binary literals
+  
+    70 70 │   window.parseInt('11'/**/, 2);
+    71 71 │   window.Number.parseInt('11'/**/, 2);
+    72    │ - window.window.parseInt('11'/**/,·2);
+       72 │ + 0b11;
+    73 73 │   window.window.Number.parseInt('11'/**/, 2);
+  
+
+```
+
+```
+invalid.js:73:1 lint/style/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use binary literals instead of Number.parseInt()
+  
+    71 │ window.Number.parseInt('11'/**/, 2);
+    72 │ window.window.parseInt('11'/**/, 2);
+  > 73 │ window.window.Number.parseInt('11'/**/, 2);
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  
+  i Suggested fix: Replace with binary literals
+  
+    71 71 │   window.Number.parseInt('11'/**/, 2);
+    72 72 │   window.window.parseInt('11'/**/, 2);
+    73    │ - window.window.Number.parseInt('11'/**/,·2);
+       73 │ + 0b11;
   
 
 ```
