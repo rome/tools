@@ -58,9 +58,9 @@ fix.ts format ━━━━━━━━━━━━━━━━━━━━━━
 ```
 
 ```block
-fix.ts internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Fixes applied to the file, but there are still diagnostics to address.
+  × Some errors were emitted while running checks
   
 
 ```

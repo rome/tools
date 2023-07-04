@@ -335,9 +335,6 @@ fn process_messages(options: ProcessMessagesOptions) {
                 }
                 if mode.should_report_to_terminal() && should_print {
                     diagnostics_to_print.push(Error::from(error));
-                    // console.error(markup! {
-                    //     {if verbose { PrintDiagnostic::verbose(&error) } else { PrintDiagnostic::simple(&error) }}
-                    // });
                 }
             }
 
@@ -383,9 +380,6 @@ fn process_messages(options: ProcessMessagesOptions) {
                 if mode.should_report_to_terminal() {
                     if should_print {
                         diagnostics_to_print.push(err);
-                        // console.error(markup! {
-                        //     {if verbose { PrintDiagnostic::verbose(&err) } else { PrintDiagnostic::simple(&err) }}
-                        // });
                     }
                 } else {
                     let location = err.location();

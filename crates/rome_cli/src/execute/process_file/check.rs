@@ -69,9 +69,15 @@ pub(crate) fn check_file<'ctx>(
     }
 
     if has_errors {
-        Ok(FileStatus::Message(Message::ApplyError(
-            CliDiagnostic::file_apply_error(path.display().to_string()),
-        )))
+        if ctx.execution.is_check_apply() || ctx.execution.is_check_apply_unsafe() {
+            Ok(FileStatus::Message(Message::ApplyError(
+                CliDiagnostic::file_apply_error(path.display().to_string()),
+            )))
+        } else {
+            Ok(FileStatus::Message(Message::ApplyError(
+                CliDiagnostic::check_error(),
+            )))
+        }
     } else {
         Ok(FileStatus::Success)
     }

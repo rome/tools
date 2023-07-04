@@ -1228,11 +1228,12 @@ fn max_diagnostics() {
     for msg in console.out_buffer {
         let MarkupBuf(nodes) = &msg.content;
         let is_diagnostic = nodes.iter().any(|node| {
+            dbg!(&node.content);
             node.content.contains("useWhile")
                 || node.content.contains("useBlockStatements")
                 || node.content.contains("noConstantCondition")
                 || node.content.contains("format")
-                || node.content.contains("Fixes applied to the file")
+                || node.content.contains("Some errors were emitted while")
         });
 
         if is_diagnostic {
