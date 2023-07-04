@@ -1,5 +1,3 @@
-/* should not generate diagnostics */
-
 function simpleBranches() {
     if (firstCondition) {                 // +1
         return 1;

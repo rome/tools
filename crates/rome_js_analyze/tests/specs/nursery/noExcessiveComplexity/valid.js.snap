@@ -1,3 +1,9 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: valid.js
+---
+# Input
+```js
 /* should not generate diagnostics */
 
 function simpleBranches() {
@@ -9,3 +15,7 @@ function simpleBranches() {
         return 3;
     }
 }
+
+```
+
+
