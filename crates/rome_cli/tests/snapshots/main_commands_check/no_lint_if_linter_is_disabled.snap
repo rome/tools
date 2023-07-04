@@ -20,6 +20,17 @@ expression: content
 
 ```
 
+# Termination Message
+
+```block
+internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Some errors were emitted while running checks
+  
+
+
+```
+
 # Emitted Messages
 
 ```block
@@ -31,6 +42,14 @@ fix.js format ━━━━━━━━━━━━━━━━━━━━━━
     2   │ - (1·>=·-0)
       1 │ + 1·>=·-0;
     3 2 │   
+  
+
+```
+
+```block
+internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Some errors were emitted while running checks
   
 
 ```

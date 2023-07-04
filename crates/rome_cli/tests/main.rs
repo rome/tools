@@ -285,7 +285,7 @@ mod configuration {
             Args::from(&[("check"), ("file.js")]),
         );
 
-        assert!(result.is_ok(), "run_cli returned {result:?}");
+        assert!(result.is_err(), "run_cli returned {result:?}");
     }
 }
 

@@ -24,7 +24,7 @@ statement2();
 ```block
 internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × No files were processed in the specified paths.
+  × Some errors were emitted while running checks
   
 
 
@@ -41,11 +41,23 @@ check.js lint ━━━━━━━━━━━━━━━━━━━━━━
 ```
 
 ```block
-Checked 1 file(s) in <TIME>
+check.js format ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Size of check.js is 27 B which exceeds configured maximum of 16 B for this project. The file size limit exists to prevent us inadvertently slowing down and loading large files that we shouldn't.
+  
+
 ```
 
 ```block
-Skipped 1 file(s)
+internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Some errors were emitted while running checks
+  
+
+```
+
+```block
+Checked 1 file(s) in <TIME>
 ```
 
 

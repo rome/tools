@@ -629,6 +629,12 @@ impl<'app, W: Workspace + ?Sized> FileGuard<'app, W> {
         })
     }
 
+    pub fn get_file_content(&self) -> Result<String, WorkspaceError> {
+        self.workspace.get_file_content(GetFileContentParams {
+            path: self.path.clone(),
+        })
+    }
+
     pub fn pull_diagnostics(
         &self,
         categories: RuleCategories,

@@ -39,6 +39,8 @@ const FIX_BEFORE: &str = "
 ";
 const FIX_AFTER: &str = "1 >= 0;
 ";
+const CHECK_FORMAT_AFTER: &str = "1 >= -0;
+";
 
 const APPLY_SUGGESTED_BEFORE: &str = "let a = 4;
 debugger;
@@ -189,9 +191,10 @@ fn maximum_diagnostics() {
         .filter(|m| m.level == LogLevel::Log)
         .any(|m| {
             let content = format!("{:?}", m.content);
+            dbg!(&content);
             content.contains("The number of diagnostics exceeds the number allowed by Rome")
                 && content.contains("Diagnostics not shown")
-                && content.contains("76")
+                && content.contains("78")
         }));
 
     assert_cli_snapshot(SnapshotPayload::new(
@@ -432,7 +435,7 @@ fn no_lint_if_linter_is_disabled_when_run_apply() {
         .read_to_string(&mut buffer)
         .unwrap();
 
-    assert_eq!(buffer, FIX_AFTER);
+    assert_eq!(buffer, CHECK_FORMAT_AFTER);
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
@@ -460,7 +463,7 @@ fn no_lint_if_linter_is_disabled() {
         Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
     );
 
-    assert!(result.is_ok(), "run_cli returned {result:?}");
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     let mut buffer = String::new();
     fs.open(file_path)
@@ -583,7 +586,7 @@ fn downgrade_severity() {
 
     println!("{console:?}");
 
-    assert!(result.is_ok(), "run_cli returned {result:?}");
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     let messages = &console.out_buffer;
 
@@ -676,7 +679,7 @@ fn no_lint_when_file_is_ignored() {
         ]),
     );
 
-    assert!(result.is_err(), "run_cli returned {result:?}");
+    assert!(result.is_ok(), "run_cli returned {result:?}");
 
     let mut buffer = String::new();
     fs.open(file_path)
@@ -684,7 +687,7 @@ fn no_lint_when_file_is_ignored() {
         .read_to_string(&mut buffer)
         .unwrap();
 
-    assert_eq!(buffer, FIX_BEFORE);
+    assert_eq!(buffer, CHECK_FORMAT_AFTER);
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
@@ -720,7 +723,7 @@ fn no_lint_if_files_are_listed_in_ignore_option() {
         ]),
     );
 
-    assert!(result.is_err(), "run_cli returned {result:?}");
+    assert!(result.is_ok(), "run_cli returned {result:?}");
 
     let mut buffer = String::new();
     fs.open(file_path_test1)
@@ -736,7 +739,7 @@ fn no_lint_if_files_are_listed_in_ignore_option() {
         .read_to_string(&mut buffer)
         .unwrap();
 
-    assert_eq!(buffer, FIX_BEFORE);
+    assert_eq!(buffer, CHECK_FORMAT_AFTER);
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
@@ -1174,6 +1177,8 @@ fn max_diagnostics_default() {
             node.content.contains("useWhile")
                 || node.content.contains("useBlockStatements")
                 || node.content.contains("noConstantCondition")
+                || node.content.contains("format")
+                || node.content.contains("internalError/io")
         });
 
         if is_diagnostic {
@@ -1223,9 +1228,12 @@ fn max_diagnostics() {
     for msg in console.out_buffer {
         let MarkupBuf(nodes) = &msg.content;
         let is_diagnostic = nodes.iter().any(|node| {
+            dbg!(&node.content);
             node.content.contains("useWhile")
                 || node.content.contains("useBlockStatements")
                 || node.content.contains("noConstantCondition")
+                || node.content.contains("format")
+                || node.content.contains("Some errors were emitted while")
         });
 
         if is_diagnostic {
@@ -1288,7 +1296,7 @@ a == b;",
         Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
     );
 
-    assert!(result.is_ok(), "run_cli returned {result:?}");
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
@@ -1693,7 +1701,7 @@ fn top_level_all_down_level_not_all() {
         Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
     );
 
-    assert!(result.is_ok(), "run_cli returned {result:?}");
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
@@ -1778,7 +1786,7 @@ fn ignore_configured_globals() {
         Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
     );
 
-    assert!(result.is_ok(), "run_cli returned {result:?}");
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
@@ -1899,7 +1907,7 @@ fn ignore_vcs_os_independent_parse() {
         ]),
     );
 
-    assert!(result.is_ok(), "run_cli returned {result:?}");
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
@@ -2126,7 +2134,7 @@ fn should_apply_correct_file_source() {
         Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
     );
 
-    assert!(result.is_ok(), "run_cli returned {result:?}");
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     let mut buffer = String::new();
     fs.open(file_path)
@@ -2222,7 +2230,7 @@ fn should_not_enable_all_recommended_rules() {
         Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
     );
 
-    assert!(result.is_ok(), "run_cli returned {result:?}");
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
@@ -2325,7 +2333,7 @@ if (true) {
         Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
     );
 
-    assert!(result.is_ok(), "run_cli returned {result:?}");
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
@@ -2357,7 +2365,7 @@ fn apply_bogus_argument() {
         ]),
     );
 
-    assert!(result.is_ok(), "run_cli returned {result:?}");
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
