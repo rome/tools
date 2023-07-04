@@ -205,7 +205,9 @@ fn calculate_for_fallible_expression(
                 + calculate_for_expression(&js_binary_expression.right()?, nesting_score)
         }
         AnyJsExpression::JsBogusExpression(_) => 0,
-        AnyJsExpression::JsCallExpression(_) => 0,
+        AnyJsExpression::JsCallExpression(js_call_expression) => {
+            calculate_for_call_arguments(&js_call_expression.arguments()?, nesting_score)
+        }
         AnyJsExpression::JsClassExpression(_) => 0,
         AnyJsExpression::JsComputedMemberExpression(_) => 0,
         AnyJsExpression::JsConditionalExpression(js_conditional) => {
@@ -586,7 +588,7 @@ fn calculate_for_fallible_if_statement(
                 AnyJsStatement::JsIfStatement(else_if) => {
                     calculate_for_if_statement(&else_if, nesting_score)
                 }
-                _ => calculate_for_statement(&alternate, nesting_score + 1),
+                _ => 1 + calculate_for_statement(&alternate, nesting_score + 1),
             })
             .unwrap_or_default();
 
@@ -634,12 +636,12 @@ mod tests {
                     return 1;
                 } else if (secondCondition) {         // +1
                     return 2;
-                } else {
+                } else {                              // +1
                     return 3;
                 }
             }",
         );
-        assert_eq!(calculate_cognitive_complexity(&body), 2);
+        assert_eq!(calculate_cognitive_complexity(&body), 3);
     }
 
     #[test]
@@ -707,12 +709,30 @@ mod tests {
     }
 
     #[test]
+    fn test_cognitive_complexity_of_nested_flow_structures() {
+        let body = parse_function(
+            r#"function myMethod(num) {
+                try {
+                    if (condition1) {                        // +1
+                        for (let i = 0; i < 10; i++) {       // +2 (nesting=1)
+                            while (condition2) { /* ... */}  // +3 (nesting=2)
+                        }
+                    }
+                } catch (error) {                            // +1
+                    if (condition2) { /* ... */}             // +2 (nesting=1)
+                }
+            }"#,
+        );
+        assert_eq!(calculate_cognitive_complexity(&body), 9);
+    }
+
+    #[test]
     fn test_cognitive_complexity_of_complex_event_handler() {
         let body = parse_function(
             r#"function handleArrowDown(event: React.KeyboardEvent) {
                 const state = getState();
                 const focusedCell = selectFocusedCellOrSurrogate(state);
-                if (!focusedCell) {
+                if (!focusedCell) { // +1 = 1
                     return;
                 }
               
@@ -722,13 +742,13 @@ mod tests {
                 const focus = selectNotebookFocus(state);
                 const field = getField(focus);
                 const containerEl = getContainerElForCellField(focusedCell.id, field);
-                const containerRect = containerEl && containerEl.getBoundingClientRect();
-                if (containerEl && focus.type !== "none" && !event.altKey) {
+                const containerRect = containerEl && containerEl.getBoundingClientRect(); // +1 = 2
+                if (containerEl && focus.type !== "none" && !event.altKey) { // +2 = 4
                     const text = selectCellText(state, focusedCell, field);
                     coordinates = getCoordinatesForOffset(containerEl, text, getFocusOffset(focus));
               
                     const lineHeight = getLineHeightForContainer(containerEl);
-                    if (coordinates && coordinates.y + lineHeight < containerRect!.height) {
+                    if (coordinates && coordinates.y + lineHeight < containerRect!.height) { // +3 = 7
                         // Move the cursor within the cell if we can:
                         const offset = getOffsetForCoordinates(containerEl, text, {
                             x: coordinates.x,
@@ -741,9 +761,9 @@ mod tests {
                     }
                 }
               
-                if (!event.altKey) {
+                if (!event.altKey) { // +1 = 8
                     const targetField = selectRelativeField(state, focusedCell.id, field, 1);
-                    if (targetField) {
+                    if (targetField) { // +2 = 10
                         const text = selectCellText(
                             state,
                             selectCellOrSurrogate(state, targetField.cellId)!,
@@ -762,42 +782,42 @@ mod tests {
                 }
               
                 const targetCell = selectRelativeCellOrSurrogate(state, focusedCell.id, 1);
-                if (!targetCell) {
+                if (!targetCell) {  // +1 = 11
                     return handleEnd(event);
                 }
               
-                if (event.altKey) {
-                    if (focusedCell.readOnly) {
+                if (event.altKey) { // +1 = 12
+                    if (focusedCell.readOnly) { // +2 = 14
                         CellById.get(focusedCell.id)?.shake();
                         return;
                     }
               
-                    if (isSurrogateId(targetCell.id)) {
+                    if (isSurrogateId(targetCell.id)) { // +2 = 16
                         // TODO: Should we nudge?
-                    } else {
+                    } else { // +1 = 17
                         // Swap cells with Alt modifier:
                         dispatch(swapCells(focusedCell.id, targetCell.id));
                     }
-                } else if (isContentCell(targetCell)) {
+                } else if (isContentCell(targetCell)) { // +1 = 18
                     // Move to the cell above and try to maintain the cursor position:
                     const field = undefined;
                     const containerBelowEl = getContainerElForCellField(targetCell.id, field);
                     const extendSelection = event.shiftKey;
-                    if (containerRect && containerBelowEl) {
+                    if (containerRect && containerBelowEl) { // +3 = 21
                         const deltaX =
                             containerRect.left - containerBelowEl.getBoundingClientRect().left;
                         const lineHeight = getLineHeightForContainer(containerEl);
-                        const offset = coordinates
+                        const offset = coordinates // +3 = 24
                             ? getOffsetForCoordinates(containerBelowEl, targetCell.content, {
                                 x: coordinates.x + deltaX,
                                 y: lineHeight / 2,
                             })
                             : 0;
                         dispatch(focusCell({ cellId: targetCell.id, offset, extendSelection }));
-                    } else {
+                    } else { // +1 = 25
                         dispatch(focusCell({ cellId: targetCell.id, offset: 0, extendSelection }));
                     }
-                } else {
+                } else { // +1 = 26
                     // Move to a cell without cursor position:
                     dispatch(focusCell({ cellId: targetCell.id, extendSelection }));
                 }
