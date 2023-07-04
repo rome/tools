@@ -7,15 +7,6 @@ use rome_diagnostics::category;
 use std::path::Path;
 
 /// Lints a single file and returns a [FileResult]
-pub(crate) fn _organize_imports<'ctx>(
-    ctx: &'ctx SharedTraversalOptions<'ctx, '_>,
-    path: &Path,
-) -> FileResult {
-    let mut workspace_file = WorkspaceFile::new(ctx, path)?;
-    organize_imports_with_guard(ctx, &mut workspace_file)
-}
-
-/// Lints a single file and returns a [FileResult]
 pub(crate) fn organize_imports_with_guard<'ctx>(
     ctx: &'ctx SharedTraversalOptions<'ctx, '_>,
     workspace_file: &mut WorkspaceFile,
