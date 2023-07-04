@@ -59,8 +59,8 @@ JsModule {
                     readonly_token: missing (optional),
                     l_brack_token: L_BRACK@61..62 "[" [] [],
                     parameter: TsIndexSignatureParameter {
-                        binding: JsIdentifierBinding {
-                            name_token: IDENT@62..67 "index" [] [],
+                        binding: TsIndexSignatureParameterName {
+                            ident_token: IDENT@62..67 "index" [] [],
                         },
                         type_annotation: TsTypeAnnotation {
                             colon_token: COLON@67..69 ":" [] [Whitespace(" ")],
@@ -153,7 +153,7 @@ JsModule {
           0: (empty)
           1: L_BRACK@61..62 "[" [] []
           2: TS_INDEX_SIGNATURE_PARAMETER@62..75
-            0: JS_IDENTIFIER_BINDING@62..67
+            0: TS_INDEX_SIGNATURE_PARAMETER_NAME@62..67
               0: IDENT@62..67 "index" [] []
             1: TS_TYPE_ANNOTATION@67..75
               0: COLON@67..69 ":" [] [Whitespace(" ")]

@@ -18,7 +18,6 @@ pub(crate) use self::statement::*;
 use self::ts_parse_error::ts_member_cannot_be;
 pub(crate) use self::types::*;
 
-use super::binding::parse_identifier_binding;
 use super::class::is_nth_at_modifier;
 use super::expr::is_nth_at_identifier;
 use super::js_parse_error::expected_identifier;
@@ -172,6 +171,10 @@ pub(crate) enum MemberParent {
     TypeOrInterface,
 }
 
+fn parse_ts_index_signature_parameter_name(p: &mut JsParser) -> ParsedSyntax {
+    parse_identifier(p, TS_INDEX_SIGNATURE_PARAMETER_NAME)
+}
+
 pub(crate) fn expect_ts_index_signature_member(
     p: &mut JsParser,
     m: Marker,
@@ -194,7 +197,7 @@ pub(crate) fn expect_ts_index_signature_member(
     p.bump(T!['[']);
 
     let parameter = p.start();
-    parse_identifier_binding(p).or_add_diagnostic(p, expected_identifier);
+    parse_ts_index_signature_parameter_name(p).or_add_diagnostic(p, expected_identifier);
     parse_ts_type_annotation(p).unwrap(); // It's a computed member name if the type annotation is missing
     parameter.complete(p, TS_INDEX_SIGNATURE_PARAMETER);
 

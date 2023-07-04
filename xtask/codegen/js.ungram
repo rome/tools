@@ -2066,8 +2066,10 @@ TsIndexSignatureTypeMember =
 // { [a: string]: number }
 //    ^^^^^^^^^
 TsIndexSignatureParameter =
-	binding: JsIdentifierBinding
+	binding: TsIndexSignatureParameterName
 	type_annotation: TsTypeAnnotation
+
+TsIndexSignatureParameterName = 'ident'
 
 // type OptionsFlags<Type> = {
 //   [Property in keyof Type]: boolean;

@@ -16,6 +16,7 @@ pub(crate) mod external_module_reference;
 pub(crate) mod getter_signature_type_member;
 pub(crate) mod implements_clause;
 pub(crate) mod in_modifier;
+pub(crate) mod index_signature_parameter_name;
 pub(crate) mod index_signature_type_member;
 pub(crate) mod mapped_type_as_clause;
 pub(crate) mod mapped_type_optional_modifier_clause;

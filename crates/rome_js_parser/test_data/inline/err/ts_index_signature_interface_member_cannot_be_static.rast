@@ -16,8 +16,8 @@ JsModule {
                                 STATIC_KW@13..25 "static" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
                                 L_BRACK@25..26 "[" [] [],
                                 TsIndexSignatureParameter {
-                                    binding: JsIdentifierBinding {
-                                        name_token: IDENT@26..31 "index" [] [],
+                                    binding: TsIndexSignatureParameterName {
+                                        ident_token: IDENT@26..31 "index" [] [],
                                     },
                                     type_annotation: TsTypeAnnotation {
                                         colon_token: COLON@31..33 ":" [] [Whitespace(" ")],
@@ -54,8 +54,8 @@ JsModule {
                                 PUBLIC_KW@64..76 "public" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
                                 L_BRACK@76..77 "[" [] [],
                                 TsIndexSignatureParameter {
-                                    binding: JsIdentifierBinding {
-                                        name_token: IDENT@77..82 "index" [] [],
+                                    binding: TsIndexSignatureParameterName {
+                                        ident_token: IDENT@77..82 "index" [] [],
                                     },
                                     type_annotation: TsTypeAnnotation {
                                         colon_token: COLON@82..84 ":" [] [Whitespace(" ")],
@@ -92,8 +92,8 @@ JsModule {
                                 PRIVATE_KW@115..128 "private" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
                                 L_BRACK@128..129 "[" [] [],
                                 TsIndexSignatureParameter {
-                                    binding: JsIdentifierBinding {
-                                        name_token: IDENT@129..134 "index" [] [],
+                                    binding: TsIndexSignatureParameterName {
+                                        ident_token: IDENT@129..134 "index" [] [],
                                     },
                                     type_annotation: TsTypeAnnotation {
                                         colon_token: COLON@134..136 ":" [] [Whitespace(" ")],
@@ -134,7 +134,7 @@ JsModule {
           0: STATIC_KW@13..25 "static" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
           1: L_BRACK@25..26 "[" [] []
           2: TS_INDEX_SIGNATURE_PARAMETER@26..39
-            0: JS_IDENTIFIER_BINDING@26..31
+            0: TS_INDEX_SIGNATURE_PARAMETER_NAME@26..31
               0: IDENT@26..31 "index" [] []
             1: TS_TYPE_ANNOTATION@31..39
               0: COLON@31..33 ":" [] [Whitespace(" ")]
@@ -156,7 +156,7 @@ JsModule {
           0: PUBLIC_KW@64..76 "public" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
           1: L_BRACK@76..77 "[" [] []
           2: TS_INDEX_SIGNATURE_PARAMETER@77..90
-            0: JS_IDENTIFIER_BINDING@77..82
+            0: TS_INDEX_SIGNATURE_PARAMETER_NAME@77..82
               0: IDENT@77..82 "index" [] []
             1: TS_TYPE_ANNOTATION@82..90
               0: COLON@82..84 ":" [] [Whitespace(" ")]
@@ -178,7 +178,7 @@ JsModule {
           0: PRIVATE_KW@115..128 "private" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
           1: L_BRACK@128..129 "[" [] []
           2: TS_INDEX_SIGNATURE_PARAMETER@129..142
-            0: JS_IDENTIFIER_BINDING@129..134
+            0: TS_INDEX_SIGNATURE_PARAMETER_NAME@129..134
               0: IDENT@129..134 "index" [] []
             1: TS_TYPE_ANNOTATION@134..142
               0: COLON@134..136 ":" [] [Whitespace(" ")]

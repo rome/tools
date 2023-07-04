@@ -16,8 +16,8 @@ JsModule {
                         readonly_token: missing (optional),
                         l_brack_token: L_BRACK@11..12 "[" [] [],
                         parameter: TsIndexSignatureParameter {
-                            binding: JsIdentifierBinding {
-                                name_token: IDENT@12..13 "a" [] [],
+                            binding: TsIndexSignatureParameterName {
+                                ident_token: IDENT@12..13 "a" [] [],
                             },
                             type_annotation: TsTypeAnnotation {
                                 colon_token: COLON@13..15 ":" [] [Whitespace(" ")],
@@ -54,8 +54,8 @@ JsModule {
                         readonly_token: READONLY_KW@44..53 "readonly" [] [Whitespace(" ")],
                         l_brack_token: L_BRACK@53..54 "[" [] [],
                         parameter: TsIndexSignatureParameter {
-                            binding: JsIdentifierBinding {
-                                name_token: IDENT@54..55 "a" [] [],
+                            binding: TsIndexSignatureParameterName {
+                                ident_token: IDENT@54..55 "a" [] [],
                             },
                             type_annotation: TsTypeAnnotation {
                                 colon_token: COLON@55..57 ":" [] [Whitespace(" ")],
@@ -169,7 +169,7 @@ JsModule {
             0: (empty)
             1: L_BRACK@11..12 "[" [] []
             2: TS_INDEX_SIGNATURE_PARAMETER@12..21
-              0: JS_IDENTIFIER_BINDING@12..13
+              0: TS_INDEX_SIGNATURE_PARAMETER_NAME@12..13
                 0: IDENT@12..13 "a" [] []
               1: TS_TYPE_ANNOTATION@13..21
                 0: COLON@13..15 ":" [] [Whitespace(" ")]
@@ -196,7 +196,7 @@ JsModule {
             0: READONLY_KW@44..53 "readonly" [] [Whitespace(" ")]
             1: L_BRACK@53..54 "[" [] []
             2: TS_INDEX_SIGNATURE_PARAMETER@54..63
-              0: JS_IDENTIFIER_BINDING@54..55
+              0: TS_INDEX_SIGNATURE_PARAMETER_NAME@54..55
                 0: IDENT@54..55 "a" [] []
               1: TS_TYPE_ANNOTATION@55..63
                 0: COLON@55..57 ":" [] [Whitespace(" ")]

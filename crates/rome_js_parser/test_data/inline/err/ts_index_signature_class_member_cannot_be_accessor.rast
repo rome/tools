@@ -25,8 +25,8 @@ JsModule {
                         },
                         L_BRACK@32..33 "[" [] [],
                         TsIndexSignatureParameter {
-                            binding: JsIdentifierBinding {
-                                name_token: IDENT@33..34 "a" [] [],
+                            binding: TsIndexSignatureParameterName {
+                                ident_token: IDENT@33..34 "a" [] [],
                             },
                             type_annotation: TsTypeAnnotation {
                                 colon_token: COLON@34..36 ":" [] [Whitespace(" ")],
@@ -73,7 +73,7 @@ JsModule {
               0: ACCESSOR_KW@18..32 "accessor" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
           1: L_BRACK@32..33 "[" [] []
           2: TS_INDEX_SIGNATURE_PARAMETER@33..42
-            0: JS_IDENTIFIER_BINDING@33..34
+            0: TS_INDEX_SIGNATURE_PARAMETER_NAME@33..34
               0: IDENT@33..34 "a" [] []
             1: TS_TYPE_ANNOTATION@34..42
               0: COLON@34..36 ":" [] [Whitespace(" ")]

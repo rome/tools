@@ -8766,6 +8766,38 @@ impl IntoFormat<JsFormatContext> for rome_js_syntax::TsIndexSignatureTypeMember 
         FormatOwnedWithRule :: new (self , crate :: ts :: auxiliary :: index_signature_type_member :: FormatTsIndexSignatureTypeMember :: default ())
     }
 }
+impl FormatRule<rome_js_syntax::TsIndexSignatureParameterName>
+    for crate::ts::auxiliary::index_signature_parameter_name::FormatTsIndexSignatureParameterName
+{
+    type Context = JsFormatContext;
+    #[inline(always)]
+    fn fmt(
+        &self,
+        node: &rome_js_syntax::TsIndexSignatureParameterName,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::TsIndexSignatureParameterName>::fmt(self, node, f)
+    }
+}
+impl AsFormat<JsFormatContext> for rome_js_syntax::TsIndexSignatureParameterName {
+    type Format<'a> = FormatRefWithRule<
+        'a,
+        rome_js_syntax::TsIndexSignatureParameterName,
+        crate::ts::auxiliary::index_signature_parameter_name::FormatTsIndexSignatureParameterName,
+    >;
+    fn format(&self) -> Self::Format<'_> {
+        FormatRefWithRule :: new (self , crate :: ts :: auxiliary :: index_signature_parameter_name :: FormatTsIndexSignatureParameterName :: default ())
+    }
+}
+impl IntoFormat<JsFormatContext> for rome_js_syntax::TsIndexSignatureParameterName {
+    type Format = FormatOwnedWithRule<
+        rome_js_syntax::TsIndexSignatureParameterName,
+        crate::ts::auxiliary::index_signature_parameter_name::FormatTsIndexSignatureParameterName,
+    >;
+    fn into_format(self) -> Self::Format {
+        FormatOwnedWithRule :: new (self , crate :: ts :: auxiliary :: index_signature_parameter_name :: FormatTsIndexSignatureParameterName :: default ())
+    }
+}
 impl FormatRule < rome_js_syntax :: TsMappedTypeReadonlyModifierClause > for crate :: ts :: auxiliary :: mapped_type_readonly_modifier_clause :: FormatTsMappedTypeReadonlyModifierClause { type Context = JsFormatContext ; # [inline (always)] fn fmt (& self , node : & rome_js_syntax :: TsMappedTypeReadonlyModifierClause , f : & mut JsFormatter) -> FormatResult < () > { FormatNodeRule :: < rome_js_syntax :: TsMappedTypeReadonlyModifierClause > :: fmt (self , node , f) } }
 impl AsFormat<JsFormatContext> for rome_js_syntax::TsMappedTypeReadonlyModifierClause {
     type Format < 'a > = FormatRefWithRule < 'a , rome_js_syntax :: TsMappedTypeReadonlyModifierClause , crate :: ts :: auxiliary :: mapped_type_readonly_modifier_clause :: FormatTsMappedTypeReadonlyModifierClause > ;

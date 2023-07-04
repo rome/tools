@@ -20,7 +20,8 @@ use rome_js_syntax::{
     binding_ext::AnyJsBindingDeclaration, AnyJsClassMember, AnyJsObjectMember,
     AnyJsVariableDeclaration, AnyTsTypeMember, JsIdentifierBinding, JsLiteralExportName,
     JsLiteralMemberName, JsPrivateClassMemberName, JsSyntaxKind, JsSyntaxToken,
-    JsVariableDeclarator, JsVariableKind, TsEnumMember, TsIdentifierBinding, TsTypeParameterName,
+    JsVariableDeclarator, JsVariableKind, TsEnumMember, TsIdentifierBinding,
+    TsIndexSignatureParameterName, TsTypeParameterName,
 };
 use rome_json_syntax::JsonLanguage;
 use rome_rowan::{
@@ -347,6 +348,8 @@ impl Rule for UseNamingConvention {
             element,
             suggested_name,
         } = state;
+        println!("suggested_name: {}", suggested_name);
+        println!("node: {}", node);
         let renamable = match node {
             AnyName::JsIdentifierBinding(binding) => {
                 if binding.is_exported(model) {
@@ -395,6 +398,7 @@ declare_node_union! {
         JsPrivateClassMemberName |
         JsLiteralExportName |
         TsIdentifierBinding |
+        TsIndexSignatureParameterName |
         TsTypeParameterName
 }
 
@@ -406,6 +410,7 @@ impl AnyName {
             AnyName::JsPrivateClassMemberName(member_name) => member_name.id_token(),
             AnyName::JsLiteralExportName(export_name) => export_name.value(),
             AnyName::TsIdentifierBinding(binding) => binding.name_token(),
+            AnyName::TsIndexSignatureParameterName(parameter) => parameter.ident_token(),
             AnyName::TsTypeParameterName(type_parameter) => type_parameter.ident_token(),
         }
     }
@@ -610,6 +615,7 @@ enum Named {
     TypeReadonlyProperty,
     TypeSetter,
     TypeParameter,
+    IndexSignatureParameter,
 }
 
 impl Named {
@@ -651,6 +657,7 @@ impl Named {
                     _ => None,
                 }
             }
+            AnyName::TsIndexSignatureParameterName(_) => Some(Named::IndexSignatureParameter),
             AnyName::TsTypeParameterName(_) => Some(Named::TypeParameter),
         }
     }
@@ -880,7 +887,8 @@ impl Named {
             | Named::TopLevelLet
             | Named::TypeMethod
             | Named::TypeProperty
-            | Named::TypeSetter => SmallVec::from_slice(&[Case::Camel]),
+            | Named::TypeSetter
+            | Named::IndexSignatureParameter => SmallVec::from_slice(&[Case::Camel]),
             Named::Class
             | Named::Enum
             | Named::Interface
@@ -945,6 +953,7 @@ impl std::fmt::Display for Named {
             Named::TypeReadonlyProperty => "readonly property",
             Named::TypeSetter => "setter",
             Named::TypeParameter => "type parameter",
+            Named::IndexSignatureParameter => "index signature parameter",
         };
         write!(f, "{}", repr)
     }

@@ -4675,7 +4675,7 @@ impl TsIndexSignatureClassMember {
     }
 }
 impl TsIndexSignatureParameter {
-    pub fn with_binding(self, element: JsIdentifierBinding) -> Self {
+    pub fn with_binding(self, element: TsIndexSignatureParameterName) -> Self {
         Self::unwrap_cast(
             self.syntax
                 .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
@@ -4685,6 +4685,14 @@ impl TsIndexSignatureParameter {
         Self::unwrap_cast(
             self.syntax
                 .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
+        )
+    }
+}
+impl TsIndexSignatureParameterName {
+    pub fn with_ident_token(self, element: SyntaxToken) -> Self {
+        Self::unwrap_cast(
+            self.syntax
+                .splice_slots(0usize..=0usize, once(Some(element.into()))),
         )
     }
 }

@@ -933,6 +933,11 @@ macro_rules! map_syntax_node {
                         unsafe { $crate::TsIndexSignatureParameter::new_unchecked(node) };
                     $body
                 }
+                $crate::JsSyntaxKind::TS_INDEX_SIGNATURE_PARAMETER_NAME => {
+                    let $pattern =
+                        unsafe { $crate::TsIndexSignatureParameterName::new_unchecked(node) };
+                    $body
+                }
                 $crate::JsSyntaxKind::TS_INDEX_SIGNATURE_TYPE_MEMBER => {
                     let $pattern =
                         unsafe { $crate::TsIndexSignatureTypeMember::new_unchecked(node) };
