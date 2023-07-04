@@ -5,8 +5,10 @@ use crate::execute::process_file::{
 };
 use crate::execute::TraversalMode;
 use crate::FormatterReportFileDetail;
-use rome_diagnostics::{category, DiagnosticExt};
+use rome_diagnostics::{category, DiagnosticExt, Error};
+use rome_service::workspace::RuleCategories;
 use std::path::Path;
+use std::sync::atomic::Ordering;
 
 pub(crate) fn format<'ctx>(ctx: &'ctx SharedTraversalOptions<'ctx, '_>, path: &Path) -> FileResult {
     let mut workspace_file = WorkspaceFile::new(ctx, path)?;
@@ -17,15 +19,14 @@ pub(crate) fn format_with_guard<'ctx>(
     ctx: &'ctx SharedTraversalOptions<'ctx, '_>,
     workspace_file: &mut WorkspaceFile,
 ) -> FileResult {
-    let printed = workspace_file
+    let max_diagnostics = ctx.remaining_diagnostics.load(Ordering::Relaxed);
+    let diagnostics_result = workspace_file
         .guard()
-        .format_file()
+        .pull_diagnostics(RuleCategories::SYNTAX, max_diagnostics.into())
         .with_file_path_and_code(
             workspace_file.path.display().to_string(),
             category!("format"),
         )?;
-
-    let output = printed.into_code();
     let (should_write, ignore_errors) = match ctx.execution.traversal_mode {
         TraversalMode::Format {
             write,
@@ -39,10 +40,38 @@ pub(crate) fn format_with_guard<'ctx>(
         ),
     };
 
+    if diagnostics_result.errors > 0 {
+        return Err(if ignore_errors {
+            Message::from(
+                SkippedDiagnostic.with_file_path(workspace_file.path.display().to_string()),
+            )
+        } else {
+            Message::Diagnostics {
+                name: workspace_file.path.display().to_string(),
+                content: workspace_file.input().to_string(),
+                diagnostics: diagnostics_result
+                    .diagnostics
+                    .into_iter()
+                    .map(Error::from)
+                    .collect(),
+                skipped_diagnostics: diagnostics_result.skipped_diagnostics,
+            }
+        });
+    }
+
+    let printed = workspace_file
+        .guard()
+        .format_file()
+        .with_file_path_and_code(
+            workspace_file.path.display().to_string(),
+            category!("format"),
+        )?;
+
+    let output = printed.into_code();
+
+    // NOTE: ignoring the
     if ignore_errors {
-        return Err(Message::from(
-            SkippedDiagnostic.with_file_path(workspace_file.path.display().to_string()),
-        ));
+        return Ok(FileStatus::Ignored);
     }
 
     if output != workspace_file.input() {
