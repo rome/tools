@@ -8,7 +8,7 @@ use std::{
 /// This type cannot be instantiated outside of the `rome_diagnostics_categories`
 /// crate, which serves as a registry for all known diagnostic categories
 /// (currently this registry is fully static and generated at compile time)
-#[derive(Debug)]
+#[derive(Debug, Ord, PartialOrd)]
 pub struct Category {
     name: &'static str,
     link: Option<&'static str>,

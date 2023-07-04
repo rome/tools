@@ -27,6 +27,17 @@ expression: content
     
 ```
 
+# Termination Message
+
+```block
+internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Some errors were emitted while running checks
+  
+
+
+```
+
 # Emitted Messages
 
 ```block
@@ -146,6 +157,14 @@ fix.js format ━━━━━━━━━━━━━━━━━━━━━━
       4 │ + const·FOO·=·"FOO";
       5 │ + var·x,·y;
       6 │ + 
+  
+
+```
+
+```block
+fix.js internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Fixes applied to the file, but there are still diagnostics to address.
   
 
 ```

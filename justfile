@@ -100,7 +100,7 @@ ready:
   just codegen
   just documentation
   just format
-  cargo lint
+  just lint
   just t
   cargo test --doc
   git diff --exit-code --quiet

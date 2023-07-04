@@ -127,10 +127,10 @@ pub(crate) fn run<'a>(
                 }
             } else {
                 let diagnostic = FormatDiffDiagnostic {
-                    file_name: &rome_path.display().to_string(),
+                    file_name: rome_path.display().to_string(),
                     diff: ContentDiffAdvice {
-                        new: printed.as_code(),
-                        old: content,
+                        new: printed.as_code().to_string(),
+                        old: content.to_string(),
                     },
                 };
                 diagnostics.push(rome_diagnostics::serde::Diagnostic::new(diagnostic));

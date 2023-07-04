@@ -291,7 +291,7 @@ fn process_messages(options: ProcessMessagesOptions) {
 
     let mut is_msg_open = true;
     let mut is_report_open = true;
-
+    let mut diagnostics_to_print = vec![];
     while is_msg_open || is_report_open {
         let msg = select! {
             recv(recv_msgs) -> msg => match msg {
@@ -334,9 +334,10 @@ fn process_messages(options: ProcessMessagesOptions) {
                     not_printed_diagnostics += 1;
                 }
                 if mode.should_report_to_terminal() && should_print {
-                    console.error(markup! {
-                        {if verbose { PrintDiagnostic::verbose(&error) } else { PrintDiagnostic::simple(&error) }}
-                    });
+                    diagnostics_to_print.push(Error::from(error));
+                    // console.error(markup! {
+                    //     {if verbose { PrintDiagnostic::verbose(&error) } else { PrintDiagnostic::simple(&error) }}
+                    // });
                 }
             }
 
@@ -381,9 +382,10 @@ fn process_messages(options: ProcessMessagesOptions) {
 
                 if mode.should_report_to_terminal() {
                     if should_print {
-                        console.error(markup! {
-                            {if verbose { PrintDiagnostic::verbose(&err) } else { PrintDiagnostic::simple(&err) }}
-                        });
+                        diagnostics_to_print.push(err);
+                        // console.error(markup! {
+                        //     {if verbose { PrintDiagnostic::verbose(&err) } else { PrintDiagnostic::simple(&err) }}
+                        // });
                     }
                 } else {
                     let location = err.location();
@@ -423,9 +425,7 @@ fn process_messages(options: ProcessMessagesOptions) {
                         }
 
                         let diag = diag.with_file_path(&name).with_file_source_code(&content);
-                        console.error(markup! {
-                            {if verbose { PrintDiagnostic::verbose(&diag) } else { PrintDiagnostic::simple(&diag) }}
-                        });
+                        diagnostics_to_print.push(diag);
                     }
                 } else {
                     for diag in diagnostics {
@@ -449,9 +449,7 @@ fn process_messages(options: ProcessMessagesOptions) {
                             if should_print {
                                 let diag =
                                     diag.with_file_path(&name).with_file_source_code(&content);
-                                console.error(markup! {
-                                    {if verbose { PrintDiagnostic::verbose(&diag) } else { PrintDiagnostic::simple(&diag) }}
-                                });
+                                diagnostics_to_print.push(diag)
                             }
                         } else {
                             report.push_detail_report(ReportKind::Error(
@@ -494,54 +492,46 @@ fn process_messages(options: ProcessMessagesOptions) {
                             match diff_kind {
                                 DiffKind::Format => {
                                     let diag = CIFormatDiffDiagnostic {
-                                        file_name: &file_name,
+                                        file_name: file_name.clone(),
                                         diff: ContentDiffAdvice {
-                                            old: &old,
-                                            new: &new,
+                                            old: old.clone(),
+                                            new: new.clone(),
                                         },
                                     };
-                                    console.error(markup! {
-                                        {if verbose { PrintDiagnostic::verbose(&diag) } else { PrintDiagnostic::simple(&diag) }}
-                                    });
+                                    diagnostics_to_print.push(Error::from(diag))
                                 }
                                 DiffKind::OrganizeImports => {
                                     let diag = CIOrganizeImportsDiffDiagnostic {
-                                        file_name: &file_name,
+                                        file_name: file_name.clone(),
                                         diff: ContentDiffAdvice {
-                                            old: &old,
-                                            new: &new,
+                                            old: old.clone(),
+                                            new: new.clone(),
                                         },
                                     };
-                                    console.error(markup! {
-                                        {if verbose { PrintDiagnostic::verbose(&diag) } else { PrintDiagnostic::simple(&diag) }}
-                                    });
+                                    diagnostics_to_print.push(Error::from(diag))
                                 }
                             };
                         } else {
                             match diff_kind {
                                 DiffKind::Format => {
                                     let diag = FormatDiffDiagnostic {
-                                        file_name: &file_name,
+                                        file_name: file_name.clone(),
                                         diff: ContentDiffAdvice {
-                                            old: &old,
-                                            new: &new,
+                                            old: old.clone(),
+                                            new: new.clone(),
                                         },
                                     };
-                                    console.error(markup! {
-                                        {if verbose { PrintDiagnostic::verbose(&diag) } else { PrintDiagnostic::simple(&diag) }}
-                                    });
+                                    diagnostics_to_print.push(Error::from(diag))
                                 }
                                 DiffKind::OrganizeImports => {
                                     let diag = OrganizeImportsDiffDiagnostic {
-                                        file_name: &file_name,
+                                        file_name: file_name.clone(),
                                         diff: ContentDiffAdvice {
-                                            old: &old,
-                                            new: &new,
+                                            old: old.clone(),
+                                            new: new.clone(),
                                         },
                                     };
-                                    console.error(markup! {
-                                        {if verbose { PrintDiagnostic::verbose(&diag) } else { PrintDiagnostic::simple(&diag) }}
-                                    });
+                                    diagnostics_to_print.push(Error::from(diag))
                                 }
                             };
                         }
@@ -558,6 +548,12 @@ fn process_messages(options: ProcessMessagesOptions) {
                 }
             }
         }
+    }
+
+    for diagnostic in diagnostics_to_print {
+        console.error(markup! {
+            {if verbose { PrintDiagnostic::verbose(&diagnostic) } else { PrintDiagnostic::simple(&diagnostic) }}
+        });
     }
 
     if mode.is_check() && total_skipped_suggested_fixes > 0 {

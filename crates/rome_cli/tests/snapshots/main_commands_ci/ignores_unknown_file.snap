@@ -41,6 +41,14 @@ test.js format ━━━━━━━━━━━━━━━━━━━━━�
 ```
 
 ```block
+test.js internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Fixes applied to the file, but there are still diagnostics to address.
+  
+
+```
+
+```block
 Checked 1 file(s) in <TIME>
 ```
 

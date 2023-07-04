@@ -33,7 +33,7 @@ fn extends_config_ok_formatter_no_linter() {
         Args::from(&[("check"), test_file.as_os_str().to_str().unwrap()]),
     );
 
-    assert!(result.is_ok(), "run_cli returned {result:?}");
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),

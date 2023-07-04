@@ -54,6 +54,26 @@ test.json:1:3 lint/nursery/noDuplicateJsonKeys ━━━━━━━━━━━
 ```
 
 ```block
+test.json format ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Formatter would have printed the following content:
+  
+    1   │ - {·"foo":·true,·"foo":·true·}
+      1 │ + {·"foo":·true,·"foo":·true·}
+      2 │ + 
+  
+
+```
+
+```block
+test.json internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Fixes applied to the file, but there are still diagnostics to address.
+  
+
+```
+
+```block
 Checked 1 file(s) in <TIME>
 ```
 

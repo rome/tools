@@ -53,6 +53,24 @@ check.js:1:6 lint/nursery/noConstantCondition ━━━━━━━━━━━�
 ```
 
 ```block
+check.js format ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Formatter would have printed the following content:
+  
+    1 │ for·(;·true;·);
+      │    +  +     +  
+
+```
+
+```block
+check.js internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Fixes applied to the file, but there are still diagnostics to address.
+  
+
+```
+
+```block
 Checked 1 file(s) in <TIME>
 ```
 

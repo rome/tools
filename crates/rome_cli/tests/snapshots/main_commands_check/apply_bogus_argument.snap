@@ -6,10 +6,47 @@ expression: content
 
 ```js
 function _13_1_3_fun(arguments) { }
+```
+
+# Termination Message
+
+```block
+internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Some errors were emitted while running checks
+  
+
 
 ```
 
 # Emitted Messages
+
+```block
+fix.js:1:22 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Illegal use of `arguments` as an identifier in strict mode
+  
+  > 1 │ function _13_1_3_fun(arguments) { }
+      │                      ^^^^^^^^^
+  
+
+```
+
+```block
+fix.js format ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Format with errors is disabled.
+  
+
+```
+
+```block
+fix.js internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Fixes applied to the file, but there are still diagnostics to address.
+  
+
+```
 
 ```block
 Fixed 1 file(s) in <TIME>

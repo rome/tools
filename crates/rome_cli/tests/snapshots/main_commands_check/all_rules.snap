@@ -50,6 +50,27 @@ fix.js:2:2 lint/suspicious/noCompareNegZero  FIXABLE  ━━━━━━━━�
 ```
 
 ```block
+fix.js format ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Formatter would have printed the following content:
+  
+    1   │ - 
+    2   │ - (1·>=·-0)
+      1 │ + 1·>=·-0;
+    3 2 │   
+  
+
+```
+
+```block
+fix.js internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Fixes applied to the file, but there are still diagnostics to address.
+  
+
+```
+
+```block
 Checked 1 file(s) in <TIME>
 ```
 

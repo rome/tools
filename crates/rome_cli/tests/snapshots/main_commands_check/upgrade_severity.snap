@@ -53,6 +53,30 @@ file.js:1:1 lint/style/noNegationElse  FIXABLE  ━━━━━━━━━━�
 ```
 
 ```block
+file.js format ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Formatter would have printed the following content:
+  
+    1   │ - if(!cond)·{·exprA();·}·else·{·exprB()·}
+      1 │ + if·(!cond)·{
+      2 │ + → exprA();
+      3 │ + }·else·{
+      4 │ + → exprB();
+      5 │ + }
+      6 │ + 
+  
+
+```
+
+```block
+file.js internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Fixes applied to the file, but there are still diagnostics to address.
+  
+
+```
+
+```block
 Checked 1 file(s) in <TIME>
 ```
 

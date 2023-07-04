@@ -105,6 +105,34 @@ fix.js:4:5 lint/style/noVar  FIXABLE  ━━━━━━━━━━━━━━
 ```
 
 ```block
+fix.js format ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Formatter would have printed the following content:
+  
+    1   │ - 
+    2   │ - ····function·f()·{arguments;}
+    3   │ - ····const·FOO·=·"FOO";
+    4   │ - ····var·x,·y;
+    5   │ - ····
+      1 │ + function·f()·{
+      2 │ + → arguments;
+      3 │ + }
+      4 │ + const·FOO·=·"FOO";
+      5 │ + var·x,·y;
+      6 │ + 
+  
+
+```
+
+```block
+fix.js internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Fixes applied to the file, but there are still diagnostics to address.
+  
+
+```
+
+```block
 Checked 1 file(s) in <TIME>
 ```
 
