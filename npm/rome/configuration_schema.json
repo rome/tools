@@ -320,6 +320,20 @@
 				}
 			}
 		},
+		"ComplexityOptions": {
+			"description": "Options for the rule `noNestedModuleImports`.",
+			"type": "object",
+			"required": ["maxAllowedComplexity"],
+			"properties": {
+				"maxAllowedComplexity": {
+					"description": "The maximum complexity score that we allow. Anything higher is considered excessive.",
+					"type": "integer",
+					"format": "uint",
+					"minimum": 0.0
+				}
+			},
+			"additionalProperties": false
+		},
 		"Correctness": {
 			"description": "A list of rules that belong to this group",
 			"type": "object",
@@ -797,7 +811,7 @@
 					]
 				},
 				"noExcessiveComplexity": {
-					"description": "Succinct description of the rule.",
+					"description": "The more complexity a function contains, the harder it is to understand later on.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }
@@ -993,6 +1007,10 @@
 		},
 		"PossibleOptions": {
 			"anyOf": [
+				{
+					"description": "Options for `noExcessiveComplexity` rule",
+					"allOf": [{ "$ref": "#/definitions/ComplexityOptions" }]
+				},
 				{
 					"description": "Options for `useExhaustiveDependencies` and `useHookAtTopLevel` rule",
 					"allOf": [{ "$ref": "#/definitions/HooksOptions" }]

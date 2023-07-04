@@ -5,44 +5,51 @@ parent: lint/rules/index
 
 # noExcessiveComplexity (since vnext)
 
-Succinct description of the rule.
+The more complexity a function contains, the harder it is to understand
+later on.
 
-Put context and details about the rule.
-As a starting point, you can take the description of the corresponding _ESLint_ rule (if any).
+Reducing complexity helps to make code more maintenable, both by making
+it easier to understand as well as by reducing chances of accidental
+side-effects when making changes.
 
-Try to stay consistent with the descriptions of implemented rules.
+This rule calculates a complexity score for every function and signals
+those that exceed a configured complexity threshold (default: 10).
 
-Add a link to the corresponding ESLint rule (if any):
+Sources:
 
-Source: https://eslint.org/docs/latest/rules/rule-name
+- https://github.com/SonarSource/eslint-plugin-sonarjs/blob/HEAD/docs/rules/cognitive-complexity.md
+- https://eslint.org/docs/latest/rules/complexity (note this rule uses "cyclomatic complexity" instead)
 
 ## Examples
 
 ### Invalid
 
 ```jsx
-var a = 1;
-a = 2;
+function tooComplex() {
+    for (let x = 0; x < 10; x++) {
+        for (let y = 0; y < 10; y++) {
+            if (x % 2 === 0) {
+                if (y % 2 === 0) {
+                    console.log(x > y ? `${x} > ${y}` : `${y} > ${x}`);
+                }
+            }
+        }
+    }
+}
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noExcessiveComplexity.js:2:1 <a href="https://docs.rome.tools/lint/rules/noExcessiveComplexity">lint/nursery/noExcessiveComplexity</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">nursery/noExcessiveComplexity.js:1:10 <a href="https://docs.rome.tools/lint/rules/noExcessiveComplexity">lint/nursery/noExcessiveComplexity</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Variable is read here.</span>
+<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Excessive complexity detected.</span>
   
-    <strong>1 │ </strong>var a = 1;
-<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>a = 2;
-   <strong>   │ </strong><strong><span style="color: Tomato;">^</span></strong>
-    <strong>3 │ </strong>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>function tooComplex() {
+   <strong>   │ </strong>         <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
+    <strong>2 │ </strong>    for (let x = 0; x &lt; 10; x++) {
+    <strong>3 │ </strong>        for (let y = 0; y &lt; 10; y++) {
   
-<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">This note will give you more information.</span>
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Please refactor this code to reduce its complexity from 15 to 10.</span>
   
 </code></pre>
-
-## Valid
-
-```jsx
-var a = 1;
-```
 
 ## Related links
 

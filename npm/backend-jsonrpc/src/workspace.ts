@@ -538,7 +538,7 @@ export interface Nursery {
 	 */
 	noDuplicateJsxProps?: RuleConfiguration;
 	/**
-	 * Succinct description of the rule.
+	 * The more complexity a function contains, the harder it is to understand later on.
 	 */
 	noExcessiveComplexity?: RuleConfiguration;
 	/**
@@ -924,7 +924,20 @@ export interface RuleWithOptions {
 	level: RulePlainConfiguration;
 	options?: PossibleOptions;
 }
-export type PossibleOptions = HooksOptions | NamingConventionOptions | null;
+export type PossibleOptions =
+	| ComplexityOptions
+	| HooksOptions
+	| NamingConventionOptions
+	| null;
+/**
+ * Options for the rule `noNestedModuleImports`.
+ */
+export interface ComplexityOptions {
+	/**
+	 * The maximum complexity score that we allow. Anything higher is considered excessive.
+	 */
+	maxAllowedComplexity: number;
+}
 /**
  * Options for the rule `useExhaustiveDependencies` and `useHookAtTopLevel`
  */
