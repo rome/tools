@@ -18,6 +18,7 @@ pub(crate) fn lint_with_guard<'ctx>(
     workspace_file: &mut WorkspaceFile,
 ) -> FileResult {
     let mut errors = 0;
+    let input = workspace_file.input()?;
 
     if let Some(fix_mode) = ctx.execution.as_fix_file_mode() {
         let fixed = workspace_file
@@ -32,7 +33,7 @@ pub(crate) fn lint_with_guard<'ctx>(
             skipped_suggested_fixes: fixed.skipped_suggested_fixes,
         });
 
-        if fixed.code != workspace_file.input() {
+        if fixed.code != input {
             workspace_file.update_file(fixed.code)?;
         }
         errors = fixed.errors;
@@ -50,7 +51,7 @@ pub(crate) fn lint_with_guard<'ctx>(
     } else {
         FileStatus::Message(Message::Diagnostics {
             name: workspace_file.path.display().to_string(),
-            content: workspace_file.input().to_string(),
+            content: input,
             diagnostics: result.diagnostics.into_iter().map(Error::from).collect(),
             skipped_diagnostics: result.skipped_diagnostics,
         })

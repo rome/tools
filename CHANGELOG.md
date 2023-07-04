@@ -12,11 +12,14 @@
 
 	This wasn't ideal for users, because this could have created false positives in linting, or formatted
 	code with a configuration that wasn't the of the user.
+- The command `rome check` now shows formatter diagnostics when checking the code.
 
+	The presence of the diagnostics will result in an error code when the command finishes.
+
+	This is in line with semantic and behaviour meant for the command `rome check`.
 
 #### Other changes
 
-- The command `rome check` now shows formatter diagnostics when checking the code.
 - Fix [#4556](https://github.com/rome/tools/issues/4556), which correctly handles new lines in the
 `.gitignore` file across OS.
 - Add a new option to ignore unknown files `--files-ignore-unknown`:

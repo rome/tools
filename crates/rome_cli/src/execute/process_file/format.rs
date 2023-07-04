@@ -27,6 +27,8 @@ pub(crate) fn format_with_guard<'ctx>(
             workspace_file.path.display().to_string(),
             category!("format"),
         )?;
+
+    let input = workspace_file.input()?;
     let (should_write, ignore_errors) = match ctx.execution.traversal_mode {
         TraversalMode::Format {
             write,
@@ -48,7 +50,7 @@ pub(crate) fn format_with_guard<'ctx>(
         } else {
             Message::Diagnostics {
                 name: workspace_file.path.display().to_string(),
-                content: workspace_file.input().to_string(),
+                content: input,
                 diagnostics: diagnostics_result
                     .diagnostics
                     .into_iter()
@@ -74,7 +76,7 @@ pub(crate) fn format_with_guard<'ctx>(
         return Ok(FileStatus::Ignored);
     }
 
-    if output != workspace_file.input() {
+    if output != input {
         if should_write {
             workspace_file.update_file(output)?;
         } else {
@@ -89,7 +91,7 @@ pub(crate) fn format_with_guard<'ctx>(
 
             return Ok(FileStatus::Message(Message::Diff {
                 file_name: workspace_file.path.display().to_string(),
-                old: workspace_file.input().to_string(),
+                old: input,
                 new: output,
                 diff_kind: DiffKind::Format,
             }));

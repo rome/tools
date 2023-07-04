@@ -4,14 +4,13 @@ use rome_diagnostics::{category, Error};
 use rome_fs::{File, OpenOptions, RomePath};
 use rome_service::file_handlers::Language;
 use rome_service::workspace::{FileGuard, OpenFileParams};
-use rome_service::Workspace;
+use rome_service::{Workspace, WorkspaceError};
 use std::path::{Path, PathBuf};
 
 /// Small wrapper that holds information and operations around the current processed file
 pub(crate) struct WorkspaceFile<'ctx, 'app> {
     guard: FileGuard<'app, dyn Workspace + 'ctx>,
     file: Box<dyn File>,
-    input: String,
     pub(crate) path: PathBuf,
 }
 
@@ -49,7 +48,6 @@ impl<'ctx, 'app> WorkspaceFile<'ctx, 'app> {
         Ok(Self {
             file,
             guard,
-            input,
             path: PathBuf::from(path),
         })
     }
@@ -58,8 +56,8 @@ impl<'ctx, 'app> WorkspaceFile<'ctx, 'app> {
         &self.guard
     }
 
-    pub(crate) fn input(&self) -> &str {
-        self.input.as_str()
+    pub(crate) fn input(&self) -> Result<String, WorkspaceError> {
+        self.guard().get_file_content()
     }
 
     /// It updates the workspace file with `new_content`
@@ -68,7 +66,6 @@ impl<'ctx, 'app> WorkspaceFile<'ctx, 'app> {
         self.file
             .set_content(new_content.as_bytes())
             .with_file_path(self.path.display().to_string())?;
-        self.input = new_content.clone();
         self.guard
             .change_file(self.file.file_version(), new_content)?;
         Ok(())
