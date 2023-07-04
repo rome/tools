@@ -21,33 +21,37 @@ use std::str::FromStr;
 use schemars::JsonSchema;
 
 declare_rule! {
-    /// The more complex
+    /// The more complexity a function contains, the harder it is to understand
+    /// later on.
     ///
-    /// Put context and details about the rule.
-    /// As a starting point, you can take the description of the corresponding _ESLint_ rule (if any).
+    /// Reducing complexity helps to make code more maintenable, both by making
+    /// it easier to understand as well as by reducing chances of accidental
+    /// side-effects when making changes.
     ///
-    /// Try to stay consistent with the descriptions of implemented rules.
-    ///
-    /// Add a link to the corresponding ESLint rule (if any):
+    /// This rule calculates a complexity score for every function and signals
+    /// those that exceed a configured complexity threshold (default: 10).
     ///
     /// Sources:
     ///
     /// * https://github.com/SonarSource/eslint-plugin-sonarjs/blob/HEAD/docs/rules/cognitive-complexity.md
-    /// * https://eslint.org/docs/latest/rules/complexity (note this uses "cyclomatic complexity" instead)
+    /// * https://eslint.org/docs/latest/rules/complexity (note this rule uses "cyclomatic complexity" instead)
     ///
     /// ## Examples
     ///
     /// ### Invalid
     ///
     /// ```js,expect_diagnostic
-    /// var a = 1;
-    /// a = 2;
-    /// ```
-    ///
-    /// ## Valid
-    ///
-    /// ```js
-    /// var a = 1;
+    /// function tooComplex() {
+    ///     for (let x = 0; x < 10; x++) {
+    ///         for (let y = 0; y < 10; y++) {
+    ///             if (x % 2 === 0) {
+    ///                 if (y % 2 === 0) {
+    ///                     console.log(x > y ? `${x} > ${y}` : `${y} > ${x}`);
+    ///                 }
+    ///             }
+    ///         }
+    ///     }
+    /// }
     /// ```
     ///
     pub(crate) NoExcessiveComplexity {
@@ -426,9 +430,7 @@ fn calculate_for_jsx_element(element: &JsxElement, nesting_score: usize) -> usiz
 
 fn calculate_for_jsx_tag(tag: &AnyJsxTag, nesting_score: usize) -> usize {
     match tag {
-        AnyJsxTag::JsxElement(jsx_element) => {
-            calculate_for_jsx_element(&jsx_element, nesting_score)
-        }
+        AnyJsxTag::JsxElement(jsx_element) => calculate_for_jsx_element(jsx_element, nesting_score),
         AnyJsxTag::JsxFragment(jsx_fragment) => {
             calculate_for_jsx_children(&jsx_fragment.children(), nesting_score)
         }
