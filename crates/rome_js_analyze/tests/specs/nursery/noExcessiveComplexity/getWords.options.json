@@ -1,0 +1,15 @@
+{
+	"$schema": "../../../../../../npm/rome/configuration_schema.json",
+	"linter": {
+		"rules": {
+			"nursery": {
+				"noExcessiveComplexity": {
+					"level": "error",
+					"options": {
+						"maxAllowedComplexity": 1
+					}
+				}
+			}
+		}
+	}
+}
