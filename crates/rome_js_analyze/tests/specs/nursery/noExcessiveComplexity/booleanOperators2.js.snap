@@ -25,7 +25,7 @@ booleanOperators2.js:1:10 lint/nursery/noExcessiveComplexity ━━━━━━�
     2 │     if (a                                     // +1 for `if`
     3 │         &&                                    // +1
   
-  i Please refactor this code to reduce its complexity from 3 to 2.
+  i Please refactor this function to reduce its complexity score from 3 to 2.
   
 
 ```

@@ -29,7 +29,7 @@ nestedControlFlowStructures.js:1:10 lint/nursery/noExcessiveComplexity ━━━
     2 │     try {
     3 │         if (condition1) {                        // +1
   
-  i Please refactor this code to reduce its complexity from 9 to 8.
+  i Please refactor this function to reduce its complexity score from 9 to 8.
   
 
 ```

@@ -98,7 +98,7 @@ impl Rule for NoExcessiveComplexity {
                 markup!("Excessive complexity detected."),
             )
             .note(markup! {
-                "Please refactor this code to reduce its complexity from "{calculated_score}" to "{max_allowed_complexity}"."
+                "Please refactor this function to reduce its complexity score from "{calculated_score}" to "{max_allowed_complexity}"."
             }),
         )
     }
