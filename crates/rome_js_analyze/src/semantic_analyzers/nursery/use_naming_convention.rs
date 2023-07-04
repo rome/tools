@@ -348,8 +348,6 @@ impl Rule for UseNamingConvention {
             element,
             suggested_name,
         } = state;
-        println!("suggested_name: {}", suggested_name);
-        println!("node: {}", node);
         let renamable = match node {
             AnyName::JsIdentifierBinding(binding) => {
                 if binding.is_exported(model) {
