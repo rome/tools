@@ -81,6 +81,7 @@ define_categories! {
     "lint/nursery/noConfusingArrow": "https://docs.rome.tools/lint/rules/noConfusingArrow",
     "lint/nursery/noConsoleLog": "https://docs.rome.tools/lint/rules/noConsoleLog",
     "lint/nursery/noConstantCondition": "https://docs.rome.tools/lint/rules/noConstantCondition",
+    "lint/nursery/noControlCharactersInRegex": "https://docs.rome.tools/lint/rules/noControlCharactersInRegex",
     "lint/nursery/noDuplicateJsonKeys": "https://docs.rome.tools/lint/rules/noDuplicateJsonKeys",
     "lint/nursery/noDuplicateJsxProps": "https://docs.rome.tools/lint/rules/noDuplicateJsxProps",
     "lint/nursery/noExcessiveComplexity": "https://docs.rome.tools/lint/rules/noExcessiveComplexity",

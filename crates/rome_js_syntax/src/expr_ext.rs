@@ -618,9 +618,23 @@ impl JsRegexLiteralExpression {
         let text_trimmed = token.text_trimmed();
 
         // SAFETY: a valid regex literal must have a end slash
-        let end_slash_pos = text_trimmed.rfind('/').unwrap();
+        let end_slash_pos = text_trimmed
+            .rfind('/')
+            .expect("regex literal must have an end slash");
 
         Ok(String::from(&text_trimmed[1..end_slash_pos]))
+    }
+
+    pub fn flags(&self) -> SyntaxResult<String> {
+        let token = self.value_token()?;
+        let text_trimmed = token.text_trimmed();
+
+        // SAFETY: a valid regex literal must have a end slash
+        let end_slash_pos = text_trimmed
+            .rfind('/')
+            .expect("regex literal must have an end slash");
+
+        Ok(String::from(&text_trimmed[end_slash_pos..]))
     }
 }
 

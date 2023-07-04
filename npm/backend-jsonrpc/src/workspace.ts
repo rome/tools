@@ -530,6 +530,10 @@ export interface Nursery {
 	 */
 	noConstantCondition?: RuleConfiguration;
 	/**
+	 * Prevents from having control characters and some escape sequences that match control characters in regular expressions.
+	 */
+	noControlCharactersInRegex?: RuleConfiguration;
+	/**
 	 * Disallow two keys with the same name inside a JSON object.
 	 */
 	noDuplicateJsonKeys?: RuleConfiguration;
@@ -1138,6 +1142,7 @@ export type Category =
 	| "lint/nursery/noConfusingArrow"
 	| "lint/nursery/noConsoleLog"
 	| "lint/nursery/noConstantCondition"
+	| "lint/nursery/noControlCharactersInRegex"
 	| "lint/nursery/noDuplicateJsonKeys"
 	| "lint/nursery/noDuplicateJsxProps"
 	| "lint/nursery/noExcessiveComplexity"
