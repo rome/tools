@@ -10,7 +10,10 @@ use rome_deserialize::{
     DeserializationDiagnostic, VisitNode,
 };
 use rome_js_syntax::{
-    AnyJsFunctionBody, JsConditionalExpression, JsLanguage, JsLogicalExpression, JsLogicalOperator,
+    AnyJsFunctionBody, JsBreakStatement, JsCatchClause, JsConditionalExpression,
+    JsContinueStatement, JsDoWhileStatement, JsFinallyClause, JsForInStatement, JsForOfStatement,
+    JsForStatement, JsIfStatement, JsLanguage, JsLogicalExpression, JsLogicalOperator,
+    JsSwitchStatement, JsWhileStatement, JsWithStatement,
 };
 use rome_json_syntax::{JsonLanguage, JsonSyntaxNode};
 use rome_rowan::{AstNode, Language, SyntaxNode, SyntaxResult, TextRange, WalkEvent};
@@ -163,8 +166,15 @@ impl Visitor for CognitiveComplexityVisitor {
                 }
 
                 if let Some(state) = self.stack.last_mut() {
-                    if JsConditionalExpression::can_cast(node.kind()) {
-                        state.score += 1 + state.nesting_level;
+                    if receives_structural_penalty(node) {
+                        state.score += 1;
+
+                        if receives_nesting_penalty(node) {
+                            state.score += state.nesting_level;
+                        }
+                    }
+
+                    if increases_nesting(node) {
                         state.last_seen_operator = None;
                         state.nesting_level += 1;
                     } else if let Some(operator) = JsLogicalExpression::cast_ref(node)
@@ -181,8 +191,6 @@ impl Visitor for CognitiveComplexityVisitor {
                 }
             }
             WalkEvent::Leave(node) => {
-                // When the visitor exits a function, if it matches the node of the top-most
-                // entry of the stack and the `has_yield` flag is `false`, emit a query match
                 if let Some(exit_node) = AnyFunctionLike::cast_ref(node) {
                     if let Some(function_state) = self.stack.pop() {
                         assert_eq!(function_state.function_like, exit_node);
@@ -194,13 +202,54 @@ impl Visitor for CognitiveComplexityVisitor {
                         });
                     }
                 } else if let Some(state) = self.stack.last_mut() {
-                    if JsConditionalExpression::can_cast(node.kind()) {
+                    if increases_nesting(node) {
                         state.nesting_level = state.nesting_level.saturating_sub(1);
                     }
                 }
             }
         }
     }
+}
+
+fn increases_nesting(node: &SyntaxNode<JsLanguage>) -> bool {
+    let kind = node.kind();
+    is_loop_node(node)
+        || JsCatchClause::can_cast(kind)
+        || JsConditionalExpression::can_cast(kind)
+        || JsIfStatement::can_cast(kind)
+        || JsSwitchStatement::can_cast(kind)
+}
+
+fn is_loop_node(node: &SyntaxNode<JsLanguage>) -> bool {
+    let kind = node.kind();
+    JsDoWhileStatement::can_cast(kind)
+        || JsForInStatement::can_cast(kind)
+        || JsForOfStatement::can_cast(kind)
+        || JsForStatement::can_cast(kind)
+        || JsWhileStatement::can_cast(kind)
+}
+
+fn receives_structural_penalty(node: &SyntaxNode<JsLanguage>) -> bool {
+    let kind = node.kind();
+    receives_nesting_penalty(node)
+        || JsBreakStatement::cast_ref(node)
+            .and_then(|js_break| js_break.label_token())
+            .is_some()
+        || JsContinueStatement::cast_ref(node)
+            .and_then(|js_continue| js_continue.label_token())
+            .is_some()
+        || JsFinallyClause::can_cast(kind)
+        || JsWithStatement::can_cast(kind)
+}
+
+// Note: This is a strict subset of nodes that receive a structural penalty.
+fn receives_nesting_penalty(node: &SyntaxNode<JsLanguage>) -> bool {
+    let kind = node.kind();
+    is_loop_node(node)
+        || JsCatchClause::can_cast(kind)
+        || JsConditionalExpression::can_cast(kind)
+        || JsIfStatement::can_cast(kind)
+        || JsSwitchStatement::can_cast(kind)
 }
 
 #[derive(Clone, Default)]
