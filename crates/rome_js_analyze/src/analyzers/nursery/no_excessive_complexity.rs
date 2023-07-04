@@ -11,9 +11,9 @@ use rome_deserialize::{
 };
 use rome_js_syntax::{
     AnyJsFunctionBody, JsBreakStatement, JsCatchClause, JsConditionalExpression,
-    JsContinueStatement, JsDoWhileStatement, JsFinallyClause, JsForInStatement, JsForOfStatement,
-    JsForStatement, JsIfStatement, JsLanguage, JsLogicalExpression, JsLogicalOperator,
-    JsSwitchStatement, JsWhileStatement, JsWithStatement,
+    JsContinueStatement, JsDoWhileStatement, JsElseClause, JsFinallyClause, JsForInStatement,
+    JsForOfStatement, JsForStatement, JsIfStatement, JsLanguage, JsLogicalExpression,
+    JsLogicalOperator, JsSwitchStatement, JsWhileStatement, JsWithStatement,
 };
 use rome_json_syntax::{JsonLanguage, JsonSyntaxNode};
 use rome_rowan::{AstNode, Language, SyntaxNode, SyntaxResult, TextRange, WalkEvent};
@@ -184,6 +184,15 @@ impl Visitor for CognitiveComplexityVisitor {
                             state.score += 1;
                             state.last_seen_operator = Some(operator);
                         }
+                    } else if let Some(alternate) =
+                        JsElseClause::cast_ref(node).and_then(|js_else| js_else.alternate().ok())
+                    {
+                        if alternate.as_js_if_statement().is_some() {
+                            // Prevent double nesting inside else-if.
+                            state.nesting_level = state.nesting_level.saturating_sub(1);
+                        } else {
+                            state.score += 1;
+                        }
                     } else {
                         // Reset the operator for every other type of node.
                         state.last_seen_operator = None;
@@ -204,6 +213,15 @@ impl Visitor for CognitiveComplexityVisitor {
                 } else if let Some(state) = self.stack.last_mut() {
                     if increases_nesting(node) {
                         state.nesting_level = state.nesting_level.saturating_sub(1);
+                    } else if let Some(alternate) =
+                        JsElseClause::cast_ref(node).and_then(|js_else| js_else.alternate().ok())
+                    {
+                        if alternate.as_js_if_statement().is_some() {
+                            // Prevent double nesting inside else-if.
+                            state.nesting_level += 1;
+                        } else {
+                            state.nesting_level = state.nesting_level.saturating_sub(1);
+                        }
                     }
                 }
             }
