@@ -245,7 +245,7 @@ multiple files:
 
 - Fix [noUnusedVariables](https://docs.rome.tools/lint/rules/nounusedvariables/) 's false positive diagnostics ([#4634](https://github.com/rome/tools/issues/4637))
 
-  Semantic analyzer no longer handles identifiers of a type variable. Thus, identifiers of a type variable doesn't affect any semantic analysis. 
+  Semantic analyzer no longer handles index signature identifiers. Thus, index signature identifiers doesn't affect any semantic analysis. 
 
 ### Parser
 
