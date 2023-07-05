@@ -14,7 +14,7 @@ fn migrate_help() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("migrate"), "--help"]),
+        Args::from([("migrate"), "--help"].as_slice()),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -41,7 +41,7 @@ fn migrate_config_up_to_date() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("migrate")]),
+        Args::from([("migrate")].as_slice()),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -72,7 +72,7 @@ fn missing_configuration_file() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("migrate")]),
+        Args::from([("migrate")].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");

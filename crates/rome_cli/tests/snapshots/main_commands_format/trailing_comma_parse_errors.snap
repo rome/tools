@@ -10,7 +10,7 @@ flags/invalid ━━━━━━━━━━━━━━━━━━━━━━
   × Failed to parse CLI arguments.
     
     Caused by:
-      Couldn't parse "NONE": Value not supported for TrailingComma
+      Couldn't parse `NONE`: Value not supported for TrailingComma
   
 
 

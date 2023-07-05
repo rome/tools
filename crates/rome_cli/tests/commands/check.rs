@@ -64,7 +64,7 @@ fn check_help() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("check"), "--help"]),
+        Args::from([("check"), "--help"].as_slice()),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -89,7 +89,7 @@ fn ok() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("check"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -106,7 +106,7 @@ fn ok_read_only() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("check"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -123,7 +123,7 @@ fn parse_error() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("check"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
     assert!(result.is_err(), "run_cli returned {result:?}");
 
@@ -147,7 +147,7 @@ fn lint_error() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("check"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -171,7 +171,7 @@ fn maximum_diagnostics() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("check"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -217,11 +217,14 @@ fn apply_ok() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("check"),
-            ("--apply"),
-            file_path.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("check"),
+                ("--apply"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -254,11 +257,14 @@ fn apply_noop() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("check"),
-            ("--apply"),
-            file_path.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("check"),
+                ("--apply"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -283,12 +289,15 @@ fn apply_suggested_error() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("check"),
-            ("--apply-unsafe"),
-            ("--apply"),
-            file_path.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("check"),
+                ("--apply-unsafe"),
+                ("--apply"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -313,11 +322,14 @@ fn apply_suggested() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("check"),
-            ("--apply-unsafe"),
-            file_path.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("check"),
+                ("--apply-unsafe"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -365,12 +377,15 @@ function f() {\n\targuments;\n}
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("check"),
-            ("--apply-unsafe"),
-            test1.as_os_str().to_str().unwrap(),
-            test2.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("check"),
+                ("--apply-unsafe"),
+                test1.as_os_str().to_str().unwrap(),
+                test2.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -420,11 +435,14 @@ fn no_lint_if_linter_is_disabled_when_run_apply() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("check"),
-            ("--apply"),
-            file_path.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("check"),
+                ("--apply"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -460,7 +478,7 @@ fn no_lint_if_linter_is_disabled() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("check"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -496,11 +514,14 @@ fn should_disable_a_rule() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("check"),
-            ("--apply"),
-            file_path.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("check"),
+                ("--apply"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -539,11 +560,14 @@ fn should_disable_a_rule_group() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("check"),
-            ("--apply"),
-            file_path.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("check"),
+                ("--apply"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -581,7 +605,7 @@ fn downgrade_severity() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("check"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     println!("{console:?}");
@@ -627,7 +651,7 @@ fn upgrade_severity() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("check"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -672,11 +696,14 @@ fn no_lint_when_file_is_ignored() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("check"),
-            ("--apply"),
-            file_path.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("check"),
+                ("--apply"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -715,12 +742,15 @@ fn no_lint_if_files_are_listed_in_ignore_option() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("check"),
-            ("--apply"),
-            file_path_test1.as_os_str().to_str().unwrap(),
-            file_path_test2.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("check"),
+                ("--apply"),
+                file_path_test1.as_os_str().to_str().unwrap(),
+                file_path_test2.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -796,7 +826,7 @@ fn fs_error_dereferenced_symlink() {
     let result = run_cli(
         DynRef::Owned(Box::new(OsFileSystem)),
         &mut console,
-        Args::from(&[("check"), root_path.display().to_string().as_str()]),
+        Args::from([("check"), root_path.display().to_string().as_str()].as_slice()),
     );
 
     remove_dir_all(root_path).unwrap();
@@ -851,7 +881,7 @@ fn fs_error_infinite_symlink_exapansion() {
     let result = run_cli(
         DynRef::Owned(Box::new(OsFileSystem)),
         &mut console,
-        Args::from(&[("check"), (root_path.display().to_string().as_str())]),
+        Args::from([("check"), (root_path.display().to_string().as_str())].as_slice()),
     );
 
     remove_dir_all(root_path).unwrap();
@@ -878,11 +908,14 @@ fn fs_error_read_only() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("check"),
-            ("--apply"),
-            file_path.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("check"),
+                ("--apply"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -909,7 +942,7 @@ fn fs_error_unknown() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("check"), ("prefix")]),
+        Args::from([("check"), ("prefix")].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1014,13 +1047,16 @@ fn fs_files_ignore_symlink() {
     let result = run_cli(
         DynRef::Owned(Box::new(OsFileSystem)),
         &mut console,
-        Args::from(&[
-            ("check"),
-            ("--config-path"),
-            (root_path.display().to_string().as_str()),
-            ("--apply-unsafe"),
-            (src_path.display().to_string().as_str()),
-        ]),
+        Args::from(
+            [
+                ("check"),
+                ("--config-path"),
+                (root_path.display().to_string().as_str()),
+                ("--apply-unsafe"),
+                (src_path.display().to_string().as_str()),
+            ]
+            .as_slice(),
+        ),
     );
 
     remove_dir_all(root_path).unwrap();
@@ -1047,7 +1083,7 @@ fn file_too_large() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("check"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1077,7 +1113,7 @@ fn file_too_large_config_limit() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("check"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1102,11 +1138,14 @@ fn file_too_large_cli_limit() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("check"),
-            ("--files-max-size=16"),
-            file_path.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("check"),
+                ("--files-max-size=16"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1131,11 +1170,14 @@ fn files_max_size_parse_error() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("check"),
-            ("--files-max-size=-1"),
-            file_path.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("check"),
+                ("--files-max-size=-1"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1163,7 +1205,7 @@ fn max_diagnostics_default() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("check"), ("src")]),
+        Args::from([("check"), ("src")].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1213,12 +1255,15 @@ fn max_diagnostics() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("check"),
-            ("--max-diagnostics"),
-            ("10"),
-            Path::new("src").as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("check"),
+                ("--max-diagnostics"),
+                ("10"),
+                Path::new("src").as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1264,7 +1309,7 @@ fn no_supported_file_found() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("check"), "."]),
+        Args::from([("check"), "."].as_slice()),
     );
 
     eprintln!("{:?}", console.out_buffer);
@@ -1293,7 +1338,7 @@ a == b;",
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("check"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1318,11 +1363,14 @@ fn print_verbose() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("check"),
-            ("--verbose"),
-            file_path.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("check"),
+                ("--verbose"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1347,7 +1395,7 @@ fn unsupported_file() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("check"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
     assert!(result.is_err(), "run_cli returned {result:?}");
 
@@ -1371,7 +1419,7 @@ fn suppression_syntax_error() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("check"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1399,7 +1447,7 @@ fn config_recommended_group() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("check"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
     assert!(result.is_err(), "run_cli returned {result:?}");
     assert_cli_snapshot(SnapshotPayload::new(
@@ -1422,7 +1470,7 @@ fn nursery_unstable() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("check"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1457,11 +1505,14 @@ import { bar, foom, lorem } from "foo";
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("check"),
-            ("--apply-unsafe"),
-            file_path.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("check"),
+                ("--apply-unsafe"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -1506,7 +1557,7 @@ import * as something from "../something";
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("check"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1551,11 +1602,14 @@ import * as something from "../something";
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("check"),
-            ("--apply"),
-            file_path.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("check"),
+                ("--apply"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1600,11 +1654,14 @@ import * as something from "../something";
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("check"),
-            ("--apply-unsafe"),
-            file_path.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("check"),
+                ("--apply-unsafe"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -1650,7 +1707,7 @@ fn all_rules() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("check"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1698,7 +1755,7 @@ fn top_level_all_down_level_not_all() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("check"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1746,7 +1803,7 @@ fn top_level_not_all_down_level_all() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("check"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1783,7 +1840,7 @@ fn ignore_configured_globals() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("check"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1838,11 +1895,14 @@ file2.js
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("check"),
-            file_path1.as_os_str().to_str().unwrap(),
-            file_path2.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("check"),
+                file_path1.as_os_str().to_str().unwrap(),
+                file_path2.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1899,12 +1959,15 @@ fn ignore_vcs_os_independent_parse() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("check"),
-            file_path1.as_os_str().to_str().unwrap(),
-            file_path2.as_os_str().to_str().unwrap(),
-            file_path3.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("check"),
+                file_path1.as_os_str().to_str().unwrap(),
+                file_path2.as_os_str().to_str().unwrap(),
+                file_path3.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1947,15 +2010,18 @@ file2.js
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("check"),
-            ("--vcs-enabled=true"),
-            ("--vcs-client-kind=git"),
-            ("--vcs-use-ignore-file=true"),
-            ("--vcs-root=."),
-            file_path1.as_os_str().to_str().unwrap(),
-            file_path2.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("check"),
+                ("--vcs-enabled=true"),
+                ("--vcs-client-kind=git"),
+                ("--vcs-use-ignore-file=true"),
+                ("--vcs-root=."),
+                file_path1.as_os_str().to_str().unwrap(),
+                file_path2.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1981,7 +2047,7 @@ fn check_stdin_apply_successfully() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("check"), "--apply", ("--stdin-file-path"), ("mock.js")]),
+        Args::from([("check"), "--apply", ("--stdin-file-path"), ("mock.js")].as_slice()),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -2019,13 +2085,16 @@ fn check_stdin_apply_unsafe_successfully() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("check"),
-            "--organize-imports-enabled=true",
-            "--apply-unsafe",
-            ("--stdin-file-path"),
-            ("mock.js"),
-        ]),
+        Args::from(
+            [
+                ("check"),
+                "--organize-imports-enabled=true",
+                "--apply-unsafe",
+                ("--stdin-file-path"),
+                ("mock.js"),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -2066,15 +2135,18 @@ fn check_stdin_apply_unsafe_only_organize_imports() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("check"),
-            "--organize-imports-enabled=true",
-            "--linter-enabled=false",
-            "--formatter-enabled=false",
-            "--apply-unsafe",
-            ("--stdin-file-path"),
-            ("mock.js"),
-        ]),
+        Args::from(
+            [
+                ("check"),
+                "--organize-imports-enabled=true",
+                "--linter-enabled=false",
+                "--formatter-enabled=false",
+                "--apply-unsafe",
+                ("--stdin-file-path"),
+                ("mock.js"),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -2131,7 +2203,7 @@ fn should_apply_correct_file_source() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("check"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -2165,11 +2237,14 @@ fn apply_unsafe_no_assign_in_expression() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("check"),
-            file_path.as_os_str().to_str().unwrap(),
-            ("--apply-unsafe"),
-        ]),
+        Args::from(
+            [
+                ("check"),
+                file_path.as_os_str().to_str().unwrap(),
+                ("--apply-unsafe"),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -2227,7 +2302,7 @@ fn should_not_enable_all_recommended_rules() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("check"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -2277,7 +2352,7 @@ array.map((sentence) => sentence.split(" ")).flat();
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("check"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -2330,7 +2405,7 @@ if (true) {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("check"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("check"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -2358,11 +2433,14 @@ fn apply_bogus_argument() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("check"),
-            file_path.as_os_str().to_str().unwrap(),
-            ("--apply-unsafe"),
-        ]),
+        Args::from(
+            [
+                ("check"),
+                file_path.as_os_str().to_str().unwrap(),
+                ("--apply-unsafe"),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -2390,12 +2468,15 @@ fn ignores_unknown_file() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("check"),
-            file_path1.as_os_str().to_str().unwrap(),
-            file_path2.as_os_str().to_str().unwrap(),
-            "--files-ignore-unknown=true",
-        ]),
+        Args::from(
+            [
+                ("check"),
+                file_path1.as_os_str().to_str().unwrap(),
+                file_path2.as_os_str().to_str().unwrap(),
+                "--files-ignore-unknown=true",
+            ]
+            .as_slice(),
+        ),
     );
 
     assert_cli_snapshot(SnapshotPayload::new(
@@ -2436,7 +2517,7 @@ fn check_json_files() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("check"), file_path1.as_os_str().to_str().unwrap()]),
+        Args::from([("check"), file_path1.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -2458,7 +2539,7 @@ fn doesnt_error_if_no_files_were_processed() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("check"), "--no-errors-on-unmatched", ("file.js")]),
+        Args::from([("check"), "--no-errors-on-unmatched", ("file.js")].as_slice()),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");

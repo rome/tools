@@ -30,7 +30,7 @@ fn extends_config_ok_formatter_no_linter() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("check"), test_file.as_os_str().to_str().unwrap()]),
+        Args::from([("check"), test_file.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -78,7 +78,7 @@ fn extends_config_ok_linter_not_formatter() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("check"), test_file.as_os_str().to_str().unwrap()]),
+        Args::from([("check"), test_file.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -116,7 +116,7 @@ fn extends_should_raise_an_error_for_unresolved_configuration() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("check"), test_file.as_os_str().to_str().unwrap()]),
+        Args::from([("check"), test_file.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -154,11 +154,14 @@ fn extends_should_raise_an_error_for_unresolved_configuration_and_show_verbose()
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("check"),
-            "--verbose",
-            test_file.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("check"),
+                "--verbose",
+                test_file.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -196,11 +199,14 @@ fn extends_resolves_when_using_config_path() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("check"),
-            "--config-path=config/",
-            test_file.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("check"),
+                "--config-path=config/",
+                test_file.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
