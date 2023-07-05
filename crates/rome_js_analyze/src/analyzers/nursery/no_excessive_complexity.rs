@@ -86,22 +86,24 @@ impl Rule for NoExcessiveComplexity {
             max_allowed_complexity,
         } = ctx.options();
 
+        let range = function_like
+            .name_range()
+            .or_else(|| {
+                function_like
+                    .function_token()
+                    .map(|token| token.text_range())
+            })
+            .or_else(|| {
+                function_like
+                    .fat_arrow_token()
+                    .map(|token| token.text_range())
+            })
+            .or_else(|| function_like.body().ok().map(|body| body.range()))?;
+
         Some(
             RuleDiagnostic::new(
                 rule_category!(),
-                function_like
-                    .name_range()
-                    .or_else(|| {
-                        function_like
-                            .function_token()
-                            .map(|token| token.text_range())
-                    })
-                    .or_else(|| {
-                        function_like
-                            .fat_arrow_token()
-                            .map(|token| token.text_range())
-                    })
-                    .or_else(|| function_like.body().ok().map(|body| body.range()))?,
+                range,
                 markup!("Excessive complexity detected."),
             )
             .note(if calculated_score == &MAX_SCORE {
