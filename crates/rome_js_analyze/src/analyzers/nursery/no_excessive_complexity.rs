@@ -58,6 +58,21 @@ declare_rule! {
     /// }
     /// ```
     ///
+    /// ## Options
+    ///
+    /// Allows to specify the maximum allowed complexity.
+    ///
+    /// ```json
+    /// {
+    ///     "//": "...",
+    ///     "options": {
+    ///         "maxAllowedComplexity": 15
+    ///     }
+    /// }
+    /// ```
+    ///
+    /// The allowed values range from 1 through 254. The default is 10.
+    ///
     pub(crate) NoExcessiveComplexity {
         version: "next",
         name: "noExcessiveComplexity",
