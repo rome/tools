@@ -10,7 +10,7 @@ use snap_test::assert_cli_snapshot;
 use bpaf::ParseFailure;
 use std::path::Path;
 
-use rome_cli::{parse_command, CliDiagnostic, CliSession};
+use rome_cli::{rome_command, CliDiagnostic, CliSession};
 use rome_console::{markup, BufferConsole, Console, ConsoleExt};
 use rome_fs::{FileSystem, MemoryFileSystem};
 use rome_service::{App, DynRef};
@@ -39,7 +39,7 @@ mod help {
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
             &mut console,
-            Args::from(&[("unknown"), ("--help")]),
+            Args::from([("unknown"), ("--help")].as_slice()),
         );
 
         assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -58,7 +58,7 @@ mod main {
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
             &mut console,
-            Args::from(&[("unknown")]),
+            Args::from([("unknown")].as_slice()),
         );
         assert!(result.is_err(), "run_cli returned {result:?}");
     }
@@ -71,7 +71,7 @@ mod main {
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
             &mut console,
-            Args::from(&[("format"), ("--unknown"), ("file.js")]),
+            Args::from([("format"), ("--unknown"), ("file.js")].as_slice()),
         );
 
         assert!(result.is_err(), "run_cli returned {result:?}");
@@ -85,7 +85,7 @@ mod main {
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
             &mut console,
-            Args::from(&[("format")]),
+            Args::from([("format")].as_slice()),
         );
 
         assert!(result.is_err(), "run_cli returned {result:?}");
@@ -99,7 +99,7 @@ mod main {
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
             &mut console,
-            Args::from(&[("format"), ("--write")]),
+            Args::from([("format"), ("--write")].as_slice()),
         );
         assert!(result.is_err(), "run_cli returned {result:?}");
     }
@@ -112,7 +112,7 @@ mod main {
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
             &mut console,
-            Args::from(&[("check"), ("--max-diagnostics=foo")]),
+            Args::from([("check"), ("--max-diagnostics=foo")].as_slice()),
         );
 
         assert!(result.is_err(), "run_cli returned {result:?}");
@@ -126,7 +126,7 @@ mod main {
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
             &mut console,
-            Args::from(&[("check"), ("--max-diagnostics=500")]),
+            Args::from([("check"), ("--max-diagnostics=500")].as_slice()),
         );
 
         assert!(result.is_err(), "run_cli returned {result:?}");
@@ -134,7 +134,7 @@ mod main {
     //
     // #[test]
     // fn no_colors() {
-    //     let mut args = Args::from(&[("--colors=off")]);
+    //     let mut args = Args::from([("--colors=off")]);
     //     let result = color_from_arguments(&mut args);
     //
     //     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -142,7 +142,7 @@ mod main {
     //
     // #[test]
     // fn force_colors() {
-    //     let mut args = Args::from(&[("--colors=force")]);
+    //     let mut args = Args::from([("--colors=force")]);
     //     let result = color_from_arguments(&mut args);
     //
     //     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -150,7 +150,7 @@ mod main {
     //
     // #[test]
     // fn invalid_colors() {
-    //     let mut args = Args::from(&[("--colors=other")]);
+    //     let mut args = Args::from([("--colors=other")]);
     //     let result = color_from_arguments(&mut args);
     //     assert!(result.is_err(), "run_cli returned {result:?}");
     // }
@@ -179,7 +179,7 @@ mod configuration {
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
             &mut console,
-            Args::from(&[("format"), ("file.js")]),
+            Args::from([("format"), ("file.js")].as_slice()),
         );
 
         assert!(result.is_err(), "run_cli returned {result:?}");
@@ -204,7 +204,7 @@ mod configuration {
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
             &mut console,
-            Args::from(&[("format"), ("file.js")]),
+            Args::from([("format"), ("file.js")].as_slice()),
         );
 
         assert!(result.is_err(), "run_cli returned {result:?}");
@@ -229,7 +229,7 @@ mod configuration {
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
             &mut console,
-            Args::from(&[("check"), ("file.js")]),
+            Args::from([("check"), ("file.js")].as_slice()),
         );
 
         assert!(result.is_err(), "run_cli returned {result:?}");
@@ -254,7 +254,7 @@ mod configuration {
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
             &mut console,
-            Args::from(&[("check"), ("file.js")]),
+            Args::from([("check"), ("file.js")].as_slice()),
         );
 
         assert!(result.is_err(), "run_cli returned {result:?}");
@@ -282,7 +282,7 @@ mod configuration {
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
             &mut console,
-            Args::from(&[("check"), ("file.js")]),
+            Args::from([("check"), ("file.js")].as_slice()),
         );
 
         assert!(result.is_err(), "run_cli returned {result:?}");
@@ -307,11 +307,14 @@ mod reporter_json {
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
             &mut console,
-            Args::from(&[
-                ("format"),
-                ("--json"),
-                file_path.as_os_str().to_str().unwrap(),
-            ]),
+            Args::from(
+                [
+                    ("format"),
+                    ("--json"),
+                    file_path.as_os_str().to_str().unwrap(),
+                ]
+                .as_slice(),
+            ),
         );
 
         eprintln!("{:?}", console.out_buffer);
@@ -351,12 +354,15 @@ mod reporter_json {
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
             &mut console,
-            Args::from(&[
-                "format",
-                "--write",
-                "--json",
-                file_path.as_os_str().to_str().unwrap(),
-            ]),
+            Args::from(
+                [
+                    "format",
+                    "--write",
+                    "--json",
+                    file_path.as_os_str().to_str().unwrap(),
+                ]
+                .as_slice(),
+            ),
         );
 
         assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -416,13 +422,13 @@ pub(crate) fn run_cli<'app>(
     let app = App::new(fs, console, WorkspaceRef::Owned(workspace));
 
     let mut session = CliSession { app };
-    let command = parse_command().run_inner(args);
+    let command = rome_command().run_inner(args);
     match command {
         Ok(command) => session.run(command),
         Err(failure) => {
-            if let ParseFailure::Stdout(help) = &failure {
+            if let ParseFailure::Stdout(help, _) = &failure {
                 let console = &mut session.app.console;
-                console.log(markup! {{help}});
+                console.log(markup! {{help.to_string()}});
                 Ok(())
             } else {
                 Err(CliDiagnostic::parse_error_bpaf(failure))

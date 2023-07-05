@@ -1,6 +1,6 @@
 use crate::cli_options::{cli_options, CliOptions, ColorsArg};
 use crate::VERSION;
-use bpaf::{Bpaf, OptionParser};
+use bpaf::Bpaf;
 use rome_service::configuration::vcs::VcsConfiguration;
 use rome_service::configuration::{
     configuration, files_configuration, formatter_configuration, javascript::javascript_formatter,
@@ -21,6 +21,9 @@ pub(crate) mod version;
 
 #[derive(Debug, Clone, Bpaf)]
 #[bpaf(options, version(VERSION))]
+/// Rome CLI
+///
+/// Rome official CLI. Use it to check the health of your project or run it to check single files.
 pub enum RomeCommand {
     /// Shows the Rome version information and quit
     #[bpaf(command)]
@@ -231,12 +234,4 @@ impl RomeCommand {
             RomeCommand::PrintSocket => false,
         }
     }
-}
-
-pub fn parse_command() -> OptionParser<RomeCommand> {
-    rome_command()
-        .header("Rome CLI")
-        .usage("rome COMMAND [ARG]")
-		.version(VERSION)
-		.descr("Rome official CLI. Use it to check the health of your project or run ti to check single files!")
 }

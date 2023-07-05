@@ -17,7 +17,7 @@ fn ok() {
     let result = run_rage(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("rage")]),
+        Args::from([("rage")].as_slice()),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -47,7 +47,7 @@ fn with_configuration() {
     let result = run_rage(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("rage")]),
+        Args::from([("rage")].as_slice()),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -77,7 +77,7 @@ fn with_malformed_configuration() {
     let result = run_rage(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("rage")]),
+        Args::from([("rage")].as_slice()),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -144,7 +144,7 @@ Not most recent log file
         run_cli(
             DynRef::Borrowed(&mut fs),
             &mut console,
-            Args::from(&[("rage")]),
+            Args::from([("rage")].as_slice()),
         )
     };
 
