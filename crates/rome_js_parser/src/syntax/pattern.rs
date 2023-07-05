@@ -24,13 +24,13 @@ pub(crate) trait ParseWithDefaultPattern {
     fn parse_pattern_with_optional_default(&self, p: &mut JsParser) -> ParsedSyntax {
         let pattern = self.parse_pattern(p);
 
-        // test_err js_invalid_assignment
+        // test_err js js_invalid_assignment
         // ([=[(p[=[(p%]>([=[(p[=[(
         if p.at(T![=]) {
             let with_default = pattern.precede_or_add_diagnostic(p, Self::expected_pattern_error);
             p.bump_any(); // eat the = token
 
-            // test pattern_with_default_in_keyword
+            // test js pattern_with_default_in_keyword
             // for ([a = "a" in {}] in []) {}
             parse_assignment_expression_or_higher(p, ExpressionContext::default())
                 .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);

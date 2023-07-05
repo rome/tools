@@ -31,7 +31,7 @@ use rome_rowan::SyntaxKind;
 
 /// A function declaration, this could be async and or a generator. This takes a marker
 /// because you need to first advance over async or start a marker and feed it in.
-// test function_decl
+// test js function_decl
 // function foo1() {}
 // function *foo2() {}
 // async function *foo3() {}
@@ -40,11 +40,11 @@ use rome_rowan::SyntaxKind;
 //   yield foo;
 // }
 //
-// test function_declaration_script
+// test js function_declaration_script
 // // SCRIPT
 // function test(await) {}
 //
-// test_err function_decl_err
+// test_err js function_decl_err
 // function() {}
 // function foo {}
 // function {}
@@ -57,7 +57,7 @@ use rome_rowan::SyntaxKind;
 // function foo4(await) {}
 // function foo5(yield) {}
 //
-// test_err function_broken
+// test_err js function_broken
 // function foo())})}{{{  {}
 //
 // test ts ts_function_statement
@@ -86,14 +86,14 @@ pub(super) fn parse_function_declaration(
 
     if context != StatementContext::StatementList && !function.kind(p).is_bogus() {
         if JsSyntaxFeature::StrictMode.is_supported(p) {
-            // test_err function_in_single_statement_context_strict
+            // test_err js function_in_single_statement_context_strict
             // if (true) function a() {}
             // label1: function b() {}
             // while (true) function c() {}
             p.error(p.err_builder("In strict mode code, functions can only be declared at top level or inside a block", function.range(p)).hint( "wrap the function in a block statement"));
             function.change_to_bogus(p);
         } else if !matches!(context, StatementContext::If | StatementContext::Label) {
-            // test function_in_if_or_labelled_stmt_loose_mode
+            // test js function_in_if_or_labelled_stmt_loose_mode
             // // SCRIPT
             // label1: function a() {}
             // if (true) function b() {} else function c() {}
@@ -116,7 +116,7 @@ pub(super) fn parse_function_expression(p: &mut JsParser) -> ParsedSyntax {
     Present(parse_function(p, m, FunctionKind::Expression))
 }
 
-// test export_default_function_clause
+// test js export_default_function_clause
 // export default function test(a, b) {}
 //
 // test ts ts_export_default_function_overload
@@ -205,7 +205,7 @@ fn parse_function(p: &mut JsParser, m: Marker, kind: FunctionKind) -> CompletedM
 
     let in_async = is_at_async_function(p, LineBreak::DoNotCheck);
     if in_async {
-        // test_err function_escaped_async
+        // test_err js function_escaped_async
         // void \u0061sync function f(){}
         p.eat(T![async]);
         flags |= SignatureFlags::ASYNC;
@@ -304,7 +304,7 @@ fn parse_function(p: &mut JsParser, m: Marker, kind: FunctionKind) -> CompletedM
 
         let mut function = m.complete(p, kind.into());
 
-        // test_err async_or_generator_in_single_statement_context
+        // test_err js async_or_generator_in_single_statement_context
         // if (true) async function t() {}
         // if (true) function* t() {}
         if kind.is_in_single_statement_context() && (in_async || generator_range.is_some()) {
@@ -316,7 +316,7 @@ fn parse_function(p: &mut JsParser, m: Marker, kind: FunctionKind) -> CompletedM
     }
 }
 
-// test_err break_in_nested_function
+// test_err js break_in_nested_function
 // while (true) {
 //   function helper() {
 //     break;
@@ -332,14 +332,14 @@ fn parse_function_id(p: &mut JsParser, kind: FunctionKind, flags: SignatureFlags
     match kind {
         // Takes the async and generator restriction from the expression
         FunctionKind::Expression => {
-            // test function_expression_id
+            // test js function_expression_id
             // // SCRIPT
             // (function await() {});
             // (function yield() {});
             // (async function yield() {});
             // (function* await() {})
             //
-            // test_err function_expression_id_err
+            // test_err js function_expression_id_err
             // (async function await() {});
             // (function* yield() {});
             // function* test() { function yield() {} }
@@ -347,7 +347,7 @@ fn parse_function_id(p: &mut JsParser, kind: FunctionKind, flags: SignatureFlags
         }
         // Inherits the async and generator from the parent
         _ => {
-            // test function_id
+            // test js function_id
             // // SCRIPT
             // function test() {}
             // function await(test) {}
@@ -356,7 +356,7 @@ fn parse_function_id(p: &mut JsParser, kind: FunctionKind, flags: SignatureFlags
             // function* yield(test) {}
             //
             //
-            // test_err function_id_err
+            // test_err js function_id_err
             // function* test() {
             //   function yield(test) {}
             // }
@@ -535,7 +535,7 @@ fn try_parse_parenthesized_arrow_function_head(
 ) -> Result<(Marker, SignatureFlags), Marker> {
     let m = p.start();
 
-    // test_err arrow_escaped_async
+    // test_err js arrow_escaped_async
     // \u0061sync () => {}
     let flags = if p.eat(T![async]) {
         SignatureFlags::ASYNC
@@ -555,7 +555,7 @@ fn try_parse_parenthesized_arrow_function_head(
         return Err(m);
     }
 
-    // test_err ts ts_decorator_on_arrow_function
+    // test_err ts ts_decorator_on_arrow_function { "parse_class_parameter_decorators": true }
     // const method = (@dec x, second, @dec third = 'default') => {};
     // const method = (@dec.fn() x, second, @dec.fn() third = 'default') => {};
     // const method = (@dec() x, second, @dec() third = 'default') => {};
@@ -640,14 +640,14 @@ enum IsParenthesizedArrowFunctionExpression {
     Unknown,
 }
 
-// test paren_or_arrow_expr
+// test js paren_or_arrow_expr
 // (foo);
 // (foo) => {};
 // (5 + 5);
 // ({foo, bar, b: [f, ...baz]}) => {};
 // (foo, ...bar) => {}
 
-// test_err paren_or_arrow_expr_invalid_params
+// test_err js paren_or_arrow_expr_invalid_params
 // (5 + 5) => {}
 // (a, ,b) => {}
 // (a, b) =>;
@@ -664,7 +664,7 @@ fn is_parenthesized_arrow_function_expression(
             is_parenthesized_arrow_function_expression_impl(p, SignatureFlags::empty())
         }
         T![async] => {
-            // test async_arrow_expr
+            // test js async_arrow_expr
             // let a = async foo => {}
             // let b = async (bar) => {}
             // async (foo, bar, ...baz) => foo
@@ -806,7 +806,7 @@ fn arrow_function_parameter_flags(p: &JsParser, mut flags: SignatureFlags) -> Si
     flags
 }
 
-// test arrow_expr_single_param
+// test js arrow_expr_single_param
 // // SCRIPT
 // foo => {}
 // yield => {}
@@ -828,7 +828,7 @@ fn parse_arrow_function_with_single_parameter(p: &mut JsParser) -> ParsedSyntax 
         SignatureFlags::empty()
     };
 
-    // test_err async_arrow_expr_await_parameter
+    // test_err js async_arrow_expr_await_parameter
     // let a = async await => {}
     // async() => { (a = await) => {} };
     // async() => { (a = await 10) => {} };
@@ -844,7 +844,7 @@ fn parse_arrow_function_with_single_parameter(p: &mut JsParser) -> ParsedSyntax 
 fn is_arrow_function_with_single_parameter(p: &mut JsParser) -> bool {
     // a => ...
     if p.nth_at(1, T![=>]) {
-        // test single_parameter_arrow_function_with_parameter_named_async
+        // test js single_parameter_arrow_function_with_parameter_named_async
         // let id = async => async;
         is_at_identifier_binding(p) && !p.has_nth_preceding_line_break(1)
     }
@@ -859,7 +859,7 @@ fn is_arrow_function_with_single_parameter(p: &mut JsParser) -> bool {
 }
 
 fn parse_arrow_body(p: &mut JsParser, mut flags: SignatureFlags) -> ParsedSyntax {
-    // test arrow_in_constructor
+    // test js arrow_in_constructor
     // class A {
     //   constructor() {
     //     () => { super() };
@@ -888,7 +888,7 @@ pub(crate) fn parse_any_parameter(
     let parameter = match p.cur() {
         T![...] => parse_rest_parameter(p, decorator_list, expression_context),
         T![this] => {
-            // test_err ts ts_decorator_this_parameter
+            // test_err ts ts_decorator_this_parameter_option { "parse_class_parameter_decorators": true }
             // class A {
             //   method(@dec this) {}
             //   method(@dec(val) this) {}
@@ -961,7 +961,7 @@ pub(crate) fn parse_rest_parameter(
         .ok();
 
     if let Present(initializer) = parse_initializer_clause(p, ExpressionContext::default()) {
-        // test_err arrow_rest_in_expr_in_initializer
+        // test_err js arrow_rest_in_expr_in_initializer
         // for ((...a = "b" in {}) => {};;) {}
         let err = p.err_builder(
             "rest elements may not have default initializers",
@@ -1069,7 +1069,7 @@ impl ParameterContext {
 // function b(...rest: string[] = "init") {}
 // function c(...rest, b: string) {}
 //
-// test_err js_formal_parameter_error
+// test_err js js_formal_parameter_error
 // function a(x: string) {}
 // function b(x?) {}
 pub(crate) fn parse_formal_parameter(
@@ -1078,13 +1078,19 @@ pub(crate) fn parse_formal_parameter(
     parameter_context: ParameterContext,
     expression_context: ExpressionContext,
 ) -> ParsedSyntax {
-    // test ts ts_formal_parameter_decorator
+    // test ts ts_formal_parameter_decorator { "parse_class_parameter_decorators": true }
     // class Foo {
     //    constructor(@dec x) {}
     //    method(@dec x) {}
     // }
 
-    // test_err ts ts_formal_parameter_decorator
+    // test_err ts ts_formal_parameter_decorator_option
+    // class Foo {
+    //    constructor(@dec x) {}
+    //    method(@dec x) {}
+    // }
+
+    // test_err ts ts_formal_parameter_decorator { "parse_class_parameter_decorators": true }
     // function a(@dec x) {}
 
     // we use a checkpoint to avoid bogus nodes if the binding pattern fails to parse.
@@ -1196,7 +1202,7 @@ pub(super) fn skip_parameter_start(p: &mut JsParser) -> bool {
     }
 }
 
-// test parameter_list
+// test js parameter_list
 // function evalInComputedPropertyKey({ [computed]: ignored }) {}
 /// parse the whole list of parameters, brackets included
 pub(super) fn parse_parameter_list(
@@ -1215,7 +1221,17 @@ pub(super) fn parse_parameter_list(
             let decorator_list = parse_parameter_decorators(p);
 
             let decorator_list = if parameter_context.is_any_class_method() {
-                // test ts ts_decorator_on_class_method
+                // test_err ts ts_decorator_on_class_method
+                // class A {
+                //     method(@dec x, second, @dec third = 'default') {}
+                //     method(@dec.fn() x, second, @dec.fn() third = 'default') {}
+                //     method(@dec() x, second, @dec() third = 'default') {}
+                //     static method(@dec x, second, @dec third = 'default') {}
+                //     static method(@dec.fn() x, second, @dec.fn() third = 'default') {}
+                //     static method(@dec() x, second, @dec() third = 'default') {}
+                // }
+
+                // test ts ts_decorator_on_class_method { "parse_class_parameter_decorators": true }
                 // class A {
                 //     method(@dec x, second, @dec third = 'default') {}
                 //     method(@dec.fn() x, second, @dec.fn() third = 'default') {}
@@ -1226,27 +1242,27 @@ pub(super) fn parse_parameter_list(
                 // }
                 decorator_list
             } else {
-                // test_err ts ts_decorator_on_function_declaration
+                // test_err ts ts_decorator_on_function_declaration { "parse_class_parameter_decorators": true }
                 // function method(@dec x, second, @dec third = 'default') {}
                 // function method(@dec.fn() x, second, @dec.fn() third = 'default') {}
                 // function method(@dec() x, second, @dec() third = 'default') {}
 
-                // test_err ts ts_decorator_on_function_expression
+                // test_err ts ts_decorator_on_function_expression { "parse_class_parameter_decorators": true }
                 // const expr = function method(@dec x, second, @dec third = 'default') {}
                 // const expr = function method(@dec.fn() x, second, @dec.fn() third = 'default') {}
                 // const expr = function method(@dec() x, second, @dec() third = 'default') {}
 
-                // test_err ts ts_decorator_on_function_type
+                // test_err ts ts_decorator_on_function_type { "parse_class_parameter_decorators": true }
                 // type I = (@dec x, second, @dec third = 'default') => string;
                 // type I = (@dec.fn() x, second, @dec.fn() third = 'default') => string;
                 // type I = (@dec() x, second, @dec() third = 'default') => string;
 
-                // test_err ts ts_decorator_on_constructor_type
+                // test_err ts ts_decorator_on_constructor_type { "parse_class_parameter_decorators": true }
                 // type I = new(@dec x, second, @dec third = 'default') => string;
                 // type I = abstract new(@dec.fn() x, second, @dec.fn() third = 'default') => string;
                 // type I = abstract new(@dec() x, second, @dec() third = 'default') => string;
 
-                // test_err ts ts_decorator_on_signature_member
+                // test_err ts ts_decorator_on_signature_member { "parse_class_parameter_decorators": true }
                 // type A = {new (@dec x, second, @dec third = 'default'): string; }
                 // type B = {method(@dec.fn() x, second, @dec.fn() third = 'default'): string; }
                 // type C = {
@@ -1254,7 +1270,7 @@ pub(super) fn parse_parameter_list(
                 //	method(@dec.fn() x, second, @dec.fn() third = 'default'): string;
                 // }
 
-                // test_err ts ts_decorator_on_ambient_function
+                // test_err ts ts_decorator_on_ambient_function { "parse_class_parameter_decorators": true }
                 // declare module a {
                 // 		function method(@dec x, second, @dec third = 'default') {}
                 // 		function method(@dec.fn() x, second, @dec.fn() third = 'default') {}
@@ -1318,10 +1334,10 @@ pub(super) fn parse_parameters_list(
                 continue;
             }
 
-            // test_err formal_params_no_binding_element
+            // test_err js formal_params_no_binding_element
             // function foo(true) {}
 
-            // test_err formal_params_invalid
+            // test_err js formal_params_invalid
             // function (a++, c) {}
             let recovered_result = parameter.or_recover(
                 p,

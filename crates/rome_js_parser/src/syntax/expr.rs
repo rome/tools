@@ -143,7 +143,7 @@ pub(crate) fn parse_expression_or_recover_to_next_statement(
 /// A literal expression.
 ///
 /// `TRUE | FALSE | NUMBER | STRING | NULL`
-// test literals
+// test js literals
 // 5
 // true
 // false
@@ -156,7 +156,7 @@ pub(crate) fn parse_expression_or_recover_to_next_statement(
 // new-line";
 // /^[يفمئامئ‍ئاسۆند]/i; //regex with unicode
 
-// test_err literals
+// test_err js literals
 // 00, 012, 08, 091, 0789 // parser errors
 // 01n, 0_0, 01.2 // lexer errors
 // "test
@@ -244,7 +244,7 @@ fn parse_assignment_expression_or_higher_base(
     p: &mut JsParser,
     context: ExpressionContext,
 ) -> ParsedSyntax {
-    // test reparse_yield_as_identifier
+    // test js reparse_yield_as_identifier
     // // SCRIPT
     // function foo() { yield *bar; }
     // function bar() { yield; }
@@ -258,7 +258,7 @@ fn parse_assignment_expression_or_higher_base(
         .and_then(|target| parse_assign_expr_recursive(p, target, checkpoint, context))
 }
 
-// test assign_expr
+// test js assign_expr
 // foo += bar = b ??= 3;
 // foo -= bar;
 // (foo = bar);
@@ -268,18 +268,18 @@ fn parse_assignment_expression_or_higher_base(
 // ({ bar, baz } = {});
 // ({ bar: [baz = "baz"], foo = "foo", ...rest } = {});
 
-// test_err assign_expr_right
+// test_err js assign_expr_right
 // (foo = );
 
-// test_err assign_expr_left
+// test_err js assign_expr_left
 // ( = foo);
 
-// test assign_eval_member_or_computed_expr
+// test js assign_eval_member_or_computed_expr
 // eval.foo = 10
 // arguments[1] = "baz"
 // eval[2] = "Chungking Express"
 
-// test_err assign_eval_or_arguments
+// test_err js assign_eval_or_arguments
 // eval = 0
 // eval ??= 2
 // eval *= 4
@@ -342,7 +342,7 @@ fn is_assign_token(kind: JsSyntaxKind) -> bool {
     )
 }
 
-// test yield_expr
+// test js yield_expr
 // function *foo() {
 //  yield foo;
 //  yield* foo;
@@ -355,7 +355,7 @@ fn parse_yield_expression(p: &mut JsParser, context: ExpressionContext) -> Compl
     let yield_range = p.cur_range();
     p.expect(T![yield]);
 
-    // test yield_in_generator_function
+    // test js yield_in_generator_function
     // function* foo() { yield 10; }
     // function* foo() { yield *bar; }
     // function* foo() { yield; }
@@ -368,24 +368,24 @@ fn parse_yield_expression(p: &mut JsParser, context: ExpressionContext) -> Compl
 
     let mut yield_expr = m.complete(p, JS_YIELD_EXPRESSION);
 
-    // test_err yield_at_top_level_module
+    // test_err js yield_at_top_level_module
     // yield 10;
 
-    // test_err yield_at_top_level_script
+    // test_err js yield_at_top_level_script
     // // SCRIPT
     // yield 10;
 
-    // test_err yield_in_non_generator_function_script
+    // test_err js yield_in_non_generator_function_script
     // // SCRIPT
     // function foo() { yield bar; }
     // function foo() { yield 10; }
 
-    // test_err yield_in_non_generator_function_module
+    // test_err js yield_in_non_generator_function_module
     // function foo() { yield; }
     // function foo() { yield foo; }
     // function foo() { yield *foo; }
     if !(p.state().in_generator() && p.state().in_function()) {
-        // test_err yield_expr_in_parameter_initializer
+        // test_err js yield_expr_in_parameter_initializer
         // function* test(a = yield "test") {}
         // function test2(a = yield "test") {}
         p.error(p.err_builder(
@@ -399,11 +399,11 @@ fn parse_yield_expression(p: &mut JsParser, context: ExpressionContext) -> Compl
 }
 
 /// A conditional expression such as `foo ? bar : baz`
-// test conditional_expr
+// test js conditional_expr
 // foo ? bar : baz
 // foo ? bar : baz ? bar : baz
 pub(super) fn parse_conditional_expr(p: &mut JsParser, context: ExpressionContext) -> ParsedSyntax {
-    // test_err conditional_expr_err
+    // test_err js conditional_expr_err
     // foo ? bar baz
     // foo ? bar baz ? foo : bar
     // foo ? bar :
@@ -443,7 +443,7 @@ fn parse_binary_or_logical_expression(
     left_precedence: OperatorPrecedence,
     context: ExpressionContext,
 ) -> ParsedSyntax {
-    // test private_name_presence_check
+    // test js private_name_presence_check
     // class A {
     // 	#prop;
     // 	test() {
@@ -455,7 +455,7 @@ fn parse_binary_or_logical_expression(
     parse_binary_or_logical_expression_recursive(p, left, left_precedence, context)
 }
 
-// test binary_expressions
+// test js binary_expressions
 // 5 * 5
 // 6 ** 6 ** 7
 // 1 + 2 * 3
@@ -470,7 +470,7 @@ fn parse_binary_or_logical_expression(
 // 5 + 6 - 1 * 2 / 1 ** 6
 // class Test { #name; test() { true && #name in {} } }
 
-// test_err binary_expressions_err
+// test_err js binary_expressions_err
 // foo(foo +);
 // foo + * 2;
 // !foo * bar;
@@ -486,7 +486,7 @@ fn parse_binary_or_logical_expression_recursive(
     // current operator has the same or a lower precedence than the left-hand side expression. Thus,
     // the algorithm goes at most `count(OperatorPrecedence)` levels deep.
     loop {
-        // test_err js_right_shift_comments
+        // test_err js js_right_shift_comments
         // 1 >> /* a comment */ > 2;
         let op = p.re_lex(ReLexContext::BinaryOperator);
 
@@ -533,7 +533,7 @@ fn parse_binary_or_logical_expression_recursive(
 
         let mut is_bogus = false;
         if let Present(left) = &mut left {
-            // test exponent_unary_parenthesized
+            // test js exponent_unary_parenthesized
             // (delete a.b) ** 2;
             // (void ident) ** 2;
             // (typeof ident) ** 2;
@@ -542,7 +542,7 @@ fn parse_binary_or_logical_expression_recursive(
             // (~3) ** 2;
             // (!true) ** 2;
 
-            // test_err exponent_unary_unparenthesized
+            // test_err js exponent_unary_unparenthesized
             // delete a.b ** 2;
             // void ident ** 2;
             // typeof ident ** 2;
@@ -619,7 +619,7 @@ fn parse_binary_or_logical_expression_recursive(
         // satisfies;
         // let precedence = "hello" satisfies string + 3 satisfies number satisfies number;
 
-        // test_err ts_satisfies_expression
+        // test_err js ts_satisfies_expression
         // let x = "hello" satisfies string;
         if op == T![satisfies] {
             parse_ts_type(p, TypeContext::default()).or_add_diagnostic(p, expected_ts_type);
@@ -644,12 +644,12 @@ fn parse_binary_or_logical_expression_recursive(
             JS_BOGUS_EXPRESSION
         } else {
             match op {
-                // test logical_expressions
+                // test js logical_expressions
                 // foo ?? bar
                 // a || b
                 // a && b
                 //
-                // test_err logical_expressions_err
+                // test_err js logical_expressions_err
                 // foo ?? * 2;
                 // !foo && bar;
                 // foo(foo ||)
@@ -668,7 +668,7 @@ fn parse_binary_or_logical_expression_recursive(
         // or is a standalone expression. Private names aren't allowed as standalone expressions
         // nor on the right-hand side
         if left.kind(p) == JS_PRIVATE_NAME {
-            // test_err private_name_presence_check_recursive
+            // test_err js private_name_presence_check_recursive
             // class A {
             // 	#prop;
             // 	test() {
@@ -690,21 +690,21 @@ fn parse_binary_or_logical_expression_recursive(
 }
 
 /// A member or new expression with subscripts. e.g. `new foo`, `new Foo()`, `foo`, or `foo().bar[5]`
-// test new_exprs
+// test js new_exprs
 // new Foo()
 // new foo;
 // new.target
 // new new new new Foo();
 // new Foo(bar, baz, 6 + 6, foo[bar] + ((foo) => {}) * foo?.bar)
 
-// test_err new_exprs
+// test_err js new_exprs
 // new;
 fn parse_member_expression_or_higher(p: &mut JsParser, context: ExpressionContext) -> ParsedSyntax {
     parse_primary_expression(p, context)
         .map(|lhs| parse_member_expression_rest(p, lhs, context, true, &mut false))
 }
 
-// test_err subscripts_err
+// test_err js subscripts_err
 // foo()?.baz[].;
 // BAR`b
 fn parse_member_expression_rest(
@@ -867,7 +867,7 @@ fn parse_new_expr(p: &mut JsParser, context: ExpressionContext) -> ParsedSyntax 
     Present(m.complete(p, JS_NEW_EXPRESSION))
 }
 
-// test super_expression
+// test js super_expression
 // class Test extends B {
 //   constructor() {
 //     super();
@@ -878,7 +878,7 @@ fn parse_new_expr(p: &mut JsParser, context: ExpressionContext) -> ParsedSyntax 
 //   }
 // }
 //
-// test_err super_expression_err
+// test_err js super_expression_err
 // class Test extends B {
 //   test() {
 //     super();
@@ -914,12 +914,12 @@ fn parse_super_expression(p: &mut JsParser) -> ParsedSyntax {
     }
 }
 
-// test subscripts
+// test js subscripts
 // foo`bar`
 // foo(bar)(baz)(baz)[bar]
 
 /// A static member expression for accessing a property
-// test static_member_expression
+// test js static_member_expression
 // foo.bar
 // foo.await
 // foo.yield
@@ -976,7 +976,7 @@ pub(super) fn parse_private_name(p: &mut JsParser) -> ParsedSyntax {
     p.expect(T![#]);
 
     if (is_nth_at_identifier_or_keyword(p, 0)) && hash_end != p.cur_range().start() {
-        // test_err private_name_with_space
+        // test_err js private_name_with_space
         // class A {
         // 	# test;
         // }
@@ -1008,7 +1008,7 @@ pub(super) fn parse_any_name(p: &mut JsParser) -> ParsedSyntax {
 }
 
 /// An array expression for property access or indexing, such as `foo[0]` or `foo?.["bar"]`
-// test computed_member_expression
+// test js computed_member_expression
 // foo[bar]
 // foo[5 + 5]
 // foo["bar"]
@@ -1019,7 +1019,7 @@ fn parse_computed_member_expression(
     lhs: CompletedMarker,
     optional_chain: bool,
 ) -> ParsedSyntax {
-    // test_err bracket_expr_err
+    // test_err js bracket_expr_err
     // foo[]
     // foo?.[]
     // foo[
@@ -1029,7 +1029,7 @@ fn parse_computed_member_expression(
     }
 
     p.expect(T!['[']);
-    // test computed_member_in
+    // test js computed_member_in
     // for ({}["x" in {}];;) {}
     parse_expression(p, ExpressionContext::default()).or_add_diagnostic(p, expected_expression);
 
@@ -1053,7 +1053,7 @@ pub(super) fn parse_name(p: &mut JsParser) -> ParsedSyntax {
 ///
 /// `"(" (AssignExpr ",")* ")"`
 
-// test call_arguments
+// test js call_arguments
 // function foo(...args) {}
 // let a, b, c, d;
 // foo(a);
@@ -1061,7 +1061,7 @@ pub(super) fn parse_name(p: &mut JsParser) -> ParsedSyntax {
 // foo(a, b, ...c);
 // foo(...a, ...b, c, ...d,);
 //
-// test_err invalid_arg_list
+// test_err js invalid_arg_list
 // function foo(...args) {}
 // let a, b, c;
 // foo(a,b;
@@ -1073,7 +1073,7 @@ fn parse_call_arguments(p: &mut JsParser) -> ParsedSyntax {
         return Absent;
     }
 
-    // test in_expr_in_arguments
+    // test js in_expr_in_arguments
     // function foo() {}
     // for (foo("call" in foo);;) {}
 
@@ -1130,18 +1130,18 @@ fn parse_call_arguments(p: &mut JsParser) -> ParsedSyntax {
     Present(m.complete(p, JS_CALL_ARGUMENTS))
 }
 
-// test parenthesized_sequence_expression
+// test js parenthesized_sequence_expression
 // (a, b);
 // (a, b, c);
 // (a, b, c, d, e, f);
 // (a, b, c, d, e, f)
 // (a, b, c)
 
-// test_err incomplete_parenthesized_sequence_expression
+// test_err js incomplete_parenthesized_sequence_expression
 // (a,;
 // (a, b, c;
 
-// test js_parenthesized_expression
+// test js js_parenthesized_expression
 // ((foo))
 // (foo)
 
@@ -1153,10 +1153,10 @@ fn parse_parenthesized_expression(p: &mut JsParser) -> ParsedSyntax {
     let m = p.start();
     p.bump(T!['(']);
 
-    // test for_with_in_in_parenthesized_expression
+    // test js for_with_in_in_parenthesized_expression
     // for((true,"selectionStart"in true);;) {}
     if p.at(T![')']) {
-        // test_err empty_parenthesized_expression
+        // test_err js empty_parenthesized_expression
         // ();
         p.error(
             p.err_builder(
@@ -1189,10 +1189,10 @@ pub(crate) fn parse_expression(p: &mut JsParser, context: ExpressionContext) -> 
     }
 }
 
-// test sequence_expr
+// test js sequence_expr
 // 1, 2, 3, 4, 5
 
-// test_err sequence_expr
+// test_err js sequence_expr
 // 1, 2, , 4
 fn parse_sequence_expression_recursive(
     p: &mut JsParser,
@@ -1271,7 +1271,7 @@ fn parse_primary_expression(p: &mut JsParser, context: ExpressionContext) -> Par
 
     let complete = match p.cur() {
         T![this] => {
-            // test this_expr
+            // test js this_expr
             // this
             // this.foo
             let m = p.start();
@@ -1283,7 +1283,7 @@ fn parse_primary_expression(p: &mut JsParser, context: ExpressionContext) -> Par
 
             return match p.cur() {
                 T![class] => {
-                    // test decorator_expression_class
+                    // test js decorator_expression_class
                     // let a = @decorator class {};
                     // let b = @first @second class foo {
                     //  constructor() {}
@@ -1291,7 +1291,7 @@ fn parse_primary_expression(p: &mut JsParser, context: ExpressionContext) -> Par
                     parse_class_expression(p, decorator_list)
                 }
                 _ => {
-                    // test_err decorator_expression_class
+                    // test_err js decorator_expression_class
                     // let a = @decorator () => {};
                     // let b = @first @second function foo() {}
                     // let a = @decorator ( () => {} )
@@ -1306,7 +1306,7 @@ fn parse_primary_expression(p: &mut JsParser, context: ExpressionContext) -> Par
             };
         }
         T![class] => {
-            // test class_expr
+            // test js class_expr
             // let a = class {};
             // let b = class foo {
             //  constructor() {}
@@ -1314,38 +1314,38 @@ fn parse_primary_expression(p: &mut JsParser, context: ExpressionContext) -> Par
             // foo[class {}]
             parse_class_expression(p, Absent).unwrap()
         }
-        // test async_ident
+        // test js async_ident
         // let a = async;
         T![async] if is_at_async_function(p, LineBreak::DoCheck) => {
-            // test async_function_expr
+            // test js async_function_expr
             // let a = async function() {};
             // let b = async function foo() {};
             parse_function_expression(p).unwrap()
         }
         T![function] => {
-            // test function_expr
+            // test js function_expr
             // let a = function() {}
             // let b = function foo() {}
 
             parse_function_expression(p).unwrap()
         }
-        // test grouping_expr
+        // test js grouping_expr
         // ((foo))
         // (foo)
         T!['('] => parse_parenthesized_expression(p).unwrap(),
         T!['['] => parse_array_expr(p).unwrap(),
         T!['{'] if context.is_object_expression_allowed() => parse_object_expression(p).unwrap(),
 
-        // test_err import_keyword_in_expression_position
+        // test_err js import_keyword_in_expression_position
         // let a = import;
         T![import] if matches!(p.nth(1), T![.] | T!['(']) => {
             let m = p.start();
             p.bump_any();
 
-            // test import_meta
+            // test js import_meta
             // import.meta
             if p.eat(T![.]) {
-                // test_err import_no_meta
+                // test_err js import_no_meta
                 // import.foo
                 // import.metaa
                 if p.at(T![ident]) && p.text(p.cur_range()) == "meta" {
@@ -1372,11 +1372,11 @@ fn parse_primary_expression(p: &mut JsParser, context: ExpressionContext) -> Par
                     m.complete(p, JS_BOGUS)
                 }
             } else {
-                // test import_call
+                // test js import_call
                 // import("foo")
                 // import("foo", { assert: { type: 'json' } })
 
-                // test_err import_invalid_args
+                // test_err js import_invalid_args
                 // import()
                 // import(...["foo"])
                 // import("foo", { assert: { type: 'json' } }, "bar")
@@ -1457,10 +1457,10 @@ fn parse_primary_expression(p: &mut JsParser, context: ExpressionContext) -> Par
         // let a = <number>b;
         T![<] if Jsx.is_supported(p) => return parse_jsx_tag_expression(p),
 
-        // test_err primary_expr_invalid_recovery
+        // test_err js primary_expr_invalid_recovery
         // let a = \; foo();
         t if t.is_contextual_keyword() || t.is_future_reserved_keyword() => {
-            // test identifier_reference
+            // test js identifier_reference
             // // SCRIPT
             // foo;
             // yield;
@@ -1480,7 +1480,7 @@ fn parse_identifier_expression(p: &mut JsParser) -> ParsedSyntax {
         .map(|identifier| identifier.precede(p).complete(p, JS_IDENTIFIER_EXPRESSION))
 }
 
-// test_err identifier
+// test_err js identifier
 // yield;
 // await;
 pub(crate) fn parse_reference_identifier(p: &mut JsParser) -> ParsedSyntax {
@@ -1491,17 +1491,17 @@ pub(crate) fn is_nth_at_reference_identifier(p: &mut JsParser, n: usize) -> bool
     is_nth_at_identifier(p, n)
 }
 
-// test identifier_loose_mode
+// test js identifier_loose_mode
 // // SCRIPT
 // foo;
 // yield;
 // await;
 //
-// test identifier
+// test js identifier
 // foo;
 // let accessor = 5;
 //
-// test_err identifier_err
+// test_err js identifier_err
 // yield;
 // await;
 // async function test(await) {}
@@ -1588,14 +1588,14 @@ pub(crate) fn is_nth_at_identifier_or_keyword(p: &mut JsParser, n: usize) -> boo
 }
 
 /// A template literal such as "`abcd ${efg}`"
-// test template_literal
+// test js template_literal
 // let a = `foo ${bar}`;
 // let b = ``;
 // let c = `${foo}`;
 // let d = `foo`;
 // let e = `${{ a: "string" }}`;
 
-// test_err template_literal
+// test_err js template_literal
 // let a = `foo ${}`
 // let b = `${a a}`
 fn parse_template_literal(
@@ -1620,14 +1620,14 @@ fn parse_template_literal(
 
     elements_list.complete(p, JS_TEMPLATE_ELEMENT_LIST);
 
-    // test_err template_literal_unterminated
+    // test_err js template_literal_unterminated
     // let a = `${foo} bar
 
     // The lexer emits an error for unterminated template literals
     p.eat(BACKTICK);
     let mut completed = marker.complete(p, JS_TEMPLATE_EXPRESSION);
 
-    // test_err template_after_optional_chain
+    // test_err js template_after_optional_chain
     // obj.val?.prop`template`
     // obj.val?.[expr]`template`
     // obj.func?.(args)`template`
@@ -1728,7 +1728,7 @@ impl ParseSeparatedList for ArrayElementsList {
 }
 
 /// An array literal such as `[foo, bar, ...baz]`.
-// test array_expr
+// test js array_expr
 // [foo, bar];
 // [foo];
 // [,foo];
@@ -1736,7 +1736,7 @@ impl ParseSeparatedList for ArrayElementsList {
 // [,,,,,foo,,,,];
 // [...a, ...b];
 
-// test_err array_expr_incomplete
+// test_err js array_expr_incomplete
 // let a = [
 fn parse_array_expr(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T!['[']) {
@@ -1745,7 +1745,7 @@ fn parse_array_expr(p: &mut JsParser) -> ParsedSyntax {
     let m = p.start();
     p.bump(T!['[']);
 
-    // test array_element_in_expr
+    // test js array_element_in_expr
     // for(["a" in {}];;) {}
     ArrayElementsList.parse_list(p);
 
@@ -1753,7 +1753,7 @@ fn parse_array_expr(p: &mut JsParser) -> ParsedSyntax {
     Present(m.complete(p, JS_ARRAY_EXPRESSION))
 }
 
-// test_err spread
+// test_err js spread
 // [...]
 /// A spread element consisting of three dots and an assignment expression such as `...foo`
 fn parse_spread_element(p: &mut JsParser, context: ExpressionContext) -> ParsedSyntax {
@@ -1770,7 +1770,7 @@ fn parse_spread_element(p: &mut JsParser, context: ExpressionContext) -> ParsedS
 /// A left hand side expression, either a member expression or a call expression such as `foo()`.
 pub(super) fn parse_lhs_expr(p: &mut JsParser, context: ExpressionContext) -> ParsedSyntax {
     // super.foo and super[bar]
-    // test super_property_access
+    // test js super_property_access
     // super.foo
     // super[bar]
     // super[foo][bar]
@@ -1864,7 +1864,7 @@ fn parse_call_expression_rest(
 }
 
 /// A postifx expression, either `LHSExpr [no linebreak] ++` or `LHSExpr [no linebreak] --`.
-// test postfix_expr
+// test js postfix_expr
 // foo++
 // foo--
 fn parse_postfix_expr(p: &mut JsParser, context: ExpressionContext) -> ParsedSyntax {
@@ -1872,7 +1872,7 @@ fn parse_postfix_expr(p: &mut JsParser, context: ExpressionContext) -> ParsedSyn
     let lhs = parse_lhs_expr(p, context);
     lhs.map(|marker| {
         if !p.has_preceding_line_break() {
-            // test post_update_expr
+            // test js post_update_expr
             // foo++
             // foo--
             match p.cur() {
@@ -1902,7 +1902,7 @@ pub(super) fn parse_unary_expr(p: &mut JsParser, context: ExpressionContext) -> 
         token_set![T![delete], T![void], T![typeof], T![+], T![-], T![~], T![!]];
 
     if p.at(T![await]) {
-        // test await_expression
+        // test js await_expression
         // async function test() {
         //   await inner();
         //   await (inner()) + await inner();
@@ -1912,7 +1912,7 @@ pub(super) fn parse_unary_expr(p: &mut JsParser, context: ExpressionContext) -> 
         // }
         // await test();
 
-        // test_err no_top_level_await_in_scripts
+        // test_err js no_top_level_await_in_scripts
         // // SCRIPT
         // async function test() {}
         // await test();
@@ -1926,7 +1926,7 @@ pub(super) fn parse_unary_expr(p: &mut JsParser, context: ExpressionContext) -> 
             p.state().in_async() && (p.state().is_top_level() || p.state().in_function());
 
         if !is_top_level_module_or_async_fn {
-            // test reparse_await_as_identifier
+            // test js reparse_await_as_identifier
             // // SCRIPT
             // function test() { a = await; }
             // function test2() { return await; }
@@ -1936,19 +1936,19 @@ pub(super) fn parse_unary_expr(p: &mut JsParser, context: ExpressionContext) -> 
                 return parse_identifier_expression(p);
             }
 
-            // test_err await_in_parameter_initializer
+            // test_err js await_in_parameter_initializer
             // async function test(a = await b()) {}
             // function test2(a = await b()) {}
 
-            // test_err await_in_static_initialization_block_member
+            // test_err js await_in_static_initialization_block_member
             // // SCRIPT
             // class A { static { await; } }
             // class B { static { await 10; } }
 
-            // test_err await_in_non_async_function
+            // test_err js await_in_non_async_function
             // function test() { await 10; }
 
-            // test_err await_in_module
+            // test_err js await_in_module
             // let await = 10;
             // console.log(await);
             p.error(p.err_builder(
@@ -1975,7 +1975,7 @@ pub(super) fn parse_unary_expr(p: &mut JsParser, context: ExpressionContext) -> 
         );
     }
 
-    // test pre_update_expr
+    // test js pre_update_expr
     // ++foo
     // --foo
     if p.at(T![++]) {
@@ -1995,7 +1995,7 @@ pub(super) fn parse_unary_expr(p: &mut JsParser, context: ExpressionContext) -> 
         return Present(complete);
     }
 
-    // test js_unary_expressions
+    // test js js_unary_expressions
     // delete a['test'];
     // void a;
     // typeof a;
@@ -2005,7 +2005,7 @@ pub(super) fn parse_unary_expr(p: &mut JsParser, context: ExpressionContext) -> 
     // !true;
     // -a + -b + +a;
 
-    // test_err unary_expr
+    // test_err js unary_expr
     // ++ ;
     // -- ;
     // -;
@@ -2022,7 +2022,7 @@ pub(super) fn parse_unary_expr(p: &mut JsParser, context: ExpressionContext) -> 
             p.bump_any();
         }
 
-        // test unary_delete
+        // test js unary_delete
         // delete obj.key;
         // delete (obj).key;
         // delete obj.#member.key;
@@ -2046,7 +2046,7 @@ pub(super) fn parse_unary_expr(p: &mut JsParser, context: ExpressionContext) -> 
         // delete (obj.#key, obj.key);
         // delete (#key in obj);
 
-        // test unary_delete_nested
+        // test js unary_delete_nested
         // class TestClass { #member = true; method() { delete func(this.#member) } }
         // class TestClass { #member = true; method() { delete [this.#member] } }
         // class TestClass { #member = true; method() { delete { key: this.#member } } }
@@ -2054,14 +2054,14 @@ pub(super) fn parse_unary_expr(p: &mut JsParser, context: ExpressionContext) -> 
         // class TestClass { #member = true; method() { delete (param => { this.#member; }) } }
         // class TestClass { #member = true; method() { delete (async () => { this.#member; }) } }
 
-        // test_err unary_delete
+        // test_err js unary_delete
         // delete ident;
         // delete obj.#member;
         // delete func().#member;
         // delete obj?.#member;
         // delete obj?.inner.#member;
 
-        // test_err unary_delete_parenthesized
+        // test_err js unary_delete_parenthesized
         // delete (ident);
         // delete ((ident));
         // delete (obj.key, ident);

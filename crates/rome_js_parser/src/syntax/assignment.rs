@@ -18,7 +18,7 @@ use rome_js_syntax::{JsSyntaxKind::*, *};
 use rome_parser::diagnostic::expected_any;
 use rome_rowan::AstNode;
 
-// test assignment_target
+// test js assignment_target
 // foo += bar = b ??= 3;
 // a.foo -= bar;
 // (foo = bar);
@@ -28,7 +28,7 @@ use rome_rowan::AstNode;
 // ++count === 3
 // a['b'] = c[d] = "test"
 
-// test_err invalid_assignment_target
+// test_err js invalid_assignment_target
 // ++a = b;
 // (++a) = b;
 // (a = b;
@@ -94,7 +94,7 @@ pub(crate) fn expression_to_assignment_pattern(
     }
 }
 
-// test array_or_object_member_assignment
+// test js array_or_object_member_assignment
 // [{
 //   get y() {
 //     throw new Test262Error('The property should not be accessed.');
@@ -126,7 +126,7 @@ pub(crate) fn expression_to_assignment(
     checkpoint: JsParserCheckpoint,
 ) -> CompletedMarker {
     try_expression_to_assignment(p, target, checkpoint).unwrap_or_else(
-        // test_err js_regex_assignment
+        // test_err js js_regex_assignment
         // /=0*_:m/=/*_:|
         |mut invalid_assignment_target| {
             // Doesn't seem to be a valid assignment target. Recover and create an error.
@@ -188,13 +188,13 @@ impl ParseWithDefaultPattern for AssignmentPatternWithDefault {
 
 struct ArrayAssignmentPattern;
 
-// test array_assignment_target
+// test js array_assignment_target
 // [foo, bar] = baz;
 // [,,,b,,c,] = baz;
 // [a = "test", a.b, call().b] = baz;
 // [((a))] = baz;
 //
-// test_err array_assignment_target_err
+// test_err js array_assignment_target_err
 // [a a, ++b, ] = test;
 // [a, c, ...rest,] = test;
 // [a = , = "test"] = test;
@@ -211,7 +211,7 @@ impl ParseArrayPattern<AssignmentPatternWithDefault> for ArrayAssignmentPattern 
         JS_ARRAY_ASSIGNMENT_PATTERN
     }
 
-    // test array_assignment_target_rest
+    // test js array_assignment_target_rest
     // ([ ...abcd ] = a);
     // ([ ...(abcd) ] = a);
     // ([ ...m.test ] = c);
@@ -220,7 +220,7 @@ impl ParseArrayPattern<AssignmentPatternWithDefault> for ArrayAssignmentPattern 
     // ([ ...[x, y] ] = b);
     // ([ ...[ ...a ] ] = c);
     //
-    // test_err array_assignment_target_rest_err
+    // test_err js array_assignment_target_rest_err
     // ([ ... ] = a);
     // ([ ...c = "default" ] = a);
     // ([ ...rest, other_assignment ] = a);
@@ -246,7 +246,7 @@ impl ParseArrayPattern<AssignmentPatternWithDefault> for ArrayAssignmentPattern 
 
 struct ObjectAssignmentPattern;
 
-// test object_assignment_target
+// test js object_assignment_target
 // ({} = {});
 // ({ bar, baz } = {});
 // ({ bar: [baz = "baz"], foo = "foo", ...rest } = {});
@@ -270,7 +270,7 @@ impl ParseObjectPattern for ObjectAssignmentPattern {
         expected_any(&["assignment target", "rest property"], range).into_diagnostic(p)
     }
 
-    // test property_assignment_target
+    // test js property_assignment_target
     // ({x}= {});
     // ({x: y}= {});
     // ({x: y.test().z}= {});
@@ -280,7 +280,7 @@ impl ParseObjectPattern for ObjectAssignmentPattern {
     // ({x: y = "default"}= {});
     // ({0: y, [computed]: z} = {});
     //
-    // test_err property_assignment_target_err
+    // test_err js property_assignment_target_err
     // ({:y} = {});
     // ({=y} = {});
     // ({:="test"} = {});
@@ -312,7 +312,7 @@ impl ParseObjectPattern for ObjectAssignmentPattern {
         Present(m.complete(p, kind))
     }
 
-    // test rest_property_assignment_target
+    // test js rest_property_assignment_target
     // ({ ...abcd } = a);
     // ({ ...(abcd) } = a);
     // ({ ...m.test } = c);
@@ -320,7 +320,7 @@ impl ParseObjectPattern for ObjectAssignmentPattern {
     // ({ ...any.expression().b } = c);
     // ({ b: { ...a } } = c);
     //
-    // test_err rest_property_assignment_target_err
+    // test_err js rest_property_assignment_target_err
     // ({ ... } = a);
     // ({ ...c = "default" } = a);
     // ({ ...{a} } = b);
@@ -466,7 +466,7 @@ impl RewriteParseEvents for ReparseAssignment {
 
             match kind {
                 JS_IDENTIFIER_ASSIGNMENT => {
-                    // test_err eval_arguments_assignment
+                    // test_err js eval_arguments_assignment
                     // eval = "test";
                     // arguments = "test";
                     let name = completed.text(p);
