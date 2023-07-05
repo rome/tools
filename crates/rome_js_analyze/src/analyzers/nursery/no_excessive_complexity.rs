@@ -89,12 +89,19 @@ impl Rule for NoExcessiveComplexity {
         Some(
             RuleDiagnostic::new(
                 rule_category!(),
-                match function_like.name_range() {
-                    Some(id_range) => id_range,
-                    // This `unwrap()` is safe because we know there is a body,
-                    // otherwise the visitor wouldn't have matched anything.
-                    _ => function_like.body().unwrap().range(),
-                },
+                function_like
+                    .name_range()
+                    .or_else(|| {
+                        function_like
+                            .function_token()
+                            .map(|token| token.text_range())
+                    })
+                    .or_else(|| {
+                        function_like
+                            .fat_arrow_token()
+                            .map(|token| token.text_range())
+                    })
+                    .or_else(|| function_like.body().ok().map(|body| body.range()))?,
                 markup!("Excessive complexity detected."),
             )
             .note(if calculated_score == &MAX_SCORE {

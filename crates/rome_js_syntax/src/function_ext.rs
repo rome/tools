@@ -1,5 +1,6 @@
 use crate::{
     AnyJsFunction, AnyJsFunctionBody, JsMethodClassMember, JsMethodObjectMember, JsStatementList,
+    JsSyntaxToken,
 };
 use rome_rowan::{declare_node_union, AstNode, SyntaxResult, TextRange};
 
@@ -17,6 +18,32 @@ impl AnyFunctionLike {
             AnyFunctionLike::JsMethodClassMember(js_class_method) => js_class_method
                 .body()
                 .map(AnyJsFunctionBody::JsFunctionBody),
+        }
+    }
+
+    pub fn fat_arrow_token(&self) -> Option<JsSyntaxToken> {
+        match self {
+            AnyFunctionLike::AnyJsFunction(any_js_function) => {
+                if let Some(arrow_expression) = any_js_function.as_js_arrow_function_expression() {
+                    arrow_expression.fat_arrow_token().ok()
+                } else {
+                    None
+                }
+            }
+            AnyFunctionLike::JsMethodClassMember(_) | AnyFunctionLike::JsMethodObjectMember(_) => {
+                None
+            }
+        }
+    }
+
+    pub fn function_token(&self) -> Option<JsSyntaxToken> {
+        match self {
+            AnyFunctionLike::AnyJsFunction(any_js_function) => {
+                any_js_function.function_token().ok().flatten()
+            }
+            AnyFunctionLike::JsMethodClassMember(_) | AnyFunctionLike::JsMethodObjectMember(_) => {
+                None
+            }
         }
     }
 
