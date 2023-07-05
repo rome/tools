@@ -81,10 +81,10 @@ pub(crate) fn run(
         } else {
             let file_name = configuration_path.display().to_string();
             let diagnostic = MigrateDiffDiagnostic {
-                file_name: &file_name,
+                file_name,
                 diff: ContentDiffAdvice {
-                    old: configuration_content.as_str(),
-                    new: new_configuration_content.as_str(),
+                    old: configuration_content,
+                    new: new_configuration_content,
                 },
             };
             console.error(markup! {

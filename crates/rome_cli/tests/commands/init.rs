@@ -17,7 +17,7 @@ fn init_help() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("init"), "--help"]),
+        Args::from([("init"), "--help"].as_slice()),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -39,7 +39,7 @@ fn creates_config_file() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("init")]),
+        Args::from([("init")].as_slice()),
     );
     assert!(result.is_ok(), "run_cli returned {result:?}");
 
@@ -82,7 +82,7 @@ fn creates_config_file_when_rome_installed_via_package_manager() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("init")]),
+        Args::from([("init")].as_slice()),
     );
     assert!(result.is_ok(), "run_cli returned {result:?}");
 

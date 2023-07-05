@@ -15,6 +15,17 @@ console.log('bar');
 content
 ```
 
+# Termination Message
+
+```block
+internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Some errors were emitted while running checks
+  
+
+
+```
+
 # Emitted Messages
 
 ```block
@@ -25,6 +36,14 @@ test.js format ━━━━━━━━━━━━━━━━━━━━━�
     1   │ - console.log('bar');
       1 │ + console.log("bar");
     2 2 │   
+  
+
+```
+
+```block
+internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Some errors were emitted while running checks
   
 
 ```

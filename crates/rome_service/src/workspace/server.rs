@@ -516,13 +516,12 @@ impl Workspace for WorkspaceServer {
         let parse = self.get_parse(params.path.clone(), Some(FeatureName::Lint))?;
 
         let rules = settings.linter().rules.as_ref();
-        let should_format = settings.formatter().enabled;
         fix_all(FixAllParams {
             parse,
             rules,
             fix_file_mode: params.fix_file_mode,
             settings: self.settings(),
-            should_format,
+            should_format: params.should_format,
             rome_path: &params.path,
         })
     }

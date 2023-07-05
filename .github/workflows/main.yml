@@ -87,7 +87,7 @@ jobs:
       - name: Run tests on ${{ matrix.os }}
         run: cargo nextest run --workspace --verbose
       - name: Clean cache
-        run: cargo install cargo-cache --no-default-features --features ci-autoclean && cargo-cache
+        run: cargo cache --autoclean
 
   documentation:
     name: Documentation
@@ -117,7 +117,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-       os: [windows-latest, ubuntu-latest]
+        os: [windows-latest, ubuntu-latest]
 
     steps:
       # ref: https://github.com/orgs/community/discussions/26952
@@ -136,4 +136,4 @@ jobs:
         continue-on-error: true
         run: cargo coverage
       - name: Clean cache
-        run: cargo install cargo-cache --no-default-features --features ci-autoclean && cargo-cache
+        run: cargo cache --autoclean

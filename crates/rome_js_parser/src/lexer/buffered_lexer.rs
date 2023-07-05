@@ -144,7 +144,7 @@ impl<'l> BufferedLexer<'l> {
 
     /// Rewinds the lexer to the state stored in the checkpoint.
     pub fn rewind(&mut self, checkpoint: LexerCheckpoint) {
-        // test_err js_rewind_at_eof_token
+        // test_err js js_rewind_at_eof_token
         // (([zAgRvz=[=(e{V{
 
         self.inner.rewind(checkpoint);

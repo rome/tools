@@ -15,8 +15,8 @@ parking_lot      = { version = "0.12.0", features = ["arc_lock"] }
 rayon            = "1.5.1"
 rome_console     = { workspace = true }
 rome_diagnostics = { workspace = true }
-schemars         = { version = "0.8.10", optional = true }
-serde            = { version = "1.0.136", features = ["derive"], optional = true }
+schemars         = { workspace = true, optional = true }
+serde            = { workspace = true, features = ["derive"], optional = true }
 tracing          = { workspace = true }
 
 [features]

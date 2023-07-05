@@ -12,11 +12,14 @@
 
 	This wasn't ideal for users, because this could have created false positives in linting, or formatted
 	code with a configuration that wasn't the of the user.
+- The command `rome check` now shows formatter diagnostics when checking the code.
 
+	The presence of the diagnostics will result in an error code when the command finishes.
+
+	This is in line with semantic and behaviour meant for the command `rome check`.
 
 #### Other changes
 
-- The command `rome check` now shows formatter diagnostics when checking the code.
 - Fix [#4556](https://github.com/rome/tools/issues/4556), which correctly handles new lines in the
 `.gitignore` file across OS.
 - Add a new option to ignore unknown files `--files-ignore-unknown`:
@@ -33,6 +36,8 @@
 	```
 
 	Rome won't exit with an error code in case no files were processed in the given paths.
+
+- Fixed the diagnostics emitted when running the `rome format` command;
 
 ### Configuration
 
@@ -117,9 +122,23 @@ multiple files:
 
 	This rules disallow the use of `void`.
 
+- Add [`noNonoctalDecimalEscape`](https://docs.rome.tools/lint/rules/nononoctaldecimalescape/)
+
+	This rule disallows `\8` and `\9` escape sequences in string literals.
+
 #### Other changes
 
+- Add new TypeScript globals (`AsyncDisposable`, `Awaited`, `DecoratorContext`, and others) [4643](https://github.com/rome/tools/issues/4643).
+
 - [`noRedeclare`](https://docs.rome.tools/lint/rules/noredeclare/): allow redeclare of index signatures are in different type members [#4478](https://github.com/rome/tools/issues/4478)
+
+- Improve [`noConsoleLog`](https://docs.rome.tools/lint/rules/noconsolelog/), [`noGlobalObjectCalls`](https://docs.rome.tools/lint/rules/noglobalobjectcalls/), [`useIsNan`](https://docs.rome.tools/lint/rules/useisnan/), and [`useNumericLiterals`](https://docs.rome.tools/lint/rules/usenumericliterals/) by handling `globalThis` and `window` namespaces.
+
+  For instance, the following code is now reported by `noConsoleLog`:
+
+  ```js
+  globalThis.console.log("log")
+  ```
 
 - Fix a crash in the [`NoParameterAssign`](https://docs.rome.tools/lint/rules/noparameterassign/) rule that occurred when there was a bogus binding. [#4323](https://github.com/rome/tools/issues/4323)
 
@@ -232,6 +251,10 @@ multiple files:
 
   The rule no longer reports `This constructor calls super() in a loop`
   when using nested if statements in a constructor.
+
+- Fix [useHookAtTopLevel](https://docs.rome.tools/lint/rules/usehookattoplevel/) 's false positive diagnostics ([#4637](https://github.com/rome/tools/issues/4637))
+
+  The rule no longer reports false positive diagnostics when accessing properties directly from a hook and calling a hook inside function arguments.
 
 ### Parser
 

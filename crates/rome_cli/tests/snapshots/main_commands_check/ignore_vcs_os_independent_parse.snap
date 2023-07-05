@@ -46,6 +46,17 @@ foo.call(); bar.call();
 console.log('rome is cool');
 ```
 
+# Termination Message
+
+```block
+internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Some errors were emitted while running checks
+  
+
+
+```
+
 # Emitted Messages
 
 ```block
@@ -56,6 +67,14 @@ file1.js format ━━━━━━━━━━━━━━━━━━━━━�
     1   │ - blah.call();
       1 │ + blah.call();
       2 │ + 
+  
+
+```
+
+```block
+internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Some errors were emitted while running checks
   
 
 ```

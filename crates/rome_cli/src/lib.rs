@@ -6,7 +6,6 @@
 //! to parse commands and arguments, redirect the execution of the commands and
 //! execute the traversal of directory and files, based on the command that were passed.
 
-pub use pico_args::Arguments;
 use rome_console::{ColorMode, Console};
 use rome_fs::OsFileSystem;
 use rome_service::{App, DynRef, Workspace, WorkspaceRef};
@@ -27,7 +26,8 @@ use crate::cli_options::ColorsArg;
 use crate::commands::check::CheckCommandPayload;
 use crate::commands::ci::CiCommandPayload;
 use crate::commands::format::FormatCommandPayload;
-pub use crate::commands::{parse_command, RomeCommand};
+use crate::commands::lint::LintCommandPayload;
+pub use crate::commands::{rome_command, RomeCommand};
 pub use diagnostics::CliDiagnostic;
 pub(crate) use execute::{execute_mode, Execution, TraversalMode};
 pub use panic::setup_panic_handler;
@@ -96,6 +96,24 @@ impl<'app> CliSession<'app> {
                     linter_enabled,
                     organize_imports_enabled,
                     formatter_enabled,
+                },
+            ),
+            RomeCommand::Lint {
+                apply,
+                apply_unsafe,
+                cli_options,
+                configuration: rome_configuration,
+                paths,
+                stdin_file_path,
+            } => commands::lint::lint(
+                self,
+                LintCommandPayload {
+                    apply_unsafe,
+                    apply,
+                    cli_options,
+                    configuration: rome_configuration,
+                    paths,
+                    stdin_file_path,
                 },
             ),
             RomeCommand::Ci {

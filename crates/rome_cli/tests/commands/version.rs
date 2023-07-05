@@ -13,7 +13,7 @@ fn ok() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("--version")]),
+        Args::from([("--version")].as_slice()),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -35,7 +35,7 @@ fn full() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("version")]),
+        Args::from([("version")].as_slice()),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");

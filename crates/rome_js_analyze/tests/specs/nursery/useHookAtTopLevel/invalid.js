@@ -77,3 +77,16 @@ const Component7 = () => {
         Component6();
     }
 };
+
+const Component8 = () => {
+    if (a == 1) {
+        useRef().value;
+    }
+
+    const [_val, _setter] = useState(a ? useMemo('hello') : null);
+};
+
+const Component9 = () => {
+    a ? useEffect() : null;
+    a ?? useEffect();
+};

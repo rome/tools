@@ -91,12 +91,12 @@ pub(super) fn parse_class_expression(
     Present(parse_class(p, ClassKind::Expression, decorator_list))
 }
 
-// test class_declaration
+// test js class_declaration
 // class foo {}
 // class foo extends bar {}
 // class foo extends foo.bar {}
 
-// test_err class_decl_err
+// test_err js class_decl_err
 // class {}
 // class extends bar {}
 // class foo { set {} }
@@ -166,7 +166,7 @@ pub(super) fn parse_class_declaration(
     let mut class = parse_class(p, ClassKind::Declaration, decorator_list);
 
     if !class.kind(p).is_bogus() && context.is_single_statement() {
-        // test_err class_in_single_statement_context
+        // test_err js class_in_single_statement_context
         // if (true) class A {}
         p.error(
             p.err_builder(
@@ -181,7 +181,7 @@ pub(super) fn parse_class_declaration(
     Present(class)
 }
 
-// test export_default_class_clause
+// test js export_default_class_clause
 // export default class {}
 
 // test ts typescript_export_default_abstract_class_case
@@ -220,7 +220,7 @@ impl From<ClassKind> for JsSyntaxKind {
     }
 }
 
-// test class_named_abstract_is_valid_in_js
+// test js class_named_abstract_is_valid_in_js
 // class abstract {}
 
 // test ts ts_class_named_abstract_is_valid_in_ts
@@ -303,7 +303,7 @@ fn parse_class(p: &mut JsParser, kind: ClassKind, decorator_list: ParsedSyntax) 
     m.complete(p, kind.into())
 }
 
-// test_err class_extends_err
+// test_err js class_extends_err
 // class A extends bar extends foo {}
 // class B extends bar, foo {}
 // class C implements B {}
@@ -465,7 +465,7 @@ impl ParseNodeList for ClassMembersList {
     }
 
     fn recover(&mut self, p: &mut JsParser, parsed_element: ParsedSyntax) -> RecoveryResult {
-        // test_err invalid_method_recover
+        // test_err js invalid_method_recover
         // class {
         //   [1 + 1] = () => {
         //     let a=;
@@ -498,11 +498,11 @@ impl ParseNodeList for ClassMembersList {
     }
 }
 
-// test class_declare
+// test js class_declare
 // class B { declare() {} }
 // class B { declare = foo }
 
-// test static_method
+// test js static_method
 // class foo {
 //  static foo(bar) {}
 //  static *foo() {}
@@ -511,7 +511,7 @@ impl ParseNodeList for ClassMembersList {
 // }
 fn parse_class_member(p: &mut JsParser, inside_abstract_class: bool) -> ParsedSyntax {
     let member_marker = p.start();
-    // test class_empty_element
+    // test js class_empty_element
     // class foo { ;;;;;;;;;; get foo() {};;;;}
     if p.eat(T![;]) {
         return Present(member_marker.complete(p, JS_EMPTY_CLASS_MEMBER));
@@ -656,7 +656,7 @@ fn parse_class_member_impl(
         return parse_index_signature_class_member(p, member_marker);
     }
 
-    // test getter_class_member
+    // test js getter_class_member
     // class Getters {
     //   get foo() {}
     //   get static() {}
@@ -672,13 +672,13 @@ fn parse_class_member_impl(
     //   static get() {}
     // }
     //
-    // test_err method_getter_err
+    // test_err js method_getter_err
     // class foo {
     //  get {}
     // }
     //
 
-    // test setter_class_member
+    // test js setter_class_member
     // class Setters {
     //   set foo(a) {}
     //   set static(a) {}
@@ -694,7 +694,7 @@ fn parse_class_member_impl(
     //   static set(a) {}
     // }
     //
-    // test_err setter_class_member
+    // test_err js setter_class_member
     // class Setters {
     //   set foo() {}
     // }
@@ -731,7 +731,14 @@ fn parse_class_member_impl(
             p.with_state(EnterParameters(SignatureFlags::empty()), |p| {
                 let decorator_list = parse_parameter_decorators(p);
 
-                // test ts ts_decorator_on_class_setter
+                // test ts ts_decorator_on_class_setter { "parse_class_parameter_decorators": true }
+                // class A {
+                //     set val(@dec x) {}
+                //     set val(@dec.fn() x) {}
+                //     set val(@dec() x) {}
+                // }
+
+                // test_err ts ts_decorator_on_class_setter
                 // class A {
                 //     set val(@dec x) {}
                 //     set val(@dec.fn() x) {}
@@ -770,10 +777,10 @@ fn parse_class_member_impl(
         .or_add_diagnostic(p, js_parse_error::expected_class_member_name);
 
     if is_at_method_class_member(p, 0) {
-        // test class_static_constructor_method
+        // test js class_static_constructor_method
         // class B { static constructor() {} }
 
-        // test constructor_class_member
+        // test js constructor_class_member
         // class Foo {
         //   constructor(a) {
         //     this.a = a;
@@ -791,7 +798,7 @@ fn parse_class_member_impl(
                 modifiers,
             ))
         } else {
-            // test method_class_member
+            // test js method_class_member
             // class Test {
             //   method() {}
             //   async asyncMethod() {}
@@ -833,7 +840,7 @@ fn parse_class_member_impl(
 
     match member_name {
         Some(_) => {
-            // test property_class_member
+            // test js property_class_member
             // class foo {
             //   property
             //   declare;
@@ -849,7 +856,7 @@ fn parse_class_member_impl(
             //   static #staticPrivateInitializedProperty = 1
             // }
             //
-            // test_err class_declare_member
+            // test_err js class_declare_member
             // class B { declare foo }
 
             // test ts ts_property_class_member_can_be_named_set_or_get
@@ -869,7 +876,7 @@ fn parse_class_member_impl(
             Present(property)
         }
         None => {
-            // test_err block_stmt_in_class
+            // test_err js block_stmt_in_class
             // class S{{}}
             debug_assert_eq!(
                 p.source().position(),
@@ -887,7 +894,7 @@ fn is_at_static_initialization_block_class_member(p: &mut JsParser) -> bool {
     p.at(T![static]) && p.nth_at(1, T!['{'])
 }
 
-// test static_initialization_block_member
+// test js static_initialization_block_member
 // class A {
 //   static a;
 //   static {
@@ -940,7 +947,7 @@ fn parse_property_class_member_body(
 ) -> CompletedMarker {
     let annotation = parse_ts_property_annotation(p, modifiers).ok();
 
-    // test class_await_property_initializer
+    // test js class_await_property_initializer
     // // SCRIPT
     // async function* test() {
     //   class A {
@@ -948,7 +955,7 @@ fn parse_property_class_member_body(
     //   }
     // }
 
-    // test_err class_yield_property_initializer
+    // test_err js class_yield_property_initializer
     // // SCRIPT
     // async function* test() {
     //   class A {
@@ -1031,7 +1038,7 @@ fn expect_member_semi(p: &mut JsParser, member_marker: &Marker, name: &str) {
     }
 }
 
-// test_err js_class_property_with_ts_annotation
+// test_err js js_class_property_with_ts_annotation
 // class A {
 //  a: string;
 //  b?: string;
@@ -1145,7 +1152,7 @@ fn optional_member_token(p: &mut JsParser) -> Result<Option<TextRange>, TextRang
         let range = p.cur_range();
         p.bump(T![?]);
 
-        // test_err optional_member
+        // test_err js optional_member
         // class B { foo?; }
         if TypeScript.is_supported(p) {
             Ok(Some(range))
@@ -1160,7 +1167,7 @@ fn optional_member_token(p: &mut JsParser) -> Result<Option<TextRange>, TextRang
     }
 }
 
-// test_err class_property_initializer
+// test_err js class_property_initializer
 // class B { lorem = ; }
 pub(crate) fn parse_initializer_clause(
     p: &mut JsParser,
@@ -1190,7 +1197,7 @@ fn parse_method_class_member(
     parse_method_class_member_rest(p, m, modifiers, flags)
 }
 
-// test_err class_member_method_parameters
+// test_err js class_member_method_parameters
 // class B { foo(a {} }
 
 // test ts ts_method_class_member
@@ -1466,12 +1473,12 @@ fn expect_method_body(
     }
 }
 
-// test_err getter_class_no_body
+// test_err js getter_class_no_body
 // class Getters {
 //   get foo()
 // }
 
-// test_err setter_class_no_body
+// test_err js setter_class_no_body
 // class Setters {
 //   set foo(a)
 // }
@@ -1522,10 +1529,10 @@ fn parse_constructor_class_member_body(
 fn parse_constructor_parameter_list(p: &mut JsParser) -> ParsedSyntax {
     let m = p.start();
 
-    // test super_expression_in_constructor_parameter_list
+    // test js super_expression_in_constructor_parameter_list
     // class A extends B { constructor(c = super()) {} }
     //
-    // test_err super_expression_in_constructor_parameter_list
+    // test_err js super_expression_in_constructor_parameter_list
     // class A extends B { constructor(super()) {} }
     let flags = SignatureFlags::CONSTRUCTOR;
 
@@ -1538,14 +1545,28 @@ fn parse_constructor_parameter_list(p: &mut JsParser) -> ParsedSyntax {
     Present(m.complete(p, JS_CONSTRUCTOR_PARAMETERS))
 }
 
-// test_err js_constructor_parameter_reserved_names
+// test_err js js_constructor_parameter_reserved_names
 // // SCRIPT
 // class A { constructor(readonly, private, protected, public) {} }
 fn parse_constructor_parameter(p: &mut JsParser, context: ExpressionContext) -> ParsedSyntax {
-    // test_err class_constructor_parameter
+    // test_err js class_constructor_parameter
     // class B { constructor(protected b) {} }
 
-    // test ts ts_decorator_constructor
+    // test ts ts_decorator_constructor { "parse_class_parameter_decorators": true }
+    // class C {
+    //     constructor(@foo readonly x: number) {}
+    // }
+    // class CC {
+    //     constructor(@foo @dec(arg) readonly x: number) {}
+    // }
+    // class CC {
+    //     constructor(@foo @dec.method(arg) readonly x: number) {}
+    // }
+    // class CCC {
+    //     constructor(@foo @dec.method(arg) private readonly x: number) {}
+    // }
+
+    // test_err ts ts_decorator_constructor
     // class C {
     //     constructor(@foo readonly x: number) {}
     // }
@@ -1572,7 +1593,7 @@ fn parse_constructor_parameter(p: &mut JsParser, context: ExpressionContext) -> 
             .or_else(|| empty_decorator_list(p))
             .precede(p);
 
-        // test_err class_constructor_parameter_readonly
+        // test_err js class_constructor_parameter_readonly
         // class B { constructor(readonly b) {} }
 
         let modifiers = parse_class_member_modifiers(p, true);
@@ -1671,7 +1692,7 @@ pub(crate) fn is_nth_at_modifier(p: &mut JsParser, n: usize, constructor_paramet
     followed_by_any_member || followed_by_class_member || followed_by_parameter
 }
 
-// test static_generator_constructor_method
+// test js static_generator_constructor_method
 // class A {
 // 	static async * constructor() {}
 // 	static * constructor() {}
@@ -1681,7 +1702,7 @@ fn is_at_constructor(p: &JsParser, modifiers: &ClassMemberModifiers) -> bool {
         && (p.at(T![constructor]) || matches!(p.cur_text(), "\"constructor\"" | "'constructor'"))
 }
 
-// test class_member_modifiers
+// test js class_member_modifiers
 // class A { public() {} }
 // class A { static protected() {} }
 // class A { static }
@@ -1710,10 +1731,10 @@ fn parse_class_member_modifiers(
     ClassMemberModifiers::new(modifiers, list, flags)
 }
 
-// test_err class_declare_method
+// test_err js class_declare_method
 // class B { declare fn() {} }
 //
-// test_err class_member_modifier
+// test_err js class_member_modifier
 // class A { abstract foo; }
 fn parse_modifier(p: &mut JsParser, constructor_parameter: bool) -> Option<ClassMemberModifier> {
     // decorator modifiers can't be valid member names.
@@ -2062,7 +2083,7 @@ impl ClassMemberModifiers {
         valid
     }
 
-    // test js_class_property_member_modifiers
+    // test js js_class_property_member_modifiers
     // class Test {
     //     static a = 1;
     //     accessor b = 1;
@@ -2136,7 +2157,7 @@ impl ClassMemberModifiers {
     //     accessor accessor r;
     // }
 
-    // test_err class_invalid_modifiers
+    // test_err js class_invalid_modifiers
     // class A { public foo() {} }
     // class B { static static foo() {} }
     // class C { accessor foo() {} }
@@ -2147,7 +2168,7 @@ impl ClassMemberModifiers {
         preceding_modifiers: ModifierFlags,
         member_kind: JsSyntaxKind,
     ) -> Option<ParseDiagnostic> {
-        // test_err index_signature_class_member_in_js
+        // test_err js index_signature_class_member_in_js
         // class A {
         //     [a: number]: string;
         // }
@@ -2486,7 +2507,7 @@ impl ClassMemberModifiers {
                         modifier.as_text_range(),
                         self.get_first_range_unchecked(ModifierKind::Static),
                     ));
-                // test_err class_member_static_accessor_precedence
+                // test_err js class_member_static_accessor_precedence
                 // class A {
                 //     accessor static foo = 1;
                 // }

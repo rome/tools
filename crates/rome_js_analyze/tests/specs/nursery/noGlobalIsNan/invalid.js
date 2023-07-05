@@ -6,6 +6,8 @@ globalThis.isNaN({});
 
 (globalThis).isNaN({});
 
+globalThis.globalThis.window.isNaN({});
+
 globalThis["isNaN"]({});
 
 (globalThis)[("isNaN")]({});

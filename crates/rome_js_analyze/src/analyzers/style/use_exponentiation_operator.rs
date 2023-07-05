@@ -6,8 +6,8 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::{make, syntax::T};
 use rome_js_syntax::{
-    AnyJsExpression, JsBinaryOperator, JsCallExpression, JsClassDeclaration, JsClassExpression,
-    JsExtendsClause, JsInExpression, OperatorPrecedence,
+    global_identifier, AnyJsExpression, AnyJsMemberExpression, JsBinaryOperator, JsCallExpression,
+    JsClassDeclaration, JsClassExpression, JsExtendsClause, JsInExpression, OperatorPrecedence,
 };
 use rome_rowan::{AstNode, AstSeparatedList, BatchMutationExt};
 
@@ -106,42 +106,17 @@ impl Rule for UseExponentiationOperator {
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
         let model = ctx.model();
-
-        let object = match node.callee().ok()?.omit_parentheses() {
-            AnyJsExpression::JsStaticMemberExpression(static_member_expr) => {
-                if static_member_expr
-                    .member()
-                    .ok()?
-                    .as_js_name()?
-                    .value_token()
-                    .ok()?
-                    .token_text_trimmed()
-                    != "pow"
-                {
-                    return None;
-                }
-
-                static_member_expr.object()
-            }
-            AnyJsExpression::JsComputedMemberExpression(computed_member_expr) => {
-                if !computed_member_expr
-                    .member()
-                    .ok()?
-                    .is_string_constant("pow")
-                {
-                    return None;
-                }
-
-                computed_member_expr.object()
-            }
-            _ => return None,
-        };
-
-        let reference = object.ok()?.omit_parentheses().as_reference_identifier()?;
-
-        // verifies that the Math reference is not a local variable
-        let has_math_pow = reference.has_name("Math") && model.binding(&reference).is_none();
-        has_math_pow.then_some(())
+        let callee = node.callee().ok()?.omit_parentheses();
+        let member_expr = AnyJsMemberExpression::cast_ref(callee.syntax())?;
+        if member_expr.member_name()?.text() != "pow" {
+            return None;
+        }
+        let object = member_expr.object().ok()?.omit_parentheses();
+        let (reference, name) = global_identifier(&object)?;
+        if name.text() != "Math" {
+            return None;
+        }
+        model.binding(&reference).is_none().then_some(())
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {

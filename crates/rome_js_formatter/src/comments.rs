@@ -1035,8 +1035,28 @@ fn handle_parameter_comment(comment: DecoratedComment<JsLanguage>) -> CommentPla
     // )
     // ```
     match comment.enclosing_node().kind() {
-        JsSyntaxKind::JS_FORMAL_PARAMETER if comment.text_position().is_own_line() => {
-            return CommentPlacement::leading(comment.enclosing_node().clone(), comment)
+        JsSyntaxKind::JS_FORMAL_PARAMETER | JsSyntaxKind::TS_PROPERTY_PARAMETER => {
+            // Keep decorator comments near the decorator
+            // Attach leading parameter comments to the last decorator
+            // ```javascript
+            // class Foo {
+            // 	method(
+            // 	//leading own line
+            // 	/*leading same line*/ @Decorator /*trailing*/
+            // 	//leading own line between
+            // 	/*leading same line between*/ @dec //trailing
+            // 	/*leading parameter*/
+            // 	parameter
+            // 	) {}
+            // }
+            // ```
+            if let Some(preceding_node) = comment.preceding_node() {
+                if comment.following_node().kind() != Some(JsSyntaxKind::JS_DECORATOR) {
+                    return CommentPlacement::trailing(preceding_node.clone(), comment);
+                }
+            } else if comment.text_position().is_own_line() {
+                return CommentPlacement::leading(comment.enclosing_node().clone(), comment);
+            }
         }
         JsSyntaxKind::JS_INITIALIZER_CLAUSE => {
             if let Some(parameter) = comment

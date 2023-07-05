@@ -3,7 +3,7 @@ use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Rule, Rul
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_syntax::{AnyJsExpression, T};
+use rome_js_syntax::{global_identifier, AnyJsExpression, T};
 use rome_rowan::{AstNode, BatchMutationExt};
 
 declare_rule! {
@@ -44,51 +44,11 @@ impl Rule for NoGlobalIsNan {
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
         let model = ctx.model();
-        match node {
-            AnyJsExpression::JsIdentifierExpression(expression) => {
-                let name = expression.name().ok()?;
-                if name.has_name("isNaN") && model.binding(&name).is_none() {
-                    return Some(());
-                }
-            }
-            AnyJsExpression::JsStaticMemberExpression(expression) => {
-                let object_name = expression
-                    .object()
-                    .ok()?
-                    .omit_parentheses()
-                    .as_js_identifier_expression()?
-                    .name()
-                    .ok()?;
-                let member = expression.member().ok()?;
-                if object_name.is_global_this()
-                    && model.binding(&object_name).is_none()
-                    && member.as_js_name()?.value_token().ok()?.text_trimmed() == "isNaN"
-                {
-                    return Some(());
-                }
-            }
-            AnyJsExpression::JsComputedMemberExpression(expression) => {
-                let object_name = expression
-                    .object()
-                    .ok()?
-                    .omit_parentheses()
-                    .as_js_identifier_expression()?
-                    .name()
-                    .ok()?;
-                let member = expression.member().ok()?.omit_parentheses();
-                let member = member
-                    .as_any_js_literal_expression()?
-                    .as_js_string_literal_expression()?;
-                if object_name.is_global_this()
-                    && model.binding(&object_name).is_none()
-                    && member.inner_string_text().ok()?.text() == "isNaN"
-                {
-                    return Some(());
-                }
-            }
-            _ => (),
+        let (reference, name) = global_identifier(node)?;
+        if name.text() != "isNaN" {
+            return None;
         }
-        None
+        model.binding(&reference).is_none().then_some(())
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {

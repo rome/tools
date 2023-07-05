@@ -10,7 +10,7 @@ flags/invalid ━━━━━━━━━━━━━━━━━━━━━━
   × Failed to parse CLI arguments.
     
     Caused by:
-      Couldn't parse "invalid": Unsupported value for this option
+      Couldn't parse `invalid`: Unsupported value for this option
   
 
 

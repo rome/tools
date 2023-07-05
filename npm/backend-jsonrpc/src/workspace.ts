@@ -445,7 +445,7 @@ export interface Correctness {
 	 */
 	noSwitchDeclarations?: RuleConfiguration;
 	/**
-	 * Prevents the usage of variables that haven't been declared inside the document
+	 * Prevents the usage of variables that haven't been declared inside the document.
 	 */
 	noUndeclaredVariables?: RuleConfiguration;
 	/**
@@ -557,6 +557,10 @@ export interface Nursery {
 	 * Enforce that tabIndex is not assigned to non-interactive HTML elements.
 	 */
 	noNoninteractiveTabindex?: RuleConfiguration;
+	/**
+	 * Disallow \8 and \9 escape sequences in string literals.
+	 */
+	noNonoctalDecimalEscape?: RuleConfiguration;
 	/**
 	 * Enforce explicit role property is not the same as implicit/default role property on an element.
 	 */
@@ -1148,6 +1152,7 @@ export type Category =
 	| "lint/nursery/noGlobalIsFinite"
 	| "lint/nursery/useArrowFunction"
 	| "lint/nursery/noVoid"
+	| "lint/nursery/noNonoctalDecimalEscape"
 	| "lint/nursery/noExcessiveComplexity"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
@@ -1411,6 +1416,7 @@ export interface FormatOnTypeParams {
 export interface FixFileParams {
 	fix_file_mode: FixFileMode;
 	path: RomePath;
+	should_format: boolean;
 }
 /**
  * Which fixes should be applied during the analyzing phase

@@ -434,7 +434,7 @@
 					]
 				},
 				"noUndeclaredVariables": {
-					"description": "Prevents the usage of variables that haven't been declared inside the document",
+					"description": "Prevents the usage of variables that haven't been declared inside the document.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }
@@ -840,6 +840,13 @@
 				},
 				"noNoninteractiveTabindex": {
 					"description": "Enforce that tabIndex is not assigned to non-interactive HTML elements.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
+				"noNonoctalDecimalEscape": {
+					"description": "Disallow \\8 and \\9 escape sequences in string literals.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }

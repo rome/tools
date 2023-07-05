@@ -6,6 +6,8 @@ globalThis.isFinite({});
 
 (globalThis).isFinite({});
 
+globalThis.globalThis.window.isFinite({});
+
 globalThis["isFinite"]({});
 
 (globalThis)[("isFinite")]({});

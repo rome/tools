@@ -30,7 +30,11 @@ impl<'a> Parse<'a> {
     pub fn parse(&self) -> Parsed {
         match self {
             Parse::JavaScript(source_type, code) => Parsed::JavaScript(
-                rome_js_parser::parse(code, *source_type, JsParserOptions::default()),
+                rome_js_parser::parse(
+                    code,
+                    *source_type,
+                    JsParserOptions::default().with_parse_class_parameter_decorators(),
+                ),
                 *source_type,
             ),
             Parse::Json(code) => Parsed::Json(rome_json_parser::parse_json(code)),
@@ -43,7 +47,7 @@ impl<'a> Parse<'a> {
                 rome_js_parser::parse_js_with_cache(
                     code,
                     *source_type,
-                    JsParserOptions::default(),
+                    JsParserOptions::default().with_parse_class_parameter_decorators(),
                     cache,
                 ),
                 *source_type,

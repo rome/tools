@@ -32,9 +32,9 @@ rome_json_syntax    = { workspace = true }
 rome_parser         = { workspace = true }
 rome_rowan          = { workspace = true, features = ["serde"] }
 rome_text_edit      = { workspace = true }
-schemars            = { version = "0.8.10", features = ["indexmap1"], optional = true }
-serde               = { version = "1.0.133", features = ["derive"] }
-serde_json          = { version = "1.0.74", features = ["raw_value"] }
+schemars            = { workspace = true, features = ["indexmap1"], optional = true }
+serde               = { workspace = true, features = ["derive"] }
+serde_json          = { workspace = true, features = ["raw_value"] }
 tracing             = { workspace = true, features = ["attributes"] }
 
 [features]

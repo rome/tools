@@ -19,7 +19,7 @@ js-sys             = "0.3.59"
 rome_console       = { workspace = true }
 rome_diagnostics   = { path = "../../crates/rome_diagnostics" }
 rome_service       = { path = "../../crates/rome_service" }
-serde              = "1.0.136"
+serde              = { workspace = true }
 serde-wasm-bindgen = "0.4.5"
 wasm-bindgen       = { version = "0.2.82", features = ["serde-serialize"] }
 
@@ -36,5 +36,5 @@ rome_js_factory   = { workspace = true }
 rome_js_formatter = { workspace = true }
 rome_rowan        = { workspace = true }
 rome_service      = { workspace = true, features = ["schemars"] }
-schemars          = "0.8.10"
-serde_json        = "1.0.79"
+schemars          = { workspace = true }
+serde_json        = { workspace = true }

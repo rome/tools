@@ -10,7 +10,7 @@ flags/invalid ━━━━━━━━━━━━━━━━━━━━━━
   × Failed to parse CLI arguments.
     
     Caused by:
-      Couldn't parse "257": number too large to fit in target type
+      Couldn't parse `257`: number too large to fit in target type
   
 
 

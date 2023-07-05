@@ -7,7 +7,8 @@ use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_semantic::SemanticModel;
 use rome_js_syntax::{
-    AnyJsExpression, AnyJsLiteralExpression, AnyJsMemberExpression, JsCallExpression, JsSyntaxToken,
+    global_identifier, AnyJsExpression, AnyJsLiteralExpression, AnyJsMemberExpression,
+    JsCallExpression, JsSyntaxToken,
 };
 use rome_rowan::{AstNode, AstSeparatedList, BatchMutationExt};
 
@@ -83,10 +84,8 @@ impl Rule for UseNumericLiterals {
     fn action(ctx: &RuleContext<Self>, call: &Self::State) -> Option<JsRuleAction> {
         let node = ctx.query();
         let mut mutation = ctx.root().begin();
-
         let number = call.to_numeric_literal()?;
         let number = ast_utils::token_with_source_trivia(number, node);
-
         mutation.replace_node_discard_trivia(
             AnyJsExpression::JsCallExpression(node.clone()),
             AnyJsExpression::AnyJsLiteralExpression(
@@ -127,7 +126,6 @@ impl CallInfo {
             .as_js_number_literal_expression()?
             .as_number()?;
         let callee = get_callee(expr, model)?;
-
         Some(CallInfo {
             callee,
             text,
@@ -145,21 +143,21 @@ impl CallInfo {
 
 fn get_callee(expr: &JsCallExpression, model: &SemanticModel) -> Option<&'static str> {
     let callee = expr.callee().ok()?.omit_parentheses();
-    if let Some(id) = callee.as_reference_identifier() {
-        if id.has_name("parseInt") && model.binding(&id).is_none() {
+    if let Some((reference, name)) = global_identifier(&callee) {
+        if name.text() == "parseInt" && model.binding(&reference).is_none() {
             return Some("parseInt()");
         }
+        return None;
     }
-
     let callee = AnyJsMemberExpression::cast_ref(callee.syntax())?;
-    let object = callee.get_object_reference_identifier()?;
-    if object.has_name("Number")
-        && model.binding(&object).is_none()
-        && callee.has_member_name("parseInt")
-    {
+    if callee.member_name()?.text() != "parseInt" {
+        return None;
+    }
+    let object = callee.object().ok()?.omit_parentheses();
+    let (reference, name) = global_identifier(&object)?;
+    if name.text() == "Number" && model.binding(&reference).is_none() {
         return Some("Number.parseInt()");
     }
-
     None
 }
 

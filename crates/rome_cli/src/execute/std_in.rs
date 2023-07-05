@@ -51,7 +51,7 @@ pub(crate) fn run<'a>(
                     <Warn>"The content was not formatted because the formatter is currently disabled."</Warn>
                 })
         }
-    } else if mode.is_check() {
+    } else if mode.is_check() || mode.is_lint() {
         let mut diagnostics = Vec::new();
         let mut new_content = Cow::Borrowed(content);
 
@@ -75,6 +75,8 @@ pub(crate) fn run<'a>(
                 let fix_file_result = workspace.fix_file(FixFileParams {
                     fix_file_mode: *fix_file_mode,
                     path: rome_path.clone(),
+                    should_format: mode.is_check()
+                        && file_features.supports_for(&FeatureName::Format),
                 })?;
                 if fix_file_result.code != new_content {
                     version += 1;
@@ -87,7 +89,7 @@ pub(crate) fn run<'a>(
                 }
             }
 
-            if file_features.supports_for(&FeatureName::OrganizeImports) {
+            if file_features.supports_for(&FeatureName::OrganizeImports) && mode.is_check() {
                 let result = workspace.organize_imports(OrganizeImportsParams {
                     path: rome_path.clone(),
                 })?;
@@ -115,7 +117,7 @@ pub(crate) fn run<'a>(
             diagnostics.extend(result.diagnostics);
         }
 
-        if file_features.supports_for(&FeatureName::Format) {
+        if file_features.supports_for(&FeatureName::Format) && mode.is_check() {
             let printed = workspace.format_file(FormatFileParams {
                 path: rome_path.clone(),
             })?;
@@ -125,10 +127,10 @@ pub(crate) fn run<'a>(
                 }
             } else {
                 let diagnostic = FormatDiffDiagnostic {
-                    file_name: &rome_path.display().to_string(),
+                    file_name: rome_path.display().to_string(),
                     diff: ContentDiffAdvice {
-                        new: printed.as_code(),
-                        old: content,
+                        new: printed.as_code().to_string(),
+                        old: content.to_string(),
                     },
                 };
                 diagnostics.push(rome_diagnostics::serde::Diagnostic::new(diagnostic));

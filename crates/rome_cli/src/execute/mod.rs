@@ -11,6 +11,7 @@ use rome_diagnostics::MAXIMUM_DISPLAYABLE_DIAGNOSTICS;
 use rome_fs::RomePath;
 use rome_service::workspace::{FeatureName, FixFileMode};
 use std::ffi::OsString;
+use std::fmt::{Display, Formatter};
 use std::path::PathBuf;
 
 /// Useful information during the traversal of files and virtual content
@@ -48,6 +49,18 @@ pub(crate) enum TraversalMode {
         /// 2. The content of the file
         stdin: Option<(PathBuf, String)>,
     },
+    /// This mode is enabled when running the command `rome lint`
+    Lint {
+        /// The type of fixes that should be applied when analyzing a file.
+        ///
+        /// It's [None] if the `check` command is called without `--apply` or `--apply-suggested`
+        /// arguments.
+        fix_file_mode: Option<FixFileMode>,
+        /// An optional tuple.
+        /// 1. The virtual path to the file
+        /// 2. The content of the file
+        stdin: Option<(PathBuf, String)>,
+    },
     /// This mode is enabled when running the command `rome ci`
     CI,
     /// This mode is enabled when running the command `rome format`
@@ -66,6 +79,18 @@ pub(crate) enum TraversalMode {
         write: bool,
         configuration_path: PathBuf,
     },
+}
+
+impl Display for TraversalMode {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TraversalMode::Check { .. } => write!(f, "check"),
+            TraversalMode::CI { .. } => write!(f, "ci"),
+            TraversalMode::Format { .. } => write!(f, "format"),
+            TraversalMode::Migrate { .. } => write!(f, "migrate"),
+            TraversalMode::Lint { .. } => write!(f, "lint"),
+        }
+    }
 }
 
 /// Tells to the execution of the traversal how the information should be reported
@@ -111,10 +136,12 @@ impl Execution {
 
     /// `true` only when running the traversal in [TraversalMode::Check] and `should_fix` is `true`
     pub(crate) fn as_fix_file_mode(&self) -> Option<&FixFileMode> {
-        if let TraversalMode::Check { fix_file_mode, .. } = &self.traversal_mode {
-            fix_file_mode.as_ref()
-        } else {
-            None
+        match &self.traversal_mode {
+            TraversalMode::Check { fix_file_mode, .. }
+            | TraversalMode::Lint { fix_file_mode, .. } => fix_file_mode.as_ref(),
+            TraversalMode::Format { .. } | TraversalMode::CI | TraversalMode::Migrate { .. } => {
+                None
+            }
         }
     }
 
@@ -124,6 +151,10 @@ impl Execution {
 
     pub(crate) const fn is_check(&self) -> bool {
         matches!(self.traversal_mode, TraversalMode::Check { .. })
+    }
+
+    pub(crate) const fn is_lint(&self) -> bool {
+        matches!(self.traversal_mode, TraversalMode::Lint { .. })
     }
 
     pub(crate) const fn is_check_apply(&self) -> bool {
@@ -153,7 +184,8 @@ impl Execution {
     /// Whether the traversal mode requires write access to files
     pub(crate) const fn requires_write_access(&self) -> bool {
         match self.traversal_mode {
-            TraversalMode::Check { fix_file_mode, .. } => fix_file_mode.is_some(),
+            TraversalMode::Check { fix_file_mode, .. }
+            | TraversalMode::Lint { fix_file_mode, .. } => fix_file_mode.is_some(),
             TraversalMode::CI => false,
             TraversalMode::Format { write, .. } => write,
             TraversalMode::Migrate { write: dry_run, .. } => dry_run,
@@ -162,19 +194,10 @@ impl Execution {
 
     pub(crate) fn as_stdin_file(&self) -> Option<&(PathBuf, String)> {
         match &self.traversal_mode {
-            TraversalMode::Format { stdin, .. } => stdin.as_ref(),
-            TraversalMode::Check { stdin, .. } => stdin.as_ref(),
-            _ => None,
-        }
-    }
-
-    /// Returns the subcommand of the [traversal mode](TraversalMode) execution
-    pub(crate) fn traversal_mode_subcommand(&self) -> &'static str {
-        match self.traversal_mode {
-            TraversalMode::Check { .. } => "check",
-            TraversalMode::CI { .. } => "ci",
-            TraversalMode::Format { .. } => "format",
-            TraversalMode::Migrate { .. } => "migrate",
+            TraversalMode::Format { stdin, .. }
+            | TraversalMode::Lint { stdin, .. }
+            | TraversalMode::Check { stdin, .. } => stdin.as_ref(),
+            TraversalMode::CI { .. } | TraversalMode::Migrate { .. } => None,
         }
     }
 }
@@ -197,10 +220,10 @@ pub(crate) fn execute_mode(
 
         max_diagnostics
     } else {
-        // The command `rome check` gives a default value of 20.
+        // The commands `rome check` and `rome lint` give a default value of 20.
         // In case of other commands that pass here, we limit to 50 to avoid to delay the terminal.
         match &mode.traversal_mode {
-            TraversalMode::Check { .. } => 20,
+            TraversalMode::Check { .. } | TraversalMode::Lint { .. } => 20,
             TraversalMode::CI | TraversalMode::Format { .. } | TraversalMode::Migrate { .. } => 50,
         }
     };

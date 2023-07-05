@@ -1831,7 +1831,7 @@ pub(crate) fn parse_ts_type_arguments_in_expression(
     // Don't parse type arguments in JS because the syntax is ambiguous
     // https://github.com/microsoft/TypeScript/issues/36662
 
-    // test type_arguments_like_expression
+    // test js type_arguments_like_expression
     // ((0)<5>(6))
 
     if TypeScript.is_unsupported(p) || !matches!(p.cur(), T![<] | T![<<]) {

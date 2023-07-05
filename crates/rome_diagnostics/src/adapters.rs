@@ -73,37 +73,6 @@ impl Diagnostic for IoError {
 
 /// Implements [Diagnostic] over for [pico_args::Error].
 #[derive(Debug)]
-pub struct PicoArgsError {
-    error: pico_args::Error,
-}
-
-impl From<pico_args::Error> for PicoArgsError {
-    fn from(error: pico_args::Error) -> Self {
-        Self { error }
-    }
-}
-
-impl Diagnostic for PicoArgsError {
-    fn category(&self) -> Option<&'static Category> {
-        Some(category!("flags/invalid"))
-    }
-
-    fn tags(&self) -> DiagnosticTags {
-        DiagnosticTags::FIXABLE
-    }
-
-    fn description(&self, fmt: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(fmt, "{}", self.error)
-    }
-
-    fn message(&self, fmt: &mut fmt::Formatter<'_>) -> io::Result<()> {
-        let error = self.error.to_string();
-        fmt.write_str(&error)
-    }
-}
-
-/// Implements [Diagnostic] over for [pico_args::Error].
-#[derive(Debug)]
 pub struct BpafError {
     error: bpaf::ParseFailure,
 }

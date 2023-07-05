@@ -8,11 +8,11 @@ use std::io;
     category = "format",
     message = "File content differs from formatting output"
 )]
-pub(crate) struct CIFormatDiffDiagnostic<'a> {
+pub(crate) struct CIFormatDiffDiagnostic {
     #[location(resource)]
-    pub(crate) file_name: &'a str,
+    pub(crate) file_name: String,
     #[advice]
-    pub(crate) diff: ContentDiffAdvice<'a>,
+    pub(crate) diff: ContentDiffAdvice,
 }
 
 #[derive(Debug, Diagnostic)]
@@ -20,11 +20,11 @@ pub(crate) struct CIFormatDiffDiagnostic<'a> {
     category = "organizeImports",
     message = "Import statements differs from the output"
 )]
-pub(crate) struct CIOrganizeImportsDiffDiagnostic<'a> {
+pub(crate) struct CIOrganizeImportsDiffDiagnostic {
     #[location(resource)]
-    pub(crate) file_name: &'a str,
+    pub(crate) file_name: String,
     #[advice]
-    pub(crate) diff: ContentDiffAdvice<'a>,
+    pub(crate) diff: ContentDiffAdvice,
 }
 
 #[derive(Debug, Diagnostic)]
@@ -33,11 +33,11 @@ category = "format",
 severity = Information,
 message = "Formatter would have printed the following content:"
 )]
-pub(crate) struct FormatDiffDiagnostic<'a> {
+pub(crate) struct FormatDiffDiagnostic {
     #[location(resource)]
-    pub(crate) file_name: &'a str,
+    pub(crate) file_name: String,
     #[advice]
-    pub(crate) diff: ContentDiffAdvice<'a>,
+    pub(crate) diff: ContentDiffAdvice,
 }
 
 #[derive(Debug, Diagnostic)]
@@ -46,11 +46,11 @@ pub(crate) struct FormatDiffDiagnostic<'a> {
 	severity = Information,
 	message = "Import statements could be sorted:"
 )]
-pub(crate) struct OrganizeImportsDiffDiagnostic<'a> {
+pub(crate) struct OrganizeImportsDiffDiagnostic {
     #[location(resource)]
-    pub(crate) file_name: &'a str,
+    pub(crate) file_name: String,
     #[advice]
-    pub(crate) diff: ContentDiffAdvice<'a>,
+    pub(crate) diff: ContentDiffAdvice,
 }
 
 #[derive(Debug, Diagnostic)]
@@ -59,22 +59,22 @@ pub(crate) struct OrganizeImportsDiffDiagnostic<'a> {
 	severity = Information,
 	message = "Configuration file can be updated."
 )]
-pub(crate) struct MigrateDiffDiagnostic<'a> {
+pub(crate) struct MigrateDiffDiagnostic {
     #[location(resource)]
-    pub(crate) file_name: &'a str,
+    pub(crate) file_name: String,
     #[advice]
-    pub(crate) diff: ContentDiffAdvice<'a>,
+    pub(crate) diff: ContentDiffAdvice,
 }
 
 #[derive(Debug)]
-pub(crate) struct ContentDiffAdvice<'a> {
-    pub(crate) old: &'a str,
-    pub(crate) new: &'a str,
+pub(crate) struct ContentDiffAdvice {
+    pub(crate) old: String,
+    pub(crate) new: String,
 }
 
-impl Advices for ContentDiffAdvice<'_> {
+impl Advices for ContentDiffAdvice {
     fn record(&self, visitor: &mut dyn Visit) -> io::Result<()> {
-        let diff = TextEdit::from_unicode_words(self.old, self.new);
+        let diff = TextEdit::from_unicode_words(&self.old, &self.new);
         visitor.record_diff(&diff)
     }
 }
