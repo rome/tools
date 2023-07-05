@@ -52,6 +52,21 @@ function tooComplex() {
   
 </code></pre>
 
+## Options
+
+Allows to specify the maximum allowed complexity.
+
+```
+{
+    "//": "...",
+    "options": {
+        "maxAllowedComplexity": 15
+    }
+}
+```
+
+The allowed values range from 1 through 254. The default is 10.
+
 ## Related links
 
 - [Disable a rule](/linter/#disable-a-lint-rule)

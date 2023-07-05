@@ -328,7 +328,7 @@
 				"maxAllowedComplexity": {
 					"description": "The maximum complexity score that we allow. Anything higher is considered excessive.",
 					"type": "integer",
-					"format": "uint",
+					"format": "uint8",
 					"minimum": 0.0
 				}
 			},
