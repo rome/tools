@@ -20,6 +20,9 @@ use std::str::FromStr;
 #[cfg(feature = "schemars")]
 use schemars::JsonSchema;
 
+const MAX_FUNCTION_DEPTH: usize = 10;
+const MAX_SCORE: u8 = u8::MAX;
+
 declare_rule! {
     /// Disallow functions that exceed a given complexity score.
     ///
@@ -94,9 +97,15 @@ impl Rule for NoExcessiveComplexity {
                 },
                 markup!("Excessive complexity detected."),
             )
-            .note(markup! {
-                "Please refactor this function to reduce its complexity score from "
-                {calculated_score}" to the max allowed complexity "{max_allowed_complexity}"."
+            .note(if calculated_score == &MAX_SCORE {
+                "Please refactor this function to reduce its complexity. \
+                It's currently too complex or too deeply nested to calculate an accurate score."
+                    .to_owned()
+            } else {
+                format!(
+                    "Please refactor this function to reduce its complexity score from \
+                    {calculated_score} to the max allowed complexity {max_allowed_complexity}."
+                )
             }),
         )
     }
@@ -134,8 +143,8 @@ impl Queryable for CognitiveComplexity {
 
 struct CognitiveComplexityFunctionState {
     function_like: AnyFunctionLike,
-    score: usize,
-    nesting_level: usize,
+    score: u8,
+    nesting_level: u8,
 
     /// Cognitive complexity does not increase for every logical operator,
     /// but for every *sequence* of identical logical operators. Therefore, we
@@ -155,78 +164,108 @@ impl Visitor for CognitiveComplexityVisitor {
     fn visit(
         &mut self,
         event: &WalkEvent<SyntaxNode<Self::Language>>,
-        mut ctx: VisitorContext<Self::Language>,
+        ctx: VisitorContext<Self::Language>,
     ) {
         match event {
-            WalkEvent::Enter(node) => {
-                // When the visitor enters a function node, push a new entry on the stack
-                if let Some(function_like) = AnyFunctionLike::cast_ref(node) {
-                    self.stack.push(CognitiveComplexityFunctionState {
-                        function_like,
-                        score: 0,
-                        nesting_level: 0,
-                        last_seen_operator: None,
-                    });
-                }
+            WalkEvent::Enter(node) => self.on_enter(node),
+            WalkEvent::Leave(node) => self.on_leave(node, ctx),
+        }
+    }
+}
 
-                if let Some(state) = self.stack.last_mut() {
-                    if receives_structural_penalty(node) {
-                        state.score += 1;
+impl CognitiveComplexityVisitor {
+    fn on_enter(&mut self, node: &SyntaxNode<JsLanguage>) {
+        let parent = self.stack.last();
+        if parent
+            .map(|parent| parent.score == MAX_SCORE)
+            .unwrap_or_default()
+        {
+            return; // No need for further processing if we're already at the max.
+        }
 
-                        if receives_nesting_penalty(node) {
-                            state.score += state.nesting_level;
-                        }
-                    }
+        // When the visitor enters a function node, push a new entry on the stack
+        if let Some(function_like) = AnyFunctionLike::cast_ref(node) {
+            if self.stack.len() < MAX_FUNCTION_DEPTH {
+                self.stack.push(CognitiveComplexityFunctionState {
+                    function_like,
+                    score: 0,
+                    nesting_level: parent
+                        .map(|parent| parent.nesting_level + 1)
+                        .unwrap_or_default(),
+                    last_seen_operator: None,
+                });
+            } else if let Some(parent) = self.stack.last_mut() {
+                // Just mark the parent as being too complex. It already had a
+                // crazy level of nesting, so there's no point in reporting even
+                // deeper nested functions individually.
+                parent.score = MAX_SCORE;
+            }
+        }
 
-                    if increases_nesting(node) {
-                        state.last_seen_operator = None;
-                        state.nesting_level += 1;
-                    } else if let Some(operator) = JsLogicalExpression::cast_ref(node)
-                        .and_then(|expression| expression.operator().ok())
-                    {
-                        if state.last_seen_operator != Some(operator) {
-                            state.score += 1;
-                            state.last_seen_operator = Some(operator);
-                        }
-                    } else if let Some(alternate) =
-                        JsElseClause::cast_ref(node).and_then(|js_else| js_else.alternate().ok())
-                    {
-                        if alternate.as_js_if_statement().is_some() {
-                            // Prevent double nesting inside else-if.
-                            state.nesting_level = state.nesting_level.saturating_sub(1);
-                        } else {
-                            state.score += 1;
-                        }
-                    } else {
-                        // Reset the operator for every other type of node.
-                        state.last_seen_operator = None;
-                    }
+        if let Some(state) = self.stack.last_mut() {
+            if receives_structural_penalty(node) {
+                state.score = state.score.saturating_add(1);
+
+                if receives_nesting_penalty(node) {
+                    state.score = state.score.saturating_add(state.nesting_level);
                 }
             }
-            WalkEvent::Leave(node) => {
-                if let Some(exit_node) = AnyFunctionLike::cast_ref(node) {
-                    if let Some(function_state) = self.stack.pop() {
-                        debug_assert_eq!(function_state.function_like, exit_node);
-                        ctx.match_query(CognitiveComplexity {
-                            function_like: exit_node,
-                            score: ComplexityScore {
-                                calculated_score: function_state.score,
-                            },
-                        });
-                    }
-                } else if let Some(state) = self.stack.last_mut() {
-                    if increases_nesting(node) {
-                        state.nesting_level = state.nesting_level.saturating_sub(1);
-                    } else if let Some(alternate) =
-                        JsElseClause::cast_ref(node).and_then(|js_else| js_else.alternate().ok())
-                    {
-                        if alternate.as_js_if_statement().is_some() {
-                            // Prevent double nesting inside else-if.
-                            state.nesting_level += 1;
-                        } else {
-                            state.nesting_level = state.nesting_level.saturating_sub(1);
-                        }
-                    }
+
+            if increases_nesting(node) {
+                state.last_seen_operator = None;
+                state.nesting_level = state.nesting_level.saturating_add(1);
+            } else if let Some(operator) = JsLogicalExpression::cast_ref(node)
+                .and_then(|expression| expression.operator().ok())
+            {
+                if state.last_seen_operator != Some(operator) {
+                    state.score = state.score.saturating_add(1);
+                    state.last_seen_operator = Some(operator);
+                }
+            } else if let Some(alternate) =
+                JsElseClause::cast_ref(node).and_then(|js_else| js_else.alternate().ok())
+            {
+                if alternate.as_js_if_statement().is_some() {
+                    // Prevent double nesting inside else-if.
+                    state.nesting_level = state.nesting_level.saturating_sub(1);
+                } else {
+                    state.score = state.score.saturating_add(1);
+                }
+            } else {
+                // Reset the operator for every other type of node.
+                state.last_seen_operator = None;
+            }
+        }
+    }
+
+    fn on_leave(&mut self, node: &SyntaxNode<JsLanguage>, mut ctx: VisitorContext<JsLanguage>) {
+        if let Some(exit_node) = AnyFunctionLike::cast_ref(node) {
+            if let Some(function_state) = self.stack.pop() {
+                if function_state.function_like == exit_node {
+                    ctx.match_query(CognitiveComplexity {
+                        function_like: exit_node,
+                        score: ComplexityScore {
+                            calculated_score: function_state.score,
+                        },
+                    });
+                } else {
+                    // Push it back. This really should only be necessary
+                    // if the max complexity or max nesting level was reached.
+                    self.stack.push(function_state);
+                }
+            }
+        } else if let Some(state) = self.stack.last_mut() {
+            if state.score < MAX_SCORE {
+                if increases_nesting(node) {
+                    state.nesting_level = state.nesting_level.saturating_sub(1);
+                } else if let Some(alternate) =
+                    JsElseClause::cast_ref(node).and_then(|js_else| js_else.alternate().ok())
+                {
+                    state.nesting_level = if alternate.as_js_if_statement().is_some() {
+                        // Prevent double nesting inside else-if.
+                        state.nesting_level.saturating_add(1)
+                    } else {
+                        state.nesting_level.saturating_sub(1)
+                    };
                 }
             }
         }
@@ -301,7 +340,7 @@ fn receives_nesting_penalty(node: &SyntaxNode<JsLanguage>) -> bool {
 
 #[derive(Clone, Default)]
 pub struct ComplexityScore {
-    calculated_score: usize,
+    calculated_score: u8,
 }
 
 /// Options for the rule `noNestedModuleImports`.
@@ -310,7 +349,7 @@ pub struct ComplexityScore {
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct ComplexityOptions {
     /// The maximum complexity score that we allow. Anything higher is considered excessive.
-    pub max_allowed_complexity: usize,
+    pub max_allowed_complexity: u8,
 }
 
 impl Default for ComplexityOptions {
@@ -350,15 +389,20 @@ impl VisitNode<JsonLanguage> for ComplexityOptions {
         if name_text == "maxAllowedComplexity" {
             if let Some(value) = value
                 .as_json_number_value()
-                .and_then(|number_value| usize::from_str(&number_value.syntax().to_string()).ok())
-                .filter(|&number| number > 0)
+                .and_then(|number_value| u8::from_str(&number_value.syntax().to_string()).ok())
+                // Don't allow 0 or no code would pass.
+                // And don't allow MAX_SCORE or we can't detect exceeding it.
+                .filter(|&number| number > 0 && number < MAX_SCORE)
             {
                 self.max_allowed_complexity = value;
             } else {
-                diagnostics.push(DeserializationDiagnostic::new(markup! {
-                    "The field "<Emphasis>"maxAllowedComplexity"</Emphasis>" must contain a positive integer"
-                })
-                .with_range(value.range()));
+                diagnostics.push(
+                    DeserializationDiagnostic::new(markup! {
+                        "The field "<Emphasis>"maxAllowedComplexity"</Emphasis>
+                        " must contain an integer between 1 and "{MAX_SCORE - 1}
+                    })
+                    .with_range(value.range()),
+                );
             }
         }
         Some(())
