@@ -18,7 +18,7 @@ JsModule {
                     modifiers: TsIndexSignatureModifierList [],
                     l_brack_token: L_BRACK@9..15 "[" [Newline("\n"), Whitespace("    ")] [],
                     parameter: TsIndexSignatureParameter {
-                        binding: JsIdentifierBinding {
+                        binding: TsIndexSignatureParameterIdentifierBinding {
                             name_token: IDENT@15..16 "a" [] [],
                         },
                         type_annotation: TsTypeAnnotation {
@@ -56,7 +56,7 @@ JsModule {
                     modifiers: TsIndexSignatureModifierList [],
                     l_brack_token: L_BRACK@46..52 "[" [Newline("\n"), Whitespace("    ")] [],
                     parameter: TsIndexSignatureParameter {
-                        binding: JsIdentifierBinding {
+                        binding: TsIndexSignatureParameterIdentifierBinding {
                             name_token: IDENT@52..57 "index" [] [],
                         },
                         type_annotation: TsTypeAnnotation {
@@ -113,7 +113,7 @@ JsModule {
           0: TS_INDEX_SIGNATURE_MODIFIER_LIST@9..9
           1: L_BRACK@9..15 "[" [Newline("\n"), Whitespace("    ")] []
           2: TS_INDEX_SIGNATURE_PARAMETER@15..24
-            0: JS_IDENTIFIER_BINDING@15..16
+            0: TS_INDEX_SIGNATURE_PARAMETER_IDENTIFIER_BINDING@15..16
               0: IDENT@15..16 "a" [] []
             1: TS_TYPE_ANNOTATION@16..24
               0: COLON@16..18 ":" [] [Whitespace(" ")]
@@ -141,7 +141,7 @@ JsModule {
           0: TS_INDEX_SIGNATURE_MODIFIER_LIST@46..46
           1: L_BRACK@46..52 "[" [Newline("\n"), Whitespace("    ")] []
           2: TS_INDEX_SIGNATURE_PARAMETER@52..65
-            0: JS_IDENTIFIER_BINDING@52..57
+            0: TS_INDEX_SIGNATURE_PARAMETER_IDENTIFIER_BINDING@52..57
               0: IDENT@52..57 "index" [] []
             1: TS_TYPE_ANNOTATION@57..65
               0: COLON@57..59 ":" [] [Whitespace(" ")]

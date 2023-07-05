@@ -4961,7 +4961,7 @@ impl TsIndexSignatureClassMemberBuilder {
     }
 }
 pub fn ts_index_signature_parameter(
-    binding: JsIdentifierBinding,
+    binding: TsIndexSignatureParameterIdentifierBinding,
     type_annotation: TsTypeAnnotation,
 ) -> TsIndexSignatureParameter {
     TsIndexSignatureParameter::unwrap_cast(SyntaxNode::new_detached(
@@ -4970,6 +4970,14 @@ pub fn ts_index_signature_parameter(
             Some(SyntaxElement::Node(binding.into_syntax())),
             Some(SyntaxElement::Node(type_annotation.into_syntax())),
         ],
+    ))
+}
+pub fn ts_index_signature_parameter_identifier_binding(
+    name_token: SyntaxToken,
+) -> TsIndexSignatureParameterIdentifierBinding {
+    TsIndexSignatureParameterIdentifierBinding::unwrap_cast(SyntaxNode::new_detached(
+        JsSyntaxKind::TS_INDEX_SIGNATURE_PARAMETER_IDENTIFIER_BINDING,
+        [Some(SyntaxElement::Token(name_token))],
     ))
 }
 pub fn ts_index_signature_type_member(

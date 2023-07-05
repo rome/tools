@@ -15,7 +15,7 @@ JsModule {
                     readonly_token: missing (optional),
                     l_brack_token: L_BRACK@13..19 "[" [Newline("\n"), Whitespace("    ")] [],
                     parameter: TsIndexSignatureParameter {
-                        binding: JsIdentifierBinding {
+                        binding: TsIndexSignatureParameterIdentifierBinding {
                             name_token: IDENT@19..20 "a" [] [],
                         },
                         type_annotation: TsTypeAnnotation {
@@ -50,7 +50,7 @@ JsModule {
                     readonly_token: missing (optional),
                     l_brack_token: L_BRACK@54..60 "[" [Newline("\n"), Whitespace("    ")] [],
                     parameter: TsIndexSignatureParameter {
-                        binding: JsIdentifierBinding {
+                        binding: TsIndexSignatureParameterIdentifierBinding {
                             name_token: IDENT@60..65 "index" [] [],
                         },
                         type_annotation: TsTypeAnnotation {
@@ -97,7 +97,7 @@ JsModule {
                     readonly_token: READONLY_KW@100..114 "readonly" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
                     l_brack_token: L_BRACK@114..115 "[" [] [],
                     parameter: TsIndexSignatureParameter {
-                        binding: JsIdentifierBinding {
+                        binding: TsIndexSignatureParameterIdentifierBinding {
                             name_token: IDENT@115..116 "a" [] [],
                         },
                         type_annotation: TsTypeAnnotation {
@@ -139,7 +139,7 @@ JsModule {
           0: (empty)
           1: L_BRACK@13..19 "[" [Newline("\n"), Whitespace("    ")] []
           2: TS_INDEX_SIGNATURE_PARAMETER@19..28
-            0: JS_IDENTIFIER_BINDING@19..20
+            0: TS_INDEX_SIGNATURE_PARAMETER_IDENTIFIER_BINDING@19..20
               0: IDENT@19..20 "a" [] []
             1: TS_TYPE_ANNOTATION@20..28
               0: COLON@20..22 ":" [] [Whitespace(" ")]
@@ -164,7 +164,7 @@ JsModule {
           0: (empty)
           1: L_BRACK@54..60 "[" [Newline("\n"), Whitespace("    ")] []
           2: TS_INDEX_SIGNATURE_PARAMETER@60..73
-            0: JS_IDENTIFIER_BINDING@60..65
+            0: TS_INDEX_SIGNATURE_PARAMETER_IDENTIFIER_BINDING@60..65
               0: IDENT@60..65 "index" [] []
             1: TS_TYPE_ANNOTATION@65..73
               0: COLON@65..67 ":" [] [Whitespace(" ")]
@@ -198,7 +198,7 @@ JsModule {
           0: READONLY_KW@100..114 "readonly" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
           1: L_BRACK@114..115 "[" [] []
           2: TS_INDEX_SIGNATURE_PARAMETER@115..124
-            0: JS_IDENTIFIER_BINDING@115..116
+            0: TS_INDEX_SIGNATURE_PARAMETER_IDENTIFIER_BINDING@115..116
               0: IDENT@115..116 "a" [] []
             1: TS_TYPE_ANNOTATION@116..124
               0: COLON@116..118 ":" [] [Whitespace(" ")]

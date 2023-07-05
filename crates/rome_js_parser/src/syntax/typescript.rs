@@ -194,7 +194,8 @@ pub(crate) fn expect_ts_index_signature_member(
     p.bump(T!['[']);
 
     let parameter = p.start();
-    parse_identifier_binding(p).or_add_diagnostic(p, expected_identifier);
+    parse_identifier(p, TS_INDEX_SIGNATURE_PARAMETER_IDENTIFIER_BINDING)
+        .or_add_diagnostic(p, expected_identifier);
     parse_ts_type_annotation(p).unwrap(); // It's a computed member name if the type annotation is missing
     parameter.complete(p, TS_INDEX_SIGNATURE_PARAMETER);
 

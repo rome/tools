@@ -103,7 +103,7 @@ JsModule {
                         },
                         L_BRACK@95..96 "[" [] [],
                         TsIndexSignatureParameter {
-                            binding: JsIdentifierBinding {
+                            binding: TsIndexSignatureParameterIdentifierBinding {
                                 name_token: IDENT@96..101 "index" [] [],
                             },
                             type_annotation: TsTypeAnnotation {
@@ -282,7 +282,7 @@ JsModule {
                   0: IDENT@90..95 "test" [] [Whitespace(" ")]
           1: L_BRACK@95..96 "[" [] []
           2: TS_INDEX_SIGNATURE_PARAMETER@96..109
-            0: JS_IDENTIFIER_BINDING@96..101
+            0: TS_INDEX_SIGNATURE_PARAMETER_IDENTIFIER_BINDING@96..101
               0: IDENT@96..101 "index" [] []
             1: TS_TYPE_ANNOTATION@101..109
               0: COLON@101..103 ":" [] [Whitespace(" ")]

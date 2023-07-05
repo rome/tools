@@ -1735,6 +1735,9 @@ TsTypeAliasDeclaration =
 // Binds a type identifier
 TsIdentifierBinding = name: 'ident'
 
+// Binds an index signature parameter identifier
+TsIndexSignatureParameterIdentifierBinding = name: 'ident'
+
 // typescript enum
 TsEnumDeclaration =
 	'const'?
@@ -2066,7 +2069,7 @@ TsIndexSignatureTypeMember =
 // { [a: string]: number }
 //    ^^^^^^^^^
 TsIndexSignatureParameter =
-	binding: JsIdentifierBinding
+	binding: TsIndexSignatureParameterIdentifierBinding
 	type_annotation: TsTypeAnnotation
 
 // type OptionsFlags<Type> = {

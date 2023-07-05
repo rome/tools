@@ -243,6 +243,10 @@ multiple files:
 
   The rule no longer reports false positive diagnostics when accessing properties directly from a hook and calling a hook inside function arguments.
 
+- Fix [noUnusedVariables](https://docs.rome.tools/lint/rules/nounusedvariables/) 's false positive diagnostics ([#4634](https://github.com/rome/tools/issues/4637))
+
+  Semantic analyzer no longer handles identifiers of a type variable. Thus, identifiers of a type variable doesn't affect any semantic analysis. 
+
 ### Parser
 
 ### VSCode
