@@ -1,4 +1,3 @@
-use crate::analyzers::correctness::use_yield::AnyFunctionLike;
 use bpaf::Bpaf;
 use rome_analyze::{
     context::RuleContext, declare_rule, AddVisitor, Phases, QueryMatch, Queryable, Rule,
@@ -10,13 +9,11 @@ use rome_deserialize::{
     DeserializationDiagnostic, VisitNode,
 };
 use rome_js_syntax::{
-    AnyJsFunctionBody, JsBreakStatement, JsCatchClause, JsConditionalExpression,
-    JsContinueStatement, JsDoWhileStatement, JsElseClause, JsFinallyClause, JsForInStatement,
-    JsForOfStatement, JsForStatement, JsIfStatement, JsLanguage, JsLogicalExpression,
-    JsLogicalOperator, JsSwitchStatement, JsWhileStatement, JsWithStatement,
+    AnyFunctionLike, JsBreakStatement, JsContinueStatement, JsElseClause, JsLanguage,
+    JsLogicalExpression, JsLogicalOperator,
 };
 use rome_json_syntax::{JsonLanguage, JsonSyntaxNode};
-use rome_rowan::{AstNode, Language, SyntaxNode, SyntaxResult, TextRange, WalkEvent};
+use rome_rowan::{AstNode, Language, SyntaxNode, TextRange, WalkEvent};
 use serde::{Deserialize, Serialize};
 use std::str::FromStr;
 
@@ -24,6 +21,8 @@ use std::str::FromStr;
 use schemars::JsonSchema;
 
 declare_rule! {
+    /// Disallow functions that exceed a given complexity score.
+    ///
     /// The more complexity a function contains, the harder it is to understand
     /// later on.
     ///
@@ -31,13 +30,12 @@ declare_rule! {
     /// it easier to understand as well as by reducing chances of accidental
     /// side-effects when making changes.
     ///
-    /// This rule calculates a complexity score for every function and signals
+    /// This rule calculates a complexity score for every function and disallows
     /// those that exceed a configured complexity threshold (default: 10).
     ///
-    /// Sources:
+    /// Source:
     ///
     /// * https://github.com/SonarSource/eslint-plugin-sonarjs/blob/HEAD/docs/rules/cognitive-complexity.md
-    /// * https://eslint.org/docs/latest/rules/complexity (note this rule uses "cyclomatic complexity" instead)
     ///
     /// ## Examples
     ///
@@ -88,16 +86,17 @@ impl Rule for NoExcessiveComplexity {
         Some(
             RuleDiagnostic::new(
                 rule_category!(),
-                match function_like.id_range() {
+                match function_like.name_range() {
                     Some(id_range) => id_range,
                     // This `unwrap()` is safe because we know there is a body,
                     // otherwise the visitor wouldn't have matched anything.
-                    _ => function_like.body().unwrap().range()
+                    _ => function_like.body().unwrap().range(),
                 },
                 markup!("Excessive complexity detected."),
             )
             .note(markup! {
-                "Please refactor this function to reduce its complexity score from "{calculated_score}" to "{max_allowed_complexity}"."
+                "Please refactor this function to reduce its complexity score from "
+                {calculated_score}" to the max allowed complexity "{max_allowed_complexity}"."
             }),
         )
     }
@@ -137,6 +136,11 @@ struct CognitiveComplexityFunctionState {
     function_like: AnyFunctionLike,
     score: usize,
     nesting_level: usize,
+
+    /// Cognitive complexity does not increase for every logical operator,
+    /// but for every *sequence* of identical logical operators. Therefore, we
+    /// track which operator was last seen and incur a penalty when a different
+    /// operator is encountered.
     last_seen_operator: Option<JsLogicalOperator>,
 }
 
@@ -202,7 +206,7 @@ impl Visitor for CognitiveComplexityVisitor {
             WalkEvent::Leave(node) => {
                 if let Some(exit_node) = AnyFunctionLike::cast_ref(node) {
                     if let Some(function_state) = self.stack.pop() {
-                        assert_eq!(function_state.function_like, exit_node);
+                        debug_assert_eq!(function_state.function_like, exit_node);
                         ctx.match_query(CognitiveComplexity {
                             function_like: exit_node,
                             score: ComplexityScore {
@@ -229,45 +233,70 @@ impl Visitor for CognitiveComplexityVisitor {
     }
 }
 
+/// Returns whether the node is considered to increase the nesting level inside
+/// the function.
+///
+/// Note: These are mostly nodes that increase the complexity of the function's
+/// control flow.
 fn increases_nesting(node: &SyntaxNode<JsLanguage>) -> bool {
-    let kind = node.kind();
+    use rome_js_syntax::JsSyntaxKind::*;
     is_loop_node(node)
-        || JsCatchClause::can_cast(kind)
-        || JsConditionalExpression::can_cast(kind)
-        || JsIfStatement::can_cast(kind)
-        || JsSwitchStatement::can_cast(kind)
+        || matches!(
+            node.kind(),
+            JS_CATCH_CLAUSE | JS_CONDITIONAL_EXPRESSION | JS_IF_STATEMENT | JS_SWITCH_STATEMENT
+        )
 }
 
 fn is_loop_node(node: &SyntaxNode<JsLanguage>) -> bool {
-    let kind = node.kind();
-    JsDoWhileStatement::can_cast(kind)
-        || JsForInStatement::can_cast(kind)
-        || JsForOfStatement::can_cast(kind)
-        || JsForStatement::can_cast(kind)
-        || JsWhileStatement::can_cast(kind)
+    use rome_js_syntax::JsSyntaxKind::*;
+    matches!(
+        node.kind(),
+        JS_DO_WHILE_STATEMENT
+            | JS_FOR_OF_STATEMENT
+            | JS_FOR_IN_STATEMENT
+            | JS_FOR_STATEMENT
+            | JS_WHILE_STATEMENT
+    )
 }
 
+/// Returns whether use of the given node results in a penalty for increasing
+/// the complexity of the structure of the function.
+///
+/// The structure of a function is mostly defined by its control flow, although
+/// there are some node types that we consider as increasing its structural
+/// complexity even though they do not affect its control flow.
+///
+/// A prime example of this is the `with` statement, which does not affect
+/// control flow, but which is considered to increase structural complexity
+/// since developers will need to spend additional effort tracing the scope of
+/// variables.
+///
+/// Do note that the SonarSource paper makes no mention of the `with` statement
+/// specifically (probably because it's highly specific to JavaScript), so its
+/// inclusion here is a personal judgement call.
 fn receives_structural_penalty(node: &SyntaxNode<JsLanguage>) -> bool {
-    let kind = node.kind();
+    use rome_js_syntax::JsSyntaxKind::*;
     receives_nesting_penalty(node)
+        || matches!(node.kind(), JS_FINALLY_CLAUSE | JS_WITH_STATEMENT)
         || JsBreakStatement::cast_ref(node)
             .and_then(|js_break| js_break.label_token())
             .is_some()
         || JsContinueStatement::cast_ref(node)
             .and_then(|js_continue| js_continue.label_token())
             .is_some()
-        || JsFinallyClause::can_cast(kind)
-        || JsWithStatement::can_cast(kind)
 }
 
-// Note: This is a strict subset of nodes that receive a structural penalty.
+/// Returns whether use of the given node receives an additional penalty based
+/// on the level of nesting in which it occurs.
+///
+/// Note: This is a strict subset of the nodes that receive a structural penalty.
 fn receives_nesting_penalty(node: &SyntaxNode<JsLanguage>) -> bool {
-    let kind = node.kind();
+    use rome_js_syntax::JsSyntaxKind::*;
     is_loop_node(node)
-        || JsCatchClause::can_cast(kind)
-        || JsConditionalExpression::can_cast(kind)
-        || JsIfStatement::can_cast(kind)
-        || JsSwitchStatement::can_cast(kind)
+        || matches!(
+            node.kind(),
+            JS_CATCH_CLAUSE | JS_CONDITIONAL_EXPRESSION | JS_IF_STATEMENT | JS_SWITCH_STATEMENT
+        )
 }
 
 #[derive(Clone, Default)]
@@ -333,33 +362,5 @@ impl VisitNode<JsonLanguage> for ComplexityOptions {
             }
         }
         Some(())
-    }
-}
-
-impl AnyFunctionLike {
-    fn body(&self) -> SyntaxResult<AnyJsFunctionBody> {
-        match self {
-            AnyFunctionLike::AnyJsFunction(js_function) => js_function.body(),
-            AnyFunctionLike::JsMethodObjectMember(js_object_method) => js_object_method
-                .body()
-                .map(AnyJsFunctionBody::JsFunctionBody),
-            AnyFunctionLike::JsMethodClassMember(js_class_method) => js_class_method
-                .body()
-                .map(AnyJsFunctionBody::JsFunctionBody),
-        }
-    }
-
-    fn id_range(&self) -> Option<TextRange> {
-        match self {
-            AnyFunctionLike::AnyJsFunction(js_function) => {
-                js_function.id().ok().flatten().map(|id| id.range())
-            }
-            AnyFunctionLike::JsMethodObjectMember(js_object_method) => {
-                js_object_method.name().ok().map(|name| name.range())
-            }
-            AnyFunctionLike::JsMethodClassMember(js_class_method) => {
-                js_class_method.name().ok().map(|name| name.range())
-            }
-        }
     }
 }

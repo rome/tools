@@ -5,6 +5,8 @@ parent: lint/rules/index
 
 # noExcessiveComplexity (since vnext)
 
+Disallow functions that exceed a given complexity score.
+
 The more complexity a function contains, the harder it is to understand
 later on.
 
@@ -12,13 +14,12 @@ Reducing complexity helps to make code more maintenable, both by making
 it easier to understand as well as by reducing chances of accidental
 side-effects when making changes.
 
-This rule calculates a complexity score for every function and signals
+This rule calculates a complexity score for every function and disallows
 those that exceed a configured complexity threshold (default: 10).
 
-Sources:
+Source:
 
 - https://github.com/SonarSource/eslint-plugin-sonarjs/blob/HEAD/docs/rules/cognitive-complexity.md
-- https://eslint.org/docs/latest/rules/complexity (note this rule uses "cyclomatic complexity" instead)
 
 ## Examples
 
@@ -47,7 +48,7 @@ function tooComplex() {
     <strong>2 │ </strong>    for (let x = 0; x &lt; 10; x++) {
     <strong>3 │ </strong>        for (let y = 0; y &lt; 10; y++) {
   
-<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Please refactor this function to reduce its complexity score from 15 to 10.</span>
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Please refactor this function to reduce its complexity score from 15 to the max allowed complexity 10.</span>
   
 </code></pre>
 

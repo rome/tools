@@ -463,7 +463,7 @@ impl Visitor for MissingYieldVisitor {
                 // entry of the stack and the `has_yield` flag is `false`, emit a query match
                 if let Some(exit_node) = AnyFunctionLike::cast_ref(node) {
                     if let Some((enter_node, has_yield)) = self.stack.pop() {
-                        assert_eq!(enter_node, exit_node);
+                        debug_assert_eq!(enter_node, exit_node);
                         if !has_yield {
                             ctx.match_query(MissingYield(enter_node));
                         }

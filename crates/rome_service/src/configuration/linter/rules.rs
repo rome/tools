@@ -1839,7 +1839,7 @@ pub struct Nursery {
     )]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub no_duplicate_jsx_props: Option<RuleConfiguration>,
-    #[doc = "The more complexity a function contains, the harder it is to understand later on."]
+    #[doc = "Disallow functions that exceed a given complexity score."]
     #[bpaf(
         long("no-excessive-complexity"),
         argument("on|off|warn"),

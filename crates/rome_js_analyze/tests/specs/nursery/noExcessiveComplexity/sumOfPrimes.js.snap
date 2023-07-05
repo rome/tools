@@ -30,7 +30,7 @@ sumOfPrimes.js:1:10 lint/nursery/noExcessiveComplexity ━━━━━━━━�
     2 │     let total = 0;
     3 │     OUT: for (let i = 1; i <= max; ++i) { // +1
   
-  i Please refactor this function to reduce its complexity score from 7 to 6.
+  i Please refactor this function to reduce its complexity score from 7 to the max allowed complexity 6.
   
 
 ```

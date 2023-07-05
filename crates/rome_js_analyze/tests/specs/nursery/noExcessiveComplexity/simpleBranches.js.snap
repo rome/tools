@@ -27,7 +27,7 @@ simpleBranches.js:1:10 lint/nursery/noExcessiveComplexity ━━━━━━━�
     2 │     if (firstCondition) {                 // +1
     3 │         return 1;
   
-  i Please refactor this function to reduce its complexity score from 3 to 2.
+  i Please refactor this function to reduce its complexity score from 3 to the max allowed complexity 2.
   
 
 ```

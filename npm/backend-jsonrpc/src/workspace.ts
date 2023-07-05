@@ -538,7 +538,7 @@ export interface Nursery {
 	 */
 	noDuplicateJsxProps?: RuleConfiguration;
 	/**
-	 * The more complexity a function contains, the harder it is to understand later on.
+	 * Disallow functions that exceed a given complexity score.
 	 */
 	noExcessiveComplexity?: RuleConfiguration;
 	/**
