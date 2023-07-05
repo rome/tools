@@ -11,10 +11,10 @@ use crate::{
     TsConstructSignatureTypeMember, TsConstructorSignatureClassMember, TsConstructorType,
     TsDeclareFunctionDeclaration, TsDeclareFunctionExportDefaultDeclaration, TsEnumDeclaration,
     TsFunctionType, TsIdentifierBinding, TsImportEqualsDeclaration, TsIndexSignatureClassMember,
-    TsIndexSignatureParameter, TsInterfaceDeclaration, TsMethodSignatureClassMember,
-    TsMethodSignatureTypeMember, TsModuleDeclaration, TsPropertyParameter,
-    TsSetterSignatureClassMember, TsSetterSignatureTypeMember, TsTypeAliasDeclaration,
-    TsTypeParameterName,
+    TsIndexSignatureParameter, TsIndexSignatureParameterIdentifierBinding, TsInterfaceDeclaration,
+    TsMethodSignatureClassMember, TsMethodSignatureTypeMember, TsModuleDeclaration,
+    TsPropertyParameter, TsSetterSignatureClassMember, TsSetterSignatureTypeMember,
+    TsTypeAliasDeclaration, TsTypeParameterName,
 };
 use rome_rowan::{declare_node_union, AstNode, SyntaxResult};
 
@@ -312,6 +312,12 @@ impl TsIdentifierBinding {
 
     pub fn is_under_object_pattern_binding(&self) -> Option<bool> {
         is_under_object_pattern_binding(self.syntax())
+    }
+}
+
+impl TsIndexSignatureParameterIdentifierBinding {
+    pub fn declaration(&self) -> Option<AnyJsBindingDeclaration> {
+        declaration(&self.syntax)
     }
 }
 

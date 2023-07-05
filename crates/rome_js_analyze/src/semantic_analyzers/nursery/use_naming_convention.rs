@@ -20,7 +20,8 @@ use rome_js_syntax::{
     binding_ext::AnyJsBindingDeclaration, AnyJsClassMember, AnyJsObjectMember,
     AnyJsVariableDeclaration, AnyTsTypeMember, JsIdentifierBinding, JsLiteralExportName,
     JsLiteralMemberName, JsPrivateClassMemberName, JsSyntaxKind, JsSyntaxToken,
-    JsVariableDeclarator, JsVariableKind, TsEnumMember, TsIdentifierBinding, TsTypeParameterName,
+    JsVariableDeclarator, JsVariableKind, TsEnumMember, TsIdentifierBinding,
+    TsIndexSignatureParameterIdentifierBinding, TsTypeParameterName,
 };
 use rome_json_syntax::JsonLanguage;
 use rome_rowan::{
@@ -395,7 +396,8 @@ declare_node_union! {
         JsPrivateClassMemberName |
         JsLiteralExportName |
         TsIdentifierBinding |
-        TsTypeParameterName
+        TsTypeParameterName |
+        TsIndexSignatureParameterIdentifierBinding
 }
 
 impl AnyName {
@@ -407,6 +409,7 @@ impl AnyName {
             AnyName::JsLiteralExportName(export_name) => export_name.value(),
             AnyName::TsIdentifierBinding(binding) => binding.name_token(),
             AnyName::TsTypeParameterName(type_parameter) => type_parameter.ident_token(),
+            AnyName::TsIndexSignatureParameterIdentifierBinding(binding) => binding.name_token(),
         }
     }
 }
@@ -652,6 +655,9 @@ impl Named {
                 }
             }
             AnyName::TsTypeParameterName(_) => Some(Named::TypeParameter),
+            AnyName::TsIndexSignatureParameterIdentifierBinding(binding) => {
+                Named::from_binding_declaration(&binding.declaration()?)
+            }
         }
     }
 

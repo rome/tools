@@ -18,7 +18,6 @@ pub(crate) use self::statement::*;
 use self::ts_parse_error::ts_member_cannot_be;
 pub(crate) use self::types::*;
 
-use super::binding::parse_identifier_binding;
 use super::class::is_nth_at_modifier;
 use super::expr::is_nth_at_identifier;
 use super::js_parse_error::expected_identifier;

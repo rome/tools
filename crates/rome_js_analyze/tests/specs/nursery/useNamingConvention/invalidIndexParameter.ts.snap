@@ -15,7 +15,7 @@ export interface X {
 
 # Diagnostics
 ```
-invalidIndexParameter.ts:2:6 lint/nursery/useNamingConvention  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidIndexParameter.ts:2:6 lint/nursery/useNamingConvention ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This index parameter name should be in camelCase.
   
@@ -27,19 +27,11 @@ invalidIndexParameter.ts:2:6 lint/nursery/useNamingConvention  FIXABLE  ━━�
   
   i The name could be renamed to `pascalCase`.
   
-  i Safe fix: Rename this symbol in camelCase.
-  
-    1 1 │   export interface X {
-    2   │ - ····[PascalCase:·string]:·unknown
-      2 │ + ····[pascalCase:·string]:·unknown
-    3 3 │   
-    4 4 │       [CONSTANT_CASE: number]: unknown
-  
 
 ```
 
 ```
-invalidIndexParameter.ts:4:6 lint/nursery/useNamingConvention  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidIndexParameter.ts:4:6 lint/nursery/useNamingConvention ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This index parameter name should be in camelCase.
   
@@ -52,20 +44,11 @@ invalidIndexParameter.ts:4:6 lint/nursery/useNamingConvention  FIXABLE  ━━�
   
   i The name could be renamed to `constantCase`.
   
-  i Safe fix: Rename this symbol in camelCase.
-  
-    2 2 │       [PascalCase: string]: unknown
-    3 3 │   
-    4   │ - ····[CONSTANT_CASE:·number]:·unknown
-      4 │ + ····[constantCase:·number]:·unknown
-    5 5 │   
-    6 6 │       [snake_case: symbol]: unknown
-  
 
 ```
 
 ```
-invalidIndexParameter.ts:6:6 lint/nursery/useNamingConvention  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidIndexParameter.ts:6:6 lint/nursery/useNamingConvention ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This index parameter name should be in camelCase.
   
@@ -76,14 +59,6 @@ invalidIndexParameter.ts:6:6 lint/nursery/useNamingConvention  FIXABLE  ━━�
     7 │ }
   
   i The name could be renamed to `snakeCase`.
-  
-  i Safe fix: Rename this symbol in camelCase.
-  
-    4 4 │       [CONSTANT_CASE: number]: unknown
-    5 5 │   
-    6   │ - ····[snake_case:·symbol]:·unknown
-      6 │ + ····[snakeCase:·symbol]:·unknown
-    7 7 │   }
   
 
 ```
