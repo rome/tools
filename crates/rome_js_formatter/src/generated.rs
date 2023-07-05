@@ -8063,17 +8063,17 @@ impl IntoFormat<JsFormatContext> for rome_js_syntax::TsIdentifierBinding {
         )
     }
 }
-impl FormatRule < rome_js_syntax :: TsIndexSignatureParameterIdentifierBinding > for crate :: ts :: bindings :: index_signature_parameter_identifier_binding :: FormatTsIndexSignatureParameterIdentifierBinding { type Context = JsFormatContext ; # [inline (always)] fn fmt (& self , node : & rome_js_syntax :: TsIndexSignatureParameterIdentifierBinding , f : & mut JsFormatter) -> FormatResult < () > { FormatNodeRule :: < rome_js_syntax :: TsIndexSignatureParameterIdentifierBinding > :: fmt (self , node , f) } }
-impl AsFormat<JsFormatContext> for rome_js_syntax::TsIndexSignatureParameterIdentifierBinding {
-    type Format < 'a > = FormatRefWithRule < 'a , rome_js_syntax :: TsIndexSignatureParameterIdentifierBinding , crate :: ts :: bindings :: index_signature_parameter_identifier_binding :: FormatTsIndexSignatureParameterIdentifierBinding > ;
+impl FormatRule < rome_js_syntax :: TsIndexSignatureIdentifierBinding > for crate :: ts :: bindings :: index_signature_identifier_binding :: FormatTsIndexSignatureIdentifierBinding { type Context = JsFormatContext ; # [inline (always)] fn fmt (& self , node : & rome_js_syntax :: TsIndexSignatureIdentifierBinding , f : & mut JsFormatter) -> FormatResult < () > { FormatNodeRule :: < rome_js_syntax :: TsIndexSignatureIdentifierBinding > :: fmt (self , node , f) } }
+impl AsFormat<JsFormatContext> for rome_js_syntax::TsIndexSignatureIdentifierBinding {
+    type Format < 'a > = FormatRefWithRule < 'a , rome_js_syntax :: TsIndexSignatureIdentifierBinding , crate :: ts :: bindings :: index_signature_identifier_binding :: FormatTsIndexSignatureIdentifierBinding > ;
     fn format(&self) -> Self::Format<'_> {
-        FormatRefWithRule :: new (self , crate :: ts :: bindings :: index_signature_parameter_identifier_binding :: FormatTsIndexSignatureParameterIdentifierBinding :: default ())
+        FormatRefWithRule :: new (self , crate :: ts :: bindings :: index_signature_identifier_binding :: FormatTsIndexSignatureIdentifierBinding :: default ())
     }
 }
-impl IntoFormat<JsFormatContext> for rome_js_syntax::TsIndexSignatureParameterIdentifierBinding {
-    type Format = FormatOwnedWithRule < rome_js_syntax :: TsIndexSignatureParameterIdentifierBinding , crate :: ts :: bindings :: index_signature_parameter_identifier_binding :: FormatTsIndexSignatureParameterIdentifierBinding > ;
+impl IntoFormat<JsFormatContext> for rome_js_syntax::TsIndexSignatureIdentifierBinding {
+    type Format = FormatOwnedWithRule < rome_js_syntax :: TsIndexSignatureIdentifierBinding , crate :: ts :: bindings :: index_signature_identifier_binding :: FormatTsIndexSignatureIdentifierBinding > ;
     fn into_format(self) -> Self::Format {
-        FormatOwnedWithRule :: new (self , crate :: ts :: bindings :: index_signature_parameter_identifier_binding :: FormatTsIndexSignatureParameterIdentifierBinding :: default ())
+        FormatOwnedWithRule :: new (self , crate :: ts :: bindings :: index_signature_identifier_binding :: FormatTsIndexSignatureIdentifierBinding :: default ())
     }
 }
 impl FormatRule<rome_js_syntax::TsEnumMember>

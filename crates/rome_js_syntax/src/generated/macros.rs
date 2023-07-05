@@ -928,15 +928,14 @@ macro_rules! map_syntax_node {
                         unsafe { $crate::TsIndexSignatureClassMember::new_unchecked(node) };
                     $body
                 }
+                $crate::JsSyntaxKind::TS_INDEX_SIGNATURE_IDENTIFIER_BINDING => {
+                    let $pattern =
+                        unsafe { $crate::TsIndexSignatureIdentifierBinding::new_unchecked(node) };
+                    $body
+                }
                 $crate::JsSyntaxKind::TS_INDEX_SIGNATURE_PARAMETER => {
                     let $pattern =
                         unsafe { $crate::TsIndexSignatureParameter::new_unchecked(node) };
-                    $body
-                }
-                $crate::JsSyntaxKind::TS_INDEX_SIGNATURE_PARAMETER_IDENTIFIER_BINDING => {
-                    let $pattern = unsafe {
-                        $crate::TsIndexSignatureParameterIdentifierBinding::new_unchecked(node)
-                    };
                     $body
                 }
                 $crate::JsSyntaxKind::TS_INDEX_SIGNATURE_TYPE_MEMBER => {

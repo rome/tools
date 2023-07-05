@@ -11,7 +11,7 @@ use crate::{
     TsConstructSignatureTypeMember, TsConstructorSignatureClassMember, TsConstructorType,
     TsDeclareFunctionDeclaration, TsDeclareFunctionExportDefaultDeclaration, TsEnumDeclaration,
     TsFunctionType, TsIdentifierBinding, TsImportEqualsDeclaration, TsIndexSignatureClassMember,
-    TsIndexSignatureParameter, TsIndexSignatureParameterIdentifierBinding, TsInterfaceDeclaration,
+    TsIndexSignatureIdentifierBinding, TsIndexSignatureParameter, TsInterfaceDeclaration,
     TsMethodSignatureClassMember, TsMethodSignatureTypeMember, TsModuleDeclaration,
     TsPropertyParameter, TsSetterSignatureClassMember, TsSetterSignatureTypeMember,
     TsTypeAliasDeclaration, TsTypeParameterName,
@@ -315,7 +315,7 @@ impl TsIdentifierBinding {
     }
 }
 
-impl TsIndexSignatureParameterIdentifierBinding {
+impl TsIndexSignatureIdentifierBinding {
     pub fn declaration(&self) -> Option<AnyJsBindingDeclaration> {
         declaration(&self.syntax)
     }

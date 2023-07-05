@@ -9432,6 +9432,40 @@ pub struct TsIndexSignatureClassMemberFields {
     pub semicolon_token: Option<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsIndexSignatureIdentifierBinding {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsIndexSignatureIdentifierBinding {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsIndexSignatureIdentifierBindingFields {
+        TsIndexSignatureIdentifierBindingFields {
+            name_token: self.name_token(),
+        }
+    }
+    pub fn name_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+}
+#[cfg(feature = "serde")]
+impl Serialize for TsIndexSignatureIdentifierBinding {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize))]
+pub struct TsIndexSignatureIdentifierBindingFields {
+    pub name_token: SyntaxResult<SyntaxToken>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsIndexSignatureParameter {
     pub(crate) syntax: SyntaxNode,
 }
@@ -9449,7 +9483,7 @@ impl TsIndexSignatureParameter {
             type_annotation: self.type_annotation(),
         }
     }
-    pub fn binding(&self) -> SyntaxResult<TsIndexSignatureParameterIdentifierBinding> {
+    pub fn binding(&self) -> SyntaxResult<TsIndexSignatureIdentifierBinding> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn type_annotation(&self) -> SyntaxResult<TsTypeAnnotation> {
@@ -9467,42 +9501,8 @@ impl Serialize for TsIndexSignatureParameter {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsIndexSignatureParameterFields {
-    pub binding: SyntaxResult<TsIndexSignatureParameterIdentifierBinding>,
+    pub binding: SyntaxResult<TsIndexSignatureIdentifierBinding>,
     pub type_annotation: SyntaxResult<TsTypeAnnotation>,
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
-pub struct TsIndexSignatureParameterIdentifierBinding {
-    pub(crate) syntax: SyntaxNode,
-}
-impl TsIndexSignatureParameterIdentifierBinding {
-    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
-    #[doc = r" or a match on [SyntaxNode::kind]"]
-    #[inline]
-    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
-    pub fn as_fields(&self) -> TsIndexSignatureParameterIdentifierBindingFields {
-        TsIndexSignatureParameterIdentifierBindingFields {
-            name_token: self.name_token(),
-        }
-    }
-    pub fn name_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 0usize)
-    }
-}
-#[cfg(feature = "serde")]
-impl Serialize for TsIndexSignatureParameterIdentifierBinding {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where
-        S: Serializer,
-    {
-        self.as_fields().serialize(serializer)
-    }
-}
-#[cfg_attr(feature = "serde", derive(Serialize))]
-pub struct TsIndexSignatureParameterIdentifierBindingFields {
-    pub name_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsIndexSignatureTypeMember {
@@ -23001,6 +23001,34 @@ impl From<TsIndexSignatureClassMember> for SyntaxNode {
 impl From<TsIndexSignatureClassMember> for SyntaxElement {
     fn from(n: TsIndexSignatureClassMember) -> SyntaxElement { n.syntax.into() }
 }
+impl AstNode for TsIndexSignatureIdentifierBinding {
+    type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(TS_INDEX_SIGNATURE_IDENTIFIER_BINDING as u16));
+    fn can_cast(kind: SyntaxKind) -> bool { kind == TS_INDEX_SIGNATURE_IDENTIFIER_BINDING }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
+}
+impl std::fmt::Debug for TsIndexSignatureIdentifierBinding {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsIndexSignatureIdentifierBinding")
+            .field("name_token", &support::DebugSyntaxResult(self.name_token()))
+            .finish()
+    }
+}
+impl From<TsIndexSignatureIdentifierBinding> for SyntaxNode {
+    fn from(n: TsIndexSignatureIdentifierBinding) -> SyntaxNode { n.syntax }
+}
+impl From<TsIndexSignatureIdentifierBinding> for SyntaxElement {
+    fn from(n: TsIndexSignatureIdentifierBinding) -> SyntaxElement { n.syntax.into() }
+}
 impl AstNode for TsIndexSignatureParameter {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
@@ -23032,37 +23060,6 @@ impl From<TsIndexSignatureParameter> for SyntaxNode {
 }
 impl From<TsIndexSignatureParameter> for SyntaxElement {
     fn from(n: TsIndexSignatureParameter) -> SyntaxElement { n.syntax.into() }
-}
-impl AstNode for TsIndexSignatureParameterIdentifierBinding {
-    type Language = Language;
-    const KIND_SET: SyntaxKindSet<Language> = SyntaxKindSet::from_raw(RawSyntaxKind(
-        TS_INDEX_SIGNATURE_PARAMETER_IDENTIFIER_BINDING as u16,
-    ));
-    fn can_cast(kind: SyntaxKind) -> bool {
-        kind == TS_INDEX_SIGNATURE_PARAMETER_IDENTIFIER_BINDING
-    }
-    fn cast(syntax: SyntaxNode) -> Option<Self> {
-        if Self::can_cast(syntax.kind()) {
-            Some(Self { syntax })
-        } else {
-            None
-        }
-    }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
-    fn into_syntax(self) -> SyntaxNode { self.syntax }
-}
-impl std::fmt::Debug for TsIndexSignatureParameterIdentifierBinding {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("TsIndexSignatureParameterIdentifierBinding")
-            .field("name_token", &support::DebugSyntaxResult(self.name_token()))
-            .finish()
-    }
-}
-impl From<TsIndexSignatureParameterIdentifierBinding> for SyntaxNode {
-    fn from(n: TsIndexSignatureParameterIdentifierBinding) -> SyntaxNode { n.syntax }
-}
-impl From<TsIndexSignatureParameterIdentifierBinding> for SyntaxElement {
-    fn from(n: TsIndexSignatureParameterIdentifierBinding) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for TsIndexSignatureTypeMember {
     type Language = Language;
@@ -34236,12 +34233,12 @@ impl std::fmt::Display for TsIndexSignatureClassMember {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for TsIndexSignatureParameter {
+impl std::fmt::Display for TsIndexSignatureIdentifierBinding {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for TsIndexSignatureParameterIdentifierBinding {
+impl std::fmt::Display for TsIndexSignatureParameter {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }

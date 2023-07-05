@@ -389,7 +389,7 @@ pub const JS_KINDS_SRC: KindsSrc = KindsSrc {
         "JS_DECORATOR_LIST",
         // TypeScript
         "TS_IDENTIFIER_BINDING",
-        "TS_INDEX_SIGNATURE_PARAMETER_IDENTIFIER_BINDING",
+        "TS_INDEX_SIGNATURE_IDENTIFIER_BINDING",
         "TS_ANY_TYPE",
         "TS_UNKNOWN_TYPE",
         "TS_NUMBER_TYPE",
