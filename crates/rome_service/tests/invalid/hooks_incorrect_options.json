@@ -1,0 +1,15 @@
+{
+	"$schema": "../../../../npm/rome/configuration_schema.json",
+	"linter": {
+		"rules": {
+			"nursery": {
+				"useExhaustiveDependencies": {
+					"level": "error",
+					"options": {
+						"hooksTYPO": {}
+					}
+				}
+			}
+		}
+	}
+}

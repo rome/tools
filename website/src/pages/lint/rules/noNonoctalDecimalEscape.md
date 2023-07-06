@@ -15,24 +15,6 @@ However, most JavaScript engines consider them to be "useless" escapes. For exam
 "\9" === "9"; // true
 ```
 
-nursery/noNonoctalDecimalEscape.js:1:2 <a href="https://docs.rome.tools/lint/rules/noNonoctalDecimalEscape">lint/nursery/noNonoctalDecimalEscape</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━
-
-<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Don't use </span><span style="color: Tomato;"><strong>`\8`</strong></span><span style="color: Tomato;"> and </span><span style="color: Tomato;"><strong>`\9`</strong></span><span style="color: Tomato;"> escape sequences in string literals.</span>
-  
-<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>&quot;\8&quot; === &quot;8&quot;; // true
-   <strong>   │ </strong> <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
-    <strong>2 │ </strong>&quot;\9&quot; === &quot;9&quot;; // true
-    <strong>3 │ </strong>
-  
-<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">The nonoctal decimal escape is a deprecated syntax that is left for compatibility and should not be used.</span>
-  
-<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Replace </span><span style="color: rgb(38, 148, 255);"><strong>\8</strong></span><span style="color: rgb(38, 148, 255);"> with </span><span style="color: rgb(38, 148, 255);"><strong>8</strong></span><span style="color: rgb(38, 148, 255);">. This maintains the current functionality.</span>
-  
-    <strong>1</strong>  <strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;">&quot;</span><span style="color: Tomato;"><strong>\</strong></span><span style="color: Tomato;">8</span><span style="color: Tomato;">&quot;</span><span style="color: Tomato;"><span style="opacity: 0.8;"><strong>·</strong></span></span><span style="color: Tomato;">=</span><span style="color: Tomato;">=</span><span style="color: Tomato;">=</span><span style="color: Tomato;"><span style="opacity: 0.8;">·</span></span><span style="color: Tomato;">&quot;</span><span style="color: Tomato;">8</span><span style="color: Tomato;">&quot;</span><span style="color: Tomato;">;</span><span style="color: Tomato;"><span style="opacity: 0.8;">·</span></span><span style="color: Tomato;">/</span><span style="color: Tomato;">/</span><span style="color: Tomato;"><span style="opacity: 0.8;">·</span></span><span style="color: Tomato;">t</span><span style="color: Tomato;">r</span><span style="color: Tomato;">u</span><span style="color: Tomato;">e</span>
-      <strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&quot;</span><span style="color: MediumSeaGreen;">8</span><span style="color: MediumSeaGreen;">&quot;</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;"><strong>·</strong></span></span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;"><strong>·</strong></span></span><span style="color: MediumSeaGreen;">=</span><span style="color: MediumSeaGreen;">=</span><span style="color: MediumSeaGreen;">=</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">·</span></span><span style="color: MediumSeaGreen;">&quot;</span><span style="color: MediumSeaGreen;">8</span><span style="color: MediumSeaGreen;">&quot;</span><span style="color: MediumSeaGreen;">;</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">·</span></span><span style="color: MediumSeaGreen;">/</span><span style="color: MediumSeaGreen;">/</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">·</span></span><span style="color: MediumSeaGreen;">t</span><span style="color: MediumSeaGreen;">r</span><span style="color: MediumSeaGreen;">u</span><span style="color: MediumSeaGreen;">e</span>
-    <strong>2</strong> <strong>2</strong><strong> │ </strong>  &quot;\9&quot; === &quot;9&quot;; // true
-    <strong>3</strong> <strong>3</strong><strong> │ </strong>  
-  
 Although this syntax is deprecated, it is still supported for compatibility reasons.
 If the ECMAScript host is not a web browser, this syntax is optional.
 However, web browsers are still required to support it, but only in non-strict mode.
@@ -79,14 +61,14 @@ nursery/noNonoctalDecimalEscape.js:1:12 <a href="https://docs.rome.tools/lint/ru
 </code></pre>
 
 ```jsx
-const x = "Don't use \8 and \9 escapes.";
+const x = "Don't use \8 escape.";
 ```
 
 <pre class="language-text"><code class="language-text">nursery/noNonoctalDecimalEscape.js:1:22 <a href="https://docs.rome.tools/lint/rules/noNonoctalDecimalEscape">lint/nursery/noNonoctalDecimalEscape</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Don't use </span><span style="color: Tomato;"><strong>`\8`</strong></span><span style="color: Tomato;"> and </span><span style="color: Tomato;"><strong>`\9`</strong></span><span style="color: Tomato;"> escape sequences in string literals.</span>
   
-<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>const x = &quot;Don't use \8 and \9 escapes.&quot;;
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>const x = &quot;Don't use \8 escape.&quot;;
    <strong>   │ </strong>                     <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
     <strong>2 │ </strong>
   
@@ -94,13 +76,13 @@ const x = "Don't use \8 and \9 escapes.";
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Replace </span><span style="color: rgb(38, 148, 255);"><strong>\8</strong></span><span style="color: rgb(38, 148, 255);"> with </span><span style="color: rgb(38, 148, 255);"><strong>8</strong></span><span style="color: rgb(38, 148, 255);">. This maintains the current functionality.</span>
   
-<strong>  </strong><strong>  1 │ </strong>const<span style="opacity: 0.8;">·</span>x<span style="opacity: 0.8;">·</span>=<span style="opacity: 0.8;">·</span>&quot;Don't<span style="opacity: 0.8;">·</span>use<span style="opacity: 0.8;">·</span><span style="color: Tomato;">\</span>8<span style="opacity: 0.8;">·</span>and<span style="opacity: 0.8;">·</span>\9<span style="opacity: 0.8;">·</span>escapes.&quot;;
-<strong>  </strong><strong>    │ </strong>                     <span style="color: Tomato;">-</span>                   
+<strong>  </strong><strong>  1 │ </strong>const<span style="opacity: 0.8;">·</span>x<span style="opacity: 0.8;">·</span>=<span style="opacity: 0.8;">·</span>&quot;Don't<span style="opacity: 0.8;">·</span>use<span style="opacity: 0.8;">·</span><span style="color: Tomato;">\</span>8<span style="opacity: 0.8;">·</span>escape.&quot;;
+<strong>  </strong><strong>    │ </strong>                     <span style="color: Tomato;">-</span>           
 nursery/noNonoctalDecimalEscape.js:1:22 <a href="https://docs.rome.tools/lint/rules/noNonoctalDecimalEscape">lint/nursery/noNonoctalDecimalEscape</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Don't use </span><span style="color: Tomato;"><strong>`\8`</strong></span><span style="color: Tomato;"> and </span><span style="color: Tomato;"><strong>`\9`</strong></span><span style="color: Tomato;"> escape sequences in string literals.</span>
   
-<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>const x = &quot;Don't use \8 and \9 escapes.&quot;;
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>const x = &quot;Don't use \8 escape.&quot;;
    <strong>   │ </strong>                     <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
     <strong>2 │ </strong>
   
@@ -108,8 +90,42 @@ nursery/noNonoctalDecimalEscape.js:1:22 <a href="https://docs.rome.tools/lint/ru
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Replace </span><span style="color: rgb(38, 148, 255);"><strong>\8</strong></span><span style="color: rgb(38, 148, 255);"> with </span><span style="color: rgb(38, 148, 255);"><strong>\\8</strong></span><span style="color: rgb(38, 148, 255);"> to include the actual backslash character.</span>
   
-<strong>  </strong><strong>  1 │ </strong>const<span style="opacity: 0.8;">·</span>x<span style="opacity: 0.8;">·</span>=<span style="opacity: 0.8;">·</span>&quot;Don't<span style="opacity: 0.8;">·</span>use<span style="opacity: 0.8;">·</span>\<span style="color: MediumSeaGreen;">\</span>8<span style="opacity: 0.8;">·</span>and<span style="opacity: 0.8;">·</span>\9<span style="opacity: 0.8;">·</span>escapes.&quot;;
-<strong>  </strong><strong>    │ </strong>                      <span style="color: MediumSeaGreen;">+</span>                   
+<strong>  </strong><strong>  1 │ </strong>const<span style="opacity: 0.8;">·</span>x<span style="opacity: 0.8;">·</span>=<span style="opacity: 0.8;">·</span>&quot;Don't<span style="opacity: 0.8;">·</span>use<span style="opacity: 0.8;">·</span>\<span style="color: MediumSeaGreen;">\</span>8<span style="opacity: 0.8;">·</span>escape.&quot;;
+<strong>  </strong><strong>    │ </strong>                      <span style="color: MediumSeaGreen;">+</span>           
+</code></pre>
+
+```jsx
+const x = "Don't use \9 escape.";
+```
+
+<pre class="language-text"><code class="language-text">nursery/noNonoctalDecimalEscape.js:1:22 <a href="https://docs.rome.tools/lint/rules/noNonoctalDecimalEscape">lint/nursery/noNonoctalDecimalEscape</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━
+
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Don't use </span><span style="color: Tomato;"><strong>`\8`</strong></span><span style="color: Tomato;"> and </span><span style="color: Tomato;"><strong>`\9`</strong></span><span style="color: Tomato;"> escape sequences in string literals.</span>
+  
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>const x = &quot;Don't use \9 escape.&quot;;
+   <strong>   │ </strong>                     <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
+    <strong>2 │ </strong>
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">The nonoctal decimal escape is a deprecated syntax that is left for compatibility and should not be used.</span>
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Replace </span><span style="color: rgb(38, 148, 255);"><strong>\9</strong></span><span style="color: rgb(38, 148, 255);"> with </span><span style="color: rgb(38, 148, 255);"><strong>9</strong></span><span style="color: rgb(38, 148, 255);">. This maintains the current functionality.</span>
+  
+<strong>  </strong><strong>  1 │ </strong>const<span style="opacity: 0.8;">·</span>x<span style="opacity: 0.8;">·</span>=<span style="opacity: 0.8;">·</span>&quot;Don't<span style="opacity: 0.8;">·</span>use<span style="opacity: 0.8;">·</span><span style="color: Tomato;">\</span>9<span style="opacity: 0.8;">·</span>escape.&quot;;
+<strong>  </strong><strong>    │ </strong>                     <span style="color: Tomato;">-</span>           
+nursery/noNonoctalDecimalEscape.js:1:22 <a href="https://docs.rome.tools/lint/rules/noNonoctalDecimalEscape">lint/nursery/noNonoctalDecimalEscape</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━
+
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Don't use </span><span style="color: Tomato;"><strong>`\8`</strong></span><span style="color: Tomato;"> and </span><span style="color: Tomato;"><strong>`\9`</strong></span><span style="color: Tomato;"> escape sequences in string literals.</span>
+  
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>const x = &quot;Don't use \9 escape.&quot;;
+   <strong>   │ </strong>                     <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
+    <strong>2 │ </strong>
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">The nonoctal decimal escape is a deprecated syntax that is left for compatibility and should not be used.</span>
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Replace </span><span style="color: rgb(38, 148, 255);"><strong>\9</strong></span><span style="color: rgb(38, 148, 255);"> with </span><span style="color: rgb(38, 148, 255);"><strong>\\9</strong></span><span style="color: rgb(38, 148, 255);"> to include the actual backslash character.</span>
+  
+<strong>  </strong><strong>  1 │ </strong>const<span style="opacity: 0.8;">·</span>x<span style="opacity: 0.8;">·</span>=<span style="opacity: 0.8;">·</span>&quot;Don't<span style="opacity: 0.8;">·</span>use<span style="opacity: 0.8;">·</span>\<span style="color: MediumSeaGreen;">\</span>9<span style="opacity: 0.8;">·</span>escape.&quot;;
+<strong>  </strong><strong>    │ </strong>                      <span style="color: MediumSeaGreen;">+</span>           
 </code></pre>
 
 ```jsx

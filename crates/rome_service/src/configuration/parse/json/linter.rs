@@ -51,6 +51,64 @@ impl VisitNode<JsonLanguage> for LinterConfiguration {
     }
 }
 
+impl RuleConfiguration {
+    pub(crate) fn map_rule_configuration(
+        &mut self,
+        value: &AnyJsonValue,
+        key_name: &str,
+        rule_name: &str,
+        diagnostics: &mut Vec<DeserializationDiagnostic>,
+    ) -> Option<()> {
+        let value = JsonObjectValue::cast_ref(value.syntax()).or_else(|| {
+            diagnostics.push(DeserializationDiagnostic::new_incorrect_type_for_value(
+                key_name,
+                "object",
+                value.range(),
+            ));
+            None
+        })?;
+        for element in value.json_member_list() {
+            let element = element.ok()?;
+            let key = element.name().ok()?;
+            let value = element.value().ok()?;
+            let (name, value) =
+                self.get_key_and_value(key.syntax(), value.syntax(), diagnostics)?;
+            let name_text = name.text();
+            match name_text {
+                "level" => {
+                    if let RuleConfiguration::WithOptions(options) = self {
+                        let mut level = RulePlainConfiguration::default();
+                        level.visit_member_value(value.syntax(), diagnostics)?;
+                        options.level = level;
+                    } else {
+                        let mut level = RulePlainConfiguration::default();
+                        level.visit_member_value(value.syntax(), diagnostics)?;
+                        *self = RuleConfiguration::WithOptions(RuleWithOptions {
+                            level,
+                            ..RuleWithOptions::default()
+                        })
+                    }
+                }
+                "options" => {
+                    let mut possible_options = PossibleOptions::default();
+
+                    possible_options.map_to_rule_options(&value, name_text, rule_name, diagnostics);
+                    if let RuleConfiguration::WithOptions(options) = self {
+                        options.options = Some(possible_options)
+                    } else {
+                        *self = RuleConfiguration::WithOptions(RuleWithOptions {
+                            options: Some(possible_options),
+                            ..RuleWithOptions::default()
+                        })
+                    }
+                }
+                _ => {}
+            }
+        }
+        Some(())
+    }
+}
+
 impl VisitJsonNode for RuleConfiguration {}
 
 impl VisitNode<JsonLanguage> for RuleConfiguration {
@@ -80,47 +138,6 @@ impl VisitNode<JsonLanguage> for RuleConfiguration {
             }
             _ => {}
         }
-        Some(())
-    }
-
-    fn visit_map(
-        &mut self,
-        key: &SyntaxNode<JsonLanguage>,
-        value: &SyntaxNode<JsonLanguage>,
-        diagnostics: &mut Vec<DeserializationDiagnostic>,
-    ) -> Option<()> {
-        let (name, value) = self.get_key_and_value(key, value, diagnostics)?;
-        let name_text = name.text();
-        match name_text {
-            "level" => {
-                if let RuleConfiguration::WithOptions(options) = self {
-                    let mut level = RulePlainConfiguration::default();
-                    level.visit_member_value(value.syntax(), diagnostics)?;
-                    options.level = level;
-                } else {
-                    let mut level = RulePlainConfiguration::default();
-                    level.visit_member_value(value.syntax(), diagnostics)?;
-                    *self = RuleConfiguration::WithOptions(RuleWithOptions {
-                        level,
-                        ..RuleWithOptions::default()
-                    })
-                }
-            }
-            "options" => {
-                let mut possible_options = PossibleOptions::default();
-                self.map_to_object(&value, name_text, &mut possible_options, diagnostics);
-                if let RuleConfiguration::WithOptions(options) = self {
-                    options.options = Some(possible_options)
-                } else {
-                    *self = RuleConfiguration::WithOptions(RuleWithOptions {
-                        options: Some(possible_options),
-                        ..RuleWithOptions::default()
-                    })
-                }
-            }
-            _ => {}
-        }
-
         Some(())
     }
 }
