@@ -61,7 +61,6 @@ declare_rule! {
 #[derive(Debug)]
 pub(crate) enum FixSuggestionKind {
     Refactor,
-    // EscapeBackslash,
 }
 
 #[derive(Debug)]
@@ -148,14 +147,6 @@ impl Rule for NoNonoctalDecimalEscape {
                         replace_string_range: replace_string_range.clone(),
                     })
                 }
-                // \8 -> \\8
-                // signals.push(RuleState {
-                //     kind: FixSuggestionKind::EscapeBackslash,
-                //     diagnostics_text_range: decimal_escape_range,
-                //     replace_to: format!("\\{}", decimal_escape),
-                //     replace_from: decimal_escape.to_string(),
-                //     replace_string_range,
-                // });
             }
         }
 
@@ -214,9 +205,6 @@ impl Rule for NoNonoctalDecimalEscape {
 				FixSuggestionKind::Refactor => {
 					markup! ("Replace "<Emphasis>{replace_from}</Emphasis>" with "<Emphasis>{replace_to}</Emphasis>". This maintains the current functionality.").to_owned()
 				}
-				// FixSuggestionKind::EscapeBackslash => {
-				// 	markup! ("Replace "<Emphasis>{replace_from}</Emphasis>" with "<Emphasis>{replace_to}</Emphasis>" to include the actual backslash character." ).to_owned()
-				// }
 			},
             mutation,
         })
