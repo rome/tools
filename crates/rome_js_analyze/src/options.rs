@@ -1,5 +1,6 @@
 //! This module contains the rules that have options
 
+use crate::analyzers::nursery::no_excessive_complexity::{complexity_options, ComplexityOptions};
 use crate::semantic_analyzers::nursery::use_exhaustive_dependencies::{
     hooks_options, HooksOptions,
 };
@@ -22,6 +23,8 @@ use std::str::FromStr;
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", deny_unknown_fields, untagged)]
 pub enum PossibleOptions {
+    /// Options for `noExcessiveComplexity` rule
+    Complexity(#[bpaf(external(complexity_options), hide)] ComplexityOptions),
     /// Options for `useExhaustiveDependencies` and `useHookAtTopLevel` rule
     Hooks(#[bpaf(external(hooks_options), hide)] HooksOptions),
     /// Options for `useNamingConvention` rule
@@ -40,10 +43,22 @@ impl FromStr for PossibleOptions {
 }
 
 impl PossibleOptions {
-    const KNOWN_KEYS: &'static [&'static str] = &["hooks", "strictCase", "enumMemberCase"];
+    const KNOWN_KEYS: &'static [&'static str] = &[
+        "enumMemberCase",
+        "hooks",
+        "maxAllowedComplexity",
+        "strictCase",
+    ];
 
     pub fn extract_option(&self, rule_key: &RuleKey) -> RuleOptions {
         match rule_key.rule_name() {
+            "noExcessiveComplexity" => {
+                let options = match self {
+                    PossibleOptions::Complexity(options) => options.clone(),
+                    _ => ComplexityOptions::default(),
+                };
+                RuleOptions::new(options)
+            }
             "useExhaustiveDependencies" | "useHookAtTopLevel" => {
                 let options = match self {
                     PossibleOptions::Hooks(options) => options.clone(),
@@ -86,6 +101,11 @@ impl VisitNode<JsonLanguage> for PossibleOptions {
                 let mut options = HooksOptions::default();
                 self.map_to_array(&val, &name, &mut options, diagnostics)?;
                 *self = PossibleOptions::Hooks(options);
+            }
+            "maxAllowedComplexity" => {
+                let mut options = ComplexityOptions::default();
+                options.visit_map(key, value, diagnostics)?;
+                *self = PossibleOptions::Complexity(options);
             }
             "strictCase" | "enumMemberCase" => {
                 let mut options = match self {

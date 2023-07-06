@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 100
 expression: malformedOptions.js
 ---
 # Input
@@ -23,9 +22,10 @@ malformedOptions.options:9:7 deserialize ━━━━━━━━━━━━━
   
   i Accepted keys
   
-  - hooks
-  - strictCase
   - enumMemberCase
+  - hooks
+  - maxAllowedComplexity
+  - strictCase
   
 
 ```

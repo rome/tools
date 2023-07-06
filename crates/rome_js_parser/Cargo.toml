@@ -14,8 +14,6 @@ version              = "0.0.2"
 bitflags              = { workspace = true }
 cfg-if                = "1.0.0"
 drop_bomb             = "0.1.5"
-serde            			= { workspace = true, features = ["derive"] }
-serde_json            = { workspace = true }
 indexmap              = { workspace = true }
 rome_console          = { workspace = true }
 rome_diagnostics      = { workspace = true }
@@ -25,6 +23,8 @@ rome_js_unicode_table = { workspace = true }
 rome_parser           = { workspace = true }
 rome_rowan            = { workspace = true }
 schemars              = { workspace = true, optional = true }
+serde                 = { workspace = true, features = ["derive"] }
+serde_json            = { workspace = true }
 smallvec              = { workspace = true }
 tracing               = { workspace = true }
 

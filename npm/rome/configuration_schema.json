@@ -320,6 +320,20 @@
 				}
 			}
 		},
+		"ComplexityOptions": {
+			"description": "Options for the rule `noNestedModuleImports`.",
+			"type": "object",
+			"required": ["maxAllowedComplexity"],
+			"properties": {
+				"maxAllowedComplexity": {
+					"description": "The maximum complexity score that we allow. Anything higher is considered excessive.",
+					"type": "integer",
+					"format": "uint8",
+					"minimum": 0.0
+				}
+			},
+			"additionalProperties": false
+		},
 		"Correctness": {
 			"description": "A list of rules that belong to this group",
 			"type": "object",
@@ -796,6 +810,13 @@
 						{ "type": "null" }
 					]
 				},
+				"noExcessiveComplexity": {
+					"description": "Disallow functions that exceed a given complexity score.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"noForEach": {
 					"description": "Prefer for...of statement instead of Array.forEach.",
 					"anyOf": [
@@ -993,6 +1014,10 @@
 		},
 		"PossibleOptions": {
 			"anyOf": [
+				{
+					"description": "Options for `noExcessiveComplexity` rule",
+					"allOf": [{ "$ref": "#/definitions/ComplexityOptions" }]
+				},
 				{
 					"description": "Options for `useExhaustiveDependencies` and `useHookAtTopLevel` rule",
 					"allOf": [{ "$ref": "#/definitions/HooksOptions" }]
