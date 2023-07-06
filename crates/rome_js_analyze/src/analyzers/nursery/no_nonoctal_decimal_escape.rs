@@ -13,7 +13,7 @@ declare_rule! {
     /// Since ECMAScript 2021, the escape sequences \8 and \9 have been defined as non-octal decimal escape sequences.
     /// However, most JavaScript engines consider them to be "useless" escapes. For example:
     ///
-    /// ```js
+    /// ```js,ignore
     /// "\8" === "8"; // true
     /// "\9" === "9"; // true
     /// ```
@@ -34,7 +34,11 @@ declare_rule! {
     /// ```
     ///
     /// ```js,expect_diagnostic
-    /// const x = "Don't use \8 and \9 escapes.";
+    /// const x = "Don't use \8 escape.";
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// const x = "Don't use \9 escape.";
     /// ```
     ///
     /// ```js,expect_diagnostic

@@ -610,9 +610,9 @@ fn generate_visitor(group: &str, rules: &BTreeMap<&'static str, RuleMetadata>) -
                     self.#rule_identifier = Some(configuration);
                 }
                 AnyJsonValue::JsonObjectValue(_) => {
-                    let mut configuration = RuleConfiguration::default();
-                    self.map_to_object(&value, name_text, &mut configuration, diagnostics)?;
-                    self.#rule_identifier = Some(configuration);
+                    let mut rule_configuration = RuleConfiguration::default();
+                    rule_configuration.map_rule_configuration(&value, name_text, #rule_name, diagnostics)?;
+                    self.#rule_identifier = Some(rule_configuration);
                 }
                 _ => {
                     diagnostics.push(DeserializationDiagnostic::new_incorrect_type(

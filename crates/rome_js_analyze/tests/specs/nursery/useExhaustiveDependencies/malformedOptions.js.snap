@@ -22,10 +22,7 @@ malformedOptions.options:9:7 deserialize ━━━━━━━━━━━━━
   
   i Accepted keys
   
-  - enumMemberCase
   - hooks
-  - maxAllowedComplexity
-  - strictCase
   
 
 ```
