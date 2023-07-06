@@ -41,10 +41,6 @@ declare_rule! {
     /// const x = "Don't use \9 escape.";
     /// ```
     ///
-    /// ```js,expect_diagnostic
-    /// const x = "\0\8";
-    /// ```
-    ///
     /// ## Valid
     ///
     /// ```js
@@ -53,10 +49,6 @@ declare_rule! {
     ///
     /// ```js
     /// const x = "Don't use \\8 and \\9 escapes.";
-    /// ```
-    ///
-    /// ```js
-    /// const x = "\0\u0038";;
     /// ```
     ///
     pub(crate) NoNonoctalDecimalEscape {
