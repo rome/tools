@@ -3,7 +3,7 @@ use std::path::PathBuf;
 
 use anyhow::{Context, Ok, Result};
 use case::CaseExt;
-use proc_macro2::TokenStream;
+use proc_macro2::{Punct, Spacing, TokenStream};
 use quote::{format_ident, quote};
 use xtask::{glue::fs2, project_root};
 
@@ -166,18 +166,21 @@ fn generate_group(category: &'static str, group: &str, base_path: PathBuf) -> Re
 
     let (rule_imports, rule_names): (Vec<_>, Vec<_>) = rules.into_values().unzip();
 
+    let nl = Punct::new('\n', Spacing::Alone);
+    let sp = Punct::new(' ', Spacing::Joint);
+    let sp4 = quote! { #sp #sp #sp #sp };
     let tokens = xtask::reformat(quote! {
         use rome_analyze::declare_group;
-
+        #nl #nl
         #( #rule_imports )*
-
-        declare_group! {
-            pub(crate) #group_name {
-                name: #group,
-                rules: [
-                    #( #rule_names, )*
-                ]
-            }
+        #nl #nl
+        declare_group! { #nl
+            #sp4 pub(crate) #group_name { #nl
+                #sp4 #sp4 name: #group, #nl
+                #sp4 #sp4 rules: [ #nl
+                    #( #sp4 #sp4 #sp4 #rule_names, #nl )*
+                #sp4 #sp4 ] #nl
+            #sp4 } #nl
         }
     })?;
 
