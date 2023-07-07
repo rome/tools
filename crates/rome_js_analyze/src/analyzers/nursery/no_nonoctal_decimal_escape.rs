@@ -5,7 +5,7 @@ use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::JsStringLiteralExpression;
 use rome_rowan::{AstNode, BatchMutationExt, TextRange};
-use std::ops::Range;
+use std::{collections::HashSet, ops::Range};
 
 declare_rule! {
     /// Disallow `\8` and `\9` escape sequences in string literals.
@@ -41,10 +41,6 @@ declare_rule! {
     /// const x = "Don't use \9 escape.";
     /// ```
     ///
-    /// ```js,expect_diagnostic
-    /// const x = "\0\8";
-    /// ```
-    ///
     /// ## Valid
     ///
     /// ```js
@@ -53,10 +49,6 @@ declare_rule! {
     ///
     /// ```js
     /// const x = "Don't use \\8 and \\9 escapes.";
-    /// ```
-    ///
-    /// ```js
-    /// const x = "\0\u0038";;
     /// ```
     ///
     pub(crate) NoNonoctalDecimalEscape {
@@ -69,7 +61,6 @@ declare_rule! {
 #[derive(Debug)]
 pub(crate) enum FixSuggestionKind {
     Refactor,
-    EscapeBackslash,
 }
 
 #[derive(Debug)]
@@ -157,15 +148,10 @@ impl Rule for NoNonoctalDecimalEscape {
                     })
                 }
             }
-            // \8 -> \\8
-            signals.push(RuleState {
-                kind: FixSuggestionKind::EscapeBackslash,
-                diagnostics_text_range: decimal_escape_range,
-                replace_to: format!("\\{}", decimal_escape),
-                replace_from: decimal_escape.to_string(),
-                replace_string_range,
-            });
         }
+
+        let mut seen = HashSet::new();
+        signals.retain(|rule_state| seen.insert(rule_state.diagnostics_text_range));
         signals
     }
 
@@ -218,9 +204,6 @@ impl Rule for NoNonoctalDecimalEscape {
             message: match kind {
 				FixSuggestionKind::Refactor => {
 					markup! ("Replace "<Emphasis>{replace_from}</Emphasis>" with "<Emphasis>{replace_to}</Emphasis>". This maintains the current functionality.").to_owned()
-				}
-				FixSuggestionKind::EscapeBackslash => {
-					markup! ("Replace "<Emphasis>{replace_from}</Emphasis>" with "<Emphasis>{replace_to}</Emphasis>" to include the actual backslash character." ).to_owned()
 				}
 			},
             mutation,
