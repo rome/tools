@@ -817,6 +817,13 @@
 						{ "type": "null" }
 					]
 				},
+				"noFallthroughSwitchClause": {
+					"description": "Disallow fallthrough of case statements.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"noForEach": {
 					"description": "Prefer for...of statement instead of Array.forEach.",
 					"anyOf": [

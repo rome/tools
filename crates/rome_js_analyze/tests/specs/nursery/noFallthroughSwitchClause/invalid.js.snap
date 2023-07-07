@@ -21,7 +21,7 @@ invalid.js:1:15 lint/nursery/noFallthroughSwitchClause ━━━━━━━━�
     2 │ 
     3 │ switch (bar) { case 0: a(); default: b(); case 1: c() }
   
-  i Add a `break` statement to the end of this case to prevent fallthrough.
+  i Add a `break` or `return` statement to the end of this case to prevent fallthrough.
   
 
 ```
@@ -37,7 +37,7 @@ invalid.js:3:16 lint/nursery/noFallthroughSwitchClause ━━━━━━━━�
       │                ^^^^^^^^^^^^
     4 │ 
   
-  i Add a `break` statement to the end of this case to prevent fallthrough.
+  i Add a `break` or `return` statement to the end of this case to prevent fallthrough.
   
 
 ```
@@ -53,7 +53,7 @@ invalid.js:3:29 lint/nursery/noFallthroughSwitchClause ━━━━━━━━�
       │                             ^^^^^^^^^^^^^
     4 │ 
   
-  i Add a `break` statement to the end of this case to prevent fallthrough.
+  i Add a `break` or `return` statement to the end of this case to prevent fallthrough.
   
 
 ```
