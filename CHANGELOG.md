@@ -256,6 +256,10 @@ multiple files:
 
   The rule no longer reports false positive diagnostics when accessing properties directly from a hook and calling a hook inside function arguments.
 
+- Fix [noUselessFragments](https://docs.rome.tools/lint/rules/nouselessfragments/)'s panics when running `rome check --apply-unsafe` ([#4637](https://github.com/rome/tools/issues/4639))
+
+  This rule's code action emits an invalid AST, so I fixed using JsxString instead of JsStringLiteral
+
 ### Parser
 
 ### VSCode
