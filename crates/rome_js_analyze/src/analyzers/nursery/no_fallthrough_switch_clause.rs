@@ -3,7 +3,8 @@ use rome_rowan::AstNode;
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::{
-    AnyJsSwitchClause, JsBreakStatement, JsReturnStatement, JsSwitchStatement, JsThrowStatement, JsContinueStatement
+    AnyJsSwitchClause, JsBreakStatement, JsContinueStatement, JsReturnStatement, JsSwitchStatement,
+    JsThrowStatement,
 };
 
 declare_rule! {
@@ -91,7 +92,7 @@ impl Rule for NoFallthroughSwitchClause {
 fn case_fell(case: &AnyJsSwitchClause) -> bool {
     let mut children = case.consequent().syntax().children();
 
-    if children.clone().into_iter().count() == 0 {
+    if children.clone().count() == 0 {
         return false;
     }
 
