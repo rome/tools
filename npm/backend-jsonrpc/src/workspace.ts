@@ -542,6 +542,10 @@ export interface Nursery {
 	 */
 	noExcessiveComplexity?: RuleConfiguration;
 	/**
+	 * Disallow fallthrough of case statements.
+	 */
+	noFallthroughSwitchClause?: RuleConfiguration;
+	/**
 	 * Prefer for...of statement instead of Array.forEach.
 	 */
 	noForEach?: RuleConfiguration;
@@ -1154,6 +1158,7 @@ export type Category =
 	| "lint/nursery/noVoid"
 	| "lint/nursery/noNonoctalDecimalEscape"
 	| "lint/nursery/noExcessiveComplexity"
+	| "lint/nursery/noFallthroughSwitchClause"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"

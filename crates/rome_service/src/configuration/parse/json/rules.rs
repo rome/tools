@@ -1653,6 +1653,7 @@ impl VisitNode<JsonLanguage> for Nursery {
                 "noDuplicateJsonKeys",
                 "noDuplicateJsxProps",
                 "noExcessiveComplexity",
+                "noFallthroughSwitchClause",
                 "noForEach",
                 "noGlobalIsFinite",
                 "noGlobalIsNan",
@@ -1892,6 +1893,29 @@ impl VisitNode<JsonLanguage> for Nursery {
                         diagnostics,
                     )?;
                     self.no_excessive_complexity = Some(rule_configuration);
+                }
+                _ => {
+                    diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
+                        "object or string",
+                        value.range(),
+                    ));
+                }
+            },
+            "noFallthroughSwitchClause" => match value {
+                AnyJsonValue::JsonStringValue(_) => {
+                    let mut configuration = RuleConfiguration::default();
+                    self.map_to_known_string(&value, name_text, &mut configuration, diagnostics)?;
+                    self.no_fallthrough_switch_clause = Some(configuration);
+                }
+                AnyJsonValue::JsonObjectValue(_) => {
+                    let mut rule_configuration = RuleConfiguration::default();
+                    rule_configuration.map_rule_configuration(
+                        &value,
+                        name_text,
+                        "noFallthroughSwitchClause",
+                        diagnostics,
+                    )?;
+                    self.no_fallthrough_switch_clause = Some(rule_configuration);
                 }
                 _ => {
                     diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
