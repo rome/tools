@@ -181,6 +181,8 @@ define_categories! {
     // General categories
     "files/missingHandler",
     "format",
+    "check",
+    "ci",
     "configuration",
     "organizeImports",
     "migrate",

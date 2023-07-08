@@ -20,7 +20,7 @@ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
 # Termination Message
 
 ```block
-internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+check ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Some errors were emitted while running checks
   
@@ -488,7 +488,7 @@ check.js:5:13 lint/style/useWhile  FIXABLE  ━━━━━━━━━━━━
 
 ```block
 The number of diagnostics exceeds the number allowed by Rome.
-Diagnostics not shown: 78.
+Diagnostics not shown: 79.
 ```
 
 ```block

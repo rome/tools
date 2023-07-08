@@ -1,7 +1,7 @@
 use crate::execute::diagnostics::{ContentDiffAdvice, MigrateDiffDiagnostic};
 use crate::{CliDiagnostic, CliSession};
 use rome_console::{markup, ConsoleExt};
-use rome_diagnostics::PrintDiagnostic;
+use rome_diagnostics::{category, PrintDiagnostic};
 use rome_fs::OpenOptions;
 use rome_json_syntax::JsonRoot;
 use rome_migrate::{migrate_configuration, ControlFlow};
@@ -54,7 +54,7 @@ pub(crate) fn run(
                 if let Some((range, _)) = action.mutation.as_text_edits() {
                     tree = match JsonRoot::cast(action.mutation.commit()) {
                         Some(tree) => tree,
-                        None => return Err(CliDiagnostic::check_error()),
+                        None => return Err(CliDiagnostic::check_error(category!("migrate"))),
                     };
                     actions.push(FixAction {
                         rule_name: action

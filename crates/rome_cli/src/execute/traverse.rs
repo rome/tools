@@ -205,10 +205,15 @@ pub(crate) fn traverse(
     if count.saturating_sub(skipped) == 0 && !cli_options.no_errors_on_unmatched {
         Err(CliDiagnostic::no_files_processed())
     } else if errors > 0 {
-        if execution.is_check_apply() {
-            Err(CliDiagnostic::apply_error())
+        let category = if execution.is_ci() {
+            category!("ci")
         } else {
-            Err(CliDiagnostic::check_error())
+            category!("check")
+        };
+        if execution.is_check_apply() {
+            Err(CliDiagnostic::apply_error(category))
+        } else {
+            Err(CliDiagnostic::check_error(category))
         }
     } else {
         Ok(())

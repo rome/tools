@@ -145,7 +145,7 @@ for(;true;);
 # Termination Message
 
 ```block
-internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+check ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Some errors were emitted while running checks
   
@@ -157,7 +157,7 @@ internalError/io ━━━━━━━━━━━━━━━━━━━━━
 
 ```block
 The number of diagnostics exceeds the number allowed by Rome.
-Diagnostics not shown: 70.
+Diagnostics not shown: 90.
 ```
 
 ```block

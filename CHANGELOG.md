@@ -78,6 +78,12 @@ multiple files:
   The resolution of the files is file system based, Rome doesn't know how to
   resolve dependencies yet.
 
+- The commands `rome check` and `rome lint` now show the remaining diagnostics even when
+	`--apply-safe` or `--apply-unsafe` are passed.
+
+- Fix the commands `rome check` and `rome lint`, they won't exit with an error code
+if no error diagnostics are emitted.
+
 ### Editors
 
 #### Other changes
@@ -257,6 +263,29 @@ multiple files:
   The rule no longer reports false positive diagnostics when accessing properties directly from a hook and calling a hook inside function arguments.
 
 ### Parser
+
+- Add support for decorators in class method parameters, example:
+
+	```js
+	class AppController {
+ 		get(@Param() id) {}
+ 		//	^^^^^^^^ new supported syntax
+ 	}
+	```
+
+	This syntax is only supported via configuration, because it's a non-standard
+	syntax.
+
+	```json
+	{
+		"//": "rome.json file",
+ 		"javascript": {
+ 			"parser": {
+				"unsafeParameterDecoratorsEnabled": true
+ 			}
+ 		}
+ 	}
+	```
 
 ### VSCode
 

@@ -1216,6 +1216,8 @@ export type Category =
 	| "lint/suspicious/useValidTypeof"
 	| "files/missingHandler"
 	| "format"
+	| "check"
+	| "ci"
 	| "configuration"
 	| "organizeImports"
 	| "migrate"
@@ -1252,7 +1254,7 @@ export type MarkupBuf = MarkupNodeBuf[];
 /**
  * The severity to associate to a diagnostic.
  */
-export type Severity = "fatal" | "error" | "warning" | "information" | "hint";
+export type Severity = "hint" | "information" | "warning" | "error" | "fatal";
 export type DiagnosticTags = DiagnosticTag[];
 /**
 	* Serializable representation of a [Diagnostic](super::Diagnostic) advice

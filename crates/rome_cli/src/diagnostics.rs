@@ -152,7 +152,6 @@ pub struct IncompatibleArguments {
 
 #[derive(Debug, Diagnostic)]
 #[diagnostic(
-    category = "internalError/io",
     severity = Error,
     message(
         description = "{action_kind}",
@@ -161,6 +160,9 @@ pub struct IncompatibleArguments {
 )]
 pub struct CheckError {
     action_kind: CheckActionKind,
+
+    #[category]
+    category: &'static Category,
 }
 
 #[derive(Clone, Copy)]
@@ -203,13 +205,15 @@ impl std::fmt::Display for CheckActionKind {
 
 #[derive(Debug, Diagnostic)]
 #[diagnostic(
-    category = "internalError/io",
     severity = Error,
     message = "Fixes applied to the file, but there are still diagnostics to address."
 )]
 pub struct FileCheckApply {
     #[location(resource)]
     pub file_path: String,
+
+    #[category]
+    pub category: &'static Category,
 }
 
 #[derive(Debug, Diagnostic)]
@@ -400,23 +404,26 @@ impl CliDiagnostic {
     }
 
     /// Emitted when errors were emitted while running `check` command
-    pub fn check_error() -> Self {
+    pub fn check_error(category: &'static Category) -> Self {
         Self::CheckError(CheckError {
             action_kind: CheckActionKind::Check,
+            category,
         })
     }
 
     /// Emitted when errors were emitted while apply code fixes
-    pub fn apply_error() -> Self {
+    pub fn apply_error(category: &'static Category) -> Self {
         Self::CheckError(CheckError {
             action_kind: CheckActionKind::Apply,
+            category,
         })
     }
 
     /// Emitted for a file that has code fixes, but still has diagnostics to address
-    pub fn file_apply_error(file_path: impl Into<String>) -> Self {
+    pub fn file_apply_error(file_path: impl Into<String>, category: &'static Category) -> Self {
         Self::FileCheckApply(FileCheckApply {
             file_path: file_path.into(),
+            category,
         })
     }
 

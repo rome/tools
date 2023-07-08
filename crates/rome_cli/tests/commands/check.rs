@@ -191,10 +191,9 @@ fn maximum_diagnostics() {
         .filter(|m| m.level == LogLevel::Log)
         .any(|m| {
             let content = format!("{:?}", m.content);
-            dbg!(&content);
             content.contains("The number of diagnostics exceeds the number allowed by Rome")
                 && content.contains("Diagnostics not shown")
-                && content.contains("78")
+                && content.contains("79")
         }));
 
     assert_cli_snapshot(SnapshotPayload::new(
@@ -607,8 +606,6 @@ fn downgrade_severity() {
         &mut console,
         Args::from([("check"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
-
-    println!("{console:?}");
 
     assert!(result.is_err(), "run_cli returned {result:?}");
 
@@ -1220,7 +1217,8 @@ fn max_diagnostics_default() {
                 || node.content.contains("useBlockStatements")
                 || node.content.contains("noConstantCondition")
                 || node.content.contains("format")
-                || node.content.contains("internalError/io")
+                || node.content.contains("lint")
+                || node.content.contains("check")
         });
 
         if is_diagnostic {
@@ -1239,7 +1237,7 @@ fn max_diagnostics_default() {
         console,
         result,
     ));
-    assert_eq!(diagnostic_count, 20);
+    assert_eq!(diagnostic_count, 16);
 }
 
 #[test]
@@ -1278,6 +1276,7 @@ fn max_diagnostics() {
                 || node.content.contains("useBlockStatements")
                 || node.content.contains("noConstantCondition")
                 || node.content.contains("format")
+                || node.content.contains("lint")
                 || node.content.contains("Some errors were emitted while")
         });
 
@@ -2547,6 +2546,55 @@ fn doesnt_error_if_no_files_were_processed() {
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
         "doesnt_error_if_no_files_were_processed",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn should_pass_if_there_are_only_warnings() {
+    let mut console = BufferConsole::default();
+    let mut fs = MemoryFileSystem::default();
+
+    let file_path = Path::new("rome.json");
+    fs.insert(
+        file_path.into(),
+        r#"
+{
+  "linter": {
+    "rules": {
+        "recommended": true,
+        "suspicious": {
+            "noClassAssign": "warn"
+        }
+    }
+  }
+}
+        "#
+        .as_bytes(),
+    );
+
+    let file_path = Path::new("file.js");
+    fs.insert(
+        file_path.into(),
+        r#"class A {};
+A = 0;
+"#
+        .as_bytes(),
+    );
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Args::from([("check"), "--apply-unsafe", ("file.js")].as_slice()),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "should_pass_if_there_are_only_warnings",
         fs,
         console,
         result,
