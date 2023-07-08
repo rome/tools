@@ -1237,7 +1237,7 @@ fn max_diagnostics_default() {
         console,
         result,
     ));
-    assert_eq!(diagnostic_count, 16);
+    assert_eq!(diagnostic_count, 20);
 }
 
 #[test]
