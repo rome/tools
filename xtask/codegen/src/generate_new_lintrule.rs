@@ -96,12 +96,25 @@ impl Rule for {rule_name_upper_camel} {{
     let categories = std::fs::read_to_string(categories_path).unwrap();
 
     if !categories.contains(&rule_name_lower_camel) {
-        let insertion_point = r#"    // Insert new nursery rule here"#;
-        debug_assert!(categories.contains(insertion_point));
+        // We sort rules to reduce conflicts between contributions made in parallel.
+        let rule_line = format!(
+            r#"    "lint/nursery/{rule_name_lower_camel}": "https://docs.rome.tools/lint/rules/{rule_name_lower_camel}","#
+        );
+        let nursery_start = "    // nursery\n";
+        let nursery_end = "\n    // nursery end";
+        debug_assert!(categories.contains(nursery_start));
+        debug_assert!(categories.contains(nursery_end));
+        let nursery_start_index = categories.find(nursery_start).unwrap() + nursery_start.len();
+        let nursery_end_index = categories.find(nursery_end).unwrap();
+        let nursery_category = &categories[nursery_start_index..nursery_end_index];
+        let mut nursery_rules: Vec<&str> = nursery_category
+            .split('\n')
+            .chain(Some(&rule_line[..]))
+            .collect();
+        nursery_rules.sort();
+        let new_nursery_category = nursery_rules.join("\n");
 
-        let categories = categories.replace(insertion_point, &format!(
-        r#""lint/nursery/{rule_name_lower_camel}": "https://docs.rome.tools/lint/rules/{rule_name_lower_camel}",
-{insertion_point}"#));
+        let categories = categories.replace(nursery_category, &new_nursery_category);
         debug_assert!(categories.contains(&rule_name_lower_camel));
 
         std::fs::write(categories_path, categories).unwrap();
