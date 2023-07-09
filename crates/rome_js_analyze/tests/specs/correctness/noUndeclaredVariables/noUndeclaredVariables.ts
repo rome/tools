@@ -11,5 +11,16 @@ export type WhateverDefault<S extends number = 2> = `Hello ${S}`
 // Const assertions are valid
 const fruits = ["banana"] as const;
 
+class X {
+  f() {
+    this.g;
+    type T1 = typeof this.g;
+    type T2 = X['g'];
+  }
+
+  g() {
+  }
+}
+
 // Invalid
 export type Invalid<S extends number> = `Hello ${T}`

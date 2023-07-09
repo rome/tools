@@ -48,7 +48,9 @@ impl Rule for NoUndeclaredVariables {
         ctx.query()
             .all_unresolved_references()
             .filter_map(|reference| {
+                // dbg!(&reference);
                 let identifier = reference.tree();
+                dbg!(&identifier);
                 let under_as_expression = identifier
                     .parent::<TsReferenceType>()
                     .and_then(|ty| ty.parent::<TsAsExpression>())
