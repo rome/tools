@@ -21,8 +21,6 @@ pub(crate) mod version;
 
 #[derive(Debug, Clone, Bpaf)]
 #[bpaf(options, version(VERSION))]
-/// Rome CLI
-///
 /// Rome official CLI. Use it to check the health of your project or run it to check single files.
 pub enum RomeCommand {
     /// Shows the Rome version information and quit

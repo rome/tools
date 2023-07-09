@@ -68,7 +68,7 @@ tests_macros                = { path = "./crates/tests_macros" }
 quickcheck_macros = "1.0.0"
 quickcheck  		  = "1.0.3"
 bitflags    		  = "2.3.1"
-bpaf        		  = { version = "0.9.1", features = ["derive"] }
+bpaf        		  = { version = "0.9.2", features = ["derive"] }
 countme     		  = "3.0.1"
 dashmap     			= "5.4.0"
 indexmap    			= "1.9.3"
