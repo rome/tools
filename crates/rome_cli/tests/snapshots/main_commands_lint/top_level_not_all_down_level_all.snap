@@ -30,7 +30,7 @@ expression: content
 # Termination Message
 
 ```block
-internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+check ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Some errors were emitted while running checks
   
@@ -100,6 +100,14 @@ fix.js:4:5 lint/style/noVar  FIXABLE  ━━━━━━━━━━━━━━
     4   │ - ····var·x,·y;
       4 │ + ····let·x,·y;
     5 5 │       
+  
+
+```
+
+```block
+fix.js lint ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Fixes applied to the file, but there are still diagnostics to address.
   
 
 ```

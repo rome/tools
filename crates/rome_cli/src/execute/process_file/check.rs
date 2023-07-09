@@ -4,6 +4,7 @@ use crate::execute::process_file::organize_imports::organize_imports_with_guard;
 use crate::execute::process_file::workspace_file::WorkspaceFile;
 use crate::execute::process_file::{FileResult, FileStatus, Message, SharedTraversalOptions};
 use crate::CliDiagnostic;
+use rome_diagnostics::Category;
 use rome_service::workspace::{FeatureName, FileFeaturesResult};
 use std::path::Path;
 
@@ -11,6 +12,7 @@ pub(crate) fn check_file<'ctx>(
     ctx: &'ctx SharedTraversalOptions<'ctx, '_>,
     path: &Path,
     file_features: &'ctx FileFeaturesResult,
+    category: &'static Category,
 ) -> FileResult {
     let mut has_errors = false;
     let mut workspace_file = WorkspaceFile::new(ctx, path)?;
@@ -71,11 +73,11 @@ pub(crate) fn check_file<'ctx>(
     if has_errors {
         if ctx.execution.is_check_apply() || ctx.execution.is_check_apply_unsafe() {
             Ok(FileStatus::Message(Message::ApplyError(
-                CliDiagnostic::file_apply_error(path.display().to_string()),
+                CliDiagnostic::file_apply_error(path.display().to_string(), category),
             )))
         } else {
             Ok(FileStatus::Message(Message::ApplyError(
-                CliDiagnostic::check_error(),
+                CliDiagnostic::check_error(category),
             )))
         }
     } else {

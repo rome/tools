@@ -5,7 +5,7 @@ use crate::execute::process_file::{
 };
 use crate::execute::TraversalMode;
 use crate::FormatterReportFileDetail;
-use rome_diagnostics::{category, DiagnosticExt, Error};
+use rome_diagnostics::{category, DiagnosticExt};
 use rome_service::workspace::RuleCategories;
 use std::path::Path;
 use std::sync::atomic::Ordering;
@@ -42,23 +42,10 @@ pub(crate) fn format_with_guard<'ctx>(
         ),
     };
 
-    if diagnostics_result.errors > 0 {
-        return Err(if ignore_errors {
-            Message::from(
-                SkippedDiagnostic.with_file_path(workspace_file.path.display().to_string()),
-            )
-        } else {
-            Message::Diagnostics {
-                name: workspace_file.path.display().to_string(),
-                content: input,
-                diagnostics: diagnostics_result
-                    .diagnostics
-                    .into_iter()
-                    .map(Error::from)
-                    .collect(),
-                skipped_diagnostics: diagnostics_result.skipped_diagnostics,
-            }
-        });
+    if diagnostics_result.errors > 0 && ignore_errors {
+        return Err(Message::from(
+            SkippedDiagnostic.with_file_path(workspace_file.path.display().to_string()),
+        ));
     }
 
     let printed = workspace_file

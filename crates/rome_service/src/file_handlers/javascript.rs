@@ -293,7 +293,7 @@ fn lint(params: LintParams) -> LintResults {
                     })
                     .unwrap_or_else(|| diagnostic.severity());
 
-                if severity <= Severity::Error {
+                if severity >= Severity::Error {
                     errors += 1;
                 }
 

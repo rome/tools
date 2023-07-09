@@ -221,8 +221,10 @@ pub(crate) fn process_file(ctx: &TraversalOptions, path: &Path) -> FileResult {
                 // the unsupported case should be handled already at this point
                 format(shared_context, path)
             }
-            TraversalMode::Check { .. } => check_file(shared_context, path, &file_features),
-            TraversalMode::CI => check_file(shared_context, path, &file_features),
+            TraversalMode::Check { .. } => {
+                check_file(shared_context, path, &file_features, category!("check"))
+            }
+            TraversalMode::CI => check_file(shared_context, path, &file_features, category!("ci")),
             TraversalMode::Migrate { .. } => {
                 unreachable!("The migration should not be called for this file")
             }

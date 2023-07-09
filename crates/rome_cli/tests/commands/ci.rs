@@ -612,7 +612,8 @@ fn max_diagnostics_default() {
             node.content
                 .contains("File content differs from formatting output")
                 || node.content.contains("format")
-                || node.content.contains("internalError/io")
+                || node.content.contains("lint")
+                || node.content.contains("ci")
         });
 
         if is_diagnostic {
@@ -667,7 +668,7 @@ fn max_diagnostics() {
             node.content
                 .contains("File content differs from formatting output")
                 || node.content.contains("format")
-                || node.content.contains("internalError/io")
+                || node.content.contains("ci")
         });
 
         if is_diagnostic {
