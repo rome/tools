@@ -2,11 +2,11 @@ use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic
 use rome_console::markup;
 use rome_js_syntax::{
     AnyJsArrayAssignmentPatternElement, AnyJsArrayElement, AnyJsAssignment, AnyJsAssignmentPattern,
-    AnyJsExpression, AnyJsName, AnyJsObjectAssignmentPatternMember, AnyJsObjectMember,
-    JsAssignmentExpression, JsAssignmentOperator, JsComputedMemberAssignment,
-    JsComputedMemberExpression, JsIdentifierAssignment, JsIdentifierExpression, JsLanguage, JsName,
-    JsPrivateName, JsReferenceIdentifier, JsStaticMemberAssignment, JsStaticMemberExpression,
-    JsSyntaxToken,
+    AnyJsExpression, AnyJsLiteralExpression, AnyJsName, AnyJsObjectAssignmentPatternMember,
+    AnyJsObjectMember, JsAssignmentExpression, JsAssignmentOperator, JsCallExpression,
+    JsComputedMemberAssignment, JsComputedMemberExpression, JsIdentifierAssignment,
+    JsIdentifierExpression, JsLanguage, JsName, JsPrivateName, JsReferenceIdentifier,
+    JsStaticMemberAssignment, JsStaticMemberExpression, JsSyntaxToken,
 };
 use rome_rowan::{
     declare_node_union, AstNode, AstSeparatedList, AstSeparatedListNodesIterator, SyntaxError,
@@ -44,6 +44,14 @@ declare_rule! {
     ///
     /// ```js,expect_diagnostic
     /// a[b] = a[b];
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// a[b].foo = a[b].foo;
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// a['b'].foo = a['b'].foo;
     /// ```
     ///
     /// ## Valid
@@ -304,9 +312,10 @@ impl SameIdentifiers {
         left: &mut AnyJsAssignmentExpressionLikeIterator,
         right: &mut AnyJsAssignmentExpressionLikeIterator,
     ) -> Option<AnyAssignmentLike> {
-        if let (Some(left), Some(right)) = (left.next(), right.next()) {
-            let (left_name, left_reference) = left;
-            let (right_name, right_reference) = right;
+        if let (Some(left_item), Some(right_item)) = (left.next(), right.next()) {
+            let (left_name, left_reference) = left_item;
+            let (right_name, right_reference) = right_item;
+
             if let Ok(identifier_like) = IdentifiersLike::try_from((left_name, right_name)) {
                 if with_same_identifiers(&identifier_like).is_some() {
                     if let (Some(left_reference), Some(right_reference)) =
@@ -318,8 +327,15 @@ impl SameIdentifiers {
                         ))
                         .is_some()
                         {
-                            return Some(AnyAssignmentLike::Identifiers(identifier_like));
+                            let source_identifier = IdentifiersLike::try_from((
+                                left.source_member.clone(),
+                                right.source_member.clone(),
+                            ))
+                            .ok()?;
+                            return Some(AnyAssignmentLike::Identifiers(source_identifier));
                         }
+                    } else {
+                        return Self::next_static_expression(left, right);
                     }
                 }
             }
@@ -457,8 +473,21 @@ impl Iterator for AnyJsAssignmentExpressionLikeIterator {
                 self.drained = true;
                 Some(identifier.name().ok()?)
             }
+            AnyJsExpression::JsCallExpression(call_expression) => {
+                self.current_member_expression = Some(
+                    AnyAssignmentExpressionLike::JsCallExpression(call_expression),
+                );
+                None
+            }
+            AnyJsExpression::JsComputedMemberExpression(computed_expression) => {
+                self.current_member_expression = Some(
+                    AnyAssignmentExpressionLike::JsComputedMemberExpression(computed_expression),
+                );
+                None
+            }
             _ => return None,
         };
+
         Some((name, reference))
     }
 }
@@ -510,11 +539,11 @@ enum AnyAssignmentLike {
 }
 
 declare_node_union! {
-    pub(crate) AnyNameLike = AnyJsName | JsReferenceIdentifier | JsIdentifierExpression
+    pub(crate) AnyNameLike = AnyJsName | JsReferenceIdentifier | JsIdentifierExpression | AnyJsLiteralExpression
 }
 
 declare_node_union! {
-    pub(crate) AnyAssignmentExpressionLike = JsStaticMemberExpression | JsComputedMemberExpression
+    pub(crate) AnyAssignmentExpressionLike = JsStaticMemberExpression | JsComputedMemberExpression | JsCallExpression
 }
 
 impl AnyAssignmentExpressionLike {
@@ -525,11 +554,22 @@ impl AnyAssignmentExpressionLike {
             }
             AnyAssignmentExpressionLike::JsComputedMemberExpression(node) => {
                 node.member().ok().and_then(|node| {
-                    Some(AnyNameLike::from(
-                        node.as_js_identifier_expression()?.name().ok()?,
-                    ))
+                    Some(match node {
+                        AnyJsExpression::JsIdentifierExpression(node) => node.name().ok()?.into(),
+                        AnyJsExpression::AnyJsLiteralExpression(node) => node.into(),
+                        _ => return None,
+                    })
                 })
             }
+            AnyAssignmentExpressionLike::JsCallExpression(node) => node
+                .callee()
+                .ok()
+                .and_then(|callee| callee.as_js_static_member_expression().cloned())
+                .and_then(|callee| callee.member().ok())
+                .and_then(|member| {
+                    let js_name = member.as_js_name()?;
+                    Some(AnyNameLike::from(AnyJsName::JsName(js_name.clone())))
+                }),
         }
     }
 
@@ -537,6 +577,12 @@ impl AnyAssignmentExpressionLike {
         match self {
             AnyAssignmentExpressionLike::JsStaticMemberExpression(node) => node.object().ok(),
             AnyAssignmentExpressionLike::JsComputedMemberExpression(node) => node.object().ok(),
+            AnyAssignmentExpressionLike::JsCallExpression(node) => node
+                .callee()
+                .ok()?
+                .as_js_static_member_expression()?
+                .object()
+                .ok(),
         }
     }
 }
@@ -641,6 +687,13 @@ pub(crate) enum IdentifiersLike {
     /// a.#b = a.#b;
     /// ```
     PrivateName(JsPrivateName, JsPrivateName),
+    /// To store identifiers found in code like:
+    ///
+    /// ```js
+    /// a['b'].d = a['b'].d
+    /// a[3].d = a[4].d
+    /// ```
+    Literal(AnyJsLiteralExpression, AnyJsLiteralExpression),
 }
 
 impl TryFrom<(AnyNameLike, AnyNameLike)> for IdentifiersLike {
@@ -667,6 +720,11 @@ impl TryFrom<(AnyNameLike, AnyNameLike)> for IdentifiersLike {
                 AnyNameLike::JsIdentifierExpression(right),
             ) => Ok(Self::References(left.name()?, right.name()?)),
 
+            (
+                AnyNameLike::AnyJsLiteralExpression(left),
+                AnyNameLike::AnyJsLiteralExpression(right),
+            ) => Ok(Self::Literal(left, right)),
+
             _ => unreachable!("you should map the correct references"),
         }
     }
@@ -679,6 +737,7 @@ impl IdentifiersLike {
             IdentifiersLike::Name(left, _) => left.range(),
             IdentifiersLike::PrivateName(left, _) => left.range(),
             IdentifiersLike::References(left, _) => left.range(),
+            IdentifiersLike::Literal(left, _) => left.range(),
         }
     }
 
@@ -688,6 +747,7 @@ impl IdentifiersLike {
             IdentifiersLike::Name(_, right) => right.range(),
             IdentifiersLike::PrivateName(_, right) => right.range(),
             IdentifiersLike::References(_, right) => right.range(),
+            IdentifiersLike::Literal(_, right) => right.range(),
         }
     }
 
@@ -697,6 +757,7 @@ impl IdentifiersLike {
             IdentifiersLike::Name(_, right) => right.value_token().ok(),
             IdentifiersLike::PrivateName(_, right) => right.value_token().ok(),
             IdentifiersLike::References(_, right) => right.value_token().ok(),
+            IdentifiersLike::Literal(_, right) => right.value_token().ok(),
         }
     }
 }
@@ -724,6 +785,27 @@ fn with_same_identifiers(identifiers_like: &IdentifiersLike) -> Option<()> {
             let right_value = right.value_token().ok()?;
             (left_value, right_value)
         }
+        IdentifiersLike::Literal(left, right) => match (left, right) {
+            (
+                AnyJsLiteralExpression::JsStringLiteralExpression(left),
+                AnyJsLiteralExpression::JsStringLiteralExpression(right),
+            ) => {
+                let left_value = left.value_token().ok()?;
+                let right_value = right.value_token().ok()?;
+                (left_value, right_value)
+            }
+
+            (
+                AnyJsLiteralExpression::JsNumberLiteralExpression(left),
+                AnyJsLiteralExpression::JsNumberLiteralExpression(right),
+            ) => {
+                let left_value = left.value_token().ok()?;
+                let right_value = right.value_token().ok()?;
+                (left_value, right_value)
+            }
+
+            _ => return None,
+        },
     };
 
     if left_value.text_trimmed() == right_value.text_trimmed() {
