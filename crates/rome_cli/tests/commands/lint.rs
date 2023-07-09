@@ -59,7 +59,7 @@ fn check_help() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("lint"), "--help"]),
+        Args::from([("lint"), "--help"].as_slice()),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -84,7 +84,7 @@ fn ok() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("lint"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("lint"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -101,7 +101,7 @@ fn ok_read_only() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("lint"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("lint"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -118,7 +118,7 @@ fn parse_error() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("lint"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("lint"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
     assert!(result.is_err(), "run_cli returned {result:?}");
 
@@ -142,7 +142,7 @@ fn lint_error() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("lint"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("lint"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -166,7 +166,7 @@ fn maximum_diagnostics() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("lint"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("lint"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -188,7 +188,7 @@ fn maximum_diagnostics() {
             let content = format!("{:?}", m.content);
             content.contains("The number of diagnostics exceeds the number allowed by Rome")
                 && content.contains("Diagnostics not shown")
-                && content.contains("76")
+                && content.contains("77")
         }));
 
     assert_cli_snapshot(SnapshotPayload::new(
@@ -211,11 +211,14 @@ fn apply_ok() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("lint"),
-            ("--apply"),
-            file_path.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("lint"),
+                ("--apply"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -248,11 +251,14 @@ fn apply_noop() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("lint"),
-            ("--apply"),
-            file_path.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("lint"),
+                ("--apply"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -277,12 +283,15 @@ fn apply_suggested_error() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("lint"),
-            ("--apply-unsafe"),
-            ("--apply"),
-            file_path.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("lint"),
+                ("--apply-unsafe"),
+                ("--apply"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -307,11 +316,14 @@ fn apply_suggested() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("lint"),
-            ("--apply-unsafe"),
-            file_path.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("lint"),
+                ("--apply-unsafe"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -359,12 +371,15 @@ function f() { arguments; }
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("lint"),
-            ("--apply-unsafe"),
-            test1.as_os_str().to_str().unwrap(),
-            test2.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("lint"),
+                ("--apply-unsafe"),
+                test1.as_os_str().to_str().unwrap(),
+                test2.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -414,11 +429,14 @@ fn no_lint_if_linter_is_disabled_when_run_apply() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("lint"),
-            ("--apply"),
-            file_path.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("lint"),
+                ("--apply"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -454,7 +472,7 @@ fn no_lint_if_linter_is_disabled() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("lint"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("lint"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -490,11 +508,14 @@ fn should_disable_a_rule() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("lint"),
-            ("--apply"),
-            file_path.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("lint"),
+                ("--apply"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -533,11 +554,14 @@ fn should_disable_a_rule_group() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("lint"),
-            ("--apply"),
-            file_path.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("lint"),
+                ("--apply"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -575,7 +599,7 @@ fn downgrade_severity() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("lint"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("lint"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     println!("{console:?}");
@@ -621,7 +645,7 @@ fn upgrade_severity() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("lint"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("lint"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -666,11 +690,14 @@ fn no_lint_when_file_is_ignored() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("lint"),
-            ("--apply"),
-            file_path.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("lint"),
+                ("--apply"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -709,12 +736,15 @@ fn no_lint_if_files_are_listed_in_ignore_option() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("lint"),
-            ("--apply"),
-            file_path_test1.as_os_str().to_str().unwrap(),
-            file_path_test2.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("lint"),
+                ("--apply"),
+                file_path_test1.as_os_str().to_str().unwrap(),
+                file_path_test2.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -790,7 +820,7 @@ fn fs_error_dereferenced_symlink() {
     let result = run_cli(
         DynRef::Owned(Box::new(OsFileSystem)),
         &mut console,
-        Args::from(&[("lint"), root_path.display().to_string().as_str()]),
+        Args::from([("lint"), root_path.display().to_string().as_str()].as_slice()),
     );
 
     remove_dir_all(root_path).unwrap();
@@ -845,7 +875,7 @@ fn fs_error_infinite_symlink_exapansion() {
     let result = run_cli(
         DynRef::Owned(Box::new(OsFileSystem)),
         &mut console,
-        Args::from(&[("lint"), (root_path.display().to_string().as_str())]),
+        Args::from([("lint"), (root_path.display().to_string().as_str())].as_slice()),
     );
 
     remove_dir_all(root_path).unwrap();
@@ -872,11 +902,14 @@ fn fs_error_read_only() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("lint"),
-            ("--apply"),
-            file_path.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("lint"),
+                ("--apply"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -903,7 +936,7 @@ fn fs_error_unknown() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("lint"), ("prefix")]),
+        Args::from([("lint"), ("prefix")].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1008,13 +1041,16 @@ fn fs_files_ignore_symlink() {
     let result = run_cli(
         DynRef::Owned(Box::new(OsFileSystem)),
         &mut console,
-        Args::from(&[
-            ("lint"),
-            ("--config-path"),
-            (root_path.display().to_string().as_str()),
-            ("--apply-unsafe"),
-            (src_path.display().to_string().as_str()),
-        ]),
+        Args::from(
+            [
+                ("lint"),
+                ("--config-path"),
+                (root_path.display().to_string().as_str()),
+                ("--apply-unsafe"),
+                (src_path.display().to_string().as_str()),
+            ]
+            .as_slice(),
+        ),
     );
 
     remove_dir_all(root_path).unwrap();
@@ -1041,7 +1077,7 @@ fn file_too_large() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("lint"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("lint"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1071,7 +1107,7 @@ fn file_too_large_config_limit() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("lint"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("lint"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1096,11 +1132,14 @@ fn file_too_large_cli_limit() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("lint"),
-            ("--files-max-size=16"),
-            file_path.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("lint"),
+                ("--files-max-size=16"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1125,11 +1164,14 @@ fn files_max_size_parse_error() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("lint"),
-            ("--files-max-size=-1"),
-            file_path.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("lint"),
+                ("--files-max-size=-1"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1157,7 +1199,7 @@ fn max_diagnostics_default() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("lint"), ("src")]),
+        Args::from([("lint"), ("src")].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1171,6 +1213,7 @@ fn max_diagnostics_default() {
             node.content.contains("useWhile")
                 || node.content.contains("useBlockStatements")
                 || node.content.contains("noConstantCondition")
+                || node.content.contains("lint")
         });
 
         if is_diagnostic {
@@ -1205,12 +1248,15 @@ fn max_diagnostics() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("lint"),
-            ("--max-diagnostics"),
-            ("10"),
-            Path::new("src").as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("lint"),
+                ("--max-diagnostics"),
+                ("10"),
+                Path::new("src").as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1223,6 +1269,7 @@ fn max_diagnostics() {
             node.content.contains("useWhile")
                 || node.content.contains("useBlockStatements")
                 || node.content.contains("noConstantCondition")
+                || node.content.contains("lint")
         });
 
         if is_diagnostic {
@@ -1253,7 +1300,7 @@ fn no_supported_file_found() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("lint"), "."]),
+        Args::from([("lint"), "."].as_slice()),
     );
 
     eprintln!("{:?}", console.out_buffer);
@@ -1282,7 +1329,7 @@ a == b;",
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("lint"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("lint"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -1307,11 +1354,14 @@ fn print_verbose() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("lint"),
-            ("--verbose"),
-            file_path.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("lint"),
+                ("--verbose"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1336,7 +1386,7 @@ fn unsupported_file() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("lint"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("lint"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
     assert!(result.is_err(), "run_cli returned {result:?}");
 
@@ -1360,7 +1410,7 @@ fn suppression_syntax_error() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("lint"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("lint"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1388,7 +1438,7 @@ fn config_recommended_group() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("lint"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("lint"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
     assert!(result.is_err(), "run_cli returned {result:?}");
     assert_cli_snapshot(SnapshotPayload::new(
@@ -1411,7 +1461,7 @@ fn nursery_unstable() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("lint"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("lint"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1445,7 +1495,7 @@ fn all_rules() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("lint"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("lint"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1493,7 +1543,7 @@ fn top_level_all_down_level_not_all() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("lint"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("lint"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -1541,7 +1591,7 @@ fn top_level_not_all_down_level_all() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("lint"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("lint"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1578,7 +1628,7 @@ fn ignore_configured_globals() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("lint"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("lint"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -1633,11 +1683,14 @@ file2.js
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("lint"),
-            file_path1.as_os_str().to_str().unwrap(),
-            file_path2.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("lint"),
+                file_path1.as_os_str().to_str().unwrap(),
+                file_path2.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1694,12 +1747,15 @@ fn ignore_vcs_os_independent_parse() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("lint"),
-            file_path1.as_os_str().to_str().unwrap(),
-            file_path2.as_os_str().to_str().unwrap(),
-            file_path3.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("lint"),
+                file_path1.as_os_str().to_str().unwrap(),
+                file_path2.as_os_str().to_str().unwrap(),
+                file_path3.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -1742,15 +1798,18 @@ file2.js
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("lint"),
-            ("--vcs-enabled=true"),
-            ("--vcs-client-kind=git"),
-            ("--vcs-use-ignore-file=true"),
-            ("--vcs-root=."),
-            file_path1.as_os_str().to_str().unwrap(),
-            file_path2.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("lint"),
+                ("--vcs-enabled=true"),
+                ("--vcs-client-kind=git"),
+                ("--vcs-use-ignore-file=true"),
+                ("--vcs-root=."),
+                file_path1.as_os_str().to_str().unwrap(),
+                file_path2.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1776,7 +1835,7 @@ fn check_stdin_apply_successfully() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("lint"), "--apply", ("--stdin-file-path"), ("mock.js")]),
+        Args::from([("lint"), "--apply", ("--stdin-file-path"), ("mock.js")].as_slice()),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -1813,12 +1872,15 @@ fn check_stdin_apply_unsafe_successfully() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("lint"),
-            "--apply-unsafe",
-            ("--stdin-file-path"),
-            ("mock.js"),
-        ]),
+        Args::from(
+            [
+                ("lint"),
+                "--apply-unsafe",
+                ("--stdin-file-path"),
+                ("mock.js"),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -1873,7 +1935,7 @@ fn should_apply_correct_file_source() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("lint"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("lint"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -1907,11 +1969,14 @@ fn apply_unsafe_no_assign_in_expression() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("lint"),
-            file_path.as_os_str().to_str().unwrap(),
-            ("--apply-unsafe"),
-        ]),
+        Args::from(
+            [
+                ("lint"),
+                file_path.as_os_str().to_str().unwrap(),
+                ("--apply-unsafe"),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -1969,7 +2034,7 @@ fn should_not_enable_all_recommended_rules() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("lint"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("lint"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -2019,7 +2084,7 @@ array.map((sentence) => sentence.split(" ")).flat();
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("lint"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("lint"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -2072,7 +2137,7 @@ if (true) {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("lint"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("lint"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -2100,11 +2165,14 @@ fn apply_bogus_argument() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("lint"),
-            file_path.as_os_str().to_str().unwrap(),
-            ("--apply-unsafe"),
-        ]),
+        Args::from(
+            [
+                ("lint"),
+                file_path.as_os_str().to_str().unwrap(),
+                ("--apply-unsafe"),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -2132,12 +2200,15 @@ fn ignores_unknown_file() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("lint"),
-            file_path1.as_os_str().to_str().unwrap(),
-            file_path2.as_os_str().to_str().unwrap(),
-            "--files-ignore-unknown=true",
-        ]),
+        Args::from(
+            [
+                ("lint"),
+                file_path1.as_os_str().to_str().unwrap(),
+                file_path2.as_os_str().to_str().unwrap(),
+                "--files-ignore-unknown=true",
+            ]
+            .as_slice(),
+        ),
     );
 
     assert_cli_snapshot(SnapshotPayload::new(
@@ -2178,7 +2249,7 @@ fn check_json_files() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("lint"), file_path1.as_os_str().to_str().unwrap()]),
+        Args::from([("lint"), file_path1.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -2200,7 +2271,7 @@ fn doesnt_error_if_no_files_were_processed() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("lint"), "--no-errors-on-unmatched", ("file.js")]),
+        Args::from([("lint"), "--no-errors-on-unmatched", ("file.js")].as_slice()),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -2208,6 +2279,55 @@ fn doesnt_error_if_no_files_were_processed() {
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
         "doesnt_error_if_no_files_were_processed",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn should_pass_if_there_are_only_warnings() {
+    let mut console = BufferConsole::default();
+    let mut fs = MemoryFileSystem::default();
+
+    let file_path = Path::new("rome.json");
+    fs.insert(
+        file_path.into(),
+        r#"
+{
+  "linter": {
+    "rules": {
+        "recommended": true,
+        "suspicious": {
+            "noClassAssign": "warn"
+        }
+    }
+  }
+}
+        "#
+        .as_bytes(),
+    );
+
+    let file_path = Path::new("file.js");
+    fs.insert(
+        file_path.into(),
+        r#"class A {};
+A = 0;
+"#
+        .as_bytes(),
+    );
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Args::from([("lint"), "--apply-unsafe", ("file.js")].as_slice()),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "should_pass_if_there_are_only_warnings",
         fs,
         console,
         result,

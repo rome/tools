@@ -13,7 +13,7 @@ fn lsp_proxy_help() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("lsp-proxy"), "--help"]),
+        Args::from([("lsp-proxy"), "--help"].as_slice()),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");

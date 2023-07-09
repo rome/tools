@@ -7,7 +7,7 @@ expression: content
 ```block
 Bootstraps a new rome project. Creates a configuration file with some defaults.
 
-Usage: no parameters expected
+Usage: init 
 
 Available options:
     -h, --help  Prints help information

@@ -23,6 +23,8 @@ rome_js_unicode_table = { workspace = true }
 rome_parser           = { workspace = true }
 rome_rowan            = { workspace = true }
 schemars              = { workspace = true, optional = true }
+serde                 = { workspace = true, features = ["derive"] }
+serde_json            = { workspace = true }
 smallvec              = { workspace = true }
 tracing               = { workspace = true }
 
@@ -30,6 +32,7 @@ tracing               = { workspace = true }
 expect-test       = "1.2.2"
 quickcheck        = "1.0.3"
 quickcheck_macros = "1.0.0"
+rome_js_parser    = { workspace = true, features = ["serde"] }
 tests_macros      = { workspace = true }
 
 [features]

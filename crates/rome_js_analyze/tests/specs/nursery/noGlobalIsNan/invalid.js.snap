@@ -12,6 +12,8 @@ globalThis.isNaN({});
 
 (globalThis).isNaN({});
 
+globalThis.globalThis.window.isNaN({});
+
 globalThis["isNaN"]({});
 
 (globalThis)[("isNaN")]({});
@@ -109,7 +111,7 @@ invalid.js:7:1 lint/nursery/noGlobalIsNan  FIXABLE  ━━━━━━━━━�
   > 7 │ (globalThis).isNaN({});
       │ ^^^^^^^^^^^^^^^^^^
     8 │ 
-    9 │ globalThis["isNaN"]({});
+    9 │ globalThis.globalThis.window.isNaN({});
   
   i See the MDN documentation for more details.
   
@@ -120,7 +122,7 @@ invalid.js:7:1 lint/nursery/noGlobalIsNan  FIXABLE  ━━━━━━━━━�
      7    │ - (globalThis).isNaN({});
         7 │ + (globalThis).Number.isNaN({});
      8  8 │   
-     9  9 │   globalThis["isNaN"]({});
+     9  9 │   globalThis.globalThis.window.isNaN({});
   
 
 ```
@@ -132,10 +134,10 @@ invalid.js:9:1 lint/nursery/noGlobalIsNan  FIXABLE  ━━━━━━━━━�
   
      7 │ (globalThis).isNaN({});
      8 │ 
-   > 9 │ globalThis["isNaN"]({});
-       │ ^^^^^^^^^^^^^^^^^^^
+   > 9 │ globalThis.globalThis.window.isNaN({});
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     10 │ 
-    11 │ (globalThis)[("isNaN")]({});
+    11 │ globalThis["isNaN"]({});
   
   i See the MDN documentation for more details.
   
@@ -143,10 +145,10 @@ invalid.js:9:1 lint/nursery/noGlobalIsNan  FIXABLE  ━━━━━━━━━�
   
      7  7 │   (globalThis).isNaN({});
      8  8 │   
-     9    │ - globalThis["isNaN"]({});
-        9 │ + globalThis.Number["isNaN"]({});
+     9    │ - globalThis.globalThis.window.isNaN({});
+        9 │ + globalThis.globalThis.window.Number.isNaN({});
     10 10 │   
-    11 11 │   (globalThis)[("isNaN")]({});
+    11 11 │   globalThis["isNaN"]({});
   
 
 ```
@@ -156,67 +158,93 @@ invalid.js:11:1 lint/nursery/noGlobalIsNan  FIXABLE  ━━━━━━━━━
 
   ! isNaN is unsafe. It attempts a type coercion. Use Number.isNaN instead.
   
-     9 │ globalThis["isNaN"]({});
+     9 │ globalThis.globalThis.window.isNaN({});
     10 │ 
-  > 11 │ (globalThis)[("isNaN")]({});
-       │ ^^^^^^^^^^^^^^^^^^^^^^^
+  > 11 │ globalThis["isNaN"]({});
+       │ ^^^^^^^^^^^^^^^^^^^
     12 │ 
-    13 │ function localIsNaN(isNaN) {
+    13 │ (globalThis)[("isNaN")]({});
   
   i See the MDN documentation for more details.
   
   i Suggested fix: Use Number.isNaN instead.
   
-    11 │ (globalThis).Number[("isNaN")]({});
+     9  9 │   globalThis.globalThis.window.isNaN({});
+    10 10 │   
+    11    │ - globalThis["isNaN"]({});
+       11 │ + globalThis.Number["isNaN"]({});
+    12 12 │   
+    13 13 │   (globalThis)[("isNaN")]({});
+  
+
+```
+
+```
+invalid.js:13:1 lint/nursery/noGlobalIsNan  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! isNaN is unsafe. It attempts a type coercion. Use Number.isNaN instead.
+  
+    11 │ globalThis["isNaN"]({});
+    12 │ 
+  > 13 │ (globalThis)[("isNaN")]({});
+       │ ^^^^^^^^^^^^^^^^^^^^^^^
+    14 │ 
+    15 │ function localIsNaN(isNaN) {
+  
+  i See the MDN documentation for more details.
+  
+  i Suggested fix: Use Number.isNaN instead.
+  
+    13 │ (globalThis).Number[("isNaN")]({});
        │             +++++++                
 
 ```
 
 ```
-invalid.js:14:5 lint/nursery/noGlobalIsNan  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:16:5 lint/nursery/noGlobalIsNan  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! isNaN is unsafe. It attempts a type coercion. Use Number.isNaN instead.
   
-    13 │ function localIsNaN(isNaN) {
-  > 14 │     globalThis.isNaN({});
+    15 │ function localIsNaN(isNaN) {
+  > 16 │     globalThis.isNaN({});
        │     ^^^^^^^^^^^^^^^^
-    15 │ }
-    16 │ 
-  
-  i See the MDN documentation for more details.
-  
-  i Suggested fix: Use Number.isNaN instead.
-  
-    12 12 │   
-    13 13 │   function localIsNaN(isNaN) {
-    14    │ - ····globalThis.isNaN({});
-       14 │ + ····globalThis.Number.isNaN({});
-    15 15 │   }
-    16 16 │   
-  
-
-```
-
-```
-invalid.js:17:12 lint/nursery/noGlobalIsNan  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! isNaN is unsafe. It attempts a type coercion. Use Number.isNaN instead.
-  
-    15 │ }
-    16 │ 
-  > 17 │ localIsNaN(isNaN);
-       │            ^^^^^
+    17 │ }
     18 │ 
   
   i See the MDN documentation for more details.
   
   i Suggested fix: Use Number.isNaN instead.
   
-    15 15 │   }
-    16 16 │   
-    17    │ - localIsNaN(isNaN);
-       17 │ + localIsNaN(Number.isNaN);
+    14 14 │   
+    15 15 │   function localIsNaN(isNaN) {
+    16    │ - ····globalThis.isNaN({});
+       16 │ + ····globalThis.Number.isNaN({});
+    17 17 │   }
     18 18 │   
+  
+
+```
+
+```
+invalid.js:19:12 lint/nursery/noGlobalIsNan  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! isNaN is unsafe. It attempts a type coercion. Use Number.isNaN instead.
+  
+    17 │ }
+    18 │ 
+  > 19 │ localIsNaN(isNaN);
+       │            ^^^^^
+    20 │ 
+  
+  i See the MDN documentation for more details.
+  
+  i Suggested fix: Use Number.isNaN instead.
+  
+    17 17 │   }
+    18 18 │   
+    19    │ - localIsNaN(isNaN);
+       19 │ + localIsNaN(Number.isNaN);
+    20 20 │   
   
 
 ```

@@ -1,9 +1,13 @@
 use rome_analyze::context::RuleContext;
-use rome_analyze::{declare_rule, Ast, Rule, RuleDiagnostic};
+use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
+use rome_js_semantic::SemanticModel;
 use rome_js_syntax::{
-    AnyJsExpression, JsBinaryExpression, JsCaseClause, JsSwitchStatement, TextRange,
+    global_identifier, AnyJsExpression, AnyJsMemberExpression, JsBinaryExpression, JsCaseClause,
+    JsSwitchStatement, TextRange,
 };
 use rome_rowan::{declare_node_union, AstNode};
+
+use crate::semantic_services::Semantic;
 
 declare_rule! {
     /// Require calls to `isNaN()` when checking for `NaN`.
@@ -87,18 +91,19 @@ impl Message {
 }
 
 impl Rule for UseIsNan {
-    type Query = Ast<UseIsNanQuery>;
+    type Query = Semantic<UseIsNanQuery>;
     type State = RuleState;
     type Signals = Option<Self::State>;
     type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
-
+        let model = ctx.model();
         match node {
             UseIsNanQuery::JsBinaryExpression(bin_expr) => {
                 if bin_expr.is_comparison_operator()
-                    && (has_nan(&bin_expr.left().ok()?)? || has_nan(&bin_expr.right().ok()?)?)
+                    && (has_nan(bin_expr.left().ok()?, model)
+                        || has_nan(bin_expr.right().ok()?, model))
                 {
                     return Some(RuleState {
                         message_id: Message::BinaryExpression,
@@ -108,26 +113,25 @@ impl Rule for UseIsNan {
             }
             UseIsNanQuery::JsCaseClause(case_clause) => {
                 let test = case_clause.test().ok()?;
-
-                if has_nan(&test)? {
+                let range = test.range();
+                if has_nan(test, model) {
                     return Some(RuleState {
                         message_id: Message::CaseClause,
-                        range: test.range(),
+                        range,
                     });
                 }
             }
             UseIsNanQuery::JsSwitchStatement(switch_stmt) => {
                 let discriminant = switch_stmt.discriminant().ok()?;
-
-                if has_nan(&discriminant)? {
+                let range = discriminant.range();
+                if has_nan(discriminant, model) {
                     return Some(RuleState {
                         message_id: Message::SwitchCase,
-                        range: discriminant.range(),
+                        range,
                     });
                 }
             }
         }
-
         None
     }
 
@@ -141,48 +145,27 @@ impl Rule for UseIsNan {
 }
 
 /// Checks whether an expression has `NaN`, `Number.NaN`, or `Number['NaN']`.
-fn has_nan(expr: &AnyJsExpression) -> Option<bool> {
-    Some(match expr.clone().omit_parentheses() {
-        AnyJsExpression::JsIdentifierExpression(id_expr) => {
-            id_expr.name().ok()?.value_token().ok()?.text_trimmed() == "NaN"
-        }
-        AnyJsExpression::JsStaticMemberExpression(member_expr) => {
-            let is_number_object = member_expr
-                .object()
-                .ok()?
-                .as_js_identifier_expression()?
-                .name()
-                .ok()?
-                .value_token()
-                .ok()?
-                .text_trimmed()
-                == "Number";
-            let is_nan = member_expr
-                .member()
-                .ok()?
-                .as_js_name()?
-                .value_token()
-                .ok()?
-                .text_trimmed()
-                == "NaN";
-
-            is_number_object && is_nan
-        }
-        AnyJsExpression::JsComputedMemberExpression(member_expr) => {
-            let is_number_object = member_expr
-                .object()
-                .ok()?
-                .as_js_identifier_expression()?
-                .name()
-                .ok()?
-                .value_token()
-                .ok()?
-                .text_trimmed()
-                == "Number";
-            let is_member_nan = member_expr.member().ok()?.is_string_constant("NaN");
-
-            is_number_object && is_member_nan
-        }
-        _ => false,
-    })
+fn has_nan(expr: AnyJsExpression, model: &SemanticModel) -> bool {
+    (|| {
+        let expr = expr.omit_parentheses();
+        let reference = if let Some((reference, name)) = global_identifier(&expr) {
+            if name.text() != "NaN" {
+                return None;
+            }
+            reference
+        } else {
+            let member_expr = AnyJsMemberExpression::cast_ref(expr.syntax())?;
+            if member_expr.member_name()?.text() != "NaN" {
+                return None;
+            }
+            let member_object = member_expr.object().ok()?.omit_parentheses();
+            let (reference, name) = global_identifier(&member_object.omit_parentheses())?;
+            if name.text() != "Number" {
+                return None;
+            }
+            reference
+        };
+        model.binding(&reference).is_none().then_some(())
+    })()
+    .is_some()
 }

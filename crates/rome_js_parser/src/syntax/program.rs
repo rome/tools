@@ -9,7 +9,7 @@ use crate::JsParser;
 use rome_js_syntax::JsSyntaxKind::*;
 use rome_js_syntax::ModuleKind;
 
-// test_err unterminated_unicode_codepoint
+// test_err js unterminated_unicode_codepoint
 // let s = "\u{200";
 
 pub(crate) fn parse(p: &mut JsParser) -> CompletedMarker {

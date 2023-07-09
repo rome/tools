@@ -179,12 +179,7 @@ mod tests {
             String::from_utf8(buffer).unwrap()
         }
 
-        const SOURCE: &str = r#"function f() {
-        	if (true){
-        	useMyEffect(() => {}, []);
-
-        	}
-        }"#;
+        const SOURCE: &str = r#"a[f].c = a[f].c;"#;
 
         let parsed = parse(SOURCE, JsFileSource::tsx(), JsParserOptions::default());
 
@@ -195,7 +190,7 @@ mod tests {
             closure_index: Some(0),
             dependencies_index: Some(1),
         };
-        let rule_filter = RuleFilter::Rule("nursery", "useHookAtTopLevel");
+        let rule_filter = RuleFilter::Rule("nursery", "noSelfAssign");
         options.configuration.rules.push_rule(
             RuleKey::new("nursery", "useHookAtTopLevel"),
             RuleOptions::new(HooksOptions { hooks: vec![hook] }),

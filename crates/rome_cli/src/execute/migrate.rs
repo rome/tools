@@ -1,7 +1,7 @@
 use crate::execute::diagnostics::{ContentDiffAdvice, MigrateDiffDiagnostic};
 use crate::{CliDiagnostic, CliSession};
 use rome_console::{markup, ConsoleExt};
-use rome_diagnostics::PrintDiagnostic;
+use rome_diagnostics::{category, PrintDiagnostic};
 use rome_fs::OpenOptions;
 use rome_json_syntax::JsonRoot;
 use rome_migrate::{migrate_configuration, ControlFlow};
@@ -54,7 +54,7 @@ pub(crate) fn run(
                 if let Some((range, _)) = action.mutation.as_text_edits() {
                     tree = match JsonRoot::cast(action.mutation.commit()) {
                         Some(tree) => tree,
-                        None => return Err(CliDiagnostic::check_error()),
+                        None => return Err(CliDiagnostic::check_error(category!("migrate"))),
                     };
                     actions.push(FixAction {
                         rule_name: action
@@ -81,10 +81,10 @@ pub(crate) fn run(
         } else {
             let file_name = configuration_path.display().to_string();
             let diagnostic = MigrateDiffDiagnostic {
-                file_name: &file_name,
+                file_name,
                 diff: ContentDiffAdvice {
-                    old: configuration_content.as_str(),
-                    new: new_configuration_content.as_str(),
+                    old: configuration_content,
+                    new: new_configuration_content,
                 },
             };
             console.error(markup! {

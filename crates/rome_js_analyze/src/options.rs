@@ -1,5 +1,6 @@
 //! This module contains the rules that have options
 
+use crate::analyzers::nursery::no_excessive_complexity::{complexity_options, ComplexityOptions};
 use crate::semantic_analyzers::nursery::use_exhaustive_dependencies::{
     hooks_options, HooksOptions,
 };
@@ -9,10 +10,10 @@ use crate::semantic_analyzers::nursery::use_naming_convention::{
 use bpaf::Bpaf;
 use rome_analyze::options::RuleOptions;
 use rome_analyze::RuleKey;
-use rome_deserialize::json::{has_only_known_keys, VisitJsonNode};
+use rome_deserialize::json::VisitJsonNode;
 use rome_deserialize::{DeserializationDiagnostic, VisitNode};
-use rome_json_syntax::{JsonLanguage, JsonSyntaxNode};
-use rome_rowan::SyntaxNode;
+use rome_json_syntax::{AnyJsonValue, JsonLanguage, JsonMemberName, JsonObjectValue};
+use rome_rowan::AstNode;
 #[cfg(feature = "schemars")]
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
@@ -22,6 +23,8 @@ use std::str::FromStr;
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", deny_unknown_fields, untagged)]
 pub enum PossibleOptions {
+    /// Options for `noExcessiveComplexity` rule
+    Complexity(#[bpaf(external(complexity_options), hide)] ComplexityOptions),
     /// Options for `useExhaustiveDependencies` and `useHookAtTopLevel` rule
     Hooks(#[bpaf(external(hooks_options), hide)] HooksOptions),
     /// Options for `useNamingConvention` rule
@@ -40,10 +43,15 @@ impl FromStr for PossibleOptions {
 }
 
 impl PossibleOptions {
-    const KNOWN_KEYS: &'static [&'static str] = &["hooks", "strictCase", "enumMemberCase"];
-
     pub fn extract_option(&self, rule_key: &RuleKey) -> RuleOptions {
         match rule_key.rule_name() {
+            "noExcessiveComplexity" => {
+                let options = match self {
+                    PossibleOptions::Complexity(options) => options.clone(),
+                    _ => ComplexityOptions::default(),
+                };
+                RuleOptions::new(options)
+            }
             "useExhaustiveDependencies" | "useHookAtTopLevel" => {
                 let options = match self {
                     PossibleOptions::Hooks(options) => options.clone(),
@@ -64,39 +72,97 @@ impl PossibleOptions {
     }
 }
 
-impl VisitJsonNode for PossibleOptions {}
-impl VisitNode<JsonLanguage> for PossibleOptions {
-    fn visit_member_name(
+impl PossibleOptions {
+    pub fn map_to_rule_options(
         &mut self,
-        node: &JsonSyntaxNode,
+        value: &AnyJsonValue,
+        name: &str,
+        rule_name: &str,
         diagnostics: &mut Vec<DeserializationDiagnostic>,
     ) -> Option<()> {
-        has_only_known_keys(node, PossibleOptions::KNOWN_KEYS, diagnostics)
+        let value = JsonObjectValue::cast_ref(value.syntax()).or_else(|| {
+            diagnostics.push(DeserializationDiagnostic::new_incorrect_type_for_value(
+                name,
+                "object",
+                value.range(),
+            ));
+            None
+        })?;
+        for element in value.json_member_list() {
+            let element = element.ok()?;
+            let key = element.name().ok()?;
+            let value = element.value().ok()?;
+            let name = key.inner_string_text().ok()?;
+            self.validate_key(&key, rule_name, diagnostics)?;
+            match name.text() {
+                "hooks" => {
+                    let mut options = HooksOptions::default();
+                    self.map_to_array(&value, &name, &mut options, diagnostics)?;
+                    *self = PossibleOptions::Hooks(options);
+                }
+                "maxAllowedComplexity" => {
+                    let mut options = ComplexityOptions::default();
+                    options.visit_map(key.syntax(), value.syntax(), diagnostics)?;
+                    *self = PossibleOptions::Complexity(options);
+                }
+                "strictCase" | "enumMemberCase" => {
+                    let mut options = match self {
+                        PossibleOptions::NamingConvention(options) => *options,
+                        _ => NamingConventionOptions::default(),
+                    };
+                    options.visit_map(key.syntax(), value.syntax(), diagnostics)?;
+                    *self = PossibleOptions::NamingConvention(options);
+                }
+
+                _ => (),
+            }
+        }
+
+        Some(())
     }
 
-    fn visit_map(
+    pub fn validate_key(
         &mut self,
-        key: &SyntaxNode<JsonLanguage>,
-        value: &SyntaxNode<JsonLanguage>,
+        node: &JsonMemberName,
+        rule_name: &str,
         diagnostics: &mut Vec<DeserializationDiagnostic>,
     ) -> Option<()> {
-        let (name, val) = self.get_key_and_value(key, value, diagnostics)?;
-        match name.text() {
-            "hooks" => {
-                let mut options = HooksOptions::default();
-                self.map_to_array(&val, &name, &mut options, diagnostics)?;
-                *self = PossibleOptions::Hooks(options);
+        let key_name = node.inner_string_text().ok()?;
+        let key_name = key_name.text();
+        match rule_name {
+            "useExhaustiveDependencies" | "useHookAtTopLevel" => {
+                if key_name != "hooks" {
+                    diagnostics.push(DeserializationDiagnostic::new_unknown_key(
+                        key_name,
+                        node.range(),
+                        &["hooks"],
+                    ));
+                }
             }
-            "strictCase" | "enumMemberCase" => {
-                let mut options = match self {
-                    PossibleOptions::NamingConvention(options) => *options,
-                    _ => NamingConventionOptions::default(),
-                };
-                options.visit_map(key, value, diagnostics)?;
-                *self = PossibleOptions::NamingConvention(options);
+            "useNamingConvention" => {
+                if !matches!(key_name, "strictCase" | "enumMemberCase") {
+                    diagnostics.push(DeserializationDiagnostic::new_unknown_key(
+                        key_name,
+                        node.range(),
+                        &["strictCase", "enumMemberCase"],
+                    ));
+                }
             }
-            _ => (),
+            "noExcessiveComplexity" => {
+                if !matches!(key_name, "maxAllowedComplexity") {
+                    diagnostics.push(DeserializationDiagnostic::new_unknown_key(
+                        key_name,
+                        node.range(),
+                        &["maxAllowedComplexity"],
+                    ));
+                }
+            }
+            _ => {}
         }
+
         Some(())
     }
 }
+
+impl VisitJsonNode for PossibleOptions {}
+impl VisitNode<JsonLanguage> for PossibleOptions {}

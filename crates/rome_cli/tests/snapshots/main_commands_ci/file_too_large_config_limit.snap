@@ -22,9 +22,9 @@ statement2();
 # Termination Message
 
 ```block
-internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ci ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × No files were processed in the specified paths.
+  × Some errors were emitted while running checks
   
 
 
@@ -41,11 +41,23 @@ ci.js lint ━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
 ```block
-Checked 1 file(s) in <TIME>
+ci.js format ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Size of ci.js is 27 B which exceeds configured maximum of 16 B for this project. The file size limit exists to prevent us inadvertently slowing down and loading large files that we shouldn't.
+  
+
 ```
 
 ```block
-Skipped 1 file(s)
+ci ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Some errors were emitted while running checks
+  
+
+```
+
+```block
+Checked 1 file(s) in <TIME>
 ```
 
 

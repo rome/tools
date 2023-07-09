@@ -1,6 +1,6 @@
 //! Extensions for things which are not easily generated in ast expr nodes
 use crate::numbers::parse_js_number;
-use crate::static_value::{QuotedString, StaticValue};
+use crate::static_value::{QuotedString, StaticStringValue, StaticValue};
 use crate::{
     AnyJsCallArgument, AnyJsExpression, AnyJsLiteralExpression, AnyJsTemplateElement,
     JsArrayExpression, JsArrayHole, JsAssignmentExpression, JsBinaryExpression, JsCallExpression,
@@ -17,6 +17,9 @@ use rome_rowan::{
     TextRange,
 };
 use std::collections::HashSet;
+
+const GLOBAL_THIS: &str = "globalThis";
+const WINDOW: &str = "window";
 
 impl JsReferenceIdentifier {
     /// Returns `true` if this identifier refers to the `undefined` symbol.
@@ -44,7 +47,7 @@ impl JsReferenceIdentifier {
     /// assert!(!js_reference_identifier(ident("x")).is_global_this());
     /// ```
     pub fn is_global_this(&self) -> bool {
-        self.has_name("globalThis")
+        self.has_name(GLOBAL_THIS)
     }
 
     /// Returns `true` if this identifier has the given name.
@@ -859,33 +862,119 @@ declare_node_union! {
 }
 
 impl AnyJsMemberExpression {
-    /// Check if the given expression is a static or computed member expression
-    /// and returns the object reference identifier.
-    pub fn get_object_reference_identifier(&self) -> Option<JsReferenceIdentifier> {
+    pub fn object(&self) -> SyntaxResult<AnyJsExpression> {
         match self {
-            Self::JsStaticMemberExpression(e) => e
-                .object()
-                .ok()
-                .and_then(|it| it.omit_parentheses().as_reference_identifier()),
-            Self::JsComputedMemberExpression(e) => e
-                .object()
-                .ok()
-                .and_then(|it| it.omit_parentheses().as_reference_identifier()),
+            AnyJsMemberExpression::JsStaticMemberExpression(expr) => expr.object(),
+            AnyJsMemberExpression::JsComputedMemberExpression(expr) => expr.object(),
         }
     }
 
-    /// Check if the given expression is a static or computed member expression
-    /// and has the given member name.
-    pub fn has_member_name(&self, name: &str) -> bool {
-        match self {
-            Self::JsStaticMemberExpression(e) => e
-                .member()
-                .ok()
-                .and_then(|it| it.as_js_name().and_then(|it| it.value_token().ok()))
-                .map_or(false, |it| it.text_trimmed() == name),
-            Self::JsComputedMemberExpression(e) => {
-                e.member().map_or(false, |it| it.is_string_constant(name))
+    /// Returns the member name of `self` if `self` is a static member or a computed member with a literal string.
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use rome_js_syntax::{AnyJsExpression, AnyJsLiteralExpression, AnyJsMemberExpression, T};
+    /// use rome_js_factory::make;
+    /// use rome_js_syntax::static_value::{QuotedString, StaticStringValue};
+    ///
+    /// let math_id = make::js_reference_identifier(make::ident("Math"));
+    /// let math_id = make::js_identifier_expression(math_id);
+    /// let pow_ident_token = make::ident("pow");
+    /// let pow_name = make::js_name(pow_ident_token);
+    /// let static_member = make::js_static_member_expression(math_id.clone().into(), make::token(T![.]), pow_name.into());
+    /// let static_member: AnyJsMemberExpression = static_member.into();
+    /// let member_name = static_member.member_name().unwrap();
+    /// assert_eq!(member_name.text(), "pow");
+    ///
+    /// let pow_str_token = make::js_string_literal("pow");
+    /// let pow_str_literal = make::js_string_literal_expression(pow_str_token.clone());
+    /// let pow_str_literal = AnyJsExpression::AnyJsLiteralExpression(AnyJsLiteralExpression::from(pow_str_literal));
+    /// let computed_member = make::js_computed_member_expression(math_id.into(), make::token(T!['[']), pow_str_literal, make::token(T![']'])).build();
+    /// let computed_member: AnyJsMemberExpression = computed_member.into();
+    /// let member_name = computed_member.member_name().unwrap();
+    /// assert_eq!(member_name.text(), "pow");
+    /// ```
+    pub fn member_name(&self) -> Option<StaticStringValue> {
+        let value = match self {
+            AnyJsMemberExpression::JsStaticMemberExpression(e) => {
+                StaticStringValue::Unquoted(e.member().ok()?.as_js_name()?.value_token().ok()?)
             }
+            AnyJsMemberExpression::JsComputedMemberExpression(e) => {
+                let member = e.member().ok()?.omit_parentheses();
+                match member.as_static_value()? {
+                    StaticValue::String(quoted_str) => StaticStringValue::Quoted(quoted_str),
+                    StaticValue::TemplateChunk(Some(template_chunk)) => {
+                        StaticStringValue::Unquoted(template_chunk)
+                    }
+                    _ => return None,
+                }
+            }
+        };
+        Some(value)
+    }
+}
+
+/// Check if `expr` refers to a name that is directly referenced or indirectly via `globalThis` or `window`.
+/// Returns the reference and the name.
+///
+/// ### Examples
+///
+/// ```
+/// use rome_js_syntax::{AnyJsExpression, AnyJsLiteralExpression, AnyJsMemberExpression, global_identifier, T};
+/// use rome_js_factory::make;
+/// use rome_js_syntax::static_value::{QuotedString, StaticStringValue};
+///
+/// let math_reference = make::js_reference_identifier(make::ident("Math"));
+/// let math_id = make::js_identifier_expression(math_reference.clone());
+/// let math_id = AnyJsExpression::from(math_id);
+/// let (reference, name) = global_identifier(&math_id).unwrap();
+/// assert_eq!(name.text(), "Math");
+/// assert_eq!(reference, math_reference);
+///
+/// let global_this_reference = make::js_reference_identifier(make::ident("globalThis"));
+/// let global_this_id = make::js_identifier_expression(global_this_reference.clone());
+/// let global_this_id = AnyJsExpression::from(global_this_id);
+///
+/// let math_ident_token = make::ident("Math");
+/// let math_name = make::js_name(math_ident_token);
+/// let static_member = make::js_static_member_expression(global_this_id.clone().into(), make::token(T![.]), math_name.into());
+/// let static_member = AnyJsExpression::from(static_member);
+/// let (reference, name) = global_identifier(&static_member).unwrap();
+/// assert_eq!(name.text(), "Math");
+/// assert_eq!(reference, global_this_reference);
+/// ```
+pub fn global_identifier(
+    expr: &AnyJsExpression,
+) -> Option<(JsReferenceIdentifier, StaticStringValue)> {
+    if let AnyJsExpression::JsIdentifierExpression(id_expr) = expr {
+        let reference = id_expr.name().ok()?;
+        let name = StaticStringValue::Unquoted(reference.value_token().ok()?);
+        return Some((reference, name));
+    }
+    let Some(member_expr) = AnyJsMemberExpression::cast_ref(expr.syntax()) else { return None; };
+    let name: StaticStringValue = member_expr.member_name()?;
+    let mut expr = member_expr.object().ok()?.omit_parentheses();
+    while let Some(member_expr) = AnyJsMemberExpression::cast_ref(expr.syntax()) {
+        if !matches!(member_expr.member_name()?.text(), GLOBAL_THIS | WINDOW) {
+            return None;
+        }
+        expr = member_expr.object().ok()?.omit_parentheses();
+    }
+    if let AnyJsExpression::JsIdentifierExpression(id_expr) = expr {
+        let reference = id_expr.name().ok()?;
+        if reference.has_name(GLOBAL_THIS) || reference.has_name(WINDOW) {
+            return Some((reference, name));
+        }
+    }
+    None
+}
+
+impl From<AnyJsMemberExpression> for AnyJsExpression {
+    fn from(expression: AnyJsMemberExpression) -> Self {
+        match expression {
+            AnyJsMemberExpression::JsComputedMemberExpression(expr) => expr.into(),
+            AnyJsMemberExpression::JsStaticMemberExpression(expr) => expr.into(),
         }
     }
 }

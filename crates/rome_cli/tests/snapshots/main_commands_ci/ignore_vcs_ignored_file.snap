@@ -43,7 +43,7 @@ foo.call(); bar.call();
 # Termination Message
 
 ```block
-internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ci ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Some errors were emitted while running checks
   
@@ -65,6 +65,34 @@ file1.js:1:1 lint/complexity/useFlatMap  FIXABLE  ━━━━━━━━━━
   
   - array.map(sentence·=>·sentence.split('·')).flat();
   + array.flatMap(sentence·=>·sentence.split('·'));
+  
+
+```
+
+```block
+file1.js lint ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Fixes applied to the file, but there are still diagnostics to address.
+  
+
+```
+
+```block
+file1.js format ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × File content differs from formatting output
+  
+    1   │ - array.map(sentence·=>·sentence.split('·')).flat();
+      1 │ + array.map((sentence)·=>·sentence.split("·")).flat();
+      2 │ + 
+  
+
+```
+
+```block
+ci ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Some errors were emitted while running checks
   
 
 ```

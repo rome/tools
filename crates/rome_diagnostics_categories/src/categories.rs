@@ -104,6 +104,8 @@ define_categories! {
     "lint/nursery/useArrowFunction": "https://docs.rome.tools/lint/rules/useArrowFunction",
     "lint/nursery/noVoid": "https://docs.rome.tools/lint/rules/noVoid",
     "lint/nursery/noNonoctalDecimalEscape": "https://docs.rome.tools/lint/rules/noNonoctalDecimalEscape",
+    "lint/nursery/noExcessiveComplexity": "https://docs.rome.tools/lint/rules/noExcessiveComplexity",
+"lint/nursery/noFallthroughSwitchClause": "https://docs.rome.tools/lint/rules/noFallthroughSwitchClause",
     // Insert new nursery rule here
 
 
@@ -180,6 +182,8 @@ define_categories! {
     // General categories
     "files/missingHandler",
     "format",
+    "check",
+    "ci",
     "configuration",
     "organizeImports",
     "migrate",

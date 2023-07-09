@@ -12,11 +12,14 @@
 
 	This wasn't ideal for users, because this could have created false positives in linting, or formatted
 	code with a configuration that wasn't the of the user.
+- The command `rome check` now shows formatter diagnostics when checking the code.
 
+	The presence of the diagnostics will result in an error code when the command finishes.
+
+	This is in line with semantic and behaviour meant for the command `rome check`.
 
 #### Other changes
 
-- The command `rome check` now shows formatter diagnostics when checking the code.
 - Fix [#4556](https://github.com/rome/tools/issues/4556), which correctly handles new lines in the
 `.gitignore` file across OS.
 - Add a new option to ignore unknown files `--files-ignore-unknown`:
@@ -33,6 +36,8 @@
 	```
 
 	Rome won't exit with an error code in case no files were processed in the given paths.
+
+- Fixed the diagnostics emitted when running the `rome format` command;
 
 ### Configuration
 
@@ -72,6 +77,12 @@ multiple files:
 
   The resolution of the files is file system based, Rome doesn't know how to
   resolve dependencies yet.
+
+- The commands `rome check` and `rome lint` now show the remaining diagnostics even when
+	`--apply-safe` or `--apply-unsafe` are passed.
+
+- Fix the commands `rome check` and `rome lint`, they won't exit with an error code
+if no error diagnostics are emitted.
 
 ### Editors
 
@@ -126,6 +137,14 @@ multiple files:
 - Add new TypeScript globals (`AsyncDisposable`, `Awaited`, `DecoratorContext`, and others) [4643](https://github.com/rome/tools/issues/4643).
 
 - [`noRedeclare`](https://docs.rome.tools/lint/rules/noredeclare/): allow redeclare of index signatures are in different type members [#4478](https://github.com/rome/tools/issues/4478)
+
+- Improve [`noConsoleLog`](https://docs.rome.tools/lint/rules/noconsolelog/), [`noGlobalObjectCalls`](https://docs.rome.tools/lint/rules/noglobalobjectcalls/), [`useIsNan`](https://docs.rome.tools/lint/rules/useisnan/), and [`useNumericLiterals`](https://docs.rome.tools/lint/rules/usenumericliterals/) by handling `globalThis` and `window` namespaces.
+
+  For instance, the following code is now reported by `noConsoleLog`:
+
+  ```js
+  globalThis.console.log("log")
+  ```
 
 - Fix a crash in the [`NoParameterAssign`](https://docs.rome.tools/lint/rules/noparameterassign/) rule that occurred when there was a bogus binding. [#4323](https://github.com/rome/tools/issues/4323)
 
@@ -247,7 +266,34 @@ multiple files:
 
   Semantic analyzer no longer handles index signature identifiers. Thus, index signature identifiers doesn't affect any semantic analysis. 
 
+- Fix [noUselessFragments](https://docs.rome.tools/lint/rules/nouselessfragments/)'s panics when running `rome check --apply-unsafe` ([#4637](https://github.com/rome/tools/issues/4639))
+
+  This rule's code action emits an invalid AST, so I fixed using JsxString instead of JsStringLiteral
+
 ### Parser
+
+- Add support for decorators in class method parameters, example:
+
+	```js
+	class AppController {
+ 		get(@Param() id) {}
+ 		//	^^^^^^^^ new supported syntax
+ 	}
+	```
+
+	This syntax is only supported via configuration, because it's a non-standard
+	syntax.
+
+	```json
+	{
+		"//": "rome.json file",
+ 		"javascript": {
+ 			"parser": {
+				"unsafeParameterDecoratorsEnabled": true
+ 			}
+ 		}
+ 	}
+	```
 
 ### VSCode
 

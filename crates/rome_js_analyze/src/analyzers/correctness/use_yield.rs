@@ -4,11 +4,8 @@ use rome_analyze::{
     Visitor, VisitorContext,
 };
 use rome_console::markup;
-use rome_js_syntax::{
-    AnyJsFunction, JsLanguage, JsMethodClassMember, JsMethodObjectMember, JsStatementList,
-    JsYieldExpression, TextRange, WalkEvent,
-};
-use rome_rowan::{declare_node_union, AstNode, AstNodeList, Language, SyntaxNode};
+use rome_js_syntax::{AnyFunctionLike, JsLanguage, JsYieldExpression, TextRange, WalkEvent};
+use rome_rowan::{AstNode, AstNodeList, Language, SyntaxNode};
 
 declare_rule! {
     /// Require generator functions to contain `yield`.
@@ -45,40 +42,6 @@ declare_rule! {
         version: "12.0.0",
         name: "useYield",
         recommended: true,
-    }
-}
-
-declare_node_union! {
-    pub(crate) AnyFunctionLike = AnyJsFunction | JsMethodObjectMember | JsMethodClassMember
-}
-
-impl AnyFunctionLike {
-    fn is_generator(&self) -> bool {
-        match self {
-            AnyFunctionLike::AnyJsFunction(any_js_function) => any_js_function.is_generator(),
-            AnyFunctionLike::JsMethodClassMember(method_class_member) => {
-                method_class_member.star_token().is_some()
-            }
-            AnyFunctionLike::JsMethodObjectMember(method_obj_member) => {
-                method_obj_member.star_token().is_some()
-            }
-        }
-    }
-
-    fn statements(&self) -> Option<JsStatementList> {
-        Some(match self {
-            AnyFunctionLike::AnyJsFunction(any_js_function) => any_js_function
-                .body()
-                .ok()?
-                .as_js_function_body()?
-                .statements(),
-            AnyFunctionLike::JsMethodClassMember(method_class_member) => {
-                method_class_member.body().ok()?.statements()
-            }
-            AnyFunctionLike::JsMethodObjectMember(method_obj_member) => {
-                method_obj_member.body().ok()?.statements()
-            }
-        })
     }
 }
 

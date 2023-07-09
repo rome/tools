@@ -166,8 +166,7 @@ fn is_valid_constructor(expression: AnyJsExpression) -> Option<bool> {
         | AnyJsExpression::JsStaticMemberExpression(_)
         | AnyJsExpression::JsClassExpression(_) => Some(true),
         AnyJsExpression::JsIdentifierExpression(identifier) => {
-            let name = identifier.name().ok()?;
-            return Some(name.value_token().ok()?.text_trimmed() != "undefined");
+            Some(!identifier.name().ok()?.is_undefined())
         }
         AnyJsExpression::JsAssignmentExpression(assignment) => {
             let operator = assignment.operator().ok()?;

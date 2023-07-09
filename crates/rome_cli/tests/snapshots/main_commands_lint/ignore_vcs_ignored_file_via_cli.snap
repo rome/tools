@@ -31,7 +31,7 @@ foo.call(); bar.call();
 # Termination Message
 
 ```block
-internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+check ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Some errors were emitted while running checks
   
@@ -53,6 +53,14 @@ file1.js:1:1 lint/complexity/useFlatMap  FIXABLE  ━━━━━━━━━━
   
   - array.map(sentence·=>·sentence.split('·')).flat();
   + array.flatMap(sentence·=>·sentence.split('·'));
+  
+
+```
+
+```block
+file1.js lint ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Fixes applied to the file, but there are still diagnostics to address.
   
 
 ```

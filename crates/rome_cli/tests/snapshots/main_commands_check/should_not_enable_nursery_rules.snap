@@ -34,6 +34,17 @@ if (true) {
 		
 ```
 
+# Termination Message
+
+```block
+check ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Some errors were emitted while running checks
+  
+
+
+```
+
 # Emitted Messages
 
 ```block
@@ -43,6 +54,14 @@ fix.ts format ━━━━━━━━━━━━━━━━━━━━━━
   
     7 │ → → 
       │ ----
+
+```
+
+```block
+check ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Some errors were emitted while running checks
+  
 
 ```
 

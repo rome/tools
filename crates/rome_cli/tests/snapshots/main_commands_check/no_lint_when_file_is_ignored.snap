@@ -16,38 +16,14 @@ expression: content
 ## `test.js`
 
 ```js
-
-(1 >= -0)
-
-```
-
-# Termination Message
-
-```block
-internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × No files were processed in the specified paths.
-  
-
+1 >= -0;
 
 ```
 
 # Emitted Messages
 
 ```block
-test.js lint ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × The file test.js was ignored
-  
-
-```
-
-```block
 Fixed 1 file(s) in <TIME>
-```
-
-```block
-Skipped 1 file(s)
 ```
 
 

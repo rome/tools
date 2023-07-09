@@ -152,18 +152,18 @@ checksum = "630be753d4e58660abd17930c71b647fe46c27ea6b63cc59e1e3851406972e42"
 
 [[package]]
 name = "bpaf"
-version = "0.8.0"
+version = "0.9.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7ae5e130595d17ed4f7061317c2792ba94dc7754de93012c6d4c7191eb5d6c4b"
+checksum = "72974597bfc83173d714c0fc785a8ab64ca0f0896cb72b05f2f4c5e682543871"
 dependencies = [
  "bpaf_derive",
 ]
 
 [[package]]
 name = "bpaf_derive"
-version = "0.4.0"
+version = "0.5.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "29a7fca07923e14266ed2107f9fa592a6d4895afe2e10242ffeeda56f6009314"
+checksum = "f6b7be5dcfd7bb931b9932e689c69a9b9f50a46cf0b588c90ed73ec28e8e0bf4"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -1956,11 +1956,14 @@ dependencies = [
  "rome_console",
  "rome_diagnostics",
  "rome_js_factory",
+ "rome_js_parser",
  "rome_js_syntax",
  "rome_js_unicode_table",
  "rome_parser",
  "rome_rowan",
  "schemars",
+ "serde",
+ "serde_json",
  "smallvec",
  "tests_macros",
  "tracing",

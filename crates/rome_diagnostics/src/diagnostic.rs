@@ -112,16 +112,16 @@ pub trait Diagnostic: Debug {
 #[serde(rename_all = "camelCase")]
 /// The severity to associate to a diagnostic.
 pub enum Severity {
-    /// Reports a crash.
-    Fatal,
-    /// Reports an error.
-    Error,
-    /// Reports a warning.
-    Warning,
-    /// Reports an information.
-    Information,
     /// Reports a hint.
     Hint,
+    /// Reports an information.
+    Information,
+    /// Reports a warning.
+    Warning,
+    /// Reports an error.
+    Error,
+    /// Reports a crash.
+    Fatal,
 }
 
 /// Internal enum used to automatically generate bit offsets for [DiagnosticTags]

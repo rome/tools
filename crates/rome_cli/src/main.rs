@@ -6,7 +6,7 @@
 
 use bpaf::{Args, ParseFailure};
 use rome_cli::{
-    open_transport, parse_command, setup_panic_handler, to_color_mode, CliDiagnostic, CliSession,
+    open_transport, rome_command, setup_panic_handler, to_color_mode, CliDiagnostic, CliSession,
     RomeCommand,
 };
 use rome_console::{markup, ConsoleExt, EnvConsole};
@@ -28,7 +28,7 @@ fn main() -> ExitCode {
     set_bottom_frame(main as usize);
 
     let mut console = EnvConsole::default();
-    let command = parse_command().run_inner(Args::current_args());
+    let command = rome_command().run_inner(Args::current_args());
     match command {
         Ok(command) => {
             let color_mode = to_color_mode(command.get_color());
@@ -47,9 +47,9 @@ fn main() -> ExitCode {
             }
         }
         Err(failure) => {
-            return if let ParseFailure::Stdout(help) = &failure {
-                console.log(markup! {{help}});
-                ExitCode::SUCCESS
+            return if let ParseFailure::Stdout(help, _) = &failure {
+                console.log(markup! {{help.to_string()}});
+                ExitCode::FAILURE
             } else {
                 let diagnostic = CliDiagnostic::parse_error_bpaf(failure);
                 console.error(markup! { {PrintDiagnostic::simple(&diagnostic)}});

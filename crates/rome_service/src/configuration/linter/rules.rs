@@ -1839,6 +1839,24 @@ pub struct Nursery {
     )]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub no_duplicate_jsx_props: Option<RuleConfiguration>,
+    #[doc = "Disallow functions that exceed a given complexity score."]
+    #[bpaf(
+        long("no-excessive-complexity"),
+        argument("on|off|warn"),
+        optional,
+        hide
+    )]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub no_excessive_complexity: Option<RuleConfiguration>,
+    #[doc = "Disallow fallthrough of case statements."]
+    #[bpaf(
+        long("no-fallthrough-switch-clause"),
+        argument("on|off|warn"),
+        optional,
+        hide
+    )]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub no_fallthrough_switch_clause: Option<RuleConfiguration>,
     #[doc = "Prefer for...of statement instead of Array.forEach."]
     #[bpaf(long("no-for-each"), argument("on|off|warn"), optional, hide)]
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -1956,7 +1974,7 @@ pub struct Nursery {
 }
 impl Nursery {
     const GROUP_NAME: &'static str = "nursery";
-    pub(crate) const GROUP_RULES: [&'static str; 29] = [
+    pub(crate) const GROUP_RULES: [&'static str; 31] = [
         "noAccumulatingSpread",
         "noAriaUnsupportedElements",
         "noBannedTypes",
@@ -1965,6 +1983,8 @@ impl Nursery {
         "noConstantCondition",
         "noDuplicateJsonKeys",
         "noDuplicateJsxProps",
+        "noExcessiveComplexity",
+        "noFallthroughSwitchClause",
         "noForEach",
         "noGlobalIsFinite",
         "noGlobalIsNan",
@@ -2012,20 +2032,20 @@ impl Nursery {
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[5]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[6]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[7]),
-        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[9]),
-        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[10]),
+        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[11]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[12]),
-        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[13]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[14]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[15]),
-        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[18]),
+        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[16]),
+        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[17]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[20]),
-        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[21]),
-        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[24]),
-        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[25]),
+        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[22]),
+        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[23]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[26]),
+        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[27]),
+        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[28]),
     ];
-    const ALL_RULES_AS_FILTERS: [RuleFilter<'static>; 29] = [
+    const ALL_RULES_AS_FILTERS: [RuleFilter<'static>; 31] = [
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[0]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[1]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[2]),
@@ -2055,6 +2075,8 @@ impl Nursery {
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[26]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[27]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[28]),
+        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[29]),
+        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[30]),
     ];
     #[doc = r" Retrieves the recommended rules"]
     pub(crate) fn is_recommended(&self) -> bool { matches!(self.recommended, Some(true)) }
@@ -2105,109 +2127,119 @@ impl Nursery {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[7]));
             }
         }
-        if let Some(rule) = self.no_for_each.as_ref() {
+        if let Some(rule) = self.no_excessive_complexity.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[8]));
             }
         }
-        if let Some(rule) = self.no_global_is_finite.as_ref() {
+        if let Some(rule) = self.no_fallthrough_switch_clause.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[9]));
             }
         }
-        if let Some(rule) = self.no_global_is_nan.as_ref() {
+        if let Some(rule) = self.no_for_each.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[10]));
             }
         }
-        if let Some(rule) = self.no_noninteractive_tabindex.as_ref() {
+        if let Some(rule) = self.no_global_is_finite.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[11]));
             }
         }
-        if let Some(rule) = self.no_nonoctal_decimal_escape.as_ref() {
+        if let Some(rule) = self.no_global_is_nan.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[12]));
             }
         }
-        if let Some(rule) = self.no_redundant_roles.as_ref() {
+        if let Some(rule) = self.no_noninteractive_tabindex.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[13]));
             }
         }
-        if let Some(rule) = self.no_self_assign.as_ref() {
+        if let Some(rule) = self.no_nonoctal_decimal_escape.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[14]));
             }
         }
-        if let Some(rule) = self.no_static_only_class.as_ref() {
+        if let Some(rule) = self.no_redundant_roles.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[15]));
             }
         }
-        if let Some(rule) = self.no_void.as_ref() {
+        if let Some(rule) = self.no_self_assign.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[16]));
             }
         }
-        if let Some(rule) = self.use_aria_prop_types.as_ref() {
+        if let Some(rule) = self.no_static_only_class.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[17]));
             }
         }
-        if let Some(rule) = self.use_arrow_function.as_ref() {
+        if let Some(rule) = self.no_void.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[18]));
             }
         }
-        if let Some(rule) = self.use_camel_case.as_ref() {
+        if let Some(rule) = self.use_aria_prop_types.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[19]));
             }
         }
-        if let Some(rule) = self.use_exhaustive_dependencies.as_ref() {
+        if let Some(rule) = self.use_arrow_function.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[20]));
             }
         }
-        if let Some(rule) = self.use_grouped_type_import.as_ref() {
+        if let Some(rule) = self.use_camel_case.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[21]));
             }
         }
-        if let Some(rule) = self.use_heading_content.as_ref() {
+        if let Some(rule) = self.use_exhaustive_dependencies.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[22]));
             }
         }
-        if let Some(rule) = self.use_hook_at_top_level.as_ref() {
+        if let Some(rule) = self.use_grouped_type_import.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[23]));
             }
         }
-        if let Some(rule) = self.use_is_nan.as_ref() {
+        if let Some(rule) = self.use_heading_content.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[24]));
             }
         }
-        if let Some(rule) = self.use_literal_enum_members.as_ref() {
+        if let Some(rule) = self.use_hook_at_top_level.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[25]));
             }
         }
-        if let Some(rule) = self.use_literal_keys.as_ref() {
+        if let Some(rule) = self.use_is_nan.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[26]));
             }
         }
-        if let Some(rule) = self.use_naming_convention.as_ref() {
+        if let Some(rule) = self.use_literal_enum_members.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[27]));
             }
         }
-        if let Some(rule) = self.use_simple_number_keys.as_ref() {
+        if let Some(rule) = self.use_literal_keys.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[28]));
+            }
+        }
+        if let Some(rule) = self.use_naming_convention.as_ref() {
+            if rule.is_enabled() {
+                index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[29]));
+            }
+        }
+        if let Some(rule) = self.use_simple_number_keys.as_ref() {
+            if rule.is_enabled() {
+                index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[30]));
             }
         }
         index_set
@@ -2254,109 +2286,119 @@ impl Nursery {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[7]));
             }
         }
-        if let Some(rule) = self.no_for_each.as_ref() {
+        if let Some(rule) = self.no_excessive_complexity.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[8]));
             }
         }
-        if let Some(rule) = self.no_global_is_finite.as_ref() {
+        if let Some(rule) = self.no_fallthrough_switch_clause.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[9]));
             }
         }
-        if let Some(rule) = self.no_global_is_nan.as_ref() {
+        if let Some(rule) = self.no_for_each.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[10]));
             }
         }
-        if let Some(rule) = self.no_noninteractive_tabindex.as_ref() {
+        if let Some(rule) = self.no_global_is_finite.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[11]));
             }
         }
-        if let Some(rule) = self.no_nonoctal_decimal_escape.as_ref() {
+        if let Some(rule) = self.no_global_is_nan.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[12]));
             }
         }
-        if let Some(rule) = self.no_redundant_roles.as_ref() {
+        if let Some(rule) = self.no_noninteractive_tabindex.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[13]));
             }
         }
-        if let Some(rule) = self.no_self_assign.as_ref() {
+        if let Some(rule) = self.no_nonoctal_decimal_escape.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[14]));
             }
         }
-        if let Some(rule) = self.no_static_only_class.as_ref() {
+        if let Some(rule) = self.no_redundant_roles.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[15]));
             }
         }
-        if let Some(rule) = self.no_void.as_ref() {
+        if let Some(rule) = self.no_self_assign.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[16]));
             }
         }
-        if let Some(rule) = self.use_aria_prop_types.as_ref() {
+        if let Some(rule) = self.no_static_only_class.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[17]));
             }
         }
-        if let Some(rule) = self.use_arrow_function.as_ref() {
+        if let Some(rule) = self.no_void.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[18]));
             }
         }
-        if let Some(rule) = self.use_camel_case.as_ref() {
+        if let Some(rule) = self.use_aria_prop_types.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[19]));
             }
         }
-        if let Some(rule) = self.use_exhaustive_dependencies.as_ref() {
+        if let Some(rule) = self.use_arrow_function.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[20]));
             }
         }
-        if let Some(rule) = self.use_grouped_type_import.as_ref() {
+        if let Some(rule) = self.use_camel_case.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[21]));
             }
         }
-        if let Some(rule) = self.use_heading_content.as_ref() {
+        if let Some(rule) = self.use_exhaustive_dependencies.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[22]));
             }
         }
-        if let Some(rule) = self.use_hook_at_top_level.as_ref() {
+        if let Some(rule) = self.use_grouped_type_import.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[23]));
             }
         }
-        if let Some(rule) = self.use_is_nan.as_ref() {
+        if let Some(rule) = self.use_heading_content.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[24]));
             }
         }
-        if let Some(rule) = self.use_literal_enum_members.as_ref() {
+        if let Some(rule) = self.use_hook_at_top_level.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[25]));
             }
         }
-        if let Some(rule) = self.use_literal_keys.as_ref() {
+        if let Some(rule) = self.use_is_nan.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[26]));
             }
         }
-        if let Some(rule) = self.use_naming_convention.as_ref() {
+        if let Some(rule) = self.use_literal_enum_members.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[27]));
             }
         }
-        if let Some(rule) = self.use_simple_number_keys.as_ref() {
+        if let Some(rule) = self.use_literal_keys.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[28]));
+            }
+        }
+        if let Some(rule) = self.use_naming_convention.as_ref() {
+            if rule.is_disabled() {
+                index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[29]));
+            }
+        }
+        if let Some(rule) = self.use_simple_number_keys.as_ref() {
+            if rule.is_disabled() {
+                index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[30]));
             }
         }
         index_set
@@ -2370,7 +2412,7 @@ impl Nursery {
     pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 17] {
         Self::RECOMMENDED_RULES_AS_FILTERS
     }
-    pub(crate) fn all_rules_as_filters() -> [RuleFilter<'static>; 29] { Self::ALL_RULES_AS_FILTERS }
+    pub(crate) fn all_rules_as_filters() -> [RuleFilter<'static>; 31] { Self::ALL_RULES_AS_FILTERS }
     #[doc = r" Select preset rules"]
     pub(crate) fn collect_preset_rules(
         &self,
@@ -2399,6 +2441,8 @@ impl Nursery {
             "noConstantCondition" => self.no_constant_condition.as_ref(),
             "noDuplicateJsonKeys" => self.no_duplicate_json_keys.as_ref(),
             "noDuplicateJsxProps" => self.no_duplicate_jsx_props.as_ref(),
+            "noExcessiveComplexity" => self.no_excessive_complexity.as_ref(),
+            "noFallthroughSwitchClause" => self.no_fallthrough_switch_clause.as_ref(),
             "noForEach" => self.no_for_each.as_ref(),
             "noGlobalIsFinite" => self.no_global_is_finite.as_ref(),
             "noGlobalIsNan" => self.no_global_is_nan.as_ref(),

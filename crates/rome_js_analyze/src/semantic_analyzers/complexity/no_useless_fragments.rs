@@ -5,9 +5,7 @@ use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, ActionCategory, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
-use rome_js_factory::make::{
-    ident, js_expression_statement, js_string_literal_expression, jsx_tag_expression,
-};
+use rome_js_factory::make::{ident, js_expression_statement, jsx_string, jsx_tag_expression};
 use rome_js_syntax::{
     AnyJsxChild, AnyJsxElementName, AnyJsxTag, JsLanguage, JsParenthesizedExpression, JsSyntaxKind,
     JsxChildList, JsxElement, JsxFragment, JsxTagExpression,
@@ -243,11 +241,7 @@ impl Rule for NoUselessFragments {
                     ),
                     AnyJsxChild::JsxText(text) => {
                         let new_value = format!("\"{}\"", text.value_token().ok()?);
-                        Some(
-                            js_string_literal_expression(ident(&new_value))
-                                .syntax()
-                                .clone(),
-                        )
+                        Some(jsx_string(ident(&new_value)).syntax().clone())
                     }
                     AnyJsxChild::JsxExpressionChild(child) => {
                         child.expression().map(|expression| {

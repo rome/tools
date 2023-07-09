@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 96
 expression: invalid.js
 ---
 # Input
@@ -24,8 +23,13 @@ a = a;
 ({a, b} = {a, ...x, b});
 a.b = a.b;
 a.#b = a.#b;
-a.c.b = a.ZZ.b;
 a[b] = a[b];
+a.b().c = a.b().c;
+a.b.c = a.b.c;
+({a} = {a});
+a['b'].bar = a['b'].bar;
+a[foobar].b = a[foobar].b;
+a[10].b = a[10].b;
 
 ```
 
@@ -682,7 +686,7 @@ invalid.js:18:9 lint/nursery/noSelfAssign ━━━━━━━━━━━━�
   > 18 │ a.b = a.b;
        │         ^
     19 │ a.#b = a.#b;
-    20 │ a.c.b = a.ZZ.b;
+    20 │ a[b] = a[b];
   
   i This is where is assigned.
   
@@ -691,7 +695,7 @@ invalid.js:18:9 lint/nursery/noSelfAssign ━━━━━━━━━━━━�
   > 18 │ a.b = a.b;
        │   ^
     19 │ a.#b = a.#b;
-    20 │ a.c.b = a.ZZ.b;
+    20 │ a[b] = a[b];
   
 
 ```
@@ -705,8 +709,8 @@ invalid.js:19:10 lint/nursery/noSelfAssign ━━━━━━━━━━━━�
     18 │ a.b = a.b;
   > 19 │ a.#b = a.#b;
        │          ^^
-    20 │ a.c.b = a.ZZ.b;
-    21 │ a[b] = a[b];
+    20 │ a[b] = a[b];
+    21 │ a.b().c = a.b().c;
   
   i This is where is assigned.
   
@@ -714,30 +718,174 @@ invalid.js:19:10 lint/nursery/noSelfAssign ━━━━━━━━━━━━�
     18 │ a.b = a.b;
   > 19 │ a.#b = a.#b;
        │   ^^
-    20 │ a.c.b = a.ZZ.b;
-    21 │ a[b] = a[b];
+    20 │ a[b] = a[b];
+    21 │ a.b().c = a.b().c;
   
 
 ```
 
 ```
-invalid.js:21:10 lint/nursery/noSelfAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:20:10 lint/nursery/noSelfAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! b is assigned to itself.
   
+    18 │ a.b = a.b;
     19 │ a.#b = a.#b;
-    20 │ a.c.b = a.ZZ.b;
-  > 21 │ a[b] = a[b];
+  > 20 │ a[b] = a[b];
        │          ^
-    22 │ 
+    21 │ a.b().c = a.b().c;
+    22 │ a.b.c = a.b.c;
+  
+  i This is where is assigned.
+  
+    18 │ a.b = a.b;
+    19 │ a.#b = a.#b;
+  > 20 │ a[b] = a[b];
+       │   ^
+    21 │ a.b().c = a.b().c;
+    22 │ a.b.c = a.b.c;
+  
+
+```
+
+```
+invalid.js:21:17 lint/nursery/noSelfAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! c is assigned to itself.
+  
+    19 │ a.#b = a.#b;
+    20 │ a[b] = a[b];
+  > 21 │ a.b().c = a.b().c;
+       │                 ^
+    22 │ a.b.c = a.b.c;
+    23 │ ({a} = {a});
   
   i This is where is assigned.
   
     19 │ a.#b = a.#b;
-    20 │ a.c.b = a.ZZ.b;
-  > 21 │ a[b] = a[b];
+    20 │ a[b] = a[b];
+  > 21 │ a.b().c = a.b().c;
+       │       ^
+    22 │ a.b.c = a.b.c;
+    23 │ ({a} = {a});
+  
+
+```
+
+```
+invalid.js:22:13 lint/nursery/noSelfAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! c is assigned to itself.
+  
+    20 │ a[b] = a[b];
+    21 │ a.b().c = a.b().c;
+  > 22 │ a.b.c = a.b.c;
+       │             ^
+    23 │ ({a} = {a});
+    24 │ a['b'].bar = a['b'].bar;
+  
+  i This is where is assigned.
+  
+    20 │ a[b] = a[b];
+    21 │ a.b().c = a.b().c;
+  > 22 │ a.b.c = a.b.c;
+       │     ^
+    23 │ ({a} = {a});
+    24 │ a['b'].bar = a['b'].bar;
+  
+
+```
+
+```
+invalid.js:23:9 lint/nursery/noSelfAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! a is assigned to itself.
+  
+    21 │ a.b().c = a.b().c;
+    22 │ a.b.c = a.b.c;
+  > 23 │ ({a} = {a});
+       │         ^
+    24 │ a['b'].bar = a['b'].bar;
+    25 │ a[foobar].b = a[foobar].b;
+  
+  i This is where is assigned.
+  
+    21 │ a.b().c = a.b().c;
+    22 │ a.b.c = a.b.c;
+  > 23 │ ({a} = {a});
        │   ^
-    22 │ 
+    24 │ a['b'].bar = a['b'].bar;
+    25 │ a[foobar].b = a[foobar].b;
+  
+
+```
+
+```
+invalid.js:24:21 lint/nursery/noSelfAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! bar is assigned to itself.
+  
+    22 │ a.b.c = a.b.c;
+    23 │ ({a} = {a});
+  > 24 │ a['b'].bar = a['b'].bar;
+       │                     ^^^
+    25 │ a[foobar].b = a[foobar].b;
+    26 │ a[10].b = a[10].b;
+  
+  i This is where is assigned.
+  
+    22 │ a.b.c = a.b.c;
+    23 │ ({a} = {a});
+  > 24 │ a['b'].bar = a['b'].bar;
+       │        ^^^
+    25 │ a[foobar].b = a[foobar].b;
+    26 │ a[10].b = a[10].b;
+  
+
+```
+
+```
+invalid.js:25:25 lint/nursery/noSelfAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! b is assigned to itself.
+  
+    23 │ ({a} = {a});
+    24 │ a['b'].bar = a['b'].bar;
+  > 25 │ a[foobar].b = a[foobar].b;
+       │                         ^
+    26 │ a[10].b = a[10].b;
+    27 │ 
+  
+  i This is where is assigned.
+  
+    23 │ ({a} = {a});
+    24 │ a['b'].bar = a['b'].bar;
+  > 25 │ a[foobar].b = a[foobar].b;
+       │           ^
+    26 │ a[10].b = a[10].b;
+    27 │ 
+  
+
+```
+
+```
+invalid.js:26:17 lint/nursery/noSelfAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! b is assigned to itself.
+  
+    24 │ a['b'].bar = a['b'].bar;
+    25 │ a[foobar].b = a[foobar].b;
+  > 26 │ a[10].b = a[10].b;
+       │                 ^
+    27 │ 
+  
+  i This is where is assigned.
+  
+    24 │ a['b'].bar = a['b'].bar;
+    25 │ a[foobar].b = a[foobar].b;
+  > 26 │ a[10].b = a[10].b;
+       │       ^
+    27 │ 
   
 
 ```

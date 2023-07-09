@@ -23,7 +23,7 @@ function f() { arguments; }
 # Termination Message
 
 ```block
-internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+check ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Some errors were emitted while running checks
   
@@ -34,7 +34,23 @@ internalError/io ━━━━━━━━━━━━━━━━━━━━━
 # Emitted Messages
 
 ```block
-test1.js internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+test1.js:3:16 lint/style/noArguments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Use the rest parameters instead of arguments.
+  
+    1 │ const a = 4;
+    2 │ console.log(a);
+  > 3 │ function f() { arguments; }
+      │                ^^^^^^^^^
+    4 │ 
+  
+  i arguments does not have Array.prototype methods and can be inconvenient to use.
+  
+
+```
+
+```block
+test1.js lint ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Fixes applied to the file, but there are still diagnostics to address.
   
@@ -42,7 +58,23 @@ test1.js internalError/io ━━━━━━━━━━━━━━━━━━
 ```
 
 ```block
-test2.js internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+test2.js:3:16 lint/style/noArguments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Use the rest parameters instead of arguments.
+  
+    1 │ const a = 4;
+    2 │ console.log(a);
+  > 3 │ function f() { arguments; }
+      │                ^^^^^^^^^
+    4 │ 
+  
+  i arguments does not have Array.prototype methods and can be inconvenient to use.
+  
+
+```
+
+```block
+test2.js lint ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Fixes applied to the file, but there are still diagnostics to address.
   

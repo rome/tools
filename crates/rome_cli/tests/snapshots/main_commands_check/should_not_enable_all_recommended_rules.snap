@@ -39,6 +39,17 @@ expression: content
 		
 ```
 
+# Termination Message
+
+```block
+check ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Some errors were emitted while running checks
+  
+
+
+```
+
 # Emitted Messages
 
 ```block
@@ -61,6 +72,14 @@ fix.js format ━━━━━━━━━━━━━━━━━━━━━━
       5 │ + → f(x);
       6 │ + }
       7 │ + 
+  
+
+```
+
+```block
+check ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Some errors were emitted while running checks
   
 
 ```

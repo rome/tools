@@ -443,6 +443,7 @@ enum BlockType {
 struct CodeBlockTest {
     block_type: BlockType,
     expect_diagnostic: bool,
+    ignore: bool,
 }
 
 impl FromStr for CodeBlockTest {
@@ -459,6 +460,7 @@ impl FromStr for CodeBlockTest {
         let mut test = CodeBlockTest {
             block_type: BlockType::Js(JsFileSource::default()),
             expect_diagnostic: false,
+            ignore: false,
         };
 
         for token in tokens {
@@ -482,6 +484,10 @@ impl FromStr for CodeBlockTest {
                 // Other attributes
                 "expect_diagnostic" => {
                     test.expect_diagnostic = true;
+                }
+
+                "ignore" => {
+                    test.ignore = true;
                 }
 
                 "json" => {
@@ -517,6 +523,7 @@ fn assert_lint(
 
     let mut write_diagnostic = |code: &str, diag: rome_diagnostics::Error| {
         let category = diag.category().map_or("", |code| code.name());
+
         Formatter::new(&mut write).write_markup(markup! {
             {PrintDiagnostic::verbose(&diag)}
         })?;
@@ -563,7 +570,9 @@ fn assert_lint(
         diagnostic_count += 1;
         Ok(())
     };
-
+    if test.ignore {
+        return Ok(());
+    }
     match test.block_type {
         BlockType::Js(source_type) => {
             let parse = rome_js_parser::parse(code, source_type, JsParserOptions::default());

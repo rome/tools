@@ -1,9 +1,9 @@
 use crate::semantic_services::Semantic;
 use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_syntax::{AnyJsExpression, JsCallExpression, JsNewExpression, JsSyntaxToken};
-use rome_rowan::{declare_node_union, AstNode, SyntaxResult};
-use std::str::FromStr;
+use rome_js_syntax::{global_identifier, AnyJsExpression, JsCallExpression, JsNewExpression};
+use rome_rowan::{declare_node_union, SyntaxResult, TextRange};
+use std::{fmt::Display, str::FromStr};
 
 declare_rule! {
     /// Disallow calling global object properties as functions
@@ -92,70 +92,31 @@ declare_rule! {
 
 impl Rule for NoGlobalObjectCalls {
     type Query = Semantic<QueryNode>;
-    type State = JsSyntaxToken;
+    type State = (NonCallableGlobals, TextRange);
     type Signals = Option<Self::State>;
     type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
         let model = ctx.model();
-
         let callee = node.callee().ok()?.omit_parentheses();
-
-        match callee {
-            AnyJsExpression::JsIdentifierExpression(expression) => {
-                let reference = expression.name().ok()?;
-                let token = reference.value_token().ok()?;
-
-                // verifies that the reference is not a local variable
-                let is_global_call = is_non_callable_globals(token.text_trimmed())
-                    && model.binding(&reference).is_none();
-                is_global_call.then_some(reference.value_token().ok()?)
-            }
-            AnyJsExpression::JsStaticMemberExpression(expression) => {
-                let object = expression.object().ok()?.omit_parentheses();
-                let reference = object.as_reference_identifier()?;
-
-                let member = expression.member().ok()?;
-                let name = member.as_js_name()?;
-                let token = name.value_token().ok()?;
-
-                // verifies that the reference is not a local variable
-                let is_global_call = is_non_callable_globals(token.text_trimmed())
-                    && reference.is_global_this()
-                    && model.binding(&reference).is_none();
-
-                is_global_call.then_some(token)
-            }
-            AnyJsExpression::JsComputedMemberExpression(expression) => {
-                let object = expression.object().ok()?.omit_parentheses();
-                let reference = object.as_reference_identifier()?;
-                let member = expression.member().ok()?.omit_parentheses();
-                let literal = member
-                    .as_any_js_literal_expression()?
-                    .as_js_string_literal_expression()?;
-                let name = literal.inner_string_text().ok()?;
-
-                // verifies that the reference is not a local variable
-                let is_global_call = is_non_callable_globals(name.text())
-                    && reference.is_global_this()
-                    && model.binding(&reference).is_none();
-
-                is_global_call.then_some(literal.value_token().ok()?)
-            }
-            _ => None,
-        }
+        let (reference, name) = global_identifier(&callee)?;
+        let non_callable = NonCallableGlobals::from_str(name.text()).ok()?;
+        model
+            .binding(&reference)
+            .is_none()
+            .then_some((non_callable, name.token().text_trimmed_range()))
     }
 
-    fn diagnostic(ctx: &RuleContext<Self>, token: &Self::State) -> Option<RuleDiagnostic> {
-        let node = ctx.query();
-        let name = token.text_trimmed();
-
+    fn diagnostic(
+        _: &RuleContext<Self>,
+        (non_callable, range): &Self::State,
+    ) -> Option<RuleDiagnostic> {
         Some(RuleDiagnostic::new(
             rule_category!(),
-            node.syntax().text_trimmed_range(),
+            range,
             markup! {
-                <Emphasis>{name}</Emphasis>" is not a function."
+                <Emphasis>{non_callable.to_string()}</Emphasis>" is not a function."
             },
         ))
     }
@@ -175,8 +136,8 @@ impl QueryNode {
     }
 }
 
-#[derive(Debug, Eq, PartialEq)]
-enum NonCallableGlobals {
+#[derive(Debug, Clone, Copy, Eq, PartialEq)]
+pub(crate) enum NonCallableGlobals {
     Atomics,
     Json,
     Math,
@@ -198,6 +159,15 @@ impl FromStr for NonCallableGlobals {
     }
 }
 
-fn is_non_callable_globals(text: &str) -> bool {
-    NonCallableGlobals::from_str(text).is_ok()
+impl Display for NonCallableGlobals {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let repr = match self {
+            NonCallableGlobals::Atomics => "Atomics",
+            NonCallableGlobals::Json => "Json",
+            NonCallableGlobals::Math => "Math",
+            NonCallableGlobals::Reflect => "Reflect",
+            NonCallableGlobals::Intl => "Intl",
+        };
+        write!(f, "{}", repr)
+    }
 }
