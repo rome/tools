@@ -17,19 +17,32 @@ export type WhateverDefault<S extends number = 2> = `Hello ${S}`
 // Const assertions are valid
 const fruits = ["banana"] as const;
 
+class X {
+  f() {
+    this.g;
+    type T1 = typeof this.g;
+    type T2 = X['g'];
+  }
+
+  g() {
+  }
+}
+
 // Invalid
 export type Invalid<S extends number> = `Hello ${T}`
+
 ```
 
 # Diagnostics
 ```
-noUndeclaredVariables.ts:15:50 lint/correctness/noUndeclaredVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noUndeclaredVariables.ts:26:50 lint/correctness/noUndeclaredVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The T variable is undeclared
   
-    14 │ // Invalid
-  > 15 │ export type Invalid<S extends number> = `Hello ${T}`
+    25 │ // Invalid
+  > 26 │ export type Invalid<S extends number> = `Hello ${T}`
        │                                                  ^
+    27 │ 
   
 
 ```

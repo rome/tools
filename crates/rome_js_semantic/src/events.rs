@@ -479,6 +479,10 @@ impl SemanticEventExtractor {
                 // SAFETY: kind check above
                 let reference = JsReferenceIdentifier::unwrap_cast(node.clone());
                 let name_token = reference.value_token().ok()?;
+                // skip `this` reference representing the class instance
+                if name_token.token_text_trimmed() == "this" {
+                    return None;
+                }
                 (
                     name_token.token_text_trimmed(),
                     self.is_js_reference_identifier_exported(node),

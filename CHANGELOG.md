@@ -272,6 +272,10 @@ if no error diagnostics are emitted.
 
   This rule's code action emits an invalid AST, so I fixed using JsxString instead of JsStringLiteral
 
+- Fix [noUndeclaredVariables](https://docs.rome.tools/lint/rules/noundeclaredvariables/)'s false positive diagnostics ([#4675](https://github.com/rome/tools/issues/4675))
+
+  The semantic analyzer no longer handles `this` reference identifier in the semantic analyzer.
+
 ### Parser
 
 - Add support for decorators in class method parameters, example:
