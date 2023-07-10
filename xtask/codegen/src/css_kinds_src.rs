@@ -200,7 +200,14 @@ pub const CSS_KINDS_SRC: KindsSrc = KindsSrc {
         "CSS_CUSTOM_PROPERTY",
         "CSS_SPACE_LITERAL",
     ],
-    tokens: &["ERROR_TOKEN", "IDENT", "NEWLINE", "WHITESPACE", "COMMENT"],
+    tokens: &[
+        "ERROR_TOKEN",
+        "IDENT",
+        "NEWLINE",
+        "WHITESPACE",
+        "COMMENT",
+        "MULTILINE_COMMENT",
+    ],
     nodes: &[
         "CSS_ROOT",
         "CSS_ID_SELECTOR_PATTERN",
