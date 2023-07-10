@@ -1,4 +1,4 @@
-use rome_console::fmt::{Display, Formatter};
+use rome_console::fmt::Formatter;
 use rome_console::markup;
 use rome_diagnostics::adapters::{BpafError, IoError};
 use rome_diagnostics::{
@@ -153,54 +153,13 @@ pub struct IncompatibleArguments {
 #[derive(Debug, Diagnostic)]
 #[diagnostic(
     severity = Error,
-    message(
-        description = "{action_kind}",
-        message({{self.action_kind}})
-    )
 )]
 pub struct CheckError {
-    action_kind: CheckActionKind,
-
     #[category]
     category: &'static Category,
-}
 
-#[derive(Clone, Copy)]
-pub enum CheckActionKind {
-    Check,
-    Apply,
-}
-
-impl Debug for CheckActionKind {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        std::fmt::Display::fmt(self, f)
-    }
-}
-
-impl Display for CheckActionKind {
-    fn fmt(&self, fmt: &mut Formatter) -> std::io::Result<()> {
-        match self {
-            CheckActionKind::Check => fmt.write_markup(markup! {
-                "Some errors were emitted while "<Emphasis>"running checks"</Emphasis>
-            }),
-            CheckActionKind::Apply => fmt.write_markup(markup! {
-                "Some errors were emitted while "<Emphasis>"applying fixes"</Emphasis>
-            }),
-        }
-    }
-}
-
-impl std::fmt::Display for CheckActionKind {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            CheckActionKind::Check => {
-                write!(f, "Some errors were emitted while running checks")
-            }
-            CheckActionKind::Apply => {
-                write!(f, "Some errors were emitted while applying fixes")
-            }
-        }
-    }
+    #[message]
+    message: MessageAndDescription,
 }
 
 #[derive(Debug, Diagnostic)]
@@ -406,16 +365,51 @@ impl CliDiagnostic {
     /// Emitted when errors were emitted while running `check` command
     pub fn check_error(category: &'static Category) -> Self {
         Self::CheckError(CheckError {
-            action_kind: CheckActionKind::Check,
             category,
+            message: MessageAndDescription::from(
+                markup! {
+                    "Some "<Emphasis>"errors"</Emphasis>" were emitted while "<Emphasis>"running checks"</Emphasis>"."
+                }
+                .to_owned(),
+            ),
+        })
+    }
+
+    /// Emitted when warnings were emitted while running `check` command
+    pub fn check_warnings(category: &'static Category) -> Self {
+        Self::CheckError(CheckError {
+            category,
+            message: MessageAndDescription::from(
+                markup! {
+                    "Some "<Emphasis>"warnings"</Emphasis>" were emitted while "<Emphasis>"running checks"</Emphasis>"."
+                }
+                .to_owned(),
+            ),
         })
     }
 
     /// Emitted when errors were emitted while apply code fixes
     pub fn apply_error(category: &'static Category) -> Self {
         Self::CheckError(CheckError {
-            action_kind: CheckActionKind::Apply,
             category,
+            message: MessageAndDescription::from(
+                markup! {
+                    "Some "<Emphasis>"errors"</Emphasis>" were emitted while "<Emphasis>"applying fixes"</Emphasis>"."
+                }
+                .to_owned(),
+            ),
+        })
+    }
+    /// Emitted when warnings were emitted while apply code fixes
+    pub fn apply_warnings(category: &'static Category) -> Self {
+        Self::CheckError(CheckError {
+            category,
+            message: MessageAndDescription::from(
+                markup! {
+                    "Some "<Emphasis>"warnings"</Emphasis>" were emitted while "<Emphasis>"running checks"</Emphasis>"."
+                }
+                .to_owned(),
+            ),
         })
     }
 

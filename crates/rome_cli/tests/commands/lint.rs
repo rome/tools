@@ -2333,3 +2333,60 @@ A = 0;
         result,
     ));
 }
+
+#[test]
+fn does_error_with_only_warnings() {
+    let mut console = BufferConsole::default();
+    let mut fs = MemoryFileSystem::default();
+
+    let file_path = Path::new("rome.json");
+    fs.insert(
+        file_path.into(),
+        r#"
+{
+  "linter": {
+    "rules": {
+        "recommended": true,
+        "suspicious": {
+            "noClassAssign": "warn"
+        }
+    }
+  }
+}
+        "#
+        .as_bytes(),
+    );
+
+    let file_path = Path::new("file.js");
+    fs.insert(
+        file_path.into(),
+        r#"class A {};
+A = 0;
+"#
+        .as_bytes(),
+    );
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Args::from(
+            [
+                ("lint"),
+                "--apply-unsafe",
+                "--error-on-warnings",
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
+    );
+
+    assert!(result.is_err(), "run_cli returned {result:?}");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "does_error_with_only_warnings",
+        fs,
+        console,
+        result,
+    ));
+}

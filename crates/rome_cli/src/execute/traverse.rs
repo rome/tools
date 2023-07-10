@@ -85,6 +85,7 @@ pub(crate) fn traverse(
     let remaining_diagnostics = AtomicU16::new(max_diagnostics);
 
     let mut errors: usize = 0;
+    let mut warnings: usize = 0;
     let mut report = Report::default();
 
     let duration = thread::scope(|s| {
@@ -102,6 +103,7 @@ pub(crate) fn traverse(
                     errors: &mut errors,
                     report: &mut report,
                     verbose: cli_options.verbose,
+                    warnings: &mut warnings,
                 });
             })
             .expect("failed to spawn console thread");
@@ -201,16 +203,19 @@ pub(crate) fn traverse(
         });
     }
 
+    let should_exit_on_warnings = warnings > 0 && cli_options.error_on_warnings;
     // Processing emitted error diagnostics, exit with a non-zero code
     if count.saturating_sub(skipped) == 0 && !cli_options.no_errors_on_unmatched {
         Err(CliDiagnostic::no_files_processed())
-    } else if errors > 0 {
-        let category = if execution.is_ci() {
-            category!("ci")
-        } else {
-            category!("check")
-        };
-        if execution.is_check_apply() {
+    } else if errors > 0 || should_exit_on_warnings {
+        let category = execution.as_diagnostic_category();
+        if should_exit_on_warnings {
+            if execution.is_check_apply() {
+                Err(CliDiagnostic::apply_warnings(category))
+            } else {
+                Err(CliDiagnostic::check_warnings(category))
+            }
+        } else if execution.is_check_apply() {
             Err(CliDiagnostic::apply_error(category))
         } else {
             Err(CliDiagnostic::check_error(category))
@@ -266,6 +271,9 @@ struct ProcessMessagesOptions<'ctx> {
     /// Mutable reference to a boolean flag tracking whether the console thread
     /// printed any error-level message
     errors: &'ctx mut usize,
+    /// Mutable reference to a boolean flag tracking whether the console thread
+    /// printed any warnings-level message
+    warnings: &'ctx mut usize,
     /// Mutable handle to a [Report] instance the console thread should write
     /// stats into
     report: &'ctx mut Report,
@@ -287,6 +295,7 @@ fn process_messages(options: ProcessMessagesOptions) {
         errors,
         report,
         verbose,
+        warnings,
     } = options;
 
     let mut paths: HashSet<String> = HashSet::new();
@@ -345,6 +354,9 @@ fn process_messages(options: ProcessMessagesOptions) {
 
             Message::Error(mut err) => {
                 let location = err.location();
+                if err.severity() == Severity::Warning {
+                    *warnings += 1;
+                }
                 if let Some(Resource::File(file_path)) = location.resource.as_ref() {
                     // Retrieves the file name from the file ID cache, if it's a miss
                     // flush entries from the interner channel until it's found
@@ -431,6 +443,9 @@ fn process_messages(options: ProcessMessagesOptions) {
                         let severity = diag.severity();
                         if severity == Severity::Error {
                             *errors += 1;
+                        }
+                        if severity == Severity::Warning {
+                            *warnings += 1;
                         }
 
                         let should_print = printed_diagnostics < max_diagnostics;

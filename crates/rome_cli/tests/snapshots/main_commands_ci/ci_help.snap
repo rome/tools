@@ -43,11 +43,13 @@ Global options applied to all commands
         --verbose               Print additional verbose advices on diagnostics
         --config-path=PATH      Set the filesystem path to the directory of the rome.json configuration
                               file
-        --max-diagnostics=NUMBER  Cap the amount of diagnostics displayed (default: 20)
+        --max-diagnostics=NUMBER  Cap the amount of diagnostics displayed.
+                                [default: 20]
         --skip-errors           Skip over files containing syntax errors instead of emitting an error
                               diagnostic.
         --no-errors-on-unmatched  Silence errors that would be emitted in case no files were processed
                               during the execution of the command.
+        --error-on-warnings     Tell Rome to exit with an error code if some diagnostics emit warnings.
         --json                  Reports information using the JSON format
 
 Available positional items:

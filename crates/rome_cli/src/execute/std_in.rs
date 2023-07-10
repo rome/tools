@@ -1,13 +1,11 @@
 //! In here, there are the operations that run via standard input
 //!
+use crate::execute::diagnostics::{ContentDiffAdvice, FormatDiffDiagnostic};
 use crate::execute::Execution;
 use crate::{CliDiagnostic, CliSession};
 use rome_console::{markup, ConsoleExt};
+use rome_diagnostics::PrintDiagnostic;
 use rome_fs::RomePath;
-
-use crate::cli_options::CliOptions;
-use crate::execute::diagnostics::{ContentDiffAdvice, FormatDiffDiagnostic};
-use rome_diagnostics::{PrintDiagnostic, MAXIMUM_DISPLAYABLE_DIAGNOSTICS};
 use rome_service::workspace::{
     ChangeFileParams, FeatureName, FeaturesBuilder, FixFileParams, FormatFileParams, Language,
     OpenFileParams, OrganizeImportsParams, PullDiagnosticsParams, RuleCategories,
@@ -20,7 +18,6 @@ pub(crate) fn run<'a>(
     mode: &'a Execution,
     rome_path: RomePath,
     content: &'a str,
-    cli_options: &CliOptions,
 ) -> Result<(), CliDiagnostic> {
     let workspace = &*session.app.workspace;
     let console = &mut *session.app.console;
@@ -109,10 +106,7 @@ pub(crate) fn run<'a>(
             let result = workspace.pull_diagnostics(PullDiagnosticsParams {
                 categories: RuleCategories::LINT | RuleCategories::SYNTAX,
                 path: rome_path.clone(),
-                max_diagnostics: cli_options
-                    .max_diagnostics
-                    .unwrap_or(MAXIMUM_DISPLAYABLE_DIAGNOSTICS)
-                    as u64,
+                max_diagnostics: mode.max_diagnostics.into(),
             })?;
             diagnostics.extend(result.diagnostics);
         }

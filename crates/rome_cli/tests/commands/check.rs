@@ -1271,12 +1271,12 @@ fn max_diagnostics() {
     for msg in console.out_buffer {
         let MarkupBuf(nodes) = &msg.content;
         let is_diagnostic = nodes.iter().any(|node| {
-            dbg!(&node.content);
             node.content.contains("useWhile")
                 || node.content.contains("useBlockStatements")
                 || node.content.contains("noConstantCondition")
                 || node.content.contains("format")
                 || node.content.contains("lint")
+                || node.content.contains("check")
                 || node.content.contains("Some errors were emitted while")
         });
 
@@ -2587,7 +2587,14 @@ A = 0;
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from([("check"), "--apply-unsafe", ("file.js")].as_slice()),
+        Args::from(
+            [
+                ("check"),
+                "--apply-unsafe",
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -2595,6 +2602,63 @@ A = 0;
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
         "should_pass_if_there_are_only_warnings",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn does_error_with_only_warnings() {
+    let mut console = BufferConsole::default();
+    let mut fs = MemoryFileSystem::default();
+
+    let file_path = Path::new("rome.json");
+    fs.insert(
+        file_path.into(),
+        r#"
+{
+  "linter": {
+    "rules": {
+        "recommended": true,
+        "suspicious": {
+            "noClassAssign": "warn"
+        }
+    }
+  }
+}
+        "#
+        .as_bytes(),
+    );
+
+    let file_path = Path::new("file.js");
+    fs.insert(
+        file_path.into(),
+        r#"class A {};
+A = 0;
+"#
+        .as_bytes(),
+    );
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Args::from(
+            [
+                ("check"),
+                "--apply-unsafe",
+                "--error-on-warnings",
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
+    );
+
+    assert!(result.is_err(), "run_cli returned {result:?}");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "does_error_with_only_warnings",
         fs,
         console,
         result,

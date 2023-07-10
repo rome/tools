@@ -7,7 +7,7 @@ mod traverse;
 use crate::cli_options::CliOptions;
 use crate::execute::traverse::traverse;
 use crate::{CliDiagnostic, CliSession};
-use rome_diagnostics::MAXIMUM_DISPLAYABLE_DIAGNOSTICS;
+use rome_diagnostics::{category, Category, MAXIMUM_DISPLAYABLE_DIAGNOSTICS};
 use rome_fs::RomePath;
 use rome_service::workspace::{FeatureName, FixFileMode};
 use std::ffi::OsString;
@@ -145,6 +145,16 @@ impl Execution {
         }
     }
 
+    pub(crate) fn as_diagnostic_category(&self) -> &'static Category {
+        match self.traversal_mode {
+            TraversalMode::Check { .. } => category!("check"),
+            TraversalMode::Lint { .. } => category!("lint"),
+            TraversalMode::CI => category!("ci"),
+            TraversalMode::Format { .. } => category!("format"),
+            TraversalMode::Migrate { .. } => category!("migrate"),
+        }
+    }
+
     pub(crate) const fn is_ci(&self) -> bool {
         matches!(self.traversal_mode, TraversalMode::CI { .. })
     }
@@ -210,28 +220,19 @@ pub(crate) fn execute_mode(
     cli_options: &CliOptions,
     paths: Vec<OsString>,
 ) -> Result<(), CliDiagnostic> {
-    mode.max_diagnostics = if let Some(max_diagnostics) = cli_options.max_diagnostics {
-        if max_diagnostics > MAXIMUM_DISPLAYABLE_DIAGNOSTICS {
-            return Err(CliDiagnostic::overflown_argument(
-                "--max-diagnostics",
-                MAXIMUM_DISPLAYABLE_DIAGNOSTICS,
-            ));
-        }
+    if cli_options.max_diagnostics > MAXIMUM_DISPLAYABLE_DIAGNOSTICS {
+        return Err(CliDiagnostic::overflown_argument(
+            "--max-diagnostics",
+            MAXIMUM_DISPLAYABLE_DIAGNOSTICS,
+        ));
+    }
 
-        max_diagnostics
-    } else {
-        // The commands `rome check` and `rome lint` give a default value of 20.
-        // In case of other commands that pass here, we limit to 50 to avoid to delay the terminal.
-        match &mode.traversal_mode {
-            TraversalMode::Check { .. } | TraversalMode::Lint { .. } => 20,
-            TraversalMode::CI | TraversalMode::Format { .. } | TraversalMode::Migrate { .. } => 50,
-        }
-    };
+    mode.max_diagnostics = cli_options.max_diagnostics;
 
     // don't do any traversal if there's some content coming from stdin
     if let Some((path, content)) = mode.as_stdin_file() {
         let rome_path = RomePath::new(path);
-        std_in::run(session, &mode, rome_path, content.as_str(), cli_options)
+        std_in::run(session, &mode, rome_path, content.as_str())
     } else if let TraversalMode::Migrate {
         write,
         configuration_path,
