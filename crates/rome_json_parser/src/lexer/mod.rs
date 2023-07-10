@@ -24,7 +24,7 @@ impl Token {
     }
 }
 
-/// An extremely fast, lookup table based, lossless ECMAScript lexer
+/// An extremely fast, lookup table based, lossless JSON lexer
 #[derive(Debug)]
 pub(crate) struct Lexer<'src> {
     /// Source text

@@ -208,6 +208,7 @@ pub enum CssSyntaxKind {
     NEWLINE,
     WHITESPACE,
     COMMENT,
+    MULTILINE_COMMENT,
     CSS_ROOT,
     CSS_ID_SELECTOR_PATTERN,
     CSS_RULE,

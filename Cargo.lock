@@ -1747,8 +1747,26 @@ dependencies = [
 ]
 
 [[package]]
+name = "rome_css_parser"
+version = "0.0.1"
+dependencies = [
+ "insta",
+ "quickcheck",
+ "quickcheck_macros",
+ "rome_console",
+ "rome_css_factory",
+ "rome_css_syntax",
+ "rome_diagnostics",
+ "rome_js_unicode_table",
+ "rome_parser",
+ "rome_rowan",
+ "tests_macros",
+ "tracing",
+]
+
+[[package]]
 name = "rome_css_syntax"
-version = "0.0.0"
+version = "0.0.1"
 dependencies = [
  "rome_rowan",
 ]
