@@ -33,6 +33,39 @@ JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 Semicolons: Always
+Arrow parentheses: Always
+-----
+
+```js
+x =
+	(bifornCringerMoshedPerplexSawder) =>
+	(askTrovenaBeenaDependsRowans, glimseGlyphsHazardNoopsTieTie) =>
+	(f00) => {
+		averredBathersBoxroomBuggyNurl();
+	}; // BOOM
+
+x2 =
+	(a) =>
+	(
+		askTrovenaBeenaDependsRowans1,
+		askTrovenaBeenaDependsRowans2,
+		askTrovenaBeenaDependsRowans3,
+	) => {
+		c();
+	} /* ! */; // KABOOM
+```
+
+## Output 2
+
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+JSX quote style: Double Quotes
+Quote properties: As needed
+Trailing comma: All
+Semicolons: Always
+Arrow parentheses: Always
 -----
 
 ```js

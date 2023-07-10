@@ -137,6 +137,7 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
                             );
 
                             !are_parentheses_mandatory
+                                && f.options().arrow_parentheses().is_always()
                         }
                         _ => false,
                     };
@@ -220,7 +221,14 @@ fn format_signature(
                 AnyJsArrowFunctionParameters::AnyJsBinding(binding) => {
                     let should_hug = is_test_call_argument(arrow.syntax())?;
 
-                    write!(f, [text("(")])?;
+                    let parentheses_not_needed = f.options().arrow_parentheses().is_as_needed()
+                        && arrow.parameters()?.len() == 1
+                        && arrow.type_parameters().is_none()
+                        && arrow.return_type_annotation().is_none();
+
+                    if !parentheses_not_needed {
+                        write!(f, [text("(")])?;
+                    }
 
                     if should_hug {
                         write!(f, [binding.format()])?;
@@ -234,7 +242,9 @@ fn format_signature(
                         )?
                     }
 
-                    write!(f, [text(")")])?;
+                    if !parentheses_not_needed {
+                        write!(f, [text(")")])?;
+                    }
                 }
                 AnyJsArrowFunctionParameters::JsParameters(params) => {
                     write!(f, [params.format()])?;

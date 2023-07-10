@@ -28,6 +28,32 @@ JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 Semicolons: Always
+Arrow parentheses: Always
+-----
+
+```js
+it("should have the default duration when using the onClose arguments", (done) => {
+	expect(true);
+	done();
+});
+```
+
+# Lines exceeding max width of 80 characters
+```
+    1: it("should have the default duration when using the onClose arguments", (done) => {
+```
+
+## Output 2
+
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+JSX quote style: Double Quotes
+Quote properties: As needed
+Trailing comma: All
+Semicolons: Always
+Arrow parentheses: Always
 -----
 
 ```js

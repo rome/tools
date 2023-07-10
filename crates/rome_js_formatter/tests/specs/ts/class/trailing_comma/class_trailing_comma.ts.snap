@@ -35,6 +35,7 @@ JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 Semicolons: Always
+Arrow parentheses: Always
 -----
 
 ```ts
@@ -75,6 +76,7 @@ JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: ES5
 Semicolons: Always
+Arrow parentheses: Always
 -----
 
 ```ts
@@ -115,6 +117,7 @@ JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: None
 Semicolons: Always
+Arrow parentheses: Always
 -----
 
 ```ts

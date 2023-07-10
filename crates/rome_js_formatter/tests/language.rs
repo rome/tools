@@ -2,7 +2,7 @@ use rome_formatter::{FormatContext, FormatResult, Formatted, IndentStyle, LineWi
 use rome_formatter_test::TestFormatLanguage;
 use rome_js_formatter::context::trailing_comma::TrailingComma;
 use rome_js_formatter::context::{
-    JsFormatContext, JsFormatOptions, QuoteProperties, QuoteStyle, Semicolons,
+    ArrowParentheses, JsFormatContext, JsFormatOptions, QuoteProperties, QuoteStyle, Semicolons,
 };
 use rome_js_formatter::{format_node, format_range, JsFormatLanguage};
 use rome_js_parser::{parse, JsParserOptions};
@@ -152,6 +152,21 @@ impl From<JsSerializableSemicolons> for Semicolons {
     }
 }
 
+#[derive(Debug, Eq, PartialEq, Clone, Copy, Deserialize, Serialize)]
+pub enum JsSerializableArrowParentheses {
+    Always,
+    AsNeeded,
+}
+
+impl From<JsSerializableArrowParentheses> for ArrowParentheses {
+    fn from(test: JsSerializableArrowParentheses) -> Self {
+        match test {
+            JsSerializableArrowParentheses::Always => ArrowParentheses::Always,
+            JsSerializableArrowParentheses::AsNeeded => ArrowParentheses::AsNeeded,
+        }
+    }
+}
+
 #[derive(Debug, Deserialize, Serialize, Clone, Copy)]
 pub struct JsSerializableFormatOptions {
     /// The indent style.
@@ -172,7 +187,11 @@ pub struct JsSerializableFormatOptions {
     /// Print trailing commas wherever possible in multi-line comma-separated syntactic structures. Defaults to "all".
     pub trailing_comma: Option<JsSerializableTrailingComma>,
 
+    /// Whether the formatter prints semicolons for all statements or only in for statements where it is necessary because of ASI.
     pub semicolons: Option<JsSerializableSemicolons>,
+
+    /// Whether to add non-necessary parentheses to arrow functions. Defaults to "always".
+    pub arrow_parentheses: Option<JsSerializableArrowParentheses>,
 }
 
 impl JsSerializableFormatOptions {
@@ -206,6 +225,10 @@ impl JsSerializableFormatOptions {
             .with_semicolons(
                 self.semicolons
                     .map_or_else(|| Semicolons::Always, |value| value.into()),
+            )
+            .with_arrow_parentheses(
+                self.arrow_parentheses
+                    .map_or_else(|| ArrowParentheses::Always, |value| value.into()),
             )
     }
 }

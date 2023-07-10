@@ -2,7 +2,7 @@ use crate::configuration::merge::MergeWith;
 use crate::configuration::string_set::StringSet;
 use bpaf::Bpaf;
 use rome_js_formatter::context::{
-    trailing_comma::TrailingComma, QuoteProperties, QuoteStyle, Semicolons,
+    trailing_comma::TrailingComma, ArrowParentheses, QuoteProperties, QuoteStyle, Semicolons,
 };
 use serde::{Deserialize, Serialize};
 
@@ -88,6 +88,10 @@ pub struct JavascriptFormatter {
     #[bpaf(long("semicolons"), argument("always|as-needed"), optional)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub semicolons: Option<Semicolons>,
+    /// Whether to add non-necessary parentheses to arrow functions. Defaults to "always".
+    #[bpaf(long("arrow-parentheses"), argument("always|as-needed"), optional)]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub arrow_parentheses: Option<ArrowParentheses>,
 }
 
 impl JavascriptFormatter {
@@ -97,11 +101,15 @@ impl JavascriptFormatter {
         "quoteProperties",
         "trailingComma",
         "semicolons",
+        "arrowParentheses",
     ];
 }
 
 impl MergeWith<JavascriptFormatter> for JavascriptFormatter {
     fn merge_with(&mut self, other: JavascriptFormatter) {
+        if let Some(arrow_parentheses) = other.arrow_parentheses {
+            self.arrow_parentheses = Some(arrow_parentheses);
+        }
         if let Some(quote_properties) = other.quote_properties {
             self.quote_properties = Some(quote_properties);
         }

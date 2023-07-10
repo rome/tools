@@ -30,6 +30,33 @@ JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 Semicolons: Always
+Arrow parentheses: Always
+-----
+
+```js
+() => {};
+async () => {};
+(foo) => {};
+(
+	aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,
+	bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb,
+	ccccccccccccccccccccccccccccc,
+) => {};
+
+() => (1, 3, 4);
+```
+
+## Output 2
+
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+JSX quote style: Double Quotes
+Quote properties: As needed
+Trailing comma: All
+Semicolons: Always
+Arrow parentheses: Always
 -----
 
 ```js

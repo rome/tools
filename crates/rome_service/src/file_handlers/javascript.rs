@@ -26,7 +26,7 @@ use rome_js_analyze::{
     analyze, analyze_with_inspect_matcher, visit_registry, ControlFlowGraph, RuleError,
 };
 use rome_js_formatter::context::{
-    trailing_comma::TrailingComma, QuoteProperties, QuoteStyle, Semicolons,
+    trailing_comma::TrailingComma, ArrowParentheses, QuoteProperties, QuoteStyle, Semicolons,
 };
 use rome_js_formatter::{context::JsFormatOptions, format_node};
 use rome_js_parser::JsParserOptions;
@@ -50,6 +50,7 @@ pub struct JsFormatterSettings {
     pub quote_properties: Option<QuoteProperties>,
     pub trailing_comma: Option<TrailingComma>,
     pub semicolons: Option<Semicolons>,
+    pub arrow_parentheses: Option<ArrowParentheses>,
 }
 
 #[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
@@ -92,6 +93,7 @@ impl Language for JsLanguage {
             .with_quote_properties(language.quote_properties.unwrap_or_default())
             .with_trailing_comma(language.trailing_comma.unwrap_or_default())
             .with_semicolons(language.semicolons.unwrap_or_default())
+            .with_arrow_parentheses(language.arrow_parentheses.unwrap_or_default())
     }
 }
 

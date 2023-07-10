@@ -156,6 +156,9 @@ pub struct JsFormatOptions {
     /// Whether the formatter prints semicolons for all statements, class members, and type members or only when necessary because of [ASI](https://tc39.es/ecma262/multipage/ecmascript-language-lexical-grammar.html#sec-automatic-semicolon-insertion).
     semicolons: Semicolons,
 
+    /// Whether to add non-necessary parentheses to arrow functions. Defaults to "always".
+    arrow_parentheses: ArrowParentheses,
+
     /// Information related to the current file
     source_type: JsFileSource,
 }
@@ -171,7 +174,13 @@ impl JsFormatOptions {
             quote_properties: QuoteProperties::default(),
             trailing_comma: TrailingComma::default(),
             semicolons: Semicolons::default(),
+            arrow_parentheses: ArrowParentheses::default(),
         }
+    }
+
+    pub fn with_arrow_parentheses(mut self, arrow_parentheses: ArrowParentheses) -> Self {
+        self.arrow_parentheses = arrow_parentheses;
+        self
     }
 
     pub fn with_indent_style(mut self, indent_style: IndentStyle) -> Self {
@@ -207,6 +216,10 @@ impl JsFormatOptions {
     pub fn with_semicolons(mut self, semicolons: Semicolons) -> Self {
         self.semicolons = semicolons;
         self
+    }
+
+    pub fn arrow_parentheses(&self) -> ArrowParentheses {
+        self.arrow_parentheses
     }
 
     pub fn quote_style(&self) -> QuoteStyle {
@@ -263,7 +276,8 @@ impl fmt::Display for JsFormatOptions {
         writeln!(f, "JSX quote style: {}", self.jsx_quote_style)?;
         writeln!(f, "Quote properties: {}", self.quote_properties)?;
         writeln!(f, "Trailing comma: {}", self.trailing_comma)?;
-        writeln!(f, "Semicolons: {}", self.semicolons)
+        writeln!(f, "Semicolons: {}", self.semicolons)?;
+        writeln!(f, "Arrow parentheses: {}", self.arrow_parentheses)
     }
 }
 
@@ -483,6 +497,67 @@ impl VisitNode<JsonLanguage> for Semicolons {
             *self = Semicolons::AsNeeded;
         } else {
             *self = Semicolons::Always;
+        }
+        Some(())
+    }
+}
+
+#[derive(Debug, Eq, PartialEq, Clone, Copy, Default)]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema),
+    serde(rename_all = "camelCase")
+)]
+pub enum ArrowParentheses {
+    #[default]
+    Always,
+    AsNeeded,
+}
+
+impl ArrowParentheses {
+    pub(crate) const KNOWN_VALUES: &'static [&'static str] = &["always", "asNeeded"];
+
+    pub const fn is_as_needed(&self) -> bool {
+        matches!(self, Self::AsNeeded)
+    }
+
+    pub const fn is_always(&self) -> bool {
+        matches!(self, Self::Always)
+    }
+}
+
+impl FromStr for ArrowParentheses {
+    type Err = &'static str;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "as-needed" | "AsNeeded" => Ok(Self::AsNeeded),
+            "always" | "Always" => Ok(Self::Always),
+            _ => Err("Value not supported for Arrow parentheses. Supported values are 'as-needed' and 'always'."),
+        }
+    }
+}
+
+impl fmt::Display for ArrowParentheses {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ArrowParentheses::AsNeeded => write!(f, "As needed"),
+            ArrowParentheses::Always => write!(f, "Always"),
+        }
+    }
+}
+
+impl VisitNode<JsonLanguage> for ArrowParentheses {
+    fn visit_member_value(
+        &mut self,
+        node: &SyntaxNode<JsonLanguage>,
+        diagnostics: &mut Vec<DeserializationDiagnostic>,
+    ) -> Option<()> {
+        let node = with_only_known_variants(node, ArrowParentheses::KNOWN_VALUES, diagnostics)?;
+        if node.inner_string_text().ok()?.text() == "asNeeded" {
+            *self = ArrowParentheses::AsNeeded;
+        } else {
+            *self = ArrowParentheses::Always;
         }
         Some(())
     }

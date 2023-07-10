@@ -74,6 +74,7 @@ JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 Semicolons: Always
+Arrow parentheses: Always
 -----
 
 ```jsx
