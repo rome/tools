@@ -21,8 +21,13 @@ pub struct CliOptions {
     pub config_path: Option<String>,
 
     /// Cap the amount of diagnostics displayed.
-    #[bpaf(long("max-diagnostics"), argument("NUMBER"), optional)]
-    pub max_diagnostics: Option<u16>,
+    #[bpaf(
+        long("max-diagnostics"),
+        argument("NUMBER"),
+        fallback(20),
+        display_fallback
+    )]
+    pub max_diagnostics: u16,
 
     /// Skip over files containing syntax errors instead of emitting an error diagnostic.
     #[bpaf(long("skip-errors"), switch)]
