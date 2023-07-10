@@ -215,12 +215,10 @@ pub(crate) fn traverse(
             } else {
                 Err(CliDiagnostic::check_warnings(category))
             }
+        } else if execution.is_check_apply() {
+            Err(CliDiagnostic::apply_error(category))
         } else {
-            if execution.is_check_apply() {
-                Err(CliDiagnostic::apply_error(category))
-            } else {
-                Err(CliDiagnostic::check_error(category))
-            }
+            Err(CliDiagnostic::check_error(category))
         }
     } else {
         Ok(())

@@ -84,6 +84,12 @@ multiple files:
 - Fix the commands `rome check` and `rome lint`, they won't exit with an error code
 if no error diagnostics are emitted.
 
+- Add a new option `--error-on-warnings`, which instructs Rome to exit with an error code when warnings are emitted.
+
+  ```shell
+  rome check --error-on-wanrings ./src
+  ```
+
 ### Editors
 
 #### Other changes
