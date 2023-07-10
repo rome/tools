@@ -561,7 +561,20 @@ fn parse_class_member(p: &mut JsParser, inside_abstract_class: bool) -> ParsedSy
             Present(member)
         }
         Absent => {
-            debug_assert!(modifiers.is_empty());
+            // If the modifier list contains a modifier other than a decorator, such modifiers can also be valid member names.
+            debug_assert!(!modifiers
+                .flags
+                .contains(ModifierFlags::ALL_MODIFIERS_EXCEPT_DECORATOR));
+
+            // test_err ts ts_broken_class_member_modifiers
+            // class C {
+            // 	@decorator
+            // 	}
+            // class CC {
+            // 	@
+            // 	}
+            // class @
+            // class C@
             modifiers.abandon(p);
             Absent
         }
@@ -2024,11 +2037,7 @@ impl ClassMemberModifiers {
     }
 
     /// Abandons the marker for the modifier list
-    ///
-    /// ## Panics
-    /// If the modifier list isn't empty
     fn abandon(mut self, p: &mut JsParser) {
-        debug_assert!(self.is_empty());
         self.list_marker.undo_completion(p).abandon(p);
         self.bomb.defuse();
     }
