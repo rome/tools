@@ -27,7 +27,7 @@ expression: content
 ```block
 check ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Some errors were emitted while running checks
+  × Some errors were emitted while running checks.
   
 
 
@@ -76,7 +76,7 @@ test.json format ━━━━━━━━━━━━━━━━━━━━━
 ```block
 check ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Some errors were emitted while running checks
+  × Some errors were emitted while running checks.
   
 
 ```

@@ -20,7 +20,7 @@ pub struct CliOptions {
     #[bpaf(long("config-path"), argument("PATH"), optional)]
     pub config_path: Option<String>,
 
-    /// Cap the amount of diagnostics displayed (default: 20)
+    /// Cap the amount of diagnostics displayed.
     #[bpaf(long("max-diagnostics"), argument("NUMBER"), optional)]
     pub max_diagnostics: Option<u16>,
 
@@ -31,6 +31,10 @@ pub struct CliOptions {
     /// Silence errors that would be emitted in case no files were processed during the execution of the command.
     #[bpaf(long("no-errors-on-unmatched"), switch)]
     pub no_errors_on_unmatched: bool,
+
+    /// Tell Rome to exit with an error code if some diagnostics emit warnings.
+    #[bpaf(long("error-on-warnings"), switch)]
+    pub error_on_warnings: bool,
 
     /// Reports information using the JSON format
     #[bpaf(long("json"), switch, hide_usage)]

@@ -21,7 +21,7 @@ import * as something from "../something";
 ```block
 check ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Some errors were emitted while applying fixes
+  × Some errors were emitted while applying fixes.
   
 
 

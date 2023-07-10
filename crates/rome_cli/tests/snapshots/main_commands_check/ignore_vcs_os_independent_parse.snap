@@ -51,7 +51,7 @@ console.log('rome is cool');
 ```block
 check ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Some errors were emitted while running checks
+  × Some errors were emitted while running checks.
   
 
 
@@ -74,7 +74,7 @@ file1.js format ━━━━━━━━━━━━━━━━━━━━━�
 ```block
 check ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Some errors were emitted while running checks
+  × Some errors were emitted while running checks.
   
 
 ```

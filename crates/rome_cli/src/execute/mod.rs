@@ -7,7 +7,7 @@ mod traverse;
 use crate::cli_options::CliOptions;
 use crate::execute::traverse::traverse;
 use crate::{CliDiagnostic, CliSession};
-use rome_diagnostics::MAXIMUM_DISPLAYABLE_DIAGNOSTICS;
+use rome_diagnostics::{category, Category, MAXIMUM_DISPLAYABLE_DIAGNOSTICS};
 use rome_fs::RomePath;
 use rome_service::workspace::{FeatureName, FixFileMode};
 use std::ffi::OsString;
@@ -142,6 +142,16 @@ impl Execution {
             TraversalMode::Format { .. } | TraversalMode::CI | TraversalMode::Migrate { .. } => {
                 None
             }
+        }
+    }
+
+    pub(crate) fn as_diagnostic_category(&self) -> &'static Category {
+        match self.traversal_mode {
+            TraversalMode::Check { .. } => category!("check"),
+            TraversalMode::Lint { .. } => category!("lint"),
+            TraversalMode::CI => category!("ci"),
+            TraversalMode::Format { .. } => category!("format"),
+            TraversalMode::Migrate { .. } => category!("migrate"),
         }
     }
 

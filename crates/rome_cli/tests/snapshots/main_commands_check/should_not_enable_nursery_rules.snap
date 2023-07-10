@@ -39,7 +39,7 @@ if (true) {
 ```block
 check ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Some errors were emitted while running checks
+  × Some errors were emitted while running checks.
   
 
 
@@ -60,7 +60,7 @@ fix.ts format ━━━━━━━━━━━━━━━━━━━━━━
 ```block
 check ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Some errors were emitted while running checks
+  × Some errors were emitted while running checks.
   
 
 ```
