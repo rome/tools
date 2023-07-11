@@ -20,6 +20,7 @@
 
 #### Other changes
 
+- Fix [#4670](https://github.com/rome/tools/issues/4670), don't crash at empty default export.
 - Fix [#4556](https://github.com/rome/tools/issues/4556), which correctly handles new lines in the
 `.gitignore` file across OS.
 - Add a new option to ignore unknown files `--files-ignore-unknown`:

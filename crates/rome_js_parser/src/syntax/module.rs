@@ -1425,6 +1425,12 @@ fn parse_export_default_expression_clause(
     start: TextSize,
 ) -> ParsedSyntax {
     if !is_at_expression(p) {
+        // test_err js export_default_expression_broken
+        // export default ;
+        // export default @decorator
+        // export default
+        // export default @decorator
+        m.abandon(p);
         return Absent;
     }
 
