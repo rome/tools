@@ -30,8 +30,8 @@ unicode-width               = "0.1.9"
 countme             = { workspace = true, features = ["enable"] }
 iai                 = "0.1.1"
 insta               = { workspace = true, features = ["glob"] }
-quickcheck          = "1.0.3"
-quickcheck_macros   = "1.0.0"
+quickcheck          = { workspace = true }
+quickcheck_macros   = { workspace = true }
 rome_diagnostics    = { workspace = true }
 rome_formatter_test = { workspace = true }
 rome_fs             = { workspace = true }

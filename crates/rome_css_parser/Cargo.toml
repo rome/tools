@@ -21,8 +21,8 @@ tracing               = { workspace = true }
 
 [dev-dependencies]
 insta             = { workspace = true }
-quickcheck        = "1.0.3"
-quickcheck_macros = "1.0.0"
+quickcheck        = { workspace = true }
+quickcheck_macros = { workspace = true }
 tests_macros      = { workspace = true }
 
 # cargo-workspaces metadata

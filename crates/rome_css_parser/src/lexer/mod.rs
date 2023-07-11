@@ -59,7 +59,7 @@ impl<'src> Lexer<'src> {
     /// Lexes the next token.
     ///
     /// ## Return
-    /// Returns its kind and any potential error.
+    /// Returns its kind.
     pub(crate) fn next_token(&mut self) -> Option<Token> {
         let start = self.text_position();
 
