@@ -30,8 +30,8 @@ tracing               = { workspace = true }
 
 [dev-dependencies]
 expect-test       = "1.2.2"
-quickcheck        = "1.0.3"
-quickcheck_macros = "1.0.0"
+quickcheck        = { workspace = true }
+quickcheck_macros = { workspace = true }
 rome_js_parser    = { workspace = true, features = ["serde"] }
 tests_macros      = { workspace = true }
 
