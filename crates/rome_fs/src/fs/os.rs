@@ -1,5 +1,5 @@
 //! Implementation of the [FileSystem] and related traits for the underlying OS filesystem
-use super::{BoxedTraversal, ErrorKind, File, FileSystemDiagnostic};
+use super::{BoxedTraversal, FsErrorKind, File, FileSystemDiagnostic};
 use crate::fs::OpenOptions;
 use crate::{
     fs::{TraversalContext, TraversalScope},
@@ -131,7 +131,7 @@ impl<'scope> TraversalScope<'scope> for OsTraversalScope<'scope> {
                     let path = path.to_string_lossy().to_string();
                     ctx.push_diagnostic(Error::from(FileSystemDiagnostic {
                         path: path.clone(),
-                        error_kind: ErrorKind::DereferencedSymlink(path),
+                        error_kind: FsErrorKind::DereferencedSymlink(path),
                         severity: Severity::Warning,
                     }));
                 } else {
@@ -163,7 +163,7 @@ impl<'scope> TraversalScope<'scope> for OsTraversalScope<'scope> {
 
         ctx.push_diagnostic(Error::from(FileSystemDiagnostic {
             path: path.to_string_lossy().to_string(),
-            error_kind: ErrorKind::from(file_type),
+            error_kind: FsErrorKind::from(file_type),
             severity: Severity::Warning,
         }));
     }
@@ -248,7 +248,7 @@ fn handle_dir_entry<'scope>(
                     let path = path.to_string_lossy().to_string();
                     ctx.push_diagnostic(Error::from(FileSystemDiagnostic {
                         path: path.clone(),
-                        error_kind: ErrorKind::DereferencedSymlink(path),
+                        error_kind: FsErrorKind::DereferencedSymlink(path),
                         severity: Severity::Warning,
                     }));
                 } else {
@@ -275,7 +275,7 @@ fn handle_dir_entry<'scope>(
         let path = path.to_string_lossy().to_string();
         ctx.push_diagnostic(Error::from(FileSystemDiagnostic {
             path: path.clone(),
-            error_kind: ErrorKind::InfiniteSymlinkExpansion(path),
+            error_kind: FsErrorKind::InfiniteSymlinkExpansion(path),
             severity: Severity::Warning,
         }));
         return;
@@ -307,7 +307,7 @@ fn handle_dir_entry<'scope>(
             } else {
                 ctx.push_diagnostic(Error::from(FileSystemDiagnostic {
                     path: path.to_string_lossy().to_string(),
-                    error_kind: ErrorKind::UnknownFileType,
+                    error_kind: FsErrorKind::UnknownFileType,
                     severity: Severity::Warning,
                 }));
                 return;
@@ -333,12 +333,12 @@ fn handle_dir_entry<'scope>(
 
     ctx.push_diagnostic(Error::from(FileSystemDiagnostic {
         path: path.to_string_lossy().to_string(),
-        error_kind: ErrorKind::from(file_type),
+        error_kind: FsErrorKind::from(file_type),
         severity: Severity::Warning,
     }));
 }
 
-impl From<fs::FileType> for ErrorKind {
+impl From<fs::FileType> for FsErrorKind {
     fn from(_: fs::FileType) -> Self {
         Self::UnknownFileType
     }

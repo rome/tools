@@ -194,4 +194,8 @@ where
     ) -> Result<OrganizeImportsResult, WorkspaceError> {
         self.request("rome/organize_imports", params)
     }
+
+    fn config_name(&self, params: ()) -> Result<String, WorkspaceError> {
+        self.request("rome/config_name", params)
+    }
 }

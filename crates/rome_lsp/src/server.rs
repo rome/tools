@@ -8,7 +8,7 @@ use crate::{handlers, requests};
 use futures::future::ready;
 use futures::FutureExt;
 use rome_console::markup;
-use rome_fs::CONFIG_NAME;
+use rome_fs::{FileSystem, OsFileSystem, CONFIG_NAME};
 use rome_service::workspace::{RageEntry, RageParams, RageResult};
 use rome_service::{workspace, Workspace};
 use serde_json::json;
@@ -483,7 +483,7 @@ impl ServerFactory {
         let workspace = self
             .workspace
             .clone()
-            .unwrap_or_else(workspace::server_sync);
+            .unwrap_or_else(|| workspace::server_sync(Mutex::new(Box::new(OsFileSystem))));
 
         let session_key = SessionKey(self.next_session_key.fetch_add(1, Ordering::Relaxed));
 

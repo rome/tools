@@ -1,3 +1,4 @@
+use std::sync::Mutex;
 use std::{
     convert::Infallible,
     env, fs,
@@ -6,6 +7,7 @@ use std::{
     time::Duration,
 };
 
+use rome_fs::OsFileSystem;
 use rome_lsp::{ServerConnection, ServerFactory};
 use tokio::{
     io::Interest,
@@ -188,10 +190,11 @@ pub(crate) async fn run_daemon(factory: ServerFactory) -> io::Result<Infallible>
     }
 
     let listener = UnixListener::bind(path)?;
+    let mut fs = Mutex::new(Box::new(OsFileSystem));
 
     loop {
         let (stream, _) = listener.accept().await?;
-        let connection = factory.create();
+        let connection = factory.create(fs);
         let span = tracing::trace_span!("run_server");
         tokio::spawn(run_server(connection, stream).instrument(span.or_current()));
     }

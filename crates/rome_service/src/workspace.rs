@@ -52,16 +52,18 @@
 //! format a file with a language that does not have a formatter
 
 use crate::file_handlers::Capabilities;
-use crate::{Configuration, Deserialize, Serialize, WorkspaceError};
+use crate::{Configuration, Deserialize, DynRef, Serialize, WorkspaceError};
 use rome_analyze::ActionCategory;
 pub use rome_analyze::RuleCategories;
 use rome_console::{markup, Markup, MarkupBuf};
 use rome_diagnostics::CodeSuggestion;
 use rome_formatter::Printed;
-use rome_fs::RomePath;
+use rome_fs::{FileSystem, OsFileSystem, RomePath};
 use rome_js_syntax::{TextRange, TextSize};
 use rome_text_edit::TextEdit;
 use std::collections::HashMap;
+use std::path::PathBuf;
+use std::sync::Mutex;
 use std::{borrow::Cow, panic::RefUnwindSafe, sync::Arc};
 
 pub use self::client::{TransportRequest, WorkspaceClient, WorkspaceTransport};
@@ -454,6 +456,27 @@ pub struct OrganizeImportsParams {
 
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+pub struct PathExistsParams {
+    pub path: PathBuf,
+}
+
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+pub struct AutoSearchParams {
+    pub file_path: PathBuf,
+    pub file_name: String,
+    pub should_error_if_file_not_found: bool,
+}
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+pub struct AutoSearchResult {
+    pub file_path: PathBuf,
+    pub file_name: String,
+    pub should_error_if_file_not_found: bool,
+}
+
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct OrganizeImportsResult {
     pub code: String,
 }
@@ -572,16 +595,20 @@ pub trait Workspace: Send + Sync + RefUnwindSafe {
         &self,
         params: OrganizeImportsParams,
     ) -> Result<OrganizeImportsResult, WorkspaceError>;
+
+    fn config_name(&self, params: ()) -> Result<String, WorkspaceError>;
+    fn path_exists(&self, params: PathExistsParams) -> Result<bool, WorkspaceError>;
+    fn auto_search(&self, params: AutoSearchParams) -> Result<bool, WorkspaceError>;
 }
 
 /// Convenience function for constructing a server instance of [Workspace]
-pub fn server() -> Box<dyn Workspace> {
-    Box::new(server::WorkspaceServer::new())
+pub fn server(fs: Mutex<Box<dyn FileSystem>>) -> Box<dyn Workspace> {
+    Box::new(server::WorkspaceServer::new(fs))
 }
 
 /// Convenience function for constructing a server instance of [Workspace]
-pub fn server_sync() -> Arc<dyn Workspace> {
-    Arc::new(server::WorkspaceServer::new())
+pub fn server_sync(fs: Mutex<Box<dyn FileSystem>>) -> Arc<dyn Workspace> {
+    Arc::new(server::WorkspaceServer::new(fs))
 }
 
 /// Convenience function for constructing a client instance of [Workspace]

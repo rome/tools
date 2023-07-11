@@ -55,14 +55,14 @@ pub(crate) fn read_vcs_ignore_file(
     if !configuration.is_enabled() {
         return Ok(vec![]);
     }
-    let file_system = &session.app.fs;
+    let workspace = &session.app.workspace;
 
     if let Some(client_kind) = &configuration.client_kind {
         match client_kind {
             VcsClientKind::Git => {
                 let git_folder = current_directory.join(".git");
 
-                if !file_system.path_exists(git_folder.as_path()) {
+                if !workspace.path_exists(git_folder.as_path()) {
                     return Err(CliDiagnostic::NoVcsFolderFound(NoVcsFolderFound {
                         path: git_folder.display().to_string(),
                         source: None,
@@ -71,7 +71,7 @@ pub(crate) fn read_vcs_ignore_file(
             }
         }
         if !configuration.ignore_file_disabled() {
-            let result = file_system
+            let result = workspace
                 .auto_search(current_directory, client_kind.ignore_file(), false)
                 .map_err(WorkspaceError::from)?;
 

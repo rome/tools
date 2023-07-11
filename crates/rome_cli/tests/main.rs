@@ -419,7 +419,7 @@ pub(crate) fn run_cli<'app>(
     let transport = SocketTransport::open(runtime, client_read, client_write);
 
     let workspace = workspace::client(transport).unwrap();
-    let app = App::new(fs, console, WorkspaceRef::Owned(workspace));
+    let app = App::new(console, WorkspaceRef::Owned(workspace));
 
     let mut session = CliSession { app };
     let command = rome_command().run_inner(args);

@@ -7,7 +7,6 @@ use serde::{Deserialize, Serialize};
 use std::io;
 use std::panic::RefUnwindSafe;
 use std::path::{Path, PathBuf};
-use std::sync::Arc;
 use tracing::{error, info};
 
 mod memory;
@@ -66,7 +65,7 @@ pub trait FileSystem: Send + Sync + RefUnwindSafe {
                         .map_err(|_| FileSystemDiagnostic {
                             path: file_directory_path.display().to_string(),
                             severity: Severity::Error,
-                            error_kind: ErrorKind::CantReadFile(
+                            error_kind: FsErrorKind::CantReadFile(
                                 file_directory_path.display().to_string(),
                             ),
                         })?;
@@ -110,7 +109,7 @@ pub trait FileSystem: Send + Sync + RefUnwindSafe {
                         return Err(FileSystemDiagnostic {
                             path: file_directory_path.display().to_string(),
                             severity: Severity::Error,
-                            error_kind: ErrorKind::CantReadFile(
+                            error_kind: FsErrorKind::CantReadFile(
                                 file_directory_path.display().to_string(),
                             ),
                         });
@@ -264,27 +263,6 @@ pub trait TraversalContext: Sync {
     fn handle_file(&self, path: &Path);
 }
 
-impl<T> FileSystem for Arc<T>
-where
-    T: FileSystem + Send,
-{
-    fn open_with_options(&self, path: &Path, options: OpenOptions) -> io::Result<Box<dyn File>> {
-        T::open_with_options(self, path, options)
-    }
-
-    fn traversal<'scope>(&'scope self, func: BoxedTraversal<'_, 'scope>) {
-        T::traversal(self, func)
-    }
-
-    fn working_directory(&self) -> Option<PathBuf> {
-        T::working_directory(self)
-    }
-
-    fn path_exists(&self, path: &Path) -> bool {
-        T::path_exists(self, path)
-    }
-}
-
 #[derive(Debug, Diagnostic, Deserialize, Serialize)]
 #[diagnostic(category = "internalError/fs")]
 pub struct FileSystemDiagnostic {
@@ -295,11 +273,11 @@ pub struct FileSystemDiagnostic {
     #[message]
     #[description]
     #[advice]
-    pub error_kind: ErrorKind,
+    pub error_kind: FsErrorKind,
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
-pub enum ErrorKind {
+pub enum FsErrorKind {
     /// File not found
     CantReadFile(String),
     /// Unknown file type
@@ -308,50 +286,59 @@ pub enum ErrorKind {
     DereferencedSymlink(String),
     /// Symbolic link cycle or symbolic link infinite expansion
     InfiniteSymlinkExpansion(String),
+
+    CantAccessToFileSystem,
 }
 
-impl console::fmt::Display for ErrorKind {
+impl console::fmt::Display for FsErrorKind {
     fn fmt(&self, fmt: &mut console::fmt::Formatter) -> io::Result<()> {
         match self {
-            ErrorKind::CantReadFile(_) => fmt.write_str("Rome couldn't read the file"),
-            ErrorKind::UnknownFileType => fmt.write_str("Unknown file type"),
-            ErrorKind::DereferencedSymlink(_) => fmt.write_str("Dereferenced symlink"),
-            ErrorKind::InfiniteSymlinkExpansion(_) => fmt.write_str("Infinite symlink expansion"),
+            FsErrorKind::CantReadFile(_) => fmt.write_str("Rome couldn't read the file"),
+            FsErrorKind::UnknownFileType => fmt.write_str("Unknown file type"),
+            FsErrorKind::DereferencedSymlink(_) => fmt.write_str("Dereferenced symlink"),
+            FsErrorKind::InfiniteSymlinkExpansion(_) => fmt.write_str("Infinite symlink expansion"),
+            FsErrorKind::CantAccessToFileSystem => fmt.write_str("Couldn't access to file system"),
         }
     }
 }
 
-impl std::fmt::Display for ErrorKind {
+impl std::fmt::Display for FsErrorKind {
     fn fmt(&self, fmt: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            ErrorKind::CantReadFile(_) => fmt.write_str("Rome couldn't read the file"),
-            ErrorKind::UnknownFileType => write!(fmt, "Unknown file type"),
-            ErrorKind::DereferencedSymlink(_) => write!(fmt, "Dereferenced symlink"),
-            ErrorKind::InfiniteSymlinkExpansion(_) => write!(fmt, "Infinite symlink expansion"),
+            FsErrorKind::CantReadFile(_) => fmt.write_str("Rome couldn't read the file"),
+            FsErrorKind::UnknownFileType => write!(fmt, "Unknown file type"),
+            FsErrorKind::DereferencedSymlink(_) => write!(fmt, "Dereferenced symlink"),
+            FsErrorKind::InfiniteSymlinkExpansion(_) => write!(fmt, "Infinite symlink expansion"),
+            FsErrorKind::CantAccessToFileSystem => fmt.write_str("Couldn't access to file system"),
         }
     }
 }
 
-impl Advices for ErrorKind {
+impl Advices for FsErrorKind {
     fn record(&self, visitor: &mut dyn Visit) -> io::Result<()> {
         match self {
-			ErrorKind::CantReadFile(path) => visitor.record_log(
+			FsErrorKind::CantReadFile(path) => visitor.record_log(
 		LogCategory::Error,
 			&format!("Rome couldn't read the following file, maybe for permissions reasons or it doesn't exists: {}", path)
 			),
 
-            ErrorKind::UnknownFileType => visitor.record_log(
+            FsErrorKind::UnknownFileType => visitor.record_log(
                 LogCategory::Info,
                 &"Rome encountered a file system entry that's neither a file, directory or symbolic link",
             ),
-            ErrorKind::DereferencedSymlink(path) => visitor.record_log(
+            FsErrorKind::DereferencedSymlink(path) => visitor.record_log(
                 LogCategory::Info,
                 &format!("Rome encountered a file system entry that is a broken symbolic link: {}", path),
             ),
-            ErrorKind::InfiniteSymlinkExpansion(path) => visitor.record_log(
+            FsErrorKind::InfiniteSymlinkExpansion(path) => visitor.record_log(
                 LogCategory::Error,
                 &format!("Rome encountered a file system entry that leads to an infinite symbolic link expansion, causing an infinite cycle: {}", path),
             ),
+            FsErrorKind::CantAccessToFileSystem => visitor.record_log(
+                LogCategory::Error,
+                &format!("Some error"),
+            ),
+
         }
     }
 }

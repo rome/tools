@@ -12,7 +12,7 @@ use rome_diagnostics::{Error, Severity};
 use crate::fs::OpenOptions;
 use crate::{FileSystem, RomePath, TraversalContext, TraversalScope};
 
-use super::{BoxedTraversal, ErrorKind, File, FileSystemDiagnostic};
+use super::{BoxedTraversal, FsErrorKind, File, FileSystemDiagnostic};
 
 /// Fully in-memory file system, stores the content of all known files in a hashmap
 pub struct MemoryFileSystem {
@@ -250,12 +250,12 @@ impl<'scope> TraversalScope<'scope> for MemoryTraversalScope<'scope> {
                 ctx.push_diagnostic(Error::from(FileSystemDiagnostic {
                     path: path.to_string_lossy().to_string(),
                     error_kind: match entry {
-                        ErrorEntry::UnknownFileType => ErrorKind::UnknownFileType,
+                        ErrorEntry::UnknownFileType => FsErrorKind::UnknownFileType,
                         ErrorEntry::DereferencedSymlink(path) => {
-                            ErrorKind::DereferencedSymlink(path.to_string_lossy().to_string())
+                            FsErrorKind::DereferencedSymlink(path.to_string_lossy().to_string())
                         }
                         ErrorEntry::InfiniteSymlinkExpansion(path) => {
-                            ErrorKind::InfiniteSymlinkExpansion(path.to_string_lossy().to_string())
+                            FsErrorKind::InfiniteSymlinkExpansion(path.to_string_lossy().to_string())
                         }
                     },
                     severity: Severity::Warning,

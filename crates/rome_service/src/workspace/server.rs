@@ -7,23 +7,25 @@ use super::{
 };
 use crate::file_handlers::{Capabilities, FixAllParams, Language, LintParams};
 use crate::workspace::{
-    FileFeaturesResult, GetFileContentParams, IsPathIgnoredParams, OrganizeImportsParams,
-    OrganizeImportsResult, RageEntry, RageParams, RageResult, ServerInfo,
+    AutoSearchParams, FileFeaturesResult, GetFileContentParams, IsPathIgnoredParams,
+    OrganizeImportsParams, OrganizeImportsResult, PathExistsParams, RageEntry, RageParams,
+    RageResult, ServerInfo,
 };
 use crate::{
     file_handlers::Features,
     settings::{SettingsHandle, WorkspaceSettings},
-    Rules, Workspace, WorkspaceError,
+    DynRef, Rules, Workspace, WorkspaceError,
 };
 use dashmap::{mapref::entry::Entry, DashMap};
 use indexmap::IndexSet;
 use rome_analyze::{AnalysisFilter, RuleFilter};
 use rome_diagnostics::{serde::Diagnostic as SerdeDiagnostic, Diagnostic, DiagnosticExt, Severity};
 use rome_formatter::Printed;
-use rome_fs::RomePath;
+use rome_fs::{FileSystem, RomePath};
 use rome_parser::AnyParse;
 use rome_rowan::NodeCache;
 use std::ffi::OsStr;
+use std::sync::Mutex;
 use std::{panic::RefUnwindSafe, sync::RwLock};
 use tracing::trace;
 
@@ -36,6 +38,8 @@ pub(super) struct WorkspaceServer {
     documents: DashMap<RomePath, Document>,
     /// Stores the result of the parser (syntax tree + diagnostics) for a given URL
     syntax: DashMap<RomePath, AnyParse>,
+
+    fs: Mutex<Box<dyn FileSystem>>,
 }
 
 /// The `Workspace` object is long lived, so we want it to be able to cross
@@ -60,12 +64,13 @@ impl WorkspaceServer {
     /// This is implemented as a crate-private method instead of using
     /// [Default] to disallow instances of [Workspace] from being created
     /// outside of a [crate::App]
-    pub(crate) fn new() -> Self {
+    pub(crate) fn new(fs: Mutex<Box<dyn FileSystem>>) -> Self {
         Self {
             features: Features::new(),
             settings: RwLock::default(),
             documents: DashMap::default(),
             syntax: DashMap::default(),
+            fs,
         }
     }
 
@@ -89,11 +94,11 @@ impl WorkspaceServer {
     }
 
     /// Return an error factory function for unsupported features at a given path
-    fn build_capability_error<'a>(
-        &'a self,
-        path: &'a RomePath,
+    fn build_capability_error<'b>(
+        &'b self,
+        path: &'b RomePath,
         // feature_name: &'a str,
-    ) -> impl FnOnce() -> WorkspaceError + 'a {
+    ) -> impl FnOnce() -> WorkspaceError + 'b {
         move || {
             let language_hint = self
                 .documents
@@ -113,7 +118,7 @@ impl WorkspaceServer {
         }
     }
 
-    fn build_rule_filter_list<'a>(&'a self, rules: Option<&'a Rules>) -> Vec<RuleFilter> {
+    fn build_rule_filter_list<'b>(&'b self, rules: Option<&'b Rules>) -> Vec<RuleFilter> {
         if let Some(rules) = rules {
             let enabled: IndexSet<RuleFilter> = rules.as_enabled_rules();
             enabled.into_iter().collect::<Vec<RuleFilter>>()
@@ -322,14 +327,6 @@ impl Workspace for WorkspaceServer {
         Ok(printed)
     }
 
-    fn get_file_content(&self, params: GetFileContentParams) -> Result<String, WorkspaceError> {
-        let document = self
-            .documents
-            .get(&params.path)
-            .ok_or(WorkspaceError::not_found())?;
-        Ok(document.content.clone())
-    }
-
     fn get_formatter_ir(&self, params: GetFormatterIRParams) -> Result<String, WorkspaceError> {
         let capabilities = self.get_capabilities(&params.path);
         let debug_formatter_ir = capabilities
@@ -344,6 +341,14 @@ impl Workspace for WorkspaceServer {
         }
 
         debug_formatter_ir(&params.path, parse, settings)
+    }
+
+    fn get_file_content(&self, params: GetFileContentParams) -> Result<String, WorkspaceError> {
+        let document = self
+            .documents
+            .get(&params.path)
+            .ok_or(WorkspaceError::not_found())?;
+        Ok(document.content.clone())
     }
 
     /// Change the content of an open file
@@ -566,5 +571,24 @@ impl Workspace for WorkspaceServer {
         let result = organize_imports(parse)?;
 
         Ok(result)
+    }
+
+    fn config_name(&self, _: ()) -> Result<String, WorkspaceError> {
+        let fs = self.fs.lock().unwrap();
+        Ok(fs.config_name().to_string())
+    }
+
+    fn path_exists(&self, params: PathExistsParams) -> Result<bool, WorkspaceError> {
+        let fs = self.fs.lock().unwrap();
+        Ok(fs.path_exists(params.path.as_path()))
+    }
+
+    fn auto_search(&self, params: AutoSearchParams) -> Result<bool, WorkspaceError> {
+        let fs = self.fs.lock().unwrap();
+        let result = fs.auto_search(
+            params.file_path,
+            &params.file_name,
+            params.should_error_if_file_not_found,
+        )?;
     }
 }
