@@ -77,7 +77,6 @@ pub(crate) fn traverse(
     let processed = AtomicUsize::new(0);
     let skipped = AtomicUsize::new(0);
 
-    let fs = &*session.app.fs;
     let workspace = &*session.app.workspace;
     let console = &mut *session.app.console;
 
@@ -111,10 +110,8 @@ pub(crate) fn traverse(
         // The traversal context is scoped to ensure all the channels it
         // contains are properly closed once the traversal finishes
         traverse_inputs(
-            fs,
             inputs,
             &TraversalOptions {
-                fs,
                 workspace,
                 execution: &execution,
                 interner,
@@ -240,7 +237,7 @@ fn init_thread_pool() {
 
 /// Initiate the filesystem traversal tasks with the provided input paths and
 /// run it to completion, returning the duration of the process
-fn traverse_inputs(fs: &dyn FileSystem, inputs: Vec<OsString>, ctx: &TraversalOptions) -> Duration {
+fn traverse_inputs(inputs: Vec<OsString>, ctx: &TraversalOptions) -> Duration {
     let start = Instant::now();
 
     fs.traversal(Box::new(move |scope: &dyn TraversalScope| {
@@ -587,8 +584,6 @@ fn process_messages(options: ProcessMessagesOptions) {
 
 /// Context object shared between directory traversal tasks
 pub(crate) struct TraversalOptions<'ctx, 'app> {
-    /// Shared instance of [FileSystem]
-    pub(crate) fs: &'app dyn FileSystem,
     /// Instance of [Workspace] used by this instance of the CLI
     pub(crate) workspace: &'ctx dyn Workspace,
     /// Determines how the files should be processed

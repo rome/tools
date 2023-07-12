@@ -51,24 +51,23 @@
 //! document does not implement the required capability: for instance trying to
 //! format a file with a language that does not have a formatter
 
+pub use self::client::{TransportRequest, WorkspaceClient, WorkspaceTransport};
 use crate::file_handlers::Capabilities;
-use crate::{Configuration, Deserialize, DynRef, Serialize, WorkspaceError};
+pub use crate::file_handlers::Language;
+use crate::settings::WorkspaceSettings;
+use crate::{Configuration, Deserialize, Serialize, WorkspaceError};
 use rome_analyze::ActionCategory;
 pub use rome_analyze::RuleCategories;
 use rome_console::{markup, Markup, MarkupBuf};
 use rome_diagnostics::CodeSuggestion;
 use rome_formatter::Printed;
-use rome_fs::{FileSystem, OsFileSystem, RomePath};
+use rome_fs::{AutoSearchResult, FileSystem, RomePath};
 use rome_js_syntax::{TextRange, TextSize};
 use rome_text_edit::TextEdit;
 use std::collections::HashMap;
 use std::path::PathBuf;
 use std::sync::Mutex;
 use std::{borrow::Cow, panic::RefUnwindSafe, sync::Arc};
-
-pub use self::client::{TransportRequest, WorkspaceClient, WorkspaceTransport};
-pub use crate::file_handlers::Language;
-use crate::settings::WorkspaceSettings;
 
 mod client;
 mod server;
@@ -467,13 +466,6 @@ pub struct AutoSearchParams {
     pub file_name: String,
     pub should_error_if_file_not_found: bool,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
-#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
-pub struct AutoSearchResult {
-    pub file_path: PathBuf,
-    pub file_name: String,
-    pub should_error_if_file_not_found: bool,
-}
 
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
@@ -596,9 +588,16 @@ pub trait Workspace: Send + Sync + RefUnwindSafe {
         params: OrganizeImportsParams,
     ) -> Result<OrganizeImportsResult, WorkspaceError>;
 
-    fn config_name(&self, params: ()) -> Result<String, WorkspaceError>;
+    fn config_name(&self) -> Result<String, WorkspaceError>;
     fn path_exists(&self, params: PathExistsParams) -> Result<bool, WorkspaceError>;
-    fn auto_search(&self, params: AutoSearchParams) -> Result<bool, WorkspaceError>;
+    fn auto_search(
+        &self,
+        params: AutoSearchParams,
+    ) -> Result<Option<AutoSearchResult>, WorkspaceError>;
+
+    fn working_directory(&self) -> Result<Option<PathBuf>, WorkspaceError>;
+
+    fn traverse(&self) -> Result<(), WorkspaceError>;
 }
 
 /// Convenience function for constructing a server instance of [Workspace]

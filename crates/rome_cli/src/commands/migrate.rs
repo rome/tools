@@ -17,7 +17,7 @@ pub(crate) fn migrate(
         ..
     } = load_configuration(&mut session, &cli_options)?;
 
-    let config_name = session.app.workspace.fs().config_name();
+    let config_name = session.app.workspace.config_name()?;
     if let Some(path) = path {
         execute_mode(
             Execution::new(TraversalMode::Migrate {

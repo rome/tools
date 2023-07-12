@@ -18,7 +18,7 @@ use std::{
 use anyhow::{bail, ensure, Context, Error};
 use dashmap::DashMap;
 use rome_service::{
-    workspace::{TransportRequest, WorkspaceTransport},
+    workspace::{TransportRequestWithParams, WorkspaceTransport},
     TransportError,
 };
 use serde::{de::DeserializeOwned, Deserialize, Serialize};
@@ -185,7 +185,7 @@ impl SocketTransport {
 impl RefUnwindSafe for SocketTransport {}
 
 impl WorkspaceTransport for SocketTransport {
-    fn request<P, R>(&self, request: TransportRequest<P>) -> Result<R, TransportError>
+    fn request<P, R>(&self, request: TransportRequestWithParams<P>) -> Result<R, TransportError>
     where
         P: Serialize,
         R: DeserializeOwned,

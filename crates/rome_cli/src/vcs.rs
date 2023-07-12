@@ -5,7 +5,8 @@ use rome_console::{markup, ConsoleExt};
 use rome_diagnostics::PrintDiagnostic;
 use rome_service::configuration::vcs::{VcsClientKind, VcsConfiguration};
 use rome_service::configuration::{FilesConfiguration, StringSet};
-use rome_service::{Configuration, WorkspaceError};
+use rome_service::workspace::{AutoSearchParams, PathExistsParams};
+use rome_service::Configuration;
 use std::path::PathBuf;
 
 /// This function will check if the configuration is set to use the VCS integration and try to
@@ -62,7 +63,9 @@ pub(crate) fn read_vcs_ignore_file(
             VcsClientKind::Git => {
                 let git_folder = current_directory.join(".git");
 
-                if !workspace.path_exists(git_folder.as_path()) {
+                if !workspace.path_exists(PathExistsParams {
+                    path: git_folder.clone(),
+                })? {
                     return Err(CliDiagnostic::NoVcsFolderFound(NoVcsFolderFound {
                         path: git_folder.display().to_string(),
                         source: None,
@@ -71,9 +74,11 @@ pub(crate) fn read_vcs_ignore_file(
             }
         }
         if !configuration.ignore_file_disabled() {
-            let result = workspace
-                .auto_search(current_directory, client_kind.ignore_file(), false)
-                .map_err(WorkspaceError::from)?;
+            let result = workspace.auto_search(AutoSearchParams {
+                file_path: current_directory,
+                file_name: client_kind.ignore_file().to_string(),
+                should_error_if_file_not_found: false,
+            })?;
 
             if let Some(result) = result {
                 return Ok(result

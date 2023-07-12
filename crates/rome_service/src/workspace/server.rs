@@ -21,10 +21,11 @@ use indexmap::IndexSet;
 use rome_analyze::{AnalysisFilter, RuleFilter};
 use rome_diagnostics::{serde::Diagnostic as SerdeDiagnostic, Diagnostic, DiagnosticExt, Severity};
 use rome_formatter::Printed;
-use rome_fs::{FileSystem, RomePath};
+use rome_fs::{AutoSearchResult, FileSystem, RomePath};
 use rome_parser::AnyParse;
 use rome_rowan::NodeCache;
-use std::ffi::OsStr;
+use std::ffi::{OsStr, OsString};
+use std::path::PathBuf;
 use std::sync::Mutex;
 use std::{panic::RefUnwindSafe, sync::RwLock};
 use tracing::trace;
@@ -573,7 +574,7 @@ impl Workspace for WorkspaceServer {
         Ok(result)
     }
 
-    fn config_name(&self, _: ()) -> Result<String, WorkspaceError> {
+    fn config_name(&self) -> Result<String, WorkspaceError> {
         let fs = self.fs.lock().unwrap();
         Ok(fs.config_name().to_string())
     }
@@ -583,12 +584,31 @@ impl Workspace for WorkspaceServer {
         Ok(fs.path_exists(params.path.as_path()))
     }
 
-    fn auto_search(&self, params: AutoSearchParams) -> Result<bool, WorkspaceError> {
+    fn auto_search(
+        &self,
+        params: AutoSearchParams,
+    ) -> Result<Option<AutoSearchResult>, WorkspaceError> {
         let fs = self.fs.lock().unwrap();
-        let result = fs.auto_search(
+        Ok(fs.auto_search(
             params.file_path,
             &params.file_name,
             params.should_error_if_file_not_found,
-        )?;
+        )?)
+    }
+
+    fn working_directory(&self) -> Result<Option<PathBuf>, WorkspaceError> {
+        let fs = self.fs.lock().unwrap();
+        Ok(fs.working_directory())
+    }
+
+    fn traverse(&self, inputs: Vec<OsString>) -> Result<(), WorkspaceError> {
+        let fs = self.fs.lock().unwrap();
+        fs.traversal(Box::new(move |scope: &dyn TraversalScope| {
+            for input in inputs {
+                scope.spawn(ctx, PathBuf::from(input));
+            }
+        }));
+
+        Ok(())
     }
 }

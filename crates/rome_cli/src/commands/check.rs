@@ -85,7 +85,7 @@ pub(crate) fn check(
     fs_configuration.merge_with(configuration);
 
     // check if support of git ignore files is enabled
-    let vcs_base_path = configuration_path.or(session.app.fs.working_directory());
+    let vcs_base_path = configuration_path.or(session.app.workspace.working_directory()?);
     store_path_to_ignore_from_vcs(
         &mut session,
         &mut fs_configuration,

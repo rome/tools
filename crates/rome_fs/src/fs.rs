@@ -127,6 +127,8 @@ pub trait FileSystem: Send + Sync + RefUnwindSafe {
 }
 
 /// Result of the auto search
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct AutoSearchResult {
     /// The content of the file
     pub content: String,
