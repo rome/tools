@@ -4,11 +4,11 @@ use crate::static_value::{QuotedString, StaticStringValue, StaticValue};
 use crate::{
     AnyJsCallArgument, AnyJsExpression, AnyJsLiteralExpression, AnyJsTemplateElement,
     JsArrayExpression, JsArrayHole, JsAssignmentExpression, JsBinaryExpression, JsCallExpression,
-    JsComputedMemberExpression, JsLiteralMemberName, JsLogicalExpression, JsNewExpression,
-    JsNumberLiteralExpression, JsObjectExpression, JsPostUpdateExpression, JsReferenceIdentifier,
-    JsRegexLiteralExpression, JsStaticMemberExpression, JsStringLiteralExpression, JsSyntaxKind,
-    JsSyntaxToken, JsTemplateChunkElement, JsTemplateExpression, JsUnaryExpression,
-    OperatorPrecedence, T,
+    JsComputedMemberAssignment, JsComputedMemberExpression, JsLiteralMemberName,
+    JsLogicalExpression, JsNewExpression, JsNumberLiteralExpression, JsObjectExpression,
+    JsPostUpdateExpression, JsReferenceIdentifier, JsRegexLiteralExpression,
+    JsStaticMemberExpression, JsStringLiteralExpression, JsSyntaxKind, JsSyntaxToken,
+    JsTemplateChunkElement, JsTemplateExpression, JsUnaryExpression, OperatorPrecedence, T,
 };
 use crate::{JsPreUpdateExpression, JsSyntaxKind::*};
 use core::iter;
@@ -854,6 +854,57 @@ impl JsComputedMemberExpression {
     /// ```
     pub fn is_optional_chain(&self) -> bool {
         is_optional_chain(self.clone().into())
+    }
+}
+
+declare_node_union! {
+    pub AnyJsComputedMember = JsComputedMemberExpression | JsComputedMemberAssignment
+}
+
+impl AnyJsComputedMember {
+    pub fn object(&self) -> SyntaxResult<AnyJsExpression> {
+        match self {
+            AnyJsComputedMember::JsComputedMemberExpression(expression) => expression.object(),
+            AnyJsComputedMember::JsComputedMemberAssignment(assignment) => assignment.object(),
+        }
+    }
+
+    pub fn l_brack_token(&self) -> SyntaxResult<JsSyntaxToken> {
+        match self {
+            AnyJsComputedMember::JsComputedMemberExpression(expression) => {
+                expression.l_brack_token()
+            }
+            AnyJsComputedMember::JsComputedMemberAssignment(assignment) => {
+                assignment.l_brack_token()
+            }
+        }
+    }
+
+    pub fn optional_chain_token(&self) -> Option<JsSyntaxToken> {
+        match self {
+            AnyJsComputedMember::JsComputedMemberExpression(expression) => {
+                expression.optional_chain_token()
+            }
+            AnyJsComputedMember::JsComputedMemberAssignment(_) => None,
+        }
+    }
+
+    pub fn member(&self) -> SyntaxResult<AnyJsExpression> {
+        match self {
+            AnyJsComputedMember::JsComputedMemberExpression(expression) => expression.member(),
+            AnyJsComputedMember::JsComputedMemberAssignment(assignment) => assignment.member(),
+        }
+    }
+
+    pub fn r_brack_token(&self) -> SyntaxResult<JsSyntaxToken> {
+        match self {
+            AnyJsComputedMember::JsComputedMemberExpression(expression) => {
+                expression.r_brack_token()
+            }
+            AnyJsComputedMember::JsComputedMemberAssignment(assignment) => {
+                assignment.r_brack_token()
+            }
+        }
     }
 }
 

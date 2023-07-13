@@ -3,14 +3,14 @@ use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Ast, Rule
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make::{
-    ident, js_literal_member_name, js_name, js_static_member_expression, token,
+    self, ident, js_literal_member_name, js_name, js_static_member_expression, token,
 };
 use rome_js_syntax::{
-    AnyJsExpression, AnyJsLiteralExpression, AnyJsName, JsComputedMemberAssignment,
-    JsComputedMemberExpression, JsComputedMemberName, T,
+    AnyJsComputedMember, AnyJsExpression, AnyJsLiteralExpression, AnyJsName, JsComputedMemberName,
+    JsLiteralMemberName, JsSyntaxKind, T,
 };
 use rome_js_unicode_table::{is_id_continue, is_id_start};
-use rome_rowan::{declare_node_union, AstNode, BatchMutationExt, SyntaxResult, TextRange};
+use rome_rowan::{declare_node_union, AstNode, BatchMutationExt, TextRange};
 
 declare_rule! {
     /// Enforce the usage of a literal access to properties over computed property access.
@@ -51,52 +51,34 @@ declare_rule! {
     }
 }
 
-declare_node_union! {
-    pub(crate) AnyJsComputedMember = AnyJsCompputedExpression | JsComputedMemberName
-}
-
-declare_node_union! {
-    pub(crate) AnyJsCompputedExpression = JsComputedMemberExpression | JsComputedMemberAssignment
-}
-
-impl AnyJsCompputedExpression {
-    pub(crate) fn member(&self) -> SyntaxResult<AnyJsExpression> {
-        match self {
-            AnyJsCompputedExpression::JsComputedMemberExpression(node) => node.member(),
-            AnyJsCompputedExpression::JsComputedMemberAssignment(node) => node.member(),
-        }
-    }
-
-    pub(crate) fn object(&self) -> SyntaxResult<AnyJsExpression> {
-        match self {
-            AnyJsCompputedExpression::JsComputedMemberExpression(node) => node.object(),
-            AnyJsCompputedExpression::JsComputedMemberAssignment(node) => node.object(),
-        }
-    }
-}
-
 impl Rule for UseLiteralKeys {
-    type Query = Ast<AnyJsComputedMember>;
+    type Query = Ast<AnyJsMember>;
     type State = (TextRange, String);
     type Signals = Option<Self::State>;
     type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
-        let computed_expression = ctx.query();
-
-        let inner_expression = match computed_expression {
-            AnyJsComputedMember::AnyJsCompputedExpression(computed_expression) => {
-                computed_expression.member().ok()?
+        let node = ctx.query();
+        let inner_expression = match node {
+            AnyJsMember::AnyJsComputedMember(computed_member) => computed_member.member().ok()?,
+            AnyJsMember::JsLiteralMemberName(member) => {
+                if member.value().ok()?.kind() == JsSyntaxKind::JS_STRING_LITERAL {
+                    let name = member.name().ok()?;
+                    if is_js_ident(&name) {
+                        return Some((member.range(), name));
+                    }
+                }
+                return None;
             }
-            AnyJsComputedMember::JsComputedMemberName(member) => member.expression().ok()?,
+            AnyJsMember::JsComputedMemberName(member) => member.expression().ok()?,
         };
-
         match inner_expression {
             AnyJsExpression::AnyJsLiteralExpression(
                 AnyJsLiteralExpression::JsStringLiteralExpression(string_literal),
             ) => {
                 let value = string_literal.inner_string_text().ok()?;
-                if can_convert_to_static_member(&value) {
+                // A computed property `["something"]` can always be simplified to a string literal "something".
+                if matches!(node, AnyJsMember::JsComputedMemberName(_)) || is_js_ident(&value) {
                     return Some((string_literal.range(), value.to_string()));
                 }
             }
@@ -104,17 +86,15 @@ impl Rule for UseLiteralKeys {
                 let mut value = String::new();
                 for element in template_expression.elements() {
                     let chunk = element.as_js_template_chunk_element()?;
-
                     value.push_str(chunk.template_chunk_token().ok()?.text_trimmed());
                 }
-                if can_convert_to_static_member(&value) {
+                // A computed property ``[`something`]`` can always be simplified to a string literal "something".
+                if matches!(node, AnyJsMember::JsComputedMemberName(_)) || is_js_ident(&value) {
                     return Some((template_expression.range(), value));
                 }
             }
-
             _ => {}
         }
-
         None
     }
 
@@ -130,11 +110,9 @@ impl Rule for UseLiteralKeys {
 
     fn action(ctx: &RuleContext<Self>, (_, identifier): &Self::State) -> Option<JsRuleAction> {
         let node = ctx.query();
-
         let mut mutation = ctx.root().begin();
-
         match node {
-            AnyJsComputedMember::AnyJsCompputedExpression(node) => {
+            AnyJsMember::AnyJsComputedMember(node) => {
                 let object = node.object().ok()?;
                 let member = js_name(ident(identifier));
                 let static_expression =
@@ -143,39 +121,42 @@ impl Rule for UseLiteralKeys {
                     node.clone().into_syntax().into(),
                     static_expression.into_syntax().into(),
                 );
-                Some(JsRuleAction {
-                    mutation,
-                    applicability: Applicability::MaybeIncorrect,
-                    category: ActionCategory::QuickFix,
-                    message: markup! {
-                        "Replace it with a static expression."
-                    }
-                    .to_owned(),
-                })
             }
-            AnyJsComputedMember::JsComputedMemberName(member) => {
-                let literal_member_name = js_literal_member_name(ident(identifier));
+            AnyJsMember::JsLiteralMemberName(node) => {
+                mutation.replace_token(node.value().ok()?, make::ident(identifier));
+            }
+            AnyJsMember::JsComputedMemberName(member) => {
+                let name_token = if is_js_ident(identifier) {
+                    make::ident(identifier)
+                } else {
+                    make::js_string_literal(identifier)
+                };
+                let literal_member_name = js_literal_member_name(name_token);
                 mutation.replace_element(
                     member.clone().into_syntax().into(),
                     literal_member_name.into_syntax().into(),
                 );
-                Some(JsRuleAction {
-                    mutation,
-                    applicability: Applicability::MaybeIncorrect,
-                    category: ActionCategory::QuickFix,
-                    message: markup! {
-                        "Replace it with a static expression."
-                    }
-                    .to_owned(),
-                })
             }
         }
+        Some(JsRuleAction {
+            mutation,
+            applicability: Applicability::MaybeIncorrect,
+            category: ActionCategory::QuickFix,
+            message: markup! {
+                "Use a literal key instead."
+            }
+            .to_owned(),
+        })
     }
+}
+
+declare_node_union! {
+    pub(crate) AnyJsMember = AnyJsComputedMember | JsLiteralMemberName | JsComputedMemberName
 }
 
 // This function check if the key is valid JavaScript identifier.
 // Currently, it doesn't check escaped unicode chars.
-fn can_convert_to_static_member(key: &str) -> bool {
+fn is_js_ident(key: &str) -> bool {
     key.chars().enumerate().all(|(index, c)| {
         if index == 0 {
             is_id_start(c)
