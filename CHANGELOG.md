@@ -207,6 +207,28 @@ if no error diagnostics are emitted.
   var x = a => 1 ? 2 : 3;
   ```
 
+- Improve [useLiteralKeys](https://docs.rome.tools/lint/rules/useLiteralKeys/).
+
+  Now, the rule suggests simplifying computed properties to string literal properties:
+
+  ```diff
+  {
+  -  ["1+1"]: 2,
+  +  "1+1": 2,
+  }
+  ```
+
+  It also suggests simplifying string literal properties to static properties:
+
+  ```diff
+  {
+  -  "a": 0,
+  +  a: 0,
+  }
+  ```
+
+  These suggestions are made in object literals, classes, interfaces, and object types.
+
 - The rules [`useExhaustiveDependencies`](https://docs.rome.tools/lint/rules/useexhaustivedependencies/) and [`useHookAtTopLevel`](https://docs.rome.tools/lint/rules/usehookattoplevel/) accept a different shape of options
 
   Old configuration

@@ -4,10 +4,9 @@ use crate::js::expressions::static_member_expression::member_chain_callee_needs_
 use crate::parentheses::NeedsParentheses;
 use rome_formatter::{format_args, write};
 use rome_js_syntax::{
-    AnyJsExpression, AnyJsLiteralExpression, JsComputedMemberAssignment,
-    JsComputedMemberExpression, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken,
+    AnyJsComputedMember, AnyJsExpression, AnyJsLiteralExpression, JsComputedMemberExpression,
+    JsSyntaxKind, JsSyntaxNode,
 };
-use rome_rowan::{declare_node_union, SyntaxResult};
 
 #[derive(Debug, Clone, Default)]
 pub(crate) struct FormatJsComputedMemberExpression;
@@ -18,7 +17,7 @@ impl FormatNodeRule<JsComputedMemberExpression> for FormatJsComputedMemberExpres
         node: &JsComputedMemberExpression,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {
-        AnyJsComputedMemberLike::from(node.clone()).fmt(f)
+        AnyJsComputedMember::from(node.clone()).fmt(f)
     }
 
     fn needs_parentheses(&self, item: &JsComputedMemberExpression) -> bool {
@@ -26,11 +25,7 @@ impl FormatNodeRule<JsComputedMemberExpression> for FormatJsComputedMemberExpres
     }
 }
 
-declare_node_union! {
-    pub(crate) AnyJsComputedMemberLike = JsComputedMemberExpression | JsComputedMemberAssignment
-}
-
-impl Format<JsFormatContext> for AnyJsComputedMemberLike {
+impl Format<JsFormatContext> for AnyJsComputedMember {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
         write!(f, [self.object().format()])?;
 
@@ -39,10 +34,10 @@ impl Format<JsFormatContext> for AnyJsComputedMemberLike {
 }
 
 /// Formats the lookup portion (everything except the object) of a computed member like.
-pub(crate) struct FormatComputedMemberLookup<'a>(&'a AnyJsComputedMemberLike);
+pub(crate) struct FormatComputedMemberLookup<'a>(&'a AnyJsComputedMember);
 
 impl<'a> FormatComputedMemberLookup<'a> {
-    pub(crate) fn new(member_like: &'a AnyJsComputedMemberLike) -> Self {
+    pub(crate) fn new(member_like: &'a AnyJsComputedMember) -> Self {
         Self(member_like)
     }
 }
@@ -73,53 +68,6 @@ impl Format<JsFormatContext> for FormatComputedMemberLookup<'_> {
                         self.0.r_brack_token().format()
                     ])]
                 ]
-            }
-        }
-    }
-}
-
-impl AnyJsComputedMemberLike {
-    fn object(&self) -> SyntaxResult<AnyJsExpression> {
-        match self {
-            AnyJsComputedMemberLike::JsComputedMemberExpression(expression) => expression.object(),
-            AnyJsComputedMemberLike::JsComputedMemberAssignment(assignment) => assignment.object(),
-        }
-    }
-
-    fn l_brack_token(&self) -> SyntaxResult<JsSyntaxToken> {
-        match self {
-            AnyJsComputedMemberLike::JsComputedMemberExpression(expression) => {
-                expression.l_brack_token()
-            }
-            AnyJsComputedMemberLike::JsComputedMemberAssignment(assignment) => {
-                assignment.l_brack_token()
-            }
-        }
-    }
-
-    fn optional_chain_token(&self) -> Option<JsSyntaxToken> {
-        match self {
-            AnyJsComputedMemberLike::JsComputedMemberExpression(expression) => {
-                expression.optional_chain_token()
-            }
-            AnyJsComputedMemberLike::JsComputedMemberAssignment(_) => None,
-        }
-    }
-
-    fn member(&self) -> SyntaxResult<AnyJsExpression> {
-        match self {
-            AnyJsComputedMemberLike::JsComputedMemberExpression(expression) => expression.member(),
-            AnyJsComputedMemberLike::JsComputedMemberAssignment(assignment) => assignment.member(),
-        }
-    }
-
-    fn r_brack_token(&self) -> SyntaxResult<JsSyntaxToken> {
-        match self {
-            AnyJsComputedMemberLike::JsComputedMemberExpression(expression) => {
-                expression.r_brack_token()
-            }
-            AnyJsComputedMemberLike::JsComputedMemberAssignment(assignment) => {
-                assignment.r_brack_token()
             }
         }
     }
