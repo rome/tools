@@ -880,6 +880,13 @@
 						{ "type": "null" }
 					]
 				},
+				"noUselessEmptyExport": {
+					"description": "Disallow empty exports that don't change anything in a module file.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"noVoid": {
 					"description": "Disallow the use of void operators, which is not a familiar operator.",
 					"anyOf": [

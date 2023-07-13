@@ -1,0 +1,3 @@
+function f() {}
+f();
+export {}
