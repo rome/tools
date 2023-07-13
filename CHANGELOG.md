@@ -275,7 +275,11 @@ if no error diagnostics are emitted.
 
 - Fix [noUndeclaredVariables](https://docs.rome.tools/lint/rules/noundeclaredvariables/)'s false positive diagnostics ([#4675](https://github.com/rome/tools/issues/4675))
 
-  The semantic analyzer no longer handles `this` reference identifier in the semantic analyzer.
+  The semantic analyzer no longer handles `this` reference identifier.
+
+- Fix [noUnusedVariables](https://docs.rome.tools/lint/rules/nounusedvariables/)'s false positive diagnostics ([#4688](https://github.com/rome/tools/issues/4688))
+
+  The semantic analyzer handles ts export declaration clause correctly.
 
 ### Parser
 
