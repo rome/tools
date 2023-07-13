@@ -942,7 +942,7 @@ impl SemanticEventExtractor {
                 .and_then(|declaration| declaration.parent())
                 .and_then(|declaration_clause| declaration_clause.parent())
                 .map(|x| x.kind()),
-            Some(JS_EXPORT)
+            Some(JS_EXPORT) | Some(TS_EXPORT_DECLARE_CLAUSE)
         );
 
         if is_exported {
