@@ -542,7 +542,7 @@ export interface Nursery {
 	 */
 	noExcessiveComplexity?: RuleConfiguration;
 	/**
-	 * Disallow fallthrough of case statements.
+	 * Disallow fallthrough of switch clauses.
 	 */
 	noFallthroughSwitchClause?: RuleConfiguration;
 	/**

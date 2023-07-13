@@ -1,17 +1,16 @@
-use rome_rowan::AstNode;
+use rome_rowan::{AstNode, AstNodeList};
 
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::{
-    AnyJsSwitchClause, JsBreakStatement, JsContinueStatement, JsReturnStatement, JsSwitchStatement,
-    JsThrowStatement,
+    AnyJsStatement, AnyJsSwitchClause, JsBlockStatement, JsStatementList, JsSwitchStatement,
 };
 
 declare_rule! {
-    /// Disallow fallthrough of case statements.
+    /// Disallow fallthrough of `switch` clauses.
     ///
-    /// Case statements in switch statements fall through by default. This can lead to unexpected behavior when forgotten.
-    /// This rule disallows the fallthrough of case statements.
+    /// Switch clauses in `switch` statements fall through by default.
+    /// This can lead to unexpected behavior when forgotten.
     ///
     /// Source: https://eslint.org/docs/latest/rules/no-fallthrough
     ///
@@ -41,7 +40,7 @@ declare_rule! {
     /// ```
     ///
     pub(crate) NoFallthroughSwitchClause {
-        version: "12.0.0",
+        version: "next",
         name: "noFallthroughSwitchClause",
         recommended: false,
     }
@@ -90,18 +89,30 @@ impl Rule for NoFallthroughSwitchClause {
 }
 
 fn case_fell(case: &AnyJsSwitchClause) -> bool {
-    let mut children = case.consequent().syntax().children();
+    let statements = case.consequent();
+    !has_fall_blocker_statement(&statements) && statements.iter().count() != 0
+}
 
-    if children.clone().count() == 0 {
-        return false;
+fn has_fall_blocker_statement(statements: &JsStatementList) -> bool {
+    for statement in statements.iter() {
+        if is_fall_blocker_statement(&statement) {
+            return true;
+        }
+        if let Some(block_statement) = JsBlockStatement::cast_ref(statement.syntax()) {
+            if has_fall_blocker_statement(&block_statement.statements()) {
+                return true;
+            }
+        }
     }
+    false
+}
 
-    let has_fall_blocker = children.any(|node| {
-        JsBreakStatement::can_cast(node.kind())
-            | JsReturnStatement::can_cast(node.kind())
-            | JsThrowStatement::can_cast(node.kind())
-            | JsContinueStatement::can_cast(node.kind())
-    });
-
-    !has_fall_blocker
+fn is_fall_blocker_statement(statement: &AnyJsStatement) -> bool {
+    matches!(
+        statement,
+        AnyJsStatement::JsBreakStatement(_)
+            | AnyJsStatement::JsReturnStatement(_)
+            | AnyJsStatement::JsThrowStatement(_)
+            | AnyJsStatement::JsContinueStatement(_)
+    )
 }

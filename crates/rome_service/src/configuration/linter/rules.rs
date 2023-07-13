@@ -1848,7 +1848,7 @@ pub struct Nursery {
     )]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub no_excessive_complexity: Option<RuleConfiguration>,
-    #[doc = "Disallow fallthrough of case statements."]
+    #[doc = "Disallow fallthrough of switch clauses."]
     #[bpaf(
         long("no-fallthrough-switch-clause"),
         argument("on|off|warn"),
