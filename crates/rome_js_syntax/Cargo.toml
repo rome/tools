@@ -9,14 +9,14 @@ repository.workspace = true
 version              = "0.0.2"
 
 [dependencies]
-rome_console     = { workspace = true }
-rome_diagnostics = { workspace = true }
-rome_rowan       = { workspace = true }
-schemars         = { workspace = true, optional = true }
-serde            = { workspace = true, features = ["derive"], optional = true }
+rome_console     = { version = "0.0.1", path = "../rome_console" }
+rome_diagnostics = { version = "0.0.1", path = "../rome_diagnostics" }
+rome_rowan       = { version = "0.0.1", path = "../rome_rowan" }
+schemars         = { version = "0.8.10", optional = true }
+serde            = { version = "1.0.136", features = ["derive"], optional = true }
 
 [dev-dependencies]
-rome_js_factory = { workspace = true }
+rome_js_factory = { path = "../rome_js_factory" }
 
 [features]
 serde = ["dep:serde", "schemars", "rome_rowan/serde"]

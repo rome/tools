@@ -20,19 +20,28 @@ use std::vec::IntoIter;
 pub trait AnalyzerSignal<L: Language> {
     fn diagnostic(&self) -> Option<AnalyzerDiagnostic>;
     fn actions(&self) -> AnalyzerActionIter<L>;
+    fn transformations(&self) -> AnalyzerTransformationIter<L>;
 }
 
 /// Simple implementation of [AnalyzerSignal] generating a [AnalyzerDiagnostic]
 /// from a provided factory function. Optionally, this signal can be configured
 /// to also emit a code action, by calling `.with_action` with a secondary
 /// factory function for said action.
-pub struct DiagnosticSignal<D, A, L, T> {
+pub struct DiagnosticSignal<D, A, L, T, Tr> {
     diagnostic: D,
     action: A,
+    transformation: Tr,
     _diag: PhantomData<(L, T)>,
 }
 
-impl<L: Language, D, T> DiagnosticSignal<D, fn() -> Option<AnalyzerAction<L>>, L, T>
+impl<L: Language, D, T>
+    DiagnosticSignal<
+        D,
+        fn() -> Option<AnalyzerAction<L>>,
+        L,
+        T,
+        fn() -> Option<AnalyzerTransformation<L>>,
+    >
 where
     D: Fn() -> T,
     Error: From<T>,
@@ -41,29 +50,32 @@ where
         Self {
             diagnostic: factory,
             action: || None,
+            transformation: || None,
             _diag: PhantomData,
         }
     }
 }
 
-impl<L: Language, D, A, T> DiagnosticSignal<D, A, L, T> {
-    pub fn with_action<B>(self, factory: B) -> DiagnosticSignal<D, B, L, T>
+impl<L: Language, D, A, T, Tr> DiagnosticSignal<D, A, L, T, Tr> {
+    pub fn with_action<B>(self, factory: B) -> DiagnosticSignal<D, B, L, T, Tr>
     where
         B: Fn() -> Option<AnalyzerAction<L>>,
     {
         DiagnosticSignal {
             diagnostic: self.diagnostic,
             action: factory,
+            transformation: self.transformation,
             _diag: PhantomData,
         }
     }
 }
 
-impl<L: Language, D, A, T> AnalyzerSignal<L> for DiagnosticSignal<D, A, L, T>
+impl<L: Language, D, A, T, Tr> AnalyzerSignal<L> for DiagnosticSignal<D, A, L, T, Tr>
 where
     D: Fn() -> T,
     Error: From<T>,
     A: Fn() -> Option<AnalyzerAction<L>>,
+    Tr: Fn() -> Option<AnalyzerTransformation<L>>,
 {
     fn diagnostic(&self) -> Option<AnalyzerDiagnostic> {
         let diag = (self.diagnostic)();
@@ -76,6 +88,14 @@ where
             AnalyzerActionIter::new([action])
         } else {
             AnalyzerActionIter::new(vec![])
+        }
+    }
+
+    fn transformations(&self) -> AnalyzerTransformationIter<L> {
+        if let Some(transformation) = (self.transformation)() {
+            AnalyzerTransformationIter::new([transformation])
+        } else {
+            AnalyzerTransformationIter::new(vec![])
         }
     }
 }
@@ -236,6 +256,53 @@ impl<L: Language> AnalyzerActionIter<L> {
     }
 }
 
+pub struct AnalyzerTransformationIter<L: Language> {
+    analyzer_transformations: IntoIter<AnalyzerTransformation<L>>,
+}
+
+impl<L: Language> Default for AnalyzerTransformationIter<L> {
+    fn default() -> Self {
+        Self {
+            analyzer_transformations: vec![].into_iter(),
+        }
+    }
+}
+
+impl<L: Language> AnalyzerTransformationIter<L> {
+    pub fn new<I>(transformations: I) -> Self
+    where
+        I: IntoIterator<Item = AnalyzerTransformation<L>>,
+        I::IntoIter: ExactSizeIterator,
+    {
+        Self {
+            analyzer_transformations: transformations
+                .into_iter()
+                .collect::<Vec<AnalyzerTransformation<L>>>()
+                .into_iter(),
+        }
+    }
+}
+
+impl<L: Language> Iterator for AnalyzerTransformationIter<L> {
+    type Item = AnalyzerTransformation<L>;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        self.analyzer_transformations.next()
+    }
+}
+impl<L: Language> FusedIterator for AnalyzerTransformationIter<L> {}
+
+impl<L: Language> ExactSizeIterator for AnalyzerTransformationIter<L> {
+    fn len(&self) -> usize {
+        self.analyzer_transformations.len()
+    }
+}
+
+#[derive(Debug, Clone)]
+pub struct AnalyzerTransformation<L: Language> {
+    pub mutation: BatchMutation<L>,
+}
+
 /// Analyzer-internal implementation of [AnalyzerSignal] for a specific [Rule](crate::registry::Rule)
 pub(crate) struct RuleSignal<'phase, R: Rule> {
     root: &'phase RuleRoot<R>,
@@ -335,6 +402,31 @@ where
             AnalyzerActionIter::new(actions)
         } else {
             AnalyzerActionIter::new(vec![])
+        }
+    }
+
+    fn transformations(&self) -> AnalyzerTransformationIter<RuleLanguage<R>> {
+        let globals = self.options.globals();
+        let options = self.options.rule_options::<R>().unwrap_or_default();
+        let ctx = RuleContext::new(
+            &self.query_result,
+            self.root,
+            self.services,
+            &globals,
+            &self.options.file_path,
+            &options,
+        )
+        .ok();
+        if let Some(ctx) = ctx {
+            let mut transformations = Vec::new();
+            let mutation = R::transform(&ctx, &self.state);
+            if let Some(mutation) = mutation {
+                let transformation = AnalyzerTransformation { mutation };
+                transformations.push(transformation)
+            }
+            AnalyzerTransformationIter::new(transformations)
+        } else {
+            AnalyzerTransformationIter::new(vec![])
         }
     }
 }

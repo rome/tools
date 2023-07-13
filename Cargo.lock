@@ -2013,6 +2013,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "rome_js_transform"
+version = "0.1.0"
+dependencies = [
+ "lazy_static",
+ "rome_analyze",
+ "rome_diagnostics",
+ "rome_js_factory",
+ "rome_js_formatter",
+ "rome_js_parser",
+ "rome_js_syntax",
+ "rome_rowan",
+]
+
+[[package]]
 name = "rome_js_unicode_table"
 version = "0.0.1"
 

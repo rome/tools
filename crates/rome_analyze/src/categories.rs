@@ -18,6 +18,8 @@ pub enum RuleCategory {
     /// This rule detects refactoring opportunities and emits code action
     /// signals
     Action,
+    /// This rule detects transformations that should be applied to the code
+    Transformation,
 }
 
 /// Actions that suppress rules should start with this string
@@ -170,6 +172,7 @@ bitflags! {
         const SYNTAX = 1 << RuleCategory::Syntax as u8;
         const LINT = 1 << RuleCategory::Lint as u8;
         const ACTION = 1 << RuleCategory::Action as u8;
+        const TRANSFORMATION = 1 << RuleCategory::Transformation as u8;
     }
 }
 
@@ -191,6 +194,7 @@ impl From<RuleCategory> for RuleCategories {
             RuleCategory::Syntax => RuleCategories::SYNTAX,
             RuleCategory::Lint => RuleCategories::LINT,
             RuleCategory::Action => RuleCategories::ACTION,
+            RuleCategory::Transformation => RuleCategories::TRANSFORMATION,
         }
     }
 }
@@ -213,6 +217,10 @@ impl serde::Serialize for RuleCategories {
 
         if self.contains(Self::ACTION) {
             flags.push(RuleCategory::Action);
+        }
+
+        if self.contains(Self::TRANSFORMATION) {
+            flags.push(RuleCategory::Transformation);
         }
 
         serializer.collect_seq(flags)

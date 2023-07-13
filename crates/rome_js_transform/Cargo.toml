@@ -1,0 +1,22 @@
+[package]
+authors.workspace    = true
+edition.workspace    = true
+license.workspace    = true
+name                 = "rome_js_transform"
+repository.workspace = true
+version              = "0.1.0"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+lazy_static      = { workspace = true }
+rome_analyze     = { workspace = true }
+rome_diagnostics = { workspace = true }
+rome_js_factory  = { workspace = true }
+rome_js_syntax   = { workspace = true }
+rome_rowan       = { workspace = true }
+
+
+[dev-dependencies]
+rome_js_formatter = { path = "../rome_js_formatter" }
+rome_js_parser    = { path = "../rome_js_parser" }

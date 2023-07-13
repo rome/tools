@@ -41,7 +41,7 @@ pub trait FromServices: Sized {
     ) -> Result<Self, MissingServicesDiagnostic>;
 }
 
-#[derive(Default)]
+#[derive(Debug, Default)]
 pub struct ServiceBag {
     services: HashMap<TypeId, Box<dyn Any>>,
 }
