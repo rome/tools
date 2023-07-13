@@ -369,6 +369,14 @@ pub trait Rule: RuleMeta + Sized {
             None
         }
     }
+
+    /// Returns a mutation to apply to the code
+    fn transform(
+        _ctx: &RuleContext<Self>,
+        _state: &Self::State,
+    ) -> Option<BatchMutation<RuleLanguage<Self>>> {
+        None
+    }
 }
 
 /// Diagnostic object returned by a single analysis rule

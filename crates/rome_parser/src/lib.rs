@@ -830,7 +830,7 @@ impl AnyParse {
         F: FileSource<'a, L> + 'static,
         L: Language + 'static,
     {
-        self.file_source.unwrap_cast(path)
+        self.file_source.unwrap_cast_from_path(path)
     }
 
     pub fn tree<N>(&self) -> N

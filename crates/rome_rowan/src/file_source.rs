@@ -76,7 +76,7 @@ impl AnyFileSource {
     /// The function will panic if:
     /// - the original type and given type mismatch
     /// - it's possible to retrieve the correct [FileSource] from the given [Path]
-    pub fn unwrap_cast<'a, F, L>(&self, path: &'a Path) -> Result<F, FileSourceError>
+    pub fn unwrap_cast_from_path<'a, F, L>(&self, path: &'a Path) -> Result<F, FileSourceError>
     where
         F: FileSource<'a, L> + 'static,
         L: Language + 'static,
@@ -122,7 +122,7 @@ mod test {
         };
         let send_first = first_test.as_any_file_source();
 
-        let cast = send_first.unwrap_cast::<Test, RawLanguage>(path.as_path());
+        let cast = send_first.unwrap_cast_from_path::<Test, RawLanguage>(path.as_path());
 
         assert!(cast.is_ok());
 

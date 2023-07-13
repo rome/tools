@@ -37,10 +37,11 @@ impl<'token> FormatLiteralStringToken<'token> {
 
     pub fn clean_text(&self, options: &JsFormatOptions) -> CleanedStringLiteralText {
         let token = self.token();
-        debug_assert!(matches!(
-            token.kind(),
-            JS_STRING_LITERAL | JSX_STRING_LITERAL
-        ));
+        debug_assert!(
+            matches!(token.kind(), JS_STRING_LITERAL | JSX_STRING_LITERAL),
+            "Found kind {:?}",
+            token.kind()
+        );
 
         let chosen_quote_style = match token.kind() {
             JSX_STRING_LITERAL => options.jsx_quote_style(),

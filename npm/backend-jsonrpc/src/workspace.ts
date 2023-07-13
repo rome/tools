@@ -1042,7 +1042,7 @@ export interface PullDiagnosticsParams {
 	path: RomePath;
 }
 export type RuleCategories = RuleCategory[];
-export type RuleCategory = "Syntax" | "Lint" | "Action";
+export type RuleCategory = "Syntax" | "Lint" | "Action" | "Transformation";
 export interface PullDiagnosticsResult {
 	diagnostics: Diagnostic[];
 	errors: number;
