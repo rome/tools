@@ -15,6 +15,7 @@ pub(crate) mod no_void;
 pub(crate) mod use_arrow_function;
 pub(crate) mod use_grouped_type_import;
 pub(crate) mod use_heading_content;
+pub(crate) mod use_import_restrictions;
 pub(crate) mod use_literal_enum_members;
 pub(crate) mod use_literal_keys;
 pub(crate) mod use_simple_number_keys;
@@ -36,6 +37,7 @@ declare_group! {
             self :: use_arrow_function :: UseArrowFunction ,
             self :: use_grouped_type_import :: UseGroupedTypeImport ,
             self :: use_heading_content :: UseHeadingContent ,
+            self :: use_import_restrictions :: UseImportRestrictions ,
             self :: use_literal_enum_members :: UseLiteralEnumMembers ,
             self :: use_literal_keys :: UseLiteralKeys ,
             self :: use_simple_number_keys :: UseSimpleNumberKeys ,

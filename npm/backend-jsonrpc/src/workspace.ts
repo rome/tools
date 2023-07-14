@@ -618,6 +618,10 @@ export interface Nursery {
 	 */
 	useHookAtTopLevel?: RuleConfiguration;
 	/**
+	 * Disallows imports from certain modules.
+	 */
+	useImportRestrictions?: RuleConfiguration;
+	/**
 	 * Require calls to isNaN() when checking for NaN.
 	 */
 	useIsNan?: RuleConfiguration;
@@ -1159,6 +1163,7 @@ export type Category =
 	| "lint/nursery/useGroupedTypeImport"
 	| "lint/nursery/useHeadingContent"
 	| "lint/nursery/useHookAtTopLevel"
+	| "lint/nursery/useImportRestrictions"
 	| "lint/nursery/useIsNan"
 	| "lint/nursery/useLiteralEnumMembers"
 	| "lint/nursery/useLiteralKeys"

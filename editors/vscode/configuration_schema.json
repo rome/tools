@@ -947,6 +947,13 @@
 						{ "type": "null" }
 					]
 				},
+				"useImportRestrictions": {
+					"description": "Disallows imports from certain modules.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"useIsNan": {
 					"description": "Require calls to isNaN() when checking for NaN.",
 					"anyOf": [

@@ -102,6 +102,7 @@ define_categories! {
     "lint/nursery/useGroupedTypeImport": "https://docs.rome.tools/lint/rules/useGroupedTypeImport",
     "lint/nursery/useHeadingContent": "https://docs.rome.tools/lint/rules/useHeadingContent",
     "lint/nursery/useHookAtTopLevel": "https://docs.rome.tools/lint/rules/useHookAtTopLevel",
+    "lint/nursery/useImportRestrictions": "https://docs.rome.tools/lint/rules/useImportRestrictions",
     "lint/nursery/useIsNan": "https://docs.rome.tools/lint/rules/useIsNan",
     "lint/nursery/useLiteralEnumMembers": "https://docs.rome.tools/lint/rules/useLiteralEnumMembers",
     "lint/nursery/useLiteralKeys": "https://docs.rome.tools/lint/rules/useLiteralKeys",
