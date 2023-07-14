@@ -7,6 +7,8 @@ expression: invalidClassProperty.js
 export default class {
     X
 
+    "Y" = 0
+
     #X
 
     Initialized = 0
@@ -45,7 +47,7 @@ invalidClassProperty.js:2:5 lint/nursery/useNamingConvention ━━━━━━�
   > 2 │     X
       │     ^
     3 │ 
-    4 │     #X
+    4 │     "Y" = 0
   
   i The name could be renamed to `x`.
   
@@ -59,12 +61,12 @@ invalidClassProperty.js:4:5 lint/nursery/useNamingConvention ━━━━━━�
   
     2 │     X
     3 │ 
-  > 4 │     #X
-      │     ^^
+  > 4 │     "Y" = 0
+      │     ^^^
     5 │ 
-    6 │     Initialized = 0
+    6 │     #X
   
-  i The name could be renamed to `x`.
+  i The name could be renamed to `y`.
   
 
 ```
@@ -74,14 +76,14 @@ invalidClassProperty.js:6:5 lint/nursery/useNamingConvention ━━━━━━�
 
   ! This class property name should be in camelCase.
   
-    4 │     #X
+    4 │     "Y" = 0
     5 │ 
-  > 6 │     Initialized = 0
-      │     ^^^^^^^^^^^
+  > 6 │     #X
+      │     ^^
     7 │ 
-    8 │     #Initialized = 0
+    8 │     Initialized = 0
   
-  i The name could be renamed to `initialized`.
+  i The name could be renamed to `x`.
   
 
 ```
@@ -91,12 +93,12 @@ invalidClassProperty.js:8:5 lint/nursery/useNamingConvention ━━━━━━�
 
   ! This class property name should be in camelCase.
   
-     6 │     Initialized = 0
+     6 │     #X
      7 │ 
-   > 8 │     #Initialized = 0
-       │     ^^^^^^^^^^^^
+   > 8 │     Initialized = 0
+       │     ^^^^^^^^^^^
      9 │ 
-    10 │     PROPERTY
+    10 │     #Initialized = 0
   
   i The name could be renamed to `initialized`.
   
@@ -108,14 +110,14 @@ invalidClassProperty.js:10:5 lint/nursery/useNamingConvention ━━━━━━
 
   ! This class property name should be in camelCase.
   
-     8 │     #Initialized = 0
+     8 │     Initialized = 0
      9 │ 
-  > 10 │     PROPERTY
-       │     ^^^^^^^^
+  > 10 │     #Initialized = 0
+       │     ^^^^^^^^^^^^
     11 │ 
-    12 │     #PROPERTY
+    12 │     PROPERTY
   
-  i The name could be renamed to `property`.
+  i The name could be renamed to `initialized`.
   
 
 ```
@@ -125,12 +127,12 @@ invalidClassProperty.js:12:5 lint/nursery/useNamingConvention ━━━━━━
 
   ! This class property name should be in camelCase.
   
-    10 │     PROPERTY
+    10 │     #Initialized = 0
     11 │ 
-  > 12 │     #PROPERTY
-       │     ^^^^^^^^^
+  > 12 │     PROPERTY
+       │     ^^^^^^^^
     13 │ 
-    14 │     SpecialProperty
+    14 │     #PROPERTY
   
   i The name could be renamed to `property`.
   
@@ -142,14 +144,14 @@ invalidClassProperty.js:14:5 lint/nursery/useNamingConvention ━━━━━━
 
   ! This class property name should be in camelCase.
   
-    12 │     #PROPERTY
+    12 │     PROPERTY
     13 │ 
-  > 14 │     SpecialProperty
-       │     ^^^^^^^^^^^^^^^
+  > 14 │     #PROPERTY
+       │     ^^^^^^^^^
     15 │ 
-    16 │     #SpecialProperty
+    16 │     SpecialProperty
   
-  i The name could be renamed to `specialProperty`.
+  i The name could be renamed to `property`.
   
 
 ```
@@ -159,12 +161,12 @@ invalidClassProperty.js:16:5 lint/nursery/useNamingConvention ━━━━━━
 
   ! This class property name should be in camelCase.
   
-    14 │     SpecialProperty
+    14 │     #PROPERTY
     15 │ 
-  > 16 │     #SpecialProperty
-       │     ^^^^^^^^^^^^^^^^
+  > 16 │     SpecialProperty
+       │     ^^^^^^^^^^^^^^^
     17 │ 
-    18 │     special_property
+    18 │     #SpecialProperty
   
   i The name could be renamed to `specialProperty`.
   
@@ -176,12 +178,12 @@ invalidClassProperty.js:18:5 lint/nursery/useNamingConvention ━━━━━━
 
   ! This class property name should be in camelCase.
   
-    16 │     #SpecialProperty
+    16 │     SpecialProperty
     17 │ 
-  > 18 │     special_property
+  > 18 │     #SpecialProperty
        │     ^^^^^^^^^^^^^^^^
     19 │ 
-    20 │     #special_property
+    20 │     special_property
   
   i The name could be renamed to `specialProperty`.
   
@@ -193,12 +195,12 @@ invalidClassProperty.js:20:5 lint/nursery/useNamingConvention ━━━━━━
 
   ! This class property name should be in camelCase.
   
-    18 │     special_property
+    18 │     #SpecialProperty
     19 │ 
-  > 20 │     #special_property
-       │     ^^^^^^^^^^^^^^^^^
+  > 20 │     special_property
+       │     ^^^^^^^^^^^^^^^^
     21 │ 
-    22 │     Unknown_Style
+    22 │     #special_property
   
   i The name could be renamed to `specialProperty`.
   
@@ -210,14 +212,14 @@ invalidClassProperty.js:22:5 lint/nursery/useNamingConvention ━━━━━━
 
   ! This class property name should be in camelCase.
   
-    20 │     #special_property
+    20 │     special_property
     21 │ 
-  > 22 │     Unknown_Style
-       │     ^^^^^^^^^^^^^
+  > 22 │     #special_property
+       │     ^^^^^^^^^^^^^^^^^
     23 │ 
-    24 │     #Unknown_Style
+    24 │     Unknown_Style
   
-  i The name could be renamed to `unknownStyle`.
+  i The name could be renamed to `specialProperty`.
   
 
 ```
@@ -227,12 +229,12 @@ invalidClassProperty.js:24:5 lint/nursery/useNamingConvention ━━━━━━
 
   ! This class property name should be in camelCase.
   
-    22 │     Unknown_Style
+    22 │     #special_property
     23 │ 
-  > 24 │     #Unknown_Style
-       │     ^^^^^^^^^^^^^^
+  > 24 │     Unknown_Style
+       │     ^^^^^^^^^^^^^
     25 │ 
-    26 │     Unknown_Init_Style = 0
+    26 │     #Unknown_Style
   
   i The name could be renamed to `unknownStyle`.
   
@@ -244,14 +246,14 @@ invalidClassProperty.js:26:5 lint/nursery/useNamingConvention ━━━━━━
 
   ! This class property name should be in camelCase.
   
-    24 │     #Unknown_Style
+    24 │     Unknown_Style
     25 │ 
-  > 26 │     Unknown_Init_Style = 0
-       │     ^^^^^^^^^^^^^^^^^^
+  > 26 │     #Unknown_Style
+       │     ^^^^^^^^^^^^^^
     27 │ 
-    28 │     #Unknown_Init_Style = 0
+    28 │     Unknown_Init_Style = 0
   
-  i The name could be renamed to `unknownInitStyle`.
+  i The name could be renamed to `unknownStyle`.
   
 
 ```
@@ -261,11 +263,28 @@ invalidClassProperty.js:28:5 lint/nursery/useNamingConvention ━━━━━━
 
   ! This class property name should be in camelCase.
   
-    26 │     Unknown_Init_Style = 0
+    26 │     #Unknown_Style
     27 │ 
-  > 28 │     #Unknown_Init_Style = 0
+  > 28 │     Unknown_Init_Style = 0
+       │     ^^^^^^^^^^^^^^^^^^
+    29 │ 
+    30 │     #Unknown_Init_Style = 0
+  
+  i The name could be renamed to `unknownInitStyle`.
+  
+
+```
+
+```
+invalidClassProperty.js:30:5 lint/nursery/useNamingConvention ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class property name should be in camelCase.
+  
+    28 │     Unknown_Init_Style = 0
+    29 │ 
+  > 30 │     #Unknown_Init_Style = 0
        │     ^^^^^^^^^^^^^^^^^^^
-    29 │ }
+    31 │ }
   
   i The name could be renamed to `unknownInitStyle`.
   
