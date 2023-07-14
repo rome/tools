@@ -4,7 +4,7 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{AnyJsExpression, JsCallExpression, JsNewExpression, JsNewExpressionFields};
-use rome_rowan::{AstNode, BatchMutationExt};
+use rome_rowan::{chain_trivia_pieces, AstNode, BatchMutationExt};
 
 declare_rule! {
     /// Disallow `new` operators with the `Symbol` object
@@ -102,18 +102,10 @@ fn convert_new_expression_to_call_expression(expr: &JsNewExpression) -> Option<J
     let arguments = arguments?;
 
     if new_token.has_leading_comments() || new_token.has_trailing_comments() {
-        let symbol = callee.syntax().first_token()?;
-
-        let leading_trivia = new_token
-            .leading_trivia()
-            .pieces()
-            .chain(new_token.trailing_trivia().pieces())
-            .chain(symbol.leading_trivia().pieces())
-            .collect::<Vec<_>>();
-
-        let symbol = symbol.with_leading_trivia_pieces(leading_trivia);
-
-        callee = make::js_identifier_expression(make::js_reference_identifier(symbol)).into();
+        callee = callee.prepend_trivia_pieces(chain_trivia_pieces(
+            new_token.leading_trivia().pieces(),
+            new_token.trailing_trivia().pieces(),
+        ))?;
     }
 
     Some(make::js_call_expression(callee, arguments).build())

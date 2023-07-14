@@ -289,10 +289,7 @@ impl JsFormatSyntaxRewriter {
                 // doesn't contain ANY token, but we know that the subtree contains at least the first token.
                 let last_token = updated.last_token().unwrap();
 
-                let new_last = last_token.with_trailing_trivia_pieces(chain_trivia_pieces(
-                    last_token.trailing_trivia().pieces(),
-                    r_paren_trivia,
-                ));
+                let new_last = last_token.append_trivia_pieces(r_paren_trivia);
 
                 self.source_map
                     .add_deleted_range(r_paren.text_trimmed_range());

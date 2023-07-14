@@ -140,40 +140,18 @@ impl Rule for UseDefaultParameterLast {
         let mut mutation = ctx.root().begin();
         if opt_param.question_mark_token().is_some() {
             let question_mark = opt_param.question_mark_token()?;
-            let next_token = question_mark.next_token()?;
-            let new_next_token = next_token.with_leading_trivia_pieces(
-                question_mark
-                    .leading_trivia()
-                    .pieces()
-                    .chain(question_mark.trailing_trivia().pieces())
-                    .chain(next_token.leading_trivia().pieces())
-                    .collect::<Vec<_>>(),
-            );
-            mutation.replace_token_discard_trivia(next_token, new_next_token);
+            let prev_token = question_mark.prev_token()?;
+            let new_token =
+                prev_token.append_trivia_pieces(question_mark.trailing_trivia().pieces());
+            mutation.replace_token_discard_trivia(prev_token, new_token);
             mutation.remove_token(question_mark);
         } else {
             let initializer = opt_param.initializer()?;
-            let first_initializer_token = initializer.syntax().first_token()?;
-            let last_initializer_token = initializer.syntax().last_token()?;
-            let prev_initializer_token = first_initializer_token.prev_token()?;
-            let trailing_trivia_count = prev_initializer_token.trailing_trivia().pieces().count();
-            let last_trailing_non_space = prev_initializer_token
-                .trailing_trivia()
-                .pieces()
-                .rev()
-                .position(|p| !p.is_newline() && !p.is_whitespace())
-                .unwrap_or(trailing_trivia_count);
-            let new_prev_initializer_token = prev_initializer_token.with_trailing_trivia_pieces(
-                prev_initializer_token
-                    .trailing_trivia()
-                    .pieces()
-                    .take(trailing_trivia_count - last_trailing_non_space)
-                    .chain(first_initializer_token.leading_trivia().pieces())
-                    .chain(last_initializer_token.trailing_trivia().pieces())
-                    .collect::<Vec<_>>(),
-            );
-            mutation
-                .replace_token_discard_trivia(prev_initializer_token, new_prev_initializer_token);
+            let prev_token = initializer.syntax().prev_sibling()?.last_token()?;
+            let new_token = prev_token
+                .trim_trailing_trivia()
+                .append_trivia_pieces(initializer.syntax().last_trailing_trivia()?.pieces());
+            mutation.replace_token_discard_trivia(prev_token, new_token);
             mutation.remove_node(initializer);
         }
         Some(JsRuleAction {

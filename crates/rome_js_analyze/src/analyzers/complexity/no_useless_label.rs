@@ -8,7 +8,7 @@ use rome_js_syntax::{
 };
 
 use crate::JsRuleAction;
-use rome_rowan::{chain_trivia_pieces, declare_node_union, AstNode, BatchMutationExt};
+use rome_rowan::{declare_node_union, AstNode, BatchMutationExt};
 
 declare_rule! {
     /// Disallow unnecessary labels.
@@ -111,21 +111,12 @@ impl Rule for NoUselessLabel {
         // We want to remove trailing spaces and keep all comments that follows `stmt_token`
         // e.g. `break /* a comment */  ` to `break /* a comment */`.
         // This requires to traverse the trailing trivia in reverse order.
-        let mut stmt_token_trailing_trivia = stmt_token
-            .trailing_trivia()
-            .pieces()
-            .rev()
-            .skip_while(|p| p.is_newline() || p.is_whitespace())
-            .collect::<Vec<_>>();
-        // We restore initial trivia order
-        stmt_token_trailing_trivia.reverse();
         // We keep trailing trivia of `label_stmt`
         // e.g. `break label // a comment` -> `break // a comment`
         // We do not keep leading trivia of `label_stmt` because we assume that they are associated to the label.
-        let new_stmt_token = stmt_token.with_trailing_trivia_pieces(chain_trivia_pieces(
-            stmt_token_trailing_trivia.into_iter(),
-            label_token.trailing_trivia().pieces(),
-        ));
+        let new_stmt_token = stmt_token
+            .trim_trailing_trivia()
+            .append_trivia_pieces(label_token.trailing_trivia().pieces());
         let mut mutation = ctx.root().begin();
         mutation.remove_token(label_token);
         mutation.replace_token_discard_trivia(stmt_token, new_stmt_token);

@@ -1,5 +1,3 @@
-use std::iter;
-
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
@@ -125,14 +123,15 @@ impl Rule for NoSwitchDeclarations {
         let clause_token = switch_clause.clause_token().ok()?;
         let colon_token = switch_clause.colon_token().ok()?;
         let consequent = switch_clause.consequent();
-        let new_colon_token = colon_token.with_trailing_trivia(iter::empty());
+        let new_colon_token = colon_token.with_trailing_trivia([]);
         let new_consequent = make::js_statement_list(Some(AnyJsStatement::JsBlockStatement(
             make::js_block_statement(
                 make::token(T!['{'])
                     .with_leading_trivia(Some((TriviaPieceKind::Whitespace, " ")))
                     .with_trailing_trivia_pieces(colon_token.trailing_trivia().pieces()),
                 consequent.to_owned(),
-                make::token(T!['}']).with_leading_trivia_pieces(clause_token.indentation_trivia()),
+                make::token(T!['}'])
+                    .with_leading_trivia_pieces(clause_token.indentation_trivia_pieces()),
             ),
         )));
         let mut mutation = ctx.root().begin();

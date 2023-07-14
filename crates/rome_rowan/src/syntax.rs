@@ -16,9 +16,10 @@ use std::fmt;
 use std::fmt::Debug;
 pub use token::SyntaxToken;
 pub use trivia::{
-    chain_trivia_pieces, ChainTriviaPiecesIterator, SyntaxTrivia, SyntaxTriviaPiece,
-    SyntaxTriviaPieceComments, SyntaxTriviaPieceNewline, SyntaxTriviaPieceSkipped,
-    SyntaxTriviaPieceWhitespace, SyntaxTriviaPiecesIterator, TriviaPiece, TriviaPieceKind,
+    chain_trivia_pieces, trim_leading_trivia_pieces, trim_trailing_trivia_pieces,
+    ChainTriviaPiecesIterator, SyntaxTrivia, SyntaxTriviaPiece, SyntaxTriviaPieceComments,
+    SyntaxTriviaPieceNewline, SyntaxTriviaPieceSkipped, SyntaxTriviaPieceWhitespace,
+    SyntaxTriviaPiecesIterator, TriviaPiece, TriviaPieceKind,
 };
 
 /// Type tag for each node or token of a language

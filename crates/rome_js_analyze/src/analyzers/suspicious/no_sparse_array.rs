@@ -67,7 +67,7 @@ markup! {
                     make::ident("undefined")
                 } else {
                     make::ident("undefined")
-                        .with_leading_trivia(std::iter::once((TriviaPieceKind::Whitespace, " ")))
+                        .with_leading_trivia([(TriviaPieceKind::Whitespace, " ")])
                 };
                 let ident_expr =
                     make::js_identifier_expression(make::js_reference_identifier(undefine_indent));

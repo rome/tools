@@ -1,5 +1,3 @@
-use std::iter;
-
 use crate::JsRuleAction;
 use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
@@ -156,8 +154,7 @@ impl Rule for UseGroupedTypeImport {
         let new_node = node
             .clone()
             .with_type_token(Some(
-                make::token(T![type])
-                    .with_trailing_trivia(iter::once((TriviaPieceKind::Whitespace, " "))),
+                make::token(T![type]).with_trailing_trivia([(TriviaPieceKind::Whitespace, " ")]),
             ))
             .with_named_import(AnyJsNamedImport::JsNamedImportSpecifiers(
                 named_import_specifiers
