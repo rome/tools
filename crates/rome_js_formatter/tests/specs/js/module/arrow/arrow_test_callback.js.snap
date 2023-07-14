@@ -53,11 +53,11 @@ JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 Semicolons: Always
-Arrow parentheses: Always
+Arrow parentheses: As needed
 -----
 
 ```js
-it("should have the default duration when using the onClose arguments", (done) => {
+it("should have the default duration when using the onClose arguments", done => {
 	expect(true);
 	done();
 });
@@ -65,7 +65,7 @@ it("should have the default duration when using the onClose arguments", (done) =
 
 # Lines exceeding max width of 80 characters
 ```
-    1: it("should have the default duration when using the onClose arguments", (done) => {
+    1: it("should have the default duration when using the onClose arguments", done => {
 ```
 
 

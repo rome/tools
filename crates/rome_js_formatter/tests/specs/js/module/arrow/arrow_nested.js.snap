@@ -93,11 +93,11 @@ JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 Semicolons: Always
-Arrow parentheses: Always
+Arrow parentheses: As needed
 -----
 
 ```js
-Seq(typeDef.interface.groups).forEach((group) =>
+Seq(typeDef.interface.groups).forEach(group =>
 	Seq(group.members).forEach((member, memberName) =>
 		markdownDoc(member.doc, {
 			typePath: typePath.concat(memberName.slice(1)),
@@ -106,7 +106,7 @@ Seq(typeDef.interface.groups).forEach((group) =>
 	),
 );
 
-const promiseFromCallback = (fn) =>
+const promiseFromCallback = fn =>
 	new Promise((resolve, reject) =>
 		fn((err, result) => {
 			if (err) return reject(err);

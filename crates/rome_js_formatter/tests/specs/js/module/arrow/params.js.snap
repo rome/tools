@@ -662,12 +662,12 @@ JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 Semicolons: Always
-Arrow parentheses: Always
+Arrow parentheses: As needed
 -----
 
 ```js
 fooooooooooooooooooooooooooooooooooooooooooooooooooo(
-	(action) => (next) => dispatch(action),
+	action => next => dispatch(action),
 );
 
 foo(

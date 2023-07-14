@@ -137,11 +137,11 @@ JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 Semicolons: Always
-Arrow parentheses: Always
+Arrow parentheses: As needed
 -----
 
 ```js
-const testResults = results.testResults.map((testResult) =>
+const testResults = results.testResults.map(testResult =>
 	formatResult(testResult, formatter, reporter),
 );
 
@@ -180,7 +180,7 @@ const b = Observable.fromPromise(axiosInstance.get(url)).map(
 
 func(
 	veryLoooooooooooooooooooooooongName,
-	(veryLooooooooooooooooooooooooongName) =>
+	veryLooooooooooooooooooooooooongName =>
 		veryLoooooooooooooooongName.something(),
 );
 
@@ -189,7 +189,7 @@ const composition = (ViewComponent, ContainerComponent) =>
 		static propTypes = {};
 	};
 
-romise.then((result) =>
+romise.then(result =>
 	result.veryLongVariable.veryLongPropertyName > someOtherVariable
 		? "ok"
 		: "fail",

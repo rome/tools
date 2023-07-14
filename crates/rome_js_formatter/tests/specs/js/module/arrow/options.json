@@ -1,7 +1,7 @@
 {
 	"cases": [
 		{
-			"arrowParentheses": "AsNeeded"
+			"arrow_parentheses": "AsNeeded"
 		}
 	]
 }

@@ -74,25 +74,25 @@ JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 Semicolons: Always
-Arrow parentheses: Always
+Arrow parentheses: As needed
 -----
 
 ```js
-const fn = (b) => (c) => (d) => {
+const fn = b => c => d => {
 	return 3;
 };
 
-const foo = (a, b) => (c) => (d) => {
+const foo = (a, b) => c => d => {
 	return 3;
 };
 
-const bar = (a) => (b) => (c) => a + b + c;
+const bar = a => b => c => a + b + c;
 
-const mw = (store) => (next) => (action) => {
+const mw = store => next => action => {
 	return next(action);
 };
 
-const middleware = (options) => (req, res, next) => {
+const middleware = options => (req, res, next) => {
 	// ...
 };
 ```
