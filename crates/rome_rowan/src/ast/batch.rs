@@ -310,7 +310,7 @@ where
 
         for change in &self.changes {
             let parent = change.parent.as_ref().unwrap_or(&self.root);
-            let delete = match parent.slots().nth(change.new_node_slot) {
+            let delete = match dbg!(parent.slots().nth(change.new_node_slot)) {
                 Some(SyntaxSlot::Node(node)) => node.text_range(),
                 Some(SyntaxSlot::Token(token)) => token.text_range(),
                 _ => continue,

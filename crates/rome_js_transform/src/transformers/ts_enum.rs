@@ -15,8 +15,8 @@ use rome_js_syntax::{
     AnyJsAssignment, AnyJsAssignmentPattern, AnyJsBinding, AnyJsBindingPattern, AnyJsCallArgument,
     AnyJsExpression, AnyJsFormalParameter, AnyJsLiteralExpression, AnyJsModuleItem, AnyJsParameter,
     AnyJsStatement, JsAssignmentExpression, JsComputedMemberAssignment, JsExpressionStatement,
-    JsFunctionExpression, JsLogicalExpression, JsModule, JsStatementList, JsVariableStatement,
-    TsEnumDeclaration, T,
+    JsFunctionExpression, JsLogicalExpression, JsModule, JsModuleItemList, JsStatementList,
+    JsVariableStatement, TsEnumDeclaration, T,
 };
 use rome_rowan::{AstNode, BatchMutationExt, TriviaPieceKind};
 
@@ -56,10 +56,10 @@ impl Rule for TsEnum {
     fn transform(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsBatchMutation> {
         let node = ctx.query();
         let mut mutation = node.clone().begin();
-        let parent = node.syntax().grand_parent();
+        let parent = node.syntax().parent();
 
         if let Some(parent) = parent {
-            if let Some(module) = JsModule::cast(parent) {
+            if let Some(module_list) = JsModuleItemList::cast(parent) {
                 let variable = make_variable(state);
                 let function = make_function_caller(state);
                 let statements = vec![
@@ -68,9 +68,8 @@ impl Rule for TsEnum {
                         function,
                     )),
                 ];
-                let modules = js_module_item_list(statements.into_iter());
-                let new_modules = module.clone().with_items(modules);
-                mutation.replace_element(module.into(), new_modules.into());
+                let new_modules_list = js_module_item_list(statements.into_iter());
+                mutation.replace_node(module_list, new_modules_list);
             }
         }
 

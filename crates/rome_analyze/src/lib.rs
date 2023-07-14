@@ -39,7 +39,9 @@ pub use crate::rule::{
     RuleMeta, RuleMetadata, SuppressAction,
 };
 pub use crate::services::{FromServices, MissingServicesDiagnostic, ServiceBag};
-pub use crate::signals::{AnalyzerAction, AnalyzerSignal, DiagnosticSignal};
+pub use crate::signals::{
+    AnalyzerAction, AnalyzerSignal, AnalyzerTransformation, DiagnosticSignal,
+};
 pub use crate::syntax::{Ast, SyntaxVisitor};
 pub use crate::visitor::{NodeVisitor, Visitor, VisitorContext, VisitorFinishContext};
 

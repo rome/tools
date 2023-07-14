@@ -1,0 +1,24 @@
+[package]
+name = "rome_test_utils"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+rome_js_parser = {workspace = true }
+rome_json_parser = {workspace = true }
+rome_js_syntax = {workspace = true }
+rome_json_syntax = {workspace = true }
+rome_analyze = {workspace = true }
+rome_rowan = {workspace = true }
+rome_diagnostics = {workspace = true }
+rome_service = {workspace = true }
+rome_console = {workspace = true }
+rome_deserialize = {workspace = true }
+countme = { workspace = true, features = ["enable"] }
+similar = { version = "2.2.1" }
+json_comments    = "0.2.1"
+serde = { workspace = true }
+serde_json = { workspace = true }
+
