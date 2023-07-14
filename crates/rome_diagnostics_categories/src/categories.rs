@@ -93,6 +93,7 @@ define_categories! {
     "lint/nursery/noRedundantRoles": "https://docs.rome.tools/lint/rules/noRedundantRoles",
     "lint/nursery/noSelfAssign": "https://docs.rome.tools/lint/rules/noSelfAssign",
     "lint/nursery/noStaticOnlyClass": "https://docs.rome.tools/lint/rules/noStaticOnlyClass",
+    "lint/nursery/noUselessEmptyExport": "https://docs.rome.tools/lint/rules/noUselessEmptyExport",
     "lint/nursery/noVoid": "https://docs.rome.tools/lint/rules/noVoid",
     "lint/nursery/useAriaPropTypes": "https://docs.rome.tools/lint/rules/useAriaPropTypes",
     "lint/nursery/useArrowFunction": "https://docs.rome.tools/lint/rules/useArrowFunction",

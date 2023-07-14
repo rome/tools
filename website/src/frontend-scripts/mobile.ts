@@ -1,6 +1,3 @@
-// Yes TS I am a module.
-export {};
-
 export let isMobile = false;
 window.addEventListener("DOMContentLoaded", () => {
 	const mobileMatchMedia = matchMedia("(max-width: 768px)");

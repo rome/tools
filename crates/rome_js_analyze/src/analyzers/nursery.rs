@@ -10,6 +10,7 @@ pub(crate) mod no_for_each;
 pub(crate) mod no_nonoctal_decimal_escape;
 pub(crate) mod no_self_assign;
 pub(crate) mod no_static_only_class;
+pub(crate) mod no_useless_empty_export;
 pub(crate) mod no_void;
 pub(crate) mod use_arrow_function;
 pub(crate) mod use_grouped_type_import;
@@ -30,6 +31,7 @@ declare_group! {
             self :: no_nonoctal_decimal_escape :: NoNonoctalDecimalEscape ,
             self :: no_self_assign :: NoSelfAssign ,
             self :: no_static_only_class :: NoStaticOnlyClass ,
+            self :: no_useless_empty_export :: NoUselessEmptyExport ,
             self :: no_void :: NoVoid ,
             self :: use_arrow_function :: UseArrowFunction ,
             self :: use_grouped_type_import :: UseGroupedTypeImport ,

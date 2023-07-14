@@ -139,6 +139,10 @@ if no error diagnostics are emitted.
 
 	This rule disallows `\8` and `\9` escape sequences in string literals.
 
+- Add [`noUselessEmptyExport`](https://docs.rome.tools/lint/rules/noUselessEmptyExport/)
+
+	This rule disallows useless `export {}`.
+
 #### Other changes
 
 - Add new TypeScript globals (`AsyncDisposable`, `Awaited`, `DecoratorContext`, and others) [4643](https://github.com/rome/tools/issues/4643).

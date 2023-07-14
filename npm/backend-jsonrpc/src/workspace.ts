@@ -578,6 +578,10 @@ export interface Nursery {
 	 */
 	noStaticOnlyClass?: RuleConfiguration;
 	/**
+	 * Disallow empty exports that don't change anything in a module file.
+	 */
+	noUselessEmptyExport?: RuleConfiguration;
+	/**
 	 * Disallow the use of void operators, which is not a familiar operator.
 	 */
 	noVoid?: RuleConfiguration;
@@ -1146,6 +1150,7 @@ export type Category =
 	| "lint/nursery/noRedundantRoles"
 	| "lint/nursery/noSelfAssign"
 	| "lint/nursery/noStaticOnlyClass"
+	| "lint/nursery/noUselessEmptyExport"
 	| "lint/nursery/noVoid"
 	| "lint/nursery/useAriaPropTypes"
 	| "lint/nursery/useArrowFunction"
