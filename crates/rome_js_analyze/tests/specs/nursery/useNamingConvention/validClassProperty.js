@@ -1,6 +1,8 @@
 export default class {
     p
 
+    "q" = 0
+
     #p
 
     initialized = 0

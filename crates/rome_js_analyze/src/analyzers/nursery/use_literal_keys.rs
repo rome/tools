@@ -9,7 +9,7 @@ use rome_js_syntax::{
     AnyJsComputedMember, AnyJsExpression, AnyJsLiteralExpression, AnyJsName, JsComputedMemberName,
     JsLiteralMemberName, JsSyntaxKind, T,
 };
-use rome_js_unicode_table::{is_id_continue, is_id_start};
+use rome_js_unicode_table::is_js_ident;
 use rome_rowan::{declare_node_union, AstNode, BatchMutationExt, TextRange};
 
 declare_rule! {
@@ -152,16 +152,4 @@ impl Rule for UseLiteralKeys {
 
 declare_node_union! {
     pub(crate) AnyJsMember = AnyJsComputedMember | JsLiteralMemberName | JsComputedMemberName
-}
-
-// This function check if the key is valid JavaScript identifier.
-// Currently, it doesn't check escaped unicode chars.
-fn is_js_ident(key: &str) -> bool {
-    key.chars().enumerate().all(|(index, c)| {
-        if index == 0 {
-            is_id_start(c)
-        } else {
-            is_id_continue(c)
-        }
-    })
 }

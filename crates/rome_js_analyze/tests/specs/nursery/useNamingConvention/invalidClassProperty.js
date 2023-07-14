@@ -1,6 +1,8 @@
 export default class {
     X
 
+    "Y" = 0
+
     #X
 
     Initialized = 0
