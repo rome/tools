@@ -114,6 +114,8 @@ if no error diagnostics are emitted.
 
 #### New rules
 
+- Add [`noFallthroughSwitchClause`](https://docs.rome.tools/lint/rules/noFallthroughSwitchClause/)
+
 - Add [`noGlobalIsFinite`](https://docs.rome.tools/lint/rules/noglobalisfinite/)
 
   This rule recommends using `Number.isFinite` instead of the global and unsafe `isFinite` that attempts a type coercion.

@@ -818,7 +818,7 @@
 					]
 				},
 				"noFallthroughSwitchClause": {
-					"description": "Disallow fallthrough of case statements.",
+					"description": "Disallow fallthrough of switch clauses.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }
