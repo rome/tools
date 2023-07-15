@@ -33,6 +33,7 @@ declare_group! {
             self :: no_nonoctal_decimal_escape :: NoNonoctalDecimalEscape ,
             self :: no_self_assign :: NoSelfAssign ,
             self :: no_static_only_class :: NoStaticOnlyClass ,
+            self :: no_useless_empty_export :: NoUselessEmptyExport ,
             self :: no_void :: NoVoid ,
             self :: use_arrow_function :: UseArrowFunction ,
             self :: use_grouped_type_import :: UseGroupedTypeImport ,
