@@ -178,7 +178,13 @@ impl<'a> Display for std::fmt::Arguments<'a> {
 
 impl<'a> Display for std::path::Display<'a> {
     fn fmt(&self, fmt: &mut Formatter) -> io::Result<()> {
-        write!(fmt, "{self}")
+        let mut string = self.to_string();
+        if cfg!(target_os = "windows") {
+            // Explicitly use forward slashes on Windows for consistency with
+            // how they are used in JS `import` statements.
+            string = string.replace('\\', "/");
+        }
+        fmt.write_str(&string)
     }
 }
 
