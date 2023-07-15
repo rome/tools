@@ -1650,6 +1650,7 @@ impl VisitNode<JsonLanguage> for Nursery {
                 "noConfusingArrow",
                 "noConsoleLog",
                 "noConstantCondition",
+                "noControlCharactersInRegex",
                 "noDuplicateJsonKeys",
                 "noDuplicateJsxProps",
                 "noExcessiveComplexity",
@@ -1825,6 +1826,29 @@ impl VisitNode<JsonLanguage> for Nursery {
                         diagnostics,
                     )?;
                     self.no_constant_condition = Some(rule_configuration);
+                }
+                _ => {
+                    diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
+                        "object or string",
+                        value.range(),
+                    ));
+                }
+            },
+            "noControlCharactersInRegex" => match value {
+                AnyJsonValue::JsonStringValue(_) => {
+                    let mut configuration = RuleConfiguration::default();
+                    self.map_to_known_string(&value, name_text, &mut configuration, diagnostics)?;
+                    self.no_control_characters_in_regex = Some(configuration);
+                }
+                AnyJsonValue::JsonObjectValue(_) => {
+                    let mut rule_configuration = RuleConfiguration::default();
+                    rule_configuration.map_rule_configuration(
+                        &value,
+                        name_text,
+                        "noControlCharactersInRegex",
+                        diagnostics,
+                    )?;
+                    self.no_control_characters_in_regex = Some(rule_configuration);
                 }
                 _ => {
                     diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
