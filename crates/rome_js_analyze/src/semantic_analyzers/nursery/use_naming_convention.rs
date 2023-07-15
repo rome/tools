@@ -22,6 +22,7 @@ use rome_js_syntax::{
     JsLiteralMemberName, JsPrivateClassMemberName, JsSyntaxKind, JsSyntaxToken,
     JsVariableDeclarator, JsVariableKind, TsEnumMember, TsIdentifierBinding, TsTypeParameterName,
 };
+use rome_js_unicode_table::is_js_ident;
 use rome_json_syntax::JsonLanguage;
 use rome_rowan::{
     declare_node_union, AstNode, AstNodeList, BatchMutationExt, SyntaxNode, SyntaxResult,
@@ -289,7 +290,14 @@ impl Rule for UseNamingConvention {
             return None;
         }
         let name_token = node.name_token().ok()?;
-        let name = name_token.text_trimmed();
+        let mut name = name_token.text_trimmed();
+        if name_token.kind() == JsSyntaxKind::JS_STRING_LITERAL {
+            name = &name[1..name.len() - 1];
+        }
+        if !is_js_ident(name) {
+            // ignore non-identifier strings
+            return None;
+        }
         let trimmed_name = trim_underscore_dollar(name);
         let actual_case = Case::identify(trimmed_name, options.strict_case);
         if trimmed_name.is_empty()
@@ -315,7 +323,10 @@ impl Rule for UseNamingConvention {
             suggested_name,
         } = state;
         let name_token = ctx.query().name_token().ok()?;
-        let name = name_token.text_trimmed();
+        let mut name = name_token.text_trimmed();
+        if name_token.kind() == JsSyntaxKind::JS_STRING_LITERAL {
+            name = &name[1..name.len() - 1];
+        }
         let trimmed_name = trim_underscore_dollar(name);
         let allowed_cases = element.allowed_cases(ctx.options());
         let allowed_case_names = allowed_cases
@@ -622,10 +633,6 @@ impl Named {
                 Named::from_binding_declaration(&binding.declaration()?)
             }
             AnyName::JsLiteralMemberName(member_name) => {
-                // ignore quoted names
-                if member_name.value().ok()?.kind() == JsSyntaxKind::JS_STRING_LITERAL {
-                    return None;
-                }
                 if let Some(member) = member_name.parent::<AnyJsClassMember>() {
                     Named::from_class_member(&member)
                 } else if let Some(member) = member_name.parent::<AnyTsTypeMember>() {

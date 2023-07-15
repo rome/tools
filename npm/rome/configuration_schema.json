@@ -796,6 +796,13 @@
 						{ "type": "null" }
 					]
 				},
+				"noControlCharactersInRegex": {
+					"description": "Prevents from having control characters and some escape sequences that match control characters in regular expressions.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"noDuplicateJsonKeys": {
 					"description": "Disallow two keys with the same name inside a JSON object.",
 					"anyOf": [
