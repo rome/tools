@@ -77,7 +77,7 @@ invalidPackagePrivateImports.js:11:36 lint/nursery/useImportRestrictions ━━�
        │                                    ^^^^^^^^^^^^^^^^^^^^
     12 │ 
   
-  i Please import from ./sub instead (you may need to re-export the symbol(s) from ./sub/foo).
+  i Please import from ./sub/index.js instead (you may need to re-export the symbol(s) from ./sub/foo/index.js).
   
 
 ```

@@ -2,7 +2,10 @@ use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic
 use rome_console::markup;
 use rome_js_syntax::JsModuleSource;
 use rome_rowan::{AstNode, SyntaxTokenText};
-use std::path::{Path, PathBuf};
+use std::{
+    ffi::OsStr,
+    path::{Path, PathBuf},
+};
 
 const INDEX_BASENAMES: &[&str] = &["index", "mod"];
 
@@ -86,7 +89,7 @@ declare_rule! {
 
 impl Rule for UseImportRestrictions {
     type Query = Ast<JsModuleSource>;
-    type State = PathBuf;
+    type State = ImportRestrictionsState;
     type Signals = Option<Self::State>;
     type Options = ();
 
@@ -99,32 +102,44 @@ impl Rule for UseImportRestrictions {
         get_restricted_import(&path)
     }
 
-    fn diagnostic(ctx: &RuleContext<Self>, path: &Self::State) -> Option<RuleDiagnostic> {
-        let parent = path.parent().and_then(Path::to_str).unwrap_or_default();
-        let path = path.to_str().unwrap_or_default();
+    fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
+        let ImportRestrictionsState { path, suggestion } = state;
 
-        let diagnostic = RuleDiagnostic::new(
+        let mut diagnostic = RuleDiagnostic::new(
             rule_category!(),
             ctx.query().range(),
             markup! {
                 "Importing package private symbols is not allowed from outside the module directory."
             },
-        )
-        .note(markup! {
-            "Please import from "<Emphasis>{parent}</Emphasis>" instead "
-            "(you may need to re-export the symbol(s) from "<Emphasis>{path}</Emphasis>")."
-        });
+        );
+
+        if let Some(suggestion) = suggestion {
+            diagnostic = diagnostic.note(markup! {
+                "Please import from "<Emphasis>{suggestion.display()}</Emphasis>" instead "
+                "(you may need to re-export the symbol(s) from "<Emphasis>{path.display()}</Emphasis>")."
+            });
+        }
 
         Some(diagnostic)
     }
 }
 
-fn get_restricted_import(module_path: &SyntaxTokenText) -> Option<PathBuf> {
+pub(crate) struct ImportRestrictionsState {
+    /// The path that is being restricted.
+    path: PathBuf,
+
+    /// Optional suggestion from which to import instead.
+    suggestion: Option<PathBuf>,
+}
+
+fn get_restricted_import(module_path: &SyntaxTokenText) -> Option<ImportRestrictionsState> {
     let mut path = PathBuf::from(module_path.text());
 
     if !path.starts_with(".") && !path.starts_with("..") {
         return None;
     }
+
+    let mut index_filename = None;
 
     if let Some(extension) = path.extension() {
         if !SOURCE_EXTENSIONS.contains(&extension.to_str().unwrap_or_default()) {
@@ -133,15 +148,37 @@ fn get_restricted_import(module_path: &SyntaxTokenText) -> Option<PathBuf> {
 
         if let Some(basename) = path.file_stem() {
             if INDEX_BASENAMES.contains(&basename.to_str().unwrap_or_default()) {
-                path.pop(); // We pretend the index file was never there.
+                // We pop the index file because it shouldn't count as a path,
+                // component, but we store the file name so we can add it to
+                // both the reported path and the suggestion.
+                index_filename = path.file_name().map(OsStr::to_owned);
+                path.pop();
             }
         }
     }
 
-    (path
+    let is_restricted = path
         .components()
         .filter(|component| component.as_os_str() != "." && component.as_os_str() != "..")
         .count()
-        > 1)
-    .then_some(path)
+        > 1;
+    if !is_restricted {
+        return None;
+    }
+
+    let mut suggestion = path.parent().map(Path::to_owned);
+
+    // Push the index file if it exists. This makes sure the reported path
+    // matches the import path exactly.
+    if let Some(index_filename) = index_filename {
+        path.push(&index_filename);
+
+        // Assumes the user probably wants to use an index file that has the
+        // same name as the original.
+        if let Some(alternative) = suggestion.as_mut() {
+            alternative.push(index_filename);
+        }
+    }
+
+    Some(ImportRestrictionsState { path, suggestion })
 }

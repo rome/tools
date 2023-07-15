@@ -176,6 +176,12 @@ impl<'a> Display for std::fmt::Arguments<'a> {
     }
 }
 
+impl<'a> Display for std::path::Display<'a> {
+    fn fmt(&self, fmt: &mut Formatter) -> io::Result<()> {
+        write!(fmt, "{self}")
+    }
+}
+
 /// Implement [Display] for types that implement [std::fmt::Display] by calling
 /// through to [Formatter::write_fmt]
 macro_rules! impl_std_display {
