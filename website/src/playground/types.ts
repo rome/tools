@@ -44,6 +44,11 @@ export enum Semicolons {
 	AsNeeded = "as-needed",
 }
 
+export enum ArrowParentheses {
+	Always = "always",
+	AsNeeded = "as-needed",
+}
+
 export type PrettierOutput =
 	| { type: "SUCCESS"; code: string; ir: string }
 	| { type: "ERROR"; stack: string };
@@ -105,6 +110,7 @@ export interface PlaygroundSettings {
 	quoteProperties: QuoteProperties;
 	trailingComma: TrailingComma;
 	semicolons: Semicolons;
+	arrowParentheses: ArrowParentheses;
 	lintRules: LintRules;
 	enabledLinting: boolean;
 	importSortingEnabled: boolean;
@@ -147,6 +153,7 @@ export const defaultPlaygroundState: PlaygroundState = {
 		quoteProperties: QuoteProperties.AsNeeded,
 		trailingComma: TrailingComma.All,
 		semicolons: Semicolons.Always,
+		arrowParentheses: ArrowParentheses.Always,
 		lintRules: LintRules.Recommended,
 		enabledLinting: true,
 		importSortingEnabled: true,

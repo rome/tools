@@ -1,4 +1,5 @@
 import {
+	ArrowParentheses,
 	IndentStyle,
 	LintRules,
 	PlaygroundState,
@@ -43,6 +44,7 @@ export default function SettingsTab({
 			quoteProperties,
 			trailingComma,
 			semicolons,
+			arrowParentheses,
 			lintRules,
 			enabledLinting,
 			importSortingEnabled,
@@ -81,6 +83,10 @@ export default function SettingsTab({
 	const setSemicolons = createPlaygroundSettingsSetter(
 		setPlaygroundState,
 		"semicolons",
+	);
+	const setArrowParentheses = createPlaygroundSettingsSetter(
+		setPlaygroundState,
+		"arrowParentheses",
 	);
 	const setLintRules = createPlaygroundSettingsSetter(
 		setPlaygroundState,
@@ -239,6 +245,8 @@ export default function SettingsTab({
 				setTrailingComma={setTrailingComma}
 				semicolons={semicolons}
 				setSemicolons={setSemicolons}
+				arrowParentheses={arrowParentheses}
+				setArrowParentheses={setArrowParentheses}
 			/>
 			<LinterSettings
 				lintRules={lintRules}
@@ -550,6 +558,8 @@ function FormatterSettings({
 	setTrailingComma,
 	semicolons,
 	setSemicolons,
+	arrowParentheses,
+	setArrowParentheses,
 }: {
 	lineWidth: number;
 	setLineWidth: (value: number) => void;
@@ -567,6 +577,8 @@ function FormatterSettings({
 	setTrailingComma: (value: TrailingComma) => void;
 	semicolons: Semicolons;
 	setSemicolons: (value: Semicolons) => void;
+	arrowParentheses: ArrowParentheses;
+	setArrowParentheses: (value: ArrowParentheses) => void;
 }) {
 	return (
 		<>
@@ -667,6 +679,19 @@ function FormatterSettings({
 					>
 						<option value={Semicolons.Always}>Always</option>
 						<option value={Semicolons.AsNeeded}>As needed</option>
+					</select>
+				</div>
+
+				<div className="field-row">
+					<label htmlFor="arrowParentheses">Arrow Parentheses</label>
+					<select
+						id="arrowParentheses"
+						name="arrowParentheses"
+						value={arrowParentheses ?? "always"}
+						onChange={(e) => setArrowParentheses(e.target.value as ArrowParentheses)}
+					>
+						<option value={ArrowParentheses.Always}>Always</option>
+						<option value={ArrowParentheses.AsNeeded}>As needed</option>
 					</select>
 				</div>
 			</section>

@@ -1,4 +1,5 @@
 import {
+	ArrowParentheses,
 	IndentStyle,
 	PlaygroundSettings,
 	PrettierOutput,
@@ -32,6 +33,7 @@ self.addEventListener("message", (e) => {
 				quoteProperties,
 				trailingComma,
 				semicolons,
+				arrowParentheses,
 			} = settings;
 			const code = e.data.code as string;
 			const filename = e.data.filename as string;
@@ -46,6 +48,7 @@ self.addEventListener("message", (e) => {
 				quoteProperties,
 				trailingComma,
 				semicolons,
+				arrowParentheses,
 			});
 
 			self.postMessage({
@@ -74,6 +77,7 @@ function formatWithPrettier(
 		quoteProperties: QuoteProperties;
 		trailingComma: TrailingComma;
 		semicolons: Semicolons;
+		arrowParentheses: ArrowParentheses;
 	},
 ): PrettierOutput {
 	try {
@@ -89,6 +93,7 @@ function formatWithPrettier(
 			quoteProps: options.quoteProperties,
 			trailingComma: options.trailingComma,
 			semi: options.semicolons === Semicolons.Always,
+			arrowParens: options.arrowParentheses === ArrowParentheses.Always ? "always" : "avoid",
 		};
 
 		// @ts-expect-error
