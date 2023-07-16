@@ -70,14 +70,14 @@ Arrow parentheses: As needed
 
 ```js
 x =
-	(bifornCringerMoshedPerplexSawder) =>
+	bifornCringerMoshedPerplexSawder =>
 	(askTrovenaBeenaDependsRowans, glimseGlyphsHazardNoopsTieTie) =>
-	(f00) => {
+	f00 => {
 		averredBathersBoxroomBuggyNurl();
 	}; // BOOM
 
 x2 =
-	(a) =>
+	a =>
 	(
 		askTrovenaBeenaDependsRowans1,
 		askTrovenaBeenaDependsRowans2,

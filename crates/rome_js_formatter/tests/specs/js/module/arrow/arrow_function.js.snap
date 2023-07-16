@@ -62,7 +62,7 @@ Arrow parentheses: As needed
 ```js
 () => {};
 async () => {};
-(foo) => {};
+foo => {};
 (
 	aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,
 	bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb,

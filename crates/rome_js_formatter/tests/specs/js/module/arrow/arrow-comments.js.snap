@@ -86,23 +86,23 @@ Arrow parentheses: As needed
 
 ```js
 // array
-(action) =>
+action =>
 	// eslint-disable-next-line react/no-array-index-key
 	[<li />];
 
 // function body
-(action) =>
+action =>
 	// eslint-disable-next-line react/no-array-index-key
 	{
 		return <li />;
 	};
 
 // object expression
-(action) =>
+action =>
 	// eslint-disable-next-line react/no-array-index-key
 	({ a: 10 });
 
-(action) => /* comment */ `
+action => /* comment */ `
 ${test}
 multiline`;
 ```

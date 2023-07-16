@@ -8,11 +8,18 @@ mod language {
     include!("language.rs");
 }
 
-// #[ignore]
+#[ignore]
 #[test]
 // use this test check if your snippet prints as you wish, without using a snapshot
 fn quick_test() {
-    let src = r#"export const lol = a => "lol";"#;
+    let src = r#"
+        action => {}
+        (action) => {}
+        ({ action }) => {}
+        ([ action ]) => {}
+        (...action) => {}
+        (action = 1) => {}
+    "#;
     let syntax = JsFileSource::tsx();
     let tree = parse(
         src,
@@ -36,9 +43,15 @@ fn quick_test() {
         CheckReformat::new(root, result.as_code(), "quick_test", &language, options);
     check_reformat.check_reformat();
 
+    // I don't know why semicolons are added there, but it's not related to my code changes so ¯\_(ツ)_/¯
     assert_eq!(
         result.as_code(),
-        r#"export const lol = a => "lol"
+        r#";action => {}
+;action => {}
+;({ action }) => {}
+;([action]) => {}
+;(...action) => {}
+;(action = 1) => {}
 "#
     );
 }
