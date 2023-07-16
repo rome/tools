@@ -107,7 +107,9 @@ self.addEventListener("message", async (e) => {
 						semicolons:
 							semicolons === Semicolons.Always ? "always" : "asNeeded",
 						arrowParentheses:
-							arrowParentheses === ArrowParentheses.Always ? "always" : "asNeeded",
+							arrowParentheses === ArrowParentheses.Always
+								? "always"
+								: "asNeeded",
 					},
 					parser: {
 						unsafeParameterDecoratorsEnabled,

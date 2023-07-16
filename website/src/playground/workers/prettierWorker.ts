@@ -93,7 +93,10 @@ function formatWithPrettier(
 			quoteProps: options.quoteProperties,
 			trailingComma: options.trailingComma,
 			semi: options.semicolons === Semicolons.Always,
-			arrowParens: options.arrowParentheses === ArrowParentheses.Always ? "always" : "avoid",
+			arrowParens:
+				options.arrowParentheses === ArrowParentheses.Always
+					? "always"
+					: "avoid",
 		};
 
 		// @ts-expect-error

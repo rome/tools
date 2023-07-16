@@ -688,7 +688,9 @@ function FormatterSettings({
 						id="arrowParentheses"
 						name="arrowParentheses"
 						value={arrowParentheses ?? "always"}
-						onChange={(e) => setArrowParentheses(e.target.value as ArrowParentheses)}
+						onChange={(e) =>
+							setArrowParentheses(e.target.value as ArrowParentheses)
+						}
 					>
 						<option value={ArrowParentheses.Always}>Always</option>
 						<option value={ArrowParentheses.AsNeeded}>As needed</option>
