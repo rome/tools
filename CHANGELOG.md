@@ -88,6 +88,8 @@ multiple files:
 
 - Added a new option called `--jsx-quote-style` to the formatter. This option allows you to choose between single and double quotes for JSX attributes. [#4486](https://github.com/rome/tools/issues/4486)
 
+- Added a new option called `--arrow-parentheses` to the formatter. This option allows you to set the parentheses style for arrow functions. [#4666](https://github.com/rome/tools/issues/4666)
+
 ### Linter
 
 - [`noDuplicateParameters`](https://docs.rome.tools/lint/rules/noduplicateparameters/): enhanced rule to manage constructor parameters.
