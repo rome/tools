@@ -1,6 +1,7 @@
 import Playground from "./Playground";
 import LoadingScreen from "./components/LoadingScreen";
 import {
+	ArrowParentheses,
 	IndentStyle,
 	LintRules,
 	LoadingState,
@@ -325,6 +326,9 @@ function initState(
 			semicolons:
 				(searchParams.get("semicolons") as Semicolons) ??
 				defaultPlaygroundState.settings.semicolons,
+			arrowParentheses:
+				(searchParams.get("arrowParentheses") as ArrowParentheses) ??
+				defaultPlaygroundState.settings.arrowParentheses,
 			lintRules:
 				(searchParams.get("lintRules") as LintRules) ??
 				defaultPlaygroundState.settings.lintRules,

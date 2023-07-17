@@ -16,7 +16,7 @@ use crate::utils::{resolve_left_most_expression, AssignmentLikeLayout};
 use rome_js_syntax::{
     AnyJsArrowFunctionParameters, AnyJsBindingPattern, AnyJsExpression, AnyJsFormalParameter,
     AnyJsFunctionBody, AnyJsParameter, AnyJsTemplateElement, JsArrowFunctionExpression,
-    JsSyntaxKind, JsSyntaxNode, JsTemplateExpression,
+    JsFormalParameter, JsSyntaxKind, JsSyntaxNode, JsTemplateExpression,
 };
 use rome_rowan::{SyntaxNodeOptionExt, SyntaxResult};
 
@@ -137,6 +137,7 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
                             );
 
                             !are_parentheses_mandatory
+                                && f.options().arrow_parentheses().is_always()
                         }
                         _ => false,
                     };
@@ -220,7 +221,11 @@ fn format_signature(
                 AnyJsArrowFunctionParameters::AnyJsBinding(binding) => {
                     let should_hug = is_test_call_argument(arrow.syntax())?;
 
-                    write!(f, [text("(")])?;
+                    let parentheses_not_needed = can_avoid_parentheses(arrow, f);
+
+                    if !parentheses_not_needed {
+                        write!(f, [text("(")])?;
+                    }
 
                     if should_hug {
                         write!(f, [binding.format()])?;
@@ -234,7 +239,9 @@ fn format_signature(
                         )?
                     }
 
-                    write!(f, [text(")")])?;
+                    if !parentheses_not_needed {
+                        write!(f, [text(")")])?;
+                    }
                 }
                 AnyJsArrowFunctionParameters::JsParameters(params) => {
                     write!(f, [params.format()])?;
@@ -294,7 +301,13 @@ fn should_break_chain(arrow: &JsArrowFunctionExpression) -> SyntaxResult<bool> {
     }
 
     // Break if the function has any rest, object, or array parameter
-    let result = match parameters {
+    let result = has_rest_object_or_array_parameter(&parameters);
+
+    Ok(result)
+}
+
+fn has_rest_object_or_array_parameter(parameters: &AnyJsArrowFunctionParameters) -> bool {
+    match parameters {
         AnyJsArrowFunctionParameters::AnyJsBinding(_) => false,
         AnyJsArrowFunctionParameters::JsParameters(parameters) => parameters
             .items()
@@ -316,9 +329,23 @@ fn should_break_chain(arrow: &JsArrowFunctionExpression) -> SyntaxResult<bool> {
                 AnyJsParameter::TsThisParameter(_) => false,
                 AnyJsParameter::JsRestParameter(_) => true,
             }),
-    };
+    }
+}
 
-    Ok(result)
+/// Returns `true` if parentheses can be safely avoided and the `arrow_parentheses` formatter option allows it
+pub fn can_avoid_parentheses(arrow: &JsArrowFunctionExpression, f: &mut JsFormatter) -> bool {
+    arrow.parameters().map_or(false, |parameters| {
+        f.options().arrow_parentheses().is_as_needed()
+            && parameters.len() == 1
+            && arrow.type_parameters().is_none()
+            && arrow.return_type_annotation().is_none()
+            && !has_rest_object_or_array_parameter(&parameters)
+            && !parameters
+                .as_js_parameters()
+                .and_then(|p| p.items().first()?.ok())
+                .and_then(|p| JsFormalParameter::cast(p.syntax().clone()))
+                .is_some_and(|p| p.initializer().is_some())
+    })
 }
 
 #[derive(Clone, Debug)]

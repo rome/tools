@@ -1,12 +1,13 @@
 use crate::prelude::*;
 use rome_formatter::{write, CstFormatContext};
 
+use crate::js::expressions::arrow_function_expression::can_avoid_parentheses;
 use crate::js::lists::parameter_list::FormatJsAnyParameterList;
 use crate::utils::test_call::is_test_call_argument;
 use rome_js_syntax::parameter_ext::{AnyJsParameterList, AnyParameter};
 use rome_js_syntax::{
-    AnyJsConstructorParameter, AnyJsFormalParameter, AnyTsType, JsConstructorParameters,
-    JsParameters, JsSyntaxToken,
+    AnyJsConstructorParameter, AnyJsFormalParameter, AnyTsType, JsArrowFunctionExpression,
+    JsConstructorParameters, JsParameters, JsSyntaxToken,
 };
 use rome_rowan::{declare_node_union, SyntaxResult};
 
@@ -48,6 +49,10 @@ impl Format<JsFormatContext> for FormatAnyJsParameters {
         let l_paren_token = self.l_paren_token()?;
         let r_paren_token = self.r_paren_token()?;
 
+        let parentheses_not_needed = self
+            .as_arrow_function_expression()
+            .map_or(false, |expression| can_avoid_parentheses(&expression, f));
+
         match layout {
             ParameterLayout::NoParameters => {
                 write!(
@@ -60,27 +65,50 @@ impl Format<JsFormatContext> for FormatAnyJsParameters {
                 )
             }
             ParameterLayout::Hug => {
+                if !parentheses_not_needed {
+                    write!(f, [l_paren_token.format()])?;
+                } else {
+                    write!(f, [format_removed(&l_paren_token)])?;
+                }
+
                 write!(
                     f,
-                    [
-                        l_paren_token.format(),
-                        FormatJsAnyParameterList::with_layout(&list, ParameterLayout::Hug),
-                        &r_paren_token.format()
-                    ]
-                )
+                    [FormatJsAnyParameterList::with_layout(
+                        &list,
+                        ParameterLayout::Hug
+                    )]
+                )?;
+
+                if !parentheses_not_needed {
+                    write!(f, [&r_paren_token.format()])?;
+                } else {
+                    write!(f, [format_removed(&r_paren_token)])?;
+                }
+
+                Ok(())
             }
             ParameterLayout::Default => {
+                if !parentheses_not_needed {
+                    write!(f, [l_paren_token.format()])?;
+                } else {
+                    write!(f, [format_removed(&l_paren_token)])?;
+                }
+
                 write!(
                     f,
-                    [
-                        l_paren_token.format(),
-                        soft_block_indent(&FormatJsAnyParameterList::with_layout(
-                            &list,
-                            ParameterLayout::Default
-                        )),
-                        r_paren_token.format()
-                    ]
-                )
+                    [soft_block_indent(&FormatJsAnyParameterList::with_layout(
+                        &list,
+                        ParameterLayout::Default
+                    ))]
+                )?;
+
+                if !parentheses_not_needed {
+                    write!(f, [r_paren_token.format()])?;
+                } else {
+                    write!(f, [format_removed(&r_paren_token)])?;
+                }
+
+                Ok(())
             }
         }
     }
@@ -127,6 +155,16 @@ impl FormatAnyJsParameters {
         };
 
         Ok(result)
+    }
+
+    fn as_arrow_function_expression(&self) -> Option<JsArrowFunctionExpression> {
+        match self {
+            FormatAnyJsParameters::JsParameters(parameters) => parameters
+                .syntax()
+                .parent()
+                .and_then(JsArrowFunctionExpression::cast),
+            FormatAnyJsParameters::JsConstructorParameters(_) => None,
+        }
     }
 }
 

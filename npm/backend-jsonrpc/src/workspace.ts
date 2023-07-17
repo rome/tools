@@ -167,6 +167,10 @@ The allowed range of values is 1..=320
 export type LineWidth = number;
 export interface JavascriptFormatter {
 	/**
+	 * Whether to add non-necessary parentheses to arrow functions. Defaults to "always".
+	 */
+	arrowParentheses?: ArrowParentheses;
+	/**
 	 * The style for JSX quotes. Defaults to double.
 	 */
 	jsxQuoteStyle?: QuoteStyle;
@@ -215,6 +219,7 @@ export interface Rules {
 	suspicious?: Suspicious;
 }
 export type VcsClientKind = "git";
+export type ArrowParentheses = "always" | "asNeeded";
 export type QuoteStyle = "double" | "single";
 export type QuoteProperties = "asNeeded" | "preserve";
 export type Semicolons = "always" | "asNeeded";

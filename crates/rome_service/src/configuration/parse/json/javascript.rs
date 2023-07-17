@@ -4,7 +4,7 @@ use crate::configuration::{JavascriptConfiguration, JavascriptFormatter};
 use rome_deserialize::json::{has_only_known_keys, VisitJsonNode};
 use rome_deserialize::{DeserializationDiagnostic, VisitNode};
 use rome_js_formatter::context::trailing_comma::TrailingComma;
-use rome_js_formatter::context::{QuoteProperties, QuoteStyle, Semicolons};
+use rome_js_formatter::context::{ArrowParentheses, QuoteProperties, QuoteStyle, Semicolons};
 use rome_json_syntax::{JsonLanguage, JsonSyntaxNode};
 use rome_rowan::SyntaxNode;
 
@@ -99,6 +99,11 @@ impl VisitNode<JsonLanguage> for JavascriptFormatter {
                 let mut semicolons = Semicolons::default();
                 self.map_to_known_string(&value, name_text, &mut semicolons, diagnostics)?;
                 self.semicolons = Some(semicolons);
+            }
+            "arrowParentheses" => {
+                let mut arrow_parentheses = ArrowParentheses::default();
+                self.map_to_known_string(&value, name_text, &mut arrow_parentheses, diagnostics)?;
+                self.arrow_parentheses = Some(arrow_parentheses);
             }
             _ => {}
         }

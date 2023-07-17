@@ -215,6 +215,7 @@
 				}
 			}
 		},
+		"ArrowParentheses": { "type": "string", "enum": ["always", "asNeeded"] },
 		"Complexity": {
 			"description": "A list of rules that belong to this group",
 			"type": "object",
@@ -662,6 +663,13 @@
 		"JavascriptFormatter": {
 			"type": "object",
 			"properties": {
+				"arrowParentheses": {
+					"description": "Whether to add non-necessary parentheses to arrow functions. Defaults to \"always\".",
+					"anyOf": [
+						{ "$ref": "#/definitions/ArrowParentheses" },
+						{ "type": "null" }
+					]
+				},
 				"jsxQuoteStyle": {
 					"description": "The style for JSX quotes. Defaults to double.",
 					"anyOf": [{ "$ref": "#/definitions/QuoteStyle" }, { "type": "null" }]
