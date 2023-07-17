@@ -49,10 +49,9 @@ impl Format<JsFormatContext> for FormatAnyJsParameters {
         let l_paren_token = self.l_paren_token()?;
         let r_paren_token = self.r_paren_token()?;
 
-        let parentheses_not_needed = match self.as_arrow_function_expression() {
-            Some(expression) => can_avoid_parentheses(&expression, f),
-            None => false,
-        };
+        let parentheses_not_needed = self
+            .as_arrow_function_expression()
+            .map_or(false, |expression| can_avoid_parentheses(&expression, f));
 
         match layout {
             ParameterLayout::NoParameters => {

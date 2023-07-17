@@ -332,23 +332,20 @@ fn has_rest_object_or_array_parameter(parameters: &AnyJsArrowFunctionParameters)
     }
 }
 
-/// Returns `true` if the `arrow_parentheses` formatter option is enabled and parentheses can be safely avoided
+/// Returns `true` if parentheses can be safely avoided and the `arrow_parentheses` formatter option allows it
 pub fn can_avoid_parentheses(arrow: &JsArrowFunctionExpression, f: &mut JsFormatter) -> bool {
-    match arrow.parameters() {
-        Ok(parameters) => {
-            f.options().arrow_parentheses().is_as_needed()
-                && parameters.len() == 1
-                && arrow.type_parameters().is_none()
-                && arrow.return_type_annotation().is_none()
-                && !has_rest_object_or_array_parameter(&parameters)
-                && !parameters
-                    .as_js_parameters()
-                    .and_then(|p| p.items().first()?.ok())
-                    .and_then(|p| JsFormalParameter::cast(p.syntax().clone()))
-                    .is_some_and(|p| p.initializer().is_some())
-        }
-        Err(_) => false,
-    }
+    arrow.parameters().map_or(false, |parameters| {
+        f.options().arrow_parentheses().is_as_needed()
+            && parameters.len() == 1
+            && arrow.type_parameters().is_none()
+            && arrow.return_type_annotation().is_none()
+            && !has_rest_object_or_array_parameter(&parameters)
+            && !parameters
+                .as_js_parameters()
+                .and_then(|p| p.items().first()?.ok())
+                .and_then(|p| JsFormalParameter::cast(p.syntax().clone()))
+                .is_some_and(|p| p.initializer().is_some())
+    })
 }
 
 #[derive(Clone, Debug)]
