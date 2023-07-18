@@ -42,14 +42,14 @@ pub(crate) fn generate_files() -> Result<()> {
     fs::remove_file(project_root().join("website/src/pages/vscode.mdx")).ok();
     let page = format!("{FRONTMATTER}{readme}");
     fs::write(project_root().join("website/src/pages/vscode.mdx"), page)?;
-    let parser = rome_command();
-    let markdown = parser.render_markdown("rome");
-    fs::write(
-        project_root().join("website/src/pages/cli.mdx"),
-        format!("{CLI_FRONTMATTER}{markdown}"),
-    )?;
 
     if VERSION != "0.0.0" {
+        let parser = rome_command();
+        let markdown = parser.render_markdown("rome");
+        fs::write(
+            project_root().join("website/src/pages/cli.mdx"),
+            format!("{CLI_FRONTMATTER}{markdown}"),
+        )?;
         let schema_root_folder = project_root().join("website/src/pages/schemas");
         let schema_version_folder = schema_root_folder.join(VERSION);
         let schema_js_file = schema_version_folder.join("schema.json.js");
