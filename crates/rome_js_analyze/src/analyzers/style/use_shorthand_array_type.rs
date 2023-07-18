@@ -236,14 +236,8 @@ fn convert_to_array_type(
                     types_array.into_iter(),
                     (0..length - 1).map(|_| {
                         make::token(T![|])
-                            .with_leading_trivia(std::iter::once((
-                                TriviaPieceKind::Whitespace,
-                                " ",
-                            )))
-                            .with_trailing_trivia(std::iter::once((
-                                TriviaPieceKind::Whitespace,
-                                " ",
-                            )))
+                            .with_leading_trivia([(TriviaPieceKind::Whitespace, " ")])
+                            .with_trailing_trivia([(TriviaPieceKind::Whitespace, " ")])
                     }),
                 ));
                 return Some(AnyTsType::TsUnionType(ts_union_type_builder.build()));

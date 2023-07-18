@@ -144,49 +144,32 @@ impl Rule for UseOptionalChain {
                         .unwrap_or_else(|| expression.clone());
                     let next_expression = match next_expression {
                         AnyJsExpression::JsCallExpression(call_expression) => {
-                            let mut call_expression_builder = make::js_call_expression(
-                                call_expression.callee().ok()?,
-                                call_expression.arguments().ok()?,
-                            )
-                            .with_optional_chain_token(make::token(T![?.]));
-                            if let Some(type_arguments) = call_expression.type_arguments() {
-                                call_expression_builder =
-                                    call_expression_builder.with_type_arguments(type_arguments);
-                            }
-                            let call_expression = call_expression_builder.build();
-                            AnyJsExpression::from(call_expression)
+                            let optional_chain_token = call_expression
+                                .optional_chain_token()
+                                .unwrap_or_else(|| make::token(T![?.]));
+                            call_expression
+                                .with_optional_chain_token(Some(optional_chain_token))
+                                .into()
                         }
                         AnyJsExpression::JsStaticMemberExpression(member_expression) => {
-                            let operator_token = member_expression.operator_token().ok()?;
+                            let operator = member_expression.operator_token().ok()?;
                             AnyJsExpression::from(make::js_static_member_expression(
                                 member_expression.object().ok()?,
                                 make::token(T![?.])
-                                    .with_leading_trivia_pieces(
-                                        operator_token.leading_trivia().pieces(),
-                                    )
+                                    .with_leading_trivia_pieces(operator.leading_trivia().pieces())
                                     .with_trailing_trivia_pieces(
-                                        operator_token.trailing_trivia().pieces(),
+                                        operator.trailing_trivia().pieces(),
                                     ),
                                 member_expression.member().ok()?,
                             ))
                         }
                         AnyJsExpression::JsComputedMemberExpression(member_expression) => {
-                            let operator_token = match member_expression.optional_chain_token() {
-                                Some(token) => make::token(T![?.])
-                                    .with_leading_trivia_pieces(token.leading_trivia().pieces())
-                                    .with_trailing_trivia_pieces(token.trailing_trivia().pieces()),
-                                None => make::token(T![?.]),
-                            };
-                            AnyJsExpression::from(
-                                make::js_computed_member_expression(
-                                    member_expression.object().ok()?,
-                                    member_expression.l_brack_token().ok()?,
-                                    member_expression.member().ok()?,
-                                    member_expression.r_brack_token().ok()?,
-                                )
-                                .with_optional_chain_token(operator_token)
-                                .build(),
-                            )
+                            let optional_chain_token = member_expression
+                                .optional_chain_token()
+                                .unwrap_or_else(|| make::token(T![?.]));
+                            member_expression
+                                .with_optional_chain_token(Some(optional_chain_token))
+                                .into()
                         }
                         _ => return None,
                     };
@@ -746,7 +729,6 @@ impl LogicalOrLikeChain {
 
 fn trim_trailing_space(node: AnyJsExpression) -> Option<AnyJsExpression> {
     let Some(last_token_of_left_syntax) = node.syntax().last_token() else { return Some(node) };
-    let next_token_of_left_syntax =
-        last_token_of_left_syntax.with_trailing_trivia(std::iter::empty());
+    let next_token_of_left_syntax = last_token_of_left_syntax.with_trailing_trivia([]);
     node.replace_token_discard_trivia(last_token_of_left_syntax, next_token_of_left_syntax)
 }

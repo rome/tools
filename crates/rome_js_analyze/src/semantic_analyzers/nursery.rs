@@ -11,6 +11,7 @@ pub(crate) mod no_global_is_nan;
 pub(crate) mod use_camel_case;
 pub(crate) mod use_exhaustive_dependencies;
 pub(crate) mod use_hook_at_top_level;
+pub(crate) mod use_is_array;
 pub(crate) mod use_is_nan;
 pub(crate) mod use_naming_convention;
 
@@ -27,6 +28,7 @@ declare_group! {
             self :: use_camel_case :: UseCamelCase ,
             self :: use_exhaustive_dependencies :: UseExhaustiveDependencies ,
             self :: use_hook_at_top_level :: UseHookAtTopLevel ,
+            self :: use_is_array :: UseIsArray ,
             self :: use_is_nan :: UseIsNan ,
             self :: use_naming_convention :: UseNamingConvention ,
         ]

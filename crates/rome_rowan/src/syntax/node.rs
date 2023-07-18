@@ -3,7 +3,7 @@ use crate::syntax::element::{SyntaxElement, SyntaxElementKey};
 use crate::syntax::SyntaxTrivia;
 use crate::{
     cursor, Direction, GreenNode, Language, NodeOrToken, SyntaxKind, SyntaxList, SyntaxNodeText,
-    SyntaxToken, TokenAtOffset, WalkEvent,
+    SyntaxToken, SyntaxTriviaPiece, TokenAtOffset, WalkEvent,
 };
 use rome_text_size::{TextRange, TextSize};
 #[cfg(feature = "serde")]
@@ -213,6 +213,8 @@ impl<L: Language> SyntaxNode<L> {
     }
 
     /// Returns the trailing trivia of the  [last_token](SyntaxNode::last_token), or [None] if the node does not have any descendant tokens.
+    ///
+    /// ## Examples
     ///
     /// ```
     /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
@@ -451,6 +453,226 @@ impl<L: Language> SyntaxNode<L> {
             raw: self.raw.replace_child(prev_elem.into(), next_elem.into())?,
             _p: PhantomData,
         })
+    }
+
+    /// Return a new version of this node with the leading trivia of its first token replaced with `trivia`.
+    #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
+    pub fn with_leading_trivia_pieces<I>(self, trivia: I) -> Option<Self>
+    where
+        I: IntoIterator<Item = SyntaxTriviaPiece<L>>,
+        I::IntoIter: ExactSizeIterator,
+    {
+        let first_token = self.first_token()?;
+        let new_first_token = first_token.with_leading_trivia_pieces(trivia);
+        self.replace_child(first_token.into(), new_first_token.into())
+    }
+
+    /// Return a new version of this node with the trailing trivia of its last token replaced with `trivia`.
+    #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
+    pub fn with_trailing_trivia_pieces<I>(self, trivia: I) -> Option<Self>
+    where
+        I: IntoIterator<Item = SyntaxTriviaPiece<L>>,
+        I::IntoIter: ExactSizeIterator,
+    {
+        let last_token = self.last_token()?;
+        let new_last_token = last_token.with_trailing_trivia_pieces(trivia);
+        self.replace_child(last_token.into(), new_last_token.into())
+    }
+
+    // Return a new version of this node with `trivia` prepended to the leading trivia of the first token.
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
+    /// use rome_rowan::*;
+    ///
+    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT, |builder| {
+    ///     builder.token_with_trivia(
+    ///         RawLanguageKind::LET_TOKEN,
+    ///         "\t let ",
+    ///         &[TriviaPiece::whitespace(2)],
+    ///         &[TriviaPiece::whitespace(1)],
+    ///     );
+    ///     builder.token(RawLanguageKind::STRING_TOKEN, "a");
+    ///     builder.token_with_trivia(
+    ///         RawLanguageKind::SEMICOLON_TOKEN,
+    ///         "; ",
+    ///         &[],
+    ///         &[TriviaPiece::whitespace(1)],
+    ///     );
+    /// });
+    ///
+    /// let new_node = node.clone().prepend_trivia_pieces(node.last_trailing_trivia().unwrap().pieces()).unwrap();
+    /// let leading_trivia = new_node.first_leading_trivia().unwrap();
+    /// let trailing_trivia = new_node.last_trailing_trivia().unwrap();
+    ///
+    /// assert_eq!(" \t ", leading_trivia.text());
+    /// assert_eq!(" ", trailing_trivia.text());
+    /// ```
+    #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
+    pub fn prepend_trivia_pieces<I>(self, trivia: I) -> Option<Self>
+    where
+        I: IntoIterator<Item = SyntaxTriviaPiece<L>>,
+        I::IntoIter: ExactSizeIterator,
+    {
+        let first_token = self.first_token()?;
+        let new_first_token = first_token.prepend_trivia_pieces(trivia);
+        self.replace_child(first_token.into(), new_first_token.into())
+    }
+
+    // Return a new version of this node with `trivia` appended to the trailing trivia of the last token.
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
+    /// use rome_rowan::*;
+    ///
+    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT, |builder| {
+    ///     builder.token_with_trivia(
+    ///         RawLanguageKind::LET_TOKEN,
+    ///         "\t let ",
+    ///         &[TriviaPiece::whitespace(2)],
+    ///         &[TriviaPiece::whitespace(1)],
+    ///     );
+    ///     builder.token(RawLanguageKind::STRING_TOKEN, "a");
+    ///     builder.token_with_trivia(
+    ///         RawLanguageKind::SEMICOLON_TOKEN,
+    ///         "; ",
+    ///         &[],
+    ///         &[TriviaPiece::whitespace(1)],
+    ///     );
+    /// });
+    ///
+    /// let new_node = node.clone().append_trivia_pieces(node.first_leading_trivia().unwrap().pieces()).unwrap();
+    /// let leading_trivia = new_node.first_leading_trivia().unwrap();
+    /// let trailing_trivia = new_node.last_trailing_trivia().unwrap();
+    ///
+    /// assert_eq!("\t ", leading_trivia.text());
+    /// assert_eq!(" \t ", trailing_trivia.text());
+    /// ```
+    #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
+    pub fn append_trivia_pieces<I>(self, trivia: I) -> Option<Self>
+    where
+        I: IntoIterator<Item = SyntaxTriviaPiece<L>>,
+        I::IntoIter: ExactSizeIterator,
+    {
+        let last_token = self.last_token()?;
+        let new_last_token = last_token.append_trivia_pieces(trivia);
+        self.replace_child(last_token.into(), new_last_token.into())
+    }
+
+    /// Return a new version of this node without leading and trailing newlines and whitespaces.
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
+    /// use rome_rowan::*;
+    ///
+    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT, |builder| {
+    ///     builder.token_with_trivia(
+    ///         RawLanguageKind::LET_TOKEN,
+    ///         "\n let ",
+    ///         &[TriviaPiece::newline(1), TriviaPiece::whitespace(1)],
+    ///         &[TriviaPiece::whitespace(1)],
+    ///     );
+    ///     builder.token(RawLanguageKind::STRING_TOKEN, "a");
+    ///     builder.token_with_trivia(
+    ///         RawLanguageKind::SEMICOLON_TOKEN,
+    ///         "; ",
+    ///         &[],
+    ///         &[TriviaPiece::whitespace(1)],
+    ///     );
+    /// });
+    ///
+    /// let new_node = node.trim_trivia().unwrap();
+    /// let leading_trivia = new_node.first_leading_trivia().unwrap();
+    /// let trailing_trivia = new_node.last_trailing_trivia().unwrap();
+    ///
+    /// assert_eq!("", leading_trivia.text());
+    /// assert_eq!("", trailing_trivia.text());
+    /// ```
+    #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
+    pub fn trim_trivia(self) -> Option<Self> {
+        self.trim_leading_trivia()?.trim_trailing_trivia()
+    }
+
+    /// Return a new version of this node without leading newlines and whitespaces.
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
+    /// use rome_rowan::*;
+    ///
+    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT, |builder| {
+    ///     builder.token_with_trivia(
+    ///         RawLanguageKind::LET_TOKEN,
+    ///         "\n let ",
+    ///         &[TriviaPiece::newline(1), TriviaPiece::whitespace(1)],
+    ///         &[TriviaPiece::whitespace(1)],
+    ///     );
+    ///     builder.token(RawLanguageKind::STRING_TOKEN, "a");
+    ///     builder.token_with_trivia(
+    ///         RawLanguageKind::SEMICOLON_TOKEN,
+    ///         "; ",
+    ///         &[],
+    ///         &[TriviaPiece::whitespace(1)],
+    ///     );
+    /// });
+    ///
+    /// let new_node = node.trim_leading_trivia().unwrap();
+    /// let leading_trivia = new_node.first_leading_trivia().unwrap();
+    /// let trailing_trivia = new_node.last_trailing_trivia().unwrap();
+    ///
+    /// assert_eq!("", leading_trivia.text());
+    /// assert_eq!(" ", trailing_trivia.text());
+    /// ```
+    #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
+    pub fn trim_leading_trivia(self) -> Option<Self> {
+        let first_token = self.first_token()?;
+        let new_first_token = first_token.trim_leading_trivia();
+        self.replace_child(first_token.into(), new_first_token.into())
+    }
+
+    /// Return a new version of this token without trailing whitespaces.
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
+    /// use rome_rowan::*;
+    ///
+    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT, |builder| {
+    ///     builder.token_with_trivia(
+    ///         RawLanguageKind::LET_TOKEN,
+    ///         "\n let ",
+    ///         &[TriviaPiece::newline(1), TriviaPiece::whitespace(1)],
+    ///         &[TriviaPiece::whitespace(1)],
+    ///     );
+    ///     builder.token(RawLanguageKind::STRING_TOKEN, "a");
+    ///     builder.token_with_trivia(
+    ///         RawLanguageKind::SEMICOLON_TOKEN,
+    ///         "; ",
+    ///         &[],
+    ///         &[TriviaPiece::whitespace(1)],
+    ///     );
+    /// });
+    ///
+    /// let new_node = node.trim_trailing_trivia().unwrap();
+    /// let leading_trivia = new_node.first_leading_trivia().unwrap();
+    /// let trailing_trivia = new_node.last_trailing_trivia().unwrap();
+    ///
+    /// assert_eq!("\n ", leading_trivia.text());
+    /// assert_eq!("", trailing_trivia.text());
+    /// ```
+    #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
+    pub fn trim_trailing_trivia(self) -> Option<Self> {
+        let last_token = self.last_token()?;
+        let new_last_token = last_token.trim_trailing_trivia();
+        self.replace_child(last_token.into(), new_last_token.into())
     }
 
     pub fn into_list(self) -> SyntaxList<L> {

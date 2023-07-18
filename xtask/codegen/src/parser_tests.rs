@@ -3,7 +3,7 @@
 
 use std::{
     collections::HashMap,
-    fs, iter, mem,
+    fs, mem,
     path::{Path, PathBuf},
 };
 
@@ -181,7 +181,7 @@ fn collect_tests(s: &str) -> Vec<Test> {
         let text: String = comment_block[1..]
             .iter()
             .cloned()
-            .chain(iter::once(String::new()))
+            .chain([String::new()])
             .collect::<Vec<_>>()
             .join("\n");
 

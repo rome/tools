@@ -646,7 +646,10 @@ mod tests {
         JsSyntaxKind, JsSyntaxNode, JsUnaryExpression,
     };
     use rome_rowan::syntax::SyntaxElementKey;
-    use rome_rowan::{AstNode, BatchMutation, SyntaxNode, SyntaxTriviaPieceComments, TextRange};
+    use rome_rowan::{
+        chain_trivia_pieces, AstNode, BatchMutation, SyntaxNode, SyntaxTriviaPieceComments,
+        TextRange,
+    };
     use std::cell::RefCell;
 
     #[test]
@@ -874,22 +877,14 @@ b;"#;
 
         let identifier_token = reference_identifier.value_token().unwrap();
         let new_identifier_token = identifier_token
-            .with_leading_trivia_pieces(
-                l_paren
-                    .leading_trivia()
-                    .pieces()
-                    .chain(l_paren.trailing_trivia().pieces())
-                    .chain(identifier_token.leading_trivia().pieces())
-                    .collect::<Vec<_>>(),
-            )
-            .with_trailing_trivia_pieces(
-                identifier_token
-                    .trailing_trivia()
-                    .pieces()
-                    .chain(r_paren.leading_trivia().pieces())
-                    .chain(r_paren.trailing_trivia().pieces())
-                    .collect::<Vec<_>>(),
-            );
+            .prepend_trivia_pieces(chain_trivia_pieces(
+                l_paren.leading_trivia().pieces(),
+                l_paren.trailing_trivia().pieces(),
+            ))
+            .append_trivia_pieces(chain_trivia_pieces(
+                r_paren.leading_trivia().pieces(),
+                r_paren.trailing_trivia().pieces(),
+            ));
 
         let new_reference_identifier = reference_identifier.with_value_token(new_identifier_token);
 

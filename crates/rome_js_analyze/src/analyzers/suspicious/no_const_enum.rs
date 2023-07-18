@@ -3,7 +3,7 @@ use rome_analyze::{declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_syntax::TsEnumDeclaration;
-use rome_rowan::{AstNode, BatchMutationExt};
+use rome_rowan::{chain_trivia_pieces, trim_leading_trivia_pieces, AstNode, BatchMutationExt};
 
 use crate::JsRuleAction;
 
@@ -73,18 +73,10 @@ impl Rule for NoConstEnum {
         let mut mutation = ctx.root().begin();
         let const_token = enum_decl.const_token()?;
         let enum_token = enum_decl.enum_token().ok()?;
-        let transferred_trivia = const_token
-            .leading_trivia()
-            .pieces()
-            .chain(
-                const_token
-                    .trailing_trivia()
-                    .pieces()
-                    .skip_while(|x| x.is_whitespace() || x.is_whitespace()),
-            )
-            .chain(enum_token.leading_trivia().pieces())
-            .collect::<Vec<_>>();
-        let new_enum_token = enum_token.with_leading_trivia_pieces(transferred_trivia);
+        let new_enum_token = enum_token.prepend_trivia_pieces(chain_trivia_pieces(
+            const_token.leading_trivia().pieces(),
+            trim_leading_trivia_pieces(const_token.trailing_trivia().pieces()),
+        ));
         mutation.remove_token(const_token);
         mutation.replace_token_discard_trivia(enum_token, new_enum_token);
         Some(JsRuleAction {

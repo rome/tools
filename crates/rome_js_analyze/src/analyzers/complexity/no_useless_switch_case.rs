@@ -139,15 +139,9 @@ impl Rule for NoUselessSwitchCase {
             let new_default_clause = default_clause
                 .to_owned()
                 .with_consequent(consequent)
-                .with_colon_token(
-                    default_clause_colon_token.with_trailing_trivia_pieces(
-                        default_clause_colon_token
-                            .trailing_trivia()
-                            .pieces()
-                            .chain(useless_case.colon_token().ok()?.trailing_trivia().pieces())
-                            .collect::<Vec<_>>(),
-                    ),
-                );
+                .with_colon_token(default_clause_colon_token.append_trivia_pieces(
+                    useless_case.colon_token().ok()?.trailing_trivia().pieces(),
+                ));
             mutation.remove_node(default_clause.to_owned());
             mutation.replace_element(
                 SyntaxElement::Node(useless_case.syntax().to_owned()),

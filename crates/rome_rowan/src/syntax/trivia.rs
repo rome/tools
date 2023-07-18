@@ -674,6 +674,81 @@ impl<L: Language> std::fmt::Debug for SyntaxTrivia<L> {
     }
 }
 
+/// Remove leading newlines and whitespaces from `trivia`.
+///
+/// ## Examples
+///
+/// ```
+/// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind};
+/// use rome_rowan::{trim_leading_trivia_pieces, RawSyntaxToken, SyntaxToken, TriviaPiece};
+///
+/// let token = SyntaxToken::<RawLanguage>::new_detached(
+///     RawLanguageKind::LET_TOKEN,  
+///     "\n\t /*c*/ let \t",
+///     [TriviaPiece::newline(1), TriviaPiece::whitespace(2), TriviaPiece::multi_line_comment(5), TriviaPiece::whitespace(1)],
+///     [TriviaPiece::whitespace(2)]
+/// );
+/// let new_token = token.with_leading_trivia_pieces(
+///     trim_leading_trivia_pieces(token.leading_trivia().pieces())
+/// );
+///
+/// assert_eq!(
+///     format!("{:?}", new_token),
+///     "LET_TOKEN@0..11 \"let\" [Comments(\"/*c*/\"), Whitespace(\" \")] [Whitespace(\" \\t\")]"
+/// );
+/// ```
+pub fn trim_leading_trivia_pieces<L: Language>(
+    trivia: impl ExactSizeIterator<Item = SyntaxTriviaPiece<L>>,
+) -> impl ExactSizeIterator<Item = SyntaxTriviaPiece<L>> {
+    let mut trivia = trivia.peekable();
+    // We cannot use `skip_while` because `SkipWhile` doesn't implement `ExactSizeIterator`.
+    // Eager version of `skip_while` which eagerly consume trivia.
+    while trivia
+        .next_if(|x| x.is_whitespace() || x.is_newline())
+        .is_some()
+    {}
+    trivia
+}
+
+/// Remove trailing newlines and whitespaces from `trivia`.
+///
+/// ## Examples
+///
+/// ```
+/// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind};
+/// use rome_rowan::{trim_trailing_trivia_pieces, RawSyntaxToken, SyntaxToken, TriviaPiece};
+///
+/// let token = SyntaxToken::<RawLanguage>::new_detached(
+///     RawLanguageKind::LET_TOKEN,  
+///     "\t/*c*/\n\t let ",
+///     [TriviaPiece::whitespace(1), TriviaPiece::multi_line_comment(5), TriviaPiece::newline(1), TriviaPiece::whitespace(2)],
+///     [TriviaPiece::whitespace(1)],
+/// );
+/// let new_token = token.with_leading_trivia_pieces(
+///     trim_trailing_trivia_pieces(token.leading_trivia().pieces())
+/// );
+///
+/// assert_eq!(
+///     format!("{:?}", new_token),
+///     "LET_TOKEN@0..10 \"let\" [Whitespace(\"\\t\"), Comments(\"/*c*/\")] [Whitespace(\" \")]"
+/// );
+/// ```
+pub fn trim_trailing_trivia_pieces<L: Language>(
+    trivia: impl ExactSizeIterator<Item = SyntaxTriviaPiece<L>> + DoubleEndedIterator,
+) -> impl ExactSizeIterator<Item = SyntaxTriviaPiece<L>> {
+    let mut trivia = trivia.rev().peekable();
+    let mut take_count = trivia.len();
+    // We cannot use `take_while` because `TakeWhile` doesn't implement `ExactSizeIterator`.
+    while trivia
+        .next_if(|x| x.is_whitespace() || x.is_newline())
+        .is_some()
+    {
+        take_count -= 1;
+    }
+    // We have to use `take` to avoid panicking on `ExactSizeIterator under-reported length`.
+    trivia.rev().take(take_count)
+}
+
 /// It creates an iterator by chaining two trivia pieces. This iterator
 /// of trivia can be attached to a token using `*_pieces` APIs.
 ///

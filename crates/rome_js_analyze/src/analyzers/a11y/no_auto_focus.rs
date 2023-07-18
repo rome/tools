@@ -72,7 +72,6 @@ impl Rule for NoAutoFocus {
         if node.is_custom_component() {
             return None;
         }
-
         node.find_attribute_by_name("autoFocus")
     }
 
@@ -88,24 +87,13 @@ impl Rule for NoAutoFocus {
 
     fn action(ctx: &RuleContext<Self>, attr: &Self::State) -> Option<JsRuleAction> {
         let mut mutation = ctx.root().begin();
-        let trailing_trivia = attr.syntax().last_trailing_trivia();
-        if let Some(trailing_trivia) = trailing_trivia {
-            if trailing_trivia.pieces().any(|piece| piece.is_comments()) {
-                let element = attr.syntax().ancestors().find_map(AnyJsxElement::cast);
-                if let Some(name) = element.and_then(|e| e.name_value_token()) {
-                    let trivia_pieces = name
-                        .trailing_trivia()
-                        .pieces()
-                        .chain(trailing_trivia.pieces())
-                        .collect::<Vec<_>>();
-                    let new_name = name.with_trailing_trivia_pieces(trivia_pieces);
-                    mutation.replace_token_discard_trivia(name, new_name);
-                }
-            }
+        if attr.syntax().has_trailing_comments() {
+            let prev_token = attr.syntax().first_token()?.prev_token()?;
+            let new_token =
+                prev_token.append_trivia_pieces(attr.syntax().last_trailing_trivia()?.pieces());
+            mutation.replace_token_discard_trivia(prev_token, new_token);
         }
-
         mutation.remove_node(attr.clone());
-
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,

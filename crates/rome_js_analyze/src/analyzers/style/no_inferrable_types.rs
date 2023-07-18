@@ -8,7 +8,6 @@ use rome_js_syntax::{
     JsVariableDeclarator, JsVariableDeclaratorList, TsPropertyParameter, TsReadonlyModifier,
     TsTypeAnnotation,
 };
-use rome_rowan::chain_trivia_pieces;
 use rome_rowan::AstNode;
 use rome_rowan::BatchMutationExt;
 
@@ -169,18 +168,13 @@ impl Rule for NoInferrableTypes {
 
     fn action(ctx: &RuleContext<Self>, annotation: &Self::State) -> Option<JsRuleAction> {
         let mut mutation = ctx.root().begin();
-        let first_del_token = annotation.syntax().first_token()?;
-        let prev_token = first_del_token.prev_token()?;
-        let new_prev_token = prev_token.with_trailing_trivia_pieces(chain_trivia_pieces(
-            first_del_token.leading_trivia().pieces(),
-            prev_token.trailing_trivia().pieces(),
-        ));
-        let last_del_token = annotation.syntax().last_token()?;
-        let next_token = last_del_token.next_token()?;
-        let new_next_token = next_token.with_leading_trivia_pieces(chain_trivia_pieces(
-            last_del_token.trailing_trivia().pieces(),
-            next_token.leading_trivia().pieces(),
-        ));
+        let first_token = annotation.syntax().first_token()?;
+        let prev_token = first_token.prev_token()?;
+        let new_prev_token = prev_token.append_trivia_pieces(first_token.leading_trivia().pieces());
+        let last_token = annotation.syntax().last_token()?;
+        let next_token = last_token.next_token()?;
+        let new_next_token =
+            next_token.prepend_trivia_pieces(last_token.trailing_trivia().pieces());
         mutation.replace_token_discard_trivia(prev_token, new_prev_token);
         mutation.replace_token_discard_trivia(next_token, new_next_token);
         mutation.remove_node(annotation.clone());

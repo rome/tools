@@ -1,3 +1,4 @@
+use rome_cli::rome_command;
 use rome_service::VERSION;
 use std::fs;
 use xtask::{project_root, Result};
@@ -7,6 +8,14 @@ title: VSCode extension
 emoji: 💻
 category: reference
 description: Notes about the Rome's VSCode extension
+---
+"#;
+
+const CLI_FRONTMATTER: &str = r#"---
+title: CLI
+emoji: ⌨️
+category: reference
+description: Available commands and arguments in the Rome CLI.
 ---
 "#;
 
@@ -35,6 +44,12 @@ pub(crate) fn generate_files() -> Result<()> {
     fs::write(project_root().join("website/src/pages/vscode.mdx"), page)?;
 
     if VERSION != "0.0.0" {
+        let parser = rome_command();
+        let markdown = parser.render_markdown("rome");
+        fs::write(
+            project_root().join("website/src/pages/cli.mdx"),
+            format!("{CLI_FRONTMATTER}{markdown}"),
+        )?;
         let schema_root_folder = project_root().join("website/src/pages/schemas");
         let schema_version_folder = schema_root_folder.join(VERSION);
         let schema_js_file = schema_version_folder.join("schema.json.js");

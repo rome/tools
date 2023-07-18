@@ -1959,15 +1959,10 @@ pub struct Nursery {
     #[bpaf(long("use-hook-at-top-level"), argument("on|off|warn"), optional, hide)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub use_hook_at_top_level: Option<RuleConfiguration>,
-    #[doc = "Disallows imports from certain modules."]
-    #[bpaf(
-        long("use-import-restrictions"),
-        argument("on|off|warn"),
-        optional,
-        hide
-    )]
+    #[doc = "Use Array.isArray() instead of instanceof Array."]
+    #[bpaf(long("use-is-array"), argument("on|off|warn"), optional, hide)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub use_import_restrictions: Option<RuleConfiguration>,
+    pub use_is_array: Option<RuleConfiguration>,
     #[doc = "Require calls to isNaN() when checking for NaN."]
     #[bpaf(long("use-is-nan"), argument("on|off|warn"), optional, hide)]
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -2030,14 +2025,14 @@ impl Nursery {
         "useGroupedTypeImport",
         "useHeadingContent",
         "useHookAtTopLevel",
-        "useImportRestrictions",
+        "useIsArray",
         "useIsNan",
         "useLiteralEnumMembers",
         "useLiteralKeys",
         "useNamingConvention",
         "useSimpleNumberKeys",
     ];
-    const RECOMMENDED_RULES: [&'static str; 19] = [
+    const RECOMMENDED_RULES: [&'static str; 20] = [
         "noAriaUnsupportedElements",
         "noBannedTypes",
         "noConstantCondition",
@@ -2054,11 +2049,12 @@ impl Nursery {
         "useArrowFunction",
         "useExhaustiveDependencies",
         "useGroupedTypeImport",
+        "useIsArray",
         "useIsNan",
         "useLiteralEnumMembers",
         "useLiteralKeys",
     ];
-    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 19] = [
+    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 20] = [
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[1]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[2]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[5]),
@@ -2264,7 +2260,7 @@ impl Nursery {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[27]));
             }
         }
-        if let Some(rule) = self.use_import_restrictions.as_ref() {
+        if let Some(rule) = self.use_is_array.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[28]));
             }
@@ -2438,7 +2434,7 @@ impl Nursery {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[27]));
             }
         }
-        if let Some(rule) = self.use_import_restrictions.as_ref() {
+        if let Some(rule) = self.use_is_array.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[28]));
             }
@@ -2476,7 +2472,7 @@ impl Nursery {
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
     }
-    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 19] {
+    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 20] {
         Self::RECOMMENDED_RULES_AS_FILTERS
     }
     pub(crate) fn all_rules_as_filters() -> [RuleFilter<'static>; 34] { Self::ALL_RULES_AS_FILTERS }
@@ -2528,7 +2524,7 @@ impl Nursery {
             "useGroupedTypeImport" => self.use_grouped_type_import.as_ref(),
             "useHeadingContent" => self.use_heading_content.as_ref(),
             "useHookAtTopLevel" => self.use_hook_at_top_level.as_ref(),
-            "useImportRestrictions" => self.use_import_restrictions.as_ref(),
+            "useIsArray" => self.use_is_array.as_ref(),
             "useIsNan" => self.use_is_nan.as_ref(),
             "useLiteralEnumMembers" => self.use_literal_enum_members.as_ref(),
             "useLiteralKeys" => self.use_literal_keys.as_ref(),
