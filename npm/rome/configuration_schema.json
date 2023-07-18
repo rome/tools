@@ -962,13 +962,15 @@
 						{ "type": "null" }
 					]
 				},
-<<<<<<< HEAD
 				"useImportRestrictions": {
-					"description": "Disallows imports from certain modules.",
-=======
+					"description": "Disallows package private imports.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"useIsArray": {
 					"description": "Use Array.isArray() instead of instanceof Array.",
->>>>>>> upstream/main
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }

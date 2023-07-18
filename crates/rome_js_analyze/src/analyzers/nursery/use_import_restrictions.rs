@@ -2,43 +2,31 @@ use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic
 use rome_console::markup;
 use rome_js_syntax::JsModuleSource;
 use rome_rowan::{AstNode, SyntaxTokenText};
-use std::{
-    ffi::OsStr,
-    path::{Path, PathBuf},
-};
 
 const INDEX_BASENAMES: &[&str] = &["index", "mod"];
 
 const SOURCE_EXTENSIONS: &[&str] = &["js", "ts", "cjs", "cts", "mjs", "mts", "jsx", "tsx"];
 
 declare_rule! {
-    /// Disallows imports from certain modules.
+    /// Disallows package private imports.
     ///
     /// This rules enforces the following restrictions:
     ///
     /// ## Package private visibility
     ///
-    /// All exported symbols are considered to be "package private". This means that modules that
-    /// reside in the same directory, as well as submodules of those "sibling" modules, are
-    /// allowed to import them, while any other modules that are further away in the file system
-    /// are restricted from importing them. A symbol's visibility may be extended by
-    /// re-exporting from an index file.
+    /// All exported symbols, such as types, functions or other things that may be exported, are
+    /// considered to be "package private". This means that modules that reside in the same
+    /// directory, as well as submodules of those "sibling" modules, are allowed to import them,
+    /// while any other modules that are further away in the file system are restricted from
+    /// importing them. A symbol's visibility may be extended by re-exporting from an index file.
     ///
     /// Notes:
     ///
-    /// * This rule only applies to relative imports, since the API from external dependencies is
-    ///   often out of your control.
-    /// * This rule only applies to source imports. Imports for resources such as images or CSS
-    ///   files are exempted.
-    /// * A future improvement will relax the restriction from "all exported symbols" to those
-    ///   that have an `@package` JSDoc annotation.
+    /// * This rule only applies to relative imports. External dependencies are exempted.
+    /// * This rule only applies to imports for JavaScript and TypeScript files. Imports for
+    ///   resources such as images or CSS files are exempted.
     ///
-    /// This rule is intended to be extended with additional import restrictions.
-    /// Please see the tracking issue to follow progress: https://github.com/rome/tools/issues/4678
-    ///
-    /// Source:
-    ///
-    /// * https://github.com/uhyo/eslint-plugin-import-access
+    /// Source: https://github.com/uhyo/eslint-plugin-import-access
     ///
     /// ## Examples
     ///
@@ -61,9 +49,6 @@ declare_rule! {
     /// ### Valid
     ///
     /// ```js
-    /// // Imports within the same module are always allowed.
-    /// import { fooPackageVariable } from "./foo.js";
-    ///
     /// // Imports within the same module are always allowed.
     /// import { fooPackageVariable } from "./foo.js";
     ///
@@ -105,20 +90,17 @@ impl Rule for UseImportRestrictions {
     fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
         let ImportRestrictionsState { path, suggestion } = state;
 
-        let mut diagnostic = RuleDiagnostic::new(
+        let diagnostic = RuleDiagnostic::new(
             rule_category!(),
             ctx.query().range(),
             markup! {
-                "Importing package private symbols is not allowed from outside the module directory."
+                "Importing package private symbols is prohibited from outside the module directory."
             },
-        );
-
-        if let Some(suggestion) = suggestion {
-            diagnostic = diagnostic.note(markup! {
-                "Please import from "<Emphasis>{suggestion.display()}</Emphasis>" instead "
-                "(you may need to re-export the symbol(s) from "<Emphasis>{path.display()}</Emphasis>")."
-            });
-        }
+        )
+        .note(markup! {
+            "Please import from "<Emphasis>{suggestion}</Emphasis>" instead "
+            "(you may need to re-export the symbol(s) from "<Emphasis>{path}</Emphasis>")."
+        });
 
         Some(diagnostic)
     }
@@ -126,59 +108,75 @@ impl Rule for UseImportRestrictions {
 
 pub(crate) struct ImportRestrictionsState {
     /// The path that is being restricted.
-    path: PathBuf,
+    path: String,
 
-    /// Optional suggestion from which to import instead.
-    suggestion: Option<PathBuf>,
+    /// Suggestion from which to import instead.
+    suggestion: String,
 }
 
 fn get_restricted_import(module_path: &SyntaxTokenText) -> Option<ImportRestrictionsState> {
-    let mut path = PathBuf::from(module_path.text());
-
-    if !path.starts_with(".") && !path.starts_with("..") {
+    if !module_path.starts_with('.') {
         return None;
     }
 
+    let mut path_parts: Vec<&str> = module_path.text().split('/').collect();
     let mut index_filename = None;
 
-    if let Some(extension) = path.extension() {
-        if !SOURCE_EXTENSIONS.contains(&extension.to_str().unwrap_or_default()) {
+    if let Some(extension) = get_extension(&path_parts) {
+        if !SOURCE_EXTENSIONS.contains(&extension) {
             return None; // Resource files are exempt.
         }
 
-        if let Some(basename) = path.file_stem() {
-            if INDEX_BASENAMES.contains(&basename.to_str().unwrap_or_default()) {
+        if let Some(basename) = get_basename(&path_parts) {
+            if INDEX_BASENAMES.contains(&basename) {
                 // We pop the index file because it shouldn't count as a path,
                 // component, but we store the file name so we can add it to
                 // both the reported path and the suggestion.
-                index_filename = path.file_name().map(OsStr::to_owned);
-                path.pop();
+                index_filename = path_parts.last().cloned();
+                path_parts.pop();
             }
         }
     }
 
-    let is_restricted = path
-        .components()
-        .filter(|component| component.as_os_str() != "." && component.as_os_str() != "..")
+    let is_restricted = path_parts
+        .iter()
+        .filter(|&&part| part != "." && part != "..")
         .count()
         > 1;
     if !is_restricted {
         return None;
     }
 
-    let mut suggestion = path.parent().map(Path::to_owned);
+    let mut suggestion_parts = path_parts[..path_parts.len() - 1].to_vec();
 
     // Push the index file if it exists. This makes sure the reported path
     // matches the import path exactly.
     if let Some(index_filename) = index_filename {
-        path.push(&index_filename);
+        path_parts.push(index_filename);
 
         // Assumes the user probably wants to use an index file that has the
         // same name as the original.
-        if let Some(alternative) = suggestion.as_mut() {
-            alternative.push(index_filename);
-        }
+        suggestion_parts.push(index_filename);
     }
 
-    Some(ImportRestrictionsState { path, suggestion })
+    Some(ImportRestrictionsState {
+        path: path_parts.join("/"),
+        suggestion: suggestion_parts.join("/"),
+    })
+}
+
+fn get_basename<'a>(path_parts: &'_ [&'a str]) -> Option<&'a str> {
+    path_parts.last().map(|&part| match part.find('.') {
+        Some(dot_index) if dot_index > 0 && dot_index < part.len() - 1 => &part[..dot_index],
+        _ => part,
+    })
+}
+
+fn get_extension<'a>(path_parts: &'_ [&'a str]) -> Option<&'a str> {
+    path_parts.last().and_then(|part| match part.find('.') {
+        Some(dot_index) if dot_index > 0 && dot_index < part.len() - 1 => {
+            Some(&part[dot_index + 1..])
+        }
+        _ => None,
+    })
 }

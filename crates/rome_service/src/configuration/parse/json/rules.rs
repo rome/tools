@@ -1672,11 +1672,8 @@ impl VisitNode<JsonLanguage> for Nursery {
                 "useGroupedTypeImport",
                 "useHeadingContent",
                 "useHookAtTopLevel",
-<<<<<<< HEAD
                 "useImportRestrictions",
-=======
                 "useIsArray",
->>>>>>> upstream/main
                 "useIsNan",
                 "useLiteralEnumMembers",
                 "useLiteralKeys",
@@ -2345,36 +2342,44 @@ impl VisitNode<JsonLanguage> for Nursery {
                     ));
                 }
             },
-<<<<<<< HEAD
             "useImportRestrictions" => match value {
                 AnyJsonValue::JsonStringValue(_) => {
                     let mut configuration = RuleConfiguration::default();
                     self.map_to_known_string(&value, name_text, &mut configuration, diagnostics)?;
                     self.use_import_restrictions = Some(configuration);
-=======
-            "useIsArray" => match value {
-                AnyJsonValue::JsonStringValue(_) => {
-                    let mut configuration = RuleConfiguration::default();
-                    self.map_to_known_string(&value, name_text, &mut configuration, diagnostics)?;
-                    self.use_is_array = Some(configuration);
->>>>>>> upstream/main
                 }
                 AnyJsonValue::JsonObjectValue(_) => {
                     let mut rule_configuration = RuleConfiguration::default();
                     rule_configuration.map_rule_configuration(
                         &value,
                         name_text,
-<<<<<<< HEAD
                         "useImportRestrictions",
                         diagnostics,
                     )?;
                     self.use_import_restrictions = Some(rule_configuration);
-=======
+                }
+                _ => {
+                    diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
+                        "object or string",
+                        value.range(),
+                    ));
+                }
+            },
+            "useIsArray" => match value {
+                AnyJsonValue::JsonStringValue(_) => {
+                    let mut configuration = RuleConfiguration::default();
+                    self.map_to_known_string(&value, name_text, &mut configuration, diagnostics)?;
+                    self.use_is_array = Some(configuration);
+                }
+                AnyJsonValue::JsonObjectValue(_) => {
+                    let mut rule_configuration = RuleConfiguration::default();
+                    rule_configuration.map_rule_configuration(
+                        &value,
+                        name_text,
                         "useIsArray",
                         diagnostics,
                     )?;
                     self.use_is_array = Some(rule_configuration);
->>>>>>> upstream/main
                 }
                 _ => {
                     diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
