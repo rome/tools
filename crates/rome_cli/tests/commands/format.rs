@@ -55,6 +55,13 @@ const APPLY_TRAILING_COMMA_AFTER: &str = r#"const a = [
 const APPLY_ARROW_PARENTHESES_BEFORE: &str = r#"
 action => {}
 (action) => {}
+(action?) => {}
+(action: h) => {}
+(action): h => {}
+(
+    action
+    // hhhhhhhh
+) => {}
 ({ action }) => {}
 ([ action ]) => {}
 (...action) => {}
@@ -63,6 +70,13 @@ action => {}
 
 const APPLY_ARROW_PARENTHESES_AFTER: &str = r#"action => {};
 action => {};
+(action?) => {};
+(action: h) => {};
+(action): h => {};
+(
+	action
+	// hhhhhhhh
+) => {}
 ({ action }) => {};
 ([action]) => {};
 (...action) => {};

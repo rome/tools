@@ -13,8 +13,11 @@ mod language {
 // use this test check if your snippet prints as you wish, without using a snapshot
 fn quick_test() {
     let src = r#"
-        action => {}
-        (action) => {}
+        (action: h) => {}
+        (action?) => {}
+        (action
+        // yes
+        ) => {}
         ({ action }) => {}
         ([ action ]) => {}
         (...action) => {}
@@ -28,7 +31,7 @@ fn quick_test() {
     );
     dbg!(tree.syntax());
     let options = JsFormatOptions::new(syntax)
-        .with_semicolons(Semicolons::AsNeeded)
+        .with_semicolons(Semicolons::Always)
         .with_quote_style(QuoteStyle::Double)
         .with_jsx_quote_style(QuoteStyle::Single)
         .with_arrow_parentheses(ArrowParentheses::AsNeeded);
@@ -46,12 +49,16 @@ fn quick_test() {
     // I don't know why semicolons are added there, but it's not related to my code changes so ¯\_(ツ)_/¯
     assert_eq!(
         result.as_code(),
-        r#";action => {}
-;action => {}
-;({ action }) => {}
-;([action]) => {}
-;(...action) => {}
-;(action = 1) => {}
+        r#"(action: h) => {};
+(action?) => {};
+(
+	action,
+	// yes
+) => {};
+({ action }) => {};
+([action]) => {};
+(...action) => {};
+(action = 1) => {};
 "#
     );
 }
