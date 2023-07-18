@@ -174,6 +174,8 @@ if no error diagnostics are emitted.
 
 - Fix [`noInvalidConstructorSuper`](https://docs.rome.tools/lint/rules/noinvalidconstructorsuper/) rule that erroneously reported generic parents [#4624](https://github.com/rome/tools/issues/4624).
 
+-  Fix [`noDuplicateCase`](https://docs.rome.tools/lint/rules/noDuplicateCase/) rule that erroneously reported as equals the strings literals `"'"` and `'"'` [#4706](https://github.com/rome/tools/issues/4706).
+
 - Relax [`noBannedTypes`](https://docs.rome.tools/lint/rules/nobannedtypes/) and improve documentation
 
   The rule no longer reports a user type that reuses a banned type name.
