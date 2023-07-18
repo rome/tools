@@ -6,7 +6,6 @@ pub(crate) mod no_constructor_return;
 pub(crate) mod no_empty_pattern;
 pub(crate) mod no_inner_declarations;
 pub(crate) mod no_invalid_constructor_super;
-pub(crate) mod no_new_symbol;
 pub(crate) mod no_precision_loss;
 pub(crate) mod no_setter_return;
 pub(crate) mod no_string_case_mismatch;
@@ -29,7 +28,6 @@ declare_group! {
             self :: no_empty_pattern :: NoEmptyPattern ,
             self :: no_inner_declarations :: NoInnerDeclarations ,
             self :: no_invalid_constructor_super :: NoInvalidConstructorSuper ,
-            self :: no_new_symbol :: NoNewSymbol ,
             self :: no_precision_loss :: NoPrecisionLoss ,
             self :: no_setter_return :: NoSetterReturn ,
             self :: no_string_case_mismatch :: NoStringCaseMismatch ,
