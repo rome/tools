@@ -627,15 +627,13 @@ export interface Nursery {
 	 */
 	useHookAtTopLevel?: RuleConfiguration;
 	/**
-<<<<<<< HEAD
-	 * Disallows imports from certain modules.
+	 * Disallows package private imports.
 	 */
 	useImportRestrictions?: RuleConfiguration;
-=======
+	/**
 	 * Use Array.isArray() instead of instanceof Array.
 	 */
 	useIsArray?: RuleConfiguration;
->>>>>>> upstream/main
 	/**
 	 * Require calls to isNaN() when checking for NaN.
 	 */
@@ -1179,6 +1177,7 @@ export type Category =
 	| "lint/nursery/useGroupedTypeImport"
 	| "lint/nursery/useHeadingContent"
 	| "lint/nursery/useHookAtTopLevel"
+	| "lint/nursery/useImportRestrictions"
 	| "lint/nursery/useIsArray"
 	| "lint/nursery/useIsNan"
 	| "lint/nursery/useLiteralEnumMembers"

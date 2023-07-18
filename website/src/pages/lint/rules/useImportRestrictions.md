@@ -5,33 +5,25 @@ parent: lint/rules/index
 
 # useImportRestrictions (since vnext)
 
-Disallows imports from certain modules.
+Disallows package private imports.
 
 This rules enforces the following restrictions:
 
 ## Package private visibility
 
-All exported symbols are considered to be "package private". This means that modules that
-reside in the same directory, as well as submodules of those "sibling" modules, are
-allowed to import them, while any other modules that are further away in the file system
-are restricted from importing them. A symbol's visibility may be extended by
-re-exporting from an index file.
+All exported symbols, such as types, functions or other things that may be exported, are
+considered to be "package private". This means that modules that reside in the same
+directory, as well as submodules of those "sibling" modules, are allowed to import them,
+while any other modules that are further away in the file system are restricted from
+importing them. A symbol's visibility may be extended by re-exporting from an index file.
 
 Notes:
 
-- This rule only applies to relative imports, since the API from external dependencies is
-often out of your control.
-- This rule only applies to source imports. Imports for resources such as images or CSS
-files are exempted.
-- A future improvement will relax the restriction from "all exported symbols" to those
-that have an `@package` JSDoc annotation.
+- This rule only applies to relative imports. External dependencies are exempted.
+- This rule only applies to imports for JavaScript and TypeScript files. Imports for
+resources such as images or CSS files are exempted.
 
-This rule is intended to be extended with additional import restrictions.
-Please see the tracking issue to follow progress: https://github.com/rome/tools/issues/4678
-
-Source:
-
-- https://github.com/uhyo/eslint-plugin-import-access
+Source: https://github.com/uhyo/eslint-plugin-import-access
 
 ## Examples
 
@@ -53,7 +45,7 @@ import { fooPackageVariable } from "./sub/foo/index.js";
 
 <pre class="language-text"><code class="language-text">nursery/useImportRestrictions.js:2:36 <a href="https://docs.rome.tools/lint/rules/useImportRestrictions">lint/nursery/useImportRestrictions</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Importing package private symbols is not allowed from outside the module directory.</span>
+<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Importing package private symbols is prohibited from outside the module directory.</span>
   
     <strong>1 │ </strong>// Attempt to import from `foo.js` from outside its `sub` module.
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>import { fooPackageVariable } from &quot;./sub/foo.js&quot;;
@@ -65,7 +57,7 @@ import { fooPackageVariable } from "./sub/foo/index.js";
   
 nursery/useImportRestrictions.js:5:36 <a href="https://docs.rome.tools/lint/rules/useImportRestrictions">lint/nursery/useImportRestrictions</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Importing package private symbols is not allowed from outside the module directory.</span>
+<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Importing package private symbols is prohibited from outside the module directory.</span>
   
     <strong>4 │ </strong>// Attempt to import from `bar.ts` from outside its `aunt` module.
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>5 │ </strong>import { barPackageVariable } from &quot;../aunt/bar.ts&quot;;
@@ -80,9 +72,6 @@ nursery/useImportRestrictions.js:5:36 <a href="https://docs.rome.tools/lint/rule
 ### Valid
 
 ```jsx
-// Imports within the same module are always allowed.
-import { fooPackageVariable } from "./foo.js";
-
 // Imports within the same module are always allowed.
 import { fooPackageVariable } from "./foo.js";
 
