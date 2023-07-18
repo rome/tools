@@ -241,6 +241,10 @@ if no error diagnostics are emitted.
 
   These suggestions are made in object literals, classes, interfaces, and object types.
 
+- Improve [`noNewSymbol`](https://docs.rome.tools/lint/rules/noNewSymbol/).
+
+  The rule now handles cases where `Symbol` is namespaced with the global `globalThis` or `window`.
+
 - The rules [`useExhaustiveDependencies`](https://docs.rome.tools/lint/rules/useexhaustivedependencies/) and [`useHookAtTopLevel`](https://docs.rome.tools/lint/rules/usehookattoplevel/) accept a different shape of options
 
   Old configuration

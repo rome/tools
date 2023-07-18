@@ -426,7 +426,7 @@ export interface Correctness {
 	 */
 	noInvalidConstructorSuper?: RuleConfiguration;
 	/**
-	 * Disallow new operators with the Symbol object
+	 * Disallow new operators with the Symbol object.
 	 */
 	noNewSymbol?: RuleConfiguration;
 	/**

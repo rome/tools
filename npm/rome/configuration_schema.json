@@ -393,7 +393,7 @@
 					]
 				},
 				"noNewSymbol": {
-					"description": "Disallow new operators with the Symbol object",
+					"description": "Disallow new operators with the Symbol object.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }

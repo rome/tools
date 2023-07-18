@@ -3,11 +3,15 @@ use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Rule, Rul
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_syntax::{AnyJsExpression, JsCallExpression, JsNewExpression, JsNewExpressionFields};
+use rome_js_syntax::{global_identifier, AnyJsExpression, JsCallExpression, JsNewExpression};
 use rome_rowan::{chain_trivia_pieces, AstNode, BatchMutationExt};
 
 declare_rule! {
-    /// Disallow `new` operators with the `Symbol` object
+    /// Disallow `new` operators with the `Symbol` object.
+    ///
+    /// `Symbol` cannot be instantiated. This results in throwing a `TypeError`.
+    ///
+    /// Source: https://eslint.org/docs/latest/rules/no-new-symbol
     ///
     /// ## Examples
     ///
@@ -40,30 +44,18 @@ impl Rule for NoNewSymbol {
     type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let new_expression = ctx.query();
-        let callee = new_expression.callee().ok()?;
-
-        let ident = callee.as_js_identifier_expression()?;
-        let reference = ident.name().ok()?;
-
-        if reference.has_name("Symbol") {
-            let model = ctx.model();
-            let declaration = model.binding(&reference);
-
-            if declaration.is_none() {
-                return Some(());
-            }
+        let callee = ctx.query().callee().ok()?;
+        let (reference, name) = global_identifier(&callee)?;
+        if name.text() != "Symbol" {
+            return None;
         }
-
-        None
+        ctx.model().binding(&reference).is_none().then_some(())
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
-        let node = ctx.query();
-
         Some(RuleDiagnostic::new(
             rule_category!(),
-            node.syntax().text_trimmed_range(),
+            ctx.query().range(),
             markup! {
                 <Emphasis>"Symbol"</Emphasis>" cannot be called as a constructor."
             },
@@ -72,14 +64,12 @@ impl Rule for NoNewSymbol {
 
     fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
         let node = ctx.query();
-        let mut mutation = ctx.root().begin();
-
         let call_expression = convert_new_expression_to_call_expression(node)?;
-        mutation.replace_node_discard_trivia(
-            AnyJsExpression::JsNewExpression(node.clone()),
-            AnyJsExpression::JsCallExpression(call_expression),
+        let mut mutation = ctx.root().begin();
+        mutation.replace_node_discard_trivia::<AnyJsExpression>(
+            node.clone().into(),
+            call_expression.into(),
         );
-
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
@@ -90,23 +80,13 @@ impl Rule for NoNewSymbol {
 }
 
 fn convert_new_expression_to_call_expression(expr: &JsNewExpression) -> Option<JsCallExpression> {
-    let JsNewExpressionFields {
-        new_token,
-        callee,
-        arguments,
-        ..
-    } = expr.as_fields();
-
-    let new_token = new_token.ok()?;
-    let mut callee = callee.ok()?;
-    let arguments = arguments?;
-
+    let new_token = expr.new_token().ok()?;
+    let mut callee = expr.callee().ok()?;
     if new_token.has_leading_comments() || new_token.has_trailing_comments() {
         callee = callee.prepend_trivia_pieces(chain_trivia_pieces(
             new_token.leading_trivia().pieces(),
             new_token.trailing_trivia().pieces(),
         ))?;
     }
-
-    Some(make::js_call_expression(callee, arguments).build())
+    Some(make::js_call_expression(callee, expr.arguments()?).build())
 }
