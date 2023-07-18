@@ -24,7 +24,7 @@ use rome_rowan::{
 ///     Some(AnyJsParameter::AnyJsFormalParameter(
 ///         AnyJsFormalParameter::JsFormalParameter(
 ///             make::js_formal_parameter(
-///                 make::js_decorator_list(std::iter::empty()),
+///                 make::js_decorator_list([]),
 ///                 AnyJsBindingPattern::AnyJsBinding(AnyJsBinding::JsIdentifierBinding(
 ///                     make::js_identifier_binding(make::ident("params")),
 ///                 )),
@@ -41,7 +41,7 @@ use rome_rowan::{
 ///     Some(AnyJsConstructorParameter::AnyJsFormalParameter(
 ///         AnyJsFormalParameter::JsFormalParameter(
 ///             make::js_formal_parameter(
-///                 make::js_decorator_list(std::iter::empty()),
+///                 make::js_decorator_list([]),
 ///                 AnyJsBindingPattern::AnyJsBinding(AnyJsBinding::JsIdentifierBinding(
 ///                     make::js_identifier_binding(make::ident("params")),
 ///                 )),
@@ -96,7 +96,7 @@ impl AnyJsParameterList {
     ///     Some(AnyJsParameter::AnyJsFormalParameter(
     ///         AnyJsFormalParameter::JsFormalParameter(
     ///             make::js_formal_parameter(
-    ///                 make::js_decorator_list(std::iter::empty()),
+    ///                 make::js_decorator_list([]),
     ///                 AnyJsBindingPattern::AnyJsBinding(AnyJsBinding::JsIdentifierBinding(
     ///                     make::js_identifier_binding(make::ident("params")),
     ///                 )),
@@ -114,7 +114,7 @@ impl AnyJsParameterList {
     ///     Some(AnyJsConstructorParameter::AnyJsFormalParameter(
     ///         AnyJsFormalParameter::JsFormalParameter(
     ///             make::js_formal_parameter(
-    ///                 make::js_decorator_list(std::iter::empty()),
+    ///                 make::js_decorator_list([]),
     ///                 AnyJsBindingPattern::AnyJsBinding(AnyJsBinding::JsIdentifierBinding(
     ///                     make::js_identifier_binding(make::ident("params")),
     ///                 )),
@@ -156,7 +156,7 @@ impl AnyJsParameterList {
     ///     Some(AnyJsParameter::AnyJsFormalParameter(
     ///         AnyJsFormalParameter::JsFormalParameter(
     ///             make::js_formal_parameter(
-    ///                 make::js_decorator_list(std::iter::empty()),
+    ///                 make::js_decorator_list([]),
     ///                 AnyJsBindingPattern::AnyJsBinding(AnyJsBinding::JsIdentifierBinding(
     ///                     make::js_identifier_binding(make::ident("params")),
     ///                 )),
@@ -207,7 +207,7 @@ impl AnyJsParameterList {
     ///     Some(AnyJsParameter::AnyJsFormalParameter(
     ///         AnyJsFormalParameter::JsFormalParameter(
     ///             make::js_formal_parameter(
-    ///                 make::js_decorator_list(std::iter::empty()),
+    ///                 make::js_decorator_list([]),
     ///                 AnyJsBindingPattern::AnyJsBinding(AnyJsBinding::JsIdentifierBinding(
     ///                     make::js_identifier_binding(make::ident("param1")),
     ///                 )),
@@ -259,7 +259,7 @@ impl AnyJsParameterList {
     ///     Some(AnyJsParameter::AnyJsFormalParameter(
     ///         AnyJsFormalParameter::JsFormalParameter(
     ///             make::js_formal_parameter(
-    ///                 make::js_decorator_list(std::iter::empty()),
+    ///                 make::js_decorator_list([]),
     ///                 AnyJsBindingPattern::AnyJsBinding(AnyJsBinding::JsIdentifierBinding(
     ///                     make::js_identifier_binding(make::ident("param1")),
     ///                 )),
@@ -309,7 +309,7 @@ impl AnyJsParameterList {
     ///     Some(AnyJsParameter::AnyJsFormalParameter(
     ///         AnyJsFormalParameter::JsFormalParameter(
     ///             make::js_formal_parameter(
-    ///                 make::js_decorator_list(std::iter::empty()),
+    ///                 make::js_decorator_list([]),
     ///                 AnyJsBindingPattern::AnyJsBinding(AnyJsBinding::JsIdentifierBinding(
     ///                     make::js_identifier_binding(make::ident("param1")),
     ///                 )),
@@ -362,7 +362,7 @@ impl AnyJsParameterList {
     ///     Some(AnyJsParameter::AnyJsFormalParameter(
     ///         AnyJsFormalParameter::JsFormalParameter(
     ///             make::js_formal_parameter(
-    ///                 make::js_decorator_list(std::iter::empty()),
+    ///                 make::js_decorator_list([]),
     ///                 AnyJsBindingPattern::AnyJsBinding(AnyJsBinding::JsIdentifierBinding(
     ///                     make::js_identifier_binding(make::ident("param1")),
     ///                 )),

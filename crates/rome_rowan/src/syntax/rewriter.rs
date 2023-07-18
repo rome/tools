@@ -1,7 +1,6 @@
 //! A module that exports utilities to rewrite a syntax trees
 
 use crate::{Language, SyntaxNode, SyntaxSlot, SyntaxToken};
-use std::iter::once;
 
 /// A visitor that re-writes a syntax tree while visiting the nodes.
 ///
@@ -21,7 +20,7 @@ use std::iter::once;
 /// with a bogus node.
 ///
 /// ```
-/// # use std::iter::once;
+/// # use std::iter;
 /// # use rome_rowan::{AstNode, SyntaxNode, SyntaxRewriter, VisitNodeSignal};
 /// # use rome_rowan::raw_language::{LiteralExpression, RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
 ///
@@ -51,7 +50,7 @@ use std::iter::once;
 ///                         // Use your language's syntax factory instead
 ///                         let bogus_node = SyntaxNode::new_detached(
 ///                             RawLanguageKind::BOGUS,
-///                             once(Some(token.into())),
+///                             iter::once(Some(token.into())),
 ///                         );
 ///
 ///                         VisitNodeSignal::Replace(bogus_node)
@@ -172,7 +171,7 @@ where
                 let updated = rewriter.transform(node);
 
                 if updated.key() != original_key {
-                    parent = parent.splice_slots(index..=index, once(Some(updated.into())));
+                    parent = parent.splice_slots(index..=index, [Some(updated.into())]);
                 }
             }
             SyntaxSlot::Token(token) => {
@@ -182,7 +181,7 @@ where
                 let updated = rewriter.visit_token(token);
 
                 if updated.key() != original_key {
-                    parent = parent.splice_slots(index..=index, once(Some(updated.into())));
+                    parent = parent.splice_slots(index..=index, [Some(updated.into())]);
                 }
             }
             SyntaxSlot::Empty => {

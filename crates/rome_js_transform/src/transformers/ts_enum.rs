@@ -19,7 +19,6 @@ use rome_js_syntax::{
     TsEnumDeclaration, T,
 };
 use rome_rowan::{AstNode, BatchMutationExt, TriviaPieceKind};
-use std::iter;
 
 declare_transformation! {
     /// Transform a TypeScript [TsEnumDeclaration]
@@ -91,9 +90,9 @@ fn make_variable(node: &TsEnumMembers) -> JsVariableStatement {
     ))
     .build();
 
-    let list = js_variable_declarator_list(iter::once(binding), iter::empty());
+    let list = js_variable_declarator_list([binding], []);
     js_variable_statement(js_variable_declaration(
-        token(T![var]).with_trailing_trivia(iter::once((TriviaPieceKind::Whitespace, " "))),
+        token(T![var]).with_trailing_trivia([(TriviaPieceKind::Whitespace, " ")]),
         list,
     ))
     .with_semicolon_token(token(T![;]))
@@ -111,7 +110,7 @@ fn make_function_caller(node: &TsEnumMembers) -> JsExpressionStatement {
     ));
     let arguments = js_call_arguments(
         token(T!['(']),
-        js_call_argument_list(iter::once(argument), iter::empty()),
+        js_call_argument_list([argument], []),
         token(T![')']),
     );
     let expression = js_call_expression(
@@ -126,7 +125,7 @@ fn make_function_caller(node: &TsEnumMembers) -> JsExpressionStatement {
 
 fn make_function(node: &TsEnumMembers) -> JsFunctionExpression {
     let parameters_list = js_parameter_list(
-        iter::once(AnyJsParameter::AnyJsFormalParameter(
+        [AnyJsParameter::AnyJsFormalParameter(
             AnyJsFormalParameter::JsFormalParameter(
                 js_formal_parameter(
                     js_decorator_list(vec![]),
@@ -136,14 +135,14 @@ fn make_function(node: &TsEnumMembers) -> JsFunctionExpression {
                 )
                 .build(),
             ),
-        )),
-        iter::empty(),
+        )],
+        [],
     );
     let parameters = js_parameters(token(T!['(']), parameters_list, token(T![')']));
 
     let body = js_function_body(
         token(T!['{']),
-        js_directive_list(iter::empty()),
+        js_directive_list([]),
         make_members(node),
         token(T!['}']),
     );
@@ -171,7 +170,7 @@ fn make_logical_expression(node: &TsEnumMembers) -> JsLogicalExpression {
         token(T![=]),
         AnyJsExpression::JsObjectExpression(js_object_expression(
             token(T!['{']),
-            js_object_member_list(iter::empty(), iter::empty()),
+            js_object_member_list([], []),
             token(T!['}']),
         )),
     );

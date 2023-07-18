@@ -123,7 +123,6 @@ impl Rule for NoAssignInExpressions {
         let op = assign.operator().ok()?;
         if let JsAssignmentOperator::Assign = op {
             let mut mutation = ctx.root().begin();
-
             let token = assign.operator_token().ok()?;
             let binary_expression = make::js_binary_expression(
                 assign.left().ok()?.try_into_expression().ok()?,

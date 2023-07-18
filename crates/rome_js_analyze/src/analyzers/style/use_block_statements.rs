@@ -1,5 +1,3 @@
-use std::iter;
-
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, ActionCategory, Ast, Rule, RuleAction, RuleDiagnostic};
 use rome_console::markup;
@@ -161,8 +159,8 @@ impl Rule for UseBlockStatements {
                     .unwrap_or(false);
 
                 if !has_previous_space {
-                    l_curly_token = l_curly_token
-                        .with_leading_trivia(iter::once((TriviaPieceKind::Whitespace, " ")));
+                    l_curly_token =
+                        l_curly_token.with_leading_trivia([(TriviaPieceKind::Whitespace, " ")]);
                 }
 
                 // Clone the leading trivia of the single statement as the
@@ -176,8 +174,8 @@ impl Rule for UseBlockStatements {
                 // If the statement has no leading trivia, add a space after
                 // the opening curly token
                 if leading_trivia.is_empty() {
-                    l_curly_token = l_curly_token
-                        .with_trailing_trivia(iter::once((TriviaPieceKind::Whitespace, " ")));
+                    l_curly_token =
+                        l_curly_token.with_trailing_trivia([(TriviaPieceKind::Whitespace, " ")]);
                 }
 
                 // If the leading trivia for the statement contains any newline,
@@ -226,11 +224,9 @@ impl Rule for UseBlockStatements {
                     // if the node we have to enclose has some trailing comments, then we add a new line
                     // to the leading trivia of the right curly brace
                     if !has_trailing_single_line_comments {
-                        r_curly_token
-                            .with_leading_trivia(iter::once((TriviaPieceKind::Whitespace, " ")))
+                        r_curly_token.with_leading_trivia([(TriviaPieceKind::Whitespace, " ")])
                     } else {
-                        r_curly_token
-                            .with_leading_trivia(iter::once((TriviaPieceKind::Newline, "\n")))
+                        r_curly_token.with_leading_trivia([(TriviaPieceKind::Newline, "\n")])
                     }
                 };
 
@@ -238,7 +234,7 @@ impl Rule for UseBlockStatements {
                     stmt.clone(),
                     AnyJsStatement::JsBlockStatement(make::js_block_statement(
                         l_curly_token,
-                        make::js_statement_list(iter::once(stmt.clone())),
+                        make::js_statement_list([stmt.clone()]),
                         r_curly_token,
                     )),
                 );
@@ -333,16 +329,13 @@ macro_rules! use_block_statements_replace_body {
     ($stmt_type:ident, $builder_method:ident, $mutation:ident, $node:ident, $stmt:ident) => {
         $mutation.replace_node(
             $node.clone(),
-            AnyJsBlockStatement::$stmt_type(
-                $stmt
-                    .clone()
-                    .$builder_method(AnyJsStatement::JsBlockStatement(make::js_block_statement(
-                        make::token(T!['{'])
-                            .with_leading_trivia(iter::once((TriviaPieceKind::Whitespace, " "))),
-                        make::js_statement_list([]),
-                        make::token(T!['}']),
-                    ))),
-            ),
+            AnyJsBlockStatement::$stmt_type($stmt.clone().$builder_method(
+                AnyJsStatement::JsBlockStatement(make::js_block_statement(
+                    make::token(T!['{']).with_leading_trivia([(TriviaPieceKind::Whitespace, " ")]),
+                    make::js_statement_list([]),
+                    make::token(T!['}']),
+                )),
+            )),
         )
     };
 

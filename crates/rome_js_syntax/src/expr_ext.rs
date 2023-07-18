@@ -537,7 +537,7 @@ impl JsTemplateExpression {
     /// let tick = make::token(JsSyntaxKind::BACKTICK);
     /// let empty_str = make::js_template_expression(
     ///     tick.clone(),
-    ///     make::js_template_element_list(iter::empty()),
+    ///     make::js_template_element_list([]),
     ///     tick.clone(),
     /// ).build();
     ///
@@ -548,7 +548,7 @@ impl JsTemplateExpression {
     /// );
     /// let constant_str = make::js_template_expression(
     ///     tick.clone(),
-    ///     make::js_template_element_list(iter::once(chunk.clone())),
+    ///     make::js_template_element_list([chunk.clone()]),
     ///     tick.clone(),
     /// ).build();
     ///
@@ -571,7 +571,7 @@ impl JsTemplateExpression {
     /// );
     /// let template_str = make::js_template_expression(
     ///     tick.clone(),
-    ///     make::js_template_element_list(iter::once(template_elt)),
+    ///     make::js_template_element_list([template_elt]),
     ///     tick,
     /// ).build();
     ///

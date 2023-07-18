@@ -110,7 +110,7 @@ impl Rule for UseSelfClosingElements {
             .map_or(true, |token| !token.trailing_trivia().text().ends_with(' '));
 
         // drop the leading trivia of `r_angle_token`
-        r_angle_token = r_angle_token.with_leading_trivia(std::iter::empty());
+        r_angle_token = r_angle_token.with_leading_trivia([]);
 
         if leading_trivia.is_empty() && need_extra_whitespace {
             slash_token.push(' ');

@@ -147,6 +147,10 @@ if no error diagnostics are emitted.
 
 	This rule disallows useless `export {}`.
 
+- Add [`useIsArray`](https://docs.rome.tools/lint/rules/useIsArray/)
+
+  This rule proposes using `Array.isArray()` instead of `instanceof Array`.
+
 #### Other changes
 
 - Add new TypeScript globals (`AsyncDisposable`, `Awaited`, `DecoratorContext`, and others) [4643](https://github.com/rome/tools/issues/4643).

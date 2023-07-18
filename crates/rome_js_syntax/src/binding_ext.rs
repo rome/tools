@@ -63,7 +63,7 @@ impl AnyJsBindingDeclaration {
     ///     enum_id.into(),
     ///     make::token(T!['{']),
     ///     make::ts_enum_member_list(
-    ///         std::iter::empty(),
+    ///         [],
     ///         Some(make::token(T![;])),
     ///     ),
     ///     make::token(T!['}']),
@@ -75,18 +75,18 @@ impl AnyJsBindingDeclaration {
     ///     namespace_id.into(),
     ///     make::ts_module_block(
     ///         make::token(T!['{']),
-    ///         make::js_module_item_list(std::iter::empty()),
+    ///         make::js_module_item_list([]),
     ///         make::token(T!['}']),
     ///     ),
     /// ).into();
     ///
     /// let class_id = make::js_identifier_binding(make::ident("Order"));
     /// let class_decl: AnyJsBindingDeclaration = make::js_class_declaration(
-    ///     make::js_decorator_list(std::iter::empty()),
+    ///     make::js_decorator_list([]),
     ///     make::token(T![class]),
     ///     class_id.into(),
     ///     make::token(T!['{']),
-    ///     make::js_class_member_list(std::iter::empty()),
+    ///     make::js_class_member_list([]),
     ///     make::token(T!['}']),
     /// ).build().into();
     ///

@@ -2,7 +2,7 @@ use std::{
     cell::Cell,
     cmp::Ordering,
     collections::{btree_map::Entry, BTreeMap},
-    iter::once,
+    iter,
     mem::take,
 };
 
@@ -17,8 +17,8 @@ use rome_js_syntax::{
     JsLanguage, JsModule, JsSyntaxToken, TextRange, TriviaPieceKind, T,
 };
 use rome_rowan::{
-    syntax::SyntaxTrivia, AstNode, AstNodeExt, AstNodeList, AstSeparatedList, BatchMutationExt,
-    SyntaxTokenText, SyntaxTriviaPiece, TriviaPiece,
+    chain_trivia_pieces, syntax::SyntaxTrivia, AstNode, AstNodeExt, AstNodeList, AstSeparatedList,
+    BatchMutationExt, SyntaxTokenText, SyntaxTriviaPiece, TriviaPiece,
 };
 
 use crate::JsRuleAction;
@@ -222,7 +222,7 @@ impl Rule for OrganizeImports {
                     }
 
                     node = node.with_import_token(first_token.with_leading_trivia_pieces(
-                        exact_chain(group_leading_trivia, token_leading_trivia),
+                        chain_trivia_pieces(group_leading_trivia, token_leading_trivia),
                     ));
                 } else if node_index > 0 && group_first_token == first_token {
                     // If this node used to be in the leading position but
@@ -235,7 +235,7 @@ impl Rule for OrganizeImports {
                         .skip(group_leading_pieces);
 
                     node = node.with_import_token(first_token.with_leading_trivia_pieces(
-                        exact_chain(saved_leading_trivia, token_leading_trivia),
+                        chain_trivia_pieces(saved_leading_trivia, token_leading_trivia),
                     ));
                 }
 
@@ -440,10 +440,8 @@ impl ImportNode {
                     if is_last && separator_count == last_element {
                         // If this is the last item and we are removing its trailing separator,
                         // move the trailing trivia from the separator to the node
-                        let next_token = prev_token.with_trailing_trivia(exact_chain(
-                            trivia_iter(&prev_token, TriviaPosition::Trailing),
-                            trivia_iter(sep, TriviaPosition::Trailing),
-                        ));
+                        let next_token =
+                            prev_token.append_trivia_pieces(sep.trailing_trivia().pieces());
 
                         node = node
                             .replace_token_discard_trivia(prev_token, next_token)
@@ -595,13 +593,10 @@ fn prepend_leading_newline(
 
     // Extract the leading newline from the `newline_source` token
     let leading_newline = newline_source.and_then(|newline_source| {
-        let leading_trivia = newline_source.leading_trivia();
-        let leading_piece = leading_trivia.first()?;
-
+        let leading_piece = newline_source.leading_trivia().first()?;
         if !leading_piece.is_newline() {
             return None;
         }
-
         Some(leading_piece)
     });
 
@@ -614,32 +609,21 @@ fn prepend_leading_newline(
     };
 
     let piece_count = 1 + leading_trivia.pieces().len();
-    let mut iter = once(leading_newline).chain(trivia_iter(prev_token, TriviaPosition::Leading));
+    let mut iter = iter::once(leading_newline).chain(leading_trivia_iter(prev_token));
 
     Some(prev_token.with_leading_trivia((0..piece_count).map(|_| iter.next().unwrap())))
 }
 
-enum TriviaPosition {
-    Leading,
-    Trailing,
-}
-
-/// Builds an iterator over the leading or trailing trivia pieces of a token
+/// Builds an iterator over the leading trivia pieces of a token
 ///
 /// The items of the iterator inherit their lifetime from the token,
 /// rather than the trivia pieces themselves
-fn trivia_iter(
+fn leading_trivia_iter(
     token: &JsSyntaxToken,
-    position: TriviaPosition,
-) -> impl Iterator<Item = (TriviaPieceKind, &str)> + ExactSizeIterator {
+) -> impl ExactSizeIterator<Item = (TriviaPieceKind, &str)> {
     let token_text = token.text();
     let token_range = token.text_range();
-
-    let trivia = match position {
-        TriviaPosition::Leading => token.leading_trivia(),
-        TriviaPosition::Trailing => token.trailing_trivia(),
-    };
-
+    let trivia = token.leading_trivia();
     trivia.pieces().map(move |piece| {
         let piece_range = piece.text_range();
         let range = TextRange::at(piece_range.start() - token_range.start(), piece_range.len());
@@ -691,18 +675,4 @@ fn has_empty_line(trivia: SyntaxTrivia<JsLanguage>) -> bool {
             was_newline = piece.is_newline();
             prev_newline && was_newline
         })
-}
-
-/// Returns an iterator yielding the full content of `lhs`, then the full
-/// content of `rhs`. This is similar to the `.chain()` method on the
-/// [Iterator] trait except the returned iterator implements [ExactSizeIterator]
-fn exact_chain<'a, T>(
-    mut lhs: impl Iterator<Item = T> + ExactSizeIterator + 'a,
-    mut rhs: impl Iterator<Item = T> + ExactSizeIterator + 'a,
-) -> impl Iterator<Item = T> + ExactSizeIterator + 'a {
-    let total_len = lhs.len() + rhs.len();
-    (0..total_len).map(move |_| {
-        // SAFETY: The above range iterator should have the exact length of lhs + rhs
-        lhs.next().or_else(|| rhs.next()).unwrap()
-    })
 }

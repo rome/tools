@@ -162,7 +162,7 @@ where
                         Some(prev_trailing_trivia) => {
                             token.with_trailing_trivia_pieces(prev_trailing_trivia.pieces())
                         }
-                        None => token.with_trailing_trivia_pieces(empty()),
+                        None => token.with_trailing_trivia_pieces([]),
                     };
 
                     node = node.replace_child(token.into(), new_token.into()).unwrap();
@@ -175,14 +175,14 @@ where
                     Some(prev_leading_trivia) => {
                         token.with_leading_trivia_pieces(prev_leading_trivia.pieces())
                     }
-                    None => token.with_leading_trivia_pieces(empty()),
+                    None => token.with_leading_trivia_pieces([]),
                 };
 
                 let new_token = match prev_trailing_trivia {
                     Some(prev_trailing_trivia) => {
                         new_token.with_trailing_trivia_pieces(prev_trailing_trivia.pieces())
                     }
-                    None => new_token.with_trailing_trivia_pieces(empty()),
+                    None => new_token.with_trailing_trivia_pieces([]),
                 };
                 SyntaxElement::Token(new_token)
             }
