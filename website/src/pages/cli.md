@@ -77,15 +77,11 @@ Shows the Rome version information and quit
 - **`    --config-path`**=_`PATH`_ &mdash; 
   Set the filesystem path to the directory of the rome.json configuration file
 - **`    --max-diagnostics`**=_`NUMBER`_ &mdash; 
-  Cap the amount of diagnostics displayed.
-   
-  [default: 20]
+  Cap the amount of diagnostics displayed (default: 20)
 - **`    --skip-errors`** &mdash; 
   Skip over files containing syntax errors instead of emitting an error diagnostic.
 - **`    --no-errors-on-unmatched`** &mdash; 
   Silence errors that would be emitted in case no files were processed during the execution of the command.
-- **`    --error-on-warnings`** &mdash; 
-  Tell Rome to exit with an error code if some diagnostics emit warnings.
 - **`    --json`** &mdash; 
   Reports information using the JSON format
 
@@ -112,15 +108,11 @@ Prints information for debugging
 - **`    --config-path`**=_`PATH`_ &mdash; 
   Set the filesystem path to the directory of the rome.json configuration file
 - **`    --max-diagnostics`**=_`NUMBER`_ &mdash; 
-  Cap the amount of diagnostics displayed.
-   
-  [default: 20]
+  Cap the amount of diagnostics displayed (default: 20)
 - **`    --skip-errors`** &mdash; 
   Skip over files containing syntax errors instead of emitting an error diagnostic.
 - **`    --no-errors-on-unmatched`** &mdash; 
   Silence errors that would be emitted in case no files were processed during the execution of the command.
-- **`    --error-on-warnings`** &mdash; 
-  Tell Rome to exit with an error code if some diagnostics emit warnings.
 - **`    --json`** &mdash; 
   Reports information using the JSON format
 
@@ -176,6 +168,8 @@ Run various checks on a set of files.
   Tells Rome to not emit diagnostics when handling files that doesn't know
 - **`    --indent-style`**=_`<tab|space>`_ &mdash; 
   The indent style.
+
+  ```shell rome format --indent-style=tab ```
 - **`    --indent-size`**=_`NUMBER`_ &mdash; 
   The size of the indentation, 2 by default
 - **`    --line-width`**=_`NUMBER`_ &mdash; 
@@ -190,8 +184,6 @@ Run various checks on a set of files.
   Print trailing commas wherever possible in multi-line comma-separated syntactic structures. Defaults to "all".
 - **`    --semicolons`**=_`<always|as-needed>`_ &mdash; 
   Whether the formatter prints semicolons for all statements or only in for statements where it is necessary because of ASI.
-- **`    --arrow-parentheses`**=_`<always|as-needed>`_ &mdash; 
-  Whether to add non-necessary parentheses to arrow functions. Defaults to "always".
 
 
 
@@ -205,15 +197,11 @@ Run various checks on a set of files.
 - **`    --config-path`**=_`PATH`_ &mdash; 
   Set the filesystem path to the directory of the rome.json configuration file
 - **`    --max-diagnostics`**=_`NUMBER`_ &mdash; 
-  Cap the amount of diagnostics displayed.
-   
-  [default: 20]
+  Cap the amount of diagnostics displayed (default: 20)
 - **`    --skip-errors`** &mdash; 
   Skip over files containing syntax errors instead of emitting an error diagnostic.
 - **`    --no-errors-on-unmatched`** &mdash; 
   Silence errors that would be emitted in case no files were processed during the execution of the command.
-- **`    --error-on-warnings`** &mdash; 
-  Tell Rome to exit with an error code if some diagnostics emit warnings.
 - **`    --json`** &mdash; 
   Reports information using the JSON format
 
@@ -265,6 +253,8 @@ Run various checks on a set of files.
   Tells Rome to not emit diagnostics when handling files that doesn't know
 - **`    --indent-style`**=_`<tab|space>`_ &mdash; 
   The indent style.
+
+  ```shell rome format --indent-style=tab ```
 - **`    --indent-size`**=_`NUMBER`_ &mdash; 
   The size of the indentation, 2 by default
 - **`    --line-width`**=_`NUMBER`_ &mdash; 
@@ -279,8 +269,6 @@ Run various checks on a set of files.
   Print trailing commas wherever possible in multi-line comma-separated syntactic structures. Defaults to "all".
 - **`    --semicolons`**=_`<always|as-needed>`_ &mdash; 
   Whether the formatter prints semicolons for all statements or only in for statements where it is necessary because of ASI.
-- **`    --arrow-parentheses`**=_`<always|as-needed>`_ &mdash; 
-  Whether to add non-necessary parentheses to arrow functions. Defaults to "always".
 
 
 
@@ -294,15 +282,11 @@ Run various checks on a set of files.
 - **`    --config-path`**=_`PATH`_ &mdash; 
   Set the filesystem path to the directory of the rome.json configuration file
 - **`    --max-diagnostics`**=_`NUMBER`_ &mdash; 
-  Cap the amount of diagnostics displayed.
-   
-  [default: 20]
+  Cap the amount of diagnostics displayed (default: 20)
 - **`    --skip-errors`** &mdash; 
   Skip over files containing syntax errors instead of emitting an error diagnostic.
 - **`    --no-errors-on-unmatched`** &mdash; 
   Silence errors that would be emitted in case no files were processed during the execution of the command.
-- **`    --error-on-warnings`** &mdash; 
-  Tell Rome to exit with an error code if some diagnostics emit warnings.
 - **`    --json`** &mdash; 
   Reports information using the JSON format
 
@@ -334,6 +318,8 @@ Run the formatter on a set of files.
 **Options applied to the formatter**
 - **`    --indent-style`**=_`<tab|space>`_ &mdash; 
   The indent style.
+
+  ```shell rome format --indent-style=tab ```
 - **`    --indent-size`**=_`NUMBER`_ &mdash; 
   The size of the indentation, 2 by default
 - **`    --line-width`**=_`NUMBER`_ &mdash; 
@@ -373,15 +359,11 @@ Run the formatter on a set of files.
 - **`    --config-path`**=_`PATH`_ &mdash; 
   Set the filesystem path to the directory of the rome.json configuration file
 - **`    --max-diagnostics`**=_`NUMBER`_ &mdash; 
-  Cap the amount of diagnostics displayed.
-   
-  [default: 20]
+  Cap the amount of diagnostics displayed (default: 20)
 - **`    --skip-errors`** &mdash; 
   Skip over files containing syntax errors instead of emitting an error diagnostic.
 - **`    --no-errors-on-unmatched`** &mdash; 
   Silence errors that would be emitted in case no files were processed during the execution of the command.
-- **`    --error-on-warnings`** &mdash; 
-  Tell Rome to exit with an error code if some diagnostics emit warnings.
 - **`    --json`** &mdash; 
   Reports information using the JSON format
 
@@ -404,8 +386,6 @@ Run the formatter on a set of files.
   Print trailing commas wherever possible in multi-line comma-separated syntactic structures. Defaults to "all".
 - **`    --semicolons`**=_`<always|as-needed>`_ &mdash; 
   Whether the formatter prints semicolons for all statements or only in for statements where it is necessary because of ASI.
-- **`    --arrow-parentheses`**=_`<always|as-needed>`_ &mdash; 
-  Whether to add non-necessary parentheses to arrow functions. Defaults to "always".
 - **`    --stdin-file-path`**=_`PATH`_ &mdash; 
   A file name with its extension to pass when reading from standard in, e.g. echo 'let a;' | rome format --stdin-file-path=file.js".
 - **`    --write`** &mdash; 
@@ -437,6 +417,8 @@ Command to use in CI environments. Run various checks of a set of files.
   Tells Rome to not emit diagnostics when handling files that doesn't know
 - **`    --indent-style`**=_`<tab|space>`_ &mdash; 
   The indent style.
+
+  ```shell rome format --indent-style=tab ```
 - **`    --indent-size`**=_`NUMBER`_ &mdash; 
   The size of the indentation, 2 by default
 - **`    --line-width`**=_`NUMBER`_ &mdash; 
@@ -451,8 +433,6 @@ Command to use in CI environments. Run various checks of a set of files.
   Print trailing commas wherever possible in multi-line comma-separated syntactic structures. Defaults to "all".
 - **`    --semicolons`**=_`<always|as-needed>`_ &mdash; 
   Whether the formatter prints semicolons for all statements or only in for statements where it is necessary because of ASI.
-- **`    --arrow-parentheses`**=_`<always|as-needed>`_ &mdash; 
-  Whether to add non-necessary parentheses to arrow functions. Defaults to "always".
 
 
 
@@ -466,15 +446,11 @@ Command to use in CI environments. Run various checks of a set of files.
 - **`    --config-path`**=_`PATH`_ &mdash; 
   Set the filesystem path to the directory of the rome.json configuration file
 - **`    --max-diagnostics`**=_`NUMBER`_ &mdash; 
-  Cap the amount of diagnostics displayed.
-   
-  [default: 20]
+  Cap the amount of diagnostics displayed (default: 20)
 - **`    --skip-errors`** &mdash; 
   Skip over files containing syntax errors instead of emitting an error diagnostic.
 - **`    --no-errors-on-unmatched`** &mdash; 
   Silence errors that would be emitted in case no files were processed during the execution of the command.
-- **`    --error-on-warnings`** &mdash; 
-  Tell Rome to exit with an error code if some diagnostics emit warnings.
 - **`    --json`** &mdash; 
   Reports information using the JSON format
 
@@ -512,7 +488,7 @@ Bootstraps a new rome project. Creates a configuration file with some defaults.
 
 Acts as a server for the Language Server Protocol over stdin/stdout
 
-**Usage**: **`rome`** **`lsp-proxy`** \[**`--colors`**=_`<off|force>`_\] \[**`--use-server`**\] \[**`--verbose`**\] \[**`--config-path`**=_`PATH`_\] \[**`--max-diagnostics`**=_`NUMBER`_\] \[**`--skip-errors`**\] \[**`--no-errors-on-unmatched`**\] \[**`--error-on-warnings`**\]
+**Usage**: **`rome`** **`lsp-proxy`** \[**`--colors`**=_`<off|force>`_\] \[**`--use-server`**\] \[**`--verbose`**\] \[**`--config-path`**=_`PATH`_\] \[**`--max-diagnostics`**=_`NUMBER`_\] \[**`--skip-errors`**\] \[**`--no-errors-on-unmatched`**\]
 
 **Global options applied to all commands**
 - **`    --colors`**=_`<off|force>`_ &mdash; 
@@ -524,15 +500,11 @@ Acts as a server for the Language Server Protocol over stdin/stdout
 - **`    --config-path`**=_`PATH`_ &mdash; 
   Set the filesystem path to the directory of the rome.json configuration file
 - **`    --max-diagnostics`**=_`NUMBER`_ &mdash; 
-  Cap the amount of diagnostics displayed.
-   
-  [default: 20]
+  Cap the amount of diagnostics displayed (default: 20)
 - **`    --skip-errors`** &mdash; 
   Skip over files containing syntax errors instead of emitting an error diagnostic.
 - **`    --no-errors-on-unmatched`** &mdash; 
   Silence errors that would be emitted in case no files were processed during the execution of the command.
-- **`    --error-on-warnings`** &mdash; 
-  Tell Rome to exit with an error code if some diagnostics emit warnings.
 - **`    --json`** &mdash; 
   Reports information using the JSON format
 
@@ -559,15 +531,11 @@ It updates the configuration when there are breaking changes
 - **`    --config-path`**=_`PATH`_ &mdash; 
   Set the filesystem path to the directory of the rome.json configuration file
 - **`    --max-diagnostics`**=_`NUMBER`_ &mdash; 
-  Cap the amount of diagnostics displayed.
-   
-  [default: 20]
+  Cap the amount of diagnostics displayed (default: 20)
 - **`    --skip-errors`** &mdash; 
   Skip over files containing syntax errors instead of emitting an error diagnostic.
 - **`    --no-errors-on-unmatched`** &mdash; 
   Silence errors that would be emitted in case no files were processed during the execution of the command.
-- **`    --error-on-warnings`** &mdash; 
-  Tell Rome to exit with an error code if some diagnostics emit warnings.
 - **`    --json`** &mdash; 
   Reports information using the JSON format
 

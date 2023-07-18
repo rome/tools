@@ -59,3 +59,6 @@ rome_js_formatter   = { workspace = true }
 rome_json_formatter = { workspace = true }
 rome_json_parser    = { workspace = true }
 tokio               = { workspace = true, features = ["io-util"] }
+
+[features]
+docgen = ["bpaf/docgen"]
