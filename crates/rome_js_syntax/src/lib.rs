@@ -272,3 +272,30 @@ impl OperatorPrecedence {
         matches!(self, OperatorPrecedence::Exponential)
     }
 }
+
+/// Similar to `JsSyntaxToken::text_trimmed` with the difference that delimiters of string literals are trimmed.
+///
+/// ## Examples
+///
+/// ```
+/// use rome_js_syntax::{JsSyntaxKind, JsSyntaxToken, inner_text};
+///
+/// let a = JsSyntaxToken::new_detached(JsSyntaxKind::JS_STRING_LITERAL, "'inner_text'", [], []);
+/// let b = JsSyntaxToken::new_detached(JsSyntaxKind::JS_STRING_LITERAL, "\"inner_text\"", [], []);
+/// assert_eq!(inner_text(&a), inner_text(&b));
+///
+/// let a = JsSyntaxToken::new_detached(JsSyntaxKind::LET_KW, "let", [], []);
+/// let b = JsSyntaxToken::new_detached(JsSyntaxKind::LET_KW, "let", [], []);
+/// assert_eq!(inner_text(&a), inner_text(&b));
+///
+/// let a = JsSyntaxToken::new_detached(JsSyntaxKind::LET_KW, "let", [], []);
+/// let b = JsSyntaxToken::new_detached(JsSyntaxKind::CONST_KW, "const", [], []);
+/// assert!(inner_text(&a) != inner_text(&b));
+/// ```
+pub fn inner_text(token: &JsSyntaxToken) -> &str {
+    let mut result = token.text_trimmed();
+    if token.kind() == JsSyntaxKind::JS_STRING_LITERAL {
+        result = &result[1..result.len() - 1];
+    }
+    result
+}

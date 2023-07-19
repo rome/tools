@@ -4,7 +4,9 @@ use rome_analyze::{declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_syntax::{AnyJsExpression, AnyJsLiteralExpression, JsSyntaxKind, TsEnumMember};
+use rome_js_syntax::{
+    inner_text, AnyJsExpression, AnyJsLiteralExpression, JsSyntaxKind, TsEnumMember,
+};
 use rome_rowan::{AstNode, BatchMutationExt, Direction};
 
 declare_rule! {
@@ -118,8 +120,7 @@ impl Rule for UseEnumInitializers {
                 }
                 AnyJsLiteralExpression::JsStringLiteralExpression(expr) => {
                     let prev_enum_delim_val = expr.value_token().ok()?;
-                    let prev_enum_delim_val = prev_enum_delim_val.text();
-                    let prev_enum_val = &prev_enum_delim_val[1..(prev_enum_delim_val.len() - 1)];
+                    let prev_enum_val = inner_text(&prev_enum_delim_val);
                     if prev_name.text() == prev_enum_val {
                         let enum_name = enum_member.name().ok()?.text();
                         Some(AnyJsLiteralExpression::JsStringLiteralExpression(

@@ -17,7 +17,7 @@ use rome_deserialize::{
 use rome_diagnostics::Applicability;
 use rome_js_semantic::CanBeImportedExported;
 use rome_js_syntax::{
-    binding_ext::AnyJsBindingDeclaration, AnyJsClassMember, AnyJsObjectMember,
+    binding_ext::AnyJsBindingDeclaration, inner_text, AnyJsClassMember, AnyJsObjectMember,
     AnyJsVariableDeclaration, AnyTsTypeMember, JsIdentifierBinding, JsLiteralExportName,
     JsLiteralMemberName, JsPrivateClassMemberName, JsSyntaxKind, JsSyntaxToken,
     JsVariableDeclarator, JsVariableKind, TsEnumMember, TsIdentifierBinding, TsTypeParameterName,
@@ -290,10 +290,7 @@ impl Rule for UseNamingConvention {
             return None;
         }
         let name_token = node.name_token().ok()?;
-        let mut name = name_token.text_trimmed();
-        if name_token.kind() == JsSyntaxKind::JS_STRING_LITERAL {
-            name = &name[1..name.len() - 1];
-        }
+        let name = inner_text(&name_token);
         if !is_js_ident(name) {
             // ignore non-identifier strings
             return None;
@@ -323,10 +320,7 @@ impl Rule for UseNamingConvention {
             suggested_name,
         } = state;
         let name_token = ctx.query().name_token().ok()?;
-        let mut name = name_token.text_trimmed();
-        if name_token.kind() == JsSyntaxKind::JS_STRING_LITERAL {
-            name = &name[1..name.len() - 1];
-        }
+        let name = inner_text(&name_token);
         let trimmed_name = trim_underscore_dollar(name);
         let allowed_cases = element.allowed_cases(ctx.options());
         let allowed_case_names = allowed_cases
