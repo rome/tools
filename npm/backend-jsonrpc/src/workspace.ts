@@ -116,7 +116,7 @@ If defined here, they should not emit diagnostics.
 	parser?: JavascriptParser;
 }
 export interface JsonConfiguration {
-	allow_comments?: StringSet;
+	parser?: JsonParser;
 }
 export interface LinterConfiguration {
 	/**
@@ -206,6 +206,12 @@ export interface JavascriptParser {
 These decorators belong to an old proposal, and they are subject to change. 
 	 */
 	unsafeParameterDecoratorsEnabled?: boolean;
+}
+export interface JsonParser {
+	/**
+	 * Allow parsing comments in `.json` files
+	 */
+	allowComments?: boolean;
 }
 export interface Rules {
 	a11y?: A11y;
@@ -1027,6 +1033,7 @@ export type Language =
 	| "TypeScript"
 	| "TypeScriptReact"
 	| "Json"
+	| "Jsonc"
 	| "Unknown";
 export interface ChangeFileParams {
 	content: string;
