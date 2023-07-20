@@ -18,9 +18,9 @@ mod token_source;
 pub(crate) type JsonLosslessTreeSink<'source> =
     LosslessTreeSink<'source, JsonLanguage, JsonSyntaxFactory>;
 
-pub fn parse_json(source: &str, config: JsonParserOptions) -> JsonParse {
+pub fn parse_json(source: &str, options: JsonParserOptions) -> JsonParse {
     let mut cache = NodeCache::default();
-    parse_json_with_cache(source, &mut cache, config)
+    parse_json_with_cache(source, &mut cache, options)
 }
 
 /// Parses the provided string as JSON program using the provided node cache.

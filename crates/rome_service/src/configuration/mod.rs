@@ -118,6 +118,7 @@ impl Configuration {
         "linter",
         "formatter",
         "javascript",
+        "json",
         "$schema",
         "organizeImports",
         "extends",

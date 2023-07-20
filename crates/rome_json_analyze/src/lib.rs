@@ -103,7 +103,7 @@ mod tests {
     use rome_console::{markup, Markup};
     use rome_diagnostics::termcolor::NoColor;
     use rome_diagnostics::{Diagnostic, DiagnosticExt, PrintDiagnostic, Severity};
-    use rome_json_parser::parse_json;
+    use rome_json_parser::{parse_json, JsonParserOptions};
     use rome_json_syntax::TextRange;
     use std::slice;
 
@@ -130,7 +130,7 @@ mod tests {
 }
 "#;
 
-        let parsed = parse_json(SOURCE);
+        let parsed = parse_json(SOURCE, JsonParserOptions::default());
 
         let mut error_ranges: Vec<TextRange> = Vec::new();
         let rule_filter = RuleFilter::Rule("nursery", "noDuplicateKeys");

@@ -40,7 +40,7 @@ pub struct JsonParser {
 }
 
 impl JsonParser {
-    pub(crate) const KNOWN_KEYS: &'static [&'static str] = &["allow_comments"];
+    pub(crate) const KNOWN_KEYS: &'static [&'static str] = &["allowComments"];
 }
 
 impl MergeWith<JsonParser> for JsonParser {

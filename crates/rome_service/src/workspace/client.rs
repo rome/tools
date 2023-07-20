@@ -161,7 +161,6 @@ where
     }
 
     fn format_file(&self, params: FormatFileParams) -> Result<Printed, WorkspaceError> {
-        dbg!(&"format_file");
         self.request("rome/format_file", params)
     }
 

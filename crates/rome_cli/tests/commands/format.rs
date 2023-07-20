@@ -19,6 +19,15 @@ const CUSTOM_FORMAT_AFTER: &str = r#"function f() {
 }
 "#;
 
+const APPLY_JSX_QUOTE_STYLE_BEFORE: &str = r#"
+<div
+  bar="foo"
+  baz={"foo"}
+/>"#;
+
+const APPLY_JSX_QUOTE_STYLE_AFTER: &str = r#"<div bar='foo' baz={"foo"} />;
+"#;
+
 const APPLY_QUOTE_STYLE_BEFORE: &str = r#"
 let a = "something";
 let b = {
@@ -41,6 +50,23 @@ const APPLY_TRAILING_COMMA_AFTER: &str = r#"const a = [
 	longlonglonglongItem1longlonglonglongItem2,
 	longlonglonglongItem1longlonglonglongItem3
 ];
+"#;
+
+const APPLY_ARROW_PARENTHESES_BEFORE: &str = r#"
+action => {}
+(action) => {}
+({ action }) => {}
+([ action ]) => {}
+(...action) => {}
+(action = 1) => {}
+"#;
+
+const APPLY_ARROW_PARENTHESES_AFTER: &str = r#"action => {};
+action => {};
+({ action }) => {};
+([action]) => {};
+(...action) => {};
+(action = 1) => {};
 "#;
 
 const DEFAULT_CONFIGURATION_BEFORE: &str = r#"function f() {
@@ -72,7 +98,7 @@ fn format_help() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("format"), "--help"]),
+        Args::from([("format"), "--help"].as_slice()),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -97,7 +123,7 @@ fn print() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("format"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("format"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -133,11 +159,14 @@ fn write() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("format"),
-            ("--write"),
-            file_path.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("format"),
+                ("--write"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -181,7 +210,7 @@ fn write_only_files_in_correct_base() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("format"), ("--write"), ("./src")]),
+        Args::from([("format"), ("--write"), ("./src")].as_slice()),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -227,7 +256,7 @@ fn lint_warning() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("format"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("format"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -281,16 +310,19 @@ fn custom_config_file_path() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("format"),
-            format!(
-                "--config-path={}",
-                config_path.display().to_string().as_str()
-            )
-            .as_str(),
-            ("--write"),
-            file_path.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("format"),
+                format!(
+                    "--config-path={}",
+                    config_path.display().to_string().as_str()
+                )
+                .as_str(),
+                ("--write"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -330,13 +362,16 @@ fn invalid_config_file_path() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("format"),
-            ("--config-path"),
-            (config_path.display().to_string().as_str()),
-            ("--write"),
-            file_path.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("format"),
+                ("--config-path"),
+                (config_path.display().to_string().as_str()),
+                ("--write"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -361,17 +396,20 @@ fn applies_custom_configuration() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("format"),
-            ("--line-width"),
-            ("10"),
-            ("--indent-style"),
-            ("space"),
-            ("--indent-size"),
-            ("8"),
-            ("--write"),
-            file_path.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("format"),
+                ("--line-width"),
+                ("10"),
+                ("--indent-style"),
+                ("space"),
+                ("--indent-size"),
+                ("8"),
+                ("--write"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -410,17 +448,20 @@ fn applies_custom_configuration_over_config_file() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("format"),
-            ("--line-width"),
-            ("10"),
-            ("--indent-style"),
-            ("space"),
-            ("--indent-size"),
-            ("8"),
-            ("--write"),
-            file_path.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("format"),
+                ("--line-width"),
+                ("10"),
+                ("--indent-style"),
+                ("space"),
+                ("--indent-size"),
+                ("8"),
+                ("--write"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -459,12 +500,15 @@ fn applies_custom_configuration_over_config_file_issue_3175_v1() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("format"),
-            ("--quote-style"),
-            ("single"),
-            file_path.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("format"),
+                ("--quote-style"),
+                ("single"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -508,12 +552,15 @@ fn applies_custom_configuration_over_config_file_issue_3175_v2() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("format"),
-            ("--indent-style"),
-            ("space"),
-            file_path.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("format"),
+                ("--indent-style"),
+                ("space"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -539,6 +586,53 @@ fn applies_custom_configuration_over_config_file_issue_3175_v2() {
 }
 
 #[test]
+fn applies_custom_jsx_quote_style() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let file_path = Path::new("file.js");
+    fs.insert(file_path.into(), APPLY_JSX_QUOTE_STYLE_BEFORE.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Args::from(
+            [
+                ("format"),
+                ("--jsx-quote-style"),
+                ("single"),
+                ("--quote-properties"),
+                ("preserve"),
+                ("--write"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    let mut file = fs
+        .open(file_path)
+        .expect("formatting target file was removed by the CLI");
+
+    let mut content = String::new();
+    file.read_to_string(&mut content)
+        .expect("failed to read file from memory FS");
+
+    assert_eq!(content, APPLY_JSX_QUOTE_STYLE_AFTER);
+
+    drop(file);
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "applies_custom_jsx_quote_style",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
 fn applies_custom_quote_style() {
     let mut fs = MemoryFileSystem::default();
     let mut console = BufferConsole::default();
@@ -549,15 +643,18 @@ fn applies_custom_quote_style() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("format"),
-            ("--quote-style"),
-            ("single"),
-            ("--quote-properties"),
-            ("preserve"),
-            ("--write"),
-            file_path.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("format"),
+                ("--quote-style"),
+                ("single"),
+                ("--quote-properties"),
+                ("preserve"),
+                ("--write"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -593,13 +690,16 @@ fn applies_custom_trailing_comma() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("format"),
-            ("--trailing-comma"),
-            ("none"),
-            ("--write"),
-            file_path.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("format"),
+                ("--trailing-comma"),
+                ("none"),
+                ("--write"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -625,6 +725,51 @@ fn applies_custom_trailing_comma() {
 }
 
 #[test]
+fn applies_custom_arrow_parentheses() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let file_path = Path::new("file.js");
+    fs.insert(file_path.into(), APPLY_ARROW_PARENTHESES_BEFORE.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Args::from(
+            [
+                ("format"),
+                ("--arrow-parentheses"),
+                ("as-needed"),
+                ("--write"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    let mut file = fs
+        .open(file_path)
+        .expect("formatting target file was removed by the CLI");
+
+    let mut content = String::new();
+    file.read_to_string(&mut content)
+        .expect("failed to read file from memory FS");
+
+    assert_eq!(content, APPLY_ARROW_PARENTHESES_AFTER);
+
+    drop(file);
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "applies_custom_arrow_parentheses",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
 fn trailing_comma_parse_errors() {
     let mut console = BufferConsole::default();
     let mut fs = MemoryFileSystem::default();
@@ -632,7 +777,7 @@ fn trailing_comma_parse_errors() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("format"), ("--trailing-comma"), ("NONE"), ("file.js")]),
+        Args::from([("format"), ("--trailing-comma"), ("NONE"), ("file.js")].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -657,12 +802,15 @@ fn with_semicolons_options() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("format"),
-            ("--semicolons=as-needed"),
-            ("--write"),
-            file_path.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("format"),
+                ("--semicolons=as-needed"),
+                ("--write"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -695,7 +843,7 @@ fn with_invalid_semicolons_option() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("format"), ("--semicolons"), ("asneed"), ("file.js")]),
+        Args::from([("format"), ("--semicolons"), ("asneed"), ("file.js")].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -717,7 +865,7 @@ fn indent_style_parse_errors() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("format"), ("--indent-style"), ("invalid"), ("file.js")]),
+        Args::from([("format"), ("--indent-style"), ("invalid"), ("file.js")].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -739,7 +887,7 @@ fn indent_size_parse_errors_negative() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("format"), ("--indent-size=-1"), ("file.js")]),
+        Args::from([("format"), ("--indent-size=-1"), ("file.js")].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -761,7 +909,7 @@ fn indent_size_parse_errors_overflow() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("format"), ("--indent-size=257"), ("file.js")]),
+        Args::from([("format"), ("--indent-size=257"), ("file.js")].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -783,7 +931,7 @@ fn line_width_parse_errors_negative() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&["format", "--line-width=-1", "file.js"]),
+        Args::from(["format", "--line-width=-1", "file.js"].as_slice()),
     );
     assert!(result.is_err(), "run_cli returned {result:?}");
 
@@ -804,7 +952,7 @@ fn line_width_parse_errors_overflow() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("format"), ("--line-width"), ("321"), ("file.js")]),
+        Args::from([("format"), ("--line-width"), ("321"), ("file.js")].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -826,12 +974,15 @@ fn quote_properties_parse_errors_letter_case() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("format"),
-            ("--quote-properties"),
-            ("As-needed"),
-            ("file.js"),
-        ]),
+        Args::from(
+            [
+                ("format"),
+                ("--quote-properties"),
+                ("As-needed"),
+                ("file.js"),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -858,7 +1009,7 @@ fn format_with_configuration() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("format"), ("file.js"), ("--write")]),
+        Args::from([("format"), ("file.js"), ("--write")].as_slice()),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -896,7 +1047,7 @@ fn format_is_disabled() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("format"), ("file.js"), ("--write")]),
+        Args::from([("format"), ("file.js"), ("--write")].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -933,7 +1084,7 @@ fn format_stdin_successfully() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("format"), ("--stdin-file-path"), ("mock.js")]),
+        Args::from([("format"), ("--stdin-file-path"), ("mock.js")].as_slice()),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -966,7 +1117,7 @@ fn format_stdin_with_errors() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("format"), ("--stdin-file-path"), ("mock.js")]),
+        Args::from([("format"), ("--stdin-file-path"), ("mock.js")].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -995,7 +1146,7 @@ fn does_not_format_if_disabled() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("format"), ("--stdin-file-path"), ("mock.js")]),
+        Args::from([("format"), ("--stdin-file-path"), ("mock.js")].as_slice()),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -1033,7 +1184,7 @@ fn does_not_format_ignored_files() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("format"), ("test.js"), ("--write")]),
+        Args::from([("format"), ("test.js"), ("--write")].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1078,12 +1229,15 @@ fn does_not_format_if_files_are_listed_in_ignore_option() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("format"),
-            file_path_test1.as_os_str().to_str().unwrap(),
-            file_path_test2.as_os_str().to_str().unwrap(),
-            ("--write"),
-        ]),
+        Args::from(
+            [
+                ("format"),
+                file_path_test1.as_os_str().to_str().unwrap(),
+                file_path_test2.as_os_str().to_str().unwrap(),
+                ("--write"),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1144,7 +1298,7 @@ fn does_not_format_ignored_directories() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("format"), ("./"), ("--write")]),
+        Args::from([("format"), ("./"), ("--write")].as_slice()),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -1190,11 +1344,14 @@ fn fs_error_read_only() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("format"),
-            ("--write"),
-            file_path.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("format"),
+                ("--write"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1222,11 +1379,14 @@ fn file_too_large() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("format"),
-            file_path.as_os_str().to_str().unwrap(),
-            ("--write"),
-        ]),
+        Args::from(
+            [
+                ("format"),
+                file_path.as_os_str().to_str().unwrap(),
+                ("--write"),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1256,7 +1416,7 @@ fn file_too_large_config_limit() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("format"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("format"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1281,11 +1441,14 @@ fn file_too_large_cli_limit() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("format"),
-            ("--files-max-size=16"),
-            file_path.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("format"),
+                ("--files-max-size=16"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1310,11 +1473,14 @@ fn files_max_size_parse_error() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("format"),
-            ("--files-max-size=-1"),
-            file_path.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("format"),
+                ("--files-max-size=-1"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -1341,7 +1507,7 @@ fn max_diagnostics_default() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("format"), ("src")]),
+        Args::from([("format"), ("src")].as_slice()),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -1378,7 +1544,7 @@ fn max_diagnostics_default() {
         result,
     ));
 
-    assert_eq!(diagnostic_count, 50);
+    assert_eq!(diagnostic_count, 20);
 }
 
 #[test]
@@ -1394,7 +1560,7 @@ fn max_diagnostics() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("format"), ("--max-diagnostics"), ("10"), ("src")]),
+        Args::from([("format"), ("--max-diagnostics"), ("10"), ("src")].as_slice()),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -1442,7 +1608,7 @@ fn no_supported_file_found() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("check"), "."]),
+        Args::from([("format"), "."].as_slice()),
     );
 
     eprintln!("{:?}", console.out_buffer);
@@ -1467,11 +1633,14 @@ fn print_verbose() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("format"),
-            ("--verbose"),
-            file_path.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("format"),
+                ("--verbose"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -1532,12 +1701,15 @@ file2.js
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("format"),
-            ("--write"),
-            file_path1.as_os_str().to_str().unwrap(),
-            file_path2.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("format"),
+                ("--write"),
+                file_path1.as_os_str().to_str().unwrap(),
+                file_path2.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -1586,16 +1758,19 @@ file2.js
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[
-            ("format"),
-            ("--vcs-enabled=true"),
-            ("--vcs-client-kind=git"),
-            ("--vcs-use-ignore-file=true"),
-            ("--vcs-root=."),
-            ("--write"),
-            file_path1.as_os_str().to_str().unwrap(),
-            file_path2.as_os_str().to_str().unwrap(),
-        ]),
+        Args::from(
+            [
+                ("format"),
+                ("--vcs-enabled=true"),
+                ("--vcs-client-kind=git"),
+                ("--vcs-use-ignore-file=true"),
+                ("--vcs-root=."),
+                ("--write"),
+                file_path1.as_os_str().to_str().unwrap(),
+                file_path2.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -1610,15 +1785,69 @@ file2.js
 }
 
 #[test]
+fn ignores_unknown_file() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let file_path1 = Path::new("test.txt");
+    fs.insert(file_path1.into(), *b"content");
+
+    let file_path2 = Path::new("test.js");
+    fs.insert(file_path2.into(), *b"console.log('bar');\n");
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Args::from(
+            [
+                ("format"),
+                file_path1.as_os_str().to_str().unwrap(),
+                file_path2.as_os_str().to_str().unwrap(),
+                "--files-ignore-unknown=true",
+            ]
+            .as_slice(),
+        ),
+    );
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "ignores_unknown_file",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn doesnt_error_if_no_files_were_processed() {
+    let mut console = BufferConsole::default();
+    let mut fs = MemoryFileSystem::default();
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Args::from([("format"), "--no-errors-on-unmatched", ("file.js")].as_slice()),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "doesnt_error_if_no_files_were_processed",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
 fn ignore_comments_error_when_allow_comments() {
     let mut fs = MemoryFileSystem::default();
     let mut console = BufferConsole::default();
 
-    let config_json = r#"
-
-{
+    let config_json = r#"{
   "json": {
-    "allowComments": ["*.json"]
+    "parser": { "allowComments": true }
   }
 }
 
@@ -1631,11 +1860,10 @@ fn ignore_comments_error_when_allow_comments() {
     fs.insert(file_path.into(), code.as_bytes());
     fs.insert(rome_config.into(), config_json);
 
-    println!("something--------------------xxxxxxxxxxxxxxxxxx");
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         &mut console,
-        Args::from(&[("format"), file_path.as_os_str().to_str().unwrap()]),
+        Args::from([("format"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     // assert!(result.is_ok(), "run_cli returned {result:?}");
