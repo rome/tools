@@ -679,6 +679,7 @@ impl<'ctx, 'app> TraversalContext for TraversalOptions<'ctx, 'app> {
             TraversalMode::Check { .. } => {
                 file_features.supports_for(&FeatureName::Lint)
                     || file_features.supports_for(&FeatureName::Format)
+                    || file_features.supports_for(&FeatureName::OrganizeImports)
             }
             TraversalMode::CI { .. } => {
                 file_features.supports_for(&FeatureName::Lint)
