@@ -1,4 +1,5 @@
 use super::{ExtensionHandler, Mime};
+use crate::file_handlers::javascript::JsonParserSettings;
 use crate::file_handlers::{
     AnalyzerCapabilities, Capabilities, FixAllParams, FormatterCapabilities, LintParams,
     LintResults, ParserCapabilities,
@@ -10,25 +11,25 @@ use crate::settings::{
 use crate::workspace::{
     FixFileResult, GetSyntaxTreeResult, OrganizeImportsResult, PullActionsResult,
 };
-use crate::{Configuration, Matcher, Rules, WorkspaceError};
+use crate::{Configuration, Rules, WorkspaceError};
 use rome_deserialize::json::deserialize_from_json_ast;
 use rome_diagnostics::{Diagnostic, Severity};
 use rome_formatter::{FormatError, Printed};
 use rome_fs::{RomePath, CONFIG_NAME};
 use rome_json_formatter::context::JsonFormatOptions;
 use rome_json_formatter::format_node;
-use rome_json_parser::JsonParserConfig;
-use rome_json_syntax::{JsonLanguage, JsonRoot, JsonSyntaxNode};
+use rome_json_parser::JsonParserOptions;
+use rome_json_syntax::{JsonFileSource, JsonLanguage, JsonRoot, JsonSyntaxNode};
 use rome_parser::AnyParse;
-use rome_rowan::{AstNode, NodeCache};
+use rome_rowan::{AstNode, FileSource, NodeCache};
 use rome_rowan::{TextRange, TextSize, TokenAtOffset};
 
 impl Language for JsonLanguage {
     type FormatterSettings = ();
     type LinterSettings = ();
-    type FormatOptions = JsonFormatOptions;
     type OrganizeImportsSettings = ();
-    type AllowCommentsOptions = Option<Matcher>;
+    type FormatOptions = JsonFormatOptions;
+    type ParserSettings = JsonParserSettings;
     fn lookup_settings(language: &LanguagesSettings) -> &LanguageSettings<Self> {
         &language.json
     }
@@ -85,25 +86,37 @@ impl ExtensionHandler for JsonFileHandler {
 }
 
 fn parse(
-    path: &RomePath,
-    _: LanguageId,
+    rome_path: &RomePath,
+    language_hint: LanguageId,
     text: &str,
-    cache: &mut NodeCache,
     settings: SettingsHandle,
+    cache: &mut NodeCache,
 ) -> AnyParse {
-    let allow_comment_matcher = &settings.as_ref().languages.json.allow_comments;
-    dbg!(&allow_comment_matcher);
-    let parse = rome_json_parser::parse_json_with_cache(
-        text,
-        cache,
-        JsonParserConfig {
-            allow_comments: allow_comment_matcher
-                .as_ref()
-                .map(|matcher| matcher.matches_path(&*path))
-                .unwrap_or(false),
-        },
-    );
-    AnyParse::from(parse)
+    let parser = &settings.as_ref().languages.json.parser;
+    let options: JsonParserOptions = JsonParserOptions {
+        allow_comments: parser.allow_comments,
+    };
+    let source_type =
+        JsonFileSource::try_from(rome_path.as_path()).unwrap_or_else(|_| match language_hint {
+            LanguageId::Json => {
+                if parser.allow_comments {
+                    JsonFileSource::jsonc()
+                } else {
+                    JsonFileSource::json()
+                }
+            }
+            LanguageId::Jsonc => JsonFileSource::jsonc(),
+            _ => JsonFileSource::json(),
+        });
+    let parse = rome_json_parser::parse_json_with_cache(text, cache, options);
+    let root = parse.syntax();
+    let diagnostics = parse.into_diagnostics();
+    AnyParse::new(
+        // SAFETY: the parser should always return a root node
+        root.as_send().unwrap(),
+        diagnostics,
+        source_type.as_any_file_source(),
+    )
 }
 
 fn debug_syntax_tree(_rome_path: &RomePath, parse: AnyParse) -> GetSyntaxTreeResult {
@@ -204,7 +217,7 @@ fn lint(params: LintParams) -> LintResults {
     // if we're parsing the `rome.json` file, we deserialize it, so we can emit diagnostics for
     // malformed configuration
     if params.path.ends_with(CONFIG_NAME) {
-        let deserialized = deserialize_from_json_ast::<Configuration>(root);
+        let deserialized = deserialize_from_json_ast::<Configuration>(&root);
         diagnostics.extend(
             deserialized
                 .into_diagnostics()

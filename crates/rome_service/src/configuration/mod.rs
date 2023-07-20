@@ -2,21 +2,11 @@
 //!
 //! The configuration is divided by "tool", and then it's possible to further customise it
 //! by language. The language might further options divided by tool.
-
-use crate::{DynRef, WorkspaceError};
-use bpaf::Bpaf;
-use rome_fs::{FileSystem, OpenOptions};
-use serde::{Deserialize, Serialize};
-use std::fmt::Debug;
-use std::io::ErrorKind;
-use std::num::NonZeroU64;
-use std::path::{Path, PathBuf};
-
 pub mod diagnostics;
 pub mod formatter;
 mod generated;
 pub mod javascript;
-mod json;
+pub mod json;
 pub mod linter;
 mod merge;
 pub mod organize_imports;
@@ -31,6 +21,8 @@ use crate::configuration::organize_imports::{organize_imports, OrganizeImports};
 pub use crate::configuration::string_set::StringSet;
 use crate::configuration::vcs::{vcs_configuration, VcsConfiguration};
 use crate::settings::{LanguagesSettings, LinterSettings};
+use crate::{DynRef, WorkspaceError, VERSION};
+use bpaf::Bpaf;
 pub use formatter::{formatter_configuration, FormatterConfiguration, PlainIndentStyle};
 pub use javascript::{javascript_configuration, JavascriptConfiguration, JavascriptFormatter};
 pub use json::{json_configuration, JsonConfiguration};
@@ -38,9 +30,15 @@ pub use linter::{linter_configuration, LinterConfiguration, RuleConfiguration, R
 use rome_analyze::{AnalyzerConfiguration, AnalyzerRules};
 use rome_deserialize::json::deserialize_from_json_str;
 use rome_deserialize::Deserialized;
+use rome_fs::{AutoSearchResult, FileSystem, OpenOptions};
 use rome_js_analyze::metadata;
 use rome_json_formatter::context::JsonFormatOptions;
-use rome_json_parser::{parse_json, JsonParserConfig};
+use rome_json_parser::{parse_json, JsonParserOptions};
+use serde::{Deserialize, Serialize};
+use std::fmt::Debug;
+use std::io::ErrorKind;
+use std::num::NonZeroU64;
+use std::path::{Path, PathBuf};
 
 /// The configuration that is contained inside the file `rome.json`
 #[derive(Debug, Deserialize, Serialize, Clone, Bpaf)]
@@ -53,7 +51,7 @@ pub struct Configuration {
     #[bpaf(hide)]
     pub schema: Option<String>,
 
-    /// The configuration of the filesystem
+    /// The configuration of the VCS integration
     #[serde(skip_serializing_if = "Option::is_none")]
     #[bpaf(external(vcs_configuration), optional, hide_usage)]
     pub vcs: Option<VcsConfiguration>,
@@ -87,6 +85,11 @@ pub struct Configuration {
     #[serde(skip_serializing_if = "Option::is_none")]
     #[bpaf(external(json_configuration), optional)]
     pub json: Option<JsonConfiguration>,
+
+    /// A list of paths to other JSON files, used to extends the current configuration.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(hide)]
+    pub extends: Option<StringSet>,
 }
 
 impl Default for Configuration {
@@ -102,6 +105,7 @@ impl Default for Configuration {
             javascript: None,
             schema: None,
             vcs: None,
+            extends: None,
             json: None,
         }
     }
@@ -116,7 +120,7 @@ impl Configuration {
         "javascript",
         "$schema",
         "organizeImports",
-        "json",
+        "extends",
     ];
     pub fn is_formatter_disabled(&self) -> bool {
         self.formatter
@@ -253,10 +257,15 @@ pub struct FilesConfiguration {
     #[serde(skip_serializing_if = "Option::is_none")]
     #[bpaf(hide)]
     pub ignore: Option<StringSet>,
+
+    /// Tells Rome to not emit diagnostics when handling files that doesn't know
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(long("files-ignore-unknown"), argument("true|false"), optional)]
+    pub ignore_unknown: Option<bool>,
 }
 
 impl FilesConfiguration {
-    const KNOWN_KEYS: &'static [&'static str] = &["maxSize", "ignore"];
+    const KNOWN_KEYS: &'static [&'static str] = &["maxSize", "ignore", "ignoreUnknown"];
 }
 
 impl MergeWith<FilesConfiguration> for FilesConfiguration {
@@ -267,15 +276,26 @@ impl MergeWith<FilesConfiguration> for FilesConfiguration {
         if let Some(max_size) = other.max_size {
             self.max_size = Some(max_size)
         }
+        if let Some(ignore_unknown) = other.ignore_unknown {
+            self.ignore_unknown = Some(ignore_unknown)
+        }
     }
 }
 
 /// - [Result]: if an error occurred while loading the configuration file.
 /// - [Option]: sometimes not having a configuration file should not be an error, so we need this type.
-/// - [Deserialized]: result of the deserialization of the configuration.
-/// - [Configuration]: the type needed to [Deserialized] to infer the return type.
-/// - [PathBuf]: the path of where the first `rome.json` path was found
-type LoadConfig = Result<Option<(Deserialized<Configuration>, PathBuf)>, WorkspaceError>;
+/// - [ConfigurationPayload]: The result of the operation
+type LoadConfig = Result<Option<ConfigurationPayload>, WorkspaceError>;
+
+pub struct ConfigurationPayload {
+    /// The result of the deserialization
+    pub deserialized: Deserialized<Configuration>,
+    /// The path of where the `rome.json` file was found. This contains the `rome.json` name.
+    pub configuration_file_path: PathBuf,
+    /// The base path of where the `rome.json` file was found.
+    /// This has to be used to resolve other configuration files.
+    pub configuration_directory_path: PathBuf,
+}
 
 #[derive(Debug, Default, PartialEq)]
 pub enum ConfigurationBasePath {
@@ -319,15 +339,22 @@ pub fn load_config(
             None => PathBuf::new(),
         },
     };
-    let configuration_file_path = configuration_directory.join(config_name);
     let should_error = base_path.is_from_user();
 
     let result = file_system.auto_search(configuration_directory, config_name, should_error)?;
 
-    if let Some((buffer, configuration_path)) = result {
-        let deserialized = deserialize_from_json_str::<Configuration>(&buffer)
-            .with_file_path(&configuration_file_path.display().to_string());
-        Ok(Some((deserialized, configuration_path)))
+    if let Some(auto_search_result) = result {
+        let AutoSearchResult {
+            content,
+            directory_path,
+            file_path,
+        } = auto_search_result;
+        let deserialized = deserialize_from_json_str::<Configuration>(&content);
+        Ok(Some(ConfigurationPayload {
+            deserialized,
+            configuration_file_path: file_path,
+            configuration_directory_path: directory_path,
+        }))
     } else {
         Ok(None)
     }
@@ -357,17 +384,24 @@ pub fn create_config(
     })?;
 
     // we now check if rome is installed inside `node_modules` and if so, we
-    let schema_path = Path::new("./node_modules/rome/configuration_schema.json");
-    let options = OpenOptions::default().read(true);
-    if fs.open_with_options(schema_path, options).is_ok() {
-        configuration.schema = schema_path.to_str().map(String::from);
+    if VERSION == "0.0.0" {
+        let schema_path = Path::new("./node_modules/rome/configuration_schema.json");
+        let options = OpenOptions::default().read(true);
+        if fs.open_with_options(schema_path, options).is_ok() {
+            configuration.schema = schema_path.to_str().map(String::from);
+        }
+    } else {
+        configuration.schema = Some(format!(
+            "https://docs.rome.tools/schemas/{}/schema.json",
+            VERSION
+        ));
     }
 
     let contents = serde_json::to_string_pretty(&configuration).map_err(|_| {
         WorkspaceError::Configuration(ConfigurationDiagnostic::new_serialization_error())
     })?;
 
-    let parsed = parse_json(&contents, JsonParserConfig::default());
+    let parsed = parse_json(&contents, JsonParserOptions::default());
     let formatted =
         rome_json_formatter::format_node(JsonFormatOptions::default(), &parsed.syntax())?
             .print()

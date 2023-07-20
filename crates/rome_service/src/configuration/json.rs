@@ -1,16 +1,52 @@
+use crate::configuration::merge::MergeWith;
 use bpaf::Bpaf;
 use serde::{Deserialize, Serialize};
 
-use super::StringSet;
 #[derive(Default, Debug, Deserialize, Serialize, Eq, PartialEq, Clone, Bpaf)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(default, deny_unknown_fields)]
 pub struct JsonConfiguration {
     #[serde(skip_serializing_if = "Option::is_none")]
-    #[bpaf(hide)]
-    pub allow_comments: Option<StringSet>,
+    #[bpaf(external(json_parser), optional)]
+    pub parser: Option<JsonParser>,
 }
 
 impl JsonConfiguration {
-    pub(crate) const KNOWN_KEYS: &'static [&'static str] = &["allowComments"];
+    pub const KNOWN_KEYS: &'static [&'static str] = &["parser"];
+}
+
+impl MergeWith<JsonConfiguration> for JsonConfiguration {
+    fn merge_with(&mut self, other: JsonConfiguration) {
+        if let Some(other_parser) = other.parser {
+            let parser = self.parser.get_or_insert_with(JsonParser::default);
+            parser.merge_with(other_parser);
+        }
+    }
+}
+
+#[derive(Debug, Default, Deserialize, Serialize, Eq, PartialEq, Clone, Bpaf)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+#[serde(default, deny_unknown_fields)]
+pub struct JavascriptOrganizeImports {}
+
+#[derive(Default, Debug, Deserialize, Serialize, Eq, PartialEq, Clone, Bpaf)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+#[serde(rename_all = "camelCase", default, deny_unknown_fields)]
+pub struct JsonParser {
+    #[bpaf(hide)]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    /// Allow parsing comments in `.json` files
+    pub allow_comments: Option<bool>,
+}
+
+impl JsonParser {
+    pub(crate) const KNOWN_KEYS: &'static [&'static str] = &["allow_comments"];
+}
+
+impl MergeWith<JsonParser> for JsonParser {
+    fn merge_with(&mut self, other: JsonParser) {
+        if let Some(allow_comments) = other.allow_comments {
+            self.allow_comments = Some(allow_comments);
+        }
+    }
 }

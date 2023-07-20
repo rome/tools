@@ -16,6 +16,7 @@ use rome_js_syntax::{TextRange, TextSize};
 use rome_parser::AnyParse;
 use rome_rowan::NodeCache;
 use std::ffi::OsStr;
+use std::path::Path;
 
 mod javascript;
 mod json;
@@ -35,6 +36,8 @@ pub enum Language {
     TypeScriptReact,
     /// JSON
     Json,
+    /// JSONC
+    Jsonc,
     /// Any language that is not supported
     #[default]
     Unknown,
@@ -51,6 +54,14 @@ impl Language {
             "json" => Language::Json,
             _ => Language::Unknown,
         }
+    }
+
+    /// Returns the language corresponding to the file path
+    pub fn from_path(path: &Path) -> Self {
+        path.extension()
+            .and_then(|path| path.to_str())
+            .map(Language::from_extension)
+            .unwrap_or(Language::Unknown)
     }
 
     /// Returns the language corresponding to this language ID
@@ -109,6 +120,7 @@ impl rome_console::fmt::Display for Language {
             Language::TypeScript => fmt.write_markup(markup! { "TypeScript" }),
             Language::TypeScriptReact => fmt.write_markup(markup! { "TSX" }),
             Language::Json => fmt.write_markup(markup! { "JSON" }),
+            Language::Jsonc => fmt.write_markup(markup! { "JSONC" }),
             Language::Unknown => fmt.write_markup(markup! { "Unknown" }),
         }
     }
@@ -152,17 +164,17 @@ pub struct FixAllParams<'a> {
 
 #[derive(Default)]
 /// The list of capabilities that are available for a language
-pub(crate) struct Capabilities {
+pub struct Capabilities {
     pub(crate) parser: ParserCapabilities,
     pub(crate) debug: DebugCapabilities,
     pub(crate) analyzer: AnalyzerCapabilities,
     pub(crate) formatter: FormatterCapabilities,
 }
 
-type Parse = fn(&RomePath, Language, &str, &mut NodeCache, SettingsHandle) -> AnyParse;
+type Parse = fn(&RomePath, Language, &str, SettingsHandle, &mut NodeCache) -> AnyParse;
 
 #[derive(Default)]
-pub(crate) struct ParserCapabilities {
+pub struct ParserCapabilities {
     /// Parse a file
     pub(crate) parse: Option<Parse>,
 }
@@ -172,7 +184,7 @@ type DebugControlFlow = fn(AnyParse, TextSize) -> String;
 type DebugFormatterIR = fn(&RomePath, AnyParse, SettingsHandle) -> Result<String, WorkspaceError>;
 
 #[derive(Default)]
-pub(crate) struct DebugCapabilities {
+pub struct DebugCapabilities {
     /// Prints the syntax tree
     pub(crate) debug_syntax_tree: Option<DebugSyntaxTree>,
     /// Prints the control flow graph
@@ -204,7 +216,7 @@ type Rename = fn(&RomePath, AnyParse, TextSize, String) -> Result<RenameResult, 
 type OrganizeImports = fn(AnyParse) -> Result<OrganizeImportsResult, WorkspaceError>;
 
 #[derive(Default)]
-pub(crate) struct AnalyzerCapabilities {
+pub struct AnalyzerCapabilities {
     /// It lints a file
     pub(crate) lint: Option<Lint>,
     /// It extracts code actions for a file
@@ -296,7 +308,7 @@ impl Features {
             | Language::JavaScriptReact
             | Language::TypeScript
             | Language::TypeScriptReact => self.js.capabilities(),
-            Language::Json => self.json.capabilities(),
+            Language::Json | Language::Jsonc => self.json.capabilities(),
             Language::Unknown => self.unknown.capabilities(),
         }
     }

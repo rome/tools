@@ -130,7 +130,6 @@ impl WorkspaceServer {
         &self,
         rome_path: RomePath,
         feature: Option<FeatureName>,
-        settings: SettingsHandle,
     ) -> Result<AnyParse, WorkspaceError> {
         let ignored = if let Some(feature) = feature {
             self.is_path_ignored(IsPathIgnoredParams {
@@ -188,7 +187,6 @@ impl WorkspaceServer {
                     document.content.as_str(),
                     settings,
                     &mut document.node_cache,
-                    self.settings(),
                 );
 
                 Ok(entry.insert(parsed).clone())
@@ -302,7 +300,7 @@ impl Workspace for WorkspaceServer {
             .ok_or_else(self.build_capability_error(&params.path))?;
 
         // The feature name here can be any feature, in theory
-        let parse = self.get_parse(params.path.clone(), None, self.settings())?;
+        let parse = self.get_parse(params.path.clone(), None)?;
         let printed = debug_syntax_tree(&params.path, parse);
 
         Ok(printed)
@@ -318,7 +316,7 @@ impl Workspace for WorkspaceServer {
             .debug_control_flow
             .ok_or_else(self.build_capability_error(&params.path))?;
 
-        let parse = self.get_parse(params.path.clone(), None, self.settings())?;
+        let parse = self.get_parse(params.path.clone(), None)?;
         let printed = debug_control_flow(parse, params.cursor);
 
         Ok(printed)
@@ -339,11 +337,7 @@ impl Workspace for WorkspaceServer {
             .debug_formatter_ir
             .ok_or_else(self.build_capability_error(&params.path))?;
         let settings = self.settings();
-        let parse = self.get_parse(
-            params.path.clone(),
-            Some(FeatureName::Format),
-            self.settings(),
-        )?;
+        let parse = self.get_parse(params.path.clone(), Some(FeatureName::Format))?;
 
         if !settings.as_ref().formatter().format_with_errors && parse.has_errors() {
             return Err(WorkspaceError::format_with_errors_disabled());
@@ -388,7 +382,7 @@ impl Workspace for WorkspaceServer {
             FeatureName::Lint
         };
 
-        let parse = self.get_parse(params.path.clone(), Some(feature), self.settings())?;
+        let parse = self.get_parse(params.path.clone(), Some(feature))?;
         let settings = self.settings.read().unwrap();
 
         let (diagnostics, errors, skipped_diagnostics) = if let Some(lint) =
@@ -450,12 +444,8 @@ impl Workspace for WorkspaceServer {
             .code_actions
             .ok_or_else(self.build_capability_error(&params.path))?;
 
+        let parse = self.get_parse(params.path.clone(), Some(FeatureName::Lint))?;
         let settings = self.settings.read().unwrap();
-        let parse = self.get_parse(
-            params.path.clone(),
-            Some(FeatureName::Lint),
-            self.settings(),
-        )?;
         let rules = settings.linter().rules.as_ref();
         Ok(code_actions(
             parse,
@@ -475,11 +465,7 @@ impl Workspace for WorkspaceServer {
             .format
             .ok_or_else(self.build_capability_error(&params.path))?;
         let settings = self.settings();
-        let parse = self.get_parse(
-            params.path.clone(),
-            Some(FeatureName::Format),
-            self.settings(),
-        )?;
+        let parse = self.get_parse(params.path.clone(), Some(FeatureName::Format))?;
 
         if !settings.as_ref().formatter().format_with_errors && parse.has_errors() {
             return Err(WorkspaceError::format_with_errors_disabled());
@@ -495,11 +481,7 @@ impl Workspace for WorkspaceServer {
             .format_range
             .ok_or_else(self.build_capability_error(&params.path))?;
         let settings = self.settings();
-        let parse = self.get_parse(
-            params.path.clone(),
-            Some(FeatureName::Format),
-            self.settings(),
-        )?;
+        let parse = self.get_parse(params.path.clone(), Some(FeatureName::Format))?;
 
         if !settings.as_ref().formatter().format_with_errors && parse.has_errors() {
             return Err(WorkspaceError::format_with_errors_disabled());
@@ -516,11 +498,7 @@ impl Workspace for WorkspaceServer {
             .ok_or_else(self.build_capability_error(&params.path))?;
 
         let settings = self.settings();
-        let parse = self.get_parse(
-            params.path.clone(),
-            Some(FeatureName::Format),
-            self.settings(),
-        )?;
+        let parse = self.get_parse(params.path.clone(), Some(FeatureName::Format))?;
         if !settings.as_ref().formatter().format_with_errors && parse.has_errors() {
             return Err(WorkspaceError::format_with_errors_disabled());
         }
@@ -535,11 +513,7 @@ impl Workspace for WorkspaceServer {
             .fix_all
             .ok_or_else(self.build_capability_error(&params.path))?;
         let settings = self.settings.read().unwrap();
-        let parse = self.get_parse(
-            params.path.clone(),
-            Some(FeatureName::Lint),
-            self.settings(),
-        )?;
+        let parse = self.get_parse(params.path.clone(), Some(FeatureName::Lint))?;
 
         let rules = settings.linter().rules.as_ref();
         fix_all(FixAllParams {
@@ -559,7 +533,7 @@ impl Workspace for WorkspaceServer {
             .rename
             .ok_or_else(self.build_capability_error(&params.path))?;
 
-        let parse = self.get_parse(params.path.clone(), None, self.settings())?;
+        let parse = self.get_parse(params.path.clone(), None)?;
         let result = rename(&params.path, parse, params.symbol_at, params.new_name)?;
 
         Ok(result)
@@ -588,7 +562,7 @@ impl Workspace for WorkspaceServer {
             .organize_imports
             .ok_or_else(self.build_capability_error(&params.path))?;
 
-        let parse = self.get_parse(params.path, None, self.settings())?;
+        let parse = self.get_parse(params.path, None)?;
         let result = organize_imports(parse)?;
 
         Ok(result)

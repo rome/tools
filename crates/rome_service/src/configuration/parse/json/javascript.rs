@@ -34,6 +34,13 @@ impl VisitNode<JsonLanguage> for JavascriptConfiguration {
                 self.map_to_object(&value, name_text, &mut javascript_formatter, diagnostics)?;
                 self.formatter = Some(javascript_formatter);
             }
+
+            "parser" => {
+                let mut parser = JavascriptParser::default();
+                self.map_to_object(&value, name_text, &mut parser, diagnostics)?;
+                self.parser = Some(parser);
+            }
+
             "globals" => {
                 self.globals = self
                     .map_to_index_set_string(&value, name_text, diagnostics)

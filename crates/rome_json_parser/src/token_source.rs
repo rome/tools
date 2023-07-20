@@ -1,5 +1,5 @@
 use crate::lexer::Lexer;
-use crate::JsonParserConfig;
+use crate::JsonParserOptions;
 use rome_json_syntax::JsonSyntaxKind::{EOF, TOMBSTONE};
 use rome_json_syntax::{JsonSyntaxKind, TextRange};
 use rome_parser::diagnostic::ParseDiagnostic;
@@ -13,11 +13,11 @@ pub(crate) struct JsonTokenSource<'source> {
     current: JsonSyntaxKind,
     current_range: TextRange,
     preceding_line_break: bool,
-    config: JsonParserConfig,
+    config: JsonParserOptions,
 }
 
 impl<'source> JsonTokenSource<'source> {
-    pub fn from_str(source: &'source str, config: JsonParserConfig) -> Self {
+    pub fn from_str(source: &'source str, config: JsonParserOptions) -> Self {
         let lexer = Lexer::from_str(source).with_config(config);
 
         let mut source = Self {

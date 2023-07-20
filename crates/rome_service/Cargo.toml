@@ -38,7 +38,13 @@ serde_json          = { version = "1.0.74", features = ["raw_value"] }
 tracing             = { workspace = true, features = ["attributes"] }
 
 [features]
-schemars = ["dep:schemars", "rome_formatter/serde", "rome_js_factory", "rome_text_edit/schemars"]
+schemars = [
+  "dep:schemars",
+  "rome_formatter/serde",
+  "rome_js_factory",
+  "rome_text_edit/schemars",
+  "rome_js_analyze/schemars",
+]
 
 [dev-dependencies]
 insta        = { workspace = true }

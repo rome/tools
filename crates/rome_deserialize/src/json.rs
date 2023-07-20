@@ -2,7 +2,7 @@ use crate::{DeserializationDiagnostic, Deserialized, VisitNode};
 use indexmap::IndexSet;
 use rome_console::markup;
 use rome_diagnostics::{DiagnosticExt, Error};
-use rome_json_parser::parse_json;
+use rome_json_parser::{parse_json, JsonParserOptions};
 use rome_json_syntax::{
     AnyJsonValue, JsonArrayValue, JsonBooleanValue, JsonLanguage, JsonMemberName, JsonNumberValue,
     JsonObjectValue, JsonRoot, JsonStringValue, JsonSyntaxNode,
@@ -15,7 +15,7 @@ pub trait JsonDeserialize: Sized {
     /// It accepts a JSON AST and a visitor. The visitor is the [default](Default) implementation of the data
     /// type that implements this trait.
     fn deserialize_from_ast(
-        root: JsonRoot,
+        root: &JsonRoot,
         visitor: &mut impl VisitJsonNode,
         diagnostics: &mut Vec<DeserializationDiagnostic>,
     ) -> Option<()>;
@@ -23,7 +23,7 @@ pub trait JsonDeserialize: Sized {
 
 impl JsonDeserialize for () {
     fn deserialize_from_ast(
-        _root: JsonRoot,
+        _root: &JsonRoot,
         _visitor: &mut impl VisitJsonNode,
         _diagnostics: &mut Vec<DeserializationDiagnostic>,
     ) -> Option<()> {
@@ -135,6 +135,46 @@ pub trait VisitJsonNode: VisitNode<JsonLanguage> {
         })?;
         let value = value.value_token().ok()?;
         let result = value.text_trimmed().parse::<u8>().map_err(|err| {
+            emit_diagnostic_form_number(
+                err,
+                value.text_trimmed(),
+                value.text_trimmed_range(),
+                maximum,
+            )
+        });
+        match result {
+            Ok(number) => Some(number),
+            Err(err) => {
+                diagnostics.push(err);
+                None
+            }
+        }
+    }
+
+    /// It attempts to map a [AnyJsonValue] to a [usize].
+    ///
+    /// ## Errors
+    ///
+    /// It will fail if:
+    /// - `value` can't be cast to [JsonNumberValue]
+    /// - the value of the node can't be parsed to [usize]
+    fn map_to_usize(
+        &self,
+        value: &AnyJsonValue,
+        name: &str,
+        maximum: usize,
+        diagnostics: &mut Vec<DeserializationDiagnostic>,
+    ) -> Option<usize> {
+        let value = JsonNumberValue::cast_ref(value.syntax()).or_else(|| {
+            diagnostics.push(DeserializationDiagnostic::new_incorrect_type_for_value(
+                name,
+                "number",
+                value.range(),
+            ));
+            None
+        })?;
+        let value = value.value_token().ok()?;
+        let result = value.text_trimmed().parse::<usize>().map_err(|err| {
             emit_diagnostic_form_number(
                 err,
                 value.text_trimmed(),
@@ -341,6 +381,35 @@ pub trait VisitJsonNode: VisitNode<JsonLanguage> {
         }
         Some(())
     }
+
+    fn map_to_array<V>(
+        &mut self,
+        value: &AnyJsonValue,
+        name: &str,
+        visitor: &mut V,
+        diagnostics: &mut Vec<DeserializationDiagnostic>,
+    ) -> Option<()>
+    where
+        V: VisitNode<JsonLanguage>,
+    {
+        let array = JsonArrayValue::cast_ref(value.syntax()).or_else(|| {
+            diagnostics.push(DeserializationDiagnostic::new_incorrect_type_for_value(
+                name,
+                "array",
+                value.range(),
+            ));
+            None
+        })?;
+        if array.elements().is_empty() {
+            return None;
+        }
+        for element in array.elements() {
+            let element = element.ok()?;
+            visitor.visit_array_member(element.syntax(), diagnostics);
+        }
+
+        Some(())
+    }
 }
 
 impl VisitJsonNode for () {}
@@ -457,14 +526,14 @@ pub fn with_only_known_variants(
 ///         use rome_deserialize::Deserialized;
 ///         let mut output = Self::default();
 ///         let mut diagnostics = vec![];
-///         NewConfiguration::deserialize_from_ast(root, &mut output, &mut diagnostics);
+///         NewConfiguration::deserialize_from_ast(&root, &mut output, &mut diagnostics);
 ///         Deserialized::new(output, diagnostics)
 ///     }
 /// }
 ///
 ///
 /// impl JsonDeserialize for NewConfiguration {
-///     fn deserialize_from_ast(root: JsonRoot, visitor: &mut impl VisitJsonNode, diagnostics: &mut Vec<DeserializationDiagnostic>) -> Option<()> {
+///     fn deserialize_from_ast(root: &JsonRoot, visitor: &mut impl VisitJsonNode, diagnostics: &mut Vec<DeserializationDiagnostic>) -> Option<()> {
 ///         let object = root.value().ok()?;
 ///         let object = object.as_json_object_value()?;
 ///         for member in object.json_member_list() {
@@ -491,8 +560,8 @@ where
 {
     let mut output = Output::default();
     let mut diagnostics = vec![];
-    let parse = parse_json(source, rome_json_parser::JsonParserConfig::default());
-    Output::deserialize_from_ast(parse.tree(), &mut output, &mut diagnostics);
+    let parse = parse_json(source, JsonParserOptions::default());
+    Output::deserialize_from_ast(&parse.tree(), &mut output, &mut diagnostics);
     let mut errors = parse
         .into_diagnostics()
         .into_iter()
@@ -511,7 +580,7 @@ where
 }
 
 /// Attempts to deserialize a JSON AST, given the `Output`.
-pub fn deserialize_from_json_ast<Output>(parse: JsonRoot) -> Deserialized<Output>
+pub fn deserialize_from_json_ast<Output>(parse: &JsonRoot) -> Deserialized<Output>
 where
     Output: Default + VisitJsonNode + JsonDeserialize,
 {

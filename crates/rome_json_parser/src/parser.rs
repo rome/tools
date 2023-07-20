@@ -9,16 +9,16 @@ use rome_parser::ParserContext;
 pub(crate) struct JsonParser<'source> {
     context: ParserContext<JsonSyntaxKind>,
     source: JsonTokenSource<'source>,
-    config: JsonParserConfig,
+    config: JsonParserOptions,
 }
 
 #[derive(Default, Debug, Clone, Copy)]
-pub struct JsonParserConfig {
+pub struct JsonParserOptions {
     pub allow_comments: bool,
 }
 
 impl<'source> JsonParser<'source> {
-    pub fn new(source: &'source str, config: JsonParserConfig) -> Self {
+    pub fn new(source: &'source str, config: JsonParserOptions) -> Self {
         Self {
             context: ParserContext::default(),
             source: JsonTokenSource::from_str(source, config),

@@ -3,7 +3,7 @@ use rome_console::markup;
 use rome_diagnostics::display::PrintDiagnostic;
 use rome_diagnostics::termcolor;
 use rome_diagnostics::DiagnosticExt;
-use rome_json_parser::{parse_json, JsonParserConfig};
+use rome_json_parser::{parse_json, JsonParserOptions};
 use rome_rowan::SyntaxKind;
 use std::fmt::Write;
 use std::fs;
@@ -36,7 +36,7 @@ pub fn run(test_case: &str, _snapshot_name: &str, test_directory: &str, outcome_
     let content = fs::read_to_string(test_case_path)
         .expect("Expected test path to be a readable file in UTF8 encoding");
 
-    let parse_conifg = JsonParserConfig {
+    let parse_conifg = JsonParserOptions {
         allow_comments: outcome_str == "allow_comments",
     };
     let parsed = parse_json(&content, parse_conifg);

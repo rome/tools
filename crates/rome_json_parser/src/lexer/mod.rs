@@ -9,7 +9,7 @@ use rome_parser::diagnostic::ParseDiagnostic;
 use std::iter::FusedIterator;
 use std::ops::Add;
 
-use crate::JsonParserConfig;
+use crate::JsonParserOptions;
 
 pub struct Token {
     kind: JsonSyntaxKind,
@@ -36,7 +36,7 @@ pub(crate) struct Lexer<'src> {
     position: usize,
 
     diagnostics: Vec<ParseDiagnostic>,
-    config: JsonParserConfig,
+    config: JsonParserOptions,
 }
 
 impl<'src> Lexer<'src> {
@@ -46,7 +46,7 @@ impl<'src> Lexer<'src> {
             source: string,
             position: 0,
             diagnostics: vec![],
-            config: JsonParserConfig::default(),
+            config: JsonParserOptions::default(),
         }
     }
 
@@ -758,7 +758,7 @@ impl<'src> Lexer<'src> {
         }
     }
 
-    pub(crate) fn with_config(mut self, config: JsonParserConfig) -> Self {
+    pub(crate) fn with_config(mut self, config: JsonParserOptions) -> Self {
         self.config = config;
         self
     }

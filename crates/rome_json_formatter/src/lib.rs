@@ -293,7 +293,7 @@ mod tests {
 
     use crate::context::JsonFormatOptions;
     use crate::format_node;
-    use rome_json_parser::{parse_json, JsonParserConfig};
+    use rome_json_parser::{parse_json, JsonParserOptions};
 
     #[test]
     fn smoke_test() {
@@ -306,7 +306,7 @@ mod tests {
     "e": false
 }
 "#;
-        let parse = parse_json(src, JsonParserConfig::default());
+        let parse = parse_json(src, JsonParserOptions::default());
         let options = JsonFormatOptions::default();
         let formatted = format_node(options, &parse.syntax()).unwrap();
         assert_eq!(
