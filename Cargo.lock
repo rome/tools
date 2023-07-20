@@ -2075,6 +2075,7 @@ dependencies = [
  "rome_json_syntax",
  "rome_parser",
  "rome_rowan",
+ "rome_suppression",
  "serde",
  "serde_json",
  "tests_macros",
@@ -2213,6 +2214,15 @@ dependencies = [
  "serde_json",
  "tests_macros",
  "tracing",
+]
+
+[[package]]
+name = "rome_suppression"
+version = "0.0.1"
+dependencies = [
+ "rome_console",
+ "rome_diagnostics",
+ "rome_rowan",
 ]
 
 [[package]]

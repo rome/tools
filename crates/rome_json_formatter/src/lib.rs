@@ -1,3 +1,4 @@
+mod comments;
 pub mod context;
 mod cst;
 mod format_string;
@@ -9,11 +10,11 @@ mod separated;
 pub(crate) use crate::context::JsonFormatContext;
 use crate::context::JsonFormatOptions;
 use crate::cst::FormatJsonSyntaxNode;
-use rome_formatter::comments::{CommentKind, CommentStyle};
+use rome_formatter::comments::{CommentKind, CommentStyle, Comments};
 use rome_formatter::prelude::*;
 use rome_formatter::{
-    FormatContext, FormatLanguage, FormatOwnedWithRule, FormatRefWithRule, FormatToken,
-    TransformSourceMap,
+    write, CstFormatContext, FormatContext, FormatLanguage, FormatOwnedWithRule, FormatRefWithRule,
+    FormatToken, TransformSourceMap,
 };
 use rome_formatter::{Formatted, Printed};
 use rome_json_syntax::{AnyJsonValue, JsonLanguage, JsonSyntaxNode, JsonSyntaxToken};
@@ -159,17 +160,57 @@ where
 
 pub(crate) type JsonFormatter<'buf> = Formatter<'buf, JsonFormatContext>;
 
+/// Format a [JsonSyntaxNode]
 pub(crate) trait FormatNodeRule<N>
 where
     N: AstNode<Language = JsonLanguage>,
 {
     fn fmt(&self, node: &N, f: &mut JsonFormatter) -> FormatResult<()> {
-        f.comments().mark_suppression_checked(node.syntax());
+        if self.is_suppressed(node, f) {
+            return write!(f, [format_suppressed_node(node.syntax())]);
+        }
 
-        self.fmt_fields(node, f)
+        self.fmt_leading_comments(node, f)?;
+        self.fmt_fields(node, f)?;
+        self.fmt_dangling_comments(node, f)?;
+        self.fmt_trailing_comments(node, f)
     }
 
     fn fmt_fields(&self, node: &N, f: &mut JsonFormatter) -> FormatResult<()>;
+
+    /// Returns `true` if the node has a suppression comment and should use the same formatting as in the source document.
+    fn is_suppressed(&self, node: &N, f: &JsonFormatter) -> bool {
+        f.context().comments().is_suppressed(node.syntax())
+    }
+
+    /// Formats the [leading comments](rome_formatter::comments#leading-comments) of the node.
+    ///
+    /// You may want to override this method if you want to manually handle the formatting of comments
+    /// inside of the `fmt_fields` method or customize the formatting of the leading comments.
+    fn fmt_leading_comments(&self, node: &N, f: &mut JsonFormatter) -> FormatResult<()> {
+        format_leading_comments(node.syntax()).fmt(f)
+    }
+
+    /// Formats the [dangling comments](rome_formatter::comments#dangling-comments) of the node.
+    ///
+    /// You should override this method if the node handled by this rule can have dangling comments because the
+    /// default implementation formats the dangling comments at the end of the node, which isn't ideal but ensures that
+    /// no comments are dropped.
+    ///
+    /// A node can have dangling comments if all its children are tokens or if all node childrens are optional.
+    fn fmt_dangling_comments(&self, node: &N, f: &mut JsonFormatter) -> FormatResult<()> {
+        format_dangling_comments(node.syntax())
+            .with_soft_block_indent()
+            .fmt(f)
+    }
+
+    /// Formats the [trailing comments](rome_formatter::comments#trailing-comments) of the node.
+    ///
+    /// You may want to override this method if you want to manually handle the formatting of comments
+    /// inside of the `fmt_fields` method or customize the formatting of the trailing comments.
+    fn fmt_trailing_comments(&self, node: &N, f: &mut JsonFormatter) -> FormatResult<()> {
+        format_trailing_comments(node.syntax()).fmt(f)
+    }
 }
 
 /// Rule for formatting an bogus nodes.
@@ -208,10 +249,11 @@ impl FormatLanguage for JsonFormatLanguage {
 
     fn create_context(
         self,
-        _root: &JsonSyntaxNode,
-        _source_map: Option<TransformSourceMap>,
+        root: &JsonSyntaxNode,
+        source_map: Option<TransformSourceMap>,
     ) -> Self::Context {
-        JsonFormatContext::new(self.options)
+        let comments = Comments::from_node(root, &JsonCommentStyle, source_map.as_ref());
+        JsonFormatContext::new(self.options, comments).with_source_map(source_map)
     }
 }
 

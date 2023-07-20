@@ -17,6 +17,13 @@ pub struct JsonParserOptions {
     pub allow_comments: bool,
 }
 
+impl JsonParserOptions {
+    pub fn with_allow_comments(mut self) -> Self {
+        self.allow_comments = true;
+        self
+    }
+}
+
 impl<'source> JsonParser<'source> {
     pub fn new(source: &'source str, config: JsonParserOptions) -> Self {
         Self {
