@@ -137,7 +137,6 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
                             );
 
                             !are_parentheses_mandatory
-                                && f.options().arrow_parentheses().is_always()
                         }
                         _ => false,
                     };
