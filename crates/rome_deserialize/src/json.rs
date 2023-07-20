@@ -2,7 +2,7 @@ use crate::{DeserializationDiagnostic, Deserialized, VisitNode};
 use indexmap::IndexSet;
 use rome_console::markup;
 use rome_diagnostics::{DiagnosticExt, Error};
-use rome_json_parser::parse_json;
+use rome_json_parser::{parse_json, JsonParserOptions};
 use rome_json_syntax::{
     AnyJsonValue, JsonArrayValue, JsonBooleanValue, JsonLanguage, JsonMemberName, JsonNumberValue,
     JsonObjectValue, JsonRoot, JsonStringValue, JsonSyntaxNode,
@@ -560,7 +560,7 @@ where
 {
     let mut output = Output::default();
     let mut diagnostics = vec![];
-    let parse = parse_json(source);
+    let parse = parse_json(source, JsonParserOptions::default());
     Output::deserialize_from_ast(&parse.tree(), &mut output, &mut diagnostics);
     let mut errors = parse
         .into_diagnostics()

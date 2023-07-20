@@ -2,20 +2,11 @@
 //!
 //! The configuration is divided by "tool", and then it's possible to further customise it
 //! by language. The language might further options divided by tool.
-
-use crate::{DynRef, WorkspaceError, VERSION};
-use bpaf::Bpaf;
-use rome_fs::{AutoSearchResult, FileSystem, OpenOptions};
-use serde::{Deserialize, Serialize};
-use std::fmt::Debug;
-use std::io::ErrorKind;
-use std::num::NonZeroU64;
-use std::path::{Path, PathBuf};
-
 pub mod diagnostics;
 pub mod formatter;
 mod generated;
 pub mod javascript;
+pub mod json;
 pub mod linter;
 mod merge;
 pub mod organize_imports;
@@ -30,15 +21,24 @@ use crate::configuration::organize_imports::{organize_imports, OrganizeImports};
 pub use crate::configuration::string_set::StringSet;
 use crate::configuration::vcs::{vcs_configuration, VcsConfiguration};
 use crate::settings::{LanguagesSettings, LinterSettings};
+use crate::{DynRef, WorkspaceError, VERSION};
+use bpaf::Bpaf;
 pub use formatter::{formatter_configuration, FormatterConfiguration, PlainIndentStyle};
 pub use javascript::{javascript_configuration, JavascriptConfiguration, JavascriptFormatter};
+pub use json::{json_configuration, JsonConfiguration};
 pub use linter::{linter_configuration, LinterConfiguration, RuleConfiguration, Rules};
 use rome_analyze::{AnalyzerConfiguration, AnalyzerRules};
 use rome_deserialize::json::deserialize_from_json_str;
 use rome_deserialize::Deserialized;
+use rome_fs::{AutoSearchResult, FileSystem, OpenOptions};
 use rome_js_analyze::metadata;
 use rome_json_formatter::context::JsonFormatOptions;
-use rome_json_parser::parse_json;
+use rome_json_parser::{parse_json, JsonParserOptions};
+use serde::{Deserialize, Serialize};
+use std::fmt::Debug;
+use std::io::ErrorKind;
+use std::num::NonZeroU64;
+use std::path::{Path, PathBuf};
 
 /// The configuration that is contained inside the file `rome.json`
 #[derive(Debug, Deserialize, Serialize, Clone, Bpaf)]
@@ -81,6 +81,11 @@ pub struct Configuration {
     #[bpaf(external(javascript_configuration), optional)]
     pub javascript: Option<JavascriptConfiguration>,
 
+    /// Specific configuration for the Json language
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[bpaf(external(json_configuration), optional)]
+    pub json: Option<JsonConfiguration>,
+
     /// A list of paths to other JSON files, used to extends the current configuration.
     #[serde(skip_serializing_if = "Option::is_none")]
     #[bpaf(hide)]
@@ -101,6 +106,7 @@ impl Default for Configuration {
             schema: None,
             vcs: None,
             extends: None,
+            json: None,
         }
     }
 }
@@ -112,6 +118,7 @@ impl Configuration {
         "linter",
         "formatter",
         "javascript",
+        "json",
         "$schema",
         "organizeImports",
         "extends",
@@ -395,7 +402,7 @@ pub fn create_config(
         WorkspaceError::Configuration(ConfigurationDiagnostic::new_serialization_error())
     })?;
 
-    let parsed = parse_json(&contents);
+    let parsed = parse_json(&contents, JsonParserOptions::default());
     let formatted =
         rome_json_formatter::format_node(JsonFormatOptions::default(), &parsed.syntax())?
             .print()

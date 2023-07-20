@@ -54,7 +54,7 @@ impl MergeWith<Option<JavascriptFormatter>> for JavascriptConfiguration {
 
 impl JavascriptConfiguration {
     pub(crate) const KNOWN_KEYS: &'static [&'static str] =
-        &["formatter", "globals", "organizeImports"];
+        &["formatter", "globals", "organizeImports", "parser"];
 
     pub fn with_formatter() -> Self {
         Self {

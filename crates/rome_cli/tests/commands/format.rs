@@ -1839,3 +1839,40 @@ fn doesnt_error_if_no_files_were_processed() {
         result,
     ));
 }
+
+#[test]
+fn ignore_comments_error_when_allow_comments() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let config_json = r#"{
+  "json": {
+    "parser": { "allowComments": true }
+  }
+}
+
+	"#;
+    let rome_config = "rome.json";
+    let code = r#"
+/*test*/ [1, 2, 3]
+	"#;
+    let file_path = Path::new("tsconfig.json");
+    fs.insert(file_path.into(), code.as_bytes());
+    fs.insert(rome_config.into(), config_json);
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Args::from([("format"), file_path.as_os_str().to_str().unwrap()].as_slice()),
+    );
+
+    // assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "ignore_comments_error_when_allow_comments",
+        fs,
+        console,
+        result,
+    ));
+}

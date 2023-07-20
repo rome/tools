@@ -2,14 +2,16 @@ use rome_formatter::{FormatContext, FormatResult, Formatted, IndentStyle, LineWi
 use rome_formatter_test::TestFormatLanguage;
 use rome_json_formatter::context::{JsonFormatContext, JsonFormatOptions};
 use rome_json_formatter::{format_node, format_range, JsonFormatLanguage};
-use rome_json_parser::parse_json;
+use rome_json_parser::{parse_json, JsonParserOptions};
 use rome_json_syntax::{JsonFileSource, JsonLanguage};
 use rome_parser::AnyParse;
 use rome_rowan::{FileSource, SyntaxNode, TextRange};
 use serde::{Deserialize, Serialize};
 
 #[derive(Default)]
-pub struct JsonTestFormatLanguage;
+pub struct JsonTestFormatLanguage {
+    source_type: JsonFileSource,
+}
 
 impl TestFormatLanguage for JsonTestFormatLanguage {
     type SyntaxLanguage = JsonLanguage;
@@ -18,11 +20,12 @@ impl TestFormatLanguage for JsonTestFormatLanguage {
     type FormatLanguage = JsonFormatLanguage;
 
     fn parse(&self, text: &str) -> AnyParse {
-        let parse = parse_json(text);
+        let parse = parse_json(text, JsonParserOptions::default());
+
         AnyParse::new(
             parse.syntax().as_send().unwrap(),
             parse.into_diagnostics(),
-            JsonFileSource::json().as_any_file_source(),
+            self.source_type.as_any_file_source(),
         )
     }
 

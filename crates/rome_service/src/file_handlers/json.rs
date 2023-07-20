@@ -1,5 +1,6 @@
 use super::{ExtensionHandler, Mime};
 use crate::configuration::to_analyzer_configuration;
+use crate::file_handlers::javascript::JsonParserSettings;
 use crate::file_handlers::{
     AnalyzerCapabilities, Capabilities, FixAllParams, FormatterCapabilities, LintParams,
     LintResults, ParserCapabilities,
@@ -20,6 +21,7 @@ use rome_fs::{RomePath, CONFIG_NAME};
 use rome_json_analyze::analyze;
 use rome_json_formatter::context::JsonFormatOptions;
 use rome_json_formatter::format_node;
+use rome_json_parser::JsonParserOptions;
 use rome_json_syntax::{JsonFileSource, JsonLanguage, JsonRoot, JsonSyntaxNode};
 use rome_parser::AnyParse;
 use rome_rowan::{AstNode, FileSource, NodeCache};
@@ -29,10 +31,9 @@ use std::path::PathBuf;
 impl Language for JsonLanguage {
     type FormatterSettings = ();
     type LinterSettings = ();
-    type FormatOptions = JsonFormatOptions;
     type OrganizeImportsSettings = ();
-    type ParserSettings = ();
-
+    type FormatOptions = JsonFormatOptions;
+    type ParserSettings = JsonParserSettings;
     fn lookup_settings(language: &LanguagesSettings) -> &LanguageSettings<Self> {
         &language.json
     }
@@ -89,21 +90,31 @@ impl ExtensionHandler for JsonFileHandler {
 }
 
 fn parse(
-    _: &RomePath,
-    _: LanguageId,
+    rome_path: &RomePath,
+    language_hint: LanguageId,
     text: &str,
-    _: SettingsHandle,
+    settings: SettingsHandle,
     cache: &mut NodeCache,
 ) -> AnyParse {
-    let parse = rome_json_parser::parse_json_with_cache(text, cache);
+    let _parser = &settings.as_ref().languages.json.parser;
+    let options: JsonParserOptions = JsonParserOptions {
+        // TODO: enable once the formatter is ready
+        allow_comments: false,
+    };
+    let source_type =
+        JsonFileSource::try_from(rome_path.as_path()).unwrap_or_else(|_| match language_hint {
+            LanguageId::Json => JsonFileSource::json(),
+            LanguageId::Jsonc => JsonFileSource::jsonc(),
+            _ => JsonFileSource::json(),
+        });
+    let parse = rome_json_parser::parse_json_with_cache(text, cache, options);
     let root = parse.syntax();
     let diagnostics = parse.into_diagnostics();
-
     AnyParse::new(
         // SAFETY: the parser should always return a root node
         root.as_send().unwrap(),
         diagnostics,
-        JsonFileSource::json().as_any_file_source(),
+        source_type.as_any_file_source(),
     )
 }
 
@@ -149,7 +160,6 @@ fn format(
     }
 }
 
-#[tracing::instrument(level = "debug", skip(parse))]
 fn format_range(
     rome_path: &RomePath,
     parse: AnyParse,
@@ -163,7 +173,6 @@ fn format_range(
     Ok(printed)
 }
 
-#[tracing::instrument(level = "debug", skip(parse))]
 fn format_on_type(
     rome_path: &RomePath,
     parse: AnyParse,
@@ -199,7 +208,6 @@ fn format_on_type(
     let printed = rome_json_formatter::format_sub_tree(options, &root_node)?;
     Ok(printed)
 }
-
 fn lint(params: LintParams) -> LintResults {
     tracing::debug_span!("lint").in_scope(move || {
         let root: JsonRoot = params.parse.tree();
@@ -292,7 +300,6 @@ fn lint(params: LintParams) -> LintResults {
         }
     })
 }
-
 fn code_actions(
     _parse: AnyParse,
     _range: TextRange,
