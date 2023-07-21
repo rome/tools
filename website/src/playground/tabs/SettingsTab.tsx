@@ -49,6 +49,7 @@ export default function SettingsTab({
 			enabledLinting,
 			importSortingEnabled,
 			unsafeParameterDecoratorsEnabled,
+			allowComments
 		},
 	},
 }: SettingsTabProps) {
@@ -105,6 +106,10 @@ export default function SettingsTab({
 	const setUnsafeParameterDecoratorsEnabled = createPlaygroundSettingsSetter(
 		setPlaygroundState,
 		"unsafeParameterDecoratorsEnabled",
+	);
+	const setAllowComments = createPlaygroundSettingsSetter(
+		setPlaygroundState,
+		"allowComments",
 	);
 
 	function setCurrentFilename(newFilename: string) {
@@ -262,9 +267,11 @@ export default function SettingsTab({
 				filename={currentFile}
 				setFilename={setCurrentFilename}
 				unsafeParameterDecoratorsEnabled={unsafeParameterDecoratorsEnabled}
+				allowComments={allowComments}
 				setUnsafeParameterDecoratorsEnabled={
 					setUnsafeParameterDecoratorsEnabled
 				}
+				setAllowComments={setAllowComments}
 			/>
 		</div>
 	);
@@ -449,11 +456,15 @@ function SyntaxSettings({
 	setFilename,
 	unsafeParameterDecoratorsEnabled,
 	setUnsafeParameterDecoratorsEnabled,
+	setAllowComments,
+	allowComments
 }: {
 	filename: string;
 	setFilename: (filename: string) => void;
 	unsafeParameterDecoratorsEnabled: boolean;
+	allowComments: boolean;
 	setUnsafeParameterDecoratorsEnabled: (value: boolean) => void;
+	setAllowComments: (value: boolean) => void;
 }) {
 	const isScript = isScriptFilename(filename);
 
@@ -534,6 +545,20 @@ function SyntaxSettings({
 					/>
 					<label htmlFor="parameter-decorators">
 						Parameter decorators enabled
+					</label>
+				</div>
+				<div className="field-row">
+					<input
+						id="allow-comments"
+						name="allow-comments"
+						type="checkbox"
+						checked={allowComments}
+						onChange={(e) =>
+							setAllowComments(e.target.checked)
+						}
+					/>
+					<label htmlFor="allow-comments">
+						Allow comments in JSON files
 					</label>
 				</div>
 			</section>

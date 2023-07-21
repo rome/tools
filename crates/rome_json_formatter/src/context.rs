@@ -5,7 +5,6 @@ use rome_formatter::{
 };
 
 use crate::comments::{FormatJsonLeadingComment, JsonComments};
-use rome_formatter::comments::{Comments, FormatPlainComment};
 use rome_json_syntax::JsonLanguage;
 use std::fmt;
 use std::rc::Rc;

@@ -115,6 +115,7 @@ export interface PlaygroundSettings {
 	enabledLinting: boolean;
 	importSortingEnabled: boolean;
 	unsafeParameterDecoratorsEnabled: boolean;
+	allowComments: boolean
 }
 
 export interface PlaygroundFileState {
