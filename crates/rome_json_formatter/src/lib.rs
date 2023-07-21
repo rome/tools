@@ -7,6 +7,7 @@ mod json;
 mod prelude;
 mod separated;
 
+use crate::comments::JsonCommentStyle;
 pub(crate) use crate::context::JsonFormatContext;
 use crate::context::JsonFormatOptions;
 use crate::cst::FormatJsonSyntaxNode;
@@ -254,17 +255,6 @@ impl FormatLanguage for JsonFormatLanguage {
     ) -> Self::Context {
         let comments = Comments::from_node(root, &JsonCommentStyle, source_map.as_ref());
         JsonFormatContext::new(self.options, comments).with_source_map(source_map)
-    }
-}
-
-#[derive(Default)]
-pub struct JsonCommentStyle;
-
-impl CommentStyle for JsonCommentStyle {
-    type Language = JsonLanguage;
-
-    fn get_comment_kind(_: &SyntaxTriviaPieceComments<Self::Language>) -> CommentKind {
-        CommentKind::Line
     }
 }
 

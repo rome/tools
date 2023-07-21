@@ -4,7 +4,7 @@ use rome_formatter::{
     CstFormatContext, FormatContext, FormatOptions, IndentStyle, LineWidth, TransformSourceMap,
 };
 
-use crate::comments::JsonComments;
+use crate::comments::{FormatJsonLeadingComment, JsonComments};
 use rome_formatter::comments::{Comments, FormatPlainComment};
 use rome_json_syntax::JsonLanguage;
 use std::fmt;
@@ -48,9 +48,9 @@ impl FormatContext for JsonFormatContext {
 impl CstFormatContext for JsonFormatContext {
     type Language = JsonLanguage;
     type Style = JsonCommentStyle;
-    type CommentRule = FormatPlainComment<Self>;
+    type CommentRule = FormatJsonLeadingComment;
 
-    fn comments(&self) -> &Comments<Self::Language> {
+    fn comments(&self) -> &JsonComments {
         &self.comments
     }
 }

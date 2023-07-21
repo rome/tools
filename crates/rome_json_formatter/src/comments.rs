@@ -1,9 +1,6 @@
 use crate::prelude::*;
 use rome_diagnostics::category;
-use rome_formatter::comments::{
-    CommentKind, CommentPlacement, CommentStyle, CommentTextPosition, Comments, DecoratedComment,
-    SourceComment,
-};
+use rome_formatter::comments::{CommentKind, CommentStyle, Comments, SourceComment};
 use rome_formatter::formatter::Formatter;
 use rome_formatter::{write, FormatResult, FormatRule};
 use rome_json_syntax::{JsonLanguage, TextLen};
@@ -68,18 +65,6 @@ impl CommentStyle for JsonCommentStyle {
             .any(|(key, _)| key == category!("format"))
     }
 
-    fn place_comment(
-        &self,
-        comment: DecoratedComment<Self::Language>,
-    ) -> CommentPlacement<Self::Language> {
-        dbg!(comment.text_position());
-        match comment.text_position() {
-            CommentTextPosition::EndOfLine => CommentPlacement::Default(comment),
-            CommentTextPosition::OwnLine => handle_object_value(comment),
-            CommentTextPosition::SameLine => CommentPlacement::Default(comment),
-        }
-    }
-
     fn get_comment_kind(comment: &SyntaxTriviaPieceComments<Self::Language>) -> CommentKind {
         if comment.text().starts_with("/*") {
             if comment.has_newline() {
@@ -91,9 +76,4 @@ impl CommentStyle for JsonCommentStyle {
             CommentKind::Line
         }
     }
-}
-
-fn handle_object_value(comment: DecoratedComment<JsonLanguage>) -> CommentPlacement<JsonLanguage> {
-    dbg!("here");
-    return CommentPlacement::Default(comment);
 }

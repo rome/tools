@@ -13,7 +13,7 @@ mod language {
 fn quick_test() {
     let src = r#"// comment
  // comment
- { "test": "test"}
+ { "test": "test"} /** comment **/
 "#;
     let parse = parse_json(src, JsonParserOptions::default().with_allow_comments());
     let options = JsonFormatOptions::default();
@@ -34,6 +34,7 @@ fn quick_test() {
         r#"// comment
 // comment
 { "test": "test"}
+// comment
 "#
     );
 }
