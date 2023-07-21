@@ -11,7 +11,7 @@ macro_rules! declare_transformation {
         impl ::rome_analyze::RuleMeta for $id {
             type Group = $crate::registry::TransformationGroup;
             const METADATA: ::rome_analyze::RuleMetadata =
-                ::rome_analyze::RuleMetadata::new($version, $name, concat!( $( $doc, "\n", )* )).recommended(true);
+                ::rome_analyze::RuleMetadata::new($version, $name, concat!( $( $doc, "\n", )* ));
         }
     };
 }

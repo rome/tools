@@ -99,12 +99,9 @@ pub(crate) type JsBatchMutation = BatchMutation<JsLanguage>;
 
 #[cfg(test)]
 mod tests {
-    use rome_analyze::{AnalyzerOptions, Never, RuleCategories, RuleFilter, RuleKey};
-    use rome_console::fmt::{Formatter, Termcolor};
-    use rome_console::Markup;
-    use rome_diagnostics::termcolor::NoColor;
+    use rome_analyze::{AnalyzerOptions, Never, RuleCategories, RuleFilter};
     use rome_js_parser::{parse, JsParserOptions};
-    use rome_js_syntax::{JsFileSource, TextRange, TextSize};
+    use rome_js_syntax::JsFileSource;
     use std::slice;
 
     use crate::{transform, AnalysisFilter, ControlFlow};
@@ -112,15 +109,6 @@ mod tests {
     #[ignore]
     #[test]
     fn quick_test() {
-        fn markup_to_string(markup: Markup) -> String {
-            let mut buffer = Vec::new();
-            let mut write = Termcolor(NoColor::new(&mut buffer));
-            let mut fmt = Formatter::new(&mut write);
-            fmt.write_markup(markup).unwrap();
-
-            String::from_utf8(buffer).unwrap()
-        }
-
         const SOURCE: &str = r#"enum Foo { Lorem, Ipsum }"#;
 
         let parsed = parse(SOURCE, JsFileSource::tsx(), JsParserOptions::default());
@@ -139,7 +127,6 @@ mod tests {
             JsFileSource::tsx(),
             |signal| {
                 for transformation in signal.transformations() {
-                    dbg!(transformation.mutation.as_text_edits().unwrap_or_default());
                     let new_code = transformation.mutation.commit();
                     eprintln!("{new_code}");
                 }

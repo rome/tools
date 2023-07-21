@@ -18,9 +18,7 @@ use rome_js_syntax::{
     JsFunctionExpression, JsInitializerClause, JsLogicalExpression, JsModuleItemList,
     JsStatementList, JsVariableStatement, TsEnumDeclaration, T,
 };
-use rome_rowan::{AstNode, AstSeparatedList, BatchMutationExt, TriviaPieceKind};
-use std::collections::HashMap;
-use std::iter;
+use rome_rowan::{AstNode, BatchMutationExt, TriviaPieceKind};
 
 declare_transformation! {
     /// Transform a TypeScript [TsEnumDeclaration]
@@ -30,9 +28,10 @@ declare_transformation! {
     }
 }
 
+#[derive(Debug)]
 pub struct TsEnumMembers {
     name: String,
-    member_names: HashMap<String, Option<JsInitializerClause>>,
+    member_names: Vec<(String, Option<JsInitializerClause>)>,
 }
 
 impl Rule for TsEnum {
@@ -43,14 +42,14 @@ impl Rule for TsEnum {
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
-        let mut member_names = HashMap::default();
+        let mut member_names = vec![];
         let id = node.id().ok()?;
         let name = id.text();
-        for (index, member) in node.members().iter().enumerate() {
+        for member in node.members() {
             let member = member.ok()?;
             let key = member.name().ok()?.text();
             let value = member.initializer().clone();
-            member_names.insert(key, value);
+            member_names.push((key, value));
         }
 
         Some(TsEnumMembers { name, member_names })
@@ -60,7 +59,6 @@ impl Rule for TsEnum {
         let node = ctx.query();
         let mut mutation = node.clone().begin();
         let parent = node.syntax().parent();
-
         if let Some(parent) = parent {
             if let Some(module_list) = JsModuleItemList::cast(parent) {
                 let variable = make_variable(state);

@@ -30,8 +30,8 @@ var StatusA;
 ```ts
 var StatusB;
 (function (StatusB) {
-	StatusB[(StatusB["Disabled"] = "Disabled")] = "Disabled";
 	StatusB[(StatusB["Enabled"] = "Enabled")] = "Enabled";
+	StatusB[(StatusB["Disabled"] = "Disabled")] = "Disabled";
 })(StatusB || (StatusB = {}));
 
 ```
