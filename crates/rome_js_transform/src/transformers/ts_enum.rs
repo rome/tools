@@ -15,23 +15,24 @@ use rome_js_syntax::{
     AnyJsAssignment, AnyJsAssignmentPattern, AnyJsBinding, AnyJsBindingPattern, AnyJsCallArgument,
     AnyJsExpression, AnyJsFormalParameter, AnyJsLiteralExpression, AnyJsModuleItem, AnyJsParameter,
     AnyJsStatement, JsAssignmentExpression, JsComputedMemberAssignment, JsExpressionStatement,
-    JsFunctionExpression, JsLogicalExpression, JsModule, JsModuleItemList, JsStatementList,
-    JsVariableStatement, TsEnumDeclaration, T,
+    JsFunctionExpression, JsInitializerClause, JsLogicalExpression, JsModuleItemList,
+    JsStatementList, JsVariableStatement, TsEnumDeclaration, T,
 };
-use rome_rowan::{AstNode, BatchMutationExt, TriviaPieceKind};
+use rome_rowan::{AstNode, AstSeparatedList, BatchMutationExt, TriviaPieceKind};
+use std::collections::HashMap;
+use std::iter;
 
 declare_transformation! {
     /// Transform a TypeScript [TsEnumDeclaration]
     pub(crate) TsEnum {
         version: "next",
         name: "transformEnum",
-        recommended: false,
     }
 }
 
 pub struct TsEnumMembers {
     name: String,
-    member_names: Vec<String>,
+    member_names: HashMap<String, Option<JsInitializerClause>>,
 }
 
 impl Rule for TsEnum {
@@ -42,12 +43,14 @@ impl Rule for TsEnum {
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
-        let mut member_names = vec![];
+        let mut member_names = HashMap::default();
         let id = node.id().ok()?;
         let name = id.text();
-        for member in node.members() {
+        for (index, member) in node.members().iter().enumerate() {
             let member = member.ok()?;
-            member_names.push(member.name().ok()?.text())
+            let key = member.name().ok()?.text();
+            let value = member.initializer().clone();
+            member_names.insert(key, value);
         }
 
         Some(TsEnumMembers { name, member_names })
@@ -150,9 +153,19 @@ fn make_function(node: &TsEnumMembers) -> JsFunctionExpression {
 
 fn make_members(ts_enum: &TsEnumMembers) -> JsStatementList {
     let mut list = vec![];
-    for name in &ts_enum.member_names {
+    for (index, (name, value)) in ts_enum.member_names.iter().enumerate() {
+        let value = value
+            .as_ref()
+            .and_then(|initializer| Some(initializer.expression().ok()?.clone()))
+            .unwrap_or_else(|| {
+                AnyJsExpression::AnyJsLiteralExpression(
+                    AnyJsLiteralExpression::JsNumberLiteralExpression(
+                        js_number_literal_expression(ident(&index.to_string())),
+                    ),
+                )
+            });
         list.push(AnyJsStatement::JsExpressionStatement(
-            make_high_order_assignment(ts_enum.name.as_str(), name.as_str(), "0"),
+            make_high_order_assignment(ts_enum.name.as_str(), name.as_str(), value),
         ));
     }
 
@@ -190,7 +203,7 @@ fn make_logical_expression(node: &TsEnumMembers) -> JsLogicalExpression {
 fn make_high_order_assignment(
     enum_name: &str,
     member_name: &str,
-    member_value: &str,
+    member_value: AnyJsExpression,
 ) -> JsExpressionStatement {
     let left = js_computed_member_assignment(
         AnyJsExpression::JsIdentifierExpression(js_identifier_expression(js_reference_identifier(
@@ -226,17 +239,14 @@ fn make_high_order_assignment(
 fn make_assignment_expression_from_member(
     enum_name: &str,
     member_name: &str,
-    member_value: &str,
+    member_value: AnyJsExpression,
 ) -> JsAssignmentExpression {
     let left = make_computed_member_assignment(enum_name, member_name);
-    let right = js_number_literal_expression(ident(member_value));
 
     js_assignment_expression(
         AnyJsAssignmentPattern::AnyJsAssignment(AnyJsAssignment::JsComputedMemberAssignment(left)),
         token(T![=]),
-        AnyJsExpression::AnyJsLiteralExpression(AnyJsLiteralExpression::JsNumberLiteralExpression(
-            right,
-        )),
+        member_value,
     )
 }
 
