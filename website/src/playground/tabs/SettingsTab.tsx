@@ -49,7 +49,7 @@ export default function SettingsTab({
 			enabledLinting,
 			importSortingEnabled,
 			unsafeParameterDecoratorsEnabled,
-			allowComments
+			allowComments,
 		},
 	},
 }: SettingsTabProps) {
@@ -457,7 +457,7 @@ function SyntaxSettings({
 	unsafeParameterDecoratorsEnabled,
 	setUnsafeParameterDecoratorsEnabled,
 	setAllowComments,
-	allowComments
+	allowComments,
 }: {
 	filename: string;
 	setFilename: (filename: string) => void;
@@ -553,13 +553,9 @@ function SyntaxSettings({
 						name="allow-comments"
 						type="checkbox"
 						checked={allowComments}
-						onChange={(e) =>
-							setAllowComments(e.target.checked)
-						}
+						onChange={(e) => setAllowComments(e.target.checked)}
 					/>
-					<label htmlFor="allow-comments">
-						Allow comments in JSON files
-					</label>
+					<label htmlFor="allow-comments">Allow comments in JSON files</label>
 				</div>
 			</section>
 		</>

@@ -75,7 +75,7 @@ self.addEventListener("message", async (e) => {
 				arrowParentheses,
 				importSortingEnabled,
 				unsafeParameterDecoratorsEnabled,
-				allowComments
+				allowComments,
 			} = e.data.settings as PlaygroundSettings;
 
 			configuration = {
@@ -118,9 +118,9 @@ self.addEventListener("message", async (e) => {
 				},
 				json: {
 					parser: {
-						allowComments
-					}
-				}
+						allowComments,
+					},
+				},
 			};
 
 			switch (lintRules) {
