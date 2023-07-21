@@ -39,6 +39,8 @@ pub const CSS_KINDS_SRC: KindsSrc = KindsSrc {
         ("@", "AT"),
         ("$=", "DOLLAR_EQ"),
         ("~=", "TILDE_EQ"),
+        ("-->", "CDC"),
+        ("<!--", "CDO"),
     ],
     keywords: &[
         "aliceblue",
