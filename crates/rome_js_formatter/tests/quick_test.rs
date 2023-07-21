@@ -29,7 +29,6 @@ fn quick_test() {
         syntax,
         JsParserOptions::default().with_parse_class_parameter_decorators(),
     );
-    dbg!(tree.syntax());
     let options = JsFormatOptions::new(syntax)
         .with_semicolons(Semicolons::Always)
         .with_quote_style(QuoteStyle::Double)

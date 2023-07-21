@@ -115,6 +115,7 @@ export interface PlaygroundSettings {
 	enabledLinting: boolean;
 	importSortingEnabled: boolean;
 	unsafeParameterDecoratorsEnabled: boolean;
+	allowComments: boolean;
 }
 
 export interface PlaygroundFileState {
@@ -158,6 +159,7 @@ export const defaultPlaygroundState: PlaygroundState = {
 		enabledLinting: true,
 		importSortingEnabled: true,
 		unsafeParameterDecoratorsEnabled: true,
+		allowComments: true,
 	},
 };
 

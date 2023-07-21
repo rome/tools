@@ -96,10 +96,9 @@ fn parse(
     settings: SettingsHandle,
     cache: &mut NodeCache,
 ) -> AnyParse {
-    let _parser = &settings.as_ref().languages.json.parser;
+    let parser = &settings.as_ref().languages.json.parser;
     let options: JsonParserOptions = JsonParserOptions {
-        // TODO: enable once the formatter is ready
-        allow_comments: false,
+        allow_comments: parser.allow_comments,
     };
     let source_type =
         JsonFileSource::try_from(rome_path.as_path()).unwrap_or_else(|_| match language_hint {

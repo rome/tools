@@ -91,6 +91,18 @@ if no error diagnostics are emitted.
   rome check --error-on-wanrings ./src
   ```
 
+- Add a configuration to enable parsing comments inside JSON files:
+
+  ```json
+  {
+    "json": {
+      "parser": {
+        "allowComments": true
+      }
+    }
+  }
+  ```
+
 ### Editors
 
 #### Other changes
@@ -99,9 +111,11 @@ if no error diagnostics are emitted.
 
 ### Formatter
 
-- Added a new option called `--jsx-quote-style` to the formatter. This option allows you to choose between single and double quotes for JSX attributes. [#4486](https://github.com/rome/tools/issues/4486)
+- Add a new option called `--jsx-quote-style` to the formatter. This option allows you to choose between single and double quotes for JSX attributes. [#4486](https://github.com/rome/tools/issues/4486)
 
-- Added a new option called `--arrow-parentheses` to the formatter. This option allows you to set the parentheses style for arrow functions. [#4666](https://github.com/rome/tools/issues/4666)
+- Add a new option called `--arrow-parentheses` to the formatter. This option allows you to set the parentheses style for arrow functions. [#4666](https://github.com/rome/tools/issues/4666)
+
+- The JSON formatter is now able to format `.json` files that have comments.
 
 ### Linter
 
@@ -345,7 +359,17 @@ if no error diagnostics are emitted.
  		}
  	}
 	```
+- Add for parsing comments inside JSON files:
 
+  ```json
+  {
+    "json": {
+      "parser": {
+        "allowComments": true
+      }
+    }
+  }
+  ```
 ### VSCode
 
 ### JavaScript APIs
