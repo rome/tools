@@ -126,7 +126,7 @@ impl VisitNode<JsonLanguage> for RuleConfiguration {
         diagnostics: &mut Vec<DeserializationDiagnostic>,
     ) -> Option<()> {
         let node = with_only_known_variants(node, RulePlainConfiguration::KNOWN_KEYS, diagnostics)?;
-        match node.inner_string_text().ok()?.text() {
+        match node.inner_text().ok()?.text() {
             "error" => {
                 *self = RuleConfiguration::Plain(RulePlainConfiguration::Error);
             }
@@ -151,7 +151,7 @@ impl VisitNode<JsonLanguage> for RulePlainConfiguration {
         diagnostics: &mut Vec<DeserializationDiagnostic>,
     ) -> Option<()> {
         let node = with_only_known_variants(node, RulePlainConfiguration::KNOWN_KEYS, diagnostics)?;
-        match node.inner_string_text().ok()?.text() {
+        match node.inner_text().ok()?.text() {
             "error" => {
                 *self = RulePlainConfiguration::Error;
             }
@@ -221,7 +221,7 @@ pub(crate) fn are_recommended_and_all_correct(
 
     let recommended = value.json_member_list().iter().find_map(|member| {
         let member = member.ok()?;
-        if member.name().ok()?.inner_string_text().ok()?.text() == "recommended" {
+        if member.name().ok()?.inner_text().ok()?.text() == "recommended" {
             member.value().ok()?.as_json_boolean_value().cloned()
         } else {
             None
@@ -230,7 +230,7 @@ pub(crate) fn are_recommended_and_all_correct(
 
     let all = value.json_member_list().iter().find_map(|member| {
         let member = member.ok()?;
-        if member.name().ok()?.inner_string_text().ok()?.text() == "all" {
+        if member.name().ok()?.inner_text().ok()?.text() == "all" {
             member.value().ok()?.as_json_boolean_value().cloned()
         } else {
             None

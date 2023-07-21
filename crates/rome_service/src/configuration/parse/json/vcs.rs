@@ -55,7 +55,7 @@ impl VisitNode<JsonLanguage> for VcsClientKind {
         diagnostics: &mut Vec<DeserializationDiagnostic>,
     ) -> Option<()> {
         let node = with_only_known_variants(node, VcsClientKind::KNOWN_VALUES, diagnostics)?;
-        if node.inner_string_text().ok()?.text() == "git" {
+        if node.inner_text().ok()?.text() == "git" {
             *self = VcsClientKind::Git;
         }
         Some(())

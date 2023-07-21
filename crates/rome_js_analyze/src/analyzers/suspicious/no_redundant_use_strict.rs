@@ -91,7 +91,7 @@ impl Rule for NoRedundantUseStrict {
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
-        if node.inner_string_text().ok()? != "use strict" {
+        if node.inner_text().ok()? != "use strict" {
             return None;
         }
         let mut outer_most: Option<AnyJsStrictModeNode> = None;
@@ -102,7 +102,7 @@ impl Rule for NoRedundantUseStrict {
                 for n in node.syntax().ancestors() {
                     if let Some(parent) = AnyNodeWithDirectives::cast_ref(&n) {
                         for directive in parent.directives() {
-                            let directive_text = directive.inner_string_text().ok()?;
+                            let directive_text = directive.inner_text().ok()?;
                             if directive_text == "use strict" {
                                 outer_most = Some(directive.into());
                                 break; // continue with next parent

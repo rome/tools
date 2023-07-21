@@ -57,8 +57,7 @@ impl Rule for NoAsyncPromiseExecutor {
         } = node.as_fields();
         let callee = callee.ok()?;
         let is_promise_constructor = callee
-            .as_js_identifier_expression()
-            .and_then(|ident| ident.name().ok())
+            .as_js_reference_identifier()
             .map_or(false, |name| name.syntax().text_trimmed() == "Promise");
         if !is_promise_constructor {
             return None;

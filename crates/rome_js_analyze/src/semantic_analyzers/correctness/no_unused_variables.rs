@@ -244,9 +244,7 @@ impl Rule for NoUnusedVariables {
             AnyJsIdentifierBinding::TsTypeParameterName(binding) => binding.ident_token().ok()?,
         };
 
-        let name = name.token_text_trimmed();
-        let name = name.text();
-
+        let name = name.text_trimmed();
         // Old code import React but do not used directly
         // only indirectly after transpiling JSX.
         if name.starts_with('_') || name == "React" {

@@ -146,7 +146,7 @@ fn has_type_image_attribute(element: &AnyJsxElement) -> bool {
         .map_or(false, |attribute| {
             attribute
                 .as_static_value()
-                .map_or(false, |value| value.is_string_constant("image"))
+                .map_or(false, |value| value.as_string_constant() == Some("image"))
         })
 }
 
@@ -173,7 +173,8 @@ fn has_valid_label(element: &AnyJsxElement, name_to_lookup: &str) -> bool {
                 return false;
             }
             attribute.as_static_value().map_or(true, |value| {
-                !value.is_null_or_undefined() && value.is_not_string_constant("")
+                !value.is_null_or_undefined()
+                    && !value.as_string_constant().unwrap_or_default().is_empty()
             }) && !element.has_trailing_spread_prop(attribute)
         })
 }

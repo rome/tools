@@ -55,7 +55,7 @@ impl Rule for NoDuplicateJsonKeys {
             if index == 0 {
                 original_key = Some(name.clone());
             }
-            let text = name.inner_string_text().ok()?;
+            let text = name.inner_text().ok()?;
             if let Some(ranges) = names.get_mut(text.text()) {
                 ranges.push(name.range());
             } else {
@@ -89,7 +89,7 @@ impl Rule for NoDuplicateJsonKeys {
             rule_category!(),
             original_key.range(),
             markup! {
-                "The key "<Emphasis>{{original_key.inner_string_text().ok()?.text()}}</Emphasis>" was already declared."
+                "The key "<Emphasis>{{original_key.inner_text().ok()?.text()}}</Emphasis>" was already declared."
             },
         );
         for range in duplicated_keys {

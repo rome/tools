@@ -116,7 +116,7 @@ impl VisitNode<JsonLanguage> for TrailingComma {
         diagnostics: &mut Vec<DeserializationDiagnostic>,
     ) -> Option<()> {
         let node = with_only_known_variants(node, TrailingComma::KNOWN_VALUES, diagnostics)?;
-        match node.inner_string_text().ok()?.text() {
+        match node.inner_text().ok()?.text() {
             "all" => {
                 *self = TrailingComma::All;
             }

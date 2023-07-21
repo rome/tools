@@ -7,7 +7,7 @@ use rome_js_syntax::{
     JsStaticMemberExpression, JsSyntaxKind, JsxChildList, JsxExpressionChild, JsxTagExpression,
     JsxText, TextLen,
 };
-use rome_rowan::{Direction, SyntaxResult, SyntaxTokenText, TextRange, TextSize};
+use rome_rowan::{Direction, GreenTokenText, SyntaxResult, TextRange, TextSize};
 use std::iter::{FusedIterator, Peekable};
 use std::str::Chars;
 
@@ -283,7 +283,7 @@ where
 
                         (relative_start, JsxTextChunk::Word(word)) => {
                             let text = value_token
-                                .token_text()
+                                .green_token_text()
                                 .slice(TextRange::at(relative_start, word.text_len()));
                             let source_position = value_token.text_range().start() + relative_start;
 
@@ -401,12 +401,12 @@ impl JsxChild {
 /// A word in a Jsx Text. A word is string sequence that isn't separated by any JSX whitespace.
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub(crate) struct JsxWord {
-    text: SyntaxTokenText,
+    text: GreenTokenText,
     source_position: TextSize,
 }
 
 impl JsxWord {
-    fn new(text: SyntaxTokenText, source_position: TextSize) -> Self {
+    fn new(text: GreenTokenText, source_position: TextSize) -> Self {
         JsxWord {
             text,
             source_position,

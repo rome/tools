@@ -10,7 +10,7 @@ pub use file_source::JsonFileSource;
 pub use rome_rowan::{TextLen, TextRange, TextSize, TokenAtOffset, TriviaPieceKind, WalkEvent};
 pub use syntax_node::*;
 
-use rome_rowan::RawSyntaxKind;
+use rome_rowan::{RawSyntaxKind, SyntaxTokenText};
 
 impl From<u16> for JsonSyntaxKind {
     fn from(d: u16) -> JsonSyntaxKind {
@@ -104,4 +104,18 @@ impl TryFrom<JsonSyntaxKind> for TriviaPieceKind {
             Err(())
         }
     }
+}
+
+pub fn inner_text(token: JsonSyntaxToken) -> SyntaxTokenText {
+    let token_kind = token.kind();
+    let mut text = token.token_text_trimmed();
+    if token_kind == JsonSyntaxKind::JSON_STRING_LITERAL {
+        // remove string delimiters
+        let range = text
+            .range()
+            .add_start(TextSize::from(1))
+            .sub_end(TextSize::from(1));
+        text = text.slice(range);
+    }
+    text
 }

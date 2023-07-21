@@ -107,7 +107,7 @@ impl ReactApiCall for ReactCreateElementCall {
                 let property_name = property.name().ok()?;
 
                 let property_name = property_name.as_js_literal_member_name()?;
-                if property_name.name().ok()? == prop_name {
+                if property_name.name().ok()?.text() == prop_name {
                     Some(property.clone())
                 } else {
                     None
@@ -192,7 +192,7 @@ pub(crate) fn is_react_call_api(
     let expr = expression.omit_parentheses();
     if let Some(callee) = AnyJsMemberExpression::cast_ref(expr.syntax()) {
         let Some(object) = callee.object().ok() else { return false };
-        let Some(reference) = object.omit_parentheses().as_reference_identifier() else { return false };
+        let Some(reference) = object.omit_parentheses().as_js_reference_identifier() else { return false };
         let Some(member_name) = callee.member_name() else { return false };
         if member_name.text() != api_name {
             return false;
@@ -203,7 +203,7 @@ pub(crate) fn is_react_call_api(
         };
     }
 
-    if let Some(ident) = expr.as_reference_identifier() {
+    if let Some(ident) = expr.as_js_reference_identifier() {
         return model
             .binding(&ident)
             .and_then(|it| is_named_react_export(it, lib, api_name))

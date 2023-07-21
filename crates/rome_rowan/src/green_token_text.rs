@@ -1,31 +1,26 @@
+use crate::GreenToken;
 use rome_text_size::{TextRange, TextSize};
 use std::ops::Deref;
 use std::{borrow::Borrow, fmt::Formatter};
 
-use crate::cursor::SyntaxToken;
-
 /// Reference to the text of a SyntaxToken without having to worry about the lifetime of `&str`.
 #[derive(Eq, Clone)]
-pub struct SyntaxTokenText {
-    token: SyntaxToken,
-    /// Absolute range of the "selected" token text.
+pub struct GreenTokenText {
+    // Using a green token to ensure this type is Send + Sync.
+    token: GreenToken,
+    /// Relative range of the "selected" token text.
     range: TextRange,
 }
 
-impl std::hash::Hash for SyntaxTokenText {
+impl std::hash::Hash for GreenTokenText {
     fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
         self.text().hash(state);
     }
 }
 
-impl SyntaxTokenText {
-    pub(crate) fn new(token: SyntaxToken) -> SyntaxTokenText {
-        let range = token.text_range();
-        Self { token, range }
-    }
-
-    pub(crate) fn with_range(token: SyntaxToken, range: TextRange) -> SyntaxTokenText {
-        debug_assert!(token.text_range().contains_range(range));
+impl GreenTokenText {
+    pub(crate) fn new(token: GreenToken) -> GreenTokenText {
+        let range = TextRange::at(TextSize::default(), token.text_len());
         Self { token, range }
     }
 
@@ -40,7 +35,7 @@ impl SyntaxTokenText {
     }
 
     /// Returns a subslice of the text.
-    pub fn slice(mut self, range: TextRange) -> SyntaxTokenText {
+    pub fn slice(mut self, range: TextRange) -> GreenTokenText {
         assert!(
             self.range.contains_range(range),
             "Range {range:?} exceeds bounds {:?}",
@@ -56,12 +51,11 @@ impl SyntaxTokenText {
     }
 
     pub fn text(&self) -> &str {
-        let relative_range = self.range - self.token.text_range().start();
-        &self.token.text()[relative_range]
+        &self.token.text()[self.range]
     }
 }
 
-impl Deref for SyntaxTokenText {
+impl Deref for GreenTokenText {
     type Target = str;
 
     fn deref(&self) -> &Self::Target {
@@ -69,37 +63,37 @@ impl Deref for SyntaxTokenText {
     }
 }
 
-impl std::fmt::Display for SyntaxTokenText {
+impl std::fmt::Display for GreenTokenText {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         write!(f, "{}", self.text())
     }
 }
 
-impl std::fmt::Debug for SyntaxTokenText {
+impl std::fmt::Debug for GreenTokenText {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         write!(f, "{:?}", self.text())
     }
 }
 
-impl PartialEq for SyntaxTokenText {
+impl PartialEq for GreenTokenText {
     fn eq(&self, other: &Self) -> bool {
         **self == **other
     }
 }
 
-impl PartialEq<&'_ str> for SyntaxTokenText {
+impl PartialEq<&'_ str> for GreenTokenText {
     fn eq(&self, rhs: &&'_ str) -> bool {
         **self == **rhs
     }
 }
 
-impl PartialEq<SyntaxTokenText> for &'_ str {
-    fn eq(&self, other: &SyntaxTokenText) -> bool {
+impl PartialEq<GreenTokenText> for &'_ str {
+    fn eq(&self, other: &GreenTokenText) -> bool {
         **self == **other
     }
 }
 
-impl Borrow<str> for SyntaxTokenText {
+impl Borrow<str> for GreenTokenText {
     fn borrow(&self) -> &str {
         self.text()
     }

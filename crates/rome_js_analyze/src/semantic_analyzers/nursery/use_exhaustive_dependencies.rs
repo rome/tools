@@ -348,7 +348,7 @@ impl VisitNode<JsonLanguage> for HooksOptions {
                         DeserializationDiagnostic::new_incorrect_type("string", hook_name.range())
                     })
                     .ok()?
-                    .inner_string_text()
+                    .inner_text()
                     .ok()?
                     .to_string();
 

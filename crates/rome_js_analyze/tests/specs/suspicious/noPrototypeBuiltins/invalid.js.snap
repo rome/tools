@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 96
 expression: invalid.js
 ---
 # Input
@@ -100,14 +99,14 @@ invalid.js:5:13 lint/suspicious/noPrototypeBuiltins ━━━━━━━━━�
 ```
 
 ```
-invalid.js:6:5 lint/suspicious/noPrototypeBuiltins ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:6:6 lint/suspicious/noPrototypeBuiltins ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Do not access Object.prototype method 'hasOwnProperty' from target object.
   
     4 │ foo.bar.hasOwnProperty("bar");
     5 │ foo.bar.baz.isPrototypeOf("bar");
   > 6 │ foo["hasOwnProperty"]("bar");
-      │     ^^^^^^^^^^^^^^^^
+      │      ^^^^^^^^^^^^^^
     7 │ foo[`isPrototypeOf`]("bar").baz;
     8 │ foo?.hasOwnProperty(bar);
   
@@ -172,14 +171,14 @@ invalid.js:9:7 lint/suspicious/noPrototypeBuiltins ━━━━━━━━━�
 ```
 
 ```
-invalid.js:10:7 lint/suspicious/noPrototypeBuiltins ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:10:8 lint/suspicious/noPrototypeBuiltins ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Do not access Object.prototype method 'hasOwnProperty' from target object.
   
      8 │ foo?.hasOwnProperty(bar);
      9 │ (foo?.hasOwnProperty)("bar");
   > 10 │ foo?.["hasOwnProperty"]("bar");
-       │       ^^^^^^^^^^^^^^^^
+       │        ^^^^^^^^^^^^^^
     11 │ (foo?.[`hasOwnProperty`])("bar");
   
   i It's recommended using Object.hasOwn() instead of using Object.hasOwnProperty().

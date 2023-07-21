@@ -451,7 +451,7 @@ impl LogicalAndChain {
                 ),
                 _ => return Ok(LogicalAndChainOrdering::Different),
             };
-            if main_value_token.token_text_trimmed() != branch_value_token.token_text_trimmed() {
+            if main_value_token.text_trimmed() != branch_value_token.text_trimmed() {
                 return Ok(LogicalAndChainOrdering::Different);
             }
         }

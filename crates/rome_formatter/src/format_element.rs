@@ -7,7 +7,7 @@ use std::borrow::Cow;
 use crate::{TagKind, TextSize};
 #[cfg(target_pointer_width = "64")]
 use rome_rowan::static_assert;
-use rome_rowan::SyntaxTokenText;
+use rome_rowan::GreenTokenText;
 use std::hash::{Hash, Hasher};
 use std::ops::Deref;
 use std::rc::Rc;
@@ -44,7 +44,7 @@ pub enum FormatElement {
         /// The start position of the token in the unformatted source code
         source_position: TextSize,
         /// The token text
-        slice: SyntaxTokenText,
+        slice: GreenTokenText,
     },
 
     /// Prevents that line suffixes move past this boundary. Forces the printer to print any pending

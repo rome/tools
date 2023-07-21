@@ -1,7 +1,8 @@
 use rome_js_factory::make;
 use rome_js_syntax::{
-    inner_text, AnyJsStatement, JsLanguage, JsModuleItemList, JsStatementList, JsSyntaxNode,
-    JsVariableDeclaration, JsVariableDeclarator, JsVariableDeclaratorList, JsVariableStatement, T,
+    AnyJsStatement, JsLanguage, JsModuleItemList, JsStatementList, JsSyntaxKind, JsSyntaxNode,
+    JsSyntaxToken, JsVariableDeclaration, JsVariableDeclarator, JsVariableDeclaratorList,
+    JsVariableStatement, T,
 };
 use rome_rowan::{AstNode, AstSeparatedList, BatchMutation, Direction, WalkEvent};
 use std::borrow::Cow;
@@ -234,6 +235,32 @@ pub(crate) fn is_node_equal(a_node: &JsSyntaxNode, b_node: &JsSyntaxNode) -> boo
     }
 
     true
+}
+
+/// Similar to `JsSyntaxToken::text_trimmed` with the difference that delimiters of string literals are trimmed.
+fn inner_text(token: &JsSyntaxToken) -> &str {
+    let text_trimmed = token.text_trimmed();
+    match token.kind() {
+        JsSyntaxKind::JS_STRING_LITERAL | JsSyntaxKind::JSX_STRING_LITERAL => {
+            &text_trimmed[1..text_trimmed.len() - 1]
+        }
+        _ => text_trimmed,
+    }
+}
+
+#[test]
+fn test_inner_text() {
+    let a = JsSyntaxToken::new_detached(JsSyntaxKind::JS_STRING_LITERAL, "'inner_text'", [], []);
+    let b = JsSyntaxToken::new_detached(JsSyntaxKind::JS_STRING_LITERAL, "\"inner_text\"", [], []);
+    assert_eq!(inner_text(&a), inner_text(&b));
+
+    let a = JsSyntaxToken::new_detached(JsSyntaxKind::LET_KW, "let", [], []);
+    let b = JsSyntaxToken::new_detached(JsSyntaxKind::LET_KW, "let", [], []);
+    assert_eq!(inner_text(&a), inner_text(&b));
+
+    let a = JsSyntaxToken::new_detached(JsSyntaxKind::LET_KW, "let", [], []);
+    let b = JsSyntaxToken::new_detached(JsSyntaxKind::CONST_KW, "const", [], []);
+    assert!(inner_text(&a) != inner_text(&b));
 }
 
 #[test]

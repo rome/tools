@@ -101,7 +101,7 @@ impl Rule for UseIsNan {
         let model = ctx.model();
         match node {
             UseIsNanQuery::JsBinaryExpression(bin_expr) => {
-                if bin_expr.is_comparison_operator()
+                if bin_expr.is_comparison_operation()
                     && (has_nan(bin_expr.left().ok()?, model)
                         || has_nan(bin_expr.right().ok()?, model))
                 {

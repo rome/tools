@@ -99,7 +99,7 @@ impl Rule for UseAriaPropsForRole {
                 .value()
                 .ok()?
                 .as_jsx_string()?
-                .inner_string_text()
+                .inner_text()
                 .ok()?;
 
             let role = roles.get_role(name.text());

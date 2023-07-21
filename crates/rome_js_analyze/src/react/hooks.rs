@@ -3,10 +3,9 @@ use std::collections::{HashMap, HashSet};
 
 use rome_js_semantic::{Capture, Closure, ClosureExtensions, SemanticModel};
 use rome_js_syntax::{
-    binding_ext::AnyJsIdentifierBinding, static_value::StaticStringValue, AnyJsExpression,
-    AnyJsMemberExpression, JsArrayBindingPattern, JsArrayBindingPatternElementList,
-    JsArrowFunctionExpression, JsCallExpression, JsFunctionExpression, JsVariableDeclarator,
-    TextRange,
+    binding_ext::AnyJsIdentifierBinding, AnyJsExpression, AnyJsMemberExpression,
+    JsArrayBindingPattern, JsArrayBindingPatternElementList, JsArrowFunctionExpression,
+    JsCallExpression, JsFunctionExpression, JsVariableDeclarator, TextRange,
 };
 use rome_rowan::AstNode;
 use serde::{Deserialize, Serialize};
@@ -101,9 +100,7 @@ pub(crate) fn react_hook_configuration<'a>(
     let name = call
         .callee()
         .ok()?
-        .as_js_identifier_expression()?
-        .name()
-        .ok()?
+        .as_js_reference_identifier()?
         .value_token()
         .ok()?;
     let name = name.text_trimmed();
@@ -141,15 +138,13 @@ pub(crate) fn react_hook_with_dependency(
 ) -> Option<ReactCallWithDependencyResult> {
     let expression = call.callee().ok()?;
     let name = if let AnyJsExpression::JsIdentifierExpression(identifier) = expression.clone() {
-        Some(StaticStringValue::Unquoted(
-            identifier.name().ok()?.value_token().ok()?,
-        ))
+        identifier.name().ok()?.inner_text().ok()
     } else if let Some(member_expr) = AnyJsMemberExpression::cast_ref(expression.syntax()) {
-        Some(member_expr.member_name()?)
+        member_expr.member_name()
     } else {
         None
     }?;
-    let function_name_range = name.token().text_trimmed_range();
+    let function_name_range = name.range();
     let name = name.text();
 
     // check if the hooks api is imported from the react library
@@ -240,15 +235,12 @@ pub fn is_binding_react_stable(
                 .as_js_call_expression()?
                 .callee()
                 .ok()?
-                .as_js_identifier_expression()?
-                .name()
-                .ok()?
+                .as_js_reference_identifier()?
                 .value_token()
-                .ok()?
-                .token_text();
+                .ok()?;
 
             let stable = StableReactHookConfiguration {
-                hook_name: hook_name.to_string(),
+                hook_name: hook_name.text().to_string(),
                 index,
             };
 

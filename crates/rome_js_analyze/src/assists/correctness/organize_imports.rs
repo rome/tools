@@ -108,7 +108,7 @@ impl Rule for OrganizeImports {
                 AnyJsImportClause::JsImportNamespaceClause(clause) => clause.source().ok()?,
             };
 
-            let key = source.inner_string_text().ok()?;
+            let key = source.inner_text().ok()?;
             match nodes.entry(ImportKey(key)) {
                 Entry::Vacant(entry) => {
                     entry.insert(vec![ImportNode::from(import)]);

@@ -73,7 +73,7 @@ impl AnyNumberLikeExpression {
     pub(crate) fn value(&self) -> Option<String> {
         match self {
             AnyNumberLikeExpression::JsStringLiteralExpression(string_literal) => {
-                return Some(string_literal.inner_string_text().ok()?.to_string());
+                return Some(string_literal.inner_text().ok()?.to_string());
             }
             AnyNumberLikeExpression::JsNumberLiteralExpression(number_literal) => {
                 return Some(number_literal.value_token().ok()?.to_string());
@@ -170,7 +170,7 @@ fn attribute_has_negative_tabindex(
 ) -> Option<bool> {
     match tabindex_attribute_value {
         AnyJsxAttributeValue::JsxString(jsx_string) => {
-            let value = jsx_string.inner_string_text().ok()?.to_string();
+            let value = jsx_string.inner_text().ok()?.to_string();
             Some(is_negative_tabindex(&value))
         }
         AnyJsxAttributeValue::JsxExpressionAttributeValue(value) => {

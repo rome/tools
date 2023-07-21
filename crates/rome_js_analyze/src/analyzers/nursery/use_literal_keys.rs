@@ -64,8 +64,8 @@ impl Rule for UseLiteralKeys {
             AnyJsMember::JsLiteralMemberName(member) => {
                 if member.value().ok()?.kind() == JsSyntaxKind::JS_STRING_LITERAL {
                     let name = member.name().ok()?;
-                    if is_js_ident(&name) {
-                        return Some((member.range(), name));
+                    if is_js_ident(name.text()) {
+                        return Some((member.range(), name.to_string()));
                     }
                 }
                 return None;
@@ -76,7 +76,7 @@ impl Rule for UseLiteralKeys {
             AnyJsExpression::AnyJsLiteralExpression(
                 AnyJsLiteralExpression::JsStringLiteralExpression(string_literal),
             ) => {
-                let value = string_literal.inner_string_text().ok()?;
+                let value = string_literal.inner_text().ok()?;
                 // A computed property `["something"]` can always be simplified to a string literal "something".
                 if matches!(node, AnyJsMember::JsComputedMemberName(_)) || is_js_ident(&value) {
                     return Some((string_literal.range(), value.to_string()));

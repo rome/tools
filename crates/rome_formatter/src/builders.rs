@@ -3,7 +3,7 @@ use crate::prelude::tag::{DedentMode, GroupMode, LabelId};
 use crate::prelude::*;
 use crate::{format_element, write, Argument, Arguments, GroupId, TextRange, TextSize};
 use crate::{Buffer, VecBuffer};
-use rome_rowan::{Language, SyntaxNode, SyntaxToken, SyntaxTokenText, TextLen};
+use rome_rowan::{GreenTokenText, Language, SyntaxNode, SyntaxToken, TextLen};
 use std::borrow::Cow;
 use std::cell::Cell;
 use std::marker::PhantomData;
@@ -333,7 +333,7 @@ impl<L: Language, Context> Format<Context> for SyntaxTokenCowSlice<'_, L> {
                 );
 
                 let relative_range = range - self.token.text_range().start();
-                let slice = self.token.token_text().slice(relative_range);
+                let slice = self.token.green_token_text().slice(relative_range);
 
                 f.write_element(FormatElement::SyntaxTokenTextSlice {
                     slice,
@@ -360,7 +360,7 @@ pub fn syntax_token_text_slice<L: Language>(
     range: TextRange,
 ) -> SyntaxTokenTextSlice {
     let relative_range = range - token.text_range().start();
-    let slice = token.token_text().slice(relative_range);
+    let slice = token.green_token_text().slice(relative_range);
 
     debug_assert_no_newlines(&slice);
 
@@ -371,7 +371,7 @@ pub fn syntax_token_text_slice<L: Language>(
 }
 
 pub struct SyntaxTokenTextSlice {
-    text: SyntaxTokenText,
+    text: GreenTokenText,
     source_position: TextSize,
 }
 

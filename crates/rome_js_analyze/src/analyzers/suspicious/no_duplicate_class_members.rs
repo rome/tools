@@ -5,8 +5,8 @@ use rome_js_syntax::{
     AnyJsClassMemberName, JsClassMemberList, JsGetterClassMember, JsMethodClassMember,
     JsPropertyClassMember, JsSetterClassMember, JsStaticModifier, JsSyntaxList, TextRange,
 };
-use rome_rowan::AstNodeList;
 use rome_rowan::{declare_node_union, AstNode};
+use rome_rowan::{AstNodeList, SyntaxTokenText};
 
 declare_rule! {
     /// Disallow duplicate class members.
@@ -91,7 +91,7 @@ declare_rule! {
     }
 }
 
-fn get_member_name(node: &AnyJsClassMemberName) -> Option<String> {
+fn get_member_name(node: &AnyJsClassMemberName) -> Option<SyntaxTokenText> {
     match node {
         AnyJsClassMemberName::JsLiteralMemberName(node) => node.name().ok(),
         _ => None,
@@ -186,7 +186,7 @@ impl Rule for NoDuplicateClassMembers {
                 let member_definition = AnyClassMemberDefinition::cast_ref(member.syntax())?;
                 let member_name_node = member_definition.name()?;
                 let member_state = MemberState {
-                    name: get_member_name(&member_name_node)?,
+                    name: get_member_name(&member_name_node)?.text().to_string(),
                     is_static: is_static_member(member_definition.modifiers_list()),
                 };
 
@@ -215,7 +215,7 @@ impl Rule for NoDuplicateClassMembers {
             state.range(),
             format!(
                 "Duplicate class member name {:?}",
-                get_member_name(&state.name()?)?
+                get_member_name(&state.name()?)?.text()
             ),
         );
 

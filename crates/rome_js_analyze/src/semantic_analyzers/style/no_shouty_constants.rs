@@ -64,7 +64,8 @@ fn is_id_and_string_literal_inner_text_equal(
     let literal = expression
         .as_any_js_literal_expression()?
         .as_js_string_literal_expression()?;
-    let literal_text = literal.inner_string_text().ok()?;
+    let literal_text = literal.inner_text().ok()?;
+    let literal_text = literal_text.text();
 
     if id_text.len() != literal_text.len() {
         return None;

@@ -42,7 +42,7 @@ impl Rule for NoSelfCompare {
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
 
-        if !node.is_comparison_operator() {
+        if !node.is_comparison_operation() {
             return None;
         }
 

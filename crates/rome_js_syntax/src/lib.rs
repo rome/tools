@@ -36,7 +36,7 @@ pub use syntax_node::*;
 pub use type_ext::*;
 
 use crate::JsSyntaxKind::*;
-use rome_rowan::{AstNode, RawSyntaxKind};
+use rome_rowan::{AstNode, RawSyntaxKind, SyntaxTokenText};
 
 impl From<u16> for JsSyntaxKind {
     fn from(d: u16) -> JsSyntaxKind {
@@ -273,29 +273,46 @@ impl OperatorPrecedence {
     }
 }
 
-/// Similar to `JsSyntaxToken::text_trimmed` with the difference that delimiters of string literals are trimmed.
 ///
 /// ## Examples
 ///
 /// ```
-/// use rome_js_syntax::{JsSyntaxKind, JsSyntaxToken, inner_text};
+/// use rome_js_factory::make;
+/// use rome_js_syntax::inner_text;
+/// use rome_rowan::{TriviaPieceKind, TextRange, TextSize};
 ///
-/// let a = JsSyntaxToken::new_detached(JsSyntaxKind::JS_STRING_LITERAL, "'inner_text'", [], []);
-/// let b = JsSyntaxToken::new_detached(JsSyntaxKind::JS_STRING_LITERAL, "\"inner_text\"", [], []);
-/// assert_eq!(inner_text(&a), inner_text(&b));
+/// let token = make::ident("id")
+///     .with_leading_trivia(vec![(TriviaPieceKind::Whitespace, " ")]);
+/// let text_trimmed_range = token.text_trimmed_range();
+/// let syntax_text = inner_text(token);
+/// assert_eq!(syntax_text.text(), "id");
+/// assert_eq!(syntax_text.range(), text_trimmed_range);
 ///
-/// let a = JsSyntaxToken::new_detached(JsSyntaxKind::LET_KW, "let", [], []);
-/// let b = JsSyntaxToken::new_detached(JsSyntaxKind::LET_KW, "let", [], []);
-/// assert_eq!(inner_text(&a), inner_text(&b));
+/// let token = make::js_string_literal("str")
+///     .with_leading_trivia(vec![(TriviaPieceKind::Whitespace, " ")]);
+/// let syntax_text = inner_text(token);
+/// assert_eq!(syntax_text.text(), "str");
+/// assert_eq!(syntax_text.range(), TextRange::new(2.into(), 5.into()));
 ///
-/// let a = JsSyntaxToken::new_detached(JsSyntaxKind::LET_KW, "let", [], []);
-/// let b = JsSyntaxToken::new_detached(JsSyntaxKind::CONST_KW, "const", [], []);
-/// assert!(inner_text(&a) != inner_text(&b));
+/// let token = make::jsx_string_literal("str")
+///     .with_leading_trivia(vec![(TriviaPieceKind::Whitespace, " ")]);
+/// let syntax_text = inner_text(token);
+/// assert_eq!(syntax_text.text(), "str");
+/// assert_eq!(syntax_text.range(), TextRange::new(2.into(), 5.into()));
 /// ```
-pub fn inner_text(token: &JsSyntaxToken) -> &str {
-    let mut result = token.text_trimmed();
-    if token.kind() == JsSyntaxKind::JS_STRING_LITERAL {
-        result = &result[1..result.len() - 1];
+pub fn inner_text(token: JsSyntaxToken) -> SyntaxTokenText {
+    let token_kind = token.kind();
+    let mut text = token.token_text_trimmed();
+    if matches!(
+        token_kind,
+        JsSyntaxKind::JS_STRING_LITERAL | JsSyntaxKind::JSX_STRING_LITERAL
+    ) {
+        // remove string delimiters
+        let range = text
+            .range()
+            .add_start(TextSize::from(1))
+            .sub_end(TextSize::from(1));
+        text = text.slice(range);
     }
-    result
+    text
 }

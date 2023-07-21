@@ -79,15 +79,10 @@ impl NoArrayIndexKeyQuery {
                 .as_jsx_expression_attribute_value()?
                 .expression()
                 .ok()?
-                .as_js_identifier_expression()?
-                .name()
-                .ok(),
-            NoArrayIndexKeyQuery::JsPropertyObjectMember(object_member) => object_member
-                .value()
-                .ok()?
-                .as_js_identifier_expression()?
-                .name()
-                .ok(),
+                .as_js_reference_identifier(),
+            NoArrayIndexKeyQuery::JsPropertyObjectMember(object_member) => {
+                object_member.value().ok()?.as_js_reference_identifier()
+            }
         }
     }
 }

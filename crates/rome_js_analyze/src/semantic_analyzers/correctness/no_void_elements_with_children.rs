@@ -252,7 +252,7 @@ impl Rule for NoVoidElementsWithChildren {
                     .as_any_js_literal_expression()?
                     .as_js_string_literal_expression()?;
 
-                let element_name = element_type.inner_string_text().ok()?;
+                let element_name = element_type.inner_text().ok()?;
                 let element_name = element_name.text();
                 if is_void_dom_element(element_name) {
                     let has_children = react_create_element.children.is_some();

@@ -19,6 +19,8 @@ impl SyntaxNodeText {
     }
 
     pub(crate) fn with_range(node: SyntaxNode, range: TextRange) -> SyntaxNodeText {
+        debug_assert!(node.text_range().start() <= range.start());
+        debug_assert!(range.end() <= node.text_range().end());
         SyntaxNodeText { node, range }
     }
 

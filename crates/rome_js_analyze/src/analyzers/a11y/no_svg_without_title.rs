@@ -108,7 +108,7 @@ impl Rule for NoSvgWithoutTitle {
         };
 
         let role_attribute_value = role_attribute.initializer()?.value().ok()?;
-        let Some(text) = role_attribute_value.as_jsx_string()?.inner_string_text().ok() else {
+        let Some(text) = role_attribute_value.as_jsx_string()?.inner_text().ok() else {
             return Some(())
         };
 

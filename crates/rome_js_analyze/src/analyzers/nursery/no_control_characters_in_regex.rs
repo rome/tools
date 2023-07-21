@@ -186,7 +186,7 @@ fn collect_control_characters_from_expression(
             .next()
             .and_then(|arg| arg.ok())
             .and_then(|arg| JsStringLiteralExpression::cast_ref(arg.syntax()))
-            .and_then(|js_string_literal| js_string_literal.inner_string_text().ok())?
+            .and_then(|js_string_literal| js_string_literal.inner_text().ok())?
             .to_string();
 
         let pattern = escape_string(&raw_pattern).unwrap_or(raw_pattern);

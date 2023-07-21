@@ -47,7 +47,7 @@ impl Rule for NoCompareNegZero {
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let node = ctx.query();
 
-        if !node.is_comparison_operator() {
+        if !node.is_comparison_operation() {
             return None;
         }
 

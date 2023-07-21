@@ -200,9 +200,7 @@ fn is_delegating_initialization(
                     let arg_name = arg
                         .argument()
                         .ok()?
-                        .as_js_identifier_expression()?
-                        .name()
-                        .ok()?
+                        .as_js_reference_identifier()?
                         .value_token()
                         .ok()?;
                     if param_name.text_trimmed() != arg_name.text_trimmed() {
@@ -221,12 +219,7 @@ fn is_delegating_initialization(
                         .as_js_identifier_binding()?
                         .name_token()
                         .ok()?;
-                    let arg_name = expr
-                        .as_js_identifier_expression()?
-                        .name()
-                        .ok()?
-                        .value_token()
-                        .ok()?;
+                    let arg_name = expr.as_js_reference_identifier()?.value_token().ok()?;
                     if param_name.text_trimmed() != arg_name.text_trimmed() {
                         return Some(false);
                     }

@@ -303,7 +303,7 @@ fn is_constant_condition(
         JsCallExpression(node) => {
             if node.has_callee("Boolean") {
                 let callee = node.callee().ok()?;
-                let ident = callee.as_js_identifier_expression()?.name().ok()?;
+                let ident = callee.as_js_reference_identifier()?;
                 let binding = ident.binding(model);
                 if binding.is_some() {
                     return None;

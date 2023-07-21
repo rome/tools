@@ -8,7 +8,7 @@ use rome_js_syntax::{
 use rome_js_syntax::{
     JsMethodObjectMember, JsPropertyObjectMember, JsShorthandPropertyObjectMember, TextRange,
 };
-use rome_rowan::{AstNode, BatchMutationExt};
+use rome_rowan::{AstNode, BatchMutationExt, SyntaxTokenText};
 use std::cmp::Ordering;
 use std::collections::HashMap;
 use std::fmt::Display;
@@ -69,7 +69,7 @@ enum MemberDefinition {
     ShorthandProperty(JsShorthandPropertyObjectMember),
 }
 impl MemberDefinition {
-    fn name(&self) -> Option<String> {
+    fn name(&self) -> Option<SyntaxTokenText> {
         match self {
             MemberDefinition::Getter(getter) => {
                 getter.name().ok()?.as_js_literal_member_name()?.name().ok()
@@ -87,7 +87,7 @@ impl MemberDefinition {
                 .name()
                 .ok(),
             MemberDefinition::ShorthandProperty(shorthand_property) => {
-                Some(shorthand_property.name().ok()?.text())
+                shorthand_property.name().ok()?.inner_text().ok()
             }
         }
     }
@@ -125,7 +125,7 @@ impl Display for MemberDefinition {
         })?;
         if let Some(name) = self.name() {
             f.write_str(" named ")?;
-            f.write_str(&name)?;
+            f.write_str(name.text())?;
         }
         Ok(())
     }
@@ -222,6 +222,7 @@ impl Rule for NoDuplicateObjectKeys {
             .rev()
         {
             if let Some(member_name) = member_definition.name() {
+                let member_name = member_name.text().to_string();
                 match defined_properties.remove(&member_name) {
                     None => {
                         defined_properties

@@ -52,7 +52,7 @@ pub trait VisitJsonNode: VisitNode<JsonLanguage> {
     ) -> Option<(SyntaxTokenText, AnyJsonValue)> {
         let member = key.clone().cast::<JsonMemberName>()?;
         self.visit_member_name(member.syntax(), diagnostics)?;
-        let name = member.inner_string_text().ok()?;
+        let name = member.inner_text().ok()?;
         let value = value.clone().cast::<AnyJsonValue>()?;
 
         Some((name, value))
@@ -100,7 +100,7 @@ pub trait VisitJsonNode: VisitNode<JsonLanguage> {
         diagnostics: &mut Vec<DeserializationDiagnostic>,
     ) -> Option<String> {
         JsonStringValue::cast_ref(value.syntax())
-            .and_then(|node| Some(node.inner_string_text().ok()?.to_string()))
+            .and_then(|node| Some(node.inner_text().ok()?.to_string()))
             .or_else(|| {
                 diagnostics.push(DeserializationDiagnostic::new_incorrect_type_for_value(
                     name,
@@ -328,7 +328,7 @@ pub trait VisitJsonNode: VisitNode<JsonLanguage> {
             let element = element.ok()?;
             match element {
                 AnyJsonValue::JsonStringValue(value) => {
-                    elements.insert(value.inner_string_text().ok()?.to_string());
+                    elements.insert(value.inner_text().ok()?.to_string());
                 }
                 _ => {
                     diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
@@ -437,7 +437,7 @@ pub fn has_only_known_keys(
     diagnostics: &mut Vec<DeserializationDiagnostic>,
 ) -> Option<()> {
     node.clone().cast::<JsonMemberName>().and_then(|node| {
-        let key_name = node.inner_string_text().ok()?;
+        let key_name = node.inner_text().ok()?;
         if allowed_keys.contains(&key_name.text()) {
             Some(())
         } else {
@@ -462,7 +462,7 @@ pub fn with_only_known_variants(
     diagnostics: &mut Vec<DeserializationDiagnostic>,
 ) -> Option<JsonStringValue> {
     node.clone().cast::<JsonStringValue>().and_then(|node| {
-        let key_name = node.inner_string_text().ok()?;
+        let key_name = node.inner_text().ok()?;
         if allowed_keys.contains(&key_name.text()) {
             Some(node)
         } else {

@@ -19,13 +19,14 @@ use rome_js_semantic::CanBeImportedExported;
 use rome_js_syntax::{
     binding_ext::AnyJsBindingDeclaration, inner_text, AnyJsClassMember, AnyJsObjectMember,
     AnyJsVariableDeclaration, AnyTsTypeMember, JsIdentifierBinding, JsLiteralExportName,
-    JsLiteralMemberName, JsPrivateClassMemberName, JsSyntaxKind, JsSyntaxToken,
-    JsVariableDeclarator, JsVariableKind, TsEnumMember, TsIdentifierBinding, TsTypeParameterName,
+    JsLiteralMemberName, JsPrivateClassMemberName, JsSyntaxKind, JsVariableDeclarator,
+    JsVariableKind, TsEnumMember, TsIdentifierBinding, TsTypeParameterName,
 };
 use rome_js_unicode_table::is_js_ident;
 use rome_json_syntax::JsonLanguage;
 use rome_rowan::{
     declare_node_union, AstNode, AstNodeList, BatchMutationExt, SyntaxNode, SyntaxResult,
+    SyntaxTokenText,
 };
 use serde::{Deserialize, Serialize};
 use smallvec::SmallVec;
@@ -289,8 +290,8 @@ impl Rule for UseNamingConvention {
             // No naming convention to verify.
             return None;
         }
-        let name_token = node.name_token().ok()?;
-        let name = inner_text(&name_token);
+        let name = node.name_token().ok()?;
+        let name = name.text();
         if !is_js_ident(name) {
             // ignore non-identifier strings
             return None;
@@ -319,8 +320,8 @@ impl Rule for UseNamingConvention {
             element,
             suggested_name,
         } = state;
-        let name_token = ctx.query().name_token().ok()?;
-        let name = inner_text(&name_token);
+        let name = ctx.query().name_token().ok()?;
+        let name = name.text();
         let trimmed_name = trim_underscore_dollar(name);
         let allowed_cases = element.allowed_cases(ctx.options());
         let allowed_case_names = allowed_cases
@@ -404,15 +405,16 @@ declare_node_union! {
 }
 
 impl AnyName {
-    fn name_token(&self) -> SyntaxResult<JsSyntaxToken> {
-        match self {
+    fn name_token(&self) -> SyntaxResult<SyntaxTokenText> {
+        let token = match self {
             AnyName::JsIdentifierBinding(binding) => binding.name_token(),
             AnyName::JsLiteralMemberName(member_name) => member_name.value(),
             AnyName::JsPrivateClassMemberName(member_name) => member_name.id_token(),
             AnyName::JsLiteralExportName(export_name) => export_name.value(),
             AnyName::TsIdentifierBinding(binding) => binding.name_token(),
             AnyName::TsTypeParameterName(type_parameter) => type_parameter.ident_token(),
-        }
+        };
+        Ok(inner_text(token?))
     }
 }
 
@@ -549,7 +551,7 @@ impl VisitNode<JsonLanguage> for EnumMemberCase {
         diagnostics: &mut Vec<DeserializationDiagnostic>,
     ) -> Option<()> {
         let node = with_only_known_variants(node, Self::KNOWN_VALUES, diagnostics)?;
-        match node.inner_string_text().ok()?.text() {
+        match node.inner_text().ok()?.text() {
             "PascalCase" => *self = Self::Pascal,
             "CONSTANT_CASE" => *self = Self::Constant,
             "camelCase" => *self = Self::Camel,

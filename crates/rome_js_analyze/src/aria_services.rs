@@ -74,8 +74,8 @@ mod tests {
     use crate::aria_services::AriaServices;
     use rome_aria::{AriaProperties, AriaRoles};
     use rome_js_factory::make::{
-        ident, jsx_attribute, jsx_attribute_initializer_clause, jsx_attribute_list, jsx_ident,
-        jsx_name, jsx_string, token,
+        ident, jsx_attribute, jsx_attribute_initializer_clause, jsx_attribute_list, jsx_name,
+        jsx_string, jsx_string_literal, token,
     };
     use rome_js_syntax::{AnyJsxAttribute, AnyJsxAttributeName, AnyJsxAttributeValue, T};
     use std::sync::Arc;
@@ -88,8 +88,8 @@ mod tests {
                 jsx_attribute(AnyJsxAttributeName::JsxName(jsx_name(ident("class"))))
                     .with_initializer(jsx_attribute_initializer_clause(
                         token(T![=]),
-                        AnyJsxAttributeValue::JsxString(jsx_string(jsx_ident(
-                            "\"wrapper document\"",
+                        AnyJsxAttributeValue::JsxString(jsx_string(jsx_string_literal(
+                            "wrapper document",
                         ))),
                     ))
                     .build(),
@@ -98,7 +98,7 @@ mod tests {
                 jsx_attribute(AnyJsxAttributeName::JsxName(jsx_name(ident("role"))))
                     .with_initializer(jsx_attribute_initializer_clause(
                         token(T![=]),
-                        AnyJsxAttributeValue::JsxString(jsx_string(jsx_ident("\"article\""))),
+                        AnyJsxAttributeValue::JsxString(jsx_string(jsx_string_literal("article"))),
                     ))
                     .build(),
             ),

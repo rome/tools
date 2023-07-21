@@ -102,7 +102,7 @@ impl Rule for UseButtonType {
                     .as_any_js_literal_expression()?
                     .as_js_string_literal_expression()?;
 
-                if first_argument.inner_string_text().ok()?.text() == "button" {
+                if first_argument.inner_text().ok()?.text() == "button" {
                     return if let Some(props) = react_create_element.props.as_ref() {
                         let type_member = react_create_element.find_prop_by_name("type");
                         if let Some(member) = type_member {
@@ -116,7 +116,7 @@ impl Rule for UseButtonType {
                                     });
                                 };
 
-                            if !ALLOWED_BUTTON_TYPES.contains(&&*value.inner_string_text().ok()?) {
+                            if !ALLOWED_BUTTON_TYPES.contains(&&*value.inner_text().ok()?) {
                                 return Some(UseButtonTypeState {
                                     range: value.range(),
                                     missing_prop: false,
@@ -182,7 +182,7 @@ fn inspect_jsx_type_attribute(attribute: JsxAttribute) -> Option<UseButtonTypeSt
         // computed value
         return None;
     };
-    if ALLOWED_BUTTON_TYPES.contains(&&*value.inner_string_text().ok()?) {
+    if ALLOWED_BUTTON_TYPES.contains(&&*value.inner_text().ok()?) {
         return None;
     }
     Some(UseButtonTypeState {

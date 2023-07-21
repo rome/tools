@@ -83,12 +83,7 @@ impl Rule for NoAccumulatingSpread {
 }
 
 fn is_known_accumulator(node: &JsSpread, model: &SemanticModel) -> Option<bool> {
-    let reference = node
-        .argument()
-        .ok()?
-        .as_js_identifier_expression()?
-        .name()
-        .ok()?;
+    let reference = node.argument().ok()?.as_js_reference_identifier()?;
     let parameter = model
         .binding(&reference)
         .and_then(|declaration| declaration.syntax().parent())

@@ -77,7 +77,7 @@ impl VisitNode<JsonLanguage> for PlainIndentStyle {
         diagnostics: &mut Vec<DeserializationDiagnostic>,
     ) -> Option<()> {
         let node = with_only_known_variants(node, PlainIndentStyle::KNOWN_VALUES, diagnostics)?;
-        if node.inner_string_text().ok()? == "space" {
+        if node.inner_text().ok()? == "space" {
             *self = PlainIndentStyle::Space;
         } else {
             *self = PlainIndentStyle::Tab;

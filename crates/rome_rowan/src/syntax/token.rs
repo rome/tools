@@ -1,10 +1,10 @@
 use crate::green::{GreenToken, GreenTrivia};
+use crate::green_token_text::GreenTokenText;
 use crate::syntax::element::SyntaxElementKey;
 use crate::syntax::SyntaxTrivia;
-use crate::syntax_token_text::SyntaxTokenText;
 use crate::{
     chain_trivia_pieces, cursor, Direction, Language, NodeOrToken, SyntaxElement, SyntaxKind,
-    SyntaxNode, SyntaxTriviaPiece, TriviaPiece, TriviaPieceKind,
+    SyntaxNode, SyntaxTokenText, SyntaxTriviaPiece, TriviaPiece, TriviaPieceKind,
 };
 use rome_text_size::{TextLen, TextRange, TextSize};
 use std::fmt;
@@ -109,21 +109,25 @@ impl<L: Language> SyntaxToken<L> {
     /// })
     /// .first_token()
     /// .unwrap();
-    /// assert_eq!("\n\t let \t\t", token.token_text());
+    /// assert_eq!("\n\t let \t\t", token.green_token_text());
     /// assert_eq!(
     ///     format!("{}", "\n\t let \t\t"),
-    ///     format!("{}", token.token_text())
+    ///     format!("{}", token.green_token_text())
     /// );
     /// assert_eq!(
     ///     format!("{:?}", "\n\t let \t\t"),
-    ///     format!("{:?}", token.token_text())
+    ///     format!("{:?}", token.green_token_text())
     /// );
     /// ```
-    pub fn token_text(&self) -> SyntaxTokenText {
+    pub fn green_token_text(&self) -> GreenTokenText {
+        self.raw.green_token_text()
+    }
+
+    pub fn token_text(self) -> SyntaxTokenText {
         self.raw.token_text()
     }
 
-    pub fn token_text_trimmed(&self) -> SyntaxTokenText {
+    pub fn token_text_trimmed(self) -> SyntaxTokenText {
         self.raw.token_text_trimmed()
     }
 

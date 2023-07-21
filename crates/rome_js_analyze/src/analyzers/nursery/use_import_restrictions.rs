@@ -80,7 +80,7 @@ impl Rule for UseImportRestrictions {
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let binding = ctx.query();
-        let Ok(path) = binding.inner_string_text() else {
+        let Ok(path) = binding.inner_text() else {
             return None;
         };
 

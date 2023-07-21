@@ -383,28 +383,28 @@ impl SemanticEventExtractor {
             JS_VARIABLE_DECLARATOR => {
                 if let Some(true) = is_var {
                     let hoisted_scope_id = self.scope_index_to_hoist_declarations(0);
-                    self.push_binding_into_scope(hoisted_scope_id, &name_token, &parent_kind);
+                    self.push_binding_into_scope(hoisted_scope_id, name_token, &parent_kind);
                 } else {
-                    self.push_binding_into_scope(None, &name_token, &parent_kind);
+                    self.push_binding_into_scope(None, name_token, &parent_kind);
                 };
                 self.export_variable_declarator(node, &parent);
             }
             JS_FUNCTION_DECLARATION | JS_FUNCTION_EXPORT_DEFAULT_DECLARATION => {
                 let hoisted_scope_id = self.scope_index_to_hoist_declarations(1);
-                self.push_binding_into_scope(hoisted_scope_id, &name_token, &parent_kind);
+                self.push_binding_into_scope(hoisted_scope_id, name_token, &parent_kind);
                 self.export_function_declaration(node, &parent);
             }
             JS_FUNCTION_EXPRESSION => {
-                self.push_binding_into_scope(None, &name_token, &parent_kind);
+                self.push_binding_into_scope(None, name_token, &parent_kind);
                 self.export_function_expression(node, &parent);
             }
             JS_CLASS_DECLARATION | JS_CLASS_EXPORT_DEFAULT_DECLARATION => {
                 let hoisted_scope_id = self.scope_index_to_hoist_declarations(1);
-                self.push_binding_into_scope(hoisted_scope_id, &name_token, &parent_kind);
+                self.push_binding_into_scope(hoisted_scope_id, name_token, &parent_kind);
                 self.export_declaration(node, &parent);
             }
             JS_CLASS_EXPRESSION => {
-                self.push_binding_into_scope(None, &name_token, &parent_kind);
+                self.push_binding_into_scope(None, name_token, &parent_kind);
                 self.export_class_expression(node, &parent);
             }
             JS_BINDING_PATTERN_WITH_DEFAULT
@@ -416,7 +416,7 @@ impl SemanticEventExtractor {
             | JS_ARRAY_BINDING_PATTERN
             | JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST
             | JS_ARRAY_BINDING_PATTERN_REST_ELEMENT => {
-                self.push_binding_into_scope(None, &name_token, &parent_kind);
+                self.push_binding_into_scope(None, name_token, &parent_kind);
 
                 let possible_declarator = parent.ancestors().find(|x| {
                     !matches!(
@@ -439,26 +439,26 @@ impl SemanticEventExtractor {
             }
             TS_TYPE_ALIAS_DECLARATION => {
                 let hoisted_scope_id = self.scope_index_to_hoist_declarations(1);
-                self.push_binding_into_scope(hoisted_scope_id, &name_token, &parent_kind);
+                self.push_binding_into_scope(hoisted_scope_id, name_token, &parent_kind);
                 self.export_declaration(node, &parent);
             }
             TS_ENUM_DECLARATION => {
                 let hoisted_scope_id = self.scope_index_to_hoist_declarations(1);
-                self.push_binding_into_scope(hoisted_scope_id, &name_token, &parent_kind);
+                self.push_binding_into_scope(hoisted_scope_id, name_token, &parent_kind);
                 self.export_declaration(node, &parent);
             }
             TS_INTERFACE_DECLARATION => {
                 let hoisted_scope_id = self.scope_index_to_hoist_declarations(1);
-                self.push_binding_into_scope(hoisted_scope_id, &name_token, &parent_kind);
+                self.push_binding_into_scope(hoisted_scope_id, name_token, &parent_kind);
                 self.export_declaration(node, &parent);
             }
             TS_MODULE_DECLARATION => {
                 let hoisted_scope_id = self.scope_index_to_hoist_declarations(1);
-                self.push_binding_into_scope(hoisted_scope_id, &name_token, &parent_kind);
+                self.push_binding_into_scope(hoisted_scope_id, name_token, &parent_kind);
                 self.export_declaration(node, &parent);
             }
             _ => {
-                self.push_binding_into_scope(None, &name_token, &parent_kind);
+                self.push_binding_into_scope(None, name_token, &parent_kind);
             }
         }
 
@@ -479,14 +479,12 @@ impl SemanticEventExtractor {
                 // SAFETY: kind check above
                 let reference = JsReferenceIdentifier::unwrap_cast(node.clone());
                 let name_token = reference.value_token().ok()?;
+                let name_text = name_token.token_text_trimmed();
                 // skip `this` reference representing the class instance
-                if name_token.token_text_trimmed() == "this" {
+                if name_text.text() == "this" {
                     return None;
                 }
-                (
-                    name_token.token_text_trimmed(),
-                    self.is_js_reference_identifier_exported(node),
-                )
+                (name_text, self.is_js_reference_identifier_exported(node))
             }
             JsSyntaxKind::JSX_REFERENCE_IDENTIFIER => {
                 // SAFETY: kind check above
@@ -801,11 +799,11 @@ impl SemanticEventExtractor {
     fn push_binding_into_scope(
         &mut self,
         hoisted_scope_id: Option<usize>,
-        name_token: &JsSyntaxToken,
+        name_token: JsSyntaxToken,
         declaration_kind: &JsSyntaxKind,
     ) {
-        let name = name_token.token_text_trimmed();
         let declaration_range = name_token.text_range();
+        let name = name_token.token_text_trimmed();
 
         // insert this name into the list of available names
         // and save shadowed names to be used later
@@ -995,8 +993,7 @@ impl SemanticEventExtractor {
                         let first = a
                             .object()
                             .ok()
-                            .and_then(|x| x.as_js_identifier_expression().cloned())
-                            .and_then(|x| x.name().ok())
+                            .and_then(|x| x.as_js_reference_identifier())
                             .and_then(|x| x.value_token().ok())
                             .map(|x| x.token_text_trimmed());
 

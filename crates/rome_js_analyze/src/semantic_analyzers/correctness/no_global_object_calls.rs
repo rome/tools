@@ -105,7 +105,7 @@ impl Rule for NoGlobalObjectCalls {
         model
             .binding(&reference)
             .is_none()
-            .then_some((non_callable, name.token().text_trimmed_range()))
+            .then_some((non_callable, name.range()))
     }
 
     fn diagnostic(

@@ -92,7 +92,7 @@ impl PossibleOptions {
             let element = element.ok()?;
             let key = element.name().ok()?;
             let value = element.value().ok()?;
-            let name = key.inner_string_text().ok()?;
+            let name = key.inner_text().ok()?;
             self.validate_key(&key, rule_name, diagnostics)?;
             match name.text() {
                 "hooks" => {
@@ -127,7 +127,7 @@ impl PossibleOptions {
         rule_name: &str,
         diagnostics: &mut Vec<DeserializationDiagnostic>,
     ) -> Option<()> {
-        let key_name = node.inner_string_text().ok()?;
+        let key_name = node.inner_text().ok()?;
         let key_name = key_name.text();
         match rule_name {
             "useExhaustiveDependencies" | "useHookAtTopLevel" => {

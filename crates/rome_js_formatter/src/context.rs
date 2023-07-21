@@ -378,7 +378,7 @@ impl VisitNode<JsonLanguage> for QuoteStyle {
         diagnostics: &mut Vec<DeserializationDiagnostic>,
     ) -> Option<()> {
         let node = with_only_known_variants(node, QuoteStyle::KNOWN_VALUES, diagnostics)?;
-        if node.inner_string_text().ok()?.text() == "single" {
+        if node.inner_text().ok()?.text() == "single" {
             *self = QuoteStyle::Single;
         } else {
             *self = QuoteStyle::Double;
@@ -432,7 +432,7 @@ impl VisitNode<JsonLanguage> for QuoteProperties {
         diagnostics: &mut Vec<DeserializationDiagnostic>,
     ) -> Option<()> {
         let node = with_only_known_variants(node, QuoteProperties::KNOWN_VALUES, diagnostics)?;
-        if node.inner_string_text().ok()?.text() == "asNeeded" {
+        if node.inner_text().ok()?.text() == "asNeeded" {
             *self = QuoteProperties::AsNeeded;
         } else {
             *self = QuoteProperties::Preserve;
@@ -493,7 +493,7 @@ impl VisitNode<JsonLanguage> for Semicolons {
         diagnostics: &mut Vec<DeserializationDiagnostic>,
     ) -> Option<()> {
         let node = with_only_known_variants(node, Semicolons::KNOWN_VALUES, diagnostics)?;
-        if node.inner_string_text().ok()?.text() == "asNeeded" {
+        if node.inner_text().ok()?.text() == "asNeeded" {
             *self = Semicolons::AsNeeded;
         } else {
             *self = Semicolons::Always;
@@ -554,7 +554,7 @@ impl VisitNode<JsonLanguage> for ArrowParentheses {
         diagnostics: &mut Vec<DeserializationDiagnostic>,
     ) -> Option<()> {
         let node = with_only_known_variants(node, ArrowParentheses::KNOWN_VALUES, diagnostics)?;
-        if node.inner_string_text().ok()?.text() == "asNeeded" {
+        if node.inner_text().ok()?.text() == "asNeeded" {
             *self = ArrowParentheses::AsNeeded;
         } else {
             *self = ArrowParentheses::Always;

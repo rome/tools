@@ -1,7 +1,8 @@
 use crate::cursor::{NodeData, SyntaxElement, SyntaxNode, SyntaxTrivia};
 use crate::green::GreenElementRef;
 use crate::{
-    green, Direction, GreenToken, GreenTokenData, RawSyntaxKind, SyntaxTokenText, WalkEvent,
+    green, Direction, GreenToken, GreenTokenData, GreenTokenText, RawSyntaxKind, SyntaxTokenText,
+    WalkEvent,
 };
 use rome_text_size::{TextRange, TextSize};
 use std::hash::{Hash, Hasher};
@@ -105,21 +106,24 @@ impl SyntaxToken {
     }
 
     #[inline]
-    pub fn token_text(&self) -> SyntaxTokenText {
-        SyntaxTokenText::new(self.green().to_owned())
+    pub fn green_token_text(&self) -> GreenTokenText {
+        GreenTokenText::new(self.green().to_owned())
     }
 
     #[inline]
-    pub fn token_text_trimmed(&self) -> SyntaxTokenText {
-        let green = self.green().to_owned();
-        let mut range = self.text_trimmed_range();
-        range -= self.data().offset;
-        SyntaxTokenText::with_range(green, range)
+    pub fn token_text(self) -> SyntaxTokenText {
+        SyntaxTokenText::new(self)
     }
 
     #[inline]
     pub fn text_trimmed(&self) -> &str {
         self.green().text_trimmed()
+    }
+
+    #[inline]
+    pub fn token_text_trimmed(self) -> SyntaxTokenText {
+        let range = self.text_trimmed_range();
+        SyntaxTokenText::with_range(self, range)
     }
 
     #[inline]
