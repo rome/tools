@@ -1,4 +1,5 @@
 use crate::lexer::Lexer;
+use crate::JsonParserOptions;
 use rome_json_syntax::JsonSyntaxKind::{EOF, TOMBSTONE};
 use rome_json_syntax::{JsonSyntaxKind, TextRange};
 use rome_parser::diagnostic::ParseDiagnostic;
@@ -12,11 +13,12 @@ pub(crate) struct JsonTokenSource<'source> {
     current: JsonSyntaxKind,
     current_range: TextRange,
     preceding_line_break: bool,
+    config: JsonParserOptions,
 }
 
 impl<'source> JsonTokenSource<'source> {
-    pub fn from_str(source: &'source str) -> Self {
-        let lexer = Lexer::from_str(source);
+    pub fn from_str(source: &'source str, config: JsonParserOptions) -> Self {
+        let lexer = Lexer::from_str(source).with_config(config);
 
         let mut source = Self {
             lexer,
@@ -24,6 +26,7 @@ impl<'source> JsonTokenSource<'source> {
             current: TOMBSTONE,
             current_range: TextRange::default(),
             preceding_line_break: false,
+            config,
         };
 
         source.next_non_trivia_token(true);
@@ -39,6 +42,17 @@ impl<'source> JsonTokenSource<'source> {
 
             match trivia_kind {
                 Err(_) => {
+                    if self.config.allow_comments && token.kind().is_comments() {
+                        let trivia_kind = match token.kind() {
+                            JsonSyntaxKind::COMMENT => TriviaPieceKind::SingleLineComment,
+                            JsonSyntaxKind::MULTILINE_COMMENT => TriviaPieceKind::MultiLineComment,
+                            _ => unreachable!(),
+                        };
+                        self.trivia
+                            .push(Trivia::new(trivia_kind, token.range(), trailing));
+                        continue;
+                    }
+
                     self.current = token.kind();
                     self.current_range = token.range();
 

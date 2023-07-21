@@ -1173,3 +1173,47 @@ where
         write!(f, [item.piece.as_piece()])
     }
 }
+
+/// Returns `true` if `comment` is a multi line block comment:
+///
+/// # Examples
+///
+/// ```rs,ignore
+/// assert!(is_doc_comment(&parse_comment(r#"
+///     /**
+///      * Multiline doc comment
+///      */
+/// "#)));
+///
+/// assert!(is_doc_comment(&parse_comment(r#"
+///     /*
+///      * Single star
+///      */
+/// "#)));
+///
+///
+/// // Non doc-comments
+/// assert!(!is_doc_comment(&parse_comment(r#"/** has no line break */"#)));
+///
+/// assert!(!is_doc_comment(&parse_comment(r#"
+/// /*
+///  *
+///  this line doesn't start with a star
+///  */
+/// "#)));
+/// ```
+pub fn is_doc_comment<L: Language>(comment: &SyntaxTriviaPieceComments<L>) -> bool {
+    if !comment.has_newline() {
+        return false;
+    }
+
+    let text = comment.text();
+
+    text.lines().enumerate().all(|(index, line)| {
+        if index == 0 {
+            line.starts_with("/*")
+        } else {
+            line.trim_start().starts_with('*')
+        }
+    })
+}

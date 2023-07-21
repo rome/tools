@@ -44,6 +44,10 @@ export interface Configuration {
 	 */
 	javascript?: JavascriptConfiguration;
 	/**
+	 * Specific configuration for the Json language
+	 */
+	json?: JsonConfiguration;
+	/**
 	 * The configuration for the linter
 	 */
 	linter?: LinterConfiguration;
@@ -110,6 +114,9 @@ If defined here, they should not emit diagnostics.
 	globals?: StringSet;
 	organize_imports?: JavascriptOrganizeImports;
 	parser?: JavascriptParser;
+}
+export interface JsonConfiguration {
+	parser?: JsonParser;
 }
 export interface LinterConfiguration {
 	/**
@@ -199,6 +206,12 @@ export interface JavascriptParser {
 These decorators belong to an old proposal, and they are subject to change. 
 	 */
 	unsafeParameterDecoratorsEnabled?: boolean;
+}
+export interface JsonParser {
+	/**
+	 * Allow parsing comments in `.json` files
+	 */
+	allowComments?: boolean;
 }
 export interface Rules {
 	a11y?: A11y;
@@ -426,7 +439,7 @@ export interface Correctness {
 	 */
 	noInvalidConstructorSuper?: RuleConfiguration;
 	/**
-	 * Disallow new operators with the Symbol object
+	 * Disallow new operators with the Symbol object.
 	 */
 	noNewSymbol?: RuleConfiguration;
 	/**
@@ -1024,6 +1037,7 @@ export type Language =
 	| "TypeScript"
 	| "TypeScriptReact"
 	| "Json"
+	| "Jsonc"
 	| "Unknown";
 export interface ChangeFileParams {
 	content: string;

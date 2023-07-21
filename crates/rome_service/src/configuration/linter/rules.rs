@@ -1231,7 +1231,7 @@ pub struct Correctness {
     )]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub no_invalid_constructor_super: Option<RuleConfiguration>,
-    #[doc = "Disallow new operators with the Symbol object"]
+    #[doc = "Disallow new operators with the Symbol object."]
     #[bpaf(long("no-new-symbol"), argument("on|off|warn"), optional, hide)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub no_new_symbol: Option<RuleConfiguration>,

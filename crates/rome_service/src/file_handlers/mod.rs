@@ -36,6 +36,8 @@ pub enum Language {
     TypeScriptReact,
     /// JSON
     Json,
+    /// JSONC
+    Jsonc,
     /// Any language that is not supported
     #[default]
     Unknown,
@@ -118,6 +120,7 @@ impl rome_console::fmt::Display for Language {
             Language::TypeScript => fmt.write_markup(markup! { "TypeScript" }),
             Language::TypeScriptReact => fmt.write_markup(markup! { "TSX" }),
             Language::Json => fmt.write_markup(markup! { "JSON" }),
+            Language::Jsonc => fmt.write_markup(markup! { "JSONC" }),
             Language::Unknown => fmt.write_markup(markup! { "Unknown" }),
         }
     }
@@ -305,7 +308,7 @@ impl Features {
             | Language::JavaScriptReact
             | Language::TypeScript
             | Language::TypeScriptReact => self.js.capabilities(),
-            Language::Json => self.json.capabilities(),
+            Language::Json | Language::Jsonc => self.json.capabilities(),
             Language::Unknown => self.unknown.capabilities(),
         }
     }

@@ -62,7 +62,6 @@ pub(crate) fn traverse(
     inputs: Vec<OsString>,
 ) -> Result<(), CliDiagnostic> {
     init_thread_pool();
-
     if inputs.is_empty() && execution.as_stdin_file().is_none() {
         return Err(CliDiagnostic::missing_argument(
             "<INPUT>",
@@ -679,6 +678,7 @@ impl<'ctx, 'app> TraversalContext for TraversalOptions<'ctx, 'app> {
             TraversalMode::Check { .. } => {
                 file_features.supports_for(&FeatureName::Lint)
                     || file_features.supports_for(&FeatureName::Format)
+                    || file_features.supports_for(&FeatureName::OrganizeImports)
             }
             TraversalMode::CI { .. } => {
                 file_features.supports_for(&FeatureName::Lint)

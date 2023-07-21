@@ -91,6 +91,18 @@ if no error diagnostics are emitted.
   rome check --error-on-wanrings ./src
   ```
 
+- Add a configuration to enable parsing comments inside JSON files:
+
+  ```json
+  {
+    "json": {
+      "parser": {
+        "allowComments": true
+      }
+    }
+  }
+  ```
+
 ### Editors
 
 #### Other changes
@@ -99,9 +111,11 @@ if no error diagnostics are emitted.
 
 ### Formatter
 
-- Added a new option called `--jsx-quote-style` to the formatter. This option allows you to choose between single and double quotes for JSX attributes. [#4486](https://github.com/rome/tools/issues/4486)
+- Add a new option called `--jsx-quote-style` to the formatter. This option allows you to choose between single and double quotes for JSX attributes. [#4486](https://github.com/rome/tools/issues/4486)
 
-- Added a new option called `--arrow-parentheses` to the formatter. This option allows you to set the parentheses style for arrow functions. [#4666](https://github.com/rome/tools/issues/4666)
+- Add a new option called `--arrow-parentheses` to the formatter. This option allows you to set the parentheses style for arrow functions. [#4666](https://github.com/rome/tools/issues/4666)
+
+- The JSON formatter is now able to format `.json` files that have comments.
 
 ### Linter
 
@@ -174,6 +188,8 @@ if no error diagnostics are emitted.
 
 - Fix [`noInvalidConstructorSuper`](https://docs.rome.tools/lint/rules/noinvalidconstructorsuper/) rule that erroneously reported generic parents [#4624](https://github.com/rome/tools/issues/4624).
 
+-  Fix [`noDuplicateCase`](https://docs.rome.tools/lint/rules/noDuplicateCase/) rule that erroneously reported as equals the strings literals `"'"` and `'"'` [#4706](https://github.com/rome/tools/issues/4706).
+
 - Relax [`noBannedTypes`](https://docs.rome.tools/lint/rules/nobannedtypes/) and improve documentation
 
   The rule no longer reports a user type that reuses a banned type name.
@@ -240,6 +256,10 @@ if no error diagnostics are emitted.
   ```
 
   These suggestions are made in object literals, classes, interfaces, and object types.
+
+- Improve [`noNewSymbol`](https://docs.rome.tools/lint/rules/noNewSymbol/).
+
+  The rule now handles cases where `Symbol` is namespaced with the global `globalThis` or `window`.
 
 - The rules [`useExhaustiveDependencies`](https://docs.rome.tools/lint/rules/useexhaustivedependencies/) and [`useHookAtTopLevel`](https://docs.rome.tools/lint/rules/usehookattoplevel/) accept a different shape of options
 
@@ -339,7 +359,17 @@ if no error diagnostics are emitted.
  		}
  	}
 	```
+- Add for parsing comments inside JSON files:
 
+  ```json
+  {
+    "json": {
+      "parser": {
+        "allowComments": true
+      }
+    }
+  }
+  ```
 ### VSCode
 
 ### JavaScript APIs

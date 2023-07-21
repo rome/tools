@@ -61,6 +61,12 @@ pub struct JsParserSettings {
 
 #[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+pub struct JsonParserSettings {
+    pub allow_comments: bool,
+}
+
+#[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct JsLinterSettings {
     pub globals: Vec<String>,
 }
@@ -248,12 +254,12 @@ fn lint(params: LintParams) -> LintResults {
     let Ok(file_source) = params
         .parse
         .file_source(params.path) else {
-		return LintResults {
-			errors: 0,
-			diagnostics: vec![],
-			skipped_diagnostics: 0
-		}
-	};
+        return LintResults {
+            errors: 0,
+            diagnostics: vec![],
+            skipped_diagnostics: 0
+        }
+    };
     let tree = params.parse.tree();
     let mut diagnostics = params.parse.into_diagnostics();
 
@@ -403,10 +409,10 @@ fn code_actions(
     trace!("Filter applied for code actions: {:?}", &filter);
     let analyzer_options = compute_analyzer_options(&settings, PathBuf::from(path.as_path()));
     let Ok(source_type) = parse.file_source(path) else {
-		return PullActionsResult {
-			actions: vec![]
-		}
-	};
+        return PullActionsResult {
+            actions: vec![]
+        }
+    };
 
     analyze(&tree, filter, &analyzer_options, source_type, |signal| {
         actions.extend(signal.actions().into_code_action_iter().map(|item| {

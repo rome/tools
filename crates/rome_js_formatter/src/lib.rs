@@ -86,7 +86,7 @@
 //! It helps you to understand which nodes need to be implemented/modified
 //! in order to implement formatting. Alternatively, you can locally run the playground by following
 //! the [playground instructions](https://github.com/rome/tools/blob/main/website/playground/README.md).
-//! 5. Use the [`quick_test()`](https://github.com/rome/tools/blob/main/crates/rome_js_formatter/src/lib.rs#L597-L616)
+//! 5. Use the `quick_test.rs` file in `tests/` directory.
 //! function to test you snippet straight from your IDE, without running the whole test suite. The test
 //! is ignored on purpose, so you won't need to worry about the CI breaking.
 //!

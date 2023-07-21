@@ -25,6 +25,48 @@ invalid.jsonc:1:11 lint/correctness/noNewSymbol  FIXABLE  ━━━━━━━�
 
 # Input
 ```js
+var foo = new globalThis.Symbol('foo');
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:11 lint/correctness/noNewSymbol  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Symbol cannot be called as a constructor.
+  
+  > 1 │ var foo = new globalThis.Symbol('foo');
+      │           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  
+  i Suggested fix: Remove new.
+  
+    1 │ var·foo·=·new·globalThis.Symbol('foo');
+      │           ----                         
+
+```
+
+# Input
+```js
+var foo = new window.Symbol('foo');
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:11 lint/correctness/noNewSymbol  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Symbol cannot be called as a constructor.
+  
+  > 1 │ var foo = new window.Symbol('foo');
+      │           ^^^^^^^^^^^^^^^^^^^^^^^^
+  
+  i Suggested fix: Remove new.
+  
+    1 │ var·foo·=·new·window.Symbol('foo');
+      │           ----                     
+
+```
+
+# Input
+```js
 var foo2 = new Symbol();
 ```
 

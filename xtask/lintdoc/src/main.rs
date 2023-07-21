@@ -12,6 +12,7 @@ use rome_diagnostics::termcolor::NoColor;
 use rome_diagnostics::{Diagnostic, DiagnosticExt, PrintDiagnostic};
 use rome_js_parser::JsParserOptions;
 use rome_js_syntax::{JsFileSource, JsLanguage, Language, LanguageVariant, ModuleKind};
+use rome_json_parser::JsonParserOptions;
 use rome_json_syntax::JsonLanguage;
 use rome_service::settings::WorkspaceSettings;
 use std::{
@@ -605,8 +606,8 @@ fn assert_lint(
                         if let Some(mut diag) = signal.diagnostic() {
                             let category = diag.category().expect("linter diagnostic has no code");
                             let severity = settings.get_severity_from_rule_code(category).expect(
-                            "If you see this error, it means you need to run cargo codegen-configuration",
-                        );
+                                "If you see this error, it means you need to run cargo codegen-configuration",
+                            );
 
                             for action in signal.actions() {
                                 if !action.is_suppression() {
@@ -646,7 +647,7 @@ fn assert_lint(
             }
         }
         BlockType::Json => {
-            let parse = rome_json_parser::parse_json(code);
+            let parse = rome_json_parser::parse_json(code, JsonParserOptions::default());
 
             if parse.has_errors() {
                 for diag in parse.into_diagnostics() {
@@ -675,8 +676,8 @@ fn assert_lint(
                         if let Some(mut diag) = signal.diagnostic() {
                             let category = diag.category().expect("linter diagnostic has no code");
                             let severity = settings.get_severity_from_rule_code(category).expect(
-								"If you see this error, it means you need to run cargo codegen-configuration",
-							);
+                                "If you see this error, it means you need to run cargo codegen-configuration",
+                            );
 
                             for action in signal.actions() {
                                 if !action.is_suppression() {

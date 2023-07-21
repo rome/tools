@@ -9,7 +9,7 @@ use rome_deserialize::json::deserialize_from_json_str;
 use rome_diagnostics::advice::CodeSuggestionAdvice;
 use rome_diagnostics::termcolor::{Buffer, NoColor};
 use rome_diagnostics::{DiagnosticExt, Error, PrintDiagnostic, Severity};
-use rome_json_parser::{parse_json, JsonParse};
+use rome_json_parser::{parse_json, JsonParse, JsonParserOptions};
 use rome_json_syntax::{JsonLanguage, JsonSyntaxNode};
 use rome_rowan::SyntaxKind;
 use rome_rowan::SyntaxSlot;
@@ -77,7 +77,7 @@ pub(crate) fn write_analysis_to_snapshot(
     file_name: &str,
     input_file: &Path,
 ) -> usize {
-    let parsed = parse_json(input_code);
+    let parsed = parse_json(input_code, JsonParserOptions::default());
     let root = parsed.tree();
 
     let mut diagnostics = Vec::new();
@@ -236,7 +236,7 @@ fn check_code_action(path: &Path, source: &str, action: &AnalyzerAction<JsonLang
     }
 
     // Re-parse the modified code and panic if the resulting tree has syntax errors
-    let re_parse = parse_json(&output);
+    let re_parse = parse_json(&output, JsonParserOptions::default());
     assert_errors_are_absent(&re_parse, path);
 }
 

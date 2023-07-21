@@ -137,7 +137,6 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
                             );
 
                             !are_parentheses_mandatory
-                                && f.options().arrow_parentheses().is_always()
                         }
                         _ => false,
                     };
@@ -344,7 +343,12 @@ pub fn can_avoid_parentheses(arrow: &JsArrowFunctionExpression, f: &mut JsFormat
                 .as_js_parameters()
                 .and_then(|p| p.items().first()?.ok())
                 .and_then(|p| JsFormalParameter::cast(p.syntax().clone()))
-                .is_some_and(|p| p.initializer().is_some())
+                .is_some_and(|p| {
+                    f.context().comments().has_comments(p.syntax())
+                        || p.initializer().is_some()
+                        || p.question_mark_token().is_some()
+                        || p.type_annotation().is_some()
+                })
     })
 }
 

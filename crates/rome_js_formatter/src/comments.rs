@@ -1,6 +1,7 @@
 use crate::prelude::*;
 use crate::utils::AnyJsConditional;
 use rome_diagnostics_categories::category;
+use rome_formatter::comments::is_doc_comment;
 use rome_formatter::{
     comments::{
         CommentKind, CommentPlacement, CommentStyle, CommentTextPosition, Comments,
@@ -65,67 +66,6 @@ impl FormatRule<SourceComment<JsLanguage>> for FormatJsLeadingComment {
             write!(f, [comment.piece().as_piece()])
         }
     }
-}
-
-/// Returns `true` if `comment` is a multi line block comment:
-///
-/// # Examples
-///
-/// ```
-/// # use rome_js_parser::{JsParserOptions, parse_module};
-/// # use rome_js_syntax::JsLanguage;
-/// # use rome_rowan::{Direction, SyntaxTriviaPieceComments};
-///  use rome_js_formatter::comments::is_doc_comment;
-///
-/// # fn parse_comment(source: &str) -> SyntaxTriviaPieceComments<JsLanguage> {
-/// #     let root = parse_module(source, JsParserOptions::default()).tree();
-/// #     root
-/// #        .eof_token()
-/// #        .expect("Root to have an EOF token")
-/// #        .leading_trivia()
-/// #        .pieces()
-/// #        .filter_map(|piece| piece.as_comments())
-/// #        .next()
-/// #        .expect("Source to contain a comment.")
-/// # }
-///
-/// assert!(is_doc_comment(&parse_comment(r#"
-///     /**
-///      * Multiline doc comment
-///      */
-/// "#)));
-///
-/// assert!(is_doc_comment(&parse_comment(r#"
-///     /*
-///      * Single star
-///      */
-/// "#)));
-///
-///
-/// // Non doc-comments
-/// assert!(!is_doc_comment(&parse_comment(r#"/** has no line break */"#)));
-///
-/// assert!(!is_doc_comment(&parse_comment(r#"
-/// /*
-///  *
-///  this line doesn't start with a star
-///  */
-/// "#)));
-/// ```
-pub fn is_doc_comment(comment: &SyntaxTriviaPieceComments<JsLanguage>) -> bool {
-    if !comment.has_newline() {
-        return false;
-    }
-
-    let text = comment.text();
-
-    text.lines().enumerate().all(|(index, line)| {
-        if index == 0 {
-            line.starts_with("/*")
-        } else {
-            line.trim_start().starts_with('*')
-        }
-    })
 }
 
 #[derive(Eq, PartialEq, Copy, Clone, Debug, Default)]

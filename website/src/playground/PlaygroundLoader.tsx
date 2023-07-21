@@ -341,6 +341,9 @@ function initState(
 			unsafeParameterDecoratorsEnabled:
 				searchParams.get("unsafeParameterDecoratorsEnabled") === "true" ||
 				defaultPlaygroundState.settings.unsafeParameterDecoratorsEnabled,
+			allowComments:
+				searchParams.get("allowComments") === "true" ||
+				defaultPlaygroundState.settings.allowComments,
 		},
 	};
 }

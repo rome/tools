@@ -113,3 +113,9 @@ switch (a) {
 	case toString:
 		break;
 }
+switch (a) {
+  case "'":
+	return '&apos;';
+  case '"':
+	return '&quot;';
+}

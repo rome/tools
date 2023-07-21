@@ -96,6 +96,15 @@ impl WorkspaceSettings {
             if let Some(_organize_imports) = organize_imports {}
         }
 
+        // json settings
+        let json = configuration.json;
+        if let Some(json) = json {
+            if let Some(parser) = json.parser {
+                self.languages.json.parser.allow_comments =
+                    parser.allow_comments.unwrap_or_default();
+            }
+        }
+
         Ok(())
     }
 
