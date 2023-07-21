@@ -1,6 +1,8 @@
 use crate::prelude::*;
 use rome_diagnostics::category;
-use rome_formatter::comments::{CommentKind, CommentStyle, Comments, SourceComment};
+use rome_formatter::comments::{
+    is_doc_comment, CommentKind, CommentStyle, Comments, SourceComment,
+};
 use rome_formatter::formatter::Formatter;
 use rome_formatter::{write, FormatResult, FormatRule};
 use rome_json_syntax::{JsonLanguage, TextLen};
@@ -20,35 +22,39 @@ impl FormatRule<SourceComment<JsonLanguage>> for FormatJsonLeadingComment {
         comment: &SourceComment<JsonLanguage>,
         f: &mut Formatter<Self::Context>,
     ) -> FormatResult<()> {
-        let mut source_offset = comment.piece().text_range().start();
+        if is_doc_comment(comment.piece()) {
+            let mut source_offset = comment.piece().text_range().start();
 
-        let mut lines = comment.piece().text().lines();
+            let mut lines = comment.piece().text().lines();
 
-        // SAFETY: Safe, `is_doc_comment` only returns `true` for multiline comments
-        let first_line = lines.next().unwrap();
-        write!(f, [dynamic_text(first_line.trim_end(), source_offset)])?;
+            // SAFETY: Safe, `is_doc_comment` only returns `true` for multiline comments
+            let first_line = lines.next().unwrap();
+            write!(f, [dynamic_text(first_line.trim_end(), source_offset)])?;
 
-        source_offset += first_line.text_len();
+            source_offset += first_line.text_len();
 
-        // Indent the remaining lines by one space so that all `*` are aligned.
-        write!(
-            f,
-            [align(
-                1,
-                &format_once(|f| {
-                    for line in lines {
-                        write!(
-                            f,
-                            [hard_line_break(), dynamic_text(line.trim(), source_offset)]
-                        )?;
+            // Indent the remaining lines by one space so that all `*` are aligned.
+            write!(
+                f,
+                [align(
+                    1,
+                    &format_once(|f| {
+                        for line in lines {
+                            write!(
+                                f,
+                                [hard_line_break(), dynamic_text(line.trim(), source_offset)]
+                            )?;
 
-                        source_offset += line.text_len();
-                    }
+                            source_offset += line.text_len();
+                        }
 
-                    Ok(())
-                })
-            )]
-        )
+                        Ok(())
+                    })
+                )]
+            )
+        } else {
+            write!(f, [comment.piece().as_piece()])
+        }
     }
 }
 

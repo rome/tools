@@ -71,7 +71,7 @@ where
             .language
             .format_node(self.options.clone(), &re_parse.syntax())
             .unwrap();
-        println!("{}", &formatted.document());
+
         let printed = formatted.print().unwrap();
 
         if self.text != printed.as_code() {
