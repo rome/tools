@@ -119,7 +119,7 @@ fn get_restricted_import(module_path: &SyntaxTokenText) -> Option<ImportRestrict
         return None;
     }
 
-    let mut path_parts: Vec<&str> = module_path.text().split('/').collect();
+    let mut path_parts: Vec<_> = module_path.text().split('/').collect();
     let mut index_filename = None;
 
     if let Some(extension) = get_extension(&path_parts) {

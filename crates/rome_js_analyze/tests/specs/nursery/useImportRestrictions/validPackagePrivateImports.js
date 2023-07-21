@@ -3,9 +3,6 @@
 // Imports within the same module are always allowed.
 import { fooPackageVariable } from "./foo.js";
 
-// Imports within the same module are always allowed.
-import { fooPackageVariable } from "./foo.js";
-
 // Resources (anything other than JS/TS files) are exempt.
 import { barResource } from "../aunt/bar.png";
 
@@ -17,3 +14,9 @@ import { subPackageVariable } from "./sub/index.js";
 
 // Library imports are exempt.
 import useAsync from "react-use/lib/useAsync";
+
+// Including library imports with an extension.
+import map from "lodash/map.js";
+
+// Scoped packages work too.
+import netlify from "@astrojs/netlify/functions.js";
