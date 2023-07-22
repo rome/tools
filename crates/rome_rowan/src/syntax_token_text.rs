@@ -2,13 +2,16 @@ use rome_text_size::{TextRange, TextSize};
 use std::ops::Deref;
 use std::{borrow::Borrow, fmt::Formatter};
 
-use crate::cursor::SyntaxToken;
+use crate::green::GreenToken;
 
 /// Reference to the text of a SyntaxToken without having to worry about the lifetime of `&str`.
 #[derive(Eq, Clone)]
 pub struct SyntaxTokenText {
-    token: SyntaxToken,
-    /// Absolute range of the "selected" token text.
+    // Absolute start location of `token`
+    token_start: TextSize,
+    // Using a green token to ensure this type is Send + Sync.
+    token: GreenToken,
+    /// Relative range of the "selected" token text.
     range: TextRange,
 }
 
@@ -19,14 +22,13 @@ impl std::hash::Hash for SyntaxTokenText {
 }
 
 impl SyntaxTokenText {
-    pub(crate) fn new(token: SyntaxToken) -> SyntaxTokenText {
-        let range = token.text_range();
-        Self { token, range }
-    }
-
-    pub(crate) fn with_range(token: SyntaxToken, range: TextRange) -> SyntaxTokenText {
-        debug_assert!(token.text_range().contains_range(range));
-        Self { token, range }
+    pub(crate) fn new(token: GreenToken, token_start: TextSize) -> SyntaxTokenText {
+        let range = TextRange::at(TextSize::default(), token.text_len());
+        Self {
+            token,
+            range,
+            token_start,
+        }
     }
 
     /// Returns the length of the text
@@ -40,24 +42,26 @@ impl SyntaxTokenText {
     }
 
     /// Returns a subslice of the text.
+    /// `range.end()` must be lower or equal to `self.len()`
     pub fn slice(mut self, range: TextRange) -> SyntaxTokenText {
+        let new_range = range + self.range.start();
         assert!(
-            self.range.contains_range(range),
-            "Range {range:?} exceeds bounds {:?}",
-            self.range
+            range.end() <= self.len(),
+            "Range {range:?} exceeds the text length {:?}",
+            self.len()
         );
-
-        self.range = range;
+        self.range = new_range;
         self
     }
 
     pub fn range(&self) -> TextRange {
-        self.range
+        let mut range = self.range;
+        range += self.token_start;
+        range
     }
 
     pub fn text(&self) -> &str {
-        let relative_range = self.range - self.token.text_range().start();
-        &self.token.text()[relative_range]
+        &self.token.text()[self.range]
     }
 }
 

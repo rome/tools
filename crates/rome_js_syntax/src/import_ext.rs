@@ -42,6 +42,6 @@ impl JsModuleSource {
     /// assert_eq!(text.text(), "react");
     /// ```
     pub fn inner_text(&self) -> SyntaxResult<SyntaxTokenText> {
-        Ok(inner_text(self.value_token()?))
+        Ok(inner_text(&self.value_token()?))
     }
 }

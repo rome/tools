@@ -273,6 +273,7 @@ impl OperatorPrecedence {
     }
 }
 
+/// Similar to [JsSyntaxToken::text_trimmed()], but removes the quotes of string literals.
 ///
 /// ## Examples
 ///
@@ -284,23 +285,23 @@ impl OperatorPrecedence {
 /// let token = make::ident("id")
 ///     .with_leading_trivia(vec![(TriviaPieceKind::Whitespace, " ")]);
 /// let text_trimmed_range = token.text_trimmed_range();
-/// let syntax_text = inner_text(token);
+/// let syntax_text = inner_text(&token);
 /// assert_eq!(syntax_text.text(), "id");
 /// assert_eq!(syntax_text.range(), text_trimmed_range);
 ///
 /// let token = make::js_string_literal("str")
 ///     .with_leading_trivia(vec![(TriviaPieceKind::Whitespace, " ")]);
-/// let syntax_text = inner_text(token);
+/// let syntax_text = inner_text(&token);
 /// assert_eq!(syntax_text.text(), "str");
 /// assert_eq!(syntax_text.range(), TextRange::new(2.into(), 5.into()));
 ///
 /// let token = make::jsx_string_literal("str")
 ///     .with_leading_trivia(vec![(TriviaPieceKind::Whitespace, " ")]);
-/// let syntax_text = inner_text(token);
+/// let syntax_text = inner_text(&token);
 /// assert_eq!(syntax_text.text(), "str");
 /// assert_eq!(syntax_text.range(), TextRange::new(2.into(), 5.into()));
 /// ```
-pub fn inner_text(token: JsSyntaxToken) -> SyntaxTokenText {
+pub fn inner_text(token: &JsSyntaxToken) -> SyntaxTokenText {
     let token_kind = token.kind();
     let mut text = token.token_text_trimmed();
     if matches!(
@@ -308,11 +309,8 @@ pub fn inner_text(token: JsSyntaxToken) -> SyntaxTokenText {
         JsSyntaxKind::JS_STRING_LITERAL | JsSyntaxKind::JSX_STRING_LITERAL
     ) {
         // remove string delimiters
-        let range = text
-            .range()
-            .add_start(TextSize::from(1))
-            .sub_end(TextSize::from(1));
-        text = text.slice(range);
+        let len = text.len() - TextSize::from(2);
+        text = text.slice(TextRange::at(TextSize::from(1), len));
     }
     text
 }

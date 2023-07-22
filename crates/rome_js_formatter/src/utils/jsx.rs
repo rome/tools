@@ -7,7 +7,8 @@ use rome_js_syntax::{
     JsStaticMemberExpression, JsSyntaxKind, JsxChildList, JsxExpressionChild, JsxTagExpression,
     JsxText, TextLen,
 };
-use rome_rowan::{Direction, GreenTokenText, SyntaxResult, TextRange, TextSize};
+use rome_rowan::SyntaxTokenText;
+use rome_rowan::{Direction, SyntaxResult, TextRange, TextSize};
 use std::iter::{FusedIterator, Peekable};
 use std::str::Chars;
 
@@ -283,11 +284,9 @@ where
 
                         (relative_start, JsxTextChunk::Word(word)) => {
                             let text = value_token
-                                .green_token_text()
+                                .token_text()
                                 .slice(TextRange::at(relative_start, word.text_len()));
-                            let source_position = value_token.text_range().start() + relative_start;
-
-                            builder.entry(JsxChild::Word(JsxWord::new(text, source_position)));
+                            builder.entry(JsxChild::Word(JsxWord::new(text)));
                         }
                     }
                 }
@@ -400,23 +399,17 @@ impl JsxChild {
 
 /// A word in a Jsx Text. A word is string sequence that isn't separated by any JSX whitespace.
 #[derive(Debug, Clone, Eq, PartialEq)]
-pub(crate) struct JsxWord {
-    text: GreenTokenText,
-    source_position: TextSize,
-}
+pub(crate) struct JsxWord(SyntaxTokenText);
 
 impl JsxWord {
-    fn new(text: GreenTokenText, source_position: TextSize) -> Self {
-        JsxWord {
-            text,
-            source_position,
-        }
+    fn new(text: SyntaxTokenText) -> Self {
+        JsxWord(text)
     }
 
     pub(crate) fn is_ascii_punctuation(&self) -> bool {
-        self.text.chars().count() == 1
+        self.0.chars().count() == 1
             && self
-                .text
+                .0
                 .chars()
                 .next()
                 .map_or(false, |char| char.is_ascii_punctuation())
@@ -425,10 +418,7 @@ impl JsxWord {
 
 impl Format<JsFormatContext> for JsxWord {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
-        f.write_element(FormatElement::SyntaxTokenTextSlice {
-            source_position: self.source_position,
-            slice: self.text.clone(),
-        })
+        f.write_element(FormatElement::SyntaxTokenText(self.0.clone()))
     }
 }
 
@@ -816,7 +806,7 @@ mod tests {
     fn assert_word(child: &JsxChild, text: &str) {
         match child {
             JsxChild::Word(word) => {
-                assert_eq!(word.text.text(), text)
+                assert_eq!(word.0.text(), text)
             }
             child => {
                 panic!("Expected a word but found {child:#?}");

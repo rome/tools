@@ -106,16 +106,14 @@ impl TryFrom<JsonSyntaxKind> for TriviaPieceKind {
     }
 }
 
-pub fn inner_text(token: JsonSyntaxToken) -> SyntaxTokenText {
+/// Text of `token`, excluding all trivia and removing quotes if `token` is a string literal.
+pub fn inner_text(token: &JsonSyntaxToken) -> SyntaxTokenText {
     let token_kind = token.kind();
     let mut text = token.token_text_trimmed();
     if token_kind == JsonSyntaxKind::JSON_STRING_LITERAL {
         // remove string delimiters
-        let range = text
-            .range()
-            .add_start(TextSize::from(1))
-            .sub_end(TextSize::from(1));
-        text = text.slice(range);
+        let len = text.len() - TextSize::from(2);
+        text = text.slice(TextRange::at(TextSize::from(1), len));
     }
     text
 }

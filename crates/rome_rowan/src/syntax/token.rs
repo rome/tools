@@ -1,5 +1,4 @@
 use crate::green::{GreenToken, GreenTrivia};
-use crate::green_token_text::GreenTokenText;
 use crate::syntax::element::SyntaxElementKey;
 use crate::syntax::SyntaxTrivia;
 use crate::{
@@ -109,25 +108,48 @@ impl<L: Language> SyntaxToken<L> {
     /// })
     /// .first_token()
     /// .unwrap();
-    /// assert_eq!("\n\t let \t\t", token.green_token_text());
+    /// assert_eq!("\n\t let \t\t", token.token_text());
+    /// assert_eq!(token.text_range(), token.token_text().range());
     /// assert_eq!(
     ///     format!("{}", "\n\t let \t\t"),
-    ///     format!("{}", token.green_token_text())
+    ///     format!("{}", token.token_text())
     /// );
     /// assert_eq!(
     ///     format!("{:?}", "\n\t let \t\t"),
-    ///     format!("{:?}", token.green_token_text())
+    ///     format!("{:?}", token.token_text())
     /// );
     /// ```
-    pub fn green_token_text(&self) -> GreenTokenText {
-        self.raw.green_token_text()
-    }
-
-    pub fn token_text(self) -> SyntaxTokenText {
+    pub fn token_text(&self) -> SyntaxTokenText {
         self.raw.token_text()
     }
 
-    pub fn token_text_trimmed(self) -> SyntaxTokenText {
+    /// Returns the text of a token, without its trivia, as an owned value.
+    ///
+    /// ```
+    /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
+    /// use rome_rowan::*;
+    /// let mut token = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT, |builder| {
+    ///     builder.token_with_trivia(
+    ///         RawLanguageKind::LET_TOKEN,
+    ///         "\n\t let \t\t",
+    ///         &[TriviaPiece::whitespace(3)],
+    ///         &[TriviaPiece::whitespace(3)],
+    ///     );
+    /// })
+    /// .first_token()
+    /// .unwrap();
+    /// assert_eq!("let", token.token_text_trimmed());
+    /// assert_eq!(token.text_trimmed_range(), token.token_text_trimmed().range());
+    /// assert_eq!(
+    ///     format!("{}", "let"),
+    ///     format!("{}", token.token_text_trimmed())
+    /// );
+    /// assert_eq!(
+    ///     format!("{:?}", "let"),
+    ///     format!("{:?}", token.token_text_trimmed())
+    /// );
+    /// ```
+    pub fn token_text_trimmed(&self) -> SyntaxTokenText {
         self.raw.token_text_trimmed()
     }
 

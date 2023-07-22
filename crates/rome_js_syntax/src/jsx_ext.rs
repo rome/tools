@@ -8,7 +8,7 @@ use crate::{
 use rome_rowan::{declare_node_union, AstNode, AstNodeList, SyntaxResult, SyntaxTokenText};
 
 impl JsxString {
-    /// Get the inner text of a string not including the quotes
+    /// Get the inner text of a string not including the quotes.
     ///
     /// ## Examples
     ///
@@ -20,7 +20,7 @@ impl JsxString {
     /// assert_eq!(string.inner_text().unwrap().text(), "button");
     /// ```
     pub fn inner_text(&self) -> SyntaxResult<SyntaxTokenText> {
-        Ok(inner_text(self.value_token()?))
+        Ok(inner_text(&self.value_token()?))
     }
 }
 

@@ -414,7 +414,7 @@ impl AnyName {
             AnyName::TsIdentifierBinding(binding) => binding.name_token(),
             AnyName::TsTypeParameterName(type_parameter) => type_parameter.ident_token(),
         };
-        Ok(inner_text(token?))
+        Ok(inner_text(&token?))
     }
 }
 

@@ -66,8 +66,20 @@ impl JsReferenceIdentifier {
             .unwrap_or_default()
     }
 
+    /// Returns the identifier string.
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use rome_js_factory::make;
+    ///
+    /// let id = make::ident("foo");
+    /// let id_ref = make::js_reference_identifier(id);
+    ///
+    /// assert_eq!(id_ref.inner_text().unwrap().text(), "foo");
+    /// ```
     pub fn inner_text(&self) -> SyntaxResult<SyntaxTokenText> {
-        Ok(inner_text(self.value_token()?))
+        Ok(inner_text(&self.value_token()?))
     }
 }
 
@@ -127,7 +139,7 @@ impl JsLiteralMemberName {
     /// assert_eq!("abcd", static_member_name.name().unwrap().text());
     /// ```
     pub fn name(&self) -> SyntaxResult<SyntaxTokenText> {
-        Ok(inner_text(self.value()?))
+        Ok(inner_text(&self.value()?))
     }
 }
 
@@ -503,7 +515,7 @@ impl JsNumberLiteralExpression {
 }
 
 impl JsStringLiteralExpression {
-    /// Get the inner text of a string not including the quotes
+    /// Get the inner text of a string not including the quotes.
     ///
     /// ## Examples
     ///
@@ -516,7 +528,7 @@ impl JsStringLiteralExpression {
     /// assert_eq!(string.inner_text().unwrap().text(), "foo");
     /// ```
     pub fn inner_text(&self) -> SyntaxResult<SyntaxTokenText> {
-        Ok(inner_text(self.value_token()?))
+        Ok(inner_text(&self.value_token()?))
     }
 }
 
@@ -959,7 +971,7 @@ impl AnyJsMemberExpression {
                 }
             }
         };
-        Some(inner_text(value))
+        Some(inner_text(&value))
     }
 }
 
@@ -1009,7 +1021,7 @@ impl AnyJsObjectMemberName {
             }
             AnyJsObjectMemberName::JsLiteralMemberName(expr) => expr.value().ok()?,
         };
-        Some(inner_text(token))
+        Some(inner_text(&token))
     }
 }
 

@@ -3,7 +3,7 @@ use crate::prelude::tag::{DedentMode, GroupMode, LabelId};
 use crate::prelude::*;
 use crate::{format_element, write, Argument, Arguments, GroupId, TextRange, TextSize};
 use crate::{Buffer, VecBuffer};
-use rome_rowan::{GreenTokenText, Language, SyntaxNode, SyntaxToken, TextLen};
+use rome_rowan::{Language, SyntaxNode, SyntaxToken, SyntaxTokenText, TextLen};
 use std::borrow::Cow;
 use std::cell::Cell;
 use std::marker::PhantomData;
@@ -333,12 +333,9 @@ impl<L: Language, Context> Format<Context> for SyntaxTokenCowSlice<'_, L> {
                 );
 
                 let relative_range = range - self.token.text_range().start();
-                let slice = self.token.green_token_text().slice(relative_range);
+                let slice = self.token.token_text().slice(relative_range);
 
-                f.write_element(FormatElement::SyntaxTokenTextSlice {
-                    slice,
-                    source_position: self.start,
-                })
+                f.write_element(FormatElement::SyntaxTokenText(slice))
             }
             Cow::Owned(text) => f.write_element(FormatElement::DynamicText {
                 text: text.to_string().into_boxed_str(),
@@ -354,39 +351,9 @@ impl<L: Language> std::fmt::Debug for SyntaxTokenCowSlice<'_, L> {
     }
 }
 
-/// Copies a source text 1:1 into the output text.
-pub fn syntax_token_text_slice<L: Language>(
-    token: &SyntaxToken<L>,
-    range: TextRange,
-) -> SyntaxTokenTextSlice {
-    let relative_range = range - token.text_range().start();
-    let slice = token.green_token_text().slice(relative_range);
-
-    debug_assert_no_newlines(&slice);
-
-    SyntaxTokenTextSlice {
-        text: slice,
-        source_position: range.start(),
-    }
-}
-
-pub struct SyntaxTokenTextSlice {
-    text: GreenTokenText,
-    source_position: TextSize,
-}
-
-impl<Context> Format<Context> for SyntaxTokenTextSlice {
+impl<Context> Format<Context> for SyntaxTokenText {
     fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
-        f.write_element(FormatElement::SyntaxTokenTextSlice {
-            slice: self.text.clone(),
-            source_position: self.source_position,
-        })
-    }
-}
-
-impl std::fmt::Debug for SyntaxTokenTextSlice {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        std::write!(f, "SyntaxTokenTextSlice({})", self.text)
+        f.write_element(FormatElement::SyntaxTokenText(self.clone()))
     }
 }
 

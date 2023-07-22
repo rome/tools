@@ -303,8 +303,7 @@ where
     C: CstFormatContext<Language = L>,
 {
     fn fmt(&self, f: &mut Formatter<C>) -> FormatResult<()> {
-        let trimmed_range = self.token.text_trimmed_range();
-        syntax_token_text_slice(self.token, trimmed_range).fmt(f)
+        self.token.token_text_trimmed().fmt(f)
     }
 }
 /// Formats the skipped token trivia of a removed token and marks the token as tracked.
@@ -539,15 +538,16 @@ impl<L: Language> FormatSkippedTokenTrivia<'_, L> {
             }
         }
 
-        let skipped_range =
-            skipped_range.unwrap_or_else(|| TextRange::empty(self.token.text_range().start()));
+        let skipped_relative_range = skipped_range
+            .map(|skipped_range| skipped_range - self.token.text_range().start())
+            .unwrap_or_default();
 
         f.write_element(FormatElement::Tag(Tag::StartVerbatim(
             VerbatimKind::Verbatim {
-                length: skipped_range.len(),
+                length: skipped_relative_range.len(),
             },
         )))?;
-        write!(f, [syntax_token_text_slice(self.token, skipped_range)])?;
+        write!(f, [self.token.token_text().slice(skipped_relative_range)])?;
         f.write_element(FormatElement::Tag(Tag::EndVerbatim))?;
 
         // Write whitespace separator between skipped/last comment and token

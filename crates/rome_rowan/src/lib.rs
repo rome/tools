@@ -26,7 +26,6 @@ mod arc;
 mod ast;
 mod cow_mut;
 mod file_source;
-mod green_token_text;
 pub mod raw_language;
 #[cfg(feature = "serde")]
 mod serde_impls;
@@ -40,7 +39,6 @@ pub use crate::{
     ast::*,
     file_source::{AnyFileSource, FileSource, FileSourceError},
     green::{NodeCache, RawSyntaxKind},
-    green_token_text::GreenTokenText,
     syntax::{
         chain_trivia_pieces, trim_leading_trivia_pieces, trim_trailing_trivia_pieces,
         ChainTriviaPiecesIterator, Language, SendNode, SyntaxElement, SyntaxElementChildren,

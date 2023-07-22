@@ -7,7 +7,7 @@ use std::borrow::Cow;
 use crate::{TagKind, TextSize};
 #[cfg(target_pointer_width = "64")]
 use rome_rowan::static_assert;
-use rome_rowan::GreenTokenText;
+use rome_rowan::SyntaxTokenText;
 use std::hash::{Hash, Hasher};
 use std::ops::Deref;
 use std::rc::Rc;
@@ -40,12 +40,7 @@ pub enum FormatElement {
 
     /// A token for a text that is taken as is from the source code (input text and formatted representation are identical).
     /// Implementing by taking a slice from a `SyntaxToken` to avoid allocating a new string.
-    SyntaxTokenTextSlice {
-        /// The start position of the token in the unformatted source code
-        source_position: TextSize,
-        /// The token text
-        slice: GreenTokenText,
-    },
+    SyntaxTokenText(SyntaxTokenText),
 
     /// Prevents that line suffixes move past this boundary. Forces the printer to print any pending
     /// line suffixes, potentially by inserting a hard line break.
@@ -75,10 +70,9 @@ impl std::fmt::Debug for FormatElement {
             FormatElement::DynamicText { text, .. } => {
                 fmt.debug_tuple("DynamicText").field(text).finish()
             }
-            FormatElement::SyntaxTokenTextSlice { slice, .. } => fmt
-                .debug_tuple("SyntaxTokenTextSlice")
-                .field(slice)
-                .finish(),
+            FormatElement::SyntaxTokenText(slice) => {
+                fmt.debug_tuple("SyntaxTokenText").field(slice).finish()
+            }
             FormatElement::LineSuffixBoundary => write!(fmt, "LineSuffixBoundary"),
             FormatElement::BestFitting(best_fitting) => {
                 fmt.debug_tuple("BestFitting").field(&best_fitting).finish()
@@ -224,7 +218,7 @@ impl FormatElement {
     pub const fn is_text(&self) -> bool {
         matches!(
             self,
-            FormatElement::SyntaxTokenTextSlice { .. }
+            FormatElement::SyntaxTokenText { .. }
                 | FormatElement::DynamicText { .. }
                 | FormatElement::StaticText { .. }
         )
@@ -243,7 +237,7 @@ impl FormatElements for FormatElement {
             FormatElement::Line(line_mode) => matches!(line_mode, LineMode::Hard | LineMode::Empty),
             FormatElement::StaticText { text } => text.contains('\n'),
             FormatElement::DynamicText { text, .. } => text.contains('\n'),
-            FormatElement::SyntaxTokenTextSlice { slice, .. } => slice.contains('\n'),
+            FormatElement::SyntaxTokenText(slice) => slice.contains('\n'),
             FormatElement::Interned(interned) => interned.will_break(),
             // Traverse into the most flat version because the content is guaranteed to expand when even
             // the most flat version contains some content that forces a break.
@@ -392,4 +386,4 @@ static_assert!(std::mem::size_of::<crate::format_element::Tag>() == 16usize);
 
 #[cfg(not(debug_assertions))]
 #[cfg(target_pointer_width = "64")]
-static_assert!(std::mem::size_of::<crate::FormatElement>() == 24usize);
+static_assert!(std::mem::size_of::<crate::FormatElement>() == 32usize);
