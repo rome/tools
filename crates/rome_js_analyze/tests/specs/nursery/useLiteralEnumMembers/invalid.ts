@@ -1,73 +1,37 @@
-enum InvalidObject {
+enum InvalidLiterals {
   A = {},
+  B = [],
+  C = true,
+  D = 1n,
 }
-
-
-enum InvalidArray {
-  A = [],
-}
-
 
 enum InvalidTemplateLiteral {
   A = `foo ${0}`,
 }
 
-
 enum InvalidConstructor {
   A = new Set(),
-}
-
-
-enum InvalidExpression {
-  A = 2 + 2,
 }
 
 enum InvalidExpression {
   A = delete 2,
   B = -a,
   C = void 2,
-  D = ~2,
-  E = !0,
+  D = !0,
 }
-
 
 const variable = 'Test';
 enum InvalidVariable {
   A = 'TestStr',
-  B = 2,
-  C,
   V = variable,
 }
-
-
-enum InvalidEnumMember {
-  A = 'TestStr',
-  B = A,
-}
-
-
-const Valid = { A: 2 };
-enum InvalidObjectMember {
-  A = 'TestStr',
-  B = Valid.A,
-}
-
 
 enum Valid {
   A,
 }
 enum InvalidEnumMember {
-  A = 'TestStr',
-  B = Valid.A,
+  A = Valid.A,
 }
-
-
-const obj = { a: 1 };
-enum InvalidSpread {
-  A = 'TestStr',
-  B = { ...a },
-}
-
 
 const x = 1;
 enum Foo {
@@ -80,3 +44,14 @@ enum Foo {
   G = ~x,
 }
 
+enum InvalidRef {
+  A = A,
+  B = InvalidRef.B,
+  C = InvalidRef["C"],
+  D = E,
+  E = InvalidRef.F,
+  F = InvalidRef["G"],
+  G
+}
+
+export {}
