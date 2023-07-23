@@ -154,7 +154,7 @@ fn make_members(ts_enum: &TsEnumMembers) -> JsStatementList {
     for (index, (name, value)) in ts_enum.member_names.iter().enumerate() {
         let value = value
             .as_ref()
-            .and_then(|initializer| Some(initializer.expression().ok()?.clone()))
+            .and_then(|initializer| initializer.expression().ok())
             .unwrap_or_else(|| {
                 AnyJsExpression::AnyJsLiteralExpression(
                     AnyJsLiteralExpression::JsNumberLiteralExpression(

@@ -127,7 +127,7 @@ pub(crate) fn analyze_and_snap(
         snapshot,
         input_code,
         transformations.as_slice(),
-        source_type.as_extension_name(),
+        source_type.file_extension(),
     );
 
     diagnostics.len()
@@ -164,5 +164,5 @@ fn check_transformation(
 
     // Re-parse the modified code and panic if the resulting tree has syntax errors
     let re_parse = parse(&output, source_type, options);
-    assert_errors_are_absent(&re_parse.tree().syntax(), re_parse.diagnostics(), path);
+    assert_errors_are_absent(re_parse.tree().syntax(), re_parse.diagnostics(), path);
 }

@@ -1,7 +1,7 @@
 use rome_analyze::{AnalysisFilter, AnalyzerAction, ControlFlow, Never, RuleFilter};
 use rome_diagnostics::advice::CodeSuggestionAdvice;
 use rome_diagnostics::{DiagnosticExt, Severity};
-use rome_json_parser::parse_json;
+use rome_json_parser::{parse_json, JsonParserOptions};
 use rome_json_syntax::JsonLanguage;
 use rome_rowan::AstNode;
 use rome_test_utils::{

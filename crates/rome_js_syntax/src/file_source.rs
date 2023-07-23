@@ -182,7 +182,7 @@ impl JsFileSource {
         self.module_kind.is_module()
     }
 
-    pub fn as_extension_name(&self) -> &str {
+    pub fn file_extension(&self) -> &str {
         match self.language {
             Language::JavaScript => {
                 if matches!(self.variant, LanguageVariant::Jsx) {

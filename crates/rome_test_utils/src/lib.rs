@@ -171,8 +171,7 @@ pub fn assert_errors_are_absent<L: Language>(
     let debug_tree = format!("{:?}", program);
     let has_missing_children = debug_tree.contains("missing (required)");
 
-    if diagnostics.is_empty() && !has_bogus_nodes_or_empty_slots(&program) && !has_missing_children
-    {
+    if diagnostics.is_empty() && !has_bogus_nodes_or_empty_slots(program) && !has_missing_children {
         return;
     }
 

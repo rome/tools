@@ -206,7 +206,7 @@ fn check_code_action(
 
     // Re-parse the modified code and panic if the resulting tree has syntax errors
     let re_parse = parse(&output, source_type, options);
-    assert_errors_are_absent(&re_parse.tree().syntax(), re_parse.diagnostics(), path);
+    assert_errors_are_absent(re_parse.tree().syntax(), re_parse.diagnostics(), path);
 }
 
 pub(crate) fn run_suppression_test(input: &'static str, _: &str, _: &str, _: &str) {
