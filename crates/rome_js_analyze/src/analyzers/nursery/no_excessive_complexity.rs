@@ -369,7 +369,7 @@ pub struct ComplexityScore {
 
 /// Options for the rule `noNestedModuleImports`.
 #[derive(Deserialize, Serialize, Debug, Clone, Bpaf)]
-#[cfg_attr(feature = "schemars", derive(JsonSchema))]
+#[cfg_attr(feature = "schema", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct ComplexityOptions {
     /// The maximum complexity score that we allow. Anything higher is considered excessive.

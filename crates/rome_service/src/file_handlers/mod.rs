@@ -24,7 +24,7 @@ mod unknown;
 
 /// Supported languages by Rome
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Default, serde::Serialize, serde::Deserialize)]
-#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 pub enum Language {
     /// JavaScript
     JavaScript,

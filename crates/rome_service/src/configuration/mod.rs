@@ -11,14 +11,12 @@ pub mod linter;
 mod merge;
 pub mod organize_imports;
 mod parse;
-pub mod string_set;
 pub mod vcs;
 
 pub use crate::configuration::diagnostics::ConfigurationDiagnostic;
 use crate::configuration::generated::push_to_analyzer_rules;
 pub use crate::configuration::merge::MergeWith;
 use crate::configuration::organize_imports::{organize_imports, OrganizeImports};
-pub use crate::configuration::string_set::StringSet;
 use crate::configuration::vcs::{vcs_configuration, VcsConfiguration};
 use crate::settings::{LanguagesSettings, LinterSettings};
 use crate::{DynRef, WorkspaceError, VERSION};
@@ -29,7 +27,7 @@ pub use json::{json_configuration, JsonConfiguration};
 pub use linter::{linter_configuration, LinterConfiguration, RuleConfiguration, Rules};
 use rome_analyze::{AnalyzerConfiguration, AnalyzerRules};
 use rome_deserialize::json::deserialize_from_json_str;
-use rome_deserialize::Deserialized;
+use rome_deserialize::{Deserialized, StringSet};
 use rome_fs::{AutoSearchResult, FileSystem, OpenOptions};
 use rome_js_analyze::metadata;
 use rome_json_formatter::context::JsonFormatOptions;
@@ -42,7 +40,7 @@ use std::path::{Path, PathBuf};
 
 /// The configuration that is contained inside the file `rome.json`
 #[derive(Debug, Deserialize, Serialize, Clone, Bpaf)]
-#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 #[serde(deny_unknown_fields, rename_all = "camelCase")]
 pub struct Configuration {
     /// A field for the [JSON schema](https://json-schema.org/) specification
@@ -245,7 +243,7 @@ impl MergeWith<Option<JavascriptFormatter>> for Configuration {
 
 /// The configuration of the filesystem
 #[derive(Default, Debug, Deserialize, Serialize, Clone, Bpaf)]
-#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 #[serde(rename_all = "camelCase", default, deny_unknown_fields)]
 pub struct FilesConfiguration {
     /// The maximum allowed size for source code files in bytes. Files above

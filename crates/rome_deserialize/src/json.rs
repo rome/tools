@@ -342,6 +342,49 @@ pub trait VisitJsonNode: VisitNode<JsonLanguage> {
         Some(elements)
     }
 
+    /// It attempts to map a [AnyJsonValue] to a [Vec] of [String].
+    ///
+    /// ## Errors
+    ///
+    /// The function emit diagnostics if:
+    /// - `value` can't be cast to [JsonArrayValue]
+    /// - any element of the of the array can't be cast to [JsonStringValue]
+    fn map_to_array_of_strings(
+        &self,
+        value: &AnyJsonValue,
+        name: &str,
+        diagnostics: &mut Vec<DeserializationDiagnostic>,
+    ) -> Option<Vec<String>> {
+        let array = JsonArrayValue::cast_ref(value.syntax()).or_else(|| {
+            diagnostics.push(DeserializationDiagnostic::new_incorrect_type_for_value(
+                name,
+                "array",
+                value.range(),
+            ));
+            None
+        })?;
+        let mut elements = Vec::new();
+        if array.elements().is_empty() {
+            return None;
+        }
+        for element in array.elements() {
+            let element = element.ok()?;
+            match element {
+                AnyJsonValue::JsonStringValue(value) => {
+                    elements.push(value.inner_string_text().ok()?.to_string());
+                }
+                _ => {
+                    diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
+                        "string",
+                        element.range(),
+                    ));
+                }
+            }
+        }
+
+        Some(elements)
+    }
+
     /// It attempts to map [AnyJsonValue] to a generic map.
     ///
     /// Use this function when the value of your member is another object, and this object

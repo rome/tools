@@ -423,7 +423,7 @@ pub(crate) struct State {
 }
 
 /// Rule's options.
-#[derive(Debug, Copy, Clone, Eq, PartialEq, Serialize, Deserialize, Bpaf)]
+#[derive(Debug, Clone, Eq, PartialEq, Serialize, Deserialize, Bpaf)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct NamingConventionOptions {

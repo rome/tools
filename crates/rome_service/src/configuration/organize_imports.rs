@@ -1,12 +1,12 @@
 use crate::configuration::merge::MergeWith;
-use crate::configuration::string_set::StringSet;
 use crate::settings::OrganizeImportsSettings;
 use crate::{ConfigurationDiagnostic, MatchOptions, Matcher, WorkspaceError};
 use bpaf::Bpaf;
+use rome_deserialize::StringSet;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize, Eq, PartialEq, Clone, Bpaf)]
-#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 #[serde(rename_all = "camelCase", default, deny_unknown_fields)]
 pub struct OrganizeImports {
     /// Enables the organization of imports

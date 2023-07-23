@@ -42,4 +42,4 @@ similar          = "2.1.0"
 tests_macros     = { workspace = true }
 
 [features]
-schemars = ["dep:schemars"]
+schema = ["schemars", "rome_deserialize/schema"]
