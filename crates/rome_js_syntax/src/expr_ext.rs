@@ -2,11 +2,11 @@
 use crate::numbers::parse_js_number;
 use crate::static_value::{QuotedString, StaticStringValue, StaticValue};
 use crate::{
-    AnyJsCallArgument, AnyJsExpression, AnyJsLiteralExpression, AnyJsTemplateElement,
-    JsArrayExpression, JsArrayHole, JsAssignmentExpression, JsBinaryExpression, JsCallExpression,
-    JsComputedMemberAssignment, JsComputedMemberExpression, JsLiteralMemberName,
-    JsLogicalExpression, JsNewExpression, JsNumberLiteralExpression, JsObjectExpression,
-    JsPostUpdateExpression, JsReferenceIdentifier, JsRegexLiteralExpression,
+    AnyJsCallArgument, AnyJsExpression, AnyJsLiteralExpression, AnyJsObjectMemberName,
+    AnyJsTemplateElement, JsArrayExpression, JsArrayHole, JsAssignmentExpression,
+    JsBinaryExpression, JsCallExpression, JsComputedMemberAssignment, JsComputedMemberExpression,
+    JsLiteralMemberName, JsLogicalExpression, JsNewExpression, JsNumberLiteralExpression,
+    JsObjectExpression, JsPostUpdateExpression, JsReferenceIdentifier, JsRegexLiteralExpression,
     JsStaticMemberExpression, JsStringLiteralExpression, JsSyntaxKind, JsSyntaxToken,
     JsTemplateChunkElement, JsTemplateExpression, JsUnaryExpression, OperatorPrecedence, T,
 };
@@ -242,8 +242,16 @@ impl JsBinaryExpression {
         Ok(kind)
     }
 
+    /// Whether this is a numeric operation, such as `+`, `-`, `*`, `%`, `**`.
+    pub fn is_numeric_operation(&self) -> bool {
+        matches!(
+            self.operator_token().map(|t| t.kind()),
+            Ok(T![+] | T![-] | T![*] | T![/] | T![%] | T![**])
+        )
+    }
+
     /// Whether this is a binary operation, such as `<<`, `>>`, `>>>`, `&`, `|`, `^`.
-    pub fn is_binary_operator(&self) -> bool {
+    pub fn is_binary_operation(&self) -> bool {
         matches!(
             self.operator_token().map(|t| t.kind()),
             Ok(T![<<] | T![>>] | T![>>>] | T![&] | T![|] | T![^])
@@ -977,6 +985,61 @@ impl AnyJsMemberExpression {
             }
         };
         Some(value)
+    }
+}
+
+impl AnyJsObjectMemberName {
+    /// Returns the member name of the current node
+    /// if it is a literal member name or a computed member with a literal value.
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use rome_js_syntax::{AnyJsObjectMemberName, AnyJsExpression, AnyJsLiteralExpression, T};
+    /// use rome_js_factory::make;
+    ///
+    /// let name = make::js_literal_member_name(make::ident("a"));
+    /// let name = AnyJsObjectMemberName::JsLiteralMemberName(name);
+    /// assert_eq!(name.name().unwrap().text(), "a");
+    ///
+    /// let quoted_name = make::js_literal_member_name(make::js_string_literal("a"));
+    /// let quoted_name = AnyJsObjectMemberName::JsLiteralMemberName(quoted_name);
+    /// assert_eq!(quoted_name.name().unwrap().text(), "a");
+    ///
+    /// let number_name = make::js_literal_member_name(make::js_number_literal(42));
+    /// let number_name = AnyJsObjectMemberName::JsLiteralMemberName(number_name);
+    /// assert_eq!(number_name.name().unwrap().text(), "42");
+    ///
+    /// let string_literal = make::js_string_literal_expression(make::js_string_literal("a"));
+    /// let string_literal = AnyJsExpression::AnyJsLiteralExpression(AnyJsLiteralExpression::from(string_literal));
+    /// let computed = make::js_computed_member_name(make::token(T!['[']), string_literal, make::token(T![']']));
+    /// let computed = AnyJsObjectMemberName::JsComputedMemberName(computed);
+    /// assert_eq!(computed.name().unwrap().text(), "a");
+    /// ```
+    pub fn name(&self) -> Option<StaticStringValue> {
+        let token = match self {
+            AnyJsObjectMemberName::JsComputedMemberName(expr) => {
+                let expr = expr.expression().ok()?;
+                match expr.omit_parentheses() {
+                    AnyJsExpression::AnyJsLiteralExpression(expr) => expr.value_token().ok()?,
+                    AnyJsExpression::JsTemplateExpression(expr) => {
+                        if !expr.is_constant() {
+                            return None;
+                        }
+                        let chunk = expr.elements().first()?;
+                        let chunk = chunk.as_js_template_chunk_element()?;
+                        chunk.template_chunk_token().ok()?
+                    }
+                    _ => return None,
+                }
+            }
+            AnyJsObjectMemberName::JsLiteralMemberName(expr) => expr.value().ok()?,
+        };
+        Some(if token.kind() == JsSyntaxKind::JS_STRING_LITERAL {
+            StaticStringValue::Quoted(QuotedString::new(token))
+        } else {
+            StaticStringValue::Unquoted(token)
+        })
     }
 }
 
