@@ -1,23 +1,23 @@
 use crate::lexer::{Lexer, Token};
-use crate::JsonParserOptions;
-use rome_json_syntax::JsonSyntaxKind::{EOF, TOMBSTONE};
-use rome_json_syntax::{JsonSyntaxKind, TextRange};
+use crate::CssParserOptions;
+use rome_css_syntax::CssSyntaxKind::{EOF, TOMBSTONE};
+use rome_css_syntax::{CssSyntaxKind, TextRange};
 use rome_parser::diagnostic::ParseDiagnostic;
 use rome_parser::prelude::TokenSource;
 use rome_parser::token_source::Trivia;
 use rome_rowan::TriviaPieceKind;
 
-pub(crate) struct JsonTokenSource<'source> {
+pub(crate) struct CssTokenSource<'source> {
     lexer: Lexer<'source>,
     trivia: Vec<Trivia>,
-    current: JsonSyntaxKind,
+    current: CssSyntaxKind,
     current_range: TextRange,
     preceding_line_break: bool,
-    config: JsonParserOptions,
+    config: CssParserOptions,
 }
 
-impl<'source> JsonTokenSource<'source> {
-    pub fn from_str(source: &'source str, config: JsonParserOptions) -> Self {
+impl<'source> CssTokenSource<'source> {
+    pub fn from_str(source: &'source str, config: CssParserOptions) -> Self {
         let lexer = Lexer::from_str(source).with_config(config);
 
         let mut source = Self {
@@ -46,7 +46,10 @@ impl<'source> JsonTokenSource<'source> {
                     // Not trivia
                     break;
                 }
-                Ok(trivia_kind) if trivia_kind.is_comment() && !self.config.allow_comments => {
+                Ok(trivia_kind)
+                    if trivia_kind.is_single_line_comment()
+                        && !self.config.allow_single_line_comments =>
+                {
                     self.set_current_token(token);
 
                     // Not trivia
@@ -71,8 +74,8 @@ impl<'source> JsonTokenSource<'source> {
     }
 }
 
-impl<'source> TokenSource for JsonTokenSource<'source> {
-    type Kind = JsonSyntaxKind;
+impl<'source> TokenSource for CssTokenSource<'source> {
+    type Kind = CssSyntaxKind;
 
     fn current(&self) -> Self::Kind {
         self.current

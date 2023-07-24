@@ -1,4 +1,4 @@
-use crate::generated::CssSyntaxFactory;
+pub use crate::generated::CssSyntaxFactory;
 use rome_css_syntax::CssLanguage;
 use rome_rowan::TreeBuilder;
 
