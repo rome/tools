@@ -5,11 +5,11 @@ use bpaf::Bpaf;
 use indexmap::IndexSet;
 use rome_analyze::RuleFilter;
 use rome_diagnostics::{Category, Severity};
-#[cfg(feature = "schemars")]
+#[cfg(feature = "schema")]
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 #[derive(Deserialize, Serialize, Debug, Clone, Bpaf)]
-#[cfg_attr(feature = "schemars", derive(JsonSchema))]
+#[cfg_attr(feature = "schema", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct Rules {
     #[doc = r" It enables the lint rules recommended by Rome. `true` by default."]
@@ -335,7 +335,7 @@ impl Rules {
     }
 }
 #[derive(Deserialize, Default, Serialize, Debug, Clone, Bpaf)]
-#[cfg_attr(feature = "schemars", derive(JsonSchema))]
+#[cfg_attr(feature = "schema", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", default)]
 #[doc = r" A list of rules that belong to this group"]
 pub struct A11y {
@@ -832,7 +832,7 @@ impl A11y {
     }
 }
 #[derive(Deserialize, Default, Serialize, Debug, Clone, Bpaf)]
-#[cfg_attr(feature = "schemars", derive(JsonSchema))]
+#[cfg_attr(feature = "schema", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", default)]
 #[doc = r" A list of rules that belong to this group"]
 pub struct Complexity {
@@ -1181,7 +1181,7 @@ impl Complexity {
     }
 }
 #[derive(Deserialize, Default, Serialize, Debug, Clone, Bpaf)]
-#[cfg_attr(feature = "schemars", derive(JsonSchema))]
+#[cfg_attr(feature = "schema", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", default)]
 #[doc = r" A list of rules that belong to this group"]
 pub struct Correctness {
@@ -1775,7 +1775,7 @@ impl Correctness {
     }
 }
 #[derive(Deserialize, Default, Serialize, Debug, Clone, Bpaf)]
-#[cfg_attr(feature = "schemars", derive(JsonSchema))]
+#[cfg_attr(feature = "schema", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", default)]
 #[doc = r" A list of rules that belong to this group"]
 pub struct Nursery {
@@ -2558,7 +2558,7 @@ impl Nursery {
     }
 }
 #[derive(Deserialize, Default, Serialize, Debug, Clone, Bpaf)]
-#[cfg_attr(feature = "schemars", derive(JsonSchema))]
+#[cfg_attr(feature = "schema", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", default)]
 #[doc = r" A list of rules that belong to this group"]
 pub struct Performance {
@@ -2644,7 +2644,7 @@ impl Performance {
     }
 }
 #[derive(Deserialize, Default, Serialize, Debug, Clone, Bpaf)]
-#[cfg_attr(feature = "schemars", derive(JsonSchema))]
+#[cfg_attr(feature = "schema", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", default)]
 #[doc = r" A list of rules that belong to this group"]
 pub struct Security {
@@ -2767,7 +2767,7 @@ impl Security {
     }
 }
 #[derive(Deserialize, Default, Serialize, Debug, Clone, Bpaf)]
-#[cfg_attr(feature = "schemars", derive(JsonSchema))]
+#[cfg_attr(feature = "schema", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", default)]
 #[doc = r" A list of rules that belong to this group"]
 pub struct Style {
@@ -3352,7 +3352,7 @@ impl Style {
     }
 }
 #[derive(Deserialize, Default, Serialize, Debug, Clone, Bpaf)]
-#[cfg_attr(feature = "schemars", derive(JsonSchema))]
+#[cfg_attr(feature = "schema", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", default)]
 #[doc = r" A list of rules that belong to this group"]
 pub struct Suspicious {

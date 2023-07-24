@@ -1,0 +1,15 @@
+{
+	"$schema": "../../../../../../npm/rome/configuration_schema.json",
+	"linter": {
+		"rules": {
+			"style": {
+				"noRestrictedGlobals": {
+					"level": "error",
+					"options": {
+						"deniedGlobals": ["$"]
+					}
+				}
+			}
+		}
+	}
+}

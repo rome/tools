@@ -33,7 +33,7 @@ rome_json_parser = { path = "../../crates/rome_json_parser", optional = true }
 rome_diagnostics = { path = "../../crates/rome_diagnostics", optional = true }
 rome_aria = { path = "../../crates/rome_aria", optional = true }
 rome_service = { path = "../../crates/rome_service", features = [
-  "schemars",
+	"schema",
 ], optional = true }
 schemars = { version = "0.8.10", optional = true }
 serde_json = { version = "1.0.74", optional = true }

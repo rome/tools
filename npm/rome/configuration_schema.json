@@ -1095,11 +1095,27 @@
 					"description": "Options for `useNamingConvention` rule",
 					"allOf": [{ "$ref": "#/definitions/NamingConventionOptions" }]
 				},
+				{
+					"description": "Options for `noRestrictedGlobals` rule",
+					"allOf": [{ "$ref": "#/definitions/RestrictedGlobalsOptions" }]
+				},
 				{ "description": "No options available", "type": "null" }
 			]
 		},
 		"QuoteProperties": { "type": "string", "enum": ["asNeeded", "preserve"] },
 		"QuoteStyle": { "type": "string", "enum": ["double", "single"] },
+		"RestrictedGlobalsOptions": {
+			"description": "Options for the rule `noRestrictedGlobals`.",
+			"type": "object",
+			"properties": {
+				"deniedGlobals": {
+					"description": "A list of names that should trigger the rule",
+					"type": ["array", "null"],
+					"items": { "type": "string" }
+				}
+			},
+			"additionalProperties": false
+		},
 		"RuleConfiguration": {
 			"anyOf": [
 				{ "$ref": "#/definitions/RulePlainConfiguration" },

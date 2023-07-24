@@ -1,8 +1,7 @@
-use crate::configuration::string_set::StringSet;
 use crate::configuration::{FormatterConfiguration, PlainIndentStyle};
 use rome_console::markup;
 use rome_deserialize::json::{has_only_known_keys, with_only_known_variants, VisitJsonNode};
-use rome_deserialize::{DeserializationDiagnostic, VisitNode};
+use rome_deserialize::{DeserializationDiagnostic, StringSet, VisitNode};
 use rome_formatter::LineWidth;
 use rome_json_syntax::{JsonLanguage, JsonSyntaxNode};
 use rome_rowan::{AstNode, SyntaxNode};

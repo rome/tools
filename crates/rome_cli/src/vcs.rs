@@ -2,9 +2,10 @@ use crate::cli_options::CliOptions;
 use crate::diagnostics::{DisabledVcs, NoVcsFolderFound};
 use crate::{CliDiagnostic, CliSession};
 use rome_console::{markup, ConsoleExt};
+use rome_deserialize::StringSet;
 use rome_diagnostics::PrintDiagnostic;
 use rome_service::configuration::vcs::{VcsClientKind, VcsConfiguration};
-use rome_service::configuration::{FilesConfiguration, StringSet};
+use rome_service::configuration::FilesConfiguration;
 use rome_service::{Configuration, WorkspaceError};
 use std::path::PathBuf;
 

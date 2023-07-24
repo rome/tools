@@ -39,4 +39,4 @@ tests_macros     = { workspace = true }
 rome_test_utils =  { workspace = true }
 
 [features]
-schemars = ["dep:schemars"]
+schema = ["schemars", "rome_deserialize/schema"]

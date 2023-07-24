@@ -1780,6 +1780,7 @@ dependencies = [
  "rome_json_parser",
  "rome_json_syntax",
  "rome_rowan",
+ "schemars",
  "serde",
  "serde_json",
  "tracing",

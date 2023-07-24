@@ -32,15 +32,6 @@ Source: https://github.com/uhyo/eslint-plugin-import-access
 ```jsx
 // Attempt to import from `foo.js` from outside its `sub` module.
 import { fooPackageVariable } from "./sub/foo.js";
-
-// Attempt to import from `bar.ts` from outside its `aunt` module.
-import { barPackageVariable } from "../aunt/bar.ts";
-
-// Assumed to resolve to a JS/TS file.
-import { fooPackageVariable } from "./sub/foo";
-
-// If the `sub/foo` module is inaccessible, so is its index file.
-import { fooPackageVariable } from "./sub/foo/index.js";
 ```
 
 <pre class="language-text"><code class="language-text">nursery/useImportRestrictions.js:2:36 <a href="https://docs.rome.tools/lint/rules/useImportRestrictions">lint/nursery/useImportRestrictions</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -51,21 +42,62 @@ import { fooPackageVariable } from "./sub/foo/index.js";
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>import { fooPackageVariable } from &quot;./sub/foo.js&quot;;
    <strong>   │ </strong>                                   <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
     <strong>3 │ </strong>
-    <strong>4 │ </strong>// Attempt to import from `bar.ts` from outside its `aunt` module.
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Please import from </span><span style="color: rgb(38, 148, 255);"><strong>./sub</strong></span><span style="color: rgb(38, 148, 255);"> instead (you may need to re-export the symbol(s) from </span><span style="color: rgb(38, 148, 255);"><strong>./sub/foo.js</strong></span><span style="color: rgb(38, 148, 255);">).</span>
   
-nursery/useImportRestrictions.js:5:36 <a href="https://docs.rome.tools/lint/rules/useImportRestrictions">lint/nursery/useImportRestrictions</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+</code></pre>
+
+```jsx
+// Attempt to import from `bar.ts` from outside its `aunt` module.
+import { barPackageVariable } from "../aunt/bar.ts";
+```
+
+<pre class="language-text"><code class="language-text">nursery/useImportRestrictions.js:2:36 <a href="https://docs.rome.tools/lint/rules/useImportRestrictions">lint/nursery/useImportRestrictions</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Importing package private symbols is prohibited from outside the module directory.</span>
   
-    <strong>4 │ </strong>// Attempt to import from `bar.ts` from outside its `aunt` module.
-<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>5 │ </strong>import { barPackageVariable } from &quot;../aunt/bar.ts&quot;;
+    <strong>1 │ </strong>// Attempt to import from `bar.ts` from outside its `aunt` module.
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>import { barPackageVariable } from &quot;../aunt/bar.ts&quot;;
    <strong>   │ </strong>                                   <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
-    <strong>6 │ </strong>
-    <strong>7 │ </strong>// Assumed to resolve to a JS/TS file.
+    <strong>3 │ </strong>
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Please import from </span><span style="color: rgb(38, 148, 255);"><strong>../aunt</strong></span><span style="color: rgb(38, 148, 255);"> instead (you may need to re-export the symbol(s) from </span><span style="color: rgb(38, 148, 255);"><strong>../aunt/bar.ts</strong></span><span style="color: rgb(38, 148, 255);">).</span>
+  
+</code></pre>
+
+```jsx
+// Assumed to resolve to a JS/TS file.
+import { fooPackageVariable } from "./sub/foo";
+```
+
+<pre class="language-text"><code class="language-text">nursery/useImportRestrictions.js:2:36 <a href="https://docs.rome.tools/lint/rules/useImportRestrictions">lint/nursery/useImportRestrictions</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Importing package private symbols is prohibited from outside the module directory.</span>
+  
+    <strong>1 │ </strong>// Assumed to resolve to a JS/TS file.
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>import { fooPackageVariable } from &quot;./sub/foo&quot;;
+   <strong>   │ </strong>                                   <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
+    <strong>3 │ </strong>
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Please import from </span><span style="color: rgb(38, 148, 255);"><strong>./sub</strong></span><span style="color: rgb(38, 148, 255);"> instead (you may need to re-export the symbol(s) from </span><span style="color: rgb(38, 148, 255);"><strong>./sub/foo</strong></span><span style="color: rgb(38, 148, 255);">).</span>
+  
+</code></pre>
+
+```jsx
+// If the `sub/foo` module is inaccessible, so is its index file.
+import { fooPackageVariable } from "./sub/foo/index.js";
+```
+
+<pre class="language-text"><code class="language-text">nursery/useImportRestrictions.js:2:36 <a href="https://docs.rome.tools/lint/rules/useImportRestrictions">lint/nursery/useImportRestrictions</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Importing package private symbols is prohibited from outside the module directory.</span>
+  
+    <strong>1 │ </strong>// If the `sub/foo` module is inaccessible, so is its index file.
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>import { fooPackageVariable } from &quot;./sub/foo/index.js&quot;;
+   <strong>   │ </strong>                                   <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
+    <strong>3 │ </strong>
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Please import from </span><span style="color: rgb(38, 148, 255);"><strong>./sub/index.js</strong></span><span style="color: rgb(38, 148, 255);"> instead (you may need to re-export the symbol(s) from </span><span style="color: rgb(38, 148, 255);"><strong>./sub/foo/index.js</strong></span><span style="color: rgb(38, 148, 255);">).</span>
   
 </code></pre>
 

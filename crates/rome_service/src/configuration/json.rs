@@ -3,7 +3,7 @@ use bpaf::Bpaf;
 use serde::{Deserialize, Serialize};
 
 #[derive(Default, Debug, Deserialize, Serialize, Eq, PartialEq, Clone, Bpaf)]
-#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 #[serde(default, deny_unknown_fields)]
 pub struct JsonConfiguration {
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -25,12 +25,12 @@ impl MergeWith<JsonConfiguration> for JsonConfiguration {
 }
 
 #[derive(Debug, Default, Deserialize, Serialize, Eq, PartialEq, Clone, Bpaf)]
-#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 #[serde(default, deny_unknown_fields)]
 pub struct JavascriptOrganizeImports {}
 
 #[derive(Default, Debug, Deserialize, Serialize, Eq, PartialEq, Clone, Bpaf)]
-#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 #[serde(rename_all = "camelCase", default, deny_unknown_fields)]
 pub struct JsonParser {
     #[bpaf(hide)]

@@ -10,14 +10,12 @@ pub mod settings;
 pub mod workspace;
 
 mod diagnostics;
-#[cfg(feature = "schemars")]
+#[cfg(feature = "schema")]
 pub mod workspace_types;
 
 pub use crate::configuration::{
-    create_config, load_config,
-    string_set::{deserialize_string_set, serialize_string_set},
-    Configuration, ConfigurationBasePath, ConfigurationDiagnostic, JavascriptFormatter, MergeWith,
-    RuleConfiguration, Rules,
+    create_config, load_config, Configuration, ConfigurationBasePath, ConfigurationDiagnostic,
+    JavascriptFormatter, MergeWith, RuleConfiguration, Rules,
 };
 pub use crate::matcher::{MatchOptions, Matcher, Pattern};
 
