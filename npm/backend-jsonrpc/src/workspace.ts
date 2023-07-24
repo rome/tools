@@ -970,7 +970,7 @@ export type PossibleOptions =
 	| ComplexityOptions
 	| HooksOptions
 	| NamingConventionOptions
-	| RestrictedGlobals
+	| RestrictedGlobalsOptions
 	| null;
 /**
  * Options for the rule `noNestedModuleImports`.
@@ -1006,11 +1006,11 @@ export interface NamingConventionOptions {
 /**
  * Options for the rule `noRestrictedGlobals`.
  */
-export interface RestrictedGlobals {
+export interface RestrictedGlobalsOptions {
 	/**
 	 * A list of names that should trigger the rule
 	 */
-	deniedGlobals: StringSet;
+	deniedGlobals?: string[];
 }
 export interface Hooks {
 	/**
