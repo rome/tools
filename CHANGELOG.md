@@ -235,6 +235,31 @@ if no error diagnostics are emitted.
   var x = a => 1 ? 2 : 3;
   ```
 
+- Relax [`useLiteralEnumMembers`](https://docs.rome.tools/lint/rules/useLiteralEnumMembers/)
+
+  Enum members that refers to previous enum members are now allowed.
+  This allows common pattern in enum flags like in the following example:
+
+  ```ts
+  enum FileAccess {
+    None = 0,
+    Read = 1,
+    Write = 1 << 1,
+    All = Read | Write,
+  }
+  ```
+
+  Arbitrary numeric constant expressions are also allowed:
+
+  ```ts
+  enum FileAccess {
+    None = 0,
+    Read = 2**0,
+    Write = 2**1,
+    All = Read | Write,
+  }
+  ```
+
 - Improve [useLiteralKeys](https://docs.rome.tools/lint/rules/useLiteralKeys/).
 
   Now, the rule suggests simplifying computed properties to string literal properties:

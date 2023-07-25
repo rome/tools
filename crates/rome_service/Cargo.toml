@@ -38,9 +38,9 @@ serde_json          = { workspace = true, features = ["raw_value"] }
 tracing             = { workspace = true, features = ["attributes"] }
 
 [features]
-schemars = [
+schema = [
   "dep:schemars",
-  "rome_js_analyze/schemars",
+  "rome_js_analyze/schema",
   "rome_formatter/serde",
   "rome_js_factory",
   "rome_text_edit/schemars",

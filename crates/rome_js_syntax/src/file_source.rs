@@ -181,6 +181,27 @@ impl JsFileSource {
     pub const fn is_module(&self) -> bool {
         self.module_kind.is_module()
     }
+
+    pub fn file_extension(&self) -> &str {
+        match self.language {
+            Language::JavaScript => {
+                if matches!(self.variant, LanguageVariant::Jsx) {
+                    return "jsx";
+                }
+                match self.module_kind {
+                    ModuleKind::Script => "cjs",
+                    ModuleKind::Module => "js",
+                }
+            }
+            Language::TypeScript { .. } => {
+                if matches!(self.variant, LanguageVariant::Jsx) {
+                    "tsx"
+                } else {
+                    "ts"
+                }
+            }
+        }
+    }
 }
 
 impl TryFrom<&Path> for JsFileSource {

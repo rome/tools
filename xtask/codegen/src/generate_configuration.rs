@@ -151,7 +151,7 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
 
     let groups = quote! {
         use serde::{Deserialize, Serialize};
-        #[cfg(feature = "schemars")]
+        #[cfg(feature = "schema")]
         use schemars::JsonSchema;
         use crate::RuleConfiguration;
         use rome_analyze::RuleFilter;
@@ -160,7 +160,7 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
         use rome_diagnostics::{Category, Severity};
 
         #[derive(Deserialize, Serialize, Debug, Clone, Bpaf)]
-        #[cfg_attr(feature = "schemars", derive(JsonSchema))]
+        #[cfg_attr(feature = "schema", derive(JsonSchema))]
         #[serde(rename_all = "camelCase", deny_unknown_fields)]
         pub struct Rules {
             /// It enables the lint rules recommended by Rome. `true` by default.
@@ -481,7 +481,7 @@ fn generate_struct(group: &str, rules: &BTreeMap<&'static str, RuleMetadata>) ->
     };
     quote! {
         #[derive(Deserialize, Default, Serialize, Debug, Clone, Bpaf)]
-        #[cfg_attr(feature = "schemars", derive(JsonSchema))]
+        #[cfg_attr(feature = "schema", derive(JsonSchema))]
         #[serde(rename_all = "camelCase", default)]
         /// A list of rules that belong to this group
         pub struct #group_struct_name {

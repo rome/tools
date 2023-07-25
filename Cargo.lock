@@ -1780,6 +1780,7 @@ dependencies = [
  "rome_json_parser",
  "rome_json_syntax",
  "rome_rowan",
+ "schemars",
  "serde",
  "serde_json",
  "tracing",
@@ -1890,7 +1891,6 @@ dependencies = [
  "bpaf",
  "countme",
  "insta",
- "json_comments",
  "lazy_static",
  "natord",
  "roaring",
@@ -1906,16 +1906,14 @@ dependencies = [
  "rome_js_syntax",
  "rome_js_unicode_table",
  "rome_json_factory",
- "rome_json_parser",
  "rome_json_syntax",
  "rome_rowan",
- "rome_service",
+ "rome_test_utils",
  "rome_text_edit",
  "rustc-hash",
  "schemars",
  "serde",
  "serde_json",
- "similar",
  "smallvec",
  "tests_macros",
 ]
@@ -2016,14 +2014,18 @@ dependencies = [
 name = "rome_js_transform"
 version = "0.1.0"
 dependencies = [
+ "insta",
  "lazy_static",
  "rome_analyze",
+ "rome_console",
  "rome_diagnostics",
  "rome_js_factory",
  "rome_js_formatter",
  "rome_js_parser",
  "rome_js_syntax",
  "rome_rowan",
+ "rome_test_utils",
+ "tests_macros",
 ]
 
 [[package]]
@@ -2034,21 +2036,17 @@ version = "0.0.1"
 name = "rome_json_analyze"
 version = "0.0.0"
 dependencies = [
- "countme",
  "insta",
- "json_comments",
  "lazy_static",
  "rome_analyze",
  "rome_console",
- "rome_deserialize",
  "rome_diagnostics",
  "rome_json_factory",
  "rome_json_parser",
  "rome_json_syntax",
  "rome_rowan",
  "rome_service",
- "rome_text_edit",
- "similar",
+ "rome_test_utils",
  "tests_macros",
 ]
 
@@ -2223,6 +2221,27 @@ dependencies = [
  "rome_console",
  "rome_diagnostics",
  "rome_rowan",
+]
+
+[[package]]
+name = "rome_test_utils"
+version = "0.1.0"
+dependencies = [
+ "countme",
+ "json_comments",
+ "rome_analyze",
+ "rome_console",
+ "rome_deserialize",
+ "rome_diagnostics",
+ "rome_js_parser",
+ "rome_js_syntax",
+ "rome_json_parser",
+ "rome_json_syntax",
+ "rome_rowan",
+ "rome_service",
+ "serde",
+ "serde_json",
+ "similar",
 ]
 
 [[package]]

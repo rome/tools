@@ -4,11 +4,10 @@ use crate::configuration::parse::json::vcs::validate_vcs_configuration;
 use crate::configuration::vcs::VcsConfiguration;
 use crate::configuration::{
     FilesConfiguration, FormatterConfiguration, JavascriptConfiguration, LinterConfiguration,
-    StringSet,
 };
 use crate::Configuration;
 use rome_deserialize::json::{has_only_known_keys, VisitJsonNode};
-use rome_deserialize::{DeserializationDiagnostic, VisitNode};
+use rome_deserialize::{DeserializationDiagnostic, StringSet, VisitNode};
 use rome_json_syntax::{JsonLanguage, JsonSyntaxNode};
 use rome_rowan::SyntaxNode;
 

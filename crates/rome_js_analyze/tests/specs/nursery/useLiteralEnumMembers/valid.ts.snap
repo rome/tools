@@ -1,67 +1,33 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 96
 expression: valid.ts
 ---
 # Input
 ```js
-
-enum ValidRegex {
-  A = /test/
-}
-
-
 enum ValidString {
   A = 'test',
+  B = 'div' + 'ided',
+  C = `test2`,
+  D = `di` + `ided2`,
+  AA = A + ValidString.A,
 }
-
-
-enum ValidLiteral {
-  A = `test`,
-}
-
 
 enum ValidNumber {
-  A = 42,
-}
-
-
-enum ValidNumber {
-  A = -42,
-}
-
-
-enum ValidNumber {
-  A = +42,
-}
-
-
-enum ValidNull {
-  A = null,
-}
-
-
-enum ValidPlain {
   A,
+  B = 42,
+  C = -42,
+  D = +42,
+  E = 2 + 2,
+  F = A + ValidNumber.B,
 }
-
 
 enum ValidQuotedKey {
-  'a',
+  'A',
+  'B' = 1,
+  ['C'],
 }
 
-
-enum ValidQuotedKeyWithAssignment {
-  'a' = 1,
-}
-
-
-enum ValidKeyWithComputedSyntaxButNoComputedKey {
-  ['a'],
-}
-
-
-enum Foo {
+enum ValidFlags {
   A = 1 << 0,
   B = 1 >> 0,
   C = 1 >>> 0,
@@ -71,20 +37,33 @@ enum Foo {
   G = ~1,
 }
 
-
 enum FileAccess {
   None = 0,
   Read = 1,
   Write = 1 << 1,
-  All = (1 | (1 << 1)) // ESlint rejects this
+  All = (1 | (1 << 1)),
 }
 
-
-enum Parenthesis {
-  Left = ((("Left"))),
-  Right = (((1))),
+enum FileAccessWithRef {
+  None = 0,
+  Read = 1,
+  Write = FileAccessWithRef["Read"] << 1,
+  All = Read | FileAccessWithRef.Write,
 }
 
+enum ValidRef {
+  "A",
+  "B",
+  C = A | B,
+}
+
+enum ValidComputedRef {
+  ["A"],
+  ["B"],
+  C = A | B,
+}
+
+export {}
 ```
 
 

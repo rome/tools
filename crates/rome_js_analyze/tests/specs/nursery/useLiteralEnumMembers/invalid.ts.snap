@@ -1,80 +1,43 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 96
 expression: invalid.ts
 ---
 # Input
 ```js
-enum InvalidObject {
+enum InvalidLiterals {
   A = {},
+  B = [],
+  C = true,
+  D = 1n,
 }
-
-
-enum InvalidArray {
-  A = [],
-}
-
 
 enum InvalidTemplateLiteral {
   A = `foo ${0}`,
 }
 
-
 enum InvalidConstructor {
   A = new Set(),
-}
-
-
-enum InvalidExpression {
-  A = 2 + 2,
 }
 
 enum InvalidExpression {
   A = delete 2,
   B = -a,
   C = void 2,
-  D = ~2,
-  E = !0,
+  D = !0,
 }
-
 
 const variable = 'Test';
 enum InvalidVariable {
   A = 'TestStr',
-  B = 2,
-  C,
   V = variable,
 }
-
-
-enum InvalidEnumMember {
-  A = 'TestStr',
-  B = A,
-}
-
-
-const Valid = { A: 2 };
-enum InvalidObjectMember {
-  A = 'TestStr',
-  B = Valid.A,
-}
-
 
 enum Valid {
   A,
 }
 enum InvalidEnumMember {
-  A = 'TestStr',
-  B = Valid.A,
+  A = Valid.A,
 }
-
-
-const obj = { a: 1 };
-enum InvalidSpread {
-  A = 'TestStr',
-  B = { ...a },
-}
-
 
 const x = 1;
 enum Foo {
@@ -87,7 +50,17 @@ enum Foo {
   G = ~x,
 }
 
+enum InvalidRef {
+  A = A,
+  B = InvalidRef.B,
+  C = InvalidRef["C"],
+  D = E,
+  E = InvalidRef.F,
+  F = InvalidRef["G"],
+  G
+}
 
+export {}
 ```
 
 # Diagnostics
@@ -96,39 +69,84 @@ invalid.ts:2:7 lint/nursery/useLiteralEnumMembers ━━━━━━━━━━
 
   ! The enum member should be initialized with a literal value such as a number or a string.
   
-    1 │ enum InvalidObject {
+    1 │ enum InvalidLiterals {
   > 2 │   A = {},
       │       ^^
-    3 │ }
-    4 │ 
+    3 │   B = [],
+    4 │   C = true,
   
 
 ```
 
 ```
-invalid.ts:7:7 lint/nursery/useLiteralEnumMembers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:3:7 lint/nursery/useLiteralEnumMembers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The enum member should be initialized with a literal value such as a number or a string.
   
-    6 │ enum InvalidArray {
-  > 7 │   A = [],
+    1 │ enum InvalidLiterals {
+    2 │   A = {},
+  > 3 │   B = [],
       │       ^^
-    8 │ }
-    9 │ 
+    4 │   C = true,
+    5 │   D = 1n,
   
 
 ```
 
 ```
-invalid.ts:12:7 lint/nursery/useLiteralEnumMembers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:4:7 lint/nursery/useLiteralEnumMembers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The enum member should be initialized with a literal value such as a number or a string.
   
-    11 │ enum InvalidTemplateLiteral {
-  > 12 │   A = `foo ${0}`,
+    2 │   A = {},
+    3 │   B = [],
+  > 4 │   C = true,
+      │       ^^^^
+    5 │   D = 1n,
+    6 │ }
+  
+
+```
+
+```
+invalid.ts:5:7 lint/nursery/useLiteralEnumMembers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The enum member should be initialized with a literal value such as a number or a string.
+  
+    3 │   B = [],
+    4 │   C = true,
+  > 5 │   D = 1n,
+      │       ^^
+    6 │ }
+    7 │ 
+  
+
+```
+
+```
+invalid.ts:9:7 lint/nursery/useLiteralEnumMembers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The enum member should be initialized with a literal value such as a number or a string.
+  
+     8 │ enum InvalidTemplateLiteral {
+   > 9 │   A = `foo ${0}`,
        │       ^^^^^^^^^^
-    13 │ }
-    14 │ 
+    10 │ }
+    11 │ 
+  
+
+```
+
+```
+invalid.ts:13:7 lint/nursery/useLiteralEnumMembers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The enum member should be initialized with a literal value such as a number or a string.
+  
+    12 │ enum InvalidConstructor {
+  > 13 │   A = new Set(),
+       │       ^^^^^^^^^
+    14 │ }
+    15 │ 
   
 
 ```
@@ -138,25 +156,56 @@ invalid.ts:17:7 lint/nursery/useLiteralEnumMembers ━━━━━━━━━�
 
   ! The enum member should be initialized with a literal value such as a number or a string.
   
-    16 │ enum InvalidConstructor {
-  > 17 │   A = new Set(),
-       │       ^^^^^^^^^
-    18 │ }
-    19 │ 
+    16 │ enum InvalidExpression {
+  > 17 │   A = delete 2,
+       │       ^^^^^^^^
+    18 │   B = -a,
+    19 │   C = void 2,
   
 
 ```
 
 ```
-invalid.ts:22:7 lint/nursery/useLiteralEnumMembers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:18:7 lint/nursery/useLiteralEnumMembers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The enum member should be initialized with a literal value such as a number or a string.
   
-    21 │ enum InvalidExpression {
-  > 22 │   A = 2 + 2,
-       │       ^^^^^
-    23 │ }
-    24 │ 
+    16 │ enum InvalidExpression {
+    17 │   A = delete 2,
+  > 18 │   B = -a,
+       │       ^^
+    19 │   C = void 2,
+    20 │   D = !0,
+  
+
+```
+
+```
+invalid.ts:19:7 lint/nursery/useLiteralEnumMembers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The enum member should be initialized with a literal value such as a number or a string.
+  
+    17 │   A = delete 2,
+    18 │   B = -a,
+  > 19 │   C = void 2,
+       │       ^^^^^^
+    20 │   D = !0,
+    21 │ }
+  
+
+```
+
+```
+invalid.ts:20:7 lint/nursery/useLiteralEnumMembers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The enum member should be initialized with a literal value such as a number or a string.
+  
+    18 │   B = -a,
+    19 │   C = void 2,
+  > 20 │   D = !0,
+       │       ^^
+    21 │ }
+    22 │ 
   
 
 ```
@@ -166,56 +215,42 @@ invalid.ts:26:7 lint/nursery/useLiteralEnumMembers ━━━━━━━━━�
 
   ! The enum member should be initialized with a literal value such as a number or a string.
   
-    25 │ enum InvalidExpression {
-  > 26 │   A = delete 2,
+    24 │ enum InvalidVariable {
+    25 │   A = 'TestStr',
+  > 26 │   V = variable,
        │       ^^^^^^^^
-    27 │   B = -a,
-    28 │   C = void 2,
+    27 │ }
+    28 │ 
   
 
 ```
 
 ```
-invalid.ts:27:7 lint/nursery/useLiteralEnumMembers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:33:7 lint/nursery/useLiteralEnumMembers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The enum member should be initialized with a literal value such as a number or a string.
   
-    25 │ enum InvalidExpression {
-    26 │   A = delete 2,
-  > 27 │   B = -a,
-       │       ^^
-    28 │   C = void 2,
-    29 │   D = ~2,
-  
-
-```
-
-```
-invalid.ts:28:7 lint/nursery/useLiteralEnumMembers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! The enum member should be initialized with a literal value such as a number or a string.
-  
-    26 │   A = delete 2,
-    27 │   B = -a,
-  > 28 │   C = void 2,
-       │       ^^^^^^
-    29 │   D = ~2,
-    30 │   E = !0,
-  
-
-```
-
-```
-invalid.ts:30:7 lint/nursery/useLiteralEnumMembers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! The enum member should be initialized with a literal value such as a number or a string.
-  
-    28 │   C = void 2,
-    29 │   D = ~2,
-  > 30 │   E = !0,
-       │       ^^
     31 │ }
-    32 │ 
+    32 │ enum InvalidEnumMember {
+  > 33 │   A = Valid.A,
+       │       ^^^^^^^
+    34 │ }
+    35 │ 
+  
+
+```
+
+```
+invalid.ts:38:7 lint/nursery/useLiteralEnumMembers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The enum member should be initialized with a literal value such as a number or a string.
+  
+    36 │ const x = 1;
+    37 │ enum Foo {
+  > 38 │   A = x << 0,
+       │       ^^^^^^
+    39 │   B = x >> 0,
+    40 │   C = x >>> 0,
   
 
 ```
@@ -225,27 +260,146 @@ invalid.ts:39:7 lint/nursery/useLiteralEnumMembers ━━━━━━━━━�
 
   ! The enum member should be initialized with a literal value such as a number or a string.
   
-    37 │   B = 2,
-    38 │   C,
-  > 39 │   V = variable,
-       │       ^^^^^^^^
-    40 │ }
-    41 │ 
+    37 │ enum Foo {
+    38 │   A = x << 0,
+  > 39 │   B = x >> 0,
+       │       ^^^^^^
+    40 │   C = x >>> 0,
+    41 │   D = x | 0,
   
 
 ```
 
 ```
-invalid.ts:45:7 lint/nursery/useLiteralEnumMembers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:40:7 lint/nursery/useLiteralEnumMembers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The enum member should be initialized with a literal value such as a number or a string.
   
-    43 │ enum InvalidEnumMember {
-    44 │   A = 'TestStr',
-  > 45 │   B = A,
+    38 │   A = x << 0,
+    39 │   B = x >> 0,
+  > 40 │   C = x >>> 0,
+       │       ^^^^^^^
+    41 │   D = x | 0,
+    42 │   E = x & 0,
+  
+
+```
+
+```
+invalid.ts:41:7 lint/nursery/useLiteralEnumMembers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The enum member should be initialized with a literal value such as a number or a string.
+  
+    39 │   B = x >> 0,
+    40 │   C = x >>> 0,
+  > 41 │   D = x | 0,
+       │       ^^^^^
+    42 │   E = x & 0,
+    43 │   F = x ^ 0,
+  
+
+```
+
+```
+invalid.ts:42:7 lint/nursery/useLiteralEnumMembers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The enum member should be initialized with a literal value such as a number or a string.
+  
+    40 │   C = x >>> 0,
+    41 │   D = x | 0,
+  > 42 │   E = x & 0,
+       │       ^^^^^
+    43 │   F = x ^ 0,
+    44 │   G = ~x,
+  
+
+```
+
+```
+invalid.ts:43:7 lint/nursery/useLiteralEnumMembers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The enum member should be initialized with a literal value such as a number or a string.
+  
+    41 │   D = x | 0,
+    42 │   E = x & 0,
+  > 43 │   F = x ^ 0,
+       │       ^^^^^
+    44 │   G = ~x,
+    45 │ }
+  
+
+```
+
+```
+invalid.ts:44:7 lint/nursery/useLiteralEnumMembers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The enum member should be initialized with a literal value such as a number or a string.
+  
+    42 │   E = x & 0,
+    43 │   F = x ^ 0,
+  > 44 │   G = ~x,
+       │       ^^
+    45 │ }
+    46 │ 
+  
+
+```
+
+```
+invalid.ts:48:7 lint/nursery/useLiteralEnumMembers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The enum member should be initialized with a literal value such as a number or a string.
+  
+    47 │ enum InvalidRef {
+  > 48 │   A = A,
        │       ^
-    46 │ }
-    47 │ 
+    49 │   B = InvalidRef.B,
+    50 │   C = InvalidRef["C"],
+  
+
+```
+
+```
+invalid.ts:49:7 lint/nursery/useLiteralEnumMembers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The enum member should be initialized with a literal value such as a number or a string.
+  
+    47 │ enum InvalidRef {
+    48 │   A = A,
+  > 49 │   B = InvalidRef.B,
+       │       ^^^^^^^^^^^^
+    50 │   C = InvalidRef["C"],
+    51 │   D = E,
+  
+
+```
+
+```
+invalid.ts:50:7 lint/nursery/useLiteralEnumMembers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The enum member should be initialized with a literal value such as a number or a string.
+  
+    48 │   A = A,
+    49 │   B = InvalidRef.B,
+  > 50 │   C = InvalidRef["C"],
+       │       ^^^^^^^^^^^^^^^
+    51 │   D = E,
+    52 │   E = InvalidRef.F,
+  
+
+```
+
+```
+invalid.ts:51:7 lint/nursery/useLiteralEnumMembers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The enum member should be initialized with a literal value such as a number or a string.
+  
+    49 │   B = InvalidRef.B,
+    50 │   C = InvalidRef["C"],
+  > 51 │   D = E,
+       │       ^
+    52 │   E = InvalidRef.F,
+    53 │   F = InvalidRef["G"],
   
 
 ```
@@ -255,147 +409,27 @@ invalid.ts:52:7 lint/nursery/useLiteralEnumMembers ━━━━━━━━━�
 
   ! The enum member should be initialized with a literal value such as a number or a string.
   
-    50 │ enum InvalidObjectMember {
-    51 │   A = 'TestStr',
-  > 52 │   B = Valid.A,
-       │       ^^^^^^^
-    53 │ }
-    54 │ 
+    50 │   C = InvalidRef["C"],
+    51 │   D = E,
+  > 52 │   E = InvalidRef.F,
+       │       ^^^^^^^^^^^^
+    53 │   F = InvalidRef["G"],
+    54 │   G
   
 
 ```
 
 ```
-invalid.ts:61:7 lint/nursery/useLiteralEnumMembers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:53:7 lint/nursery/useLiteralEnumMembers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The enum member should be initialized with a literal value such as a number or a string.
   
-    59 │ enum InvalidEnumMember {
-    60 │   A = 'TestStr',
-  > 61 │   B = Valid.A,
-       │       ^^^^^^^
-    62 │ }
-    63 │ 
-  
-
-```
-
-```
-invalid.ts:68:7 lint/nursery/useLiteralEnumMembers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! The enum member should be initialized with a literal value such as a number or a string.
-  
-    66 │ enum InvalidSpread {
-    67 │   A = 'TestStr',
-  > 68 │   B = { ...a },
-       │       ^^^^^^^^
-    69 │ }
-    70 │ 
-  
-
-```
-
-```
-invalid.ts:74:7 lint/nursery/useLiteralEnumMembers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! The enum member should be initialized with a literal value such as a number or a string.
-  
-    72 │ const x = 1;
-    73 │ enum Foo {
-  > 74 │   A = x << 0,
-       │       ^^^^^^
-    75 │   B = x >> 0,
-    76 │   C = x >>> 0,
-  
-
-```
-
-```
-invalid.ts:75:7 lint/nursery/useLiteralEnumMembers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! The enum member should be initialized with a literal value such as a number or a string.
-  
-    73 │ enum Foo {
-    74 │   A = x << 0,
-  > 75 │   B = x >> 0,
-       │       ^^^^^^
-    76 │   C = x >>> 0,
-    77 │   D = x | 0,
-  
-
-```
-
-```
-invalid.ts:76:7 lint/nursery/useLiteralEnumMembers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! The enum member should be initialized with a literal value such as a number or a string.
-  
-    74 │   A = x << 0,
-    75 │   B = x >> 0,
-  > 76 │   C = x >>> 0,
-       │       ^^^^^^^
-    77 │   D = x | 0,
-    78 │   E = x & 0,
-  
-
-```
-
-```
-invalid.ts:77:7 lint/nursery/useLiteralEnumMembers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! The enum member should be initialized with a literal value such as a number or a string.
-  
-    75 │   B = x >> 0,
-    76 │   C = x >>> 0,
-  > 77 │   D = x | 0,
-       │       ^^^^^
-    78 │   E = x & 0,
-    79 │   F = x ^ 0,
-  
-
-```
-
-```
-invalid.ts:78:7 lint/nursery/useLiteralEnumMembers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! The enum member should be initialized with a literal value such as a number or a string.
-  
-    76 │   C = x >>> 0,
-    77 │   D = x | 0,
-  > 78 │   E = x & 0,
-       │       ^^^^^
-    79 │   F = x ^ 0,
-    80 │   G = ~x,
-  
-
-```
-
-```
-invalid.ts:79:7 lint/nursery/useLiteralEnumMembers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! The enum member should be initialized with a literal value such as a number or a string.
-  
-    77 │   D = x | 0,
-    78 │   E = x & 0,
-  > 79 │   F = x ^ 0,
-       │       ^^^^^
-    80 │   G = ~x,
-    81 │ }
-  
-
-```
-
-```
-invalid.ts:80:7 lint/nursery/useLiteralEnumMembers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! The enum member should be initialized with a literal value such as a number or a string.
-  
-    78 │   E = x & 0,
-    79 │   F = x ^ 0,
-  > 80 │   G = ~x,
-       │       ^^
-    81 │ }
-    82 │ 
+    51 │   D = E,
+    52 │   E = InvalidRef.F,
+  > 53 │   F = InvalidRef["G"],
+       │       ^^^^^^^^^^^^^^^
+    54 │   G
+    55 │ }
   
 
 ```

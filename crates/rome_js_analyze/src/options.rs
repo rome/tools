@@ -7,6 +7,9 @@ use crate::semantic_analyzers::nursery::use_exhaustive_dependencies::{
 use crate::semantic_analyzers::nursery::use_naming_convention::{
     naming_convention_options, NamingConventionOptions,
 };
+use crate::semantic_analyzers::style::no_restricted_globals::{
+    restricted_globals_options, RestrictedGlobalsOptions,
+};
 use bpaf::Bpaf;
 use rome_analyze::options::RuleOptions;
 use rome_analyze::RuleKey;
@@ -29,6 +32,8 @@ pub enum PossibleOptions {
     Hooks(#[bpaf(external(hooks_options), hide)] HooksOptions),
     /// Options for `useNamingConvention` rule
     NamingConvention(#[bpaf(external(naming_convention_options), hide)] NamingConventionOptions),
+    /// Options for `noRestrictedGlobals` rule
+    RestrictedGlobals(#[bpaf(external(restricted_globals_options), hide)] RestrictedGlobalsOptions),
     /// No options available
     #[default]
     NoOptions,
@@ -61,8 +66,15 @@ impl PossibleOptions {
             }
             "useNamingConvention" => {
                 let options = match self {
-                    PossibleOptions::NamingConvention(options) => *options,
+                    PossibleOptions::NamingConvention(options) => options.clone(),
                     _ => NamingConventionOptions::default(),
+                };
+                RuleOptions::new(options)
+            }
+            "noRestrictedGlobals" => {
+                let options = match self {
+                    PossibleOptions::RestrictedGlobals(options) => options.clone(),
+                    _ => RestrictedGlobalsOptions::default(),
                 };
                 RuleOptions::new(options)
             }
@@ -107,11 +119,20 @@ impl PossibleOptions {
                 }
                 "strictCase" | "enumMemberCase" => {
                     let mut options = match self {
-                        PossibleOptions::NamingConvention(options) => *options,
+                        PossibleOptions::NamingConvention(options) => options.clone(),
                         _ => NamingConventionOptions::default(),
                     };
                     options.visit_map(key.syntax(), value.syntax(), diagnostics)?;
                     *self = PossibleOptions::NamingConvention(options);
+                }
+
+                "deniedGlobals" => {
+                    let mut options = match self {
+                        PossibleOptions::RestrictedGlobals(options) => options.clone(),
+                        _ => RestrictedGlobalsOptions::default(),
+                    };
+                    options.visit_map(key.syntax(), value.syntax(), diagnostics)?;
+                    *self = PossibleOptions::RestrictedGlobals(options);
                 }
 
                 _ => (),
@@ -154,6 +175,15 @@ impl PossibleOptions {
                         key_name,
                         node.range(),
                         &["maxAllowedComplexity"],
+                    ));
+                }
+            }
+            "noRestrictedGlobals" => {
+                if !matches!(key_name, "deniedGlobals") {
+                    diagnostics.push(DeserializationDiagnostic::new_unknown_key(
+                        key_name,
+                        node.range(),
+                        &["deniedGlobals"],
                     ));
                 }
             }

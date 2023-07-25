@@ -193,6 +193,187 @@ fn string() {
 }
 
 #[test]
+fn number() {
+    assert_lex! {
+        "5098382",
+        CSS_NUMBER_LITERAL:7,
+        EOF:0
+    }
+
+    assert_lex! {
+        "509.382",
+        CSS_NUMBER_LITERAL:7,
+        EOF:0
+    }
+
+    assert_lex! {
+        ".382",
+        CSS_NUMBER_LITERAL:4,
+        EOF:0
+    }
+
+    assert_lex! {
+        "+123",
+        CSS_NUMBER_LITERAL:4,
+        EOF:0
+    }
+
+    assert_lex! {
+        "-123",
+        CSS_NUMBER_LITERAL:4,
+        EOF:0
+    }
+
+    assert_lex! {
+        "+123",
+        CSS_NUMBER_LITERAL:4,
+        EOF:0
+    }
+
+    assert_lex! {
+        "123e10",
+        CSS_NUMBER_LITERAL:6,
+        EOF:0
+    }
+
+    assert_lex! {
+        "123e+10",
+        CSS_NUMBER_LITERAL:7,
+        EOF:0
+    }
+
+    assert_lex! {
+        "123e-10",
+        CSS_NUMBER_LITERAL:7,
+        EOF:0
+    }
+
+    assert_lex! {
+        "123E10",
+        CSS_NUMBER_LITERAL:6,
+        EOF:0
+    }
+
+    assert_lex! {
+        "123E+10",
+        CSS_NUMBER_LITERAL:7,
+        EOF:0
+    }
+
+    assert_lex! {
+        "123E-10",
+        CSS_NUMBER_LITERAL:7,
+        EOF:0
+    }
+}
+
+#[test]
+fn cdo_and_cdc() {
+    assert_lex! {
+        "<!-- -->",
+        CDO:4,
+        WHITESPACE:1,
+        CDC:3
+        EOF:0
+    }
+}
+
+#[test]
+fn dimension() {
+    assert_lex! {
+        "100vh",
+        CSS_NUMBER_LITERAL:3,
+        IDENT:2,
+        EOF:0
+    }
+}
+
+#[test]
+fn keywords() {
+    assert_lex! {
+        "media keyframes important from",
+        MEDIA_KW:5,
+        WHITESPACE:1,
+        KEYFRAMES_KW:9,
+        WHITESPACE:1,
+        IMPORTANT_KW:9,
+        WHITESPACE:1,
+        FROM_KW:4,
+        EOF:0
+    }
+}
+
+#[test]
+fn identifier() {
+    assert_lex! {
+        "--",
+        MINUS:1,
+        MINUS:1,
+        EOF:0
+    }
+
+    assert_lex! {
+        "i4f5g7",
+        IDENT:6,
+        EOF:0
+    }
+
+    assert_lex! {
+        "class",
+        IDENT:5,
+        EOF:0
+    }
+
+    assert_lex! {
+        r#"cl\aass"#,
+        IDENT:7,
+        EOF:0
+    }
+
+    assert_lex! {
+        r#"\ccl\aass"#,
+        IDENT:9,
+        EOF:0
+    }
+
+    assert_lex! {
+        "-class",
+        IDENT:6,
+        EOF:0
+    }
+
+    assert_lex! {
+        r#"-cl\aass"#,
+        IDENT:8,
+        EOF:0
+    }
+
+    assert_lex! {
+        r#"-\acl\aass"#,
+        IDENT:10,
+        EOF:0
+    }
+
+    assert_lex! {
+        "--property",
+        CSS_CUSTOM_PROPERTY:10,
+        EOF:0
+    }
+
+    assert_lex! {
+        r#"--prop\eerty"#,
+        CSS_CUSTOM_PROPERTY:12,
+        EOF:0
+    }
+
+    assert_lex! {
+        r#"--\pprop\eerty"#,
+        CSS_CUSTOM_PROPERTY:14,
+        EOF:0
+    }
+}
+
+#[test]
 fn single_line_comments() {
     assert_lex! {
         "//abc

@@ -970,6 +970,7 @@ export type PossibleOptions =
 	| ComplexityOptions
 	| HooksOptions
 	| NamingConventionOptions
+	| RestrictedGlobalsOptions
 	| null;
 /**
  * Options for the rule `noNestedModuleImports`.
@@ -1001,6 +1002,15 @@ export interface NamingConventionOptions {
 	 * If `false`, then consecutive uppercase are allowed in _camel_ and _pascal_ cases. This does not affect other [Case].
 	 */
 	strictCase: boolean;
+}
+/**
+ * Options for the rule `noRestrictedGlobals`.
+ */
+export interface RestrictedGlobalsOptions {
+	/**
+	 * A list of names that should trigger the rule
+	 */
+	deniedGlobals?: string[];
 }
 export interface Hooks {
 	/**

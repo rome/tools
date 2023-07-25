@@ -96,3 +96,45 @@ where
 }
 
 pub(crate) type JsBatchMutation = BatchMutation<JsLanguage>;
+
+#[cfg(test)]
+mod tests {
+    use rome_analyze::{AnalyzerOptions, Never, RuleCategories, RuleFilter};
+    use rome_js_parser::{parse, JsParserOptions};
+    use rome_js_syntax::JsFileSource;
+    use std::slice;
+
+    use crate::{transform, AnalysisFilter, ControlFlow};
+
+    #[ignore]
+    #[test]
+    fn quick_test() {
+        const SOURCE: &str = r#"enum Foo { Lorem, Ipsum }"#;
+
+        let parsed = parse(SOURCE, JsFileSource::tsx(), JsParserOptions::default());
+
+        let options = AnalyzerOptions::default();
+        let rule_filter = RuleFilter::Rule("transformations", "transformEnum");
+
+        transform(
+            &parsed.tree(),
+            AnalysisFilter {
+                categories: RuleCategories::TRANSFORMATION,
+                enabled_rules: Some(slice::from_ref(&rule_filter)),
+                ..AnalysisFilter::default()
+            },
+            &options,
+            JsFileSource::tsx(),
+            |signal| {
+                for transformation in signal.transformations() {
+                    let new_code = transformation.mutation.commit();
+                    eprintln!("{new_code}");
+                }
+
+                ControlFlow::<Never>::Continue(())
+            },
+        );
+
+        // assert_eq!(error_ranges.as_slice(), &[]);
+    }
+}

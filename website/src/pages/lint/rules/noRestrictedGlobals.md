@@ -39,6 +39,23 @@ function f(event) {
 }
 ```
 
+## Options
+
+Use the options to specify additional globals that you want to restrict in your
+source code.
+
+```
+{
+    "//": "...",
+    "options": {
+        "deniedGlobals": ["$", "MooTools"]
+    }
+}
+```
+
+In the example above, the rule will emit a diagnostics if tried to use `$` or `MooTools` without
+creating a local variable.
+
 ## Related links
 
 - [Disable a rule](/linter/#disable-a-lint-rule)

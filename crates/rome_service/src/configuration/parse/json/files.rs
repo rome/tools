@@ -1,7 +1,6 @@
-use crate::configuration::string_set::StringSet;
 use crate::configuration::FilesConfiguration;
 use rome_deserialize::json::{has_only_known_keys, VisitJsonNode};
-use rome_deserialize::{DeserializationDiagnostic, VisitNode};
+use rome_deserialize::{DeserializationDiagnostic, StringSet, VisitNode};
 use rome_json_syntax::JsonLanguage;
 use rome_rowan::SyntaxNode;
 use std::num::NonZeroU64;
