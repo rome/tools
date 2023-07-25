@@ -291,9 +291,8 @@ impl ImportGroup {
         // the sequence
         let mut iter = self.nodes.values().flat_map(|nodes| nodes.iter());
 
-        let import_node = match iter.next() {
-            Some(node) => node,
-            None => return true,
+        let Some(import_node) = iter.next() else {
+            return true;
         };
 
         if !import_node.is_sorted() {
@@ -345,11 +344,8 @@ impl From<JsImport> for ImportNode {
             };
 
             let named_import = import_named_clause.named_import().ok()?;
-            let named_import_specifiers = match named_import {
-                AnyJsNamedImport::JsNamespaceImportSpecifier(_) => return None,
-                AnyJsNamedImport::JsNamedImportSpecifiers(named_import_specifiers) => {
-                    named_import_specifiers
-                }
+            let AnyJsNamedImport::JsNamedImportSpecifiers(named_import_specifiers) = named_import else {
+                return None;
             };
 
             let mut result = BTreeMap::new();
@@ -383,9 +379,8 @@ impl ImportNode {
             .values()
             .map(|(node, _)| node.syntax().text_range().start());
 
-        let mut last = match iter.next() {
-            Some(last) => last,
-            None => return true,
+        let Some(mut last) = iter.next() else {
+            return true;
         };
 
         iter.all(|value| {
@@ -640,6 +635,12 @@ struct ImportKey(SyntaxTokenText);
 
 impl Ord for ImportKey {
     fn cmp(&self, other: &Self) -> Ordering {
+        let own_category = ImportCategory::from(self.0.text());
+        let other_category = ImportCategory::from(other.0.text());
+        if own_category != other_category {
+            return own_category.cmp(&other_category);
+        }
+
         // Sort imports using natural ordering
         natord::compare(&self.0, &other.0)
     }
@@ -656,6 +657,85 @@ impl Eq for ImportKey {}
 impl PartialEq for ImportKey {
     fn eq(&self, other: &Self) -> bool {
         self.0 == other.0
+    }
+}
+
+/// Imports get sorted by categories before being sorted on natural order.
+///
+/// The rationale for this is that imports "further away" from the source file
+/// are listed before imports closer to the source file.
+#[derive(Eq, Ord, PartialEq, PartialOrd)]
+enum ImportCategory {
+    /// Anythign with an explicit `node:` prefix, or one of the recognized
+    /// Node built-ins, such `"fs"`, `"child_process"`, etc..
+    NodeBuiltin,
+    /// NPM dependencies with an explicit `npm:` prefix, such as supported by
+    /// Deno.
+    Npm,
+    /// Imports from an absolute URL such as supported by browsers.
+    Url,
+    /// Anything without explicit protocol specifier is assumed to be a library
+    /// import. Because we currently do not have configuration for this, this
+    /// may (incorrectly) include source imports through custom import mappings
+    /// as well.
+    Library,
+    /// Relative file imports.
+    Relative,
+    /// Any unrecognized protocols are grouped here. These may include custom
+    /// protocols such as supported by bundlers.
+    Other,
+}
+
+const NODE_BUILTINS: &[&str] = &[
+    "assert",
+    "buffer",
+    "child_process",
+    "cluster",
+    "console",
+    "constants",
+    "crypto",
+    "dgram",
+    "dns",
+    "domain",
+    "events",
+    "fs",
+    "http",
+    "https",
+    "module",
+    "net",
+    "os",
+    "path",
+    "punycode",
+    "querystring",
+    "readline",
+    "repl",
+    "stream",
+    "string_decoder",
+    "sys",
+    "timers",
+    "tls",
+    "tty",
+    "url",
+    "util",
+    "vm",
+    "zlib",
+];
+
+impl From<&str> for ImportCategory {
+    fn from(value: &str) -> Self {
+        if value.starts_with("node:") || NODE_BUILTINS.contains(&value) {
+            Self::NodeBuiltin
+        } else if value.starts_with("npm:") {
+            Self::Npm
+        } else if value.starts_with("http:") || value.starts_with("https:") {
+            Self::Url
+        } else if value.starts_with(".") {
+            Self::Relative
+        } else if !value.contains(':') {
+            Self::Library
+        } else {
+            Self::Other
+        }
     }
 }
 
