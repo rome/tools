@@ -729,7 +729,7 @@ impl From<&str> for ImportCategory {
             Self::Npm
         } else if value.starts_with("http:") || value.starts_with("https:") {
             Self::Url
-        } else if value.starts_with(".") {
+        } else if value.starts_with('.') {
             Self::Relative
         } else if !value.contains(':') {
             Self::Library
