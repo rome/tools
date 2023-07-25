@@ -30,7 +30,7 @@ pub mod raw_language;
 #[cfg(feature = "serde")]
 mod serde_impls;
 mod syntax_factory;
-mod syntax_token_text;
+mod token_text;
 mod tree_builder;
 
 pub use rome_text_size::{TextLen, TextRange, TextSize};
@@ -48,7 +48,7 @@ pub use crate::{
     },
     syntax_factory::*,
     syntax_node_text::SyntaxNodeText,
-    syntax_token_text::SyntaxTokenText,
+    token_text::TokenText,
     tree_builder::{Checkpoint, TreeBuilder},
     utility_types::{Direction, NodeOrToken, TokenAtOffset, WalkEvent},
 };

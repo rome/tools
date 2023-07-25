@@ -1,6 +1,6 @@
 use super::*;
 use rome_js_syntax::TextRange;
-use rome_rowan::SyntaxTokenText;
+use rome_rowan::TokenText;
 use rustc_hash::FxHashMap;
 use std::sync::Arc;
 
@@ -15,7 +15,7 @@ pub(crate) struct SemanticModelScopeData {
     // All bindings of this scope (points to SemanticModelData::bindings)
     pub(crate) bindings: Vec<usize>,
     // Map pointing to the [bindings] vec  of each bindings by its name
-    pub(crate) bindings_by_name: FxHashMap<SyntaxTokenText, usize>,
+    pub(crate) bindings_by_name: FxHashMap<TokenText, usize>,
     // All read references of a scope
     pub(crate) read_references: Vec<SemanticModelScopeReference>,
     // All write references of a scope

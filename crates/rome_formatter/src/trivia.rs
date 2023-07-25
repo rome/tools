@@ -304,7 +304,7 @@ where
 {
     fn fmt(&self, f: &mut Formatter<C>) -> FormatResult<()> {
         let trimmed_range = self.token.text_trimmed_range();
-        syntax_token_text_slice(self.token, trimmed_range).fmt(f)
+        located_token_text(self.token, trimmed_range).fmt(f)
     }
 }
 /// Formats the skipped token trivia of a removed token and marks the token as tracked.
@@ -547,7 +547,7 @@ impl<L: Language> FormatSkippedTokenTrivia<'_, L> {
                 length: skipped_range.len(),
             },
         )))?;
-        write!(f, [syntax_token_text_slice(self.token, skipped_range)])?;
+        write!(f, [located_token_text(self.token, skipped_range)])?;
         f.write_element(FormatElement::Tag(Tag::EndVerbatim))?;
 
         // Write whitespace separator between skipped/last comment and token

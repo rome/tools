@@ -1,4 +1,4 @@
-use rome_rowan::{SyntaxResult, SyntaxTokenText, TextSize};
+use rome_rowan::{SyntaxResult, TextRange, TextSize, TokenText};
 
 use crate::JsDirective;
 
@@ -20,19 +20,19 @@ impl JsDirective {
     ///         let text = js_directive.inner_string_text().unwrap();
     ///         assert_eq!(text, "use strict")
     /// ```
-    pub fn inner_string_text(&self) -> SyntaxResult<SyntaxTokenText> {
+    pub fn inner_string_text(&self) -> SyntaxResult<TokenText> {
         let value = self.value_token()?;
         let mut text = value.token_text_trimmed();
 
         static QUOTES: [char; 2] = ['"', '\''];
 
         if text.starts_with(QUOTES) {
-            let range = text.range().add_start(TextSize::from(1));
+            let range = TextRange::new(1.into(), text.len());
             text = text.slice(range);
         }
 
         if text.ends_with(QUOTES) {
-            let range = text.range().sub_end(TextSize::from(1));
+            let range = TextRange::new(0.into(), text.len() - TextSize::from(1));
             text = text.slice(range);
         }
 

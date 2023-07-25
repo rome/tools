@@ -7,7 +7,7 @@ use rome_js_syntax::{
     JsStaticMemberExpression, JsSyntaxKind, JsxChildList, JsxExpressionChild, JsxTagExpression,
     JsxText, TextLen,
 };
-use rome_rowan::{Direction, SyntaxResult, SyntaxTokenText, TextRange, TextSize};
+use rome_rowan::{Direction, SyntaxResult, TextRange, TextSize, TokenText};
 use std::iter::{FusedIterator, Peekable};
 use std::str::Chars;
 
@@ -401,12 +401,12 @@ impl JsxChild {
 /// A word in a Jsx Text. A word is string sequence that isn't separated by any JSX whitespace.
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub(crate) struct JsxWord {
-    text: SyntaxTokenText,
+    text: TokenText,
     source_position: TextSize,
 }
 
 impl JsxWord {
-    fn new(text: SyntaxTokenText, source_position: TextSize) -> Self {
+    fn new(text: TokenText, source_position: TextSize) -> Self {
         JsxWord {
             text,
             source_position,
@@ -425,7 +425,7 @@ impl JsxWord {
 
 impl Format<JsFormatContext> for JsxWord {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
-        f.write_element(FormatElement::SyntaxTokenTextSlice {
+        f.write_element(FormatElement::LocatedTokenText {
             source_position: self.source_position,
             slice: self.text.clone(),
         })
