@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 80
 expression: groups.js
 ---
 # Input
@@ -8,6 +7,7 @@ expression: groups.js
 import uncle from "../uncle";
 import sibling from "./sibling";
 import express from "npm:epxress";
+import imageUrl from "url:./image.png";
 import assert from "node:assert";
 import aunt from "../aunt";
 import { VERSION } from "https://deno.land/std/version.ts";
@@ -17,7 +17,7 @@ import { mock, test } from "node:test";
 
 # Actions
 ```diff
-@@ -1,7 +1,7 @@
+@@ -1,8 +1,8 @@
 +import assert from "node:assert";
 +import { mock, test } from "node:test";
 +import express from "npm:epxress";
@@ -26,6 +26,7 @@ import { mock, test } from "node:test";
  import uncle from "../uncle";
  import sibling from "./sibling";
 -import express from "npm:epxress";
+ import imageUrl from "url:./image.png";
 -import assert from "node:assert";
 -import aunt from "../aunt";
 -import { VERSION } from "https://deno.land/std/version.ts";
