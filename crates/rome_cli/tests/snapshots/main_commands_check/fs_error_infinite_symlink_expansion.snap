@@ -16,21 +16,21 @@ internalError/io ━━━━━━━━━━━━━━━━━━━━━
 # Emitted Messages
 
 ```block
-<TEMP_DIR>/rome_test_infinite_symlink_exapansion/prefix internalError/fs ━━━━━━━━━━━━━━━━━━━━
+<TEMP_DIR>/check_rome_test_infinite_symlink_expansion/prefix internalError/fs ━━━━━━━━━━━━━━━━━━━━
 
   ! Infinite symlink expansion
   
-  × Rome encountered a file system entry that leads to an infinite symbolic link expansion, causing an infinite cycle: <TEMP_DIR>/rome_test_infinite_symlink_exapansion/prefix
+  × Rome encountered a file system entry that leads to an infinite symbolic link expansion, causing an infinite cycle: <TEMP_DIR>/check_rome_test_infinite_symlink_expansion/prefix
   
 
 ```
 
 ```block
-<TEMP_DIR>/rome_test_infinite_symlink_exapansion/prefix internalError/fs ━━━━━━━━━━━━━━━━━━━━
+<TEMP_DIR>/check_rome_test_infinite_symlink_expansion/prefix internalError/fs ━━━━━━━━━━━━━━━━━━━━
 
   ! Infinite symlink expansion
   
-  × Rome encountered a file system entry that leads to an infinite symbolic link expansion, causing an infinite cycle: <TEMP_DIR>/rome_test_infinite_symlink_exapansion/prefix
+  × Rome encountered a file system entry that leads to an infinite symbolic link expansion, causing an infinite cycle: <TEMP_DIR>/check_rome_test_infinite_symlink_expansion/prefix
   
 
 ```
