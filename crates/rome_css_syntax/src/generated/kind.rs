@@ -212,6 +212,7 @@ pub enum CssSyntaxKind {
     COMMENT,
     MULTILINE_COMMENT,
     CSS_ROOT,
+    CSS_RULE_LIST,
     CSS_ID_SELECTOR_PATTERN,
     CSS_RULE,
     CSS_SELECTOR_LIST,
@@ -288,7 +289,8 @@ impl CssSyntaxKind {
     }
     pub const fn is_list(self) -> bool {
         match self {
-            CSS_SELECTOR_LIST
+            CSS_RULE_LIST
+            | CSS_SELECTOR_LIST
             | CSS_ANY_SELECTOR_PATTERN_LIST
             | CSS_AT_KEYFRAMES_ITEM_LIST
             | CSS_AT_MEDIA_QUERY_LIST

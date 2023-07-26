@@ -38,7 +38,11 @@ SyntaxElement = SyntaxElement
 
 CssBogus = SyntaxElement*
 
-CssRoot = AnyCssRule*
+CssRoot =
+	rules: CssRuleList
+	eof: 'EOF'
+
+CssRuleList = AnyCssRule*
 
 AnyCssRule =
 	CssRule
