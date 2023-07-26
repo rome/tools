@@ -1,7 +1,7 @@
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::JsModuleSource;
-use rome_rowan::{AstNode, SyntaxTokenText};
+use rome_rowan::{AstNode, TokenText};
 
 const INDEX_BASENAMES: &[&str] = &["index", "mod"];
 
@@ -119,7 +119,7 @@ pub(crate) struct ImportRestrictionsState {
     suggestion: String,
 }
 
-fn get_restricted_import(module_path: &SyntaxTokenText) -> Option<ImportRestrictionsState> {
+fn get_restricted_import(module_path: &TokenText) -> Option<ImportRestrictionsState> {
     if !module_path.starts_with('.') {
         return None;
     }
