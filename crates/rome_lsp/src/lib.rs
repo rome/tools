@@ -1,5 +1,6 @@
 mod capabilities;
 mod converters;
+mod diagnostics;
 mod documents;
 mod extension_settings;
 mod handlers;

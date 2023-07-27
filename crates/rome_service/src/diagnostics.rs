@@ -386,9 +386,10 @@ pub struct CantReadFile {
 #[diagnostic(
     category = "internalError/fs",
     message(
-        message("The file "{self.path}" was ignored"),
-        description = "The file {path} was ignored"
-    )
+        message("The file "{self.path}" was ignored."),
+        description = "The file {path} was ignored."
+    ),
+    severity = Warning
 )]
 pub struct FileIgnored {
     #[location(resource)]
