@@ -163,6 +163,7 @@ pub const JS_KINDS_SRC: KindsSrc = KindsSrc {
         "override",
         "of",
         "out",
+        "using",
     ],
     literals: &[
         "JS_NUMBER_LITERAL",
