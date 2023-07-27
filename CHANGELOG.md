@@ -108,6 +108,8 @@ if no error diagnostics are emitted.
 #### Other changes
 
 - The Rome LSP is now able to show diagnostics that belong to JSON lint rules.
+- Fix [#4564](https://github.com/rome/tools/issues/4564), now files too large don't emit errors.
+- The Rome LSP now sends client messages when files are ignored or too big.
 
 ### Formatter
 
