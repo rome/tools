@@ -175,12 +175,7 @@ fn collect_control_characters_from_expression(
     callee: &AnyJsExpression,
     js_call_arguments: &JsCallArguments,
 ) -> Option<Vec<String>> {
-    let js_identifier = match callee {
-        AnyJsExpression::JsIdentifierExpression(js_identifier) => js_identifier,
-        _ => return None,
-    };
-
-    if js_identifier.name().ok()?.has_name("RegExp") {
+    if callee.as_js_reference_identifier()?.has_name("RegExp") {
         let mut args = js_call_arguments.args().iter();
         let raw_pattern = args
             .next()

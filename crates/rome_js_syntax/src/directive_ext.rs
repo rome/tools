@@ -1,6 +1,6 @@
-use rome_rowan::{SyntaxResult, TextRange, TextSize, TokenText};
+use rome_rowan::{SyntaxResult, TokenText};
 
-use crate::JsDirective;
+use crate::{inner_string_text, JsDirective};
 
 impl JsDirective {
     /// Get the inner text of a string not including the quotes
@@ -21,22 +21,7 @@ impl JsDirective {
     ///         assert_eq!(text, "use strict")
     /// ```
     pub fn inner_string_text(&self) -> SyntaxResult<TokenText> {
-        let value = self.value_token()?;
-        let mut text = value.token_text_trimmed();
-
-        static QUOTES: [char; 2] = ['"', '\''];
-
-        if text.starts_with(QUOTES) {
-            let range = TextRange::new(1.into(), text.len());
-            text = text.slice(range);
-        }
-
-        if text.ends_with(QUOTES) {
-            let range = TextRange::new(0.into(), text.len() - TextSize::from(1));
-            text = text.slice(range);
-        }
-
-        Ok(text)
+        Ok(inner_string_text(&self.value_token()?))
     }
 }
 

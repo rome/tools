@@ -146,7 +146,7 @@ fn has_type_image_attribute(element: &AnyJsxElement) -> bool {
         .map_or(false, |attribute| {
             attribute
                 .as_static_value()
-                .map_or(false, |value| value.is_string_constant("image"))
+                .map_or(false, |value| value.text() == "image")
         })
 }
 

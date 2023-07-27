@@ -1,5 +1,5 @@
-use crate::{AnyJsImportClause, JsImport, JsModuleSource, TextSize};
-use rome_rowan::{SyntaxResult, TextRange, TokenText};
+use crate::{inner_string_text, AnyJsImportClause, JsImport, JsModuleSource};
+use rome_rowan::{SyntaxResult, TokenText};
 
 impl JsImport {
     /// It checks if the source of an import against the string `source_to_check`
@@ -42,21 +42,6 @@ impl JsModuleSource {
     /// assert_eq!(text.text(), "react");
     /// ```
     pub fn inner_string_text(&self) -> SyntaxResult<TokenText> {
-        let value = self.value_token()?;
-        let mut text = value.token_text_trimmed();
-
-        static QUOTES: [char; 2] = ['"', '\''];
-
-        if text.starts_with(QUOTES) {
-            let range = TextRange::new(1.into(), text.len());
-            text = text.slice(range);
-        }
-
-        if text.ends_with(QUOTES) {
-            let range = TextRange::new(0.into(), text.len() - TextSize::from(1));
-            text = text.slice(range);
-        }
-
-        Ok(text)
+        Ok(inner_string_text(&self.value_token()?))
     }
 }
