@@ -895,13 +895,13 @@ fn fs_error_infinite_symlink_expansion_to_files() {
     #[cfg(target_family = "unix")]
     {
         symlink(&symlink2_path, &symlink1_path).unwrap();
-        symlink(symlink1_path, symlink2_path).unwrap();
+        symlink(&symlink1_path, &symlink2_path).unwrap();
     }
 
     #[cfg(target_os = "windows")]
     {
         check_windows_symlink!(symlink_dir(&symlink2_path, &symlink1_path));
-        check_windows_symlink!(symlink_dir(symlink1_path, symlink2_path));
+        check_windows_symlink!(symlink_dir(&symlink1_path, &symlink2_path));
     }
 
     let result = run_cli(
@@ -925,12 +925,12 @@ fn fs_error_infinite_symlink_expansion_to_files() {
         .out_buffer
         .iter()
         .flat_map(|msg| msg.content.0.iter())
-        .any(|node| node.content.contains("/prefix/symlink1 internalError/fs")));
+        .any(|node| node.content.contains(&symlink1_path.display().to_string())));
     assert!(console
         .out_buffer
         .iter()
         .flat_map(|msg| msg.content.0.iter())
-        .any(|node| node.content.contains("/foo/bar/symlink2 internalError/fs")));
+        .any(|node| node.content.contains(&symlink2_path.display().to_string())));
 }
 
 #[test]
