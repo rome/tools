@@ -65,7 +65,7 @@ impl Rule for UseLiteralKeys {
                 if member.value().ok()?.kind() == JsSyntaxKind::JS_STRING_LITERAL {
                     let name = member.name().ok()?;
                     if is_js_ident(&name) {
-                        return Some((member.range(), name));
+                        return Some((member.range(), name.to_string()));
                     }
                 }
                 return None;

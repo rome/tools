@@ -28,6 +28,10 @@ impl TriviaPieceKind {
         matches!(self, TriviaPieceKind::Whitespace)
     }
 
+    pub const fn is_comment(&self) -> bool {
+        self.is_single_line_comment() || self.is_multiline_comment()
+    }
+
     pub const fn is_single_line_comment(&self) -> bool {
         matches!(self, TriviaPieceKind::SingleLineComment)
     }
@@ -683,7 +687,7 @@ impl<L: Language> std::fmt::Debug for SyntaxTrivia<L> {
 /// use rome_rowan::{trim_leading_trivia_pieces, RawSyntaxToken, SyntaxToken, TriviaPiece};
 ///
 /// let token = SyntaxToken::<RawLanguage>::new_detached(
-///     RawLanguageKind::LET_TOKEN,  
+///     RawLanguageKind::LET_TOKEN,
 ///     "\n\t /*c*/ let \t",
 ///     [TriviaPiece::newline(1), TriviaPiece::whitespace(2), TriviaPiece::multi_line_comment(5), TriviaPiece::whitespace(1)],
 ///     [TriviaPiece::whitespace(2)]
@@ -719,7 +723,7 @@ pub fn trim_leading_trivia_pieces<L: Language>(
 /// use rome_rowan::{trim_trailing_trivia_pieces, RawSyntaxToken, SyntaxToken, TriviaPiece};
 ///
 /// let token = SyntaxToken::<RawLanguage>::new_detached(
-///     RawLanguageKind::LET_TOKEN,  
+///     RawLanguageKind::LET_TOKEN,
 ///     "\t/*c*/\n\t let ",
 ///     [TriviaPiece::whitespace(1), TriviaPiece::multi_line_comment(5), TriviaPiece::newline(1), TriviaPiece::whitespace(2)],
 ///     [TriviaPiece::whitespace(1)],
@@ -759,7 +763,7 @@ pub fn trim_trailing_trivia_pieces<L: Language>(
 /// use rome_rowan::{chain_trivia_pieces, RawSyntaxToken, SyntaxToken, TriviaPiece, TriviaPieceKind};
 ///
 ///  let first_token = SyntaxToken::<RawLanguage>::new_detached(
-///     RawLanguageKind::LET_TOKEN,  
+///     RawLanguageKind::LET_TOKEN,
 ///     "\n\t let \t\t",
 ///     [TriviaPiece::whitespace(3)],
 ///     [TriviaPiece::whitespace(3)]

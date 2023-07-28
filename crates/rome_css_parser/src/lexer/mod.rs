@@ -1,9 +1,8 @@
 //! An extremely fast, lookup table based, СSS lexer which yields SyntaxKind tokens used by the rome-css parser.
-#![allow(dead_code)]
-
 #[rustfmt::skip]
 mod tests;
 
+use crate::CssParserOptions;
 use rome_css_syntax::{CssSyntaxKind, CssSyntaxKind::*, TextLen, TextRange, TextSize, T};
 use rome_js_unicode_table::{is_id_continue, is_id_start, lookup_byte, Dispatch::*};
 use rome_parser::diagnostic::ParseDiagnostic;
@@ -35,6 +34,8 @@ pub(crate) struct Lexer<'src> {
     position: usize,
 
     diagnostics: Vec<ParseDiagnostic>,
+
+    config: CssParserOptions,
 }
 
 impl<'src> Lexer<'src> {
@@ -44,7 +45,13 @@ impl<'src> Lexer<'src> {
             source,
             position: 0,
             diagnostics: vec![],
+            config: CssParserOptions::default(),
         }
+    }
+
+    pub(crate) fn with_config(mut self, config: CssParserOptions) -> Self {
+        self.config = config;
+        self
     }
 
     /// Returns the source code

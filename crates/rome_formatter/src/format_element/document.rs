@@ -81,7 +81,7 @@ impl Document {
                     }
                     FormatElement::StaticText { text } => text.contains('\n'),
                     FormatElement::DynamicText { text, .. } => text.contains('\n'),
-                    FormatElement::SyntaxTokenTextSlice { slice, .. } => slice.contains('\n'),
+                    FormatElement::LocatedTokenText { slice, .. } => slice.contains('\n'),
                     FormatElement::ExpandParent
                     | FormatElement::Line(LineMode::Hard | LineMode::Empty) => true,
                     _ => false,
@@ -194,7 +194,7 @@ impl Format<IrFormatContext> for &[FormatElement] {
                 element @ FormatElement::Space
                 | element @ FormatElement::StaticText { .. }
                 | element @ FormatElement::DynamicText { .. }
-                | element @ FormatElement::SyntaxTokenTextSlice { .. } => {
+                | element @ FormatElement::LocatedTokenText { .. } => {
                     if !in_text {
                         write!(f, [text("\"")])?;
                     }

@@ -1,94 +1,6 @@
-use crate::JsSyntaxToken;
+use rome_rowan::TextRange;
 
-use std::ops::Deref;
-
-#[derive(Debug, PartialEq, Eq, Clone)]
-pub struct QuotedString(JsSyntaxToken);
-
-/// A string literal that is wrapped in quotes
-impl QuotedString {
-    pub fn new(token: JsSyntaxToken) -> Self {
-        Self(token)
-    }
-
-    /// Get the inner text of a string not including the quotes
-    ///
-    /// ## Examples
-    ///
-    /// ```
-    /// use rome_js_syntax::static_value::QuotedString;
-    /// use rome_js_factory::make::ident;
-    /// use rome_rowan::TriviaPieceKind;
-    ///
-    /// let ident = ident("\"foo\"").with_leading_trivia(vec![(TriviaPieceKind::Whitespace, " ")]);
-    /// assert_eq!(QuotedString::new(ident).text(), "foo");
-    /// ```
-    pub fn text(&self) -> &str {
-        self.0
-            .text_trimmed()
-            .trim_start_matches(['"', '\''])
-            .trim_end_matches(['"', '\''])
-    }
-
-    /// Get the inner text of a string including the quotes
-    ///
-    /// ## Examples
-    ///
-    /// ```
-    /// use rome_js_syntax::static_value::QuotedString;
-    /// use rome_js_factory::make::ident;
-    /// use rome_rowan::TriviaPieceKind;
-    ///
-    /// let ident = ident("\"foo\"").with_leading_trivia(vec![(TriviaPieceKind::Whitespace, " ")]);
-    /// assert_eq!(QuotedString::new(ident).quoted_text(), "\"foo\"");
-    /// ```
-    pub fn quoted_text(&self) -> &str {
-        self.0.text_trimmed()
-    }
-}
-
-impl Deref for QuotedString {
-    type Target = str;
-
-    fn deref(&self) -> &Self::Target {
-        self.text()
-    }
-}
-
-/// Represent a JavaScript name which is either an identifier (unquoted string)
-/// or a literal string (quoted string), or even a template chuck (unquoted string).
-#[derive(Debug, Clone, Eq, PartialEq)]
-pub enum StaticStringValue {
-    Quoted(QuotedString),
-    Unquoted(JsSyntaxToken),
-}
-
-impl StaticStringValue {
-    /// Return a string of the static value
-    ///
-    /// ## Examples
-    ///
-    /// ```
-    /// use rome_js_syntax::static_value::{QuotedString, StaticStringValue};
-    /// use rome_js_factory::make;
-    ///
-    /// let quoted_str = QuotedString::new(make::js_string_literal("str"));
-    /// assert_eq!(StaticStringValue::Quoted(quoted_str).text(), "str");
-    /// ```
-    pub fn text(&self) -> &str {
-        match self {
-            StaticStringValue::Quoted(quoted_string) => quoted_string.text(),
-            StaticStringValue::Unquoted(token) => token.text_trimmed(),
-        }
-    }
-
-    pub fn token(&self) -> &JsSyntaxToken {
-        match self {
-            StaticStringValue::Quoted(token) => &token.0,
-            StaticStringValue::Unquoted(token) => token,
-        }
-    }
-}
+use crate::{JsSyntaxKind, JsSyntaxToken};
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 /// static values defined in JavaScript's expressions
@@ -98,8 +10,10 @@ pub enum StaticValue {
     Undefined(JsSyntaxToken),
     Number(JsSyntaxToken),
     BigInt(JsSyntaxToken),
-    String(QuotedString),
-    TemplateChunk(Option<JsSyntaxToken>),
+    // The string can be empty.
+    String(JsSyntaxToken),
+    /// This is used to represent the empty template string.
+    EmptyString(TextRange),
 }
 
 impl StaticValue {
@@ -109,22 +23,18 @@ impl StaticValue {
     ///
     /// ```
     /// use rome_js_syntax::{T, static_value::StaticValue};
-    /// use rome_js_factory::make::{js_boolean_literal_expression, token};
+    /// use rome_js_factory::make;
     ///
-    /// let bool = js_boolean_literal_expression(token(T![false]));
-    /// assert!(StaticValue::Boolean(bool.value_token().ok().unwrap()).is_falsy());
+    /// let bool = make::token(T![false]);
+    /// assert!(StaticValue::Boolean(bool).is_falsy());
     /// ```
     pub fn is_falsy(&self) -> bool {
         match self {
             StaticValue::Boolean(token) => token.text_trimmed() == "false",
-            StaticValue::Null(_) => true,
-            StaticValue::Undefined(_) => true,
-            StaticValue::Number(token) => matches!(token.text_trimmed(), "0" | "-0" | "+0" | "NaN"),
-            StaticValue::BigInt(token) => matches!(token.text_trimmed(), "0n"),
-            StaticValue::String(token) => token.text().is_empty(),
-            StaticValue::TemplateChunk(token) => token
-                .as_ref()
-                .map_or(true, |it| it.text_trimmed().is_empty()),
+            StaticValue::Null(_) | StaticValue::Undefined(_) | StaticValue::EmptyString(_) => true,
+            StaticValue::Number(token) => token.text_trimmed() == "0",
+            StaticValue::BigInt(token) => token.text_trimmed() == "0n",
+            StaticValue::String(_) => self.text().is_empty(),
         }
     }
 
@@ -134,42 +44,53 @@ impl StaticValue {
     ///
     /// ```
     /// use rome_js_syntax::{T, static_value::StaticValue};
-    /// use rome_js_factory::make::{js_boolean_literal_expression, token};
+    /// use rome_js_factory::make;
     ///
-    /// let bool = js_boolean_literal_expression(token(T![false]));
-    /// assert_eq!(StaticValue::Boolean(bool.value_token().ok().unwrap()).text(), "false");
+    /// let bool = make::token(T![false]);
+    /// assert_eq!(StaticValue::Boolean(bool).text(), "false");
     /// ```
     pub fn text(&self) -> &str {
         match self {
-            StaticValue::Boolean(token) => token.text_trimmed(),
-            StaticValue::Null(token) => token.text_trimmed(),
-            StaticValue::Undefined(token) => token.text_trimmed(),
-            StaticValue::Number(token) => token.text_trimmed(),
-            StaticValue::BigInt(token) => token.text_trimmed(),
-            StaticValue::String(token) => token.text(),
-            StaticValue::TemplateChunk(token) => token.as_ref().map_or("", |it| it.text_trimmed()),
+            StaticValue::Boolean(token)
+            | StaticValue::Null(token)
+            | StaticValue::Undefined(token)
+            | StaticValue::Number(token)
+            | StaticValue::BigInt(token) => token.text_trimmed(),
+            StaticValue::String(token) => {
+                let text = token.text_trimmed();
+                if matches!(
+                    token.kind(),
+                    JsSyntaxKind::JS_STRING_LITERAL | JsSyntaxKind::JSX_STRING_LITERAL
+                ) {
+                    // SAFETY: string literal token have a delimiters at the start and the end of the string
+                    return &text[1..text.len() - 1];
+                }
+                text
+            }
+            StaticValue::EmptyString(_) => "",
         }
     }
 
-    /// Return `true` if the static value match the given string value and it is
-    /// 1. A string literal
-    /// 2. A template literal with no substitutions
+    /// Return teh range of the static value.
     ///
     /// ## Examples
     ///
     /// ```
-    /// use rome_js_syntax::static_value::{StaticValue, QuotedString};
-    /// use rome_js_factory::make::{js_string_literal_expression, ident};
-    /// use rome_rowan::TriviaPieceKind;
+    /// use rome_js_syntax::{T, static_value::StaticValue};
+    /// use rome_js_factory::make;
     ///
-    /// let ident = ident("\"foo\"").with_leading_trivia(vec![(TriviaPieceKind::Whitespace, " ")]);
-    /// let quoted_string = QuotedString::new(ident);
-    /// assert!(StaticValue::String(quoted_string).is_string_constant("foo"));
+    /// let bool = make::token(T![false]);
+    /// assert_eq!(StaticValue::Boolean(bool.clone()).range(), bool.text_trimmed_range());
     /// ```
-    pub fn is_string_constant(&self, text: &str) -> bool {
+    pub fn range(&self) -> TextRange {
         match self {
-            StaticValue::String(_) | StaticValue::TemplateChunk(_) => self.text() == text,
-            _ => false,
+            StaticValue::Boolean(token)
+            | StaticValue::Null(token)
+            | StaticValue::Undefined(token)
+            | StaticValue::Number(token)
+            | StaticValue::BigInt(token)
+            | StaticValue::String(token) => token.text_trimmed_range(),
+            StaticValue::EmptyString(range) => *range,
         }
     }
 
@@ -180,17 +101,17 @@ impl StaticValue {
     /// ## Examples
     ///
     /// ```
-    /// use rome_js_syntax::static_value::{StaticValue, QuotedString};
-    /// use rome_js_factory::make::{js_string_literal_expression, ident};
+    /// use rome_js_syntax::static_value::StaticValue;
+    /// use rome_js_factory::make;
     /// use rome_rowan::TriviaPieceKind;
     ///
-    /// let ident = ident("\"foo\"").with_leading_trivia(vec![(TriviaPieceKind::Whitespace, " ")]);
-    /// let quoted_string = QuotedString::new(ident);
-    /// assert!(StaticValue::String(quoted_string).is_not_string_constant("bar"));
+    /// let str_literal = make::js_string_literal("foo")
+    ///     .with_leading_trivia(vec![(TriviaPieceKind::Whitespace, " ")]);
+    /// assert!(StaticValue::String(str_literal).is_not_string_constant("bar"));
     /// ```
     pub fn is_not_string_constant(&self, text: &str) -> bool {
         match self {
-            StaticValue::String(_) | StaticValue::TemplateChunk(_) => self.text() != text,
+            StaticValue::String(_) | StaticValue::EmptyString(_) => self.text() != text,
             _ => false,
         }
     }
@@ -202,17 +123,17 @@ impl StaticValue {
     /// ## Examples
     ///
     /// ```
-    /// use rome_js_syntax::static_value::{StaticValue, QuotedString};
-    /// use rome_js_factory::make::{js_string_literal_expression, ident};
+    /// use rome_js_syntax::static_value::StaticValue;
+    /// use rome_js_factory::make;
     /// use rome_rowan::TriviaPieceKind;
     ///
-    /// let ident = ident("\"foo\"").with_leading_trivia(vec![(TriviaPieceKind::Whitespace, " ")]);
-    /// let quoted_string = QuotedString::new(ident);
-    /// assert_eq!(StaticValue::String(quoted_string).as_string_constant().unwrap(), "foo");
+    /// let str_literal = make::js_string_literal("foo")
+    ///     .with_leading_trivia(vec![(TriviaPieceKind::Whitespace, " ")]);
+    /// assert_eq!(StaticValue::String(str_literal).as_string_constant().unwrap(), "foo");
     /// ```
     pub fn as_string_constant(&self) -> Option<&str> {
         match self {
-            StaticValue::String(_) | StaticValue::TemplateChunk(_) => Some(self.text()),
+            StaticValue::String(_) | StaticValue::EmptyString(_) => Some(self.text()),
             _ => None,
         }
     }

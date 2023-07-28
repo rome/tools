@@ -1754,6 +1754,7 @@ dependencies = [
  "quickcheck",
  "quickcheck_macros",
  "rome_console",
+ "rome_css_factory",
  "rome_css_syntax",
  "rome_diagnostics",
  "rome_js_unicode_table",

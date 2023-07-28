@@ -4,7 +4,7 @@ use rome_js_syntax::{
     AnyJsLiteralExpression, AnyJsName, AnyJsTemplateElement, JsCallArgumentList, JsCallArguments,
     JsCallExpression, JsSyntaxNode, JsTemplateExpression,
 };
-use rome_rowan::{SyntaxResult, SyntaxTokenText};
+use rome_rowan::{SyntaxResult, TokenText};
 
 /// Returns `Ok(true)` if `maybe_argument` is an argument of a [test call expression](is_test_call_expression).
 pub(crate) fn is_test_call_argument(maybe_argument: &JsSyntaxNode) -> SyntaxResult<bool> {
@@ -260,7 +260,7 @@ fn is_test_each_pattern_callee(template: &JsTemplateExpression) -> bool {
     if let Some(tag) = template.tag() {
         let mut members = CalleeNamesIterator::new(tag);
 
-        let texts: [Option<SyntaxTokenText>; 5] = [
+        let texts: [Option<TokenText>; 5] = [
             members.next(),
             members.next(),
             members.next(),
@@ -339,7 +339,7 @@ fn is_test_each_pattern_callee(template: &JsTemplateExpression) -> bool {
 fn contains_a_test_pattern(callee: &AnyJsExpression) -> SyntaxResult<bool> {
     let mut members = CalleeNamesIterator::new(callee.clone());
 
-    let texts: [Option<SyntaxTokenText>; 5] = [
+    let texts: [Option<TokenText>; 5] = [
         members.next(),
         members.next(),
         members.next(),
@@ -399,7 +399,7 @@ impl CalleeNamesIterator {
 }
 
 impl Iterator for CalleeNamesIterator {
-    type Item = SyntaxTokenText;
+    type Item = TokenText;
 
     fn next(&mut self) -> Option<Self::Item> {
         use AnyJsExpression::*;

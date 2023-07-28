@@ -1,4 +1,5 @@
 use crate::capabilities::server_capabilities;
+use crate::diagnostics::{handle_lsp_error, LspError};
 use crate::requests::syntax_tree::{SyntaxTreePayload, SYNTAX_TREE_REQUEST};
 use crate::session::{
     CapabilitySet, CapabilityStatus, ClientInformation, Session, SessionHandle, SessionKey,
@@ -8,6 +9,7 @@ use crate::{handlers, requests};
 use futures::future::ready;
 use futures::FutureExt;
 use rome_console::markup;
+use rome_diagnostics::panic::PanicError;
 use rome_fs::CONFIG_NAME;
 use rome_service::workspace::{RageEntry, RageParams, RageResult};
 use rome_service::{workspace, Workspace};
@@ -192,6 +194,20 @@ impl LSPServer {
 
         self.session.register_capabilities(capabilities).await;
     }
+
+    async fn map_op_error<T>(
+        &self,
+        result: Result<Result<Option<T>, LspError>, PanicError>,
+    ) -> LspResult<Option<T>> {
+        match result {
+            Ok(result) => match result {
+                Ok(result) => Ok(result),
+                Err(err) => handle_lsp_error(err, &self.session.client).await,
+            },
+
+            Err(err) => Err(into_lsp_error(err)),
+        }
+    }
 }
 
 #[tower_lsp::async_trait]
@@ -340,30 +356,33 @@ impl LanguageServer for LSPServer {
         &self,
         params: DocumentFormattingParams,
     ) -> LspResult<Option<Vec<TextEdit>>> {
-        rome_diagnostics::panic::catch_unwind(move || {
-            handlers::formatting::format(&self.session, params).map_err(into_lsp_error)
-        })
-        .map_err(into_lsp_error)?
+        let result = rome_diagnostics::panic::catch_unwind(move || {
+            handlers::formatting::format(&self.session, params)
+        });
+
+        self.map_op_error(result).await
     }
 
     async fn range_formatting(
         &self,
         params: DocumentRangeFormattingParams,
     ) -> LspResult<Option<Vec<TextEdit>>> {
-        rome_diagnostics::panic::catch_unwind(move || {
-            handlers::formatting::format_range(&self.session, params).map_err(into_lsp_error)
-        })
-        .map_err(into_lsp_error)?
+        let result = rome_diagnostics::panic::catch_unwind(move || {
+            handlers::formatting::format_range(&self.session, params)
+        });
+
+        self.map_op_error(result).await
     }
 
     async fn on_type_formatting(
         &self,
         params: DocumentOnTypeFormattingParams,
     ) -> LspResult<Option<Vec<TextEdit>>> {
-        rome_diagnostics::panic::catch_unwind(move || {
-            handlers::formatting::format_on_type(&self.session, params).map_err(into_lsp_error)
-        })
-        .map_err(into_lsp_error)?
+        let result = rome_diagnostics::panic::catch_unwind(move || {
+            handlers::formatting::format_on_type(&self.session, params)
+        });
+
+        self.map_op_error(result).await
     }
 
     async fn rename(&self, params: RenameParams) -> LspResult<Option<WorkspaceEdit>> {

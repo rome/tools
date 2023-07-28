@@ -18,7 +18,7 @@ use rome_js_syntax::{
 };
 use rome_rowan::{
     chain_trivia_pieces, syntax::SyntaxTrivia, AstNode, AstNodeExt, AstNodeList, AstSeparatedList,
-    BatchMutationExt, SyntaxTokenText, SyntaxTriviaPiece, TriviaPiece,
+    BatchMutationExt, SyntaxTriviaPiece, TokenText, TriviaPiece,
 };
 
 use crate::JsRuleAction;
@@ -548,7 +548,7 @@ impl ImportNode {
 ///
 /// Currently named import specifiers are sorted using their import name,
 /// not the local name they get imported as
-fn import_specifier_name(import_specifier: &AnyJsNamedImportSpecifier) -> Option<SyntaxTokenText> {
+fn import_specifier_name(import_specifier: &AnyJsNamedImportSpecifier) -> Option<TokenText> {
     let token = match import_specifier {
         AnyJsNamedImportSpecifier::JsNamedImportSpecifier(import_specifier) => {
             import_specifier.name().ok()?.value().ok()?
@@ -631,7 +631,7 @@ fn leading_trivia_iter(
 }
 
 #[derive(Debug)]
-struct ImportKey(SyntaxTokenText);
+struct ImportKey(TokenText);
 
 impl Ord for ImportKey {
     fn cmp(&self, other: &Self) -> Ordering {
