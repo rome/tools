@@ -881,7 +881,6 @@ fn fs_error_infinite_symlink_expansion_to_dirs() {
 
 #[test]
 fn fs_error_infinite_symlink_expansion_to_files() {
-    let fs = MemoryFileSystem::default();
     let mut console = BufferConsole::default();
 
     let root_path = temp_dir().join("check_rome_test_infinite_symlink_expansion_to_files");
@@ -917,13 +916,23 @@ fn fs_error_infinite_symlink_expansion_to_files() {
 
     assert!(result.is_err(), "run_cli returned {result:?}");
 
-    assert_cli_snapshot(SnapshotPayload::new(
-        module_path!(),
-        "fs_error_infinite_symlink_expansion_to_files",
-        fs,
-        console,
-        result,
-    ));
+    // Don't use a snapshot here, since the diagnostics can be reported in
+    // arbitrary order:
+    assert!(console
+        .out_buffer
+        .iter()
+        .flat_map(|msg| msg.content.0.iter())
+        .any(|node| node.content.contains("Deeply nested symlink expansion")));
+    assert!(console
+        .out_buffer
+        .iter()
+        .flat_map(|msg| msg.content.0.iter())
+        .any(|node| node.content.contains("/prefix/symlink1 internalError/fs")));
+    assert!(console
+        .out_buffer
+        .iter()
+        .flat_map(|msg| msg.content.0.iter())
+        .any(|node| node.content.contains("/foo/bar/symlink2 internalError/fs")));
 }
 
 #[test]
