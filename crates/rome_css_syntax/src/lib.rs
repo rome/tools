@@ -96,6 +96,7 @@ impl TryFrom<CssSyntaxKind> for TriviaPieceKind {
                 CssSyntaxKind::NEWLINE => Ok(TriviaPieceKind::Newline),
                 CssSyntaxKind::WHITESPACE => Ok(TriviaPieceKind::Whitespace),
                 CssSyntaxKind::COMMENT => Ok(TriviaPieceKind::SingleLineComment),
+                CssSyntaxKind::MULTILINE_COMMENT => Ok(TriviaPieceKind::MultiLineComment),
                 _ => unreachable!("Not Trivia"),
             }
         } else {

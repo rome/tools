@@ -576,6 +576,15 @@ pub fn css_ratio(numerator: CssNumber, denominator: CssNumber) -> CssRatio {
         ],
     ))
 }
+pub fn css_root(rules: CssRuleList, eof_token: SyntaxToken) -> CssRoot {
+    CssRoot::unwrap_cast(SyntaxNode::new_detached(
+        CssSyntaxKind::CSS_ROOT,
+        [
+            Some(SyntaxElement::Node(rules.into_syntax())),
+            Some(SyntaxElement::Token(eof_token)),
+        ],
+    ))
+}
 pub fn css_rule(prelude: CssSelectorList, block: CssBlock) -> CssRule {
     CssRule::unwrap_cast(SyntaxNode::new_detached(
         CssSyntaxKind::CSS_RULE,
@@ -779,13 +788,13 @@ where
             .map(|item| Some(item.into_syntax().into())),
     ))
 }
-pub fn css_root<I>(items: I) -> CssRoot
+pub fn css_rule_list<I>(items: I) -> CssRuleList
 where
     I: IntoIterator<Item = AnyCssRule>,
     I::IntoIter: ExactSizeIterator,
 {
-    CssRoot::unwrap_cast(SyntaxNode::new_detached(
-        CssSyntaxKind::CSS_ROOT,
+    CssRuleList::unwrap_cast(SyntaxNode::new_detached(
+        CssSyntaxKind::CSS_RULE_LIST,
         items
             .into_iter()
             .map(|item| Some(item.into_syntax().into())),

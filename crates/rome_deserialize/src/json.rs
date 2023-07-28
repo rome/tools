@@ -7,7 +7,7 @@ use rome_json_syntax::{
     AnyJsonValue, JsonArrayValue, JsonBooleanValue, JsonLanguage, JsonMemberName, JsonNumberValue,
     JsonObjectValue, JsonRoot, JsonStringValue, JsonSyntaxNode,
 };
-use rome_rowan::{AstNode, AstSeparatedList, SyntaxNodeCast, SyntaxTokenText, TextRange};
+use rome_rowan::{AstNode, AstSeparatedList, SyntaxNodeCast, TextRange, TokenText};
 use std::num::ParseIntError;
 
 /// Main trait to
@@ -49,7 +49,7 @@ pub trait VisitJsonNode: VisitNode<JsonLanguage> {
         key: &JsonSyntaxNode,
         value: &JsonSyntaxNode,
         diagnostics: &mut Vec<DeserializationDiagnostic>,
-    ) -> Option<(SyntaxTokenText, AnyJsonValue)> {
+    ) -> Option<(TokenText, AnyJsonValue)> {
         let member = key.clone().cast::<JsonMemberName>()?;
         self.visit_member_name(member.syntax(), diagnostics)?;
         let name = member.inner_string_text().ok()?;

@@ -1,7 +1,7 @@
 use crate::green::{GreenToken, GreenTrivia};
 use crate::syntax::element::SyntaxElementKey;
 use crate::syntax::SyntaxTrivia;
-use crate::syntax_token_text::SyntaxTokenText;
+use crate::token_text::TokenText;
 use crate::{
     chain_trivia_pieces, cursor, Direction, Language, NodeOrToken, SyntaxElement, SyntaxKind,
     SyntaxNode, SyntaxTriviaPiece, TriviaPiece, TriviaPieceKind,
@@ -119,11 +119,11 @@ impl<L: Language> SyntaxToken<L> {
     ///     format!("{:?}", token.token_text())
     /// );
     /// ```
-    pub fn token_text(&self) -> SyntaxTokenText {
+    pub fn token_text(&self) -> TokenText {
         self.raw.token_text()
     }
 
-    pub fn token_text_trimmed(&self) -> SyntaxTokenText {
+    pub fn token_text_trimmed(&self) -> TokenText {
         self.raw.token_text_trimmed()
     }
 

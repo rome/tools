@@ -1,10 +1,8 @@
 use crate::converters::{from_proto, to_proto};
+use crate::diagnostics::LspError;
 use crate::session::Session;
-use anyhow::{Context, Error, Result};
-use rome_service::{
-    workspace::{FormatFileParams, FormatOnTypeParams, FormatRangeParams},
-    WorkspaceError,
-};
+use anyhow::Context;
+use rome_service::workspace::{FormatFileParams, FormatOnTypeParams, FormatRangeParams};
 use tower_lsp::lsp_types::*;
 use tracing::debug;
 
@@ -12,24 +10,16 @@ use tracing::debug;
 pub(crate) fn format(
     session: &Session,
     params: DocumentFormattingParams,
-) -> Result<Option<Vec<TextEdit>>> {
+) -> Result<Option<Vec<TextEdit>>, LspError> {
     let url = params.text_document.uri;
     let rome_path = session.file_path(&url)?;
 
     let doc = session.document(&url)?;
 
     debug!("Formatting...");
-    let result = session
+    let printed = session
         .workspace
-        .format_file(FormatFileParams { path: rome_path });
-
-    let printed = match result {
-        Ok(printed) => printed,
-        Err(WorkspaceError::FormatWithErrorsDisabled(_)) | Err(WorkspaceError::FileIgnored(_)) => {
-            return Ok(None)
-        }
-        Err(err) => return Err(Error::from(err)),
-    };
+        .format_file(FormatFileParams { path: rome_path })?;
 
     let num_lines: u32 = doc.line_index.len();
 
@@ -53,7 +43,7 @@ pub(crate) fn format(
 pub(crate) fn format_range(
     session: &Session,
     params: DocumentRangeFormattingParams,
-) -> Result<Option<Vec<TextEdit>>> {
+) -> Result<Option<Vec<TextEdit>>, LspError> {
     let url = params.text_document.uri;
     let rome_path = session.file_path(&url)?;
     let doc = session.document(&url)?;
@@ -67,18 +57,10 @@ pub(crate) fn format_range(
             )
         })?;
 
-    let result = session.workspace.format_range(FormatRangeParams {
+    let formatted = session.workspace.format_range(FormatRangeParams {
         path: rome_path,
         range: format_range,
-    });
-
-    let formatted = match result {
-        Ok(formatted) => formatted,
-        Err(WorkspaceError::FormatWithErrorsDisabled(_)) | Err(WorkspaceError::FileIgnored(_)) => {
-            return Ok(None)
-        }
-        Err(err) => return Err(Error::from(err)),
-    };
+    })?;
 
     // Recalculate the actual range that was reformatted from the formatter result
     let formatted_range = match formatted.range() {
@@ -105,7 +87,7 @@ pub(crate) fn format_range(
 pub(crate) fn format_on_type(
     session: &Session,
     params: DocumentOnTypeFormattingParams,
-) -> Result<Option<Vec<TextEdit>>> {
+) -> Result<Option<Vec<TextEdit>>, LspError> {
     let url = params.text_document_position.text_document.uri;
     let position = params.text_document_position.position;
 
@@ -116,18 +98,10 @@ pub(crate) fn format_on_type(
     let offset = from_proto::offset(&doc.line_index, position, position_encoding)
         .with_context(|| format!("failed to access position {position:?} in document {url}"))?;
 
-    let result = session.workspace.format_on_type(FormatOnTypeParams {
+    let formatted = session.workspace.format_on_type(FormatOnTypeParams {
         path: rome_path,
         offset,
-    });
-
-    let formatted = match result {
-        Ok(formatted) => formatted,
-        Err(WorkspaceError::FormatWithErrorsDisabled(_)) | Err(WorkspaceError::FileIgnored(_)) => {
-            return Ok(None)
-        }
-        Err(err) => return Err(Error::from(err)),
-    };
+    })?;
 
     // Recalculate the actual range that was reformatted from the formatter result
     let formatted_range = match formatted.range() {

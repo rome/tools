@@ -1154,6 +1154,29 @@ impl SyntaxFactory for CssSyntaxFactory {
                 }
                 slots.into_node(CSS_RATIO, children)
             }
+            CSS_ROOT => {
+                let mut elements = (&children).into_iter();
+                let mut slots: RawNodeSlots<2usize> = RawNodeSlots::default();
+                let mut current_element = elements.next();
+                if let Some(element) = &current_element {
+                    if CssRuleList::can_cast(element.kind()) {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
+                if let Some(element) = &current_element {
+                    if element.kind() == T![EOF] {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
+                if current_element.is_some() {
+                    return RawSyntaxNode::new(CSS_ROOT.to_bogus(), children.into_iter().map(Some));
+                }
+                slots.into_node(CSS_ROOT, children)
+            }
             CSS_RULE => {
                 let mut elements = (&children).into_iter();
                 let mut slots: RawNodeSlots<2usize> = RawNodeSlots::default();
@@ -1395,7 +1418,7 @@ impl SyntaxFactory for CssSyntaxFactory {
             CSS_PARAMETER_LIST => {
                 Self::make_node_list_syntax(kind, children, CssParameter::can_cast)
             }
-            CSS_ROOT => Self::make_node_list_syntax(kind, children, AnyCssRule::can_cast),
+            CSS_RULE_LIST => Self::make_node_list_syntax(kind, children, AnyCssRule::can_cast),
             CSS_SELECTOR_LIST => Self::make_separated_list_syntax(
                 kind,
                 children,

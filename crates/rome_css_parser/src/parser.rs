@@ -1,43 +1,37 @@
-use crate::token_source::JsonTokenSource;
-use rome_json_syntax::JsonSyntaxKind;
+use crate::token_source::CssTokenSource;
+use rome_css_syntax::CssSyntaxKind;
 use rome_parser::diagnostic::merge_diagnostics;
 use rome_parser::event::Event;
 use rome_parser::prelude::*;
 use rome_parser::token_source::Trivia;
 use rome_parser::ParserContext;
 
-pub(crate) struct JsonParser<'source> {
-    context: ParserContext<JsonSyntaxKind>,
-    source: JsonTokenSource<'source>,
+pub(crate) struct CssParser<'source> {
+    context: ParserContext<CssSyntaxKind>,
+    source: CssTokenSource<'source>,
 }
 
 #[derive(Default, Debug, Clone, Copy)]
-pub struct JsonParserOptions {
-    pub allow_comments: bool,
+pub struct CssParserOptions {
+    pub allow_single_line_comments: bool,
 }
 
-impl JsonParserOptions {
-    pub fn with_allow_comments(mut self) -> Self {
-        self.allow_comments = true;
+impl CssParserOptions {
+    pub fn with_allow_single_line_comments(mut self) -> Self {
+        self.allow_single_line_comments = true;
         self
     }
 }
 
-impl<'source> JsonParser<'source> {
-    pub fn new(source: &'source str, config: JsonParserOptions) -> Self {
+impl<'source> CssParser<'source> {
+    pub fn new(source: &'source str, config: CssParserOptions) -> Self {
         Self {
             context: ParserContext::default(),
-            source: JsonTokenSource::from_str(source, config),
+            source: CssTokenSource::from_str(source, config),
         }
     }
 
-    pub fn finish(
-        self,
-    ) -> (
-        Vec<Event<JsonSyntaxKind>>,
-        Vec<ParseDiagnostic>,
-        Vec<Trivia>,
-    ) {
+    pub fn finish(self) -> (Vec<Event<CssSyntaxKind>>, Vec<ParseDiagnostic>, Vec<Trivia>) {
         let (trivia, lexer_diagnostics) = self.source.finish();
         let (events, parse_diagnostics) = self.context.finish();
 
@@ -47,9 +41,9 @@ impl<'source> JsonParser<'source> {
     }
 }
 
-impl<'source> Parser for JsonParser<'source> {
-    type Kind = JsonSyntaxKind;
-    type Source = JsonTokenSource<'source>;
+impl<'source> Parser for CssParser<'source> {
+    type Kind = CssSyntaxKind;
+    type Source = CssTokenSource<'source>;
 
     fn context(&self) -> &ParserContext<Self::Kind> {
         &self.context

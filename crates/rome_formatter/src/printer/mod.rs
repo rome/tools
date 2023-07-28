@@ -99,7 +99,7 @@ impl<'a> Printer<'a> {
                 text,
                 source_position,
             } => self.print_text(text, Some(*source_position)),
-            FormatElement::SyntaxTokenTextSlice {
+            FormatElement::LocatedTokenText {
                 slice,
                 source_position,
             } => self.print_text(slice, Some(*source_position)),
@@ -1001,7 +1001,7 @@ impl<'a, 'print> FitsMeasurer<'a, 'print> {
 
             FormatElement::StaticText { text } => return Ok(self.fits_text(text)),
             FormatElement::DynamicText { text, .. } => return Ok(self.fits_text(text)),
-            FormatElement::SyntaxTokenTextSlice { slice, .. } => return Ok(self.fits_text(slice)),
+            FormatElement::LocatedTokenText { slice, .. } => return Ok(self.fits_text(slice)),
 
             FormatElement::LineSuffixBoundary => {
                 if self.state.has_line_suffix {

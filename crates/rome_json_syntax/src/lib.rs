@@ -100,6 +100,12 @@ impl TryFrom<JsonSyntaxKind> for TriviaPieceKind {
                 JsonSyntaxKind::WHITESPACE => Ok(TriviaPieceKind::Whitespace),
                 _ => unreachable!("Not Trivia"),
             }
+        } else if value.is_comments() {
+            match value {
+                JsonSyntaxKind::COMMENT => Ok(TriviaPieceKind::SingleLineComment),
+                JsonSyntaxKind::MULTILINE_COMMENT => Ok(TriviaPieceKind::MultiLineComment),
+                _ => unreachable!("Not Comment"),
+            }
         } else {
             Err(())
         }

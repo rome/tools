@@ -5,26 +5,26 @@ use std::{borrow::Borrow, fmt::Formatter};
 
 /// Reference to the text of a SyntaxToken without having to worry about the lifetime of `&str`.
 #[derive(Eq, Clone)]
-pub struct SyntaxTokenText {
+pub struct TokenText {
     // Using a green token to ensure this type is Send + Sync.
     token: GreenToken,
     /// Relative range of the "selected" token text.
     range: TextRange,
 }
 
-impl std::hash::Hash for SyntaxTokenText {
+impl std::hash::Hash for TokenText {
     fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
         self.text().hash(state);
     }
 }
 
-impl SyntaxTokenText {
-    pub(crate) fn new(token: GreenToken) -> SyntaxTokenText {
+impl TokenText {
+    pub(crate) fn new(token: GreenToken) -> TokenText {
         let range = TextRange::at(TextSize::default(), token.text_len());
         Self { token, range }
     }
 
-    pub(crate) fn with_range(token: GreenToken, range: TextRange) -> SyntaxTokenText {
+    pub(crate) fn with_range(token: GreenToken, range: TextRange) -> TokenText {
         debug_assert!(range.end() <= token.text_len());
         Self { token, range }
     }
@@ -40,19 +40,15 @@ impl SyntaxTokenText {
     }
 
     /// Returns a subslice of the text.
-    pub fn slice(mut self, range: TextRange) -> SyntaxTokenText {
+    /// `range.end()` must be lower or equal to `self.len()`
+    pub fn slice(mut self, range: TextRange) -> TokenText {
         assert!(
-            self.range.contains_range(range),
-            "Range {range:?} exceeds bounds {:?}",
-            self.range
+            range.end() <= self.len(),
+            "Range {range:?} exceeds the text length {:?}",
+            self.len()
         );
-
-        self.range = range;
+        self.range = range + self.range.start();
         self
-    }
-
-    pub fn range(&self) -> TextRange {
-        self.range
     }
 
     pub fn text(&self) -> &str {
@@ -60,7 +56,7 @@ impl SyntaxTokenText {
     }
 }
 
-impl Deref for SyntaxTokenText {
+impl Deref for TokenText {
     type Target = str;
 
     fn deref(&self) -> &Self::Target {
@@ -68,37 +64,37 @@ impl Deref for SyntaxTokenText {
     }
 }
 
-impl std::fmt::Display for SyntaxTokenText {
+impl std::fmt::Display for TokenText {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         write!(f, "{}", self.text())
     }
 }
 
-impl std::fmt::Debug for SyntaxTokenText {
+impl std::fmt::Debug for TokenText {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         write!(f, "{:?}", self.text())
     }
 }
 
-impl PartialEq for SyntaxTokenText {
+impl PartialEq for TokenText {
     fn eq(&self, other: &Self) -> bool {
         **self == **other
     }
 }
 
-impl PartialEq<&'_ str> for SyntaxTokenText {
+impl PartialEq<&'_ str> for TokenText {
     fn eq(&self, rhs: &&'_ str) -> bool {
         **self == **rhs
     }
 }
 
-impl PartialEq<SyntaxTokenText> for &'_ str {
-    fn eq(&self, other: &SyntaxTokenText) -> bool {
+impl PartialEq<TokenText> for &'_ str {
+    fn eq(&self, other: &TokenText) -> bool {
         **self == **other
     }
 }
 
-impl Borrow<str> for SyntaxTokenText {
+impl Borrow<str> for TokenText {
     fn borrow(&self) -> &str {
         self.text()
     }
