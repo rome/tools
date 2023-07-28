@@ -98,4 +98,29 @@ invalid.ts:9:11 lint/nursery/noUnsafeDeclarationMerging ━━━━━━━━
 
 ```
 
+```
+invalid.ts:14:11 lint/nursery/noUnsafeDeclarationMerging ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class is unsafely merged with an interface.
+  
+    12 │ {
+    13 │     interface Foo4 {}
+  > 14 │     class Foo4 {}
+       │           ^^^^
+    15 │ }
+    16 │ 
+  
+  i The interface is declared here.
+  
+    12 │ {
+  > 13 │     interface Foo4 {}
+       │               ^^^^
+    14 │     class Foo4 {}
+    15 │ }
+  
+  i The TypeScript compiler doesn't check whether properties defined in the interface are initialized in the class.
+  
+
+```
+
 
