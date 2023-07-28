@@ -317,9 +317,8 @@ fn handle_symlink(
 fn follow_symlink(path: &Path, ctx: &dyn TraversalContext) -> Result<(PathBuf, FileType), ()> {
     tracing::info!("Translating symlink: {path:?}");
 
-    let target_path = fs::read_link(&path).map_err(|err| {
+    let target_path = fs::read_link(path).map_err(|err| {
         ctx.push_diagnostic(IoError::from(err).with_file_path(path.to_string_lossy().to_string()));
-        ()
     })?;
 
     let target_file_type = match fs::symlink_metadata(&target_path) {
