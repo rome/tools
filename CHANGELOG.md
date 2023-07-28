@@ -40,6 +40,11 @@
 
 - Fixed the diagnostics emitted when running the `rome format` command;
 
+- Rome doesn't warn anymore when discovering (possibly infinite) symbolic links between directories.
+  This fixes [#4193](https://github.com/rome/tools/issues/4193) which resulted in incorrect warnings
+  when a single file or directory was pointed at by multiple symbolic links. Symbolic links to other
+  symbolic links do still trigger warnings if they are too deeply nested.
+
 ### Configuration
 
 #### Other changes
