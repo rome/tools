@@ -25,7 +25,7 @@ use crate::JsRuleAction;
 
 declare_rule! {
     /// Provides a whole-source code action to sort the imports in the file
-    /// using natural ordering
+    /// using import groups and natural ordering.
     ///
     /// ## Examples
     ///
