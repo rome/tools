@@ -286,6 +286,9 @@ fn handle_dir_entry<'scope>(
     }));
 }
 
+/// Handles symlinks by recursively following them (up to `MAX_SYMLINK_DEPTH`),
+/// and returning the new type of the file pointed to. Performs error reporting,
+/// so the returned error type is `()`.
 fn handle_symlink(
     mut path: PathBuf,
     ctx: &dyn TraversalContext,
@@ -320,6 +323,12 @@ fn follow_symlink(path: &Path, ctx: &dyn TraversalContext) -> Result<(PathBuf, F
     let target_path = fs::read_link(path).map_err(|err| {
         ctx.push_diagnostic(IoError::from(err).with_file_path(path.to_string_lossy().to_string()));
     })?;
+
+    // Make sure relative symlinks are resolved:
+    let target_path = path
+        .parent()
+        .map(|parent_dir| parent_dir.join(&target_path))
+        .unwrap_or(target_path);
 
     let target_file_type = match fs::symlink_metadata(&target_path) {
         Ok(meta) => meta.file_type(),
