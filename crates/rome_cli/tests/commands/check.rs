@@ -836,34 +836,28 @@ fn fs_error_dereferenced_symlink() {
 }
 
 #[test]
-fn fs_error_infinite_symlink_expansion() {
+fn fs_error_infinite_symlink_expansion_to_dirs() {
     let fs = MemoryFileSystem::default();
     let mut console = BufferConsole::default();
 
-    let root_path = temp_dir().join("check_rome_test_infinite_symlink_expansion");
+    let root_path = temp_dir().join("check_rome_test_infinite_symlink_expansion_to_dirs");
     let subdir1_path = root_path.join("prefix");
     let subdir2_path = root_path.join("foo").join("bar");
 
     let _ = remove_dir_all(&root_path);
-    create_dir_all(subdir1_path.clone()).unwrap();
-    create_dir_all(subdir2_path.clone()).unwrap();
+    create_dir_all(&subdir1_path).unwrap();
+    create_dir_all(&subdir2_path).unwrap();
 
     #[cfg(target_family = "unix")]
     {
-        symlink(subdir1_path.clone(), root_path.join("self_symlink1")).unwrap();
-        symlink(subdir1_path, subdir2_path.join("self_symlink2")).unwrap();
+        symlink(&subdir2_path, subdir1_path.join("symlink1")).unwrap();
+        symlink(subdir1_path, subdir2_path.join("symlink2")).unwrap();
     }
 
     #[cfg(target_os = "windows")]
     {
-        check_windows_symlink!(symlink_dir(
-            subdir1_path.clone(),
-            root_path.join("self_symlink1")
-        ));
-        check_windows_symlink!(symlink_dir(
-            subdir1_path,
-            subdir2_path.join("self_symlink2")
-        ));
+        check_windows_symlink!(symlink_dir(&subdir2_path, subdir1_path.join("symlink1")));
+        check_windows_symlink!(symlink_dir(subdir1_path, subdir2_path.join("symlink2")));
     }
 
     let result = run_cli(
@@ -878,7 +872,54 @@ fn fs_error_infinite_symlink_expansion() {
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
-        "fs_error_infinite_symlink_expansion",
+        "fs_error_infinite_symlink_expansion_to_dirs",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn fs_error_infinite_symlink_expansion_to_files() {
+    let fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let root_path = temp_dir().join("check_rome_test_infinite_symlink_expansion_to_files");
+    let subdir1_path = root_path.join("prefix");
+    let subdir2_path = root_path.join("foo").join("bar");
+
+    let _ = remove_dir_all(&root_path);
+    create_dir_all(&subdir1_path).unwrap();
+    create_dir_all(&subdir2_path).unwrap();
+
+    let symlink1_path = subdir1_path.join("symlink1");
+    let symlink2_path = subdir2_path.join("symlink2");
+
+    #[cfg(target_family = "unix")]
+    {
+        symlink(&symlink2_path, &symlink1_path).unwrap();
+        symlink(symlink1_path, symlink2_path).unwrap();
+    }
+
+    #[cfg(target_os = "windows")]
+    {
+        check_windows_symlink!(symlink_dir(&symlink2_path, symlink1_path));
+        check_windows_symlink!(symlink_dir(symlink1_path, symlink2_path));
+    }
+
+    let result = run_cli(
+        DynRef::Owned(Box::new(OsFileSystem)),
+        &mut console,
+        Args::from([("check"), (root_path.display().to_string().as_str())].as_slice()),
+    );
+
+    remove_dir_all(root_path).unwrap();
+
+    assert!(result.is_err(), "run_cli returned {result:?}");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "fs_error_infinite_symlink_expansion_to_files",
         fs,
         console,
         result,
