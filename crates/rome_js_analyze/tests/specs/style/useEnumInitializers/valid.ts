@@ -13,3 +13,13 @@ export enum Mix {
 	Str = "Str",
 	Number = 0,
 }
+
+export declare enum Weather {
+    Rainy,
+    Sunny,
+}
+
+declare enum Weather2 {
+    Rainy,
+    Sunny,
+}
