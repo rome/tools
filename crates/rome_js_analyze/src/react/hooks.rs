@@ -3,7 +3,7 @@ use std::collections::{HashMap, HashSet};
 
 use rome_js_semantic::{Capture, Closure, ClosureExtensions, SemanticModel};
 use rome_js_syntax::{
-    binding_ext::AnyJsIdentifierBinding, static_value::StaticStringValue, AnyJsExpression,
+    binding_ext::AnyJsIdentifierBinding, static_value::StaticValue, AnyJsExpression,
     AnyJsMemberExpression, JsArrayBindingPattern, JsArrayBindingPatternElementList,
     JsArrowFunctionExpression, JsCallExpression, JsFunctionExpression, JsVariableDeclarator,
     TextRange,
@@ -140,16 +140,14 @@ pub(crate) fn react_hook_with_dependency(
     model: &SemanticModel,
 ) -> Option<ReactCallWithDependencyResult> {
     let expression = call.callee().ok()?;
-    let name = if let AnyJsExpression::JsIdentifierExpression(identifier) = expression.clone() {
-        Some(StaticStringValue::Unquoted(
-            identifier.name().ok()?.value_token().ok()?,
-        ))
+    let name = if let Some(identifier) = expression.as_js_reference_identifier() {
+        Some(StaticValue::String(identifier.value_token().ok()?))
     } else if let Some(member_expr) = AnyJsMemberExpression::cast_ref(expression.syntax()) {
         Some(member_expr.member_name()?)
     } else {
         None
     }?;
-    let function_name_range = name.token().text_trimmed_range();
+    let function_name_range = name.range();
     let name = name.text();
 
     // check if the hooks api is imported from the react library

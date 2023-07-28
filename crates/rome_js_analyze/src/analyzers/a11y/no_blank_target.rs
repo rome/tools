@@ -75,10 +75,7 @@ impl Rule for NoBlankTarget {
         let target_attribute = node.find_attribute_by_name("target")?;
         let rel_attribute = node.find_attribute_by_name("rel");
 
-        if target_attribute
-            .as_static_value()?
-            .is_string_constant("_blank")
-        {
+        if target_attribute.as_static_value()?.text() == "_blank" {
             match rel_attribute {
                 None => {
                     if !node.has_trailing_spread_prop(target_attribute.clone()) {

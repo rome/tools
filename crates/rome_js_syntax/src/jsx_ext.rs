@@ -1,12 +1,11 @@
 use std::collections::HashSet;
 
 use crate::{
-    static_value::{QuotedString, StaticValue},
-    AnyJsxAttribute, AnyJsxAttributeName, AnyJsxAttributeValue, AnyJsxChild, AnyJsxElementName,
-    JsSyntaxToken, JsxAttribute, JsxAttributeList, JsxElement, JsxName, JsxOpeningElement,
-    JsxSelfClosingElement, JsxString,
+    inner_string_text, static_value::StaticValue, AnyJsxAttribute, AnyJsxAttributeName,
+    AnyJsxAttributeValue, AnyJsxChild, AnyJsxElementName, JsSyntaxToken, JsxAttribute,
+    JsxAttributeList, JsxElement, JsxName, JsxOpeningElement, JsxSelfClosingElement, JsxString,
 };
-use rome_rowan::{declare_node_union, AstNode, AstNodeList, SyntaxResult};
+use rome_rowan::{declare_node_union, AstNode, AstNodeList, SyntaxResult, TokenText};
 
 impl JsxString {
     /// Get the inner text of a string not including the quotes
@@ -14,15 +13,15 @@ impl JsxString {
     /// ## Examples
     ///
     /// ```
-    /// use rome_js_factory::make::{jsx_ident, jsx_string};
+    /// use rome_js_factory::make;
     /// use rome_rowan::TriviaPieceKind;
     ///
-    ///let string = jsx_string(jsx_ident("button").with_leading_trivia(vec![(TriviaPieceKind::Whitespace, " ")]));
+    ///let string = make::jsx_string(make::jsx_string_literal("button")
+    ///     .with_leading_trivia(vec![(TriviaPieceKind::Whitespace, " ")]));
     /// assert_eq!(string.inner_string_text().unwrap().text(), "button");
     /// ```
-    pub fn inner_string_text(&self) -> SyntaxResult<QuotedString> {
-        let value = self.value_token()?;
-        Ok(QuotedString::new(value))
+    pub fn inner_string_text(&self) -> SyntaxResult<TokenText> {
+        Ok(inner_string_text(&self.value_token()?))
     }
 }
 
@@ -395,9 +394,10 @@ impl AnyJsxElement {
     pub fn has_truthy_attribute(&self, name_to_lookup: &str) -> bool {
         self.find_attribute_by_name(name_to_lookup)
             .map_or(false, |attribute| {
-                attribute.as_static_value().map_or(true, |value| {
-                    !(value.is_falsy() || value.is_string_constant("false"))
-                }) && !self.has_trailing_spread_prop(attribute)
+                attribute
+                    .as_static_value()
+                    .map_or(true, |value| !(value.is_falsy() || value.text() == "false"))
+                    && !self.has_trailing_spread_prop(attribute)
             })
     }
 }
@@ -433,7 +433,7 @@ impl AnyJsxAttributeValue {
                 expression.expression().ok()?.as_static_value()
             }
             AnyJsxAttributeValue::JsxString(string) => {
-                Some(StaticValue::String(string.inner_string_text().ok()?))
+                Some(StaticValue::String(string.value_token().ok()?))
             }
         }
     }
