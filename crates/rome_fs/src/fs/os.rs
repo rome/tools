@@ -118,7 +118,7 @@ impl<'scope> TraversalScope<'scope> for OsTraversalScope<'scope> {
         };
 
         if file_type.is_symlink() {
-            let Ok((target_path, target_file_type)) = handle_symlink(path, ctx) else {
+            let Ok((target_path, target_file_type)) = expand_symbolic_link(path, ctx) else {
                 return;
             };
 
@@ -208,7 +208,7 @@ fn handle_dir_entry<'scope>(
     };
 
     if file_type.is_symlink() {
-        let Ok((target_path, target_file_type)) = handle_symlink(path.clone(), ctx) else {
+        let Ok((target_path, target_file_type)) = expand_symbolic_link(path.clone(), ctx) else {
             return;
         };
 
@@ -286,13 +286,23 @@ fn handle_dir_entry<'scope>(
     }));
 }
 
-/// Handles symlinks by recursively following them (up to `MAX_SYMLINK_DEPTH`),
-/// and returning the new type of the file pointed to. Performs error reporting,
-/// so the returned error type is `()`.
-fn handle_symlink(
+/// Indicates a symbolic link could not be expanded.
+///
+/// Has no fields, since the diagnostics are already generated inside
+/// [follow_symbolic_link()] and the caller doesn't need to do anything except
+/// an early return.
+struct SymlinkExpansionError;
+
+/// Expands symlinks by recursively following them up to [MAX_SYMLINK_DEPTH].
+///
+/// ## Returns
+///
+/// Returns a tuple where the first argument is the target path being pointed to
+/// and the second argument is the target file type.
+fn expand_symbolic_link(
     mut path: PathBuf,
     ctx: &dyn TraversalContext,
-) -> Result<(PathBuf, FileType), ()> {
+) -> Result<(PathBuf, FileType), SymlinkExpansionError> {
     let mut symlink_depth = 0;
     loop {
         symlink_depth += 1;
@@ -303,7 +313,7 @@ fn handle_symlink(
                 error_kind: ErrorKind::DeeplyNestedSymlinkExpansion(path),
                 severity: Severity::Warning,
             }));
-            return Err(());
+            return Err(SymlinkExpansionError);
         }
 
         let (target_path, target_file_type) = follow_symlink(&path, ctx)?;
@@ -317,11 +327,15 @@ fn handle_symlink(
     }
 }
 
-fn follow_symlink(path: &Path, ctx: &dyn TraversalContext) -> Result<(PathBuf, FileType), ()> {
+fn follow_symlink(
+    path: &Path,
+    ctx: &dyn TraversalContext,
+) -> Result<(PathBuf, FileType), SymlinkExpansionError> {
     tracing::info!("Translating symlink: {path:?}");
 
     let target_path = fs::read_link(path).map_err(|err| {
         ctx.push_diagnostic(IoError::from(err).with_file_path(path.to_string_lossy().to_string()));
+        SymlinkExpansionError
     })?;
 
     // Make sure relative symlinks are resolved:
@@ -345,7 +359,7 @@ fn follow_symlink(path: &Path, ctx: &dyn TraversalContext) -> Result<(PathBuf, F
                     IoError::from(err).with_file_path(path.to_string_lossy().to_string()),
                 );
             }
-            return Err(());
+            return Err(SymlinkExpansionError);
         }
     };
 
