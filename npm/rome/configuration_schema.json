@@ -921,6 +921,13 @@
 						{ "type": "null" }
 					]
 				},
+				"noUnsafeDeclarationMerging": {
+					"description": "Disallow unsafe declaration merging between interfaces and classes.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"noUselessEmptyExport": {
 					"description": "Disallow empty exports that don't change anything in a module file.",
 					"anyOf": [
