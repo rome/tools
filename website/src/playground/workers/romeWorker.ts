@@ -1,3 +1,10 @@
+import init, {
+	Configuration,
+	DiagnosticPrinter,
+	RomePath,
+	RuleCategories,
+	Workspace,
+} from "@rometools/wasm-web";
 import {
 	ArrowParentheses,
 	IndentStyle,
@@ -10,13 +17,6 @@ import {
 	Semicolons,
 } from "../types";
 import { isJsonFilename } from "../utils";
-import init, {
-	Configuration,
-	DiagnosticPrinter,
-	RomePath,
-	RuleCategories,
-	Workspace,
-} from "@rometools/wasm-web";
 
 let workspace: Workspace | null = null;
 let fileCounter = 0;

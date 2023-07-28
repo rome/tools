@@ -1,3 +1,18 @@
+import { javascript } from "@codemirror/lang-javascript";
+import { json } from "@codemirror/lang-json";
+import { EditorSelection } from "@codemirror/state";
+import type { ViewUpdate } from "@codemirror/view";
+import ImportSortingTab from "@src/playground/tabs/ImportSortingTab";
+import type { ReactCodeMirrorRef } from "@uiw/react-codemirror";
+import * as codeMirrorLangRomeAst from "codemirror-lang-rome-ast";
+import {
+	createRef,
+	useCallback,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from "react";
 import CodeMirror from "./CodeMirror";
 import DiagnosticsPane from "./components/DiagnosticsPane";
 import Resizable from "./components/Resizable";
@@ -19,21 +34,6 @@ import {
 	isTypeScriptFilename,
 	useWindowSize,
 } from "./utils";
-import { javascript } from "@codemirror/lang-javascript";
-import { json } from "@codemirror/lang-json";
-import { EditorSelection } from "@codemirror/state";
-import type { ViewUpdate } from "@codemirror/view";
-import ImportSortingTab from "@src/playground/tabs/ImportSortingTab";
-import type { ReactCodeMirrorRef } from "@uiw/react-codemirror";
-import * as codeMirrorLangRomeAst from "codemirror-lang-rome-ast";
-import {
-	createRef,
-	useCallback,
-	useEffect,
-	useMemo,
-	useRef,
-	useState,
-} from "react";
 
 export default function PlaygroundLoader({
 	setPlaygroundState,

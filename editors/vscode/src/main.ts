@@ -1,8 +1,3 @@
-import { Commands } from "./commands";
-import { syntaxTree } from "./commands/syntaxTree";
-import { Session } from "./session";
-import { StatusBar } from "./statusBar";
-import { setContextValue } from "./utils";
 import { type ChildProcess, spawn } from "child_process";
 import { type Socket, connect } from "net";
 import { isAbsolute } from "path";
@@ -23,6 +18,11 @@ import {
 	ServerOptions,
 	StreamInfo,
 } from "vscode-languageclient/node";
+import { Commands } from "./commands";
+import { syntaxTree } from "./commands/syntaxTree";
+import { Session } from "./session";
+import { StatusBar } from "./statusBar";
+import { setContextValue } from "./utils";
 
 import resolveImpl = require("resolve/async");
 import type * as resolve from "resolve";

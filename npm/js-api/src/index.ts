@@ -1,4 +1,3 @@
-import { Distribution, WasmModule, loadModule, wrapError } from "./wasm";
 import type {
 	Configuration,
 	Diagnostic,
@@ -6,6 +5,7 @@ import type {
 	RomePath,
 	Workspace,
 } from "@rometools/wasm-nodejs";
+import { Distribution, WasmModule, loadModule, wrapError } from "./wasm";
 
 // Re-export of some useful types for users
 export type { Configuration, Diagnostic };

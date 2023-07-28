@@ -1,9 +1,9 @@
+import { romeAst as RomeFormatterIr } from "lang-rome-formatter-ir";
 import CodeMirror from "../CodeMirror";
 import Collapsible from "../Collapsible";
 import PrettierHeader from "../components/PrettierHeader";
 import RomeHeader from "../components/RomeHeader";
 import type { PrettierOutput } from "../types";
-import { romeAst as RomeFormatterIr } from "lang-rome-formatter-ir";
 
 interface Props {
 	prettier: PrettierOutput;

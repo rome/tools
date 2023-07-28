@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import Playground from "./Playground";
 import LoadingScreen from "./components/LoadingScreen";
 import {
@@ -27,7 +28,6 @@ import {
 	isTypeScriptFilename,
 	normalizeFilename,
 } from "./utils";
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 
 function throttle(callback: () => void): () => void {
 	const timeout = setTimeout(callback, 100);
