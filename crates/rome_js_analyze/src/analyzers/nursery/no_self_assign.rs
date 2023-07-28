@@ -1,11 +1,11 @@
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::{
-    AnyJsArrayAssignmentPatternElement, AnyJsArrayElement, AnyJsAssignment, AnyJsAssignmentPattern,
-    AnyJsExpression, AnyJsLiteralExpression, AnyJsName, AnyJsObjectAssignmentPatternMember,
-    AnyJsObjectMember, JsAssignmentExpression, JsAssignmentOperator, JsCallExpression,
-    JsComputedMemberAssignment, JsComputedMemberExpression, JsIdentifierAssignment,
-    JsIdentifierExpression, JsLanguage, JsName, JsPrivateName, JsReferenceIdentifier,
+    inner_string_text, AnyJsArrayAssignmentPatternElement, AnyJsArrayElement, AnyJsAssignment,
+    AnyJsAssignmentPattern, AnyJsExpression, AnyJsLiteralExpression, AnyJsName,
+    AnyJsObjectAssignmentPatternMember, AnyJsObjectMember, JsAssignmentExpression,
+    JsAssignmentOperator, JsCallExpression, JsComputedMemberAssignment, JsComputedMemberExpression,
+    JsIdentifierAssignment, JsLanguage, JsName, JsPrivateName, JsReferenceIdentifier,
     JsStaticMemberAssignment, JsStaticMemberExpression, JsSyntaxToken,
 };
 use rome_rowan::{
@@ -421,7 +421,9 @@ impl AnyJsAssignmentExpressionLikeIterator {
     fn from_computed_member_assignment(source: JsComputedMemberAssignment) -> SyntaxResult<Self> {
         Ok(Self {
             source_member: source.member().and_then(|expression| match expression {
-                AnyJsExpression::JsIdentifierExpression(node) => Ok(AnyNameLike::from(node)),
+                AnyJsExpression::JsIdentifierExpression(node) => {
+                    Ok(AnyNameLike::from(node.name()?))
+                }
                 _ => Err(SyntaxError::MissingRequiredChild),
             })?,
             source_object: source.object()?,
@@ -433,7 +435,9 @@ impl AnyJsAssignmentExpressionLikeIterator {
     fn from_computed_member_expression(source: JsComputedMemberExpression) -> SyntaxResult<Self> {
         Ok(Self {
             source_member: source.member().and_then(|expression| match expression {
-                AnyJsExpression::JsIdentifierExpression(node) => Ok(AnyNameLike::from(node)),
+                AnyJsExpression::JsIdentifierExpression(node) => {
+                    Ok(AnyNameLike::from(node.name()?))
+                }
                 _ => Err(SyntaxError::MissingRequiredChild),
             })?,
             source_object: source.object()?,
@@ -539,7 +543,7 @@ enum AnyAssignmentLike {
 }
 
 declare_node_union! {
-    pub(crate) AnyNameLike = AnyJsName | JsReferenceIdentifier | JsIdentifierExpression | AnyJsLiteralExpression
+    pub(crate) AnyNameLike = AnyJsName | JsReferenceIdentifier | AnyJsLiteralExpression
 }
 
 declare_node_union! {
@@ -716,11 +720,6 @@ impl TryFrom<(AnyNameLike, AnyNameLike)> for IdentifiersLike {
             ) => Ok(Self::References(left, right)),
 
             (
-                AnyNameLike::JsIdentifierExpression(left),
-                AnyNameLike::JsIdentifierExpression(right),
-            ) => Ok(Self::References(left.name()?, right.name()?)),
-
-            (
                 AnyNameLike::AnyJsLiteralExpression(left),
                 AnyNameLike::AnyJsLiteralExpression(right),
             ) => Ok(Self::Literal(left, right)),
@@ -808,7 +807,7 @@ fn with_same_identifiers(identifiers_like: &IdentifiersLike) -> Option<()> {
         },
     };
 
-    if left_value.text_trimmed() == right_value.text_trimmed() {
+    if inner_string_text(&left_value) == inner_string_text(&right_value) {
         Some(())
     } else {
         None

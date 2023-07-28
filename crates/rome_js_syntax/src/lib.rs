@@ -29,7 +29,8 @@ pub use function_ext::*;
 pub use identifier_ext::*;
 pub use modifier_ext::*;
 pub use rome_rowan::{
-    SyntaxNodeText, TextLen, TextRange, TextSize, TokenAtOffset, TriviaPieceKind, WalkEvent,
+    SyntaxNodeText, TextLen, TextRange, TextSize, TokenAtOffset, TokenText, TriviaPieceKind,
+    WalkEvent,
 };
 pub use stmt_ext::*;
 pub use syntax_node::*;
@@ -273,29 +274,35 @@ impl OperatorPrecedence {
     }
 }
 
-/// Similar to `JsSyntaxToken::text_trimmed` with the difference that delimiters of string literals are trimmed.
+/// Similar to [JsSyntaxToken::text_trimmed()], but removes the quotes of string literals.
 ///
 /// ## Examples
 ///
 /// ```
-/// use rome_js_syntax::{JsSyntaxKind, JsSyntaxToken, inner_text};
+/// use rome_js_syntax::{JsSyntaxKind, JsSyntaxToken, inner_string_text};
 ///
-/// let a = JsSyntaxToken::new_detached(JsSyntaxKind::JS_STRING_LITERAL, "'inner_text'", [], []);
-/// let b = JsSyntaxToken::new_detached(JsSyntaxKind::JS_STRING_LITERAL, "\"inner_text\"", [], []);
-/// assert_eq!(inner_text(&a), inner_text(&b));
+/// let a = JsSyntaxToken::new_detached(JsSyntaxKind::JS_STRING_LITERAL, "'inner_string_text'", [], []);
+/// let b = JsSyntaxToken::new_detached(JsSyntaxKind::JS_STRING_LITERAL, "\"inner_string_text\"", [], []);
+/// assert_eq!(inner_string_text(&a), inner_string_text(&b));
 ///
 /// let a = JsSyntaxToken::new_detached(JsSyntaxKind::LET_KW, "let", [], []);
 /// let b = JsSyntaxToken::new_detached(JsSyntaxKind::LET_KW, "let", [], []);
-/// assert_eq!(inner_text(&a), inner_text(&b));
+/// assert_eq!(inner_string_text(&a), inner_string_text(&b));
 ///
 /// let a = JsSyntaxToken::new_detached(JsSyntaxKind::LET_KW, "let", [], []);
 /// let b = JsSyntaxToken::new_detached(JsSyntaxKind::CONST_KW, "const", [], []);
-/// assert!(inner_text(&a) != inner_text(&b));
+/// assert!(inner_string_text(&a) != inner_string_text(&b));
 /// ```
-pub fn inner_text(token: &JsSyntaxToken) -> &str {
-    let mut result = token.text_trimmed();
-    if token.kind() == JsSyntaxKind::JS_STRING_LITERAL {
-        result = &result[1..result.len() - 1];
+pub fn inner_string_text(token: &JsSyntaxToken) -> TokenText {
+    let mut text = token.token_text_trimmed();
+    if matches!(
+        token.kind(),
+        JsSyntaxKind::JS_STRING_LITERAL | JsSyntaxKind::JSX_STRING_LITERAL
+    ) {
+        // remove string delimiters
+        // SAFETY: string literal token have a delimiters at the start and the end of the string
+        let range = TextRange::new(1.into(), text.len() - TextSize::from(1));
+        text = text.slice(range);
     }
-    result
+    text
 }

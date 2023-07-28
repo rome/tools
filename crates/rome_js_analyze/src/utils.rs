@@ -1,6 +1,6 @@
 use rome_js_factory::make;
 use rome_js_syntax::{
-    inner_text, AnyJsStatement, JsLanguage, JsModuleItemList, JsStatementList, JsSyntaxNode,
+    inner_string_text, AnyJsStatement, JsLanguage, JsModuleItemList, JsStatementList, JsSyntaxNode,
     JsVariableDeclaration, JsVariableDeclarator, JsVariableDeclaratorList, JsVariableStatement, T,
 };
 use rome_rowan::{AstNode, AstSeparatedList, BatchMutation, Direction, WalkEvent};
@@ -225,7 +225,7 @@ pub(crate) fn is_node_equal(a_node: &JsSyntaxNode, b_node: &JsSyntaxNode) -> boo
             (None, Some(_)) | (Some(_), None) => return false,
             // both are tokens
             (Some(a), Some(b)) => {
-                if inner_text(a) != inner_text(b) {
+                if inner_string_text(a) != inner_string_text(b) {
                     return false;
                 }
                 continue;

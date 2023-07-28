@@ -103,7 +103,7 @@ impl Rule for UseLiteralEnumMembers {
             };
             if let Ok(name) = enum_member.name() {
                 if let Some(name) = name.name() {
-                    enum_member_names.insert(name.text().to_string());
+                    enum_member_names.insert(name.to_string());
                 }
             }
         }
@@ -208,11 +208,8 @@ fn is_enum_member_reference(
     (move || {
         // Allow reference to previous member name namespaced by the enum name
         let object = expr.object().ok()?.omit_parentheses();
-        let object = object.as_js_identifier_expression()?;
-        Some(
-            object.name().ok()?.has_name(enum_name)
-                && enum_member_names.contains(expr.member_name()?.text()),
-        )
+        let object = object.as_js_reference_identifier()?;
+        Some(object.has_name(enum_name) && enum_member_names.contains(expr.member_name()?.text()))
     })()
     .unwrap_or_default()
 }
