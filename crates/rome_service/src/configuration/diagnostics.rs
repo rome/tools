@@ -340,7 +340,7 @@ mod test {
     #[test]
     fn deserialization_error() {
         let content = "{ \n\n\"formatter\" }";
-        let result = deserialize_from_json_str::<Configuration>(content);
+        let result = deserialize_from_json_str::<Configuration>(content, false);
 
         assert!(result.has_errors());
         for diagnostic in result.into_diagnostics() {
@@ -363,6 +363,7 @@ mod test {
     }
   }
 }"#;
-        let _result = deserialize_from_json_str::<Configuration>(content).into_deserialized();
+        let _result =
+            deserialize_from_json_str::<Configuration>(content, false).into_deserialized();
     }
 }

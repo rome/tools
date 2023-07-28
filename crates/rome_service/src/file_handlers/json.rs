@@ -26,7 +26,7 @@ use rome_json_syntax::{JsonFileSource, JsonLanguage, JsonRoot, JsonSyntaxNode};
 use rome_parser::AnyParse;
 use rome_rowan::{AstNode, FileSource, NodeCache};
 use rome_rowan::{TextRange, TextSize, TokenAtOffset};
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 impl Language for JsonLanguage {
     type FormatterSettings = ();
@@ -89,6 +89,14 @@ impl ExtensionHandler for JsonFileHandler {
     }
 }
 
+fn is_file_allowed_as_jsonc(path: &Path) -> bool {
+    path.file_name()
+        .and_then(|f| f.to_str())
+        .map(|f| super::Language::ALLOWED_FILES.contains(&f))
+        // default is false
+        .unwrap_or_default()
+}
+
 fn parse(
     rome_path: &RomePath,
     language_hint: LanguageId,
@@ -97,15 +105,17 @@ fn parse(
     cache: &mut NodeCache,
 ) -> AnyParse {
     let parser = &settings.as_ref().languages.json.parser;
-    let options: JsonParserOptions = JsonParserOptions {
-        allow_comments: parser.allow_comments,
-    };
     let source_type =
         JsonFileSource::try_from(rome_path.as_path()).unwrap_or_else(|_| match language_hint {
             LanguageId::Json => JsonFileSource::json(),
             LanguageId::Jsonc => JsonFileSource::jsonc(),
             _ => JsonFileSource::json(),
         });
+    let options: JsonParserOptions = JsonParserOptions {
+        allow_comments: parser.allow_comments
+            || source_type.is_jsonc()
+            || is_file_allowed_as_jsonc(&rome_path),
+    };
     let parse = rome_json_parser::parse_json_with_cache(text, cache, options);
     let root = parse.syntax();
     let diagnostics = parse.into_diagnostics();

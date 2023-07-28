@@ -14,7 +14,8 @@ fn run_invalid_configurations(input: &'static str, _: &str, _: &str, _: &str) {
         .unwrap_or_else(|err| panic!("failed to read {:?}: {:?}", input_file, err));
 
     let result = match extension {
-        "json" => deserialize_from_json_str::<Configuration>(input_code.as_str()),
+        "json" => deserialize_from_json_str::<Configuration>(input_code.as_str(), false),
+        "jsonc" => deserialize_from_json_str::<Configuration>(input_code.as_str(), true),
         _ => {
             panic!("Extension not supported");
         }

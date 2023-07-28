@@ -36,7 +36,7 @@ pub fn create_analyzer_options(
     let options_file = input_file.with_extension("options.json");
     if let Ok(json) = std::fs::read_to_string(options_file.clone()) {
         let deserialized =
-            rome_deserialize::json::deserialize_from_json_str::<Configuration>(json.as_str());
+            rome_deserialize::json::deserialize_from_json_str::<Configuration>(json.as_str(), true);
         if deserialized.has_errors() {
             diagnostics.extend(
                 deserialized

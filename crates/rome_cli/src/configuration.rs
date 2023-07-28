@@ -72,7 +72,7 @@ impl LoadedConfiguration {
 					)
 
 				})?;
-            let deserialized = deserialize_from_json_str::<Configuration>(content.as_str());
+            let deserialized = deserialize_from_json_str::<Configuration>(content.as_str(), true);
             deserialized_configurations.push(deserialized)
         }
         Ok(deserialized_configurations)
