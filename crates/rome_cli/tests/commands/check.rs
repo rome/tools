@@ -856,7 +856,7 @@ fn fs_error_infinite_symlink_expansion_to_dirs() {
 
     #[cfg(target_os = "windows")]
     {
-        check_windows_symlink!(symlink_dir(&subdir2_path, subdir1_path.join("symlink1")));
+        check_windows_symlink!(symlink_dir(&subdir2_path, &subdir1_path.join("symlink1")));
         check_windows_symlink!(symlink_dir(subdir1_path, subdir2_path.join("symlink2")));
     }
 
@@ -903,7 +903,7 @@ fn fs_error_infinite_symlink_expansion_to_files() {
 
     #[cfg(target_os = "windows")]
     {
-        check_windows_symlink!(symlink_dir(&symlink2_path, symlink1_path));
+        check_windows_symlink!(symlink_dir(&symlink2_path, &symlink1_path));
         check_windows_symlink!(symlink_dir(symlink1_path, symlink2_path));
     }
 
