@@ -355,6 +355,24 @@ match these patterns.
 
 These options apply only to JavaScript (and TypeScript) files.
 
+### `javascript.parser.unsafeParameterDecoratorsEnabled`
+
+Allows to support the unsafe/experimental parameter decorators.
+
+<CodeBlockHeader filename="rome.json" />
+
+```json
+{
+	"javascript": {
+		"parser": {
+			"unsafeParameterDecoratorsEnabled": true
+		}
+	}
+}
+```
+
+> Default: `false`
+
 ### `javascript.formatter.quoteStyle`
 
 The type of quote used when representing string literals. It can be `single` or `double`.
