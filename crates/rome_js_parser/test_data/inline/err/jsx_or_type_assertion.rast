@@ -22,6 +22,7 @@ JsScript {
                 statements: JsStatementList [
                     JsVariableStatement {
                         declaration: JsVariableDeclaration {
+                            await_token: missing (optional),
                             kind: LET_KW@24..33 "let" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
                             declarators: JsVariableDeclaratorList [
                                 JsVariableDeclarator {
@@ -70,6 +71,7 @@ JsScript {
                     },
                     JsVariableStatement {
                         declaration: JsVariableDeclaration {
+                            await_token: missing (optional),
                             kind: LET_KW@57..66 "let" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
                             declarators: JsVariableDeclaratorList [
                                 JsVariableDeclarator {
@@ -101,6 +103,7 @@ JsScript {
                     },
                     JsVariableStatement {
                         declaration: JsVariableDeclaration {
+                            await_token: missing (optional),
                             kind: LET_KW@98..107 "let" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
                             declarators: JsVariableDeclaratorList [
                                 JsVariableDeclarator {
@@ -148,6 +151,7 @@ JsScript {
                     },
                     JsVariableStatement {
                         declaration: JsVariableDeclaration {
+                            await_token: missing (optional),
                             kind: LET_KW@143..152 "let" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
                             declarators: JsVariableDeclaratorList [
                                 JsVariableDeclarator {
@@ -188,6 +192,7 @@ JsScript {
                     },
                     JsVariableStatement {
                         declaration: JsVariableDeclaration {
+                            await_token: missing (optional),
                             kind: LET_KW@248..257 "let" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
                             declarators: JsVariableDeclaratorList [
                                 JsVariableDeclarator {
@@ -253,8 +258,9 @@ JsScript {
         2: JS_STATEMENT_LIST@24..281
           0: JS_VARIABLE_STATEMENT@24..57
             0: JS_VARIABLE_DECLARATION@24..57
-              0: LET_KW@24..33 "let" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
-              1: JS_VARIABLE_DECLARATOR_LIST@33..57
+              0: (empty)
+              1: LET_KW@24..33 "let" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+              2: JS_VARIABLE_DECLARATOR_LIST@33..57
                 0: JS_VARIABLE_DECLARATOR@33..57
                   0: JS_IDENTIFIER_BINDING@33..35
                     0: IDENT@33..35 "a" [] [Whitespace(" ")]
@@ -283,8 +289,9 @@ JsScript {
             1: (empty)
           1: JS_VARIABLE_STATEMENT@57..98
             0: JS_VARIABLE_DECLARATION@57..79
-              0: LET_KW@57..66 "let" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
-              1: JS_VARIABLE_DECLARATOR_LIST@66..79
+              0: (empty)
+              1: LET_KW@57..66 "let" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+              2: JS_VARIABLE_DECLARATOR_LIST@66..79
                 0: JS_VARIABLE_DECLARATOR@66..79
                   0: JS_IDENTIFIER_BINDING@66..68
                     0: IDENT@66..68 "b" [] [Whitespace(" ")]
@@ -302,8 +309,9 @@ JsScript {
             1: SEMICOLON@79..98 ";" [] [Whitespace(" "), Comments("// type assertion")]
           2: JS_VARIABLE_STATEMENT@98..143
             0: JS_VARIABLE_DECLARATION@98..124
-              0: LET_KW@98..107 "let" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
-              1: JS_VARIABLE_DECLARATOR_LIST@107..124
+              0: (empty)
+              1: LET_KW@98..107 "let" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+              2: JS_VARIABLE_DECLARATOR_LIST@107..124
                 0: JS_VARIABLE_DECLARATOR@107..124
                   0: JS_IDENTIFIER_BINDING@107..109
                     0: IDENT@107..109 "c" [] [Whitespace(" ")]
@@ -331,8 +339,9 @@ JsScript {
             1: SEMICOLON@124..143 ";" [] [Whitespace(" "), Comments("// type assertion")]
           3: JS_VARIABLE_STATEMENT@143..248
             0: JS_VARIABLE_DECLARATION@143..169
-              0: LET_KW@143..152 "let" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
-              1: JS_VARIABLE_DECLARATOR_LIST@152..169
+              0: (empty)
+              1: LET_KW@143..152 "let" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+              2: JS_VARIABLE_DECLARATOR_LIST@152..169
                 0: JS_VARIABLE_DECLARATOR@152..169
                   0: JS_IDENTIFIER_BINDING@152..154
                     0: IDENT@152..154 "d" [] [Whitespace(" ")]
@@ -356,8 +365,9 @@ JsScript {
             1: SEMICOLON@169..248 ";" [] [Whitespace(" "), Comments("// ambiguous: JSX or  ...")]
           4: JS_VARIABLE_STATEMENT@248..281
             0: JS_VARIABLE_DECLARATION@248..280
-              0: LET_KW@248..257 "let" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
-              1: JS_VARIABLE_DECLARATOR_LIST@257..280
+              0: (empty)
+              1: LET_KW@248..257 "let" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+              2: JS_VARIABLE_DECLARATOR_LIST@257..280
                 0: JS_VARIABLE_DECLARATOR@257..280
                   0: JS_IDENTIFIER_BINDING@257..259
                     0: IDENT@257..259 "d" [] [Whitespace(" ")]

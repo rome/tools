@@ -4,6 +4,7 @@ JsModule {
     items: JsModuleItemList [
         JsVariableStatement {
             declaration: JsVariableDeclaration {
+                await_token: missing (optional),
                 kind: LET_KW@0..4 "let" [] [Whitespace(" ")],
                 declarators: JsVariableDeclaratorList [
                     JsVariableDeclarator {
@@ -135,8 +136,9 @@ JsModule {
   2: JS_MODULE_ITEM_LIST@0..85
     0: JS_VARIABLE_STATEMENT@0..16
       0: JS_VARIABLE_DECLARATION@0..15
-        0: LET_KW@0..4 "let" [] [Whitespace(" ")]
-        1: JS_VARIABLE_DECLARATOR_LIST@4..15
+        0: (empty)
+        1: LET_KW@0..4 "let" [] [Whitespace(" ")]
+        2: JS_VARIABLE_DECLARATOR_LIST@4..15
           0: JS_VARIABLE_DECLARATOR@4..15
             0: JS_ARRAY_BINDING_PATTERN@4..12
               0: L_BRACK@4..6 "[" [] [Whitespace(" ")]

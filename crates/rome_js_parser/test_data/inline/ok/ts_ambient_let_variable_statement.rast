@@ -6,6 +6,7 @@ JsModule {
             declare_token: DECLARE_KW@0..8 "declare" [] [Whitespace(" ")],
             declaration: JsVariableDeclarationClause {
                 declaration: JsVariableDeclaration {
+                    await_token: missing (optional),
                     kind: LET_KW@8..12 "let" [] [Whitespace(" ")],
                     declarators: JsVariableDeclaratorList [
                         JsVariableDeclarator {
@@ -56,8 +57,9 @@ JsModule {
       0: DECLARE_KW@0..8 "declare" [] [Whitespace(" ")]
       1: JS_VARIABLE_DECLARATION_CLAUSE@8..23
         0: JS_VARIABLE_DECLARATION@8..22
-          0: LET_KW@8..12 "let" [] [Whitespace(" ")]
-          1: JS_VARIABLE_DECLARATOR_LIST@12..22
+          0: (empty)
+          1: LET_KW@8..12 "let" [] [Whitespace(" ")]
+          2: JS_VARIABLE_DECLARATOR_LIST@12..22
             0: JS_VARIABLE_DECLARATOR@12..13
               0: JS_IDENTIFIER_BINDING@12..13
                 0: IDENT@12..13 "a" [] []

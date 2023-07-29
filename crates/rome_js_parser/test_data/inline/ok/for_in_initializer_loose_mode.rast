@@ -6,6 +6,7 @@ JsScript {
             for_token: FOR_KW@0..14 "for" [Comments("// SCRIPT"), Newline("\n")] [Whitespace(" ")],
             l_paren_token: L_PAREN@14..15 "(" [] [],
             initializer: JsForVariableDeclaration {
+                await_token: missing (optional),
                 kind_token: VAR_KW@15..19 "var" [] [Whitespace(" ")],
                 declarator: JsVariableDeclarator {
                     id: JsIdentifierBinding {
@@ -45,8 +46,9 @@ JsScript {
       0: FOR_KW@0..14 "for" [Comments("// SCRIPT"), Newline("\n")] [Whitespace(" ")]
       1: L_PAREN@14..15 "(" [] []
       2: JS_FOR_VARIABLE_DECLARATION@15..25
-        0: VAR_KW@15..19 "var" [] [Whitespace(" ")]
-        1: JS_VARIABLE_DECLARATOR@19..25
+        0: (empty)
+        1: VAR_KW@15..19 "var" [] [Whitespace(" ")]
+        2: JS_VARIABLE_DECLARATOR@19..25
           0: JS_IDENTIFIER_BINDING@19..21
             0: IDENT@19..21 "i" [] [Whitespace(" ")]
           1: (empty)

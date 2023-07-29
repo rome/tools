@@ -1,0 +1,423 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsVariableStatement {
+            declaration: JsVariableDeclaration {
+                await_token: missing (optional),
+                kind: USING_KW@0..6 "using" [] [Whitespace(" ")],
+                declarators: JsVariableDeclaratorList [
+                    JsVariableDeclarator {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@6..7 "a" [] [],
+                        },
+                        variable_annotation: missing (optional),
+                        initializer: missing (optional),
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@7..8 ";" [] [],
+        },
+        JsVariableStatement {
+            declaration: JsVariableDeclaration {
+                await_token: missing (optional),
+                kind: USING_KW@8..15 "using" [Newline("\n")] [Whitespace(" ")],
+                declarators: JsVariableDeclaratorList [
+                    JsVariableDeclarator {
+                        id: JsObjectBindingPattern {
+                            l_curly_token: L_CURLY@15..16 "{" [] [],
+                            properties: JsObjectBindingPatternPropertyList [
+                                JsObjectBindingPatternShorthandProperty {
+                                    identifier: JsIdentifierBinding {
+                                        name_token: IDENT@16..17 "b" [] [],
+                                    },
+                                    init: missing (optional),
+                                },
+                            ],
+                            r_curly_token: R_CURLY@17..18 "}" [] [],
+                        },
+                        variable_annotation: missing (optional),
+                        initializer: missing (optional),
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@18..19 ";" [] [],
+        },
+        JsVariableStatement {
+            declaration: JsVariableDeclaration {
+                await_token: missing (optional),
+                kind: USING_KW@19..26 "using" [Newline("\n")] [Whitespace(" ")],
+                declarators: JsVariableDeclaratorList [
+                    JsVariableDeclarator {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@26..28 "c" [] [Whitespace(" ")],
+                        },
+                        variable_annotation: missing (optional),
+                        initializer: JsInitializerClause {
+                            eq_token: EQ@28..30 "=" [] [Whitespace(" ")],
+                            expression: JsIdentifierExpression {
+                                name: JsReferenceIdentifier {
+                                    value_token: IDENT@30..31 "d" [] [],
+                                },
+                            },
+                        },
+                    },
+                    COMMA@31..33 "," [] [Whitespace(" ")],
+                    JsVariableDeclarator {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@33..34 "e" [] [],
+                        },
+                        variable_annotation: missing (optional),
+                        initializer: missing (optional),
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@34..35 ";" [] [],
+        },
+        JsExport {
+            decorators: JsDecoratorList [],
+            export_token: EXPORT_KW@35..43 "export" [Newline("\n")] [Whitespace(" ")],
+            export_clause: missing (required),
+        },
+        JsVariableStatement {
+            declaration: JsVariableDeclaration {
+                await_token: missing (optional),
+                kind: USING_KW@43..49 "using" [] [Whitespace(" ")],
+                declarators: JsVariableDeclaratorList [
+                    JsVariableDeclarator {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@49..51 "m" [] [Whitespace(" ")],
+                        },
+                        variable_annotation: missing (optional),
+                        initializer: JsInitializerClause {
+                            eq_token: EQ@51..53 "=" [] [Whitespace(" ")],
+                            expression: JsIdentifierExpression {
+                                name: JsReferenceIdentifier {
+                                    value_token: IDENT@53..54 "n" [] [],
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@54..55 ";" [] [],
+        },
+        JsVariableStatement {
+            declaration: JsVariableDeclaration {
+                await_token: AWAIT_KW@55..62 "await" [Newline("\n")] [Whitespace(" ")],
+                kind: USING_KW@62..68 "using" [] [Whitespace(" ")],
+                declarators: JsVariableDeclaratorList [
+                    JsVariableDeclarator {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@68..69 "f" [] [],
+                        },
+                        variable_annotation: missing (optional),
+                        initializer: missing (optional),
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@69..70 ";" [] [],
+        },
+        JsVariableStatement {
+            declaration: JsVariableDeclaration {
+                await_token: AWAIT_KW@70..77 "await" [Newline("\n")] [Whitespace(" ")],
+                kind: USING_KW@77..83 "using" [] [Whitespace(" ")],
+                declarators: JsVariableDeclaratorList [
+                    JsVariableDeclarator {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@83..85 "g" [] [Whitespace(" ")],
+                        },
+                        variable_annotation: missing (optional),
+                        initializer: JsInitializerClause {
+                            eq_token: EQ@85..87 "=" [] [Whitespace(" ")],
+                            expression: JsIdentifierExpression {
+                                name: JsReferenceIdentifier {
+                                    value_token: IDENT@87..88 "h" [] [],
+                                },
+                            },
+                        },
+                    },
+                    COMMA@88..90 "," [] [Whitespace(" ")],
+                    JsVariableDeclarator {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@90..91 "j" [] [],
+                        },
+                        variable_annotation: missing (optional),
+                        initializer: missing (optional),
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@91..92 ";" [] [],
+        },
+        JsExport {
+            decorators: JsDecoratorList [],
+            export_token: EXPORT_KW@92..130 "export" [Newline("\n"), Comments("// TODO: await using  ..."), Newline("\n")] [Whitespace(" ")],
+            export_clause: missing (required),
+        },
+        JsVariableStatement {
+            declaration: JsVariableDeclaration {
+                await_token: AWAIT_KW@130..136 "await" [] [Whitespace(" ")],
+                kind: USING_KW@136..142 "using" [] [Whitespace(" ")],
+                declarators: JsVariableDeclaratorList [
+                    JsVariableDeclarator {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@142..144 "q" [] [Whitespace(" ")],
+                        },
+                        variable_annotation: missing (optional),
+                        initializer: JsInitializerClause {
+                            eq_token: EQ@144..146 "=" [] [Whitespace(" ")],
+                            expression: JsIdentifierExpression {
+                                name: JsReferenceIdentifier {
+                                    value_token: IDENT@146..147 "r" [] [],
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@147..148 ";" [] [],
+        },
+    ],
+    eof_token: EOF@148..149 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..149
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..148
+    0: JS_VARIABLE_STATEMENT@0..8
+      0: JS_VARIABLE_DECLARATION@0..7
+        0: (empty)
+        1: USING_KW@0..6 "using" [] [Whitespace(" ")]
+        2: JS_VARIABLE_DECLARATOR_LIST@6..7
+          0: JS_VARIABLE_DECLARATOR@6..7
+            0: JS_IDENTIFIER_BINDING@6..7
+              0: IDENT@6..7 "a" [] []
+            1: (empty)
+            2: (empty)
+      1: SEMICOLON@7..8 ";" [] []
+    1: JS_VARIABLE_STATEMENT@8..19
+      0: JS_VARIABLE_DECLARATION@8..18
+        0: (empty)
+        1: USING_KW@8..15 "using" [Newline("\n")] [Whitespace(" ")]
+        2: JS_VARIABLE_DECLARATOR_LIST@15..18
+          0: JS_VARIABLE_DECLARATOR@15..18
+            0: JS_OBJECT_BINDING_PATTERN@15..18
+              0: L_CURLY@15..16 "{" [] []
+              1: JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST@16..17
+                0: JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY@16..17
+                  0: JS_IDENTIFIER_BINDING@16..17
+                    0: IDENT@16..17 "b" [] []
+                  1: (empty)
+              2: R_CURLY@17..18 "}" [] []
+            1: (empty)
+            2: (empty)
+      1: SEMICOLON@18..19 ";" [] []
+    2: JS_VARIABLE_STATEMENT@19..35
+      0: JS_VARIABLE_DECLARATION@19..34
+        0: (empty)
+        1: USING_KW@19..26 "using" [Newline("\n")] [Whitespace(" ")]
+        2: JS_VARIABLE_DECLARATOR_LIST@26..34
+          0: JS_VARIABLE_DECLARATOR@26..31
+            0: JS_IDENTIFIER_BINDING@26..28
+              0: IDENT@26..28 "c" [] [Whitespace(" ")]
+            1: (empty)
+            2: JS_INITIALIZER_CLAUSE@28..31
+              0: EQ@28..30 "=" [] [Whitespace(" ")]
+              1: JS_IDENTIFIER_EXPRESSION@30..31
+                0: JS_REFERENCE_IDENTIFIER@30..31
+                  0: IDENT@30..31 "d" [] []
+          1: COMMA@31..33 "," [] [Whitespace(" ")]
+          2: JS_VARIABLE_DECLARATOR@33..34
+            0: JS_IDENTIFIER_BINDING@33..34
+              0: IDENT@33..34 "e" [] []
+            1: (empty)
+            2: (empty)
+      1: SEMICOLON@34..35 ";" [] []
+    3: JS_EXPORT@35..43
+      0: JS_DECORATOR_LIST@35..35
+      1: EXPORT_KW@35..43 "export" [Newline("\n")] [Whitespace(" ")]
+      2: (empty)
+    4: JS_VARIABLE_STATEMENT@43..55
+      0: JS_VARIABLE_DECLARATION@43..54
+        0: (empty)
+        1: USING_KW@43..49 "using" [] [Whitespace(" ")]
+        2: JS_VARIABLE_DECLARATOR_LIST@49..54
+          0: JS_VARIABLE_DECLARATOR@49..54
+            0: JS_IDENTIFIER_BINDING@49..51
+              0: IDENT@49..51 "m" [] [Whitespace(" ")]
+            1: (empty)
+            2: JS_INITIALIZER_CLAUSE@51..54
+              0: EQ@51..53 "=" [] [Whitespace(" ")]
+              1: JS_IDENTIFIER_EXPRESSION@53..54
+                0: JS_REFERENCE_IDENTIFIER@53..54
+                  0: IDENT@53..54 "n" [] []
+      1: SEMICOLON@54..55 ";" [] []
+    5: JS_VARIABLE_STATEMENT@55..70
+      0: JS_VARIABLE_DECLARATION@55..69
+        0: AWAIT_KW@55..62 "await" [Newline("\n")] [Whitespace(" ")]
+        1: USING_KW@62..68 "using" [] [Whitespace(" ")]
+        2: JS_VARIABLE_DECLARATOR_LIST@68..69
+          0: JS_VARIABLE_DECLARATOR@68..69
+            0: JS_IDENTIFIER_BINDING@68..69
+              0: IDENT@68..69 "f" [] []
+            1: (empty)
+            2: (empty)
+      1: SEMICOLON@69..70 ";" [] []
+    6: JS_VARIABLE_STATEMENT@70..92
+      0: JS_VARIABLE_DECLARATION@70..91
+        0: AWAIT_KW@70..77 "await" [Newline("\n")] [Whitespace(" ")]
+        1: USING_KW@77..83 "using" [] [Whitespace(" ")]
+        2: JS_VARIABLE_DECLARATOR_LIST@83..91
+          0: JS_VARIABLE_DECLARATOR@83..88
+            0: JS_IDENTIFIER_BINDING@83..85
+              0: IDENT@83..85 "g" [] [Whitespace(" ")]
+            1: (empty)
+            2: JS_INITIALIZER_CLAUSE@85..88
+              0: EQ@85..87 "=" [] [Whitespace(" ")]
+              1: JS_IDENTIFIER_EXPRESSION@87..88
+                0: JS_REFERENCE_IDENTIFIER@87..88
+                  0: IDENT@87..88 "h" [] []
+          1: COMMA@88..90 "," [] [Whitespace(" ")]
+          2: JS_VARIABLE_DECLARATOR@90..91
+            0: JS_IDENTIFIER_BINDING@90..91
+              0: IDENT@90..91 "j" [] []
+            1: (empty)
+            2: (empty)
+      1: SEMICOLON@91..92 ";" [] []
+    7: JS_EXPORT@92..130
+      0: JS_DECORATOR_LIST@92..92
+      1: EXPORT_KW@92..130 "export" [Newline("\n"), Comments("// TODO: await using  ..."), Newline("\n")] [Whitespace(" ")]
+      2: (empty)
+    8: JS_VARIABLE_STATEMENT@130..148
+      0: JS_VARIABLE_DECLARATION@130..147
+        0: AWAIT_KW@130..136 "await" [] [Whitespace(" ")]
+        1: USING_KW@136..142 "using" [] [Whitespace(" ")]
+        2: JS_VARIABLE_DECLARATOR_LIST@142..147
+          0: JS_VARIABLE_DECLARATOR@142..147
+            0: JS_IDENTIFIER_BINDING@142..144
+              0: IDENT@142..144 "q" [] [Whitespace(" ")]
+            1: (empty)
+            2: JS_INITIALIZER_CLAUSE@144..147
+              0: EQ@144..146 "=" [] [Whitespace(" ")]
+              1: JS_IDENTIFIER_EXPRESSION@146..147
+                0: JS_REFERENCE_IDENTIFIER@146..147
+                  0: IDENT@146..147 "r" [] []
+      1: SEMICOLON@147..148 ";" [] []
+  3: EOF@148..149 "" [Newline("\n")] []
+--
+using_declaration_statement_err.js:1:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Using declarations must have an initialized value
+  
+  > 1 │ using a;
+      │       ^
+    2 │ using {b};
+    3 │ using c = d, e;
+  
+  i this variable needs to be initialized
+  
+--
+using_declaration_statement_err.js:2:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Object and Array patterns require initializers
+  
+    1 │ using a;
+  > 2 │ using {b};
+      │       ^^^
+    3 │ using c = d, e;
+    4 │ export using m = n;
+  
+  i this pattern is declared, but it is not given an initialized value
+  
+--
+using_declaration_statement_err.js:3:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Using declarations must have an initialized value
+  
+    1 │ using a;
+    2 │ using {b};
+  > 3 │ using c = d, e;
+      │              ^
+    4 │ export using m = n;
+    5 │ await using f;
+  
+  i this variable needs to be initialized
+  
+--
+using_declaration_statement_err.js:4:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected a class, a function, or a variable declaration but instead found 'using'
+  
+    2 │ using {b};
+    3 │ using c = d, e;
+  > 4 │ export using m = n;
+      │        ^^^^^
+    5 │ await using f;
+    6 │ await using g = h, j;
+  
+  i Expected a class, a function, or a variable declaration here
+  
+    2 │ using {b};
+    3 │ using c = d, e;
+  > 4 │ export using m = n;
+      │        ^^^^^
+    5 │ await using f;
+    6 │ await using g = h, j;
+  
+--
+using_declaration_statement_err.js:5:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Using declarations must have an initialized value
+  
+    3 │ using c = d, e;
+    4 │ export using m = n;
+  > 5 │ await using f;
+      │             ^
+    6 │ await using g = h, j;
+    7 │ // TODO: await using [o] = p;
+  
+  i this variable needs to be initialized
+  
+--
+using_declaration_statement_err.js:6:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Using declarations must have an initialized value
+  
+    4 │ export using m = n;
+    5 │ await using f;
+  > 6 │ await using g = h, j;
+      │                    ^
+    7 │ // TODO: await using [o] = p;
+    8 │ export await using q = r;
+  
+  i this variable needs to be initialized
+  
+--
+using_declaration_statement_err.js:8:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected a class, a function, or a variable declaration but instead found 'await'
+  
+    6 │ await using g = h, j;
+    7 │ // TODO: await using [o] = p;
+  > 8 │ export await using q = r;
+      │        ^^^^^
+    9 │ 
+  
+  i Expected a class, a function, or a variable declaration here
+  
+    6 │ await using g = h, j;
+    7 │ // TODO: await using [o] = p;
+  > 8 │ export await using q = r;
+      │        ^^^^^
+    9 │ 
+  
+--
+using a;
+using {b};
+using c = d, e;
+export using m = n;
+await using f;
+await using g = h, j;
+// TODO: await using [o] = p;
+export await using q = r;

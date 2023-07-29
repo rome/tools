@@ -65,6 +65,7 @@ pub const STMT_RECOVERY_SET: TokenSet<JsSyntaxKind> = token_set![
     NAMESPACE_KW,
     LET_KW,
     CONST_KW,
+    USING_KW,
     MODULE_KW,
     NAMESPACE_KW,
     GLOBAL_KW,
@@ -206,6 +207,8 @@ pub(crate) fn parse_statement(p: &mut JsParser, context: StatementContext) -> Pa
         }
         T![var] => parse_variable_statement(p, context),
         T![const] => parse_variable_statement(p, context),
+        T![using] => parse_variable_statement(p, context),
+        T![await] if p.nth_at(1, T![using]) => parse_variable_statement(p, context),
         T![for] => parse_for_statement(p),
         T![do] => parse_do_statement(p),
         T![switch] => parse_switch_statement(p),
@@ -1014,7 +1017,8 @@ fn parse_while_statement(p: &mut JsParser) -> ParsedSyntax {
 
 pub(crate) fn is_nth_at_variable_declarations(p: &mut JsParser, n: usize) -> bool {
     match p.nth(n) {
-        T![var] | T![const] => true,
+        T![var] | T![const] | T![using] => true,
+        T![await] if p.nth_at(n + 1, T![using]) => true,
         T![let] if is_nth_at_let_variable_statement(p, n) => true,
         _ => false,
     }
@@ -1028,7 +1032,7 @@ pub(crate) fn is_nth_at_let_variable_statement(p: &mut JsParser, n: usize) -> bo
     matches!(p.nth(n + 1), T!['{'] | T!['[']) || is_nth_at_identifier(p, n + 1)
 }
 
-/// A var, const, or let declaration statement such as `var a = 5, b;` or `let {a, b} = foo;`
+/// A var, const, using or let declaration statement such as `var a = 5, b;` or `let {a, b} = foo;`
 // test js var_decl
 // var a = 5;
 // let { foo, bar } = 5;
@@ -1038,12 +1042,41 @@ pub(crate) fn is_nth_at_let_variable_statement(p: &mut JsParser, n: usize) -> bo
 // let foo6 = "lorem", bar7 = "ipsum", third8 = "value", fourth = 6;
 // var q, w, e, r, t;
 //
+// test js using_declaration_statement
+// using a = b;
+// using c = d, e = _;
+// using [g] = h;
+// using [j]
+// = k;
+// await using l = m;
+// await using
+// n = o;
+// await
+// using
+// p = q;
+// // TODO: await using ([s] = t);
+// // TODO: await (using [u] = v);
+// using w = {};
+// using x = null;
+// using y = undefined;
+// using z = (foo, bar);
+//
 // test_err js variable_declaration_statement_err
 // let a, { b } = { a: 10 }
 // const c = 1, { d } = { a: 10 }
 // const e;
 // let [f];
 // const { g };
+//
+// test_err js using_declaration_statement_err
+// using a;
+// using {b};
+// using c = d, e;
+// export using m = n;
+// await using f;
+// await using g = h, j;
+// // TODO: await using [o] = p;
+// export await using q = r;
 pub(crate) fn parse_variable_statement(
     p: &mut JsParser,
     context: StatementContext,
@@ -1053,6 +1086,7 @@ pub(crate) fn parse_variable_statement(
     // const b = 5 let c = 5;
     let start = p.cur_range().start();
     let is_var = p.at(T![var]);
+    let is_await_using = p.at(T![await]) && p.nth_at(1, T![using]);
 
     parse_variable_declaration(p, VariableDeclarationParent::VariableStatement).map(|declaration| {
         let m = declaration.precede(p);
@@ -1073,6 +1107,23 @@ pub(crate) fn parse_variable_statement(
                     statement.range(p),
                 )
                 .hint("Wrap this declaration in a block statement"),
+            );
+            statement.change_to_bogus(p);
+        }
+
+        let is_top_level_module_or_async_fn =
+            p.state().in_async() && (p.state().is_top_level() || p.state().in_function());
+        if is_await_using && !is_top_level_module_or_async_fn {
+            // test_err js await_using_declaration_only_allowed_inside_an_async_function
+            // function foo() { await using x = y };
+            // foo = function() { await using x = y };
+            // foo = () => { await using x = y };
+            p.error(
+                p.err_builder(
+                    "`await using` declarations are only allowed at top-level or inside an async function",
+                    statement.range(p),
+                )
+                .hint("Wrap this declaration in an async function"),
             );
             statement.change_to_bogus(p);
         }
@@ -1107,7 +1158,7 @@ pub(super) enum VariableDeclarationParent {
     Clause,
 }
 
-/// Parses a variable declaration that consist of a variable kind (`let`, `const` or `var` and a list
+/// Parses a variable declaration that consist of a variable kind (`let`, `const`, `using` or `var` and a list
 /// of variable declarators).
 /// Returns a tuple where
 /// * the first element is the marker to the not yet completed list
@@ -1122,14 +1173,24 @@ fn eat_variable_declaration(
     match p.cur() {
         T![var] => {
             p.bump(T![var]);
+            context.kind_name = Some("var");
         }
         T![const] => {
-            context.is_const = Some(p.cur_range());
             p.bump(T![const]);
+            context.kind_name = Some("const");
         }
         T![let] => {
             p.bump(T![let]);
-            context.is_let = true;
+            context.kind_name = Some("let");
+        }
+        T![using] => {
+            p.bump(T![using]);
+            context.kind_name = Some("using");
+        }
+        T![await] if p.nth_at(1, T![using]) => {
+            p.bump(T![await]);
+            p.bump(T![using]);
+            context.kind_name = Some("using");
         }
         _ => {
             return None;
@@ -1214,10 +1275,8 @@ impl ParseSeparatedList for VariableDeclaratorList {
 }
 
 struct VariableDeclaratorContext {
-    /// The range of the `const` keyword if this is `const` variable declaration.
-    is_const: Option<TextRange>,
-    /// `true` if this is a let variable declaration
-    is_let: bool,
+    /// What kind of variable declaration is this (`var`, `let`, `const`, 'using')
+    kind_name: Option<&'static str>,
     /// Is this the first declaration in the declaration list (a first, b second in `let a, b`)
     is_first: bool,
     /// What's the parent of the variable declaration
@@ -1228,20 +1287,21 @@ impl VariableDeclaratorContext {
     fn new(parent: VariableDeclarationParent) -> Self {
         Self {
             parent,
-            is_const: None,
-            is_let: false,
+            kind_name: None,
             is_first: true,
         }
     }
 
-    fn duplicate_binding_parent_name(&self) -> Option<&'static str> {
-        if self.is_const.is_some() {
-            Some("const")
-        } else if self.is_let {
-            Some("let")
-        } else {
-            None
-        }
+    fn is_var(&self) -> bool {
+        matches!(self.kind_name, Some("var"))
+    }
+
+    fn is_const(&self) -> bool {
+        matches!(self.kind_name, Some("const"))
+    }
+
+    fn is_using(&self) -> bool {
+        matches!(self.kind_name, Some("using"))
     }
 }
 
@@ -1252,12 +1312,22 @@ impl VariableDeclaratorContext {
 //   }
 // };
 //
+// test js using_declarations_inside_for_statement
+// for (using x of y) {};
+// for await (using x of y) {};
+// for (await using x of y) {};
+// for await (await using x of y) {};
+//
+// test_err js invalid_using_declarations_inside_for_statement
+// for (await using of x) {};
+// for await (await using of x) {};
+//
 // A single declarator, either `ident` or `ident = assign_expr`
 fn parse_variable_declarator(
     p: &mut JsParser,
     context: &VariableDeclaratorContext,
 ) -> ParsedSyntax {
-    p.state_mut().duplicate_binding_parent = context.duplicate_binding_parent_name();
+    p.state_mut().duplicate_binding_parent = context.kind_name;
     let id = parse_binding_pattern(p, ExpressionContext::default());
     p.state_mut().duplicate_binding_parent = None;
 
@@ -1323,6 +1393,17 @@ fn parse_variable_declarator(
                     ts_annotation.change_to_bogus(p);
                 }
             }
+
+
+            // test_err js using_declaration_not_allowed_in_for_in_statement
+            // for (using x in y) {};
+            // for (await using x in y) {};
+            if context.is_using() && is_in_for_in {
+                let err = p
+                    .err_builder("The left-hand side of a 'for...in' statement cannot be a 'using' declaration", id_range);
+                p.error(err);
+            }
+
             if let Some(initializer) = initializer {
                 // Initializers are disallowed for `for..in` and `for..of`,
                 // except for `for(var ... in ...)` in loose mode
@@ -1346,11 +1427,14 @@ fn parse_variable_declarator(
                 // for (var i = 0 of []) {}
                 // for (let i = 0 of []) {}
                 // for (const i = 0 of []) {}
+                // for (using x = y of z) {};
+                // for await (using x = y of z) {};
+                // for (await using x = y of z) {};
+                // for await (await using x = y of z) {};
 
                 let is_strict = StrictMode.is_supported(p);
-                let is_var = !context.is_let && context.is_const.is_none();
 
-                if is_strict || !is_in_for_in || !is_var {
+                if is_strict || !is_in_for_in || !context.is_var() {
                     let err = p
                         .err_builder(if is_in_for_in {
                             "`for..in` statement declarators cannot have an initializer expression"
@@ -1375,9 +1459,15 @@ fn parse_variable_declarator(
                 );
 
             p.error(err);
-        } else if initializer.is_none() && context.is_const.is_some() && !p.state().in_ambient_context() {
+        } else if initializer.is_none() && context.is_const() && !p.state().in_ambient_context() {
             let err = p
-                .err_builder("Const var declarations must have an initialized value", id_range)
+                .err_builder("Const declarations must have an initialized value", id_range)
+                .hint( "this variable needs to be initialized");
+
+            p.error(err);
+        } else if initializer.is_none() && context.is_using() {
+            let err = p
+                .err_builder("Using declarations must have an initialized value", id_range)
                 .hint( "this variable needs to be initialized");
 
             p.error(err);
@@ -1477,7 +1567,7 @@ fn parse_for_head(p: &mut JsParser, has_l_paren: bool, is_for_await: bool) -> Js
 
     // `for (let...` | `for (const...` | `for (var...`
 
-    if p.at(T![const]) || p.at(T![var]) || is_nth_at_let_variable_statement(p, 0) {
+    if is_nth_at_variable_declarations(p, 0) {
         let m = p.start();
 
         let (declarations, additional_declarations) =

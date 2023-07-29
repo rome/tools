@@ -92,6 +92,7 @@ JsModule {
                 statements: JsStatementList [
                     JsVariableStatement {
                         declaration: JsVariableDeclaration {
+                            await_token: missing (optional),
                             kind: CONST_KW@69..80 "const" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
                             declarators: JsVariableDeclaratorList [
                                 JsVariableDeclarator {
@@ -1664,8 +1665,9 @@ JsModule {
         2: JS_STATEMENT_LIST@69..99
           0: JS_VARIABLE_STATEMENT@69..88
             0: JS_VARIABLE_DECLARATION@69..88
-              0: CONST_KW@69..80 "const" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
-              1: JS_VARIABLE_DECLARATOR_LIST@80..88
+              0: (empty)
+              1: CONST_KW@69..80 "const" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+              2: JS_VARIABLE_DECLARATOR_LIST@80..88
                 0: JS_VARIABLE_DECLARATOR@80..88
                   0: JS_IDENTIFIER_BINDING@80..82
                     0: IDENT@80..82 "f" [] [Whitespace(" ")]

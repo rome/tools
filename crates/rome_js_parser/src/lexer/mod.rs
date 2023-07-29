@@ -1093,6 +1093,7 @@ impl<'src> Lexer<'src> {
             b"override" => OVERRIDE_KW,
             b"of" => OF_KW,
             b"out" => OUT_KW,
+            b"using" => USING_KW,
             _ => T![ident],
         }
     }

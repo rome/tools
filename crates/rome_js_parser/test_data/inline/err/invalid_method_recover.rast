@@ -46,6 +46,7 @@ JsModule {
                                 statements: JsStatementList [
                                     JsVariableStatement {
                                         declaration: JsVariableDeclaration {
+                                            await_token: missing (optional),
                                             kind: LET_KW@27..36 "let" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
                                             declarators: JsVariableDeclaratorList [
                                                 JsVariableDeclarator {
@@ -122,8 +123,9 @@ JsModule {
                 2: JS_STATEMENT_LIST@27..39
                   0: JS_VARIABLE_STATEMENT@27..39
                     0: JS_VARIABLE_DECLARATION@27..38
-                      0: LET_KW@27..36 "let" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
-                      1: JS_VARIABLE_DECLARATOR_LIST@36..38
+                      0: (empty)
+                      1: LET_KW@27..36 "let" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+                      2: JS_VARIABLE_DECLARATOR_LIST@36..38
                         0: JS_VARIABLE_DECLARATOR@36..38
                           0: JS_IDENTIFIER_BINDING@36..37
                             0: IDENT@36..37 "a" [] []

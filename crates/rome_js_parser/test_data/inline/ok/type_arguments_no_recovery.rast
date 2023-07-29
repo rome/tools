@@ -6,6 +6,7 @@ JsModule {
             for_token: FOR_KW@0..4 "for" [] [Whitespace(" ")],
             l_paren_token: L_PAREN@4..5 "(" [] [],
             initializer: JsVariableDeclaration {
+                await_token: missing (optional),
                 kind: LET_KW@5..9 "let" [] [Whitespace(" ")],
                 declarators: JsVariableDeclaratorList [
                     JsVariableDeclarator {
@@ -239,8 +240,9 @@ JsModule {
       0: FOR_KW@0..4 "for" [] [Whitespace(" ")]
       1: L_PAREN@4..5 "(" [] []
       2: JS_VARIABLE_DECLARATION@5..15
-        0: LET_KW@5..9 "let" [] [Whitespace(" ")]
-        1: JS_VARIABLE_DECLARATOR_LIST@9..15
+        0: (empty)
+        1: LET_KW@5..9 "let" [] [Whitespace(" ")]
+        2: JS_VARIABLE_DECLARATOR_LIST@9..15
           0: JS_VARIABLE_DECLARATOR@9..15
             0: JS_IDENTIFIER_BINDING@9..11
               0: IDENT@9..11 "i" [] [Whitespace(" ")]

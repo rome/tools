@@ -11,6 +11,7 @@ JsModule {
             r_paren_token: R_PAREN@8..10 ")" [] [Whitespace(" ")],
             consequent: JsVariableStatement {
                 declaration: JsVariableDeclaration {
+                    await_token: missing (optional),
                     kind: VAR_KW@10..14 "var" [] [Whitespace(" ")],
                     declarators: JsVariableDeclaratorList [
                         JsVariableDeclarator {
@@ -42,8 +43,9 @@ JsModule {
       3: R_PAREN@8..10 ")" [] [Whitespace(" ")]
       4: JS_VARIABLE_STATEMENT@10..16
         0: JS_VARIABLE_DECLARATION@10..15
-          0: VAR_KW@10..14 "var" [] [Whitespace(" ")]
-          1: JS_VARIABLE_DECLARATOR_LIST@14..15
+          0: (empty)
+          1: VAR_KW@10..14 "var" [] [Whitespace(" ")]
+          2: JS_VARIABLE_DECLARATOR_LIST@14..15
             0: JS_VARIABLE_DECLARATOR@14..15
               0: JS_IDENTIFIER_BINDING@14..15
                 0: IDENT@14..15 "a" [] []
