@@ -5,6 +5,7 @@ use rome_deserialize::json::deserialize_from_json_str;
 use rome_deserialize::Deserialized;
 use rome_diagnostics::{DiagnosticExt, Error, PrintDiagnostic};
 use rome_fs::{FileSystem, OpenOptions};
+use rome_json_parser::JsonParserOptions;
 use rome_service::configuration::diagnostics::CantLoadExtendFile;
 use rome_service::configuration::ConfigurationPayload;
 use rome_service::{
@@ -72,7 +73,10 @@ impl LoadedConfiguration {
 					)
 
 				})?;
-            let deserialized = deserialize_from_json_str::<Configuration>(content.as_str(), true);
+            let deserialized = deserialize_from_json_str::<Configuration>(
+                content.as_str(),
+                JsonParserOptions::default(),
+            );
             deserialized_configurations.push(deserialized)
         }
         Ok(deserialized_configurations)
