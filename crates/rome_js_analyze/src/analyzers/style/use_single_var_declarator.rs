@@ -54,7 +54,11 @@ impl Rule for UseSingleVarDeclarator {
             semicolon_token,
         } = node.as_fields();
 
-        let JsVariableDeclarationFields { kind, declarators } = declaration.ok()?.as_fields();
+        let JsVariableDeclarationFields {
+            await_token: _,
+            kind,
+            declarators,
+        } = declaration.ok()?.as_fields();
 
         let kind = kind.ok()?;
 
@@ -196,10 +200,16 @@ impl Rule for UseSingleVarDeclarator {
                         )
                     };
 
-                    let mut builder = make::js_variable_statement(make::js_variable_declaration(
-                        kind,
-                        make::js_variable_declarator_list(iter::once(declarator), iter::empty()),
-                    ));
+                    let mut builder = make::js_variable_statement(
+                        make::js_variable_declaration(
+                            kind,
+                            make::js_variable_declarator_list(
+                                iter::once(declarator),
+                                iter::empty(),
+                            ),
+                        )
+                        .build(),
+                    );
 
                     let semicolon_token = if index + 1 == declarators_len {
                         last_semicolon_token

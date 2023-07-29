@@ -92,10 +92,13 @@ fn make_variable(node: &TsEnumMembers) -> JsVariableStatement {
     .build();
 
     let list = js_variable_declarator_list(iter::once(binding), iter::empty());
-    js_variable_statement(js_variable_declaration(
-        token(T![var]).with_trailing_trivia(iter::once((TriviaPieceKind::Whitespace, " "))),
-        list,
-    ))
+    js_variable_statement(
+        js_variable_declaration(
+            token(T![var]).with_trailing_trivia(iter::once((TriviaPieceKind::Whitespace, " "))),
+            list,
+        )
+        .build(),
+    )
     .with_semicolon_token(token(T![;]))
     .build()
 }
