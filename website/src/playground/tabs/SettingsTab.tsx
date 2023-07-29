@@ -1,4 +1,5 @@
 import {
+	ArrowParentheses,
 	IndentStyle,
 	LintRules,
 	PlaygroundState,
@@ -43,10 +44,12 @@ export default function SettingsTab({
 			quoteProperties,
 			trailingComma,
 			semicolons,
+			arrowParentheses,
 			lintRules,
 			enabledLinting,
 			importSortingEnabled,
 			unsafeParameterDecoratorsEnabled,
+			allowComments,
 		},
 	},
 }: SettingsTabProps) {
@@ -82,6 +85,10 @@ export default function SettingsTab({
 		setPlaygroundState,
 		"semicolons",
 	);
+	const setArrowParentheses = createPlaygroundSettingsSetter(
+		setPlaygroundState,
+		"arrowParentheses",
+	);
 	const setLintRules = createPlaygroundSettingsSetter(
 		setPlaygroundState,
 		"lintRules",
@@ -99,6 +106,10 @@ export default function SettingsTab({
 	const setUnsafeParameterDecoratorsEnabled = createPlaygroundSettingsSetter(
 		setPlaygroundState,
 		"unsafeParameterDecoratorsEnabled",
+	);
+	const setAllowComments = createPlaygroundSettingsSetter(
+		setPlaygroundState,
+		"allowComments",
 	);
 
 	function setCurrentFilename(newFilename: string) {
@@ -239,6 +250,8 @@ export default function SettingsTab({
 				setTrailingComma={setTrailingComma}
 				semicolons={semicolons}
 				setSemicolons={setSemicolons}
+				arrowParentheses={arrowParentheses}
+				setArrowParentheses={setArrowParentheses}
 			/>
 			<LinterSettings
 				lintRules={lintRules}
@@ -254,9 +267,11 @@ export default function SettingsTab({
 				filename={currentFile}
 				setFilename={setCurrentFilename}
 				unsafeParameterDecoratorsEnabled={unsafeParameterDecoratorsEnabled}
+				allowComments={allowComments}
 				setUnsafeParameterDecoratorsEnabled={
 					setUnsafeParameterDecoratorsEnabled
 				}
+				setAllowComments={setAllowComments}
 			/>
 		</div>
 	);
@@ -441,11 +456,15 @@ function SyntaxSettings({
 	setFilename,
 	unsafeParameterDecoratorsEnabled,
 	setUnsafeParameterDecoratorsEnabled,
+	setAllowComments,
+	allowComments,
 }: {
 	filename: string;
 	setFilename: (filename: string) => void;
 	unsafeParameterDecoratorsEnabled: boolean;
+	allowComments: boolean;
 	setUnsafeParameterDecoratorsEnabled: (value: boolean) => void;
+	setAllowComments: (value: boolean) => void;
 }) {
 	const isScript = isScriptFilename(filename);
 
@@ -528,6 +547,16 @@ function SyntaxSettings({
 						Parameter decorators enabled
 					</label>
 				</div>
+				<div className="field-row">
+					<input
+						id="allow-comments"
+						name="allow-comments"
+						type="checkbox"
+						checked={allowComments}
+						onChange={(e) => setAllowComments(e.target.checked)}
+					/>
+					<label htmlFor="allow-comments">Allow comments in JSON files</label>
+				</div>
 			</section>
 		</>
 	);
@@ -550,6 +579,8 @@ function FormatterSettings({
 	setTrailingComma,
 	semicolons,
 	setSemicolons,
+	arrowParentheses,
+	setArrowParentheses,
 }: {
 	lineWidth: number;
 	setLineWidth: (value: number) => void;
@@ -567,6 +598,8 @@ function FormatterSettings({
 	setTrailingComma: (value: TrailingComma) => void;
 	semicolons: Semicolons;
 	setSemicolons: (value: Semicolons) => void;
+	arrowParentheses: ArrowParentheses;
+	setArrowParentheses: (value: ArrowParentheses) => void;
 }) {
 	return (
 		<>
@@ -667,6 +700,21 @@ function FormatterSettings({
 					>
 						<option value={Semicolons.Always}>Always</option>
 						<option value={Semicolons.AsNeeded}>As needed</option>
+					</select>
+				</div>
+
+				<div className="field-row">
+					<label htmlFor="arrowParentheses">Arrow Parentheses</label>
+					<select
+						id="arrowParentheses"
+						name="arrowParentheses"
+						value={arrowParentheses ?? "always"}
+						onChange={(e) =>
+							setArrowParentheses(e.target.value as ArrowParentheses)
+						}
+					>
+						<option value={ArrowParentheses.Always}>Always</option>
+						<option value={ArrowParentheses.AsNeeded}>As needed</option>
 					</select>
 				</div>
 			</section>

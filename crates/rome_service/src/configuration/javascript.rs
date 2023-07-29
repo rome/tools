@@ -1,13 +1,13 @@
 use crate::configuration::merge::MergeWith;
-use crate::configuration::string_set::StringSet;
 use bpaf::Bpaf;
+use rome_deserialize::StringSet;
 use rome_js_formatter::context::{
-    trailing_comma::TrailingComma, QuoteProperties, QuoteStyle, Semicolons,
+    trailing_comma::TrailingComma, ArrowParentheses, QuoteProperties, QuoteStyle, Semicolons,
 };
 use serde::{Deserialize, Serialize};
 
 #[derive(Default, Debug, Deserialize, Serialize, Eq, PartialEq, Clone, Bpaf)]
-#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 #[serde(default, deny_unknown_fields)]
 pub struct JavascriptConfiguration {
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -54,7 +54,7 @@ impl MergeWith<Option<JavascriptFormatter>> for JavascriptConfiguration {
 
 impl JavascriptConfiguration {
     pub(crate) const KNOWN_KEYS: &'static [&'static str] =
-        &["formatter", "globals", "organizeImports"];
+        &["formatter", "globals", "organizeImports", "parser"];
 
     pub fn with_formatter() -> Self {
         Self {
@@ -65,7 +65,7 @@ impl JavascriptConfiguration {
 }
 
 #[derive(Default, Debug, Deserialize, Serialize, Eq, PartialEq, Clone, Bpaf)]
-#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 #[serde(rename_all = "camelCase", default, deny_unknown_fields)]
 pub struct JavascriptFormatter {
     /// The style for quotes. Defaults to double.
@@ -88,6 +88,10 @@ pub struct JavascriptFormatter {
     #[bpaf(long("semicolons"), argument("always|as-needed"), optional)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub semicolons: Option<Semicolons>,
+    /// Whether to add non-necessary parentheses to arrow functions. Defaults to "always".
+    #[bpaf(long("arrow-parentheses"), argument("always|as-needed"), optional)]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub arrow_parentheses: Option<ArrowParentheses>,
 }
 
 impl JavascriptFormatter {
@@ -97,11 +101,15 @@ impl JavascriptFormatter {
         "quoteProperties",
         "trailingComma",
         "semicolons",
+        "arrowParentheses",
     ];
 }
 
 impl MergeWith<JavascriptFormatter> for JavascriptFormatter {
     fn merge_with(&mut self, other: JavascriptFormatter) {
+        if let Some(arrow_parentheses) = other.arrow_parentheses {
+            self.arrow_parentheses = Some(arrow_parentheses);
+        }
         if let Some(quote_properties) = other.quote_properties {
             self.quote_properties = Some(quote_properties);
         }
@@ -121,12 +129,12 @@ impl MergeWith<JavascriptFormatter> for JavascriptFormatter {
 }
 
 #[derive(Debug, Default, Deserialize, Serialize, Eq, PartialEq, Clone, Bpaf)]
-#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 #[serde(default, deny_unknown_fields)]
 pub struct JavascriptOrganizeImports {}
 
 #[derive(Default, Debug, Deserialize, Serialize, Eq, PartialEq, Clone, Bpaf)]
-#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 #[serde(rename_all = "camelCase", default, deny_unknown_fields)]
 pub struct JavascriptParser {
     #[bpaf(hide)]

@@ -52,6 +52,23 @@ const APPLY_TRAILING_COMMA_AFTER: &str = r#"const a = [
 ];
 "#;
 
+const APPLY_ARROW_PARENTHESES_BEFORE: &str = r#"
+action => {}
+(action) => {}
+({ action }) => {}
+([ action ]) => {}
+(...action) => {}
+(action = 1) => {}
+"#;
+
+const APPLY_ARROW_PARENTHESES_AFTER: &str = r#"action => {};
+action => {};
+({ action }) => {};
+([action]) => {};
+(...action) => {};
+(action = 1) => {};
+"#;
+
 const DEFAULT_CONFIGURATION_BEFORE: &str = r#"function f() {
     return { a, b }
   }"#;
@@ -701,6 +718,51 @@ fn applies_custom_trailing_comma() {
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
         "applies_custom_trailing_comma",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn applies_custom_arrow_parentheses() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let file_path = Path::new("file.js");
+    fs.insert(file_path.into(), APPLY_ARROW_PARENTHESES_BEFORE.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Args::from(
+            [
+                ("format"),
+                ("--arrow-parentheses"),
+                ("as-needed"),
+                ("--write"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    let mut file = fs
+        .open(file_path)
+        .expect("formatting target file was removed by the CLI");
+
+    let mut content = String::new();
+    file.read_to_string(&mut content)
+        .expect("failed to read file from memory FS");
+
+    assert_eq!(content, APPLY_ARROW_PARENTHESES_AFTER);
+
+    drop(file);
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "applies_custom_arrow_parentheses",
         fs,
         console,
         result,
@@ -1772,6 +1834,43 @@ fn doesnt_error_if_no_files_were_processed() {
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
         "doesnt_error_if_no_files_were_processed",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn ignore_comments_error_when_allow_comments() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let config_json = r#"{
+  "json": {
+    "parser": { "allowComments": true }
+  }
+}
+
+	"#;
+    let rome_config = "rome.json";
+    let code = r#"
+/*test*/ [1, 2, 3]
+	"#;
+    let file_path = Path::new("tsconfig.json");
+    fs.insert(file_path.into(), code.as_bytes());
+    fs.insert(rome_config.into(), config_json);
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Args::from([("format"), file_path.as_os_str().to_str().unwrap()].as_slice()),
+    );
+
+    // assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "ignore_comments_error_when_allow_comments",
         fs,
         console,
         result,

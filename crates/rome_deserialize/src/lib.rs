@@ -2,8 +2,11 @@ mod diagnostics;
 mod visitor;
 
 pub mod json;
+pub mod string_set;
+
 pub use diagnostics::{DeserializationAdvice, DeserializationDiagnostic};
 use rome_diagnostics::Error;
+pub use string_set::{deserialize_string_set, serialize_string_set, StringSet};
 pub use visitor::VisitNode;
 
 /// A small type to interrogate the result of a JSON deserialization

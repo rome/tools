@@ -152,18 +152,18 @@ checksum = "630be753d4e58660abd17930c71b647fe46c27ea6b63cc59e1e3851406972e42"
 
 [[package]]
 name = "bpaf"
-version = "0.9.1"
+version = "0.9.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "72974597bfc83173d714c0fc785a8ab64ca0f0896cb72b05f2f4c5e682543871"
+checksum = "affa4185035a12636b90d7064d64fff3cca6ff5a2f65c3325a7eef0da2f272bb"
 dependencies = [
  "bpaf_derive",
 ]
 
 [[package]]
 name = "bpaf_derive"
-version = "0.5.1"
+version = "0.5.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f6b7be5dcfd7bb931b9932e689c69a9b9f50a46cf0b588c90ed73ec28e8e0bf4"
+checksum = "ac88f5e10b620a207805c5a6f538a7777dc55e5469bbc0eec27e2bf75d5ee0f6"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -1754,6 +1754,7 @@ dependencies = [
  "quickcheck",
  "quickcheck_macros",
  "rome_console",
+ "rome_css_factory",
  "rome_css_syntax",
  "rome_diagnostics",
  "rome_js_unicode_table",
@@ -1780,6 +1781,7 @@ dependencies = [
  "rome_json_parser",
  "rome_json_syntax",
  "rome_rowan",
+ "schemars",
  "serde",
  "serde_json",
  "tracing",
@@ -1890,7 +1892,6 @@ dependencies = [
  "bpaf",
  "countme",
  "insta",
- "json_comments",
  "lazy_static",
  "natord",
  "roaring",
@@ -1906,16 +1907,14 @@ dependencies = [
  "rome_js_syntax",
  "rome_js_unicode_table",
  "rome_json_factory",
- "rome_json_parser",
  "rome_json_syntax",
  "rome_rowan",
- "rome_service",
+ "rome_test_utils",
  "rome_text_edit",
  "rustc-hash",
  "schemars",
  "serde",
  "serde_json",
- "similar",
  "smallvec",
  "tests_macros",
 ]
@@ -2016,14 +2015,18 @@ dependencies = [
 name = "rome_js_transform"
 version = "0.1.0"
 dependencies = [
+ "insta",
  "lazy_static",
  "rome_analyze",
+ "rome_console",
  "rome_diagnostics",
  "rome_js_factory",
  "rome_js_formatter",
  "rome_js_parser",
  "rome_js_syntax",
  "rome_rowan",
+ "rome_test_utils",
+ "tests_macros",
 ]
 
 [[package]]
@@ -2034,21 +2037,17 @@ version = "0.0.1"
 name = "rome_json_analyze"
 version = "0.0.0"
 dependencies = [
- "countme",
  "insta",
- "json_comments",
  "lazy_static",
  "rome_analyze",
  "rome_console",
- "rome_deserialize",
  "rome_diagnostics",
  "rome_json_factory",
  "rome_json_parser",
  "rome_json_syntax",
  "rome_rowan",
  "rome_service",
- "rome_text_edit",
- "similar",
+ "rome_test_utils",
  "tests_macros",
 ]
 
@@ -2075,6 +2074,7 @@ dependencies = [
  "rome_json_syntax",
  "rome_parser",
  "rome_rowan",
+ "rome_suppression",
  "serde",
  "serde_json",
  "tests_macros",
@@ -2213,6 +2213,36 @@ dependencies = [
  "serde_json",
  "tests_macros",
  "tracing",
+]
+
+[[package]]
+name = "rome_suppression"
+version = "0.0.1"
+dependencies = [
+ "rome_console",
+ "rome_diagnostics",
+ "rome_rowan",
+]
+
+[[package]]
+name = "rome_test_utils"
+version = "0.1.0"
+dependencies = [
+ "countme",
+ "json_comments",
+ "rome_analyze",
+ "rome_console",
+ "rome_deserialize",
+ "rome_diagnostics",
+ "rome_js_parser",
+ "rome_js_syntax",
+ "rome_json_parser",
+ "rome_json_syntax",
+ "rome_rowan",
+ "rome_service",
+ "serde",
+ "serde_json",
+ "similar",
 ]
 
 [[package]]
@@ -3338,6 +3368,7 @@ dependencies = [
  "quote",
  "rome_analyze",
  "rome_aria",
+ "rome_cli",
  "rome_diagnostics",
  "rome_js_analyze",
  "rome_js_factory",

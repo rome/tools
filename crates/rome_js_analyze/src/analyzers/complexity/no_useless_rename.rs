@@ -7,7 +7,7 @@ use rome_js_syntax::{
     JsExportNamedFromSpecifier, JsExportNamedSpecifier, JsNamedImportSpecifier,
     JsObjectBindingPatternProperty, JsSyntaxElement,
 };
-use rome_rowan::{declare_node_union, AstNode, BatchMutationExt};
+use rome_rowan::{declare_node_union, trim_leading_trivia_pieces, AstNode, BatchMutationExt};
 
 use crate::JsRuleAction;
 
@@ -126,18 +126,9 @@ impl Rule for NoUselessRename {
                 let last_token = x.source_name().ok()?.value().ok()?;
                 let export_as = x.export_as()?;
                 let export_as_last_token = export_as.exported_name().ok()?.value().ok()?;
-                let replacing_token = last_token.with_trailing_trivia_pieces(
-                    last_token
-                        .trailing_trivia()
-                        .pieces()
-                        .chain(
-                            export_as_last_token
-                                .trailing_trivia()
-                                .pieces()
-                                .skip_while(|p| p.is_newline() || p.is_whitespace()),
-                        )
-                        .collect::<Vec<_>>(),
-                );
+                let replacing_token = last_token.append_trivia_pieces(trim_leading_trivia_pieces(
+                    export_as_last_token.trailing_trivia().pieces(),
+                ));
                 mutation.remove_node(export_as);
                 mutation.replace_token_discard_trivia(last_token, replacing_token);
             }

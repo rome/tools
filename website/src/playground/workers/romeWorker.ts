@@ -1,4 +1,5 @@
 import {
+	ArrowParentheses,
 	IndentStyle,
 	LintRules,
 	LoadingState,
@@ -71,8 +72,10 @@ self.addEventListener("message", async (e) => {
 				enabledLinting,
 				trailingComma,
 				semicolons,
+				arrowParentheses,
 				importSortingEnabled,
 				unsafeParameterDecoratorsEnabled,
+				allowComments,
 			} = e.data.settings as PlaygroundSettings;
 
 			configuration = {
@@ -104,9 +107,18 @@ self.addEventListener("message", async (e) => {
 						trailingComma,
 						semicolons:
 							semicolons === Semicolons.Always ? "always" : "asNeeded",
+						arrowParentheses:
+							arrowParentheses === ArrowParentheses.Always
+								? "always"
+								: "asNeeded",
 					},
 					parser: {
 						unsafeParameterDecoratorsEnabled,
+					},
+				},
+				json: {
+					parser: {
+						allowComments,
 					},
 				},
 			};

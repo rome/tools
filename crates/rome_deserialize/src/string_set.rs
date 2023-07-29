@@ -6,14 +6,14 @@ use std::marker::PhantomData;
 use std::str::FromStr;
 
 #[derive(Default, Debug, Deserialize, Serialize, Clone, Eq, PartialEq)]
-#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct StringSet(
     #[serde(
         deserialize_with = "crate::deserialize_string_set",
         serialize_with = "crate::serialize_string_set"
     )]
-    IndexSet<String>,
+    pub IndexSet<String>,
 );
 
 impl StringSet {
@@ -102,5 +102,11 @@ impl FromStr for StringSet {
 
     fn from_str(_s: &str) -> Result<Self, Self::Err> {
         Ok(StringSet::default())
+    }
+}
+
+impl From<IndexSet<String>> for StringSet {
+    fn from(value: IndexSet<String>) -> Self {
+        Self::new(value)
     }
 }

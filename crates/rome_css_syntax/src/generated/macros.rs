@@ -166,6 +166,10 @@ macro_rules! map_syntax_node {
                     let $pattern = unsafe { $crate::CssRatio::new_unchecked(node) };
                     $body
                 }
+                $crate::CssSyntaxKind::CSS_ROOT => {
+                    let $pattern = unsafe { $crate::CssRoot::new_unchecked(node) };
+                    $body
+                }
                 $crate::CssSyntaxKind::CSS_RULE => {
                     let $pattern = unsafe { $crate::CssRule::new_unchecked(node) };
                     $body
@@ -232,8 +236,8 @@ macro_rules! map_syntax_node {
                     let $pattern = unsafe { $crate::CssParameterList::new_unchecked(node) };
                     $body
                 }
-                $crate::CssSyntaxKind::CSS_ROOT => {
-                    let $pattern = unsafe { $crate::CssRoot::new_unchecked(node) };
+                $crate::CssSyntaxKind::CSS_RULE_LIST => {
+                    let $pattern = unsafe { $crate::CssRuleList::new_unchecked(node) };
                     $body
                 }
                 $crate::CssSyntaxKind::CSS_SELECTOR_LIST => {

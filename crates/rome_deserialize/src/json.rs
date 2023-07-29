@@ -2,12 +2,12 @@ use crate::{DeserializationDiagnostic, Deserialized, VisitNode};
 use indexmap::IndexSet;
 use rome_console::markup;
 use rome_diagnostics::{DiagnosticExt, Error};
-use rome_json_parser::parse_json;
+use rome_json_parser::{parse_json, JsonParserOptions};
 use rome_json_syntax::{
     AnyJsonValue, JsonArrayValue, JsonBooleanValue, JsonLanguage, JsonMemberName, JsonNumberValue,
     JsonObjectValue, JsonRoot, JsonStringValue, JsonSyntaxNode,
 };
-use rome_rowan::{AstNode, AstSeparatedList, SyntaxNodeCast, SyntaxTokenText, TextRange};
+use rome_rowan::{AstNode, AstSeparatedList, SyntaxNodeCast, TextRange, TokenText};
 use std::num::ParseIntError;
 
 /// Main trait to
@@ -49,7 +49,7 @@ pub trait VisitJsonNode: VisitNode<JsonLanguage> {
         key: &JsonSyntaxNode,
         value: &JsonSyntaxNode,
         diagnostics: &mut Vec<DeserializationDiagnostic>,
-    ) -> Option<(SyntaxTokenText, AnyJsonValue)> {
+    ) -> Option<(TokenText, AnyJsonValue)> {
         let member = key.clone().cast::<JsonMemberName>()?;
         self.visit_member_name(member.syntax(), diagnostics)?;
         let name = member.inner_string_text().ok()?;
@@ -342,6 +342,49 @@ pub trait VisitJsonNode: VisitNode<JsonLanguage> {
         Some(elements)
     }
 
+    /// It attempts to map a [AnyJsonValue] to a [Vec] of [String].
+    ///
+    /// ## Errors
+    ///
+    /// The function emit diagnostics if:
+    /// - `value` can't be cast to [JsonArrayValue]
+    /// - any element of the of the array can't be cast to [JsonStringValue]
+    fn map_to_array_of_strings(
+        &self,
+        value: &AnyJsonValue,
+        name: &str,
+        diagnostics: &mut Vec<DeserializationDiagnostic>,
+    ) -> Option<Vec<String>> {
+        let array = JsonArrayValue::cast_ref(value.syntax()).or_else(|| {
+            diagnostics.push(DeserializationDiagnostic::new_incorrect_type_for_value(
+                name,
+                "array",
+                value.range(),
+            ));
+            None
+        })?;
+        let mut elements = Vec::new();
+        if array.elements().is_empty() {
+            return None;
+        }
+        for element in array.elements() {
+            let element = element.ok()?;
+            match element {
+                AnyJsonValue::JsonStringValue(value) => {
+                    elements.push(value.inner_string_text().ok()?.to_string());
+                }
+                _ => {
+                    diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
+                        "string",
+                        element.range(),
+                    ));
+                }
+            }
+        }
+
+        Some(elements)
+    }
+
     /// It attempts to map [AnyJsonValue] to a generic map.
     ///
     /// Use this function when the value of your member is another object, and this object
@@ -560,7 +603,7 @@ where
 {
     let mut output = Output::default();
     let mut diagnostics = vec![];
-    let parse = parse_json(source);
+    let parse = parse_json(source, JsonParserOptions::default());
     Output::deserialize_from_ast(&parse.tree(), &mut output, &mut diagnostics);
     let mut errors = parse
         .into_diagnostics()

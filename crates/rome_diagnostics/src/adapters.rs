@@ -71,7 +71,7 @@ impl Diagnostic for IoError {
     }
 }
 
-/// Implements [Diagnostic] over for [pico_args::Error].
+/// Implements [Diagnostic] over for [bpaf::ParseFailure].
 #[derive(Debug)]
 pub struct BpafError {
     error: bpaf::ParseFailure,

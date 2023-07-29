@@ -17,14 +17,15 @@ use rome_deserialize::{
 use rome_diagnostics::Applicability;
 use rome_js_semantic::CanBeImportedExported;
 use rome_js_syntax::{
-    binding_ext::AnyJsBindingDeclaration, AnyJsClassMember, AnyJsObjectMember,
+    binding_ext::AnyJsBindingDeclaration, inner_string_text, AnyJsClassMember, AnyJsObjectMember,
     AnyJsVariableDeclaration, AnyTsTypeMember, JsIdentifierBinding, JsLiteralExportName,
     JsLiteralMemberName, JsPrivateClassMemberName, JsSyntaxKind, JsSyntaxToken,
     JsVariableDeclarator, JsVariableKind, TsEnumMember, TsIdentifierBinding, TsTypeParameterName,
 };
+use rome_js_unicode_table::is_js_ident;
 use rome_json_syntax::JsonLanguage;
 use rome_rowan::{
-    declare_node_union, AstNode, AstNodeList, BatchMutationExt, SyntaxNode, SyntaxResult,
+    declare_node_union, AstNode, AstNodeList, BatchMutationExt, SyntaxNode, SyntaxResult, TokenText,
 };
 use serde::{Deserialize, Serialize};
 use smallvec::SmallVec;
@@ -274,7 +275,7 @@ declare_rule! {
 }
 
 impl Rule for UseNamingConvention {
-    type Query = Semantic<AnyName>;
+    type Query = Semantic<AnyIdentifierBindingLike>;
     type State = State;
     type Signals = Option<Self::State>;
     type Options = NamingConventionOptions;
@@ -288,8 +289,12 @@ impl Rule for UseNamingConvention {
             // No naming convention to verify.
             return None;
         }
-        let name_token = node.name_token().ok()?;
-        let name = name_token.text_trimmed();
+        let name = node.name().ok()?;
+        let name = name.text();
+        if !is_js_ident(name) {
+            // ignore non-identifier strings
+            return None;
+        }
         let trimmed_name = trim_underscore_dollar(name);
         let actual_case = Case::identify(trimmed_name, options.strict_case);
         if trimmed_name.is_empty()
@@ -314,8 +319,8 @@ impl Rule for UseNamingConvention {
             element,
             suggested_name,
         } = state;
-        let name_token = ctx.query().name_token().ok()?;
-        let name = name_token.text_trimmed();
+        let name = ctx.query().name().ok()?;
+        let name = name.text();
         let trimmed_name = trim_underscore_dollar(name);
         let allowed_cases = element.allowed_cases(ctx.options());
         let allowed_case_names = allowed_cases
@@ -348,7 +353,7 @@ impl Rule for UseNamingConvention {
             suggested_name,
         } = state;
         let renamable = match node {
-            AnyName::JsIdentifierBinding(binding) => {
+            AnyIdentifierBindingLike::JsIdentifierBinding(binding) => {
                 if binding.is_exported(model) {
                     return None;
                 }
@@ -361,7 +366,7 @@ impl Rule for UseNamingConvention {
                     binding.clone(),
                 ))
             }
-            AnyName::TsIdentifierBinding(binding) => {
+            AnyIdentifierBindingLike::TsIdentifierBinding(binding) => {
                 if binding.is_exported(model) {
                     return None;
                 }
@@ -388,8 +393,8 @@ impl Rule for UseNamingConvention {
 }
 
 declare_node_union! {
-    /// Ast nodes that carries a name.
-    pub(crate) AnyName =
+    /// Ast nodes that defines a name.
+    pub(crate) AnyIdentifierBindingLike =
         JsIdentifierBinding |
         JsLiteralMemberName |
         JsPrivateClassMemberName |
@@ -398,16 +403,24 @@ declare_node_union! {
         TsTypeParameterName
 }
 
-impl AnyName {
+impl AnyIdentifierBindingLike {
     fn name_token(&self) -> SyntaxResult<JsSyntaxToken> {
         match self {
-            AnyName::JsIdentifierBinding(binding) => binding.name_token(),
-            AnyName::JsLiteralMemberName(member_name) => member_name.value(),
-            AnyName::JsPrivateClassMemberName(member_name) => member_name.id_token(),
-            AnyName::JsLiteralExportName(export_name) => export_name.value(),
-            AnyName::TsIdentifierBinding(binding) => binding.name_token(),
-            AnyName::TsTypeParameterName(type_parameter) => type_parameter.ident_token(),
+            AnyIdentifierBindingLike::JsIdentifierBinding(binding) => binding.name_token(),
+            AnyIdentifierBindingLike::JsLiteralMemberName(member_name) => member_name.value(),
+            AnyIdentifierBindingLike::JsPrivateClassMemberName(member_name) => {
+                member_name.id_token()
+            }
+            AnyIdentifierBindingLike::JsLiteralExportName(export_name) => export_name.value(),
+            AnyIdentifierBindingLike::TsIdentifierBinding(binding) => binding.name_token(),
+            AnyIdentifierBindingLike::TsTypeParameterName(type_parameter) => {
+                type_parameter.ident_token()
+            }
         }
+    }
+
+    fn name(&self) -> SyntaxResult<TokenText> {
+        Ok(inner_string_text(&self.name_token()?))
     }
 }
 
@@ -418,7 +431,7 @@ pub(crate) struct State {
 }
 
 /// Rule's options.
-#[derive(Debug, Copy, Clone, Eq, PartialEq, Serialize, Deserialize, Bpaf)]
+#[derive(Debug, Clone, Eq, PartialEq, Serialize, Deserialize, Bpaf)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct NamingConventionOptions {
@@ -613,19 +626,15 @@ enum Named {
 }
 
 impl Named {
-    fn from_name(js_name: &AnyName) -> Option<Named> {
+    fn from_name(js_name: &AnyIdentifierBindingLike) -> Option<Named> {
         match js_name {
-            AnyName::JsIdentifierBinding(binding) => {
+            AnyIdentifierBindingLike::JsIdentifierBinding(binding) => {
                 Named::from_binding_declaration(&binding.declaration()?)
             }
-            AnyName::TsIdentifierBinding(binding) => {
+            AnyIdentifierBindingLike::TsIdentifierBinding(binding) => {
                 Named::from_binding_declaration(&binding.declaration()?)
             }
-            AnyName::JsLiteralMemberName(member_name) => {
-                // ignore quoted names
-                if member_name.value().ok()?.kind() == JsSyntaxKind::JS_STRING_LITERAL {
-                    return None;
-                }
+            AnyIdentifierBindingLike::JsLiteralMemberName(member_name) => {
                 if let Some(member) = member_name.parent::<AnyJsClassMember>() {
                     Named::from_class_member(&member)
                 } else if let Some(member) = member_name.parent::<AnyTsTypeMember>() {
@@ -638,10 +647,10 @@ impl Named {
                     None
                 }
             }
-            AnyName::JsPrivateClassMemberName(member_name) => {
+            AnyIdentifierBindingLike::JsPrivateClassMemberName(member_name) => {
                 Named::from_class_member(&member_name.parent::<AnyJsClassMember>()?)
             }
-            AnyName::JsLiteralExportName(export_name) => {
+            AnyIdentifierBindingLike::JsLiteralExportName(export_name) => {
                 match export_name.syntax().parent()?.kind() {
                     JsSyntaxKind::JS_NAMED_IMPORT_SPECIFIER => Some(Named::ImportSource),
                     JsSyntaxKind::JS_EXPORT_NAMED_FROM_SPECIFIER => Some(Named::ExportSource),
@@ -651,7 +660,7 @@ impl Named {
                     _ => None,
                 }
             }
-            AnyName::TsTypeParameterName(_) => Some(Named::TypeParameter),
+            AnyIdentifierBindingLike::TsTypeParameterName(_) => Some(Named::TypeParameter),
         }
     }
 

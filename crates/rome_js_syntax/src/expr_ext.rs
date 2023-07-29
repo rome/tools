@@ -1,24 +1,26 @@
 //! Extensions for things which are not easily generated in ast expr nodes
 use crate::numbers::parse_js_number;
-use crate::static_value::{QuotedString, StaticStringValue, StaticValue};
+use crate::static_value::StaticValue;
 use crate::{
-    AnyJsCallArgument, AnyJsExpression, AnyJsLiteralExpression, AnyJsTemplateElement,
-    JsArrayExpression, JsArrayHole, JsAssignmentExpression, JsBinaryExpression, JsCallExpression,
-    JsComputedMemberAssignment, JsComputedMemberExpression, JsLiteralMemberName,
-    JsLogicalExpression, JsNewExpression, JsNumberLiteralExpression, JsObjectExpression,
-    JsPostUpdateExpression, JsReferenceIdentifier, JsRegexLiteralExpression,
-    JsStaticMemberExpression, JsStringLiteralExpression, JsSyntaxKind, JsSyntaxToken,
-    JsTemplateChunkElement, JsTemplateExpression, JsUnaryExpression, OperatorPrecedence, T,
+    inner_string_text, AnyJsCallArgument, AnyJsExpression, AnyJsLiteralExpression,
+    AnyJsObjectMemberName, AnyJsTemplateElement, JsArrayExpression, JsArrayHole,
+    JsAssignmentExpression, JsBinaryExpression, JsCallExpression, JsComputedMemberAssignment,
+    JsComputedMemberExpression, JsLiteralMemberName, JsLogicalExpression, JsNewExpression,
+    JsNumberLiteralExpression, JsObjectExpression, JsPostUpdateExpression, JsReferenceIdentifier,
+    JsRegexLiteralExpression, JsStaticMemberExpression, JsStringLiteralExpression, JsSyntaxKind,
+    JsSyntaxToken, JsTemplateChunkElement, JsTemplateExpression, JsUnaryExpression,
+    OperatorPrecedence, T,
 };
 use crate::{JsPreUpdateExpression, JsSyntaxKind::*};
 use core::iter;
 use rome_rowan::{
     declare_node_union, AstNode, AstNodeList, AstSeparatedList, NodeOrToken, SyntaxResult,
-    TextRange,
+    TextRange, TokenText,
 };
 use std::collections::HashSet;
 
 const GLOBAL_THIS: &str = "globalThis";
+const UNDEFINED: &str = "undefined";
 const WINDOW: &str = "window";
 
 impl JsReferenceIdentifier {
@@ -33,7 +35,7 @@ impl JsReferenceIdentifier {
     /// assert!(!js_reference_identifier(ident("x")).is_undefined());
     /// ```
     pub fn is_undefined(&self) -> bool {
-        self.has_name("undefined")
+        self.has_name(UNDEFINED)
     }
 
     /// Returns `true` if this identifier refers to the `globalThis` symbol.
@@ -64,6 +66,10 @@ impl JsReferenceIdentifier {
         self.value_token()
             .map(|token| token.text_trimmed() == name)
             .unwrap_or_default()
+    }
+
+    pub fn name(&self) -> SyntaxResult<TokenText> {
+        Ok(self.value_token()?.token_text_trimmed())
     }
 }
 
@@ -120,18 +126,10 @@ impl JsLiteralMemberName {
     ///
     /// let static_member_name = JsLiteralMemberName::unwrap_cast(node);
     ///
-    /// assert_eq!("abcd", static_member_name.name().unwrap());
+    /// assert_eq!("abcd", static_member_name.name().unwrap().text());
     /// ```
-    pub fn name(&self) -> SyntaxResult<String> {
-        let value = self.value()?;
-        let name = value.text_trimmed();
-
-        let result = match value.kind() {
-            JS_STRING_LITERAL => String::from(&name[1..name.len() - 1]),
-            _ => String::from(name),
-        };
-
-        Ok(result)
+    pub fn name(&self) -> SyntaxResult<TokenText> {
+        Ok(inner_string_text(&self.value()?))
     }
 }
 
@@ -242,8 +240,16 @@ impl JsBinaryExpression {
         Ok(kind)
     }
 
+    /// Whether this is a numeric operation, such as `+`, `-`, `*`, `%`, `**`.
+    pub fn is_numeric_operation(&self) -> bool {
+        matches!(
+            self.operator_token().map(|t| t.kind()),
+            Ok(T![+] | T![-] | T![*] | T![/] | T![%] | T![**])
+        )
+    }
+
     /// Whether this is a binary operation, such as `<<`, `>>`, `>>>`, `&`, `|`, `^`.
-    pub fn is_binary_operator(&self) -> bool {
+    pub fn is_binary_operation(&self) -> bool {
         matches!(
             self.operator_token().map(|t| t.kind()),
             Ok(T![<<] | T![>>] | T![>>>] | T![&] | T![|] | T![^])
@@ -270,7 +276,10 @@ impl JsBinaryExpression {
             self.operator(),
             Ok(JsBinaryOperator::StrictInequality | JsBinaryOperator::Inequality)
         ) {
-            Ok(self.right()?.is_value_null_or_undefined())
+            Ok(self
+                .right()?
+                .as_static_value()
+                .map_or(false, |x| x.is_null_or_undefined()))
         } else {
             Ok(false)
         }
@@ -512,15 +521,15 @@ impl JsStringLiteralExpression {
     /// ## Examples
     ///
     /// ```
-    /// use rome_js_factory::make::{js_string_literal_expression, ident};
+    /// use rome_js_factory::make;
     /// use rome_rowan::TriviaPieceKind;
     ///
-    ///let string = js_string_literal_expression(ident("foo")
+    ///let string = make::js_string_literal_expression(make::js_string_literal("foo")
     ///     .with_leading_trivia(vec![(TriviaPieceKind::Whitespace, " ")]));
     /// assert_eq!(string.inner_string_text().unwrap().text(), "foo");
     /// ```
-    pub fn inner_string_text(&self) -> SyntaxResult<QuotedString> {
-        Ok(QuotedString::new(self.value_token()?))
+    pub fn inner_string_text(&self) -> SyntaxResult<TokenText> {
+        Ok(inner_string_text(&self.value_token()?))
     }
 }
 
@@ -537,7 +546,7 @@ impl JsTemplateExpression {
     /// let tick = make::token(JsSyntaxKind::BACKTICK);
     /// let empty_str = make::js_template_expression(
     ///     tick.clone(),
-    ///     make::js_template_element_list(iter::empty()),
+    ///     make::js_template_element_list([]),
     ///     tick.clone(),
     /// ).build();
     ///
@@ -548,7 +557,7 @@ impl JsTemplateExpression {
     /// );
     /// let constant_str = make::js_template_expression(
     ///     tick.clone(),
-    ///     make::js_template_element_list(iter::once(chunk.clone())),
+    ///     make::js_template_element_list([chunk.clone()]),
     ///     tick.clone(),
     /// ).build();
     ///
@@ -571,7 +580,7 @@ impl JsTemplateExpression {
     /// );
     /// let template_str = make::js_template_expression(
     ///     tick.clone(),
-    ///     make::js_template_element_list(iter::once(template_elt)),
+    ///     make::js_template_element_list([template_elt]),
     ///     tick,
     /// ).build();
     ///
@@ -618,9 +627,23 @@ impl JsRegexLiteralExpression {
         let text_trimmed = token.text_trimmed();
 
         // SAFETY: a valid regex literal must have a end slash
-        let end_slash_pos = text_trimmed.rfind('/').unwrap();
+        let end_slash_pos = text_trimmed
+            .rfind('/')
+            .expect("regex literal must have an end slash");
 
         Ok(String::from(&text_trimmed[1..end_slash_pos]))
+    }
+
+    pub fn flags(&self) -> SyntaxResult<String> {
+        let token = self.value_token()?;
+        let text_trimmed = token.text_trimmed();
+
+        // SAFETY: a valid regex literal must have a end slash
+        let end_slash_pos = text_trimmed
+            .rfind('/')
+            .expect("regex literal must have an end slash");
+
+        Ok(String::from(&text_trimmed[end_slash_pos..]))
     }
 }
 
@@ -700,22 +723,8 @@ impl AnyJsExpression {
     }
 
     /// Return identifier if the expression is an identifier expression.
-    pub fn as_reference_identifier(&self) -> Option<JsReferenceIdentifier> {
-        self.as_js_identifier_expression()
-            .and_then(|it| it.name().ok())
-    }
-
-    /// Return `true` if the static value match the given string value and it is
-    /// 1. A string literal
-    /// 2. A template literal with no substitutions
-    pub fn is_string_constant(&self, text: &str) -> bool {
-        self.as_static_value()
-            .map_or(false, |it| it.is_string_constant(text))
-    }
-
-    pub fn is_value_null_or_undefined(&self) -> bool {
-        self.as_static_value()
-            .map_or(false, |it| it.is_null_or_undefined())
+    pub fn as_js_reference_identifier(&self) -> Option<JsReferenceIdentifier> {
+        self.as_js_identifier_expression()?.name().ok()
     }
 
     pub fn as_static_value(&self) -> Option<StaticValue> {
@@ -723,39 +732,28 @@ impl AnyJsExpression {
             AnyJsExpression::AnyJsLiteralExpression(literal) => literal.as_static_value(),
             AnyJsExpression::JsTemplateExpression(template) => {
                 let element_list = template.elements();
-
+                if element_list.len() == 0 {
+                    let range = template
+                        .l_tick_token()
+                        .ok()?
+                        .text_trimmed_range()
+                        .add_start(1.into());
+                    return Some(StaticValue::EmptyString(range));
+                }
                 if element_list.len() > 1 {
                     return None;
                 }
-
-                if element_list.len() == 0 {
-                    return Some(StaticValue::TemplateChunk(None));
-                }
-
                 match element_list.first()? {
-                    AnyJsTemplateElement::JsTemplateChunkElement(element) => Some(
-                        StaticValue::TemplateChunk(Some(element.template_chunk_token().ok()?)),
-                    ),
-                    AnyJsTemplateElement::JsTemplateElement(element) => {
-                        let static_value = element.expression().ok()?.as_static_value();
-                        match static_value {
-                            Some(StaticValue::Boolean(token))
-                            | Some(StaticValue::Null(token))
-                            | Some(StaticValue::Undefined(token))
-                            | Some(StaticValue::Number(token))
-                            | Some(StaticValue::BigInt(token)) => {
-                                Some(StaticValue::String(QuotedString::new(token)))
-                            }
-                            _ => static_value,
-                        }
+                    AnyJsTemplateElement::JsTemplateChunkElement(element) => {
+                        Some(StaticValue::String(element.template_chunk_token().ok()?))
                     }
+                    _ => None,
                 }
             }
             AnyJsExpression::JsIdentifierExpression(identifier) => {
                 let identifier_token = identifier.name().ok()?.value_token().ok()?;
                 match identifier_token.text_trimmed() {
-                    "undefined" => Some(StaticValue::Undefined(identifier_token)),
-                    "NaN" => Some(StaticValue::Number(identifier_token)),
+                    UNDEFINED => Some(StaticValue::Undefined(identifier_token)),
                     _ => None,
                 }
             }
@@ -801,9 +799,9 @@ impl AnyJsLiteralExpression {
                 Some(StaticValue::Number(number.value_token().ok()?))
             }
             AnyJsLiteralExpression::JsRegexLiteralExpression(_) => None,
-            AnyJsLiteralExpression::JsStringLiteralExpression(string) => Some(StaticValue::String(
-                QuotedString::new(string.value_token().ok()?),
-            )),
+            AnyJsLiteralExpression::JsStringLiteralExpression(string) => {
+                Some(StaticValue::String(string.value_token().ok()?))
+            }
         }
     }
 }
@@ -927,7 +925,6 @@ impl AnyJsMemberExpression {
     /// ```
     /// use rome_js_syntax::{AnyJsExpression, AnyJsLiteralExpression, AnyJsMemberExpression, T};
     /// use rome_js_factory::make;
-    /// use rome_js_syntax::static_value::{QuotedString, StaticStringValue};
     ///
     /// let math_id = make::js_reference_identifier(make::ident("Math"));
     /// let math_id = make::js_identifier_expression(math_id);
@@ -946,23 +943,72 @@ impl AnyJsMemberExpression {
     /// let member_name = computed_member.member_name().unwrap();
     /// assert_eq!(member_name.text(), "pow");
     /// ```
-    pub fn member_name(&self) -> Option<StaticStringValue> {
+    pub fn member_name(&self) -> Option<StaticValue> {
         let value = match self {
             AnyJsMemberExpression::JsStaticMemberExpression(e) => {
-                StaticStringValue::Unquoted(e.member().ok()?.as_js_name()?.value_token().ok()?)
+                StaticValue::String(e.member().ok()?.as_js_name()?.value_token().ok()?)
             }
             AnyJsMemberExpression::JsComputedMemberExpression(e) => {
                 let member = e.member().ok()?.omit_parentheses();
-                match member.as_static_value()? {
-                    StaticValue::String(quoted_str) => StaticStringValue::Quoted(quoted_str),
-                    StaticValue::TemplateChunk(Some(template_chunk)) => {
-                        StaticStringValue::Unquoted(template_chunk)
+                let result = member.as_static_value()?;
+                if !matches!(result, StaticValue::String(_) | StaticValue::EmptyString(_)) {
+                    return None;
+                }
+                result
+            }
+        };
+        Some(value)
+    }
+}
+
+impl AnyJsObjectMemberName {
+    /// Returns the member name of the current node
+    /// if it is a literal member name or a computed member with a literal value.
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use rome_js_syntax::{AnyJsObjectMemberName, AnyJsExpression, AnyJsLiteralExpression, T};
+    /// use rome_js_factory::make;
+    ///
+    /// let name = make::js_literal_member_name(make::ident("a"));
+    /// let name = AnyJsObjectMemberName::JsLiteralMemberName(name);
+    /// assert_eq!(name.name().unwrap().text(), "a");
+    ///
+    /// let quoted_name = make::js_literal_member_name(make::js_string_literal("a"));
+    /// let quoted_name = AnyJsObjectMemberName::JsLiteralMemberName(quoted_name);
+    /// assert_eq!(quoted_name.name().unwrap().text(), "a");
+    ///
+    /// let number_name = make::js_literal_member_name(make::js_number_literal(42));
+    /// let number_name = AnyJsObjectMemberName::JsLiteralMemberName(number_name);
+    /// assert_eq!(number_name.name().unwrap().text(), "42");
+    ///
+    /// let string_literal = make::js_string_literal_expression(make::js_string_literal("a"));
+    /// let string_literal = AnyJsExpression::AnyJsLiteralExpression(AnyJsLiteralExpression::from(string_literal));
+    /// let computed = make::js_computed_member_name(make::token(T!['[']), string_literal, make::token(T![']']));
+    /// let computed = AnyJsObjectMemberName::JsComputedMemberName(computed);
+    /// assert_eq!(computed.name().unwrap().text(), "a");
+    /// ```
+    pub fn name(&self) -> Option<TokenText> {
+        let token = match self {
+            AnyJsObjectMemberName::JsComputedMemberName(expr) => {
+                let expr = expr.expression().ok()?;
+                match expr.omit_parentheses() {
+                    AnyJsExpression::AnyJsLiteralExpression(expr) => expr.value_token().ok()?,
+                    AnyJsExpression::JsTemplateExpression(expr) => {
+                        if !expr.is_constant() {
+                            return None;
+                        }
+                        let chunk = expr.elements().first()?;
+                        let chunk = chunk.as_js_template_chunk_element()?;
+                        chunk.template_chunk_token().ok()?
                     }
                     _ => return None,
                 }
             }
+            AnyJsObjectMemberName::JsLiteralMemberName(expr) => expr.value().ok()?,
         };
-        Some(value)
+        Some(inner_string_text(&token))
     }
 }
 
@@ -974,7 +1020,6 @@ impl AnyJsMemberExpression {
 /// ```
 /// use rome_js_syntax::{AnyJsExpression, AnyJsLiteralExpression, AnyJsMemberExpression, global_identifier, T};
 /// use rome_js_factory::make;
-/// use rome_js_syntax::static_value::{QuotedString, StaticStringValue};
 ///
 /// let math_reference = make::js_reference_identifier(make::ident("Math"));
 /// let math_id = make::js_identifier_expression(math_reference.clone());
@@ -995,16 +1040,13 @@ impl AnyJsMemberExpression {
 /// assert_eq!(name.text(), "Math");
 /// assert_eq!(reference, global_this_reference);
 /// ```
-pub fn global_identifier(
-    expr: &AnyJsExpression,
-) -> Option<(JsReferenceIdentifier, StaticStringValue)> {
-    if let AnyJsExpression::JsIdentifierExpression(id_expr) = expr {
-        let reference = id_expr.name().ok()?;
-        let name = StaticStringValue::Unquoted(reference.value_token().ok()?);
+pub fn global_identifier(expr: &AnyJsExpression) -> Option<(JsReferenceIdentifier, StaticValue)> {
+    if let Some(reference) = expr.as_js_reference_identifier() {
+        let name = StaticValue::String(reference.value_token().ok()?);
         return Some((reference, name));
     }
     let Some(member_expr) = AnyJsMemberExpression::cast_ref(expr.syntax()) else { return None; };
-    let name: StaticStringValue = member_expr.member_name()?;
+    let name = member_expr.member_name()?;
     let mut expr = member_expr.object().ok()?.omit_parentheses();
     while let Some(member_expr) = AnyJsMemberExpression::cast_ref(expr.syntax()) {
         if !matches!(member_expr.member_name()?.text(), GLOBAL_THIS | WINDOW) {
@@ -1012,9 +1054,8 @@ pub fn global_identifier(
         }
         expr = member_expr.object().ok()?.omit_parentheses();
     }
-    if let AnyJsExpression::JsIdentifierExpression(id_expr) = expr {
-        let reference = id_expr.name().ok()?;
-        if reference.has_name(GLOBAL_THIS) || reference.has_name(WINDOW) {
+    if let Some(reference) = expr.as_js_reference_identifier() {
+        if matches!(reference.name().ok()?.text(), GLOBAL_THIS | WINDOW) {
             return Some((reference, name));
         }
     }
@@ -1100,7 +1141,7 @@ impl JsCallExpression {
 
     pub fn has_callee(&self, name: &str) -> bool {
         self.callee().map_or(false, |it| {
-            it.as_reference_identifier()
+            it.as_js_reference_identifier()
                 .map_or(false, |it| it.has_name(name))
         })
     }
@@ -1109,7 +1150,7 @@ impl JsCallExpression {
 impl JsNewExpression {
     pub fn has_callee(&self, name: &str) -> bool {
         self.callee().map_or(false, |it| {
-            it.as_reference_identifier()
+            it.as_js_reference_identifier()
                 .map_or(false, |it| it.has_name(name))
         })
     }

@@ -3,20 +3,20 @@ mod rules;
 
 pub use crate::configuration::linter::rules::{rules, Rules};
 use crate::configuration::merge::MergeWith;
-use crate::configuration::string_set::StringSet;
 use crate::settings::LinterSettings;
 use crate::{ConfigurationDiagnostic, MatchOptions, Matcher, WorkspaceError};
 use bpaf::Bpaf;
+use rome_deserialize::StringSet;
 use rome_diagnostics::Severity;
 use rome_js_analyze::options::{possible_options, PossibleOptions};
 pub use rules::*;
-#[cfg(feature = "schemars")]
+#[cfg(feature = "schema")]
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 use std::str::FromStr;
 
 #[derive(Deserialize, Serialize, Debug, Clone, Bpaf)]
-#[cfg_attr(feature = "schemars", derive(JsonSchema))]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 #[serde(rename_all = "camelCase", default, deny_unknown_fields)]
 pub struct LinterConfiguration {
     /// if `false`, it disables the feature and the linter won't be executed. `true` by default
@@ -91,7 +91,7 @@ impl TryFrom<LinterConfiguration> for LinterSettings {
 }
 
 #[derive(Deserialize, Serialize, Debug, Clone, Bpaf)]
-#[cfg_attr(feature = "schemars", derive(JsonSchema))]
+#[cfg_attr(feature = "schema", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", deny_unknown_fields, untagged)]
 pub enum RuleConfiguration {
     Plain(RulePlainConfiguration),
@@ -157,7 +157,7 @@ impl From<&RulePlainConfiguration> for Severity {
 }
 
 #[derive(Default, Deserialize, Serialize, Debug, Eq, PartialEq, Clone, Bpaf)]
-#[cfg_attr(feature = "schemars", derive(JsonSchema))]
+#[cfg_attr(feature = "schema", derive(JsonSchema))]
 #[serde(rename_all = "camelCase")]
 pub enum RulePlainConfiguration {
     #[default]
@@ -184,7 +184,7 @@ impl FromStr for RulePlainConfiguration {
 }
 
 #[derive(Default, Deserialize, Serialize, Debug, Clone, Bpaf)]
-#[cfg_attr(feature = "schemars", derive(JsonSchema))]
+#[cfg_attr(feature = "schema", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct RuleWithOptions {
     pub level: RulePlainConfiguration,

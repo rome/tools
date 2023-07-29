@@ -4,22 +4,31 @@ use rome_formatter::{
     CstFormatContext, FormatContext, FormatOptions, IndentStyle, LineWidth, TransformSourceMap,
 };
 
-use rome_formatter::comments::{Comments, FormatPlainComment};
+use crate::comments::{FormatJsonLeadingComment, JsonComments};
 use rome_json_syntax::JsonLanguage;
 use std::fmt;
+use std::rc::Rc;
 
 #[derive(Debug)]
 pub struct JsonFormatContext {
     options: JsonFormatOptions,
-    comments: Comments<JsonLanguage>,
+    /// The comments of the nodes and tokens in the program.
+    comments: Rc<JsonComments>,
+    source_map: Option<TransformSourceMap>,
 }
 
 impl JsonFormatContext {
-    pub fn new(options: JsonFormatOptions) -> Self {
+    pub fn new(options: JsonFormatOptions, comments: JsonComments) -> Self {
         Self {
             options,
-            comments: Comments::default(),
+            comments: Rc::new(comments),
+            source_map: None,
         }
+    }
+
+    pub fn with_source_map(mut self, source_map: Option<TransformSourceMap>) -> Self {
+        self.source_map = source_map;
+        self
     }
 }
 
@@ -38,9 +47,9 @@ impl FormatContext for JsonFormatContext {
 impl CstFormatContext for JsonFormatContext {
     type Language = JsonLanguage;
     type Style = JsonCommentStyle;
-    type CommentRule = FormatPlainComment<Self>;
+    type CommentRule = FormatJsonLeadingComment;
 
-    fn comments(&self) -> &Comments<Self::Language> {
+    fn comments(&self) -> &JsonComments {
         &self.comments
     }
 }

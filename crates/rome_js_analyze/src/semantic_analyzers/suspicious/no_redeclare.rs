@@ -115,7 +115,6 @@ impl Rule for NoRedeclare {
 
 fn check_redeclarations_in_single_scope(scope: &Scope, redeclarations: &mut Vec<Redeclaration>) {
     let mut declarations = HashMap::<String, (TextRange, AnyJsBindingDeclaration)>::default();
-    dbg!("scope", scope);
     for binding in scope.bindings() {
         let id_binding = binding.tree();
 

@@ -10,12 +10,12 @@ alias l := lint
 # Installs the tools needed to develop with Rome
 install-tools:
 	cargo install cargo-binstall
-	cargo binstall cargo-insta cargo-nextest taplo-cli wasm-pack
+	cargo binstall cargo-insta cargo-nextest taplo-cli wasm-pack wasm-tools
 
 # Upgrades the tools needed to develop with Rome
 upgrade-tools:
 	cargo install cargo-binstall --force
-	cargo binstall cargo-insta cargo-nextest taplo-cli wasm-pack --force
+	cargo binstall cargo-insta cargo-nextest taplo-cli wasm-pack wasm-tools --force
 
 # Generate all files across crates and tools. You rarely want to use it locally.
 codegen:
@@ -89,6 +89,12 @@ test-lintrule name:
   just _touch crates/rome_json_analyze/tests/spec_tests.rs
   cargo test -p rome_js_analyze -- {{snakecase(name)}}
   cargo test -p rome_json_analyze -- {{snakecase(name)}}
+
+# Tests a lint rule. The name of the rule needs to be camel case
+test-transformation name:
+  just _touch crates/rome_js_transform/tests/spec_tests.rs
+  cargo test -p rome_js_transform -- {{snakecase(name)}}
+
 
 # Alias for `cargo lint`, it runs clippy on the whole codebase
 lint:

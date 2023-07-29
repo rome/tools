@@ -7,7 +7,11 @@ parent: lint/rules/index
 
 > This rule is recommended by Rome.
 
-Disallow `new` operators with the `Symbol` object
+Disallow `new` operators with the `Symbol` object.
+
+`Symbol` cannot be instantiated. This results in throwing a `TypeError`.
+
+Source: https://eslint.org/docs/latest/rules/no-new-symbol
 
 ## Examples
 

@@ -318,7 +318,7 @@ It also checks whether a call <code>super()</code> is missing from classes that 
 	<a href="/lint/rules/noNewSymbol">noNewSymbol</a>
 	<span class="recommended">recommended</span>
 </h3>
-Disallow <code>new</code> operators with the <code>Symbol</code> object
+Disallow <code>new</code> operators with the <code>Symbol</code> object.
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="noPrecisionLoss">
@@ -933,6 +933,12 @@ Disallow the use of <code>console.log</code>
 Disallow constant expressions in conditions
 </section>
 <section class="rule">
+<h3 data-toc-exclude id="noControlCharactersInRegex">
+	<a href="/lint/rules/noControlCharactersInRegex">noControlCharactersInRegex</a>
+</h3>
+Prevents from having control characters and some escape sequences that match control characters in regular expressions.
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="noDuplicateJsonKeys">
 	<a href="/lint/rules/noDuplicateJsonKeys">noDuplicateJsonKeys</a>
 </h3>
@@ -954,7 +960,7 @@ Disallow functions that exceed a given complexity score.
 <h3 data-toc-exclude id="noFallthroughSwitchClause">
 	<a href="/lint/rules/noFallthroughSwitchClause">noFallthroughSwitchClause</a>
 </h3>
-Disallow fallthrough of case statements.
+Disallow fallthrough of <code>switch</code> clauses.
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="noForEach">
@@ -1005,6 +1011,12 @@ Disallow assignments where both sides are exactly the same.
 This rule reports when a class has no non-static members, such as for a class used exclusively as a static namespace.
 </section>
 <section class="rule">
+<h3 data-toc-exclude id="noUselessEmptyExport">
+	<a href="/lint/rules/noUselessEmptyExport">noUselessEmptyExport</a>
+</h3>
+Disallow empty exports that don't change anything in a module file.
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="noVoid">
 	<a href="/lint/rules/noVoid">noVoid</a>
 </h3>
@@ -1053,6 +1065,18 @@ Accessible means that it is not hidden using the aria-hidden prop.
 </h3>
 Enforce that all React hooks are being called from the Top Level
 component functions.
+</section>
+<section class="rule">
+<h3 data-toc-exclude id="useImportRestrictions">
+	<a href="/lint/rules/useImportRestrictions">useImportRestrictions</a>
+</h3>
+Disallows package private imports.
+</section>
+<section class="rule">
+<h3 data-toc-exclude id="useIsArray">
+	<a href="/lint/rules/useIsArray">useIsArray</a>
+</h3>
+Use <code>Array.isArray()</code> instead of <code>instanceof Array</code>.
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="useIsNan">

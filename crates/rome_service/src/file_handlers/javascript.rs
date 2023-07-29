@@ -26,7 +26,7 @@ use rome_js_analyze::{
     analyze, analyze_with_inspect_matcher, visit_registry, ControlFlowGraph, RuleError,
 };
 use rome_js_formatter::context::{
-    trailing_comma::TrailingComma, QuoteProperties, QuoteStyle, Semicolons,
+    trailing_comma::TrailingComma, ArrowParentheses, QuoteProperties, QuoteStyle, Semicolons,
 };
 use rome_js_formatter::{context::JsFormatOptions, format_node};
 use rome_js_parser::JsParserOptions;
@@ -43,29 +43,36 @@ use std::path::PathBuf;
 use tracing::{debug, trace};
 
 #[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
-#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 pub struct JsFormatterSettings {
     pub quote_style: Option<QuoteStyle>,
     pub jsx_quote_style: Option<QuoteStyle>,
     pub quote_properties: Option<QuoteProperties>,
     pub trailing_comma: Option<TrailingComma>,
     pub semicolons: Option<Semicolons>,
+    pub arrow_parentheses: Option<ArrowParentheses>,
 }
 
 #[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
-#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 pub struct JsParserSettings {
     pub parse_class_parameter_decorators: bool,
 }
 
 #[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
-#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
+pub struct JsonParserSettings {
+    pub allow_comments: bool,
+}
+
+#[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 pub struct JsLinterSettings {
     pub globals: Vec<String>,
 }
 
 #[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
-#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 pub struct JsOrganizeImportsSettings {}
 
 impl Language for JsLanguage {
@@ -92,6 +99,7 @@ impl Language for JsLanguage {
             .with_quote_properties(language.quote_properties.unwrap_or_default())
             .with_trailing_comma(language.trailing_comma.unwrap_or_default())
             .with_semicolons(language.semicolons.unwrap_or_default())
+            .with_arrow_parentheses(language.arrow_parentheses.unwrap_or_default())
     }
 }
 
@@ -246,12 +254,12 @@ fn lint(params: LintParams) -> LintResults {
     let Ok(file_source) = params
         .parse
         .file_source(params.path) else {
-		return LintResults {
-			errors: 0,
-			diagnostics: vec![],
-			skipped_diagnostics: 0
-		}
-	};
+        return LintResults {
+            errors: 0,
+            diagnostics: vec![],
+            skipped_diagnostics: 0
+        }
+    };
     let tree = params.parse.tree();
     let mut diagnostics = params.parse.into_diagnostics();
 
@@ -401,10 +409,10 @@ fn code_actions(
     trace!("Filter applied for code actions: {:?}", &filter);
     let analyzer_options = compute_analyzer_options(&settings, PathBuf::from(path.as_path()));
     let Ok(source_type) = parse.file_source(path) else {
-		return PullActionsResult {
-			actions: vec![]
-		}
-	};
+        return PullActionsResult {
+            actions: vec![]
+        }
+    };
 
     analyze(&tree, filter, &analyzer_options, source_type, |signal| {
         actions.extend(signal.actions().into_code_action_iter().map(|item| {

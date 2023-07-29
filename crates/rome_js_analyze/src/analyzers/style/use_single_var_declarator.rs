@@ -1,5 +1,3 @@
-use std::iter;
-
 use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
@@ -146,7 +144,7 @@ impl Rule for UseSingleVarDeclarator {
                     declarator = declarator
                         .replace_token_discard_trivia(
                             first_token.clone(),
-                            first_token.with_leading_trivia(iter::empty()),
+                            first_token.with_leading_trivia([]),
                         )
                         // SAFETY: first_token is a known child of declarator
                         .unwrap();
@@ -203,10 +201,7 @@ impl Rule for UseSingleVarDeclarator {
                     let mut builder = make::js_variable_statement(
                         make::js_variable_declaration(
                             kind,
-                            make::js_variable_declarator_list(
-                                iter::once(declarator),
-                                iter::empty(),
-                            ),
+                            make::js_variable_declarator_list([declarator], []),
                         )
                         .build(),
                     );

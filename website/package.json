@@ -11,7 +11,7 @@
 				"build": "pnpm build:wasm && pnpm build:js",
 				"build:js": "astro build",
 				"build:wasm": "wasm-pack build --out-dir ../../npm/wasm-web --target web --release --scope rometools ../crates/rome_wasm",
-				"build:wasm-dev": "wasm-pack build --out-dir ../../npm/wasm-web --target web --dev --scope rometools ../crates/rome_wasm",
+				"build:wasm-dev": "wasm-pack build --out-dir ../../npm/wasm-web --target web --scope rometools ../crates/rome_wasm",
 				"preview": "astro preview"
 		},
 		"devDependencies": {

@@ -1526,6 +1526,43 @@ pub struct CssRatioFields {
     pub denominator: SyntaxResult<CssNumber>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct CssRoot {
+    pub(crate) syntax: SyntaxNode,
+}
+impl CssRoot {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> CssRootFields {
+        CssRootFields {
+            rules: self.rules(),
+            eof_token: self.eof_token(),
+        }
+    }
+    pub fn rules(&self) -> CssRuleList { support::list(&self.syntax, 0usize) }
+    pub fn eof_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 1usize)
+    }
+}
+#[cfg(feature = "serde")]
+impl Serialize for CssRoot {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize))]
+pub struct CssRootFields {
+    pub rules: CssRuleList,
+    pub eof_token: SyntaxResult<SyntaxToken>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct CssRule {
     pub(crate) syntax: SyntaxNode,
 }
@@ -3259,6 +3296,35 @@ impl From<CssRatio> for SyntaxNode {
 impl From<CssRatio> for SyntaxElement {
     fn from(n: CssRatio) -> SyntaxElement { n.syntax.into() }
 }
+impl AstNode for CssRoot {
+    type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_ROOT as u16));
+    fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_ROOT }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
+}
+impl std::fmt::Debug for CssRoot {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("CssRoot")
+            .field("rules", &self.rules())
+            .field("eof_token", &support::DebugSyntaxResult(self.eof_token()))
+            .finish()
+    }
+}
+impl From<CssRoot> for SyntaxNode {
+    fn from(n: CssRoot) -> SyntaxNode { n.syntax }
+}
+impl From<CssRoot> for SyntaxElement {
+    fn from(n: CssRoot) -> SyntaxElement { n.syntax.into() }
+}
 impl AstNode for CssRule {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
@@ -4258,6 +4324,11 @@ impl std::fmt::Display for CssRatio {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for CssRoot {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for CssRule {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -4825,10 +4896,10 @@ impl IntoIterator for CssParameterList {
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
-pub struct CssRoot {
+pub struct CssRuleList {
     syntax_list: SyntaxList,
 }
-impl CssRoot {
+impl CssRuleList {
     #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
     #[doc = r""]
     #[doc = r" # Safety"]
@@ -4841,14 +4912,14 @@ impl CssRoot {
         }
     }
 }
-impl AstNode for CssRoot {
+impl AstNode for CssRuleList {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
-        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_ROOT as u16));
-    fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_ROOT }
-    fn cast(syntax: SyntaxNode) -> Option<CssRoot> {
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_RULE_LIST as u16));
+    fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_RULE_LIST }
+    fn cast(syntax: SyntaxNode) -> Option<CssRuleList> {
         if Self::can_cast(syntax.kind()) {
-            Some(CssRoot {
+            Some(CssRuleList {
                 syntax_list: syntax.into_list(),
             })
         } else {
@@ -4859,7 +4930,7 @@ impl AstNode for CssRoot {
     fn into_syntax(self) -> SyntaxNode { self.syntax_list.into_node() }
 }
 #[cfg(feature = "serde")]
-impl Serialize for CssRoot {
+impl Serialize for CssRuleList {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -4871,24 +4942,24 @@ impl Serialize for CssRoot {
         seq.end()
     }
 }
-impl AstNodeList for CssRoot {
+impl AstNodeList for CssRuleList {
     type Language = Language;
     type Node = AnyCssRule;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
     fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
-impl Debug for CssRoot {
+impl Debug for CssRuleList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        f.write_str("CssRoot ")?;
+        f.write_str("CssRuleList ")?;
         f.debug_list().entries(self.iter()).finish()
     }
 }
-impl IntoIterator for &CssRoot {
+impl IntoIterator for &CssRuleList {
     type Item = AnyCssRule;
     type IntoIter = AstNodeListIterator<Language, AnyCssRule>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
-impl IntoIterator for CssRoot {
+impl IntoIterator for CssRuleList {
     type Item = AnyCssRule;
     type IntoIter = AstNodeListIterator<Language, AnyCssRule>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }

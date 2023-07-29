@@ -86,13 +86,10 @@ impl Rule for NoCommentText {
             AnyJsxChild::JsxText(node.clone()),
             AnyJsxChild::JsxExpressionChild(
                 make::jsx_expression_child(
-                    make::token(T!['{']).with_trailing_trivia(
-                        [(
-                            TriviaPieceKind::MultiLineComment,
-                            normalized_comment.as_str(),
-                        )]
-                        .into_iter(),
-                    ),
+                    make::token(T!['{']).with_trailing_trivia([(
+                        TriviaPieceKind::MultiLineComment,
+                        normalized_comment.as_str(),
+                    )]),
                     make::token(T!['}']),
                 )
                 .build(),

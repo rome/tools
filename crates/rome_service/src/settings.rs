@@ -80,6 +80,7 @@ impl WorkspaceSettings {
                 self.languages.javascript.formatter.quote_properties = formatter.quote_properties;
                 self.languages.javascript.formatter.trailing_comma = formatter.trailing_comma;
                 self.languages.javascript.formatter.semicolons = formatter.semicolons;
+                self.languages.javascript.formatter.arrow_parentheses = formatter.arrow_parentheses;
             }
 
             if let Some(parser) = javascript.parser {
@@ -93,6 +94,15 @@ impl WorkspaceSettings {
 
             let organize_imports = javascript.organize_imports;
             if let Some(_organize_imports) = organize_imports {}
+        }
+
+        // json settings
+        let json = configuration.json;
+        if let Some(json) = json {
+            if let Some(parser) = json.parser {
+                self.languages.json.parser.allow_comments =
+                    parser.allow_comments.unwrap_or_default();
+            }
         }
 
         Ok(())

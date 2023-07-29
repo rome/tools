@@ -8,7 +8,7 @@ use rome_js_syntax::{
 use rome_js_syntax::{
     JsMethodObjectMember, JsPropertyObjectMember, JsShorthandPropertyObjectMember, TextRange,
 };
-use rome_rowan::{AstNode, BatchMutationExt};
+use rome_rowan::{AstNode, BatchMutationExt, TokenText};
 use std::cmp::Ordering;
 use std::collections::HashMap;
 use std::fmt::Display;
@@ -69,7 +69,7 @@ enum MemberDefinition {
     ShorthandProperty(JsShorthandPropertyObjectMember),
 }
 impl MemberDefinition {
-    fn name(&self) -> Option<String> {
+    fn name(&self) -> Option<TokenText> {
         match self {
             MemberDefinition::Getter(getter) => {
                 getter.name().ok()?.as_js_literal_member_name()?.name().ok()
@@ -86,9 +86,14 @@ impl MemberDefinition {
                 .as_js_literal_member_name()?
                 .name()
                 .ok(),
-            MemberDefinition::ShorthandProperty(shorthand_property) => {
-                Some(shorthand_property.name().ok()?.text())
-            }
+            MemberDefinition::ShorthandProperty(shorthand_property) => Some(
+                shorthand_property
+                    .name()
+                    .ok()?
+                    .value_token()
+                    .ok()?
+                    .token_text_trimmed(),
+            ),
         }
     }
 
@@ -210,7 +215,7 @@ impl Rule for NoDuplicateObjectKeys {
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
 
-        let mut defined_properties: HashMap<String, DefinedProperty> = HashMap::new();
+        let mut defined_properties: HashMap<TokenText, DefinedProperty> = HashMap::new();
         let mut signals: Self::Signals = Vec::new();
 
         for member_definition in node

@@ -1,4 +1,5 @@
-use crate::lexer::Lexer;
+use crate::lexer::{Lexer, Token};
+use crate::JsonParserOptions;
 use rome_json_syntax::JsonSyntaxKind::{EOF, TOMBSTONE};
 use rome_json_syntax::{JsonSyntaxKind, TextRange};
 use rome_parser::diagnostic::ParseDiagnostic;
@@ -12,11 +13,12 @@ pub(crate) struct JsonTokenSource<'source> {
     current: JsonSyntaxKind,
     current_range: TextRange,
     preceding_line_break: bool,
+    config: JsonParserOptions,
 }
 
 impl<'source> JsonTokenSource<'source> {
-    pub fn from_str(source: &'source str) -> Self {
-        let lexer = Lexer::from_str(source);
+    pub fn from_str(source: &'source str, config: JsonParserOptions) -> Self {
+        let lexer = Lexer::from_str(source).with_config(config);
 
         let mut source = Self {
             lexer,
@@ -24,6 +26,7 @@ impl<'source> JsonTokenSource<'source> {
             current: TOMBSTONE,
             current_range: TextRange::default(),
             preceding_line_break: false,
+            config,
         };
 
         source.next_non_trivia_token(true);
@@ -39,8 +42,12 @@ impl<'source> JsonTokenSource<'source> {
 
             match trivia_kind {
                 Err(_) => {
-                    self.current = token.kind();
-                    self.current_range = token.range();
+                    self.set_current_token(token);
+                    // Not trivia
+                    break;
+                }
+                Ok(trivia_kind) if trivia_kind.is_comment() && !self.config.allow_comments => {
+                    self.set_current_token(token);
 
                     // Not trivia
                     break;
@@ -56,6 +63,11 @@ impl<'source> JsonTokenSource<'source> {
                 }
             }
         }
+    }
+
+    fn set_current_token(&mut self, token: Token) {
+        self.current = token.kind();
+        self.current_range = token.range()
     }
 }
 

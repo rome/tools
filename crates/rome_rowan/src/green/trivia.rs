@@ -162,7 +162,7 @@ mod tests {
 
         /// Creates a trivia containing a single piece
         pub fn single<L: Into<TextSize>>(kind: TriviaPieceKind, len: L) -> Self {
-            Self::new(std::iter::once(TriviaPiece::new(kind, len)))
+            Self::new([TriviaPiece::new(kind, len)])
         }
     }
 

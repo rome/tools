@@ -44,6 +44,10 @@ export interface Configuration {
 	 */
 	javascript?: JavascriptConfiguration;
 	/**
+	 * Specific configuration for the Json language
+	 */
+	json?: JsonConfiguration;
+	/**
 	 * The configuration for the linter
 	 */
 	linter?: LinterConfiguration;
@@ -111,6 +115,9 @@ If defined here, they should not emit diagnostics.
 	organize_imports?: JavascriptOrganizeImports;
 	parser?: JavascriptParser;
 }
+export interface JsonConfiguration {
+	parser?: JsonParser;
+}
 export interface LinterConfiguration {
 	/**
 	 * if `false`, it disables the feature and the linter won't be executed. `true` by default
@@ -167,6 +174,10 @@ The allowed range of values is 1..=320
 export type LineWidth = number;
 export interface JavascriptFormatter {
 	/**
+	 * Whether to add non-necessary parentheses to arrow functions. Defaults to "always".
+	 */
+	arrowParentheses?: ArrowParentheses;
+	/**
 	 * The style for JSX quotes. Defaults to double.
 	 */
 	jsxQuoteStyle?: QuoteStyle;
@@ -196,6 +207,12 @@ These decorators belong to an old proposal, and they are subject to change.
 	 */
 	unsafeParameterDecoratorsEnabled?: boolean;
 }
+export interface JsonParser {
+	/**
+	 * Allow parsing comments in `.json` files
+	 */
+	allowComments?: boolean;
+}
 export interface Rules {
 	a11y?: A11y;
 	/**
@@ -215,6 +232,7 @@ export interface Rules {
 	suspicious?: Suspicious;
 }
 export type VcsClientKind = "git";
+export type ArrowParentheses = "always" | "asNeeded";
 export type QuoteStyle = "double" | "single";
 export type QuoteProperties = "asNeeded" | "preserve";
 export type Semicolons = "always" | "asNeeded";
@@ -421,7 +439,7 @@ export interface Correctness {
 	 */
 	noInvalidConstructorSuper?: RuleConfiguration;
 	/**
-	 * Disallow new operators with the Symbol object
+	 * Disallow new operators with the Symbol object.
 	 */
 	noNewSymbol?: RuleConfiguration;
 	/**
@@ -530,6 +548,10 @@ export interface Nursery {
 	 */
 	noConstantCondition?: RuleConfiguration;
 	/**
+	 * Prevents from having control characters and some escape sequences that match control characters in regular expressions.
+	 */
+	noControlCharactersInRegex?: RuleConfiguration;
+	/**
 	 * Disallow two keys with the same name inside a JSON object.
 	 */
 	noDuplicateJsonKeys?: RuleConfiguration;
@@ -542,7 +564,7 @@ export interface Nursery {
 	 */
 	noExcessiveComplexity?: RuleConfiguration;
 	/**
-	 * Disallow fallthrough of case statements.
+	 * Disallow fallthrough of switch clauses.
 	 */
 	noFallthroughSwitchClause?: RuleConfiguration;
 	/**
@@ -577,6 +599,10 @@ export interface Nursery {
 	 * This rule reports when a class has no non-static members, such as for a class used exclusively as a static namespace.
 	 */
 	noStaticOnlyClass?: RuleConfiguration;
+	/**
+	 * Disallow empty exports that don't change anything in a module file.
+	 */
+	noUselessEmptyExport?: RuleConfiguration;
 	/**
 	 * Disallow the use of void operators, which is not a familiar operator.
 	 */
@@ -613,6 +639,14 @@ export interface Nursery {
 	 * Enforce that all React hooks are being called from the Top Level component functions.
 	 */
 	useHookAtTopLevel?: RuleConfiguration;
+	/**
+	 * Disallows package private imports.
+	 */
+	useImportRestrictions?: RuleConfiguration;
+	/**
+	 * Use Array.isArray() instead of instanceof Array.
+	 */
+	useIsArray?: RuleConfiguration;
 	/**
 	 * Require calls to isNaN() when checking for NaN.
 	 */
@@ -936,6 +970,7 @@ export type PossibleOptions =
 	| ComplexityOptions
 	| HooksOptions
 	| NamingConventionOptions
+	| RestrictedGlobalsOptions
 	| null;
 /**
  * Options for the rule `noNestedModuleImports`.
@@ -967,6 +1002,15 @@ export interface NamingConventionOptions {
 	 * If `false`, then consecutive uppercase are allowed in _camel_ and _pascal_ cases. This does not affect other [Case].
 	 */
 	strictCase: boolean;
+}
+/**
+ * Options for the rule `noRestrictedGlobals`.
+ */
+export interface RestrictedGlobalsOptions {
+	/**
+	 * A list of names that should trigger the rule
+	 */
+	deniedGlobals?: string[];
 }
 export interface Hooks {
 	/**
@@ -1003,6 +1047,7 @@ export type Language =
 	| "TypeScript"
 	| "TypeScriptReact"
 	| "Json"
+	| "Jsonc"
 	| "Unknown";
 export interface ChangeFileParams {
 	content: string;
@@ -1134,6 +1179,7 @@ export type Category =
 	| "lint/nursery/noConfusingArrow"
 	| "lint/nursery/noConsoleLog"
 	| "lint/nursery/noConstantCondition"
+	| "lint/nursery/noControlCharactersInRegex"
 	| "lint/nursery/noDuplicateJsonKeys"
 	| "lint/nursery/noDuplicateJsxProps"
 	| "lint/nursery/noExcessiveComplexity"
@@ -1146,6 +1192,7 @@ export type Category =
 	| "lint/nursery/noRedundantRoles"
 	| "lint/nursery/noSelfAssign"
 	| "lint/nursery/noStaticOnlyClass"
+	| "lint/nursery/noUselessEmptyExport"
 	| "lint/nursery/noVoid"
 	| "lint/nursery/useAriaPropTypes"
 	| "lint/nursery/useArrowFunction"
@@ -1154,6 +1201,8 @@ export type Category =
 	| "lint/nursery/useGroupedTypeImport"
 	| "lint/nursery/useHeadingContent"
 	| "lint/nursery/useHookAtTopLevel"
+	| "lint/nursery/useImportRestrictions"
+	| "lint/nursery/useIsArray"
 	| "lint/nursery/useIsNan"
 	| "lint/nursery/useLiteralEnumMembers"
 	| "lint/nursery/useLiteralKeys"

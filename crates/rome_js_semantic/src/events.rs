@@ -10,7 +10,7 @@ use rome_js_syntax::{
     JsSyntaxToken, JsVariableDeclaration, JsVariableDeclarator, JsVariableDeclaratorList,
     JsxReferenceIdentifier, TextRange, TextSize, TsIdentifierBinding, TsTypeParameterName,
 };
-use rome_rowan::{syntax::Preorder, AstNode, SyntaxNodeCast, SyntaxNodeOptionExt, SyntaxTokenText};
+use rome_rowan::{syntax::Preorder, AstNode, SyntaxNodeCast, SyntaxNodeOptionExt, TokenText};
 
 /// Events emitted by the [SemanticEventExtractor]. These events are later
 /// made into the Semantic Model.
@@ -26,7 +26,7 @@ pub enum SemanticEvent {
         scope_started_at: TextSize,
         scope_id: usize,
         hoisted_scope_id: Option<usize>,
-        name: SyntaxTokenText,
+        name: TokenText,
     },
 
     /// Tracks where a symbol is read, but only if its declaration
@@ -161,7 +161,7 @@ pub struct SemanticEventExtractor {
     next_scope_id: usize,
     /// At any point this is the set of available bindings and
     /// the range of its declaration
-    bindings: FxHashMap<SyntaxTokenText, BindingInfo>,
+    bindings: FxHashMap<TokenText, BindingInfo>,
 }
 
 /// Holds the text range of the token when it is bound,
@@ -176,7 +176,7 @@ struct BindingInfo {
 
 #[derive(Debug)]
 struct Binding {
-    name: SyntaxTokenText,
+    name: TokenText,
 }
 
 #[derive(Debug)]
@@ -212,10 +212,10 @@ struct Scope {
     bindings: Vec<Binding>,
     /// References that still needs to be bound and
     /// will be solved at the end of the scope
-    references: HashMap<SyntaxTokenText, Vec<Reference>>,
+    references: HashMap<TokenText, Vec<Reference>>,
     /// All bindings that where shadowed and will be
     /// restored after this scope ends.
-    shadowed: Vec<(SyntaxTokenText, BindingInfo)>,
+    shadowed: Vec<(TokenText, BindingInfo)>,
     /// If this scope allows declarations to be hoisted
     /// to parent scope or not
     hoisting: ScopeHoisting,

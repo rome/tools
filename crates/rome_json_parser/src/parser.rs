@@ -11,11 +11,23 @@ pub(crate) struct JsonParser<'source> {
     source: JsonTokenSource<'source>,
 }
 
+#[derive(Default, Debug, Clone, Copy)]
+pub struct JsonParserOptions {
+    pub allow_comments: bool,
+}
+
+impl JsonParserOptions {
+    pub fn with_allow_comments(mut self) -> Self {
+        self.allow_comments = true;
+        self
+    }
+}
+
 impl<'source> JsonParser<'source> {
-    pub fn new(source: &'source str) -> Self {
+    pub fn new(source: &'source str, config: JsonParserOptions) -> Self {
         Self {
             context: ParserContext::default(),
-            source: JsonTokenSource::from_str(source),
+            source: JsonTokenSource::from_str(source, config),
         }
     }
 

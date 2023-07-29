@@ -10,7 +10,7 @@ pub use file_source::JsonFileSource;
 pub use rome_rowan::{TextLen, TextRange, TextSize, TokenAtOffset, TriviaPieceKind, WalkEvent};
 pub use syntax_node::*;
 
-use rome_rowan::RawSyntaxKind;
+use rome_rowan::{RawSyntaxKind, TokenText};
 
 impl From<u16> for JsonSyntaxKind {
     fn from(d: u16) -> JsonSyntaxKind {
@@ -28,6 +28,13 @@ impl From<JsonSyntaxKind> for u16 {
 impl JsonSyntaxKind {
     pub fn is_trivia(self) -> bool {
         matches!(self, JsonSyntaxKind::NEWLINE | JsonSyntaxKind::WHITESPACE)
+    }
+
+    pub fn is_comments(self) -> bool {
+        matches!(
+            self,
+            JsonSyntaxKind::COMMENT | JsonSyntaxKind::MULTILINE_COMMENT
+        )
     }
 
     #[inline]
@@ -93,8 +100,26 @@ impl TryFrom<JsonSyntaxKind> for TriviaPieceKind {
                 JsonSyntaxKind::WHITESPACE => Ok(TriviaPieceKind::Whitespace),
                 _ => unreachable!("Not Trivia"),
             }
+        } else if value.is_comments() {
+            match value {
+                JsonSyntaxKind::COMMENT => Ok(TriviaPieceKind::SingleLineComment),
+                JsonSyntaxKind::MULTILINE_COMMENT => Ok(TriviaPieceKind::MultiLineComment),
+                _ => unreachable!("Not Comment"),
+            }
         } else {
             Err(())
         }
     }
+}
+
+/// Text of `token`, excluding all trivia and removing quotes if `token` is a string literal.
+pub fn inner_string_text(token: &JsonSyntaxToken) -> TokenText {
+    let mut text = token.token_text_trimmed();
+    if token.kind() == JsonSyntaxKind::JSON_STRING_LITERAL {
+        // remove string delimiters
+        // SAFETY: string literal token have a delimiters at the start and the end of the string
+        let range = TextRange::new(1.into(), text.len() - TextSize::from(1));
+        text = text.slice(range);
+    }
+    text
 }

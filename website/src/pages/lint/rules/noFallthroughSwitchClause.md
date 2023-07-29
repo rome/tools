@@ -3,12 +3,12 @@ title: Lint Rule noFallthroughSwitchClause
 parent: lint/rules/index
 ---
 
-# noFallthroughSwitchClause (since v12.0.0)
+# noFallthroughSwitchClause (since vnext)
 
-Disallow fallthrough of case statements.
+Disallow fallthrough of `switch` clauses.
 
-Case statements in switch statements fall through by default. This can lead to unexpected behavior when forgotten.
-This rule disallows the fallthrough of case statements.
+Switch clauses in `switch` statements fall through by default.
+This can lead to unexpected behavior when forgotten.
 
 Source: https://eslint.org/docs/latest/rules/no-fallthrough
 

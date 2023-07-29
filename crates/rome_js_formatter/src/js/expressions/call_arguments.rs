@@ -950,56 +950,50 @@ fn is_commonjs_or_amd_call(
     arguments: &JsCallArguments,
     call: &JsCallExpression,
 ) -> SyntaxResult<bool> {
-    let callee = call.callee()?;
-
-    Ok(match callee {
-        AnyJsExpression::JsIdentifierExpression(identifier) => {
-            let reference = identifier.name()?;
-
-            if reference.has_name("require") {
-                true
-            } else if reference.has_name("define") {
-                let in_statement = call.parent::<JsExpressionStatement>().is_some();
-
-                if in_statement {
-                    let args = arguments.args();
-                    match args.len() {
-                        1 => true,
-                        2 => matches!(
-                            args.first(),
-                            Some(Ok(AnyJsCallArgument::AnyJsExpression(
-                                AnyJsExpression::JsArrayExpression(_)
-                            )))
-                        ),
-                        3 => {
-                            let mut iter = args.iter();
-                            let first = iter.next();
-                            let second = iter.next();
-                            matches!(
-                                (first, second),
-                                (
-                                    Some(Ok(AnyJsCallArgument::AnyJsExpression(
-                                        AnyJsExpression::AnyJsLiteralExpression(
-                                            AnyJsLiteralExpression::JsStringLiteralExpression(_)
-                                        )
-                                    ))),
-                                    Some(Ok(AnyJsCallArgument::AnyJsExpression(
-                                        AnyJsExpression::JsArrayExpression(_)
-                                    )))
-                                )
+    let Some(reference) = call.callee()?.as_js_reference_identifier() else {
+        return Ok(false);
+    };
+    let result = match reference.name()?.text() {
+        "require" => true,
+        "define" => {
+            let in_statement = call.parent::<JsExpressionStatement>().is_some();
+            if in_statement {
+                let args = arguments.args();
+                match args.len() {
+                    1 => true,
+                    2 => matches!(
+                        args.first(),
+                        Some(Ok(AnyJsCallArgument::AnyJsExpression(
+                            AnyJsExpression::JsArrayExpression(_)
+                        )))
+                    ),
+                    3 => {
+                        let mut iter = args.iter();
+                        let first = iter.next();
+                        let second = iter.next();
+                        matches!(
+                            (first, second),
+                            (
+                                Some(Ok(AnyJsCallArgument::AnyJsExpression(
+                                    AnyJsExpression::AnyJsLiteralExpression(
+                                        AnyJsLiteralExpression::JsStringLiteralExpression(_)
+                                    )
+                                ))),
+                                Some(Ok(AnyJsCallArgument::AnyJsExpression(
+                                    AnyJsExpression::JsArrayExpression(_)
+                                )))
                             )
-                        }
-                        _ => false,
+                        )
                     }
-                } else {
-                    false
+                    _ => false,
                 }
             } else {
                 false
             }
         }
         _ => false,
-    })
+    };
+    Ok(result)
 }
 
 /// Returns `true` if `arguments` contains a single [multiline template literal argument that starts on its own ](is_multiline_template_starting_on_same_line).

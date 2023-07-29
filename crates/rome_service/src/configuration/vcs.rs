@@ -7,7 +7,7 @@ const GIT_IGNORE_FILE_NAME: &str = ".gitignore";
 
 /// Set of properties to integrate Rome with a VCS software.
 #[derive(Debug, Default, Deserialize, Serialize, Clone, Bpaf)]
-#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 #[serde(deny_unknown_fields, rename_all = "camelCase")]
 pub struct VcsConfiguration {
     /// The kind of client.
@@ -65,7 +65,7 @@ impl MergeWith<VcsConfiguration> for VcsConfiguration {
 }
 
 #[derive(Debug, Default, Deserialize, Clone, Serialize)]
-#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 #[serde(rename_all = "camelCase")]
 pub enum VcsClientKind {
     #[default]

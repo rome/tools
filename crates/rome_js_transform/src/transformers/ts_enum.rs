@@ -15,24 +15,23 @@ use rome_js_syntax::{
     AnyJsAssignment, AnyJsAssignmentPattern, AnyJsBinding, AnyJsBindingPattern, AnyJsCallArgument,
     AnyJsExpression, AnyJsFormalParameter, AnyJsLiteralExpression, AnyJsModuleItem, AnyJsParameter,
     AnyJsStatement, JsAssignmentExpression, JsComputedMemberAssignment, JsExpressionStatement,
-    JsFunctionExpression, JsLogicalExpression, JsModule, JsStatementList, JsVariableStatement,
-    TsEnumDeclaration, T,
+    JsFunctionExpression, JsInitializerClause, JsLogicalExpression, JsModuleItemList,
+    JsStatementList, JsVariableStatement, TsEnumDeclaration, T,
 };
 use rome_rowan::{AstNode, BatchMutationExt, TriviaPieceKind};
-use std::iter;
 
 declare_transformation! {
     /// Transform a TypeScript [TsEnumDeclaration]
     pub(crate) TsEnum {
         version: "next",
         name: "transformEnum",
-        recommended: false,
     }
 }
 
+#[derive(Debug)]
 pub struct TsEnumMembers {
     name: String,
-    member_names: Vec<String>,
+    member_names: Vec<(String, Option<JsInitializerClause>)>,
 }
 
 impl Rule for TsEnum {
@@ -48,7 +47,9 @@ impl Rule for TsEnum {
         let name = id.text();
         for member in node.members() {
             let member = member.ok()?;
-            member_names.push(member.name().ok()?.text())
+            let key = member.name().ok()?.text();
+            let value = member.initializer().clone();
+            member_names.push((key, value));
         }
 
         Some(TsEnumMembers { name, member_names })
@@ -57,10 +58,9 @@ impl Rule for TsEnum {
     fn transform(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsBatchMutation> {
         let node = ctx.query();
         let mut mutation = node.clone().begin();
-        let parent = node.syntax().grand_parent();
-
+        let parent = node.syntax().parent();
         if let Some(parent) = parent {
-            if let Some(module) = JsModule::cast(parent) {
+            if let Some(module_list) = JsModuleItemList::cast(parent) {
                 let variable = make_variable(state);
                 let function = make_function_caller(state);
                 let statements = vec![
@@ -69,9 +69,8 @@ impl Rule for TsEnum {
                         function,
                     )),
                 ];
-                let modules = js_module_item_list(statements.into_iter());
-                let new_modules = module.clone().with_items(modules);
-                mutation.replace_element(module.into(), new_modules.into());
+                let new_modules_list = js_module_item_list(statements.into_iter());
+                mutation.replace_node(module_list, new_modules_list);
             }
         }
 
@@ -91,10 +90,10 @@ fn make_variable(node: &TsEnumMembers) -> JsVariableStatement {
     ))
     .build();
 
-    let list = js_variable_declarator_list(iter::once(binding), iter::empty());
+    let list = js_variable_declarator_list([binding], []);
     js_variable_statement(
         js_variable_declaration(
-            token(T![var]).with_trailing_trivia(iter::once((TriviaPieceKind::Whitespace, " "))),
+            token(T![var]).with_trailing_trivia([(TriviaPieceKind::Whitespace, " ")]),
             list,
         )
         .build(),
@@ -114,7 +113,7 @@ fn make_function_caller(node: &TsEnumMembers) -> JsExpressionStatement {
     ));
     let arguments = js_call_arguments(
         token(T!['(']),
-        js_call_argument_list(iter::once(argument), iter::empty()),
+        js_call_argument_list([argument], []),
         token(T![')']),
     );
     let expression = js_call_expression(
@@ -129,7 +128,7 @@ fn make_function_caller(node: &TsEnumMembers) -> JsExpressionStatement {
 
 fn make_function(node: &TsEnumMembers) -> JsFunctionExpression {
     let parameters_list = js_parameter_list(
-        iter::once(AnyJsParameter::AnyJsFormalParameter(
+        [AnyJsParameter::AnyJsFormalParameter(
             AnyJsFormalParameter::JsFormalParameter(
                 js_formal_parameter(
                     js_decorator_list(vec![]),
@@ -139,14 +138,14 @@ fn make_function(node: &TsEnumMembers) -> JsFunctionExpression {
                 )
                 .build(),
             ),
-        )),
-        iter::empty(),
+        )],
+        [],
     );
     let parameters = js_parameters(token(T!['(']), parameters_list, token(T![')']));
 
     let body = js_function_body(
         token(T!['{']),
-        js_directive_list(iter::empty()),
+        js_directive_list([]),
         make_members(node),
         token(T!['}']),
     );
@@ -155,9 +154,19 @@ fn make_function(node: &TsEnumMembers) -> JsFunctionExpression {
 
 fn make_members(ts_enum: &TsEnumMembers) -> JsStatementList {
     let mut list = vec![];
-    for name in &ts_enum.member_names {
+    for (index, (name, value)) in ts_enum.member_names.iter().enumerate() {
+        let value = value
+            .as_ref()
+            .and_then(|initializer| initializer.expression().ok())
+            .unwrap_or_else(|| {
+                AnyJsExpression::AnyJsLiteralExpression(
+                    AnyJsLiteralExpression::JsNumberLiteralExpression(
+                        js_number_literal_expression(ident(&index.to_string())),
+                    ),
+                )
+            });
         list.push(AnyJsStatement::JsExpressionStatement(
-            make_high_order_assignment(ts_enum.name.as_str(), name.as_str(), "0"),
+            make_high_order_assignment(ts_enum.name.as_str(), name.as_str(), value),
         ));
     }
 
@@ -174,7 +183,7 @@ fn make_logical_expression(node: &TsEnumMembers) -> JsLogicalExpression {
         token(T![=]),
         AnyJsExpression::JsObjectExpression(js_object_expression(
             token(T!['{']),
-            js_object_member_list(iter::empty(), iter::empty()),
+            js_object_member_list([], []),
             token(T!['}']),
         )),
     );
@@ -195,7 +204,7 @@ fn make_logical_expression(node: &TsEnumMembers) -> JsLogicalExpression {
 fn make_high_order_assignment(
     enum_name: &str,
     member_name: &str,
-    member_value: &str,
+    member_value: AnyJsExpression,
 ) -> JsExpressionStatement {
     let left = js_computed_member_assignment(
         AnyJsExpression::JsIdentifierExpression(js_identifier_expression(js_reference_identifier(
@@ -231,17 +240,14 @@ fn make_high_order_assignment(
 fn make_assignment_expression_from_member(
     enum_name: &str,
     member_name: &str,
-    member_value: &str,
+    member_value: AnyJsExpression,
 ) -> JsAssignmentExpression {
     let left = make_computed_member_assignment(enum_name, member_name);
-    let right = js_number_literal_expression(ident(member_value));
 
     js_assignment_expression(
         AnyJsAssignmentPattern::AnyJsAssignment(AnyJsAssignment::JsComputedMemberAssignment(left)),
         token(T![=]),
-        AnyJsExpression::AnyJsLiteralExpression(AnyJsLiteralExpression::JsNumberLiteralExpression(
-            right,
-        )),
+        member_value,
     )
 }
 

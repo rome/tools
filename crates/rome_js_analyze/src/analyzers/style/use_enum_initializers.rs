@@ -117,10 +117,8 @@ impl Rule for UseEnumInitializers {
                     ))
                 }
                 AnyJsLiteralExpression::JsStringLiteralExpression(expr) => {
-                    let prev_enum_delim_val = expr.value_token().ok()?;
-                    let prev_enum_delim_val = prev_enum_delim_val.text();
-                    let prev_enum_val = &prev_enum_delim_val[1..(prev_enum_delim_val.len() - 1)];
-                    if prev_name.text() == prev_enum_val {
+                    let prev_enum_val = expr.inner_string_text().ok()?;
+                    if prev_name.name() == Some(prev_enum_val) {
                         let enum_name = enum_member.name().ok()?.text();
                         Some(AnyJsLiteralExpression::JsStringLiteralExpression(
                             make::js_string_literal_expression(make::js_string_literal(&enum_name)),

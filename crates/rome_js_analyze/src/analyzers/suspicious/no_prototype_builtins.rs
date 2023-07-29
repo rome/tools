@@ -65,7 +65,7 @@ impl Rule for NoPrototypeBuiltins {
             let member_name_text = member_name.text();
             return is_prototype_builtins(member_name_text).then_some(RuleState {
                 prototype_builtins_method_name: member_name_text.to_string(),
-                text_range: member_name.token().text_trimmed_range(),
+                text_range: member_name.range(),
             });
         }
         None

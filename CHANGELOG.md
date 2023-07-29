@@ -91,15 +91,33 @@ if no error diagnostics are emitted.
   rome check --error-on-wanrings ./src
   ```
 
+- Add a configuration to enable parsing comments inside JSON files:
+
+  ```json
+  {
+    "json": {
+      "parser": {
+        "allowComments": true
+      }
+    }
+  }
+  ```
+
 ### Editors
 
 #### Other changes
 
 - The Rome LSP is now able to show diagnostics that belong to JSON lint rules.
+- Fix [#4564](https://github.com/rome/tools/issues/4564), now files too large don't emit errors.
+- The Rome LSP now sends client messages when files are ignored or too big.
 
 ### Formatter
 
-- Added a new option called `--jsx-quote-style` to the formatter. This option allows you to choose between single and double quotes for JSX attributes. [#4486](https://github.com/rome/tools/issues/4486)
+- Add a new option called `--jsx-quote-style` to the formatter. This option allows you to choose between single and double quotes for JSX attributes. [#4486](https://github.com/rome/tools/issues/4486)
+
+- Add a new option called `--arrow-parentheses` to the formatter. This option allows you to set the parentheses style for arrow functions. [#4666](https://github.com/rome/tools/issues/4666)
+
+- The JSON formatter is now able to format `.json` files that have comments.
 
 ### Linter
 
@@ -113,6 +131,8 @@ if no error diagnostics are emitted.
   Thus, there is no need for this rule.
 
 #### New rules
+
+- Add [`noFallthroughSwitchClause`](https://docs.rome.tools/lint/rules/noFallthroughSwitchClause/)
 
 - Add [`noGlobalIsFinite`](https://docs.rome.tools/lint/rules/noglobalisfinite/)
 
@@ -139,6 +159,14 @@ if no error diagnostics are emitted.
 
 	This rule disallows `\8` and `\9` escape sequences in string literals.
 
+- Add [`noUselessEmptyExport`](https://docs.rome.tools/lint/rules/noUselessEmptyExport/)
+
+	This rule disallows useless `export {}`.
+
+- Add [`useIsArray`](https://docs.rome.tools/lint/rules/useIsArray/)
+
+  This rule proposes using `Array.isArray()` instead of `instanceof Array`.
+
 #### Other changes
 
 - Add new TypeScript globals (`AsyncDisposable`, `Awaited`, `DecoratorContext`, and others) [4643](https://github.com/rome/tools/issues/4643).
@@ -161,6 +189,8 @@ if no error diagnostics are emitted.
   - for React.use* hooks
 
 - Fix [`noInvalidConstructorSuper`](https://docs.rome.tools/lint/rules/noinvalidconstructorsuper/) rule that erroneously reported generic parents [#4624](https://github.com/rome/tools/issues/4624).
+
+-  Fix [`noDuplicateCase`](https://docs.rome.tools/lint/rules/noDuplicateCase/) rule that erroneously reported as equals the strings literals `"'"` and `'"'` [#4706](https://github.com/rome/tools/issues/4706).
 
 - Relax [`noBannedTypes`](https://docs.rome.tools/lint/rules/nobannedtypes/) and improve documentation
 
@@ -207,6 +237,31 @@ if no error diagnostics are emitted.
   var x = a => 1 ? 2 : 3;
   ```
 
+- Relax [`useLiteralEnumMembers`](https://docs.rome.tools/lint/rules/useLiteralEnumMembers/)
+
+  Enum members that refers to previous enum members are now allowed.
+  This allows common pattern in enum flags like in the following example:
+
+  ```ts
+  enum FileAccess {
+    None = 0,
+    Read = 1,
+    Write = 1 << 1,
+    All = Read | Write,
+  }
+  ```
+
+  Arbitrary numeric constant expressions are also allowed:
+
+  ```ts
+  enum FileAccess {
+    None = 0,
+    Read = 2**0,
+    Write = 2**1,
+    All = Read | Write,
+  }
+  ```
+
 - Improve [useLiteralKeys](https://docs.rome.tools/lint/rules/useLiteralKeys/).
 
   Now, the rule suggests simplifying computed properties to string literal properties:
@@ -228,6 +283,10 @@ if no error diagnostics are emitted.
   ```
 
   These suggestions are made in object literals, classes, interfaces, and object types.
+
+- Improve [`noNewSymbol`](https://docs.rome.tools/lint/rules/noNewSymbol/).
+
+  The rule now handles cases where `Symbol` is namespaced with the global `globalThis` or `window`.
 
 - The rules [`useExhaustiveDependencies`](https://docs.rome.tools/lint/rules/useexhaustivedependencies/) and [`useHookAtTopLevel`](https://docs.rome.tools/lint/rules/usehookattoplevel/) accept a different shape of options
 
@@ -327,7 +386,17 @@ if no error diagnostics are emitted.
  		}
  	}
 	```
+- Add for parsing comments inside JSON files:
 
+  ```json
+  {
+    "json": {
+      "parser": {
+        "allowComments": true
+      }
+    }
+  }
+  ```
 ### VSCode
 
 ### JavaScript APIs

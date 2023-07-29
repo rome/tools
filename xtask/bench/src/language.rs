@@ -7,6 +7,7 @@ use rome_js_formatter::context::{JsFormatContext, JsFormatOptions};
 use rome_js_parser::JsParserOptions;
 use rome_js_syntax::{AnyJsRoot, JsFileSource, JsSyntaxNode};
 use rome_json_formatter::context::{JsonFormatContext, JsonFormatOptions};
+use rome_json_parser::JsonParserOptions;
 use rome_json_syntax::JsonSyntaxNode;
 use rome_parser::prelude::ParseDiagnostic;
 use rome_rowan::NodeCache;
@@ -30,14 +31,13 @@ impl<'a> Parse<'a> {
     pub fn parse(&self) -> Parsed {
         match self {
             Parse::JavaScript(source_type, code) => Parsed::JavaScript(
-                rome_js_parser::parse(
-                    code,
-                    *source_type,
-                    JsParserOptions::default().with_parse_class_parameter_decorators(),
-                ),
+                rome_js_parser::parse(code, *source_type, JsParserOptions::default()),
                 *source_type,
             ),
-            Parse::Json(code) => Parsed::Json(rome_json_parser::parse_json(code)),
+            Parse::Json(code) => Parsed::Json(rome_json_parser::parse_json(
+                code,
+                JsonParserOptions::default(),
+            )),
         }
     }
 
@@ -47,12 +47,16 @@ impl<'a> Parse<'a> {
                 rome_js_parser::parse_js_with_cache(
                     code,
                     *source_type,
-                    JsParserOptions::default().with_parse_class_parameter_decorators(),
+                    JsParserOptions::default(),
                     cache,
                 ),
                 *source_type,
             ),
-            Parse::Json(code) => Parsed::Json(rome_json_parser::parse_json_with_cache(code, cache)),
+            Parse::Json(code) => Parsed::Json(rome_json_parser::parse_json_with_cache(
+                code,
+                cache,
+                JsonParserOptions::default(),
+            )),
         }
     }
 }

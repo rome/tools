@@ -1,7 +1,6 @@
 use crate::configuration::organize_imports::OrganizeImports;
-use crate::configuration::string_set::StringSet;
 use rome_deserialize::json::{has_only_known_keys, VisitJsonNode};
-use rome_deserialize::{DeserializationDiagnostic, VisitNode};
+use rome_deserialize::{DeserializationDiagnostic, StringSet, VisitNode};
 use rome_json_syntax::{JsonLanguage, JsonSyntaxNode};
 use rome_rowan::SyntaxNode;
 

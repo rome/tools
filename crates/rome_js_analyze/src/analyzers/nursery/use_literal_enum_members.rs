@@ -1,10 +1,11 @@
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::{
-    AnyJsExpression, JsBinaryExpression, JsSyntaxKind, JsUnaryExpression, JsUnaryOperator,
-    TsEnumMember,
+    AnyJsExpression, AnyJsLiteralExpression, AnyJsMemberExpression, JsUnaryOperator,
+    TsEnumDeclaration,
 };
-use rome_rowan::AstNode;
+use rome_rowan::{AstNode, TextRange};
+use rustc_hash::FxHashSet;
 
 declare_rule! {
     /// Require all enum members to be literal values.
@@ -12,10 +13,9 @@ declare_rule! {
     /// Usually, an enum member is initialized with a literal number or a literal string.
     /// However, _TypeScript_ allows the value of an enum member to be many different kinds of expressions.
     /// Using a computed enum member is often error-prone and confusing.
-    /// This rule requires the initialization of enum members with literal values.
-    /// It allows bitwise expressions for supporting [enum flags](https://stackoverflow.com/questions/39359740/what-are-enum-flags-in-typescript/39359953#39359953).
-    ///
-    /// In contrast to the equivalent _ESLint_ rule, this rule allows arbitrary bitwise constant expressions.
+    /// This rule requires the initialization of enum members with constant expressions.
+    /// It allows numeric and bitwise expressions for supporting [enum flags](https://stackoverflow.com/questions/39359740/what-are-enum-flags-in-typescript/39359953#39359953).
+    /// It also allows referencing previous enum members.
     ///
     /// Source: https://typescript-eslint.io/rules/prefer-literal-enum-member/
     ///
@@ -28,14 +28,6 @@ declare_rule! {
     /// enum Computed {
     ///     A,
     ///     B = x,
-    /// }
-    /// ```
-    ///
-    /// ```ts,expect_diagnostic
-    /// const x = 2;
-    /// enum Invalid {
-    ///     A,
-    ///     B = 2**3,
     /// }
     /// ```
     ///
@@ -68,7 +60,7 @@ declare_rule! {
     ///     None = 0,
     ///     Read = 1,
     ///     Write = 1 << 1,
-    ///     All = 1 | (1 << 1)
+    ///     All = Read | Write
     /// }
     /// ```
     pub(crate) UseLiteralEnumMembers {
@@ -79,37 +71,52 @@ declare_rule! {
 }
 
 impl Rule for UseLiteralEnumMembers {
-    type Query = Ast<TsEnumMember>;
-    type State = ();
-    type Signals = Option<Self::State>;
+    type Query = Ast<TsEnumDeclaration>;
+    type State = TextRange;
+    type Signals = Vec<Self::State>;
     type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
-        let enum_member = ctx.query();
-        let Some(initializer) = enum_member.initializer() else {
-            // no initializer => sequentially assigned literal integer
-            return None;
+        let enum_declaration = ctx.query();
+        let mut result = Vec::new();
+        let mut enum_member_names = FxHashSet::default();
+        let Ok(enum_name) = enum_declaration.id() else {
+            return result;
         };
-        let expr = initializer.expression().ok()?.omit_parentheses();
-        if expr.as_any_js_literal_expression().is_some() || is_bitwise_constant_expression(&expr) {
-            return None;
-        } else if let Some(expr) = expr.as_js_unary_expression() {
-            if expr.is_signed_numeric_literal().ok()? {
-                return None;
-            }
-        } else if let Some(expr) = expr.as_js_template_expression() {
-            if expr.is_constant() {
-                return None;
+        let Some(enum_name) = enum_name.as_js_identifier_binding()
+            .and_then(|x| x.name_token().ok()) else {
+                return result;
+            };
+        let enum_name = enum_name.text_trimmed();
+        for enum_member in enum_declaration.members() {
+            let Ok(enum_member) = enum_member else {
+                continue;
+            };
+            // no initializer => sequentially assigned literal integer
+            if let Some(initializer) = enum_member.initializer() {
+                if let Ok(initializer) = initializer.expression() {
+                    let range = initializer.range();
+                    if !is_constant_enum_expression(initializer, enum_name, &enum_member_names) {
+                        result.push(range);
+                    }
+                }
+            };
+            if let Ok(name) = enum_member.name() {
+                if let Some(name) = name.name() {
+                    enum_member_names.insert(name.to_string());
+                }
             }
         }
-        Some(())
+        result
     }
 
-    fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
-        let enum_member = ctx.query();
+    fn diagnostic(
+        _: &RuleContext<Self>,
+        initializer_range: &Self::State,
+    ) -> Option<RuleDiagnostic> {
         Some(RuleDiagnostic::new(
             rule_category!(),
-            enum_member.initializer()?.expression().ok()?.range(),
+            initializer_range,
             markup! {
                 "The enum member should be initialized with a literal value such as a number or a string."
             },
@@ -117,23 +124,92 @@ impl Rule for UseLiteralEnumMembers {
     }
 }
 
-/// Returns true if `expr` is an expression that only includes literal numbers and bitwise operations.
-fn is_bitwise_constant_expression(expr: &AnyJsExpression) -> bool {
-    for node in expr.syntax().descendants() {
-        if let Some(exp) = JsUnaryExpression::cast_ref(&node) {
-            if exp.operator() != Ok(JsUnaryOperator::BitwiseNot) {
-                return false;
+/// Returns true if `expr` is a constant enum expression.
+/// A constant enum expression can contain numbers, string literals, and reference to
+/// one of the enum member of `enum_member_names` of the enum name `enum_name`.
+/// These values can be combined thanks to numeric, bitwise, and concatenation operations.
+fn is_constant_enum_expression(
+    expr: AnyJsExpression,
+    enum_name: &str,
+    enum_member_names: &FxHashSet<String>,
+) -> bool {
+    (move || {
+        // stack that holds expressions to validate.
+        let mut stack = Vec::new();
+        stack.push(expr);
+        while let Some(expr) = stack.pop() {
+            match expr.omit_parentheses() {
+                AnyJsExpression::AnyJsLiteralExpression(expr) => {
+                    if !matches!(
+                        expr,
+                        AnyJsLiteralExpression::JsNumberLiteralExpression(_)
+                            | AnyJsLiteralExpression::JsStringLiteralExpression(_)
+                    ) {
+                        return Some(false);
+                    }
+                }
+                AnyJsExpression::JsTemplateExpression(expr) => {
+                    if !expr.is_constant() {
+                        return Some(false);
+                    }
+                }
+                AnyJsExpression::JsUnaryExpression(expr) => {
+                    if !matches!(
+                        expr.operator(),
+                        Ok(JsUnaryOperator::BitwiseNot
+                            | JsUnaryOperator::Minus
+                            | JsUnaryOperator::Plus)
+                    ) {
+                        return Some(false);
+                    }
+                    stack.push(expr.argument().ok()?)
+                }
+                AnyJsExpression::JsBinaryExpression(expr) => {
+                    if !expr.is_binary_operation() && !expr.is_numeric_operation() {
+                        return Some(false);
+                    }
+                    stack.push(expr.left().ok()?);
+                    stack.push(expr.right().ok()?);
+                }
+                AnyJsExpression::JsIdentifierExpression(expr) => {
+                    // Allow reference to previous member name
+                    let name = expr.name().ok()?;
+                    if !enum_member_names.contains(name.value_token().ok()?.text_trimmed()) {
+                        return Some(false);
+                    }
+                }
+                AnyJsExpression::JsStaticMemberExpression(expr) => {
+                    if !is_enum_member_reference(expr.into(), enum_name, enum_member_names) {
+                        return Some(false);
+                    }
+                }
+                AnyJsExpression::JsComputedMemberExpression(expr) => {
+                    if !is_enum_member_reference(expr.into(), enum_name, enum_member_names) {
+                        return Some(false);
+                    }
+                }
+                _ => {
+                    return Some(false);
+                }
             }
-        } else if let Some(exp) = JsBinaryExpression::cast_ref(&node) {
-            if !exp.is_binary_operator() {
-                return false;
-            }
-        } else if !matches!(
-            node.kind(),
-            JsSyntaxKind::JS_NUMBER_LITERAL_EXPRESSION | JsSyntaxKind::JS_PARENTHESIZED_EXPRESSION
-        ) {
-            return false;
         }
-    }
-    true
+        Some(true)
+    })()
+    .unwrap_or_default()
+}
+
+// Return true if `expr` is a reference to one of the enum member `enum_member_names`
+// of the enum named `enum_name`.
+fn is_enum_member_reference(
+    expr: AnyJsMemberExpression,
+    enum_name: &str,
+    enum_member_names: &FxHashSet<String>,
+) -> bool {
+    (move || {
+        // Allow reference to previous member name namespaced by the enum name
+        let object = expr.object().ok()?.omit_parentheses();
+        let object = object.as_js_reference_identifier()?;
+        Some(object.has_name(enum_name) && enum_member_names.contains(expr.member_name()?.text()))
+    })()
+    .unwrap_or_default()
 }
