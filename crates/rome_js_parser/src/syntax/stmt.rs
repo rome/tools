@@ -1173,7 +1173,6 @@ fn eat_variable_declaration(
     match p.cur() {
         T![var] => {
             p.bump(T![var]);
-            context.kind_name = Some("var");
         }
         T![const] => {
             p.bump(T![const]);
@@ -1293,7 +1292,7 @@ impl VariableDeclaratorContext {
     }
 
     fn is_var(&self) -> bool {
-        matches!(self.kind_name, Some("var"))
+        matches!(self.kind_name, None)
     }
 
     fn is_const(&self) -> bool {
