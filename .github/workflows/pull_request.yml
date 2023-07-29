@@ -28,8 +28,11 @@ jobs:
         uses: moonrepo/setup-rust@v0
         with:
           components: rustfmt
-      - name: Run rustfmt
-        run: cargo fmt --all --check
+          bins: taplo-cli
+      - name: Run format
+        run: |
+          cargo fmt --all --check
+          taplo fmt -- --locked
 
   lint:
     name: Lint Rust Files
