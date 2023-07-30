@@ -4,7 +4,7 @@ use rome_console::fmt::{Formatter, Termcolor};
 use rome_console::markup;
 use rome_diagnostics::termcolor::Buffer;
 use rome_diagnostics::{DiagnosticExt, Error, PrintDiagnostic};
-use rome_json_parser::ParseDiagnostic;
+use rome_json_parser::{JsonParserOptions, ParseDiagnostic};
 use rome_rowan::{SyntaxKind, SyntaxNode, SyntaxSlot};
 use rome_service::configuration::to_analyzer_configuration;
 use rome_service::settings::{Language, WorkspaceSettings};
@@ -35,8 +35,10 @@ pub fn create_analyzer_options(
     // that configures that specific rule.
     let options_file = input_file.with_extension("options.json");
     if let Ok(json) = std::fs::read_to_string(options_file.clone()) {
-        let deserialized =
-            rome_deserialize::json::deserialize_from_json_str::<Configuration>(json.as_str());
+        let deserialized = rome_deserialize::json::deserialize_from_json_str::<Configuration>(
+            json.as_str(),
+            JsonParserOptions::default(),
+        );
         if deserialized.has_errors() {
             diagnostics.extend(
                 deserialized

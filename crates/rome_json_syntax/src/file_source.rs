@@ -28,6 +28,10 @@ impl JsonFileSource {
             variant: JsonVariant::Jsonc,
         }
     }
+
+    pub const fn is_jsonc(&self) -> bool {
+        matches!(self.variant, JsonVariant::Jsonc)
+    }
 }
 
 impl<'a> FileSource<'a, JsonLanguage> for JsonFileSource {}

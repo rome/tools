@@ -44,6 +44,23 @@ pub enum Language {
 }
 
 impl Language {
+    /// Files that can be bypassed, because correctly handled by the JSON parser
+    pub(crate) const ALLOWED_FILES: &'static [&'static str; 13] = &[
+        "typescript.json",
+        "tslint.json",
+        "babel.config.json",
+        ".babelrc.json",
+        ".ember-cli",
+        "typedoc.json",
+        ".eslintrc.json",
+        ".eslintrc",
+        ".jsfmtrc",
+        ".jshintrc",
+        ".swcrc",
+        ".hintrc",
+        ".babelrc",
+    ];
+
     /// Returns the language corresponding to this file extension
     pub fn from_extension(s: &str) -> Self {
         match s.to_lowercase().as_str() {
@@ -52,7 +69,16 @@ impl Language {
             "ts" | "mts" | "cts" => Language::TypeScript,
             "tsx" => Language::TypeScriptReact,
             "json" => Language::Json,
+            "jsonc" => Language::Jsonc,
             _ => Language::Unknown,
+        }
+    }
+
+    pub fn from_known_filename(s: &str) -> Self {
+        if Self::ALLOWED_FILES.contains(&s.to_lowercase().as_str()) {
+            Language::Jsonc
+        } else {
+            Language::Unknown
         }
     }
 
@@ -77,6 +103,7 @@ impl Language {
             "javascriptreact" => Language::JavaScriptReact,
             "typescriptreact" => Language::TypeScriptReact,
             "json" => Language::Json,
+            "jsonc" => Language::Jsonc,
             _ => Language::Unknown,
         }
     }
@@ -294,6 +321,10 @@ impl Features {
             .extension()
             .and_then(OsStr::to_str)
             .map(Language::from_extension)
+            .or(rome_path
+                .file_name()
+                .and_then(OsStr::to_str)
+                .map(Language::from_known_filename))
             .unwrap_or_default()
     }
 

@@ -348,7 +348,8 @@ pub fn load_config(
             directory_path,
             file_path,
         } = auto_search_result;
-        let deserialized = deserialize_from_json_str::<Configuration>(&content);
+        let deserialized =
+            deserialize_from_json_str::<Configuration>(&content, JsonParserOptions::default());
         Ok(Some(ConfigurationPayload {
             deserialized,
             configuration_file_path: file_path,
