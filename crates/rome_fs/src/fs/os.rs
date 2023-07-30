@@ -7,7 +7,7 @@ use crate::{
 };
 use rayon::{scope, Scope};
 use rome_diagnostics::{adapters::IoError, DiagnosticExt, Error, Severity};
-use std::fs::DirEntry;
+use std::fs::{DirEntry, FileType};
 use std::{
     env,
     ffi::OsStr,
@@ -16,6 +16,8 @@ use std::{
     mem,
     path::{Path, PathBuf},
 };
+
+const MAX_SYMLINK_DEPTH: u8 = 3;
 
 /// Implementation of [FileSystem] that directly calls through to the underlying OS
 pub struct OsFileSystem;
@@ -104,8 +106,8 @@ impl<'scope> OsTraversalScope<'scope> {
 }
 
 impl<'scope> TraversalScope<'scope> for OsTraversalScope<'scope> {
-    fn spawn(&self, ctx: &'scope dyn TraversalContext, path: PathBuf) {
-        let file_type = match path.metadata() {
+    fn spawn(&self, ctx: &'scope dyn TraversalContext, mut path: PathBuf) {
+        let mut file_type = match path.metadata() {
             Ok(meta) => meta.file_type(),
             Err(err) => {
                 ctx.push_diagnostic(
@@ -114,36 +116,15 @@ impl<'scope> TraversalScope<'scope> for OsTraversalScope<'scope> {
                 return;
             }
         };
-        if file_type.is_symlink() {
-            tracing::info!("Translating symlink: {:?}", path);
-            let path = match fs::read_link(&path) {
-                Ok(path) => path,
-                Err(err) => {
-                    ctx.push_diagnostic(
-                        IoError::from(err).with_file_path(path.to_string_lossy().to_string()),
-                    );
-                    return;
-                }
-            };
 
-            if let Err(err) = fs::symlink_metadata(&path) {
-                if err.kind() == IoErrorKind::NotFound {
-                    let path = path.to_string_lossy().to_string();
-                    ctx.push_diagnostic(Error::from(FileSystemDiagnostic {
-                        path: path.clone(),
-                        error_kind: ErrorKind::DereferencedSymlink(path),
-                        severity: Severity::Warning,
-                    }));
-                } else {
-                    ctx.push_diagnostic(
-                        IoError::from(err).with_file_path(path.to_string_lossy().to_string()),
-                    );
-                }
+        if file_type.is_symlink() {
+            let Ok((target_path, target_file_type)) = expand_symbolic_link(path, ctx) else {
                 return;
             };
 
-            return self.spawn(ctx, path);
-        };
+            path = target_path;
+            file_type = target_file_type;
+        }
 
         let _ = ctx.interner().intern_path(path.clone());
 
@@ -196,15 +177,12 @@ fn handle_dir<'scope>(
     };
 
     for entry in iter {
-        let entry = match entry {
-            Ok(entry) => entry,
+        match entry {
+            Ok(entry) => handle_dir_entry(scope, ctx, entry, origin_path.clone()),
             Err(err) => {
                 ctx.push_diagnostic(IoError::from(err).with_file_path(path.display().to_string()));
-                continue;
             }
-        };
-
-        handle_dir_entry(scope, ctx, entry, origin_path.clone());
+        }
     }
 }
 
@@ -230,54 +208,24 @@ fn handle_dir_entry<'scope>(
     };
 
     if file_type.is_symlink() {
-        tracing::info!("Translating symlink: {:?}", path);
-        let target_path = match fs::read_link(&path) {
-            Ok(path) => path,
-            Err(err) => {
-                ctx.push_diagnostic(
-                    IoError::from(err).with_file_path(path.to_string_lossy().to_string()),
-                );
-                return;
-            }
+        let Ok((target_path, target_file_type)) = expand_symbolic_link(path.clone(), ctx) else {
+            return;
         };
 
-        file_type = match path.metadata() {
-            Ok(meta) => meta.file_type(),
-            Err(err) => {
-                if err.kind() == IoErrorKind::NotFound {
-                    let path = path.to_string_lossy().to_string();
-                    ctx.push_diagnostic(Error::from(FileSystemDiagnostic {
-                        path: path.clone(),
-                        error_kind: ErrorKind::DereferencedSymlink(path),
-                        severity: Severity::Warning,
-                    }));
-                } else {
-                    ctx.push_diagnostic(
-                        IoError::from(err).with_file_path(path.to_string_lossy().to_string()),
-                    );
-                }
-                return;
-            }
-        };
-
-        if file_type.is_dir() {
+        if target_file_type.is_dir() {
             // Override the origin path of the symbolic link
             origin_path = Some(path);
         }
 
         path = target_path;
-    };
+        file_type = target_file_type;
+    }
 
     let inserted = ctx.interner().intern_path(path.clone());
 
-    // Determine whether an equivalent path already exists
     if !inserted {
-        let path = path.to_string_lossy().to_string();
-        ctx.push_diagnostic(Error::from(FileSystemDiagnostic {
-            path: path.clone(),
-            error_kind: ErrorKind::InfiniteSymlinkExpansion(path),
-            severity: Severity::Warning,
-        }));
+        // If the path was already inserted, it could have been pointed at by
+        // multiple symlinks. No need to traverse again.
         return;
     }
 
@@ -336,6 +284,86 @@ fn handle_dir_entry<'scope>(
         error_kind: ErrorKind::from(file_type),
         severity: Severity::Warning,
     }));
+}
+
+/// Indicates a symbolic link could not be expanded.
+///
+/// Has no fields, since the diagnostics are already generated inside
+/// [follow_symbolic_link()] and the caller doesn't need to do anything except
+/// an early return.
+struct SymlinkExpansionError;
+
+/// Expands symlinks by recursively following them up to [MAX_SYMLINK_DEPTH].
+///
+/// ## Returns
+///
+/// Returns a tuple where the first argument is the target path being pointed to
+/// and the second argument is the target file type.
+fn expand_symbolic_link(
+    mut path: PathBuf,
+    ctx: &dyn TraversalContext,
+) -> Result<(PathBuf, FileType), SymlinkExpansionError> {
+    let mut symlink_depth = 0;
+    loop {
+        symlink_depth += 1;
+        if symlink_depth > MAX_SYMLINK_DEPTH {
+            let path = path.to_string_lossy().to_string();
+            ctx.push_diagnostic(Error::from(FileSystemDiagnostic {
+                path: path.clone(),
+                error_kind: ErrorKind::DeeplyNestedSymlinkExpansion(path),
+                severity: Severity::Warning,
+            }));
+            return Err(SymlinkExpansionError);
+        }
+
+        let (target_path, target_file_type) = follow_symlink(&path, ctx)?;
+
+        if target_file_type.is_symlink() {
+            path = target_path;
+            continue;
+        }
+
+        return Ok((target_path, target_file_type));
+    }
+}
+
+fn follow_symlink(
+    path: &Path,
+    ctx: &dyn TraversalContext,
+) -> Result<(PathBuf, FileType), SymlinkExpansionError> {
+    tracing::info!("Translating symlink: {path:?}");
+
+    let target_path = fs::read_link(path).map_err(|err| {
+        ctx.push_diagnostic(IoError::from(err).with_file_path(path.to_string_lossy().to_string()));
+        SymlinkExpansionError
+    })?;
+
+    // Make sure relative symlinks are resolved:
+    let target_path = path
+        .parent()
+        .map(|parent_dir| parent_dir.join(&target_path))
+        .unwrap_or(target_path);
+
+    let target_file_type = match fs::symlink_metadata(&target_path) {
+        Ok(meta) => meta.file_type(),
+        Err(err) => {
+            if err.kind() == IoErrorKind::NotFound {
+                let path = path.to_string_lossy().to_string();
+                ctx.push_diagnostic(Error::from(FileSystemDiagnostic {
+                    path: path.clone(),
+                    error_kind: ErrorKind::DereferencedSymlink(path),
+                    severity: Severity::Warning,
+                }));
+            } else {
+                ctx.push_diagnostic(
+                    IoError::from(err).with_file_path(path.to_string_lossy().to_string()),
+                );
+            }
+            return Err(SymlinkExpansionError);
+        }
+    };
+
+    Ok((target_path, target_file_type))
 }
 
 impl From<fs::FileType> for ErrorKind {

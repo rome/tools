@@ -794,14 +794,11 @@ fn fs_error_dereferenced_symlink() {
     let fs = MemoryFileSystem::default();
     let mut console = BufferConsole::default();
 
-    let root_path = temp_dir().join("rome_test_broken_symlink");
+    let root_path = temp_dir().join("lint_rome_test_broken_symlink");
     let subdir_path = root_path.join("prefix");
 
-    #[allow(unused_must_use)]
-    {
-        remove_dir_all(root_path.display().to_string().as_str());
-    }
-    create_dir(root_path.display().to_string().as_str()).unwrap();
+    let _ = remove_dir_all(&root_path);
+    create_dir(&root_path).unwrap();
     create_dir(subdir_path).unwrap();
 
     #[cfg(target_family = "unix")]
@@ -837,39 +834,28 @@ fn fs_error_dereferenced_symlink() {
 }
 
 #[test]
-fn fs_error_infinite_symlink_exapansion() {
+fn fs_error_infinite_symlink_expansion_to_dirs() {
     let fs = MemoryFileSystem::default();
     let mut console = BufferConsole::default();
 
-    let root_path = temp_dir().join("rome_test_infinite_symlink_exapansion");
+    let root_path = temp_dir().join("lint_rome_test_infinite_symlink_expansion_to_dirs");
     let subdir1_path = root_path.join("prefix");
     let subdir2_path = root_path.join("foo").join("bar");
 
-    #[allow(unused_must_use)]
-    {
-        remove_dir_all(root_path.display().to_string().as_str());
-    }
-    create_dir(root_path.display().to_string().as_str()).unwrap();
-    create_dir(subdir1_path.clone()).unwrap();
-
-    create_dir_all(subdir2_path.clone()).unwrap();
+    let _ = remove_dir_all(&root_path);
+    create_dir_all(&subdir1_path).unwrap();
+    create_dir_all(&subdir2_path).unwrap();
 
     #[cfg(target_family = "unix")]
     {
-        symlink(subdir1_path.clone(), root_path.join("self_symlink1")).unwrap();
-        symlink(subdir1_path, subdir2_path.join("self_symlink2")).unwrap();
+        symlink(&subdir2_path, subdir1_path.join("symlink1")).unwrap();
+        symlink(subdir1_path, subdir2_path.join("symlink2")).unwrap();
     }
 
     #[cfg(target_os = "windows")]
     {
-        check_windows_symlink!(symlink_dir(
-            subdir1_path.clone(),
-            root_path.join("self_symlink1")
-        ));
-        check_windows_symlink!(symlink_dir(
-            subdir1_path,
-            subdir2_path.join("self_symlink2")
-        ));
+        check_windows_symlink!(symlink_dir(&subdir2_path, &subdir1_path.join("symlink1")));
+        check_windows_symlink!(symlink_dir(subdir1_path, subdir2_path.join("symlink2")));
     }
 
     let result = run_cli(
@@ -884,11 +870,67 @@ fn fs_error_infinite_symlink_exapansion() {
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
-        "fs_error_infinite_symlink_expansion",
+        "fs_error_infinite_symlink_expansion_to_dirs",
         fs,
         console,
         result,
     ));
+}
+
+#[test]
+fn fs_error_infinite_symlink_expansion_to_files() {
+    let mut console = BufferConsole::default();
+
+    let root_path = temp_dir().join("lint_rome_test_infinite_symlink_expansion_to_files");
+    let subdir1_path = root_path.join("prefix");
+    let subdir2_path = root_path.join("foo").join("bar");
+
+    let _ = remove_dir_all(&root_path);
+    create_dir_all(&subdir1_path).unwrap();
+    create_dir_all(&subdir2_path).unwrap();
+
+    let symlink1_path = subdir1_path.join("symlink1");
+    let symlink2_path = subdir2_path.join("symlink2");
+
+    #[cfg(target_family = "unix")]
+    {
+        symlink(&symlink2_path, &symlink1_path).unwrap();
+        symlink(&symlink1_path, &symlink2_path).unwrap();
+    }
+
+    #[cfg(target_os = "windows")]
+    {
+        check_windows_symlink!(symlink_dir(&symlink2_path, &symlink1_path));
+        check_windows_symlink!(symlink_dir(&symlink1_path, &symlink2_path));
+    }
+
+    let result = run_cli(
+        DynRef::Owned(Box::new(OsFileSystem)),
+        &mut console,
+        Args::from([("lint"), (root_path.display().to_string().as_str())].as_slice()),
+    );
+
+    remove_dir_all(root_path).unwrap();
+
+    assert!(result.is_err(), "run_cli returned {result:?}");
+
+    // Don't use a snapshot here, since the diagnostics can be reported in
+    // arbitrary order:
+    assert!(console
+        .out_buffer
+        .iter()
+        .flat_map(|msg| msg.content.0.iter())
+        .any(|node| node.content.contains("Deeply nested symlink expansion")));
+    assert!(console
+        .out_buffer
+        .iter()
+        .flat_map(|msg| msg.content.0.iter())
+        .any(|node| node.content.contains(&symlink1_path.display().to_string())));
+    assert!(console
+        .out_buffer
+        .iter()
+        .flat_map(|msg| msg.content.0.iter())
+        .any(|node| node.content.contains(&symlink2_path.display().to_string())));
 }
 
 #[test]
@@ -973,22 +1015,20 @@ fn fs_files_ignore_symlink() {
     let fs = MemoryFileSystem::default();
     let mut console = BufferConsole::default();
 
-    let root_path = temp_dir().join("rome_test_files_ignore_symlink");
+    let root_path = temp_dir().join("lint_rome_test_files_ignore_symlink");
     let src_path = root_path.join("src");
 
     let testcase1_path = root_path.join("hidden_testcase1");
     let testcase1_sub_path = testcase1_path.join("test");
+    let testcase1_sub_file_path = testcase1_sub_path.join("test.js");
     let testcase2_path = root_path.join("hidden_testcase2");
 
     let nested_path = root_path.join("hidden_nested");
     let nested_sub_path = nested_path.join("test");
 
-    #[allow(unused_must_use)]
-    {
-        remove_dir_all(root_path.display().to_string().as_str());
-    }
-    create_dir(root_path.display().to_string().as_str()).unwrap();
-    create_dir(src_path.clone()).unwrap();
+    let _ = remove_dir_all(&root_path);
+    create_dir(&root_path).unwrap();
+    create_dir(&src_path).unwrap();
     create_dir_all(testcase1_sub_path.clone()).unwrap();
     create_dir(testcase2_path.clone()).unwrap();
     create_dir_all(nested_sub_path.clone()).unwrap();
@@ -997,27 +1037,32 @@ fn fs_files_ignore_symlink() {
     let symlink_testcase1_1_path = src_path.join("symlink_testcase1_1");
     // hidden_nested/test/symlink_testcase1_2
     let symlink_testcase1_2_path = nested_sub_path.join("symlink_testcase1_2");
+    // src/symlink_testcase1_3
+    let symlink_testcase1_3_path = src_path.join("symlink_testcase1_3");
     // src/symlink_testcase2
     let symlink_testcase2_path = src_path.join("symlink_testcase2");
 
     #[cfg(target_family = "unix")]
     {
-        // src/test/symlink_testcase1_1 -> hidden_nested
+        // src/symlink_testcase1_1 -> hidden_nested
         symlink(nested_path, symlink_testcase1_1_path).unwrap();
         // hidden_nested/test/symlink_testcase1_2 -> hidden_testcase1
         symlink(testcase1_path, symlink_testcase1_2_path).unwrap();
+        // src/symlink_testcase1_3 -> hidden_testcase1/test/test.js
+        symlink(testcase1_sub_file_path, symlink_testcase1_3_path).unwrap();
         // src/symlink_testcase2 -> hidden_testcase2
-        symlink(testcase2_path.clone(), symlink_testcase2_path).unwrap();
+        symlink(&testcase2_path, symlink_testcase2_path).unwrap();
     }
 
     #[cfg(target_os = "windows")]
     {
-        check_windows_symlink!(symlink_dir(nested_path.clone(), symlink_testcase1_1_path));
+        check_windows_symlink!(symlink_dir(nested_path, symlink_testcase1_1_path));
+        check_windows_symlink!(symlink_dir(testcase1_path, symlink_testcase1_2_path));
         check_windows_symlink!(symlink_dir(
-            testcase1_path.clone(),
-            symlink_testcase1_2_path
+            testcase1_sub_file_path,
+            symlink_testcase1_3_path
         ));
-        check_windows_symlink!(symlink_dir(testcase2_path.clone(), symlink_testcase2_path));
+        check_windows_symlink!(symlink_dir(&testcase2_path, symlink_testcase2_path));
     }
 
     let config_path = root_path.join("rome.json");

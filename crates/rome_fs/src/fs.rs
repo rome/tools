@@ -306,8 +306,8 @@ pub enum ErrorKind {
     UnknownFileType,
     /// Dereferenced (broken) symbolic link
     DereferencedSymlink(String),
-    /// Symbolic link cycle or symbolic link infinite expansion
-    InfiniteSymlinkExpansion(String),
+    /// Too deeply nested symbolic link expansion
+    DeeplyNestedSymlinkExpansion(String),
 }
 
 impl console::fmt::Display for ErrorKind {
@@ -316,7 +316,9 @@ impl console::fmt::Display for ErrorKind {
             ErrorKind::CantReadFile(_) => fmt.write_str("Rome couldn't read the file"),
             ErrorKind::UnknownFileType => fmt.write_str("Unknown file type"),
             ErrorKind::DereferencedSymlink(_) => fmt.write_str("Dereferenced symlink"),
-            ErrorKind::InfiniteSymlinkExpansion(_) => fmt.write_str("Infinite symlink expansion"),
+            ErrorKind::DeeplyNestedSymlinkExpansion(_) => {
+                fmt.write_str("Deeply nested symlink expansion")
+            }
         }
     }
 }
@@ -327,7 +329,9 @@ impl std::fmt::Display for ErrorKind {
             ErrorKind::CantReadFile(_) => fmt.write_str("Rome couldn't read the file"),
             ErrorKind::UnknownFileType => write!(fmt, "Unknown file type"),
             ErrorKind::DereferencedSymlink(_) => write!(fmt, "Dereferenced symlink"),
-            ErrorKind::InfiniteSymlinkExpansion(_) => write!(fmt, "Infinite symlink expansion"),
+            ErrorKind::DeeplyNestedSymlinkExpansion(_) => {
+                write!(fmt, "Deeply nested symlink expansion")
+            }
         }
     }
 }
@@ -348,9 +352,9 @@ impl Advices for ErrorKind {
                 LogCategory::Info,
                 &format!("Rome encountered a file system entry that is a broken symbolic link: {}", path),
             ),
-            ErrorKind::InfiniteSymlinkExpansion(path) => visitor.record_log(
+            ErrorKind::DeeplyNestedSymlinkExpansion(path) => visitor.record_log(
                 LogCategory::Error,
-                &format!("Rome encountered a file system entry that leads to an infinite symbolic link expansion, causing an infinite cycle: {}", path),
+                &format!("Rome encountered a file system entry with too many nested symbolic links, possibly forming an infinite cycle: {}", path),
             ),
         }
     }
