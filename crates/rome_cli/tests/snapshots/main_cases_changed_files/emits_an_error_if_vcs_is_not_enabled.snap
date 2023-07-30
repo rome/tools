@@ -1,0 +1,17 @@
+---
+source: crates/rome_cli/tests/snap_test.rs
+expression: content
+---
+# Termination Message
+
+```block
+internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × The combination of configuration and arguments is invalid: 
+    You provided the --changed argument, but you haven't enabled VCS support. This is an error.
+  
+
+
+```
+
+

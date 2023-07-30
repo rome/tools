@@ -48,6 +48,8 @@ pub(crate) fn format(
     configuration.merge_with(vcs_configuration);
     configuration.merge_with(files_configuration);
 
+    let changed_files = cli_options.compute_changed_files(&configuration)?;
+
     // check if support of git ignore files is enabled
     let vcs_base_path = configuration_path.or(session.app.fs.working_directory());
     store_path_to_ignore_from_vcs(
@@ -92,5 +94,5 @@ pub(crate) fn format(
         })
     };
 
-    execute_mode(execution, session, &cli_options, paths)
+    execute_mode(execution, session, &cli_options, paths, changed_files)
 }

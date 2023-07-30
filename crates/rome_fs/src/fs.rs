@@ -4,6 +4,7 @@ pub use os::OsFileSystem;
 use rome_diagnostics::{console, Advices, Diagnostic, LogCategory, Visit};
 use rome_diagnostics::{Error, Severity};
 use serde::{Deserialize, Serialize};
+use std::ffi::OsString;
 use std::io;
 use std::panic::RefUnwindSafe;
 use std::path::{Path, PathBuf};
@@ -16,6 +17,8 @@ mod os;
 pub const CONFIG_NAME: &str = "rome.json";
 
 pub trait FileSystem: Send + Sync + RefUnwindSafe {
+    fn set_changed_files(&mut self) -> Result<(), FileSystemDiagnostic>;
+
     /// It opens a file with the given set of options
     fn open_with_options(&self, path: &Path, options: OpenOptions) -> io::Result<Box<dyn File>>;
 
@@ -242,7 +245,12 @@ pub trait TraversalScope<'scope> {
     /// directory, it will be recursively traversed and all the files the
     /// [`can_handle`](TraversalContext::can_handle) method of the context
     /// returns true for will be handled as well
-    fn spawn(&self, context: &'scope dyn TraversalContext, path: PathBuf);
+    fn spawn(
+        &self,
+        context: &'scope dyn TraversalContext,
+        path: PathBuf,
+        changed_files: &'scope [String],
+    );
 }
 
 pub trait TraversalContext: Sync {

@@ -60,6 +60,7 @@ pub(crate) fn traverse(
     session: CliSession,
     cli_options: &CliOptions,
     inputs: Vec<OsString>,
+    changed_files: Vec<String>,
 ) -> Result<(), CliDiagnostic> {
     init_thread_pool();
     if inputs.is_empty() && execution.as_stdin_file().is_none() {
@@ -112,6 +113,7 @@ pub(crate) fn traverse(
         traverse_inputs(
             fs,
             inputs,
+            changed_files,
             &TraversalOptions {
                 fs,
                 workspace,
@@ -239,12 +241,17 @@ fn init_thread_pool() {
 
 /// Initiate the filesystem traversal tasks with the provided input paths and
 /// run it to completion, returning the duration of the process
-fn traverse_inputs(fs: &dyn FileSystem, inputs: Vec<OsString>, ctx: &TraversalOptions) -> Duration {
+fn traverse_inputs(
+    fs: &dyn FileSystem,
+    inputs: Vec<OsString>,
+    changed_files: Vec<String>,
+    ctx: &TraversalOptions,
+) -> Duration {
     let start = Instant::now();
-
+    let changed_files = changed_files.as_slice();
     fs.traversal(Box::new(move |scope: &dyn TraversalScope| {
         for input in inputs {
-            scope.spawn(ctx, PathBuf::from(input));
+            scope.spawn(ctx, PathBuf::from(input), changed_files);
         }
     }));
 
