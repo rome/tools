@@ -1,0 +1,121 @@
+---
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info: js/explicit-resource-management/valid-await-expr-using.js
+---
+
+# Input
+
+```js
+async function f() {
+  await using[x];
+  await using.x + await using(x) ? await using?.x : await using`x`;
+}
+
+```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,4 +1,5 @@
+ async function f() {
+-  await using[x];
+-  (await using.x) + (await using(x)) ? await using?.x : await using`x`;
++  await using [x];
++  await using.x + await using
++  x ? await using?.x : await using`x`;
+ }
+```
+
+# Output
+
+```js
+async function f() {
+  await using [x];
+  await using.x + await using
+  x ? await using?.x : await using`x`;
+}
+```
+
+# Errors
+```
+valid-await-expr-using.js:2:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Object and Array patterns require initializers
+  
+    1 │ async function f() {
+  > 2 │   await using[x];
+      │              ^^^
+    3 │   await using.x + await using(x) ? await using?.x : await using`x`;
+    4 │ }
+  
+  i this pattern is declared, but it is not given an initialized value
+  
+valid-await-expr-using.js:3:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected an identifier, an array pattern, or an object pattern but instead found '.x + await'
+  
+    1 │ async function f() {
+    2 │   await using[x];
+  > 3 │   await using.x + await using(x) ? await using?.x : await using`x`;
+      │              ^^^^^^^^^^
+    4 │ }
+    5 │ 
+  
+  i Expected an identifier, an array pattern, or an object pattern here
+  
+    1 │ async function f() {
+    2 │   await using[x];
+  > 3 │   await using.x + await using(x) ? await using?.x : await using`x`;
+      │              ^^^^^^^^^^
+    4 │ }
+    5 │ 
+  
+valid-await-expr-using.js:3:25 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `,` but instead found `using`
+  
+    1 │ async function f() {
+    2 │   await using[x];
+  > 3 │   await using.x + await using(x) ? await using?.x : await using`x`;
+      │                         ^^^^^
+    4 │ }
+    5 │ 
+  
+  i Remove using
+  
+valid-await-expr-using.js:3:30 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    1 │ async function f() {
+    2 │   await using[x];
+  > 3 │   await using.x + await using(x) ? await using?.x : await using`x`;
+      │                              ^
+    4 │ }
+    5 │ 
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    1 │ async function f() {
+    2 │   await using[x];
+  > 3 │   await using.x + await using(x) ? await using?.x : await using`x`;
+      │                              ^
+    4 │ }
+    5 │ 
+  
+  i ...Which is required to end this statement
+  
+    1 │ async function f() {
+    2 │   await using[x];
+  > 3 │   await using.x + await using(x) ? await using?.x : await using`x`;
+      │   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    4 │ }
+    5 │ 
+  
+
+```
+
+

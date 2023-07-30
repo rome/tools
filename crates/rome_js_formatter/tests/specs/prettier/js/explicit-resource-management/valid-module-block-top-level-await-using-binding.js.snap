@@ -18,14 +18,12 @@ const m = module {
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,3 +1,5 @@
+@@ -1,3 +1,4 @@
 -const m = module {
--  await using foo = bar();
--};
 +const m = module;
 +{
-+  await using;
-+  foo = bar();
+   await using foo = bar();
+-};
 +}
 ```
 
@@ -34,8 +32,7 @@ const m = module {
 ```js
 const m = module;
 {
-  await using;
-  foo = bar();
+  await using foo = bar();
 }
 ```
 
@@ -63,32 +60,6 @@ valid-module-block-top-level-await-using-binding.js:1:18 parse ━━━━━�
       │ ^^^^^^^^^^^^^^^^^
     2 │   await using foo = bar();
     3 │ }
-  
-valid-module-block-top-level-await-using-binding.js:2:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × Expected a semicolon or an implicit semicolon after a statement, but found none
-  
-    1 │ const m = module {
-  > 2 │   await using foo = bar();
-      │               ^^^
-    3 │ }
-    4 │ 
-  
-  i An explicit or implicit semicolon is expected here...
-  
-    1 │ const m = module {
-  > 2 │   await using foo = bar();
-      │               ^^^
-    3 │ }
-    4 │ 
-  
-  i ...Which is required to end this statement
-  
-    1 │ const m = module {
-  > 2 │   await using foo = bar();
-      │   ^^^^^^^^^^^^^^^
-    3 │ }
-    4 │ 
   
 
 ```

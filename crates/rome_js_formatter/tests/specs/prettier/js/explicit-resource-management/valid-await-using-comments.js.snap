@@ -29,34 +29,21 @@ async function f() {
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,19 +1,18 @@
+@@ -1,13 +1,12 @@
  async function f() {
    {
 -    /*0*/ await using /*1*/ /*2*/ b /*3*/ = /*4*/ f(); /*5*/
-+    /*0*/ await /*1*/ using; /*2*/
-+    b /*3*/ = /*4*/ f() /*5*/;
++    /*0*/ await using /*1*/ /*2*/ b /*3*/ = /*4*/ f() /*5*/;
    }
    {
--    /*0*/ for (
--      /*1*/ /*2*/ await using /*3*/ /*4*/ b /*5*/ =
--          /*6*/ x /*7*/ /*8*/ /*9*/ /*10*/;
--      ;
+     /*0*/ for (
+       /*1*/ /*2*/ await using /*3*/ /*4*/ b /*5*/ =
+           /*6*/ x /*7*/ /*8*/ /*9*/ /*10*/;
+       ;
 -
--    );
-+    /*0*/ for/*1*/(/*2*/await/*3*/using/*4*/b/*5*/=/*6*/x/*7*/;/*8*/; /*9*/
-+    ) /*10*/
+     );
    }
    {
--    /*0*/ for (/*1*/ /*2*/ await using /*3*/ /*4*/ b /*5*/ of /*6*/ x /*7*/ /*8*/);
-+    /*0*/ for/*1*/(/*2*/await/*3*/using/*4*/b/*5*/of/*6*/x /*7*/
-+    ) /*8*/
-   }
-   {
--    /*0*/ for await (/*1*/ /*2*/ /*3*/ await using /*4*/ /*5*/ b /*6*/ of /*7*/ x /*8*/ /*9*/);
-+    /*0*/ for/*1*/await/*2*/(/*3*/await/*4*/using/*5*/b/*6*/of/*7*/x /*8*/
-+    ) /*9*/
-   }
- }
 ```
 
 # Output
@@ -64,294 +51,28 @@ async function f() {
 ```js
 async function f() {
   {
-    /*0*/ await /*1*/ using; /*2*/
-    b /*3*/ = /*4*/ f() /*5*/;
+    /*0*/ await using /*1*/ /*2*/ b /*3*/ = /*4*/ f() /*5*/;
   }
   {
-    /*0*/ for/*1*/(/*2*/await/*3*/using/*4*/b/*5*/=/*6*/x/*7*/;/*8*/; /*9*/
-    ) /*10*/
+    /*0*/ for (
+      /*1*/ /*2*/ await using /*3*/ /*4*/ b /*5*/ =
+          /*6*/ x /*7*/ /*8*/ /*9*/ /*10*/;
+      ;
+    );
   }
   {
-    /*0*/ for/*1*/(/*2*/await/*3*/using/*4*/b/*5*/of/*6*/x /*7*/
-    ) /*8*/
+    /*0*/ for (/*1*/ /*2*/ await using /*3*/ /*4*/ b /*5*/ of /*6*/ x /*7*/ /*8*/);
   }
   {
-    /*0*/ for/*1*/await/*2*/(/*3*/await/*4*/using/*5*/b/*6*/of/*7*/x /*8*/
-    ) /*9*/
+    /*0*/ for await (/*1*/ /*2*/ /*3*/ await using /*4*/ /*5*/ b /*6*/ of /*7*/ x /*8*/ /*9*/);
   }
 }
 ```
 
-# Errors
+# Lines exceeding max width of 80 characters
 ```
-valid-await-using-comments.js:3:28 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × Expected a semicolon or an implicit semicolon after a statement, but found none
-  
-    1 │ async function f() {
-    2 │ {
-  > 3 │   /*0*/await/*1*/using/*2*/b/*3*/=/*4*/f()/*5*/;
-      │                            ^
-    4 │ }
-    5 │ {
-  
-  i An explicit or implicit semicolon is expected here...
-  
-    1 │ async function f() {
-    2 │ {
-  > 3 │   /*0*/await/*1*/using/*2*/b/*3*/=/*4*/f()/*5*/;
-      │                            ^
-    4 │ }
-    5 │ {
-  
-  i ...Which is required to end this statement
-  
-    1 │ async function f() {
-    2 │ {
-  > 3 │   /*0*/await/*1*/using/*2*/b/*3*/=/*4*/f()/*5*/;
-      │        ^^^^^^^^^^^^^^^^^^^^^
-    4 │ }
-    5 │ {
-  
-valid-await-using-comments.js:6:42 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected `;` but instead found `b`
-  
-    4 │ }
-    5 │ {
-  > 6 │   /*0*/for/*1*/(/*2*/await/*3*/using/*4*/b/*5*/=/*6*/x/*7*/;/*8*/;/*9*/)/*10*/;
-      │                                          ^
-    7 │ }
-    8 │ {
-  
-  i Remove b
-  
-valid-await-using-comments.js:6:66 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected an expression but instead found ';'
-  
-    4 │ }
-    5 │ {
-  > 6 │   /*0*/for/*1*/(/*2*/await/*3*/using/*4*/b/*5*/=/*6*/x/*7*/;/*8*/;/*9*/)/*10*/;
-      │                                                                  ^
-    7 │ }
-    8 │ {
-  
-  i Expected an expression here
-  
-    4 │ }
-    5 │ {
-  > 6 │   /*0*/for/*1*/(/*2*/await/*3*/using/*4*/b/*5*/=/*6*/x/*7*/;/*8*/;/*9*/)/*10*/;
-      │                                                                  ^
-    7 │ }
-    8 │ {
-  
-valid-await-using-comments.js:6:72 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected a statement but instead found ')'
-  
-    4 │ }
-    5 │ {
-  > 6 │   /*0*/for/*1*/(/*2*/await/*3*/using/*4*/b/*5*/=/*6*/x/*7*/;/*8*/;/*9*/)/*10*/;
-      │                                                                        ^
-    7 │ }
-    8 │ {
-  
-  i Expected a statement here
-  
-    4 │ }
-    5 │ {
-  > 6 │   /*0*/for/*1*/(/*2*/await/*3*/using/*4*/b/*5*/=/*6*/x/*7*/;/*8*/;/*9*/)/*10*/;
-      │                                                                        ^
-    7 │ }
-    8 │ {
-  
-valid-await-using-comments.js:9:42 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected `;` but instead found `b`
-  
-     7 │ }
-     8 │ {
-   > 9 │   /*0*/for/*1*/(/*2*/await/*3*/using/*4*/b/*5*/of/*6*/x/*7*/)/*8*/;
-       │                                          ^
-    10 │ }
-    11 │ {
-  
-  i Remove b
-  
-valid-await-using-comments.js:9:48 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected `;` but instead found `of`
-  
-     7 │ }
-     8 │ {
-   > 9 │   /*0*/for/*1*/(/*2*/await/*3*/using/*4*/b/*5*/of/*6*/x/*7*/)/*8*/;
-       │                                                ^^
-    10 │ }
-    11 │ {
-  
-  i Remove of
-  
-valid-await-using-comments.js:9:55 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected `)` but instead found `x`
-  
-     7 │ }
-     8 │ {
-   > 9 │   /*0*/for/*1*/(/*2*/await/*3*/using/*4*/b/*5*/of/*6*/x/*7*/)/*8*/;
-       │                                                       ^
-    10 │ }
-    11 │ {
-  
-  i Remove x
-  
-valid-await-using-comments.js:9:61 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × Expected a semicolon or an implicit semicolon after a statement, but found none
-  
-     7 │ }
-     8 │ {
-   > 9 │   /*0*/for/*1*/(/*2*/await/*3*/using/*4*/b/*5*/of/*6*/x/*7*/)/*8*/;
-       │                                                             ^
-    10 │ }
-    11 │ {
-  
-  i An explicit or implicit semicolon is expected here...
-  
-     7 │ }
-     8 │ {
-   > 9 │   /*0*/for/*1*/(/*2*/await/*3*/using/*4*/b/*5*/of/*6*/x/*7*/)/*8*/;
-       │                                                             ^
-    10 │ }
-    11 │ {
-  
-  i ...Which is required to end this statement
-  
-     7 │ }
-     8 │ {
-   > 9 │   /*0*/for/*1*/(/*2*/await/*3*/using/*4*/b/*5*/of/*6*/x/*7*/)/*8*/;
-       │                                                       ^^^^^^^
-    10 │ }
-    11 │ {
-  
-valid-await-using-comments.js:12:52 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected `;` but instead found `b`
-  
-    10 │ }
-    11 │ {
-  > 12 │   /*0*/for/*1*/await/*2*/(/*3*/await/*4*/using/*5*/b/*6*/of/*7*/x/*8*/)/*9*/;
-       │                                                    ^
-    13 │ }
-    14 │ }
-  
-  i Remove b
-  
-valid-await-using-comments.js:12:58 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected `;` but instead found `of`
-  
-    10 │ }
-    11 │ {
-  > 12 │   /*0*/for/*1*/await/*2*/(/*3*/await/*4*/using/*5*/b/*6*/of/*7*/x/*8*/)/*9*/;
-       │                                                          ^^
-    13 │ }
-    14 │ }
-  
-  i Remove of
-  
-valid-await-using-comments.js:12:65 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected `)` but instead found `x`
-  
-    10 │ }
-    11 │ {
-  > 12 │   /*0*/for/*1*/await/*2*/(/*3*/await/*4*/using/*5*/b/*6*/of/*7*/x/*8*/)/*9*/;
-       │                                                                 ^
-    13 │ }
-    14 │ }
-  
-  i Remove x
-  
-valid-await-using-comments.js:12:71 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × Expected a semicolon or an implicit semicolon after a statement, but found none
-  
-    10 │ }
-    11 │ {
-  > 12 │   /*0*/for/*1*/await/*2*/(/*3*/await/*4*/using/*5*/b/*6*/of/*7*/x/*8*/)/*9*/;
-       │                                                                       ^
-    13 │ }
-    14 │ }
-  
-  i An explicit or implicit semicolon is expected here...
-  
-    10 │ }
-    11 │ {
-  > 12 │   /*0*/for/*1*/await/*2*/(/*3*/await/*4*/using/*5*/b/*6*/of/*7*/x/*8*/)/*9*/;
-       │                                                                       ^
-    13 │ }
-    14 │ }
-  
-  i ...Which is required to end this statement
-  
-    10 │ }
-    11 │ {
-  > 12 │   /*0*/for/*1*/await/*2*/(/*3*/await/*4*/using/*5*/b/*6*/of/*7*/x/*8*/)/*9*/;
-       │                                                                 ^^^^^^^
-    13 │ }
-    14 │ }
-  
-valid-await-using-comments.js:12:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × await can only be used in conjunction with `for...of` statements
-  
-    10 │ }
-    11 │ {
-  > 12 │   /*0*/for/*1*/await/*2*/(/*3*/await/*4*/using/*5*/b/*6*/of/*7*/x/*8*/)/*9*/;
-       │                ^^^^^
-    13 │ }
-    14 │ }
-  
-  i Remove the await here
-  
-    10 │ }
-    11 │ {
-  > 12 │   /*0*/for/*1*/await/*2*/(/*3*/await/*4*/using/*5*/b/*6*/of/*7*/x/*8*/)/*9*/;
-       │                ^^^^^
-    13 │ }
-    14 │ }
-  
-  i or convert this to a `for...of` statement
-  
-    10 │ }
-    11 │ {
-  > 12 │   /*0*/for/*1*/await/*2*/(/*3*/await/*4*/using/*5*/b/*6*/of/*7*/x/*8*/)/*9*/;
-       │        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    13 │ }
-    14 │ }
-  
-valid-await-using-comments.js:12:71 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected a statement but instead found ')'
-  
-    10 │ }
-    11 │ {
-  > 12 │   /*0*/for/*1*/await/*2*/(/*3*/await/*4*/using/*5*/b/*6*/of/*7*/x/*8*/)/*9*/;
-       │                                                                       ^
-    13 │ }
-    14 │ }
-  
-  i Expected a statement here
-  
-    10 │ }
-    11 │ {
-  > 12 │   /*0*/for/*1*/await/*2*/(/*3*/await/*4*/using/*5*/b/*6*/of/*7*/x/*8*/)/*9*/;
-       │                                                                       ^
-    13 │ }
-    14 │ }
-  
-
+   13:     /*0*/ for (/*1*/ /*2*/ await using /*3*/ /*4*/ b /*5*/ of /*6*/ x /*7*/ /*8*/);
+   16:     /*0*/ for await (/*1*/ /*2*/ /*3*/ await using /*4*/ /*5*/ b /*6*/ of /*7*/ x /*8*/ /*9*/);
 ```
 
 

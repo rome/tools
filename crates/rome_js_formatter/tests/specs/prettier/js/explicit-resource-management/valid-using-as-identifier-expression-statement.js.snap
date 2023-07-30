@@ -1,0 +1,32 @@
+---
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info: js/explicit-resource-management/valid-using-as-identifier-expression-statement.js
+---
+
+# Input
+
+```js
+using
+reader = getReader()
+
+```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,2 +1 @@
+-using;
+-reader = getReader();
++using reader = getReader();
+```
+
+# Output
+
+```js
+using reader = getReader();
+```
+
+
