@@ -149,7 +149,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 18
 
       - name: Update package.json version
         if: needs.check.outputs.prerelease == 'true'
@@ -195,7 +195,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 18
           registry-url: 'https://registry.npmjs.org'
 
       - name: Publish extension to Microsoft Marketplace (pre-release)

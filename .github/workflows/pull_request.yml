@@ -115,7 +115,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 18
       - name: Cache pnpm modules
         uses: actions/cache@v3
         with:
@@ -125,7 +125,7 @@ jobs:
             ${{ runner.os }}-
       - uses: pnpm/action-setup@v2.2.4
         with:
-          version: 7
+          version: 8
       - name: Install wasm-pack
         uses: jetli/wasm-pack-action@v0.4.0
         with:
