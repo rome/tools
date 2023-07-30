@@ -55,4 +55,4 @@ jobs:
           pnpm --prefix npm/backend-jsonrpc run build
       - name: CI checks
         working-directory: npm/js-api
-        run: pnpm ci
+        run: pnpm run ci
