@@ -201,6 +201,20 @@ if no error diagnostics are emitted.
 
 -  Fix [`noDuplicateCase`](https://docs.rome.tools/lint/rules/noDuplicateCase/) rule that erroneously reported as equals the strings literals `"'"` and `'"'` [#4706](https://github.com/rome/tools/issues/4706).
 
+- Improve [`useEnumInitializers`](https://docs.rome.tools/lint/rules/useEnumInitializers/)
+
+  The rule now reports all uninitialized members of an enum in a single diagnostic.
+
+  Moreover, ambient enum declarations are now ignored.
+  This avoids reporting ambient enum declarations in _TypeScript_ declaration files.
+
+  ```ts
+  declare enum Weather {
+    Rainy,
+    Sunny,
+  }
+  ```
+
 - Relax [`noBannedTypes`](https://docs.rome.tools/lint/rules/nobannedtypes/) and improve documentation
 
   The rule no longer reports a user type that reuses a banned type name.

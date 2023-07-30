@@ -24,6 +24,13 @@ export enum Color {
 	Blue,
 }
 
+export enum Exotic {
+	A = 0.1,
+	B,
+	C = "Special",
+	D,
+}
+
 export enum IndexedColor {
 	Red = "0",
 	Green = "1",
