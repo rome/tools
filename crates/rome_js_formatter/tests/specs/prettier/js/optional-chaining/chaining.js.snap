@@ -1,6 +1,5 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-assertion_line: 212
 info: js/optional-chaining/chaining.js
 ---
 
@@ -142,7 +141,7 @@ new (foo?.())();
  
  a?.[b ? c : d];
  
-@@ -59,26 +59,26 @@
+@@ -59,7 +59,7 @@
  (function () {})?.();
  (() => f)?.();
  (() => f)?.x;
@@ -151,38 +150,6 @@ new (foo?.())();
  (
    aaaaaaaaaaaaaaaaaaaaaaaa &&
    aaaaaaaaaaaaaaaaaaaaaaaa &&
-   aaaaaaaaaaaaaaaaaaaaaaaa
- )?.();
- 
--let f = () => ({}?.());
--let g = () => ({}?.b);
--a = () => ({}?.() && a);
--a = () => ({}?.()() && a);
--a = () => ({}?.().b && a);
--a = () => ({}?.b && a);
--a = () => ({}?.b() && a);
--(a) => ({}?.()?.b && 0);
--(a) => ({}?.b?.b && 0);
--(x) => ({}?.()());
--(x) => ({}?.().b);
--(x) => ({}?.b());
--(x) => ({}?.b.b);
-+let f = () => ({})?.();
-+let g = () => ({})?.b;
-+a = () => ({})?.() && a;
-+a = () => ({})?.()() && a;
-+a = () => ({})?.().b && a;
-+a = () => ({})?.b && a;
-+a = () => ({})?.b() && a;
-+(a) => ({})?.()?.b && 0;
-+(a) => ({})?.b?.b && 0;
-+(x) => ({})?.()();
-+(x) => ({})?.().b;
-+(x) => ({})?.b();
-+(x) => ({})?.b.b;
- ({})?.a().b();
- ({ a: 1 })?.entries();
- 
 ```
 
 # Output

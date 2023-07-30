@@ -1,0 +1,154 @@
+---
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info: js/babel-plugins/explicit-resource-management.js
+---
+
+# Input
+
+```js
+function * g() {
+  using handle = acquireFileHandle(); // block-scoped critical resource
+} // cleanup
+
+{
+  using obj = g(); // block-scoped declaration
+  const r = obj.next();
+} // calls finally blocks in `g`
+
+{
+  await using obj = g();
+}
+
+```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,12 +1,15 @@
+ function* g() {
+-  using handle = acquireFileHandle(); // block-scoped critical resource
++  using;
++  handle = acquireFileHandle(); // block-scoped critical resource
+ } // cleanup
+ 
+ {
+-  using obj = g(); // block-scoped declaration
++  using;
++  obj = g(); // block-scoped declaration
+   const r = obj.next();
+ } // calls finally blocks in `g`
+ 
+ {
+-  await using obj = g();
++  await using;
++  obj = g();
+ }
+```
+
+# Output
+
+```js
+function* g() {
+  using;
+  handle = acquireFileHandle(); // block-scoped critical resource
+} // cleanup
+
+{
+  using;
+  obj = g(); // block-scoped declaration
+  const r = obj.next();
+} // calls finally blocks in `g`
+
+{
+  await using;
+  obj = g();
+}
+```
+
+# Errors
+```
+explicit-resource-management.js:2:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    1 │ function * g() {
+  > 2 │   using handle = acquireFileHandle(); // block-scoped critical resource
+      │         ^^^^^^
+    3 │ } // cleanup
+    4 │ 
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    1 │ function * g() {
+  > 2 │   using handle = acquireFileHandle(); // block-scoped critical resource
+      │         ^^^^^^
+    3 │ } // cleanup
+    4 │ 
+  
+  i ...Which is required to end this statement
+  
+    1 │ function * g() {
+  > 2 │   using handle = acquireFileHandle(); // block-scoped critical resource
+      │   ^^^^^^^^^^^^
+    3 │ } // cleanup
+    4 │ 
+  
+explicit-resource-management.js:6:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    5 │ {
+  > 6 │   using obj = g(); // block-scoped declaration
+      │         ^^^
+    7 │   const r = obj.next();
+    8 │ } // calls finally blocks in `g`
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    5 │ {
+  > 6 │   using obj = g(); // block-scoped declaration
+      │         ^^^
+    7 │   const r = obj.next();
+    8 │ } // calls finally blocks in `g`
+  
+  i ...Which is required to end this statement
+  
+    5 │ {
+  > 6 │   using obj = g(); // block-scoped declaration
+      │   ^^^^^^^^^
+    7 │   const r = obj.next();
+    8 │ } // calls finally blocks in `g`
+  
+explicit-resource-management.js:11:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    10 │ {
+  > 11 │   await using obj = g();
+       │               ^^^
+    12 │ }
+    13 │ 
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    10 │ {
+  > 11 │   await using obj = g();
+       │               ^^^
+    12 │ }
+    13 │ 
+  
+  i ...Which is required to end this statement
+  
+    10 │ {
+  > 11 │   await using obj = g();
+       │   ^^^^^^^^^^^^^^^
+    12 │ }
+    13 │ 
+  
+
+```
+
+

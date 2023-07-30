@@ -1,0 +1,54 @@
+---
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info: js/ignore/issue-13737.js
+---
+
+# Input
+
+```js
+oneArgument(
+ // prettier-ignore
+ (0, 1)
+)
+
+a=(
+ // prettier-ignore
+ (0, 1)
+)
+
+```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -4,5 +4,7 @@
+ );
+ 
+ a =
+-  // prettier-ignore
+-  (0, 1);
++  (
++ // prettier-ignore
++ (0, 1)
++);
+```
+
+# Output
+
+```js
+oneArgument(
+  // prettier-ignore
+  (0, 1),
+);
+
+a =
+  (
+ // prettier-ignore
+ (0, 1)
+);
+```
+
+
