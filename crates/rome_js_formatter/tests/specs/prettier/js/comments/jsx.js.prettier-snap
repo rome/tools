@@ -9,8 +9,7 @@
 
 <div>
   {
-    a
-    /* comment
+    a /* comment
      */
   }
 </div>;

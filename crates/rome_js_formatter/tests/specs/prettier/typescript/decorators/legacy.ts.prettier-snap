@@ -1,12 +1,8 @@
 [
-  (
-    @decorator()
-    class {}
-  ),
-  (
-    @decorator()
-    class A {}
-  ),
+  @decorator()
+  class {},
+  @decorator()
+  class A {},
 ];
 
 class A {
