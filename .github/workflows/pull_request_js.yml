@@ -47,7 +47,7 @@ jobs:
             ${{ runner.os }}-
       - uses: pnpm/action-setup@v2.2.4
         with:
-          version: 7
+          version: 8
       - name: Install toolchain
         uses: moonrepo/setup-rust@v0
       - name: Build WASM module for the web

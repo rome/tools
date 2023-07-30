@@ -7,7 +7,10 @@ class C {
 
 class D<T, U> {
   constructor(x: T, y: U);
-  constructor(x: T = 1, public y: U = x) {
+  constructor(
+    x: T = 1,
+    public y: U = x,
+  ) {
     var z = x;
   }
 }

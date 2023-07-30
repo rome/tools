@@ -2,7 +2,7 @@ function a<const T>() {}
 function b<const T extends U>() {}
 function c<T, const U>() {}
 declare function d<const T>();
-<const T>() => {};
+<const T,>() => {};
 <const T extends U>() => {};
 (function <const T>() {});
 (function <const T extends U>() {});

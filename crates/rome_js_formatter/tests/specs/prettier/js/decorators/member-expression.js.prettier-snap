@@ -39,16 +39,12 @@
     @(decorators["first"])
     method() {}
   },
-  (
-    @(decorators[first])
-    class {
-      method() {}
-    }
-  ),
-  (
-    @(decorators[0])
-    class {
-      method() {}
-    }
-  ),
+  @(decorators[first])
+  class {
+    method() {}
+  },
+  @(decorators[0])
+  class {
+    method() {}
+  },
 ];

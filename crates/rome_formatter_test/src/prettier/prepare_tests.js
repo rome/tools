@@ -86,7 +86,7 @@ async function traverseDir(dir, input_config) {
 				try {
 					// We need to reformat prettier snapshot
 					// because Rome and Prettier have different default options
-					snapshotContent = prettier.format(snapshotContent, config);
+					snapshotContent = await prettier.format(snapshotContent, config);
 				} catch (error) {
 					console.error(`Prettier format error in ${filePath}: ${error}`);
 				}
@@ -99,7 +99,7 @@ async function traverseDir(dir, input_config) {
 
 				try {
 					// Try to format input with prettier
-					const prettierOutput = prettier.format(content, config);
+					const prettierOutput = await prettier.format(content, config);
 
 					const outDir = path.resolve(outPath, '..');
 					await fs.mkdir(outDir, { recursive: true });

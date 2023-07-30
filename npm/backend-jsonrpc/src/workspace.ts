@@ -600,6 +600,10 @@ export interface Nursery {
 	 */
 	noStaticOnlyClass?: RuleConfiguration;
 	/**
+	 * Disallow unsafe declaration merging between interfaces and classes.
+	 */
+	noUnsafeDeclarationMerging?: RuleConfiguration;
+	/**
 	 * Disallow empty exports that don't change anything in a module file.
 	 */
 	noUselessEmptyExport?: RuleConfiguration;
@@ -1192,6 +1196,7 @@ export type Category =
 	| "lint/nursery/noRedundantRoles"
 	| "lint/nursery/noSelfAssign"
 	| "lint/nursery/noStaticOnlyClass"
+	| "lint/nursery/noUnsafeDeclarationMerging"
 	| "lint/nursery/noUselessEmptyExport"
 	| "lint/nursery/noVoid"
 	| "lint/nursery/useAriaPropTypes"

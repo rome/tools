@@ -142,6 +142,10 @@ if no error diagnostics are emitted.
 
   This rule recommends using `Number.isNaN` instead of the global and unsafe `isNaN` that attempts a type coercion.
 
+- Add [`noUnsafeDeclarationMerging`](https://docs.rome.tools/lint/rules/noUnsafeDeclarationMerging/)
+
+  This rule disallows declaration merging between an interface and a class.
+
 - Add [`useArrowFunction`](https://docs.rome.tools/lint/rules/usearrowfunction/)
 
   This rule proposes turning function expressions into arrow functions.
