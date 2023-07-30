@@ -3,13 +3,10 @@
 	"scripts": {
 		"start": "node prepare_tests"
 	},
-	"dependencies": {
-		"prettier": "2.8.8"
-	},
-	"devDependencies": {
-		"@types/prettier": "^2.7.1"
-	},
 	"engines": {
 		"pnpm": "^7.0.0"
+	},
+	"dependencies": {
+		"prettier": "^3.0.0"
 	}
 }

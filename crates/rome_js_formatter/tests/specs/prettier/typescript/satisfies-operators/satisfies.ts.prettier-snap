@@ -1,6 +1,6 @@
 ({}) satisfies {};
 ({}) satisfies X;
-() => ({} satisfies X);
+() => ({}) satisfies X;
 this.isTabActionBar((e.target || e.srcElement) satisfies HTMLElement);
 
 "current" in (props.pagination satisfies Object);

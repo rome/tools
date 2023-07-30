@@ -83,6 +83,31 @@ info: js/decorators/member-expression.js
      method() {}
    },
    class {
+@@ -39,12 +39,16 @@
+     @(decorators["first"])
+     method() {}
+   },
+-  @(decorators[first])
+-  class {
+-    method() {}
+-  },
+-  @(decorators[0])
+-  class {
+-    method() {}
+-  },
++  (
++    @(decorators[first])
++    class {
++      method() {}
++    }
++  ),
++  (
++    @(decorators[0])
++    class {
++      method() {}
++    }
++  ),
+ ];
 ```
 
 # Output
