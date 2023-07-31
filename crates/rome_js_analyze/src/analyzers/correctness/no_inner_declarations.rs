@@ -1,9 +1,6 @@
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_syntax::{
-    AnyJsDeclaration, JsExport, JsFileSource, JsFunctionBody, JsModuleItemList, JsScript,
-    JsStatementList, JsStaticInitializationBlockClassMember,
-};
+use rome_js_syntax::{AnyJsDeclaration, JsFileSource, JsStatementList, JsSyntaxKind};
 use rome_rowan::AstNode;
 
 use crate::control_flow::AnyJsControlFlowRoot;
@@ -106,33 +103,55 @@ impl Rule for NoInnerDeclarations {
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let decl = ctx.query();
         let parent = match decl {
+            AnyJsDeclaration::TsDeclareFunctionDeclaration(x) => {
+                if ctx.source_type::<JsFileSource>().is_module() {
+                    // In strict mode (implied by esm), function declarations are block-scoped.
+                    return None;
+                }
+                // ignore TsDeclareStatement
+                x.syntax().parent()?.parent()?
+            }
             AnyJsDeclaration::JsFunctionDeclaration(x) => {
                 if ctx.source_type::<JsFileSource>().is_module() {
                     // In strict mode (implied by esm), function declarations are block-scoped.
-                    None
-                } else {
-                    x.syntax().parent()
+                    return None;
                 }
+                x.syntax().parent()?
             }
             AnyJsDeclaration::JsVariableDeclaration(x) => {
-                if x.is_var() {
-                    // ignore parent (JsVariableStatement or JsVariableDeclarationClause)
-                    x.syntax().parent()?.parent()
-                } else {
-                    None
+                if !x.is_var() {
+                    return None;
                 }
+                let mut parent = x.syntax().parent()?;
+                while matches!(
+                    parent.kind(),
+                    JsSyntaxKind::JS_VARIABLE_STATEMENT
+                        | JsSyntaxKind::JS_VARIABLE_DECLARATION_CLAUSE
+                        | JsSyntaxKind::TS_DECLARE_STATEMENT
+                ) {
+                    parent = parent.parent()?;
+                }
+                parent
             }
-            _ => None,
-        }?;
-        if JsExport::can_cast(parent.kind()) || JsModuleItemList::can_cast(parent.kind()) {
+            _ => {
+                return None;
+            }
+        };
+        if matches!(
+            parent.kind(),
+            JsSyntaxKind::JS_EXPORT
+                | JsSyntaxKind::TS_EXPORT_DECLARE_CLAUSE
+                | JsSyntaxKind::JS_MODULE_ITEM_LIST
+        ) {
             return None;
         }
         if let Some(stmt_list) = JsStatementList::cast(parent) {
-            let parent_kind = stmt_list.syntax().parent()?.kind();
-            if JsFunctionBody::can_cast(parent_kind)
-                || JsScript::can_cast(parent_kind)
-                || JsStaticInitializationBlockClassMember::can_cast(parent_kind)
-            {
+            if matches!(
+                stmt_list.syntax().parent()?.kind(),
+                JsSyntaxKind::JS_FUNCTION_BODY
+                    | JsSyntaxKind::JS_SCRIPT
+                    | JsSyntaxKind::JS_STATIC_INITIALIZATION_BLOCK_CLASS_MEMBER
+            ) {
                 return None;
             }
         }

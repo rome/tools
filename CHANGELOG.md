@@ -201,6 +201,15 @@ if no error diagnostics are emitted.
 
 -  Fix [`noDuplicateCase`](https://docs.rome.tools/lint/rules/noDuplicateCase/) rule that erroneously reported as equals the strings literals `"'"` and `'"'` [#4706](https://github.com/rome/tools/issues/4706).
 
+- Improve [`noInnerDeclarations`](https://docs.rome.tools/lint/rules/noInnerDeclarations/)
+
+  Now, the rule doesn't report false-positives about ambient _TypeScript_ declarations.
+  For example, the following code is no longer reported by the rule:
+
+  ```ts
+  declare var foo;
+  ```
+
 - Improve [`useEnumInitializers`](https://docs.rome.tools/lint/rules/useEnumInitializers/)
 
   The rule now reports all uninitialized members of an enum in a single diagnostic.
