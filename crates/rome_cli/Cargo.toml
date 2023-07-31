@@ -14,7 +14,7 @@ path = "src/main.rs"
 [dependencies]
 anyhow              = "1.0.52"
 bpaf                = { workspace = true }
-crossbeam           = "0.8.1"
+crossbeam           = { workspace = true }
 dashmap             = { workspace = true }
 hdrhistogram        = { version = "7.5.0", default-features = false }
 indexmap            = { workspace = true }
