@@ -2330,8 +2330,8 @@ name = "rome_v8"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "bpaf",
  "crossbeam",
- "pico-args",
  "rome_console",
  "rome_diagnostics",
  "rome_fs",
