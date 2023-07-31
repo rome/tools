@@ -1538,11 +1538,11 @@ fn applies_organize_imports() {
     fs.insert(file_path.into(), config.as_bytes());
 
     let file_path = Path::new("check.js");
-    let content = r#"import { lorem, foom, bar } from "foo";
-import * as something from "../something";
+    let content = r#"import * as something from "../something";
+import { lorem, foom, bar } from "foo";
 "#;
-    let expected = r#"import * as something from "../something";
-import { bar, foom, lorem } from "foo";
+    let expected = r#"import { bar, foom, lorem } from "foo";
+import * as something from "../something";
 "#;
     fs.insert(file_path.into(), content.as_bytes());
 
@@ -1737,11 +1737,11 @@ fn applies_organize_imports_from_cli() {
     let mut console = BufferConsole::default();
 
     let file_path = Path::new("check.js");
-    let content = r#"import { lorem, foom, bar } from "foo";
-import * as something from "../something";
+    let content = r#"import * as something from "../something";
+import { lorem, foom, bar } from "foo";
 "#;
-    let expected = r#"import * as something from "../something";
-import { bar, foom, lorem } from "foo";
+    let expected = r#"import { bar, foom, lorem } from "foo";
+import * as something from "../something";
 "#;
 
     fs.insert(file_path.into(), content.as_bytes());

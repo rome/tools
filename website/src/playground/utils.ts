@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import type { ThemeName } from "../frontend-scripts/util";
 import { getCurrentTheme } from "../frontend-scripts/util";
 import {
@@ -7,7 +8,6 @@ import {
 	emptyPrettierOutput,
 	emptyRomeOutput,
 } from "./types";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 export function classNames(
 	...classes: (string | undefined | boolean)[]

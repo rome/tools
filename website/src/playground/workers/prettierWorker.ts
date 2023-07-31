@@ -1,3 +1,6 @@
+import prettier, { Options as PrettierOptions } from "prettier";
+// @ts-expect-error
+import parserBabel from "prettier/esm/parser-babel.mjs";
 import {
 	ArrowParentheses,
 	IndentStyle,
@@ -10,9 +13,6 @@ import {
 	defaultPlaygroundState,
 } from "../types";
 import { isJsonFilename, isTypeScriptFilename } from "../utils";
-import prettier, { Options as PrettierOptions } from "prettier";
-// @ts-expect-error
-import parserBabel from "prettier/esm/parser-babel.mjs";
 
 let settings = defaultPlaygroundState.settings;
 

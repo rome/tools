@@ -35,9 +35,8 @@ check.js organizeImports ━━━━━━━━━━━━━━━━━━�
   i Import statements could be sorted:
   
     1   │ - import·{·lorem,·foom,·bar·}·from·"foo";
-    2   │ - import·*·as·something·from·"../something";
-      1 │ + import·*·as·something·from·"../something";
-      2 │ + import·{·bar,·foom,·lorem·}·from·"foo";
+      1 │ + import·{·bar,·foom,·lorem·}·from·"foo";
+    2 2 │   import * as something from "../something";
     3 3 │   
   
 

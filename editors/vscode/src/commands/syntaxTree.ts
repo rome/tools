@@ -1,7 +1,3 @@
-import { SyntaxTreeParams, syntaxTreeRequest } from "../lsp_requests";
-import { Command, Session } from "../session";
-import { isRomeEditor } from "../utils";
-import { SyntaxTreeDocument } from "./syntaxTreeDocument";
 import {
 	CancellationToken,
 	Disposable,
@@ -19,6 +15,10 @@ import {
 	window,
 	workspace,
 } from "vscode";
+import { SyntaxTreeParams, syntaxTreeRequest } from "../lsp_requests";
+import { Command, Session } from "../session";
+import { isRomeEditor } from "../utils";
+import { SyntaxTreeDocument } from "./syntaxTreeDocument";
 
 type FilePath = string;
 

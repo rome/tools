@@ -1,7 +1,7 @@
-import { Commands } from "./commands";
-import { RomeEditor, isRomeEditor } from "./utils";
 import { Disposable, ExtensionContext, commands, window } from "vscode";
 import { LanguageClient } from "vscode-languageclient/node";
+import { Commands } from "./commands";
+import { RomeEditor, isRomeEditor } from "./utils";
 
 export type Command = (...args: unknown[]) => unknown;
 

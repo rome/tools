@@ -1,5 +1,5 @@
-import { classnames } from "../utils";
 import type React from "react";
+import { classnames } from "../utils";
 
 interface Tab {
 	key: string;
