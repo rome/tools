@@ -8,6 +8,7 @@ pub(crate) mod no_console_log;
 pub(crate) mod no_constant_condition;
 pub(crate) mod no_global_is_finite;
 pub(crate) mod no_global_is_nan;
+pub(crate) mod no_unsafe_declaration_merging;
 pub(crate) mod use_camel_case;
 pub(crate) mod use_exhaustive_dependencies;
 pub(crate) mod use_hook_at_top_level;
@@ -25,6 +26,7 @@ declare_group! {
             self :: no_constant_condition :: NoConstantCondition ,
             self :: no_global_is_finite :: NoGlobalIsFinite ,
             self :: no_global_is_nan :: NoGlobalIsNan ,
+            self :: no_unsafe_declaration_merging :: NoUnsafeDeclarationMerging ,
             self :: use_camel_case :: UseCamelCase ,
             self :: use_exhaustive_dependencies :: UseExhaustiveDependencies ,
             self :: use_hook_at_top_level :: UseHookAtTopLevel ,

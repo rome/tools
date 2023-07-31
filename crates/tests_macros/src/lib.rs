@@ -94,6 +94,7 @@ fn transform_file_name(input: &str) -> String {
             | "type"
             | "super"
             | "typeof"
+            | "const"
     );
 
     let is_number = result

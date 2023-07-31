@@ -1663,6 +1663,7 @@ impl VisitNode<JsonLanguage> for Nursery {
                 "noRedundantRoles",
                 "noSelfAssign",
                 "noStaticOnlyClass",
+                "noUnsafeDeclarationMerging",
                 "noUselessEmptyExport",
                 "noVoid",
                 "useAriaPropTypes",
@@ -2127,6 +2128,29 @@ impl VisitNode<JsonLanguage> for Nursery {
                         diagnostics,
                     )?;
                     self.no_static_only_class = Some(rule_configuration);
+                }
+                _ => {
+                    diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
+                        "object or string",
+                        value.range(),
+                    ));
+                }
+            },
+            "noUnsafeDeclarationMerging" => match value {
+                AnyJsonValue::JsonStringValue(_) => {
+                    let mut configuration = RuleConfiguration::default();
+                    self.map_to_known_string(&value, name_text, &mut configuration, diagnostics)?;
+                    self.no_unsafe_declaration_merging = Some(configuration);
+                }
+                AnyJsonValue::JsonObjectValue(_) => {
+                    let mut rule_configuration = RuleConfiguration::default();
+                    rule_configuration.map_rule_configuration(
+                        &value,
+                        name_text,
+                        "noUnsafeDeclarationMerging",
+                        diagnostics,
+                    )?;
+                    self.no_unsafe_declaration_merging = Some(rule_configuration);
                 }
                 _ => {
                     diagnostics.push(DeserializationDiagnostic::new_incorrect_type(

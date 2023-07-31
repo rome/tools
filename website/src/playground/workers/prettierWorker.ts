@@ -1,6 +1,6 @@
 import prettier, { Options as PrettierOptions } from "prettier";
 // @ts-expect-error
-import parserBabel from "prettier/esm/parser-babel";
+import parserBabel from "prettier/esm/parser-babel.mjs";
 import {
 	ArrowParentheses,
 	IndentStyle,

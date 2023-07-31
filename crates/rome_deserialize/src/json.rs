@@ -587,9 +587,10 @@ pub fn with_only_known_variants(
 ///     }
 /// }
 ///
+///  use rome_json_parser::JsonParserOptions;
 /// # fn main() -> Result<(), DeserializationDiagnostic> {
 /// let source = r#"{ "lorem": true }"#;
-///  let deserialized = deserialize_from_json_str::<NewConfiguration>(&source);
+///  let deserialized = deserialize_from_json_str::<NewConfiguration>(&source, JsonParserOptions::default());
 ///  assert!(!deserialized.has_errors());
 ///  assert_eq!(deserialized.into_deserialized(), NewConfiguration { lorem: true });
 /// # Ok(())
@@ -597,13 +598,16 @@ pub fn with_only_known_variants(
 ///
 ///
 /// ```
-pub fn deserialize_from_json_str<Output>(source: &str) -> Deserialized<Output>
+pub fn deserialize_from_json_str<Output>(
+    source: &str,
+    options: JsonParserOptions,
+) -> Deserialized<Output>
 where
     Output: Default + VisitJsonNode + JsonDeserialize,
 {
     let mut output = Output::default();
     let mut diagnostics = vec![];
-    let parse = parse_json(source, JsonParserOptions::default());
+    let parse = parse_json(source, options);
     Output::deserialize_from_ast(&parse.tree(), &mut output, &mut diagnostics);
     let mut errors = parse
         .into_diagnostics()

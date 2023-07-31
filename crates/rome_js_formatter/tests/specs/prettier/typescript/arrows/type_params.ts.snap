@@ -1,0 +1,30 @@
+---
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info: typescript/arrows/type_params.ts
+---
+
+# Input
+
+```ts
+<T>(a) => { }
+
+```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1 +1 @@
+-<T,>(a) => {};
++<T>(a) => {};
+```
+
+# Output
+
+```ts
+<T>(a) => {};
+```
+
+

@@ -1,0 +1,143 @@
+---
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info: js/explicit-resource-management/valid-using-binding-using.js
+---
+
+# Input
+
+```js
+{
+  using using = of;
+  for (using using of of);
+}
+
+```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,4 +1,6 @@
+ {
+-  using using = of;
+-  for (using using of of);
++  using;
++  using = of;
++  for (using using of of
++  )
+ }
+```
+
+# Output
+
+```js
+{
+  using;
+  using = of;
+  for (using using of of
+  )
+}
+```
+
+# Errors
+```
+valid-using-binding-using.js:2:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    1 │ {
+  > 2 │   using using = of;
+      │         ^^^^^
+    3 │   for (using using of of);
+    4 │ }
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    1 │ {
+  > 2 │   using using = of;
+      │         ^^^^^
+    3 │   for (using using of of);
+    4 │ }
+  
+  i ...Which is required to end this statement
+  
+    1 │ {
+  > 2 │   using using = of;
+      │   ^^^^^^^^^^^
+    3 │   for (using using of of);
+    4 │ }
+  
+valid-using-binding-using.js:3:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `;` but instead found `using`
+  
+    1 │ {
+    2 │   using using = of;
+  > 3 │   for (using using of of);
+      │              ^^^^^
+    4 │ }
+    5 │ 
+  
+  i Remove using
+  
+valid-using-binding-using.js:3:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `;` but instead found `of`
+  
+    1 │ {
+    2 │   using using = of;
+  > 3 │   for (using using of of);
+      │                    ^^
+    4 │ }
+    5 │ 
+  
+  i Remove of
+  
+valid-using-binding-using.js:3:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `)` but instead found `of`
+  
+    1 │ {
+    2 │   using using = of;
+  > 3 │   for (using using of of);
+      │                       ^^
+    4 │ }
+    5 │ 
+  
+  i Remove of
+  
+valid-using-binding-using.js:3:25 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    1 │ {
+    2 │   using using = of;
+  > 3 │   for (using using of of);
+      │                         ^
+    4 │ }
+    5 │ 
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    1 │ {
+    2 │   using using = of;
+  > 3 │   for (using using of of);
+      │                         ^
+    4 │ }
+    5 │ 
+  
+  i ...Which is required to end this statement
+  
+    1 │ {
+    2 │   using using = of;
+  > 3 │   for (using using of of);
+      │                       ^^^
+    4 │ }
+    5 │ 
+  
+
+```
+
+

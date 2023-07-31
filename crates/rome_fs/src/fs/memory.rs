@@ -54,7 +54,7 @@ type FileEntry = Arc<Mutex<Vec<u8>>>;
 pub enum ErrorEntry {
     UnknownFileType,
     DereferencedSymlink(PathBuf),
-    InfiniteSymlinkExpansion(PathBuf),
+    DeeplyNestedSymlinkExpansion(PathBuf),
 }
 
 impl MemoryFileSystem {
@@ -254,8 +254,10 @@ impl<'scope> TraversalScope<'scope> for MemoryTraversalScope<'scope> {
                         ErrorEntry::DereferencedSymlink(path) => {
                             ErrorKind::DereferencedSymlink(path.to_string_lossy().to_string())
                         }
-                        ErrorEntry::InfiniteSymlinkExpansion(path) => {
-                            ErrorKind::InfiniteSymlinkExpansion(path.to_string_lossy().to_string())
+                        ErrorEntry::DeeplyNestedSymlinkExpansion(path) => {
+                            ErrorKind::DeeplyNestedSymlinkExpansion(
+                                path.to_string_lossy().to_string(),
+                            )
                         }
                     },
                     severity: Severity::Warning,

@@ -40,7 +40,7 @@ jobs:
             ${{ runner.os }}-
       - uses: pnpm/action-setup@v2.2.4
         with:
-          version: 7
+          version: 8
       - name: Install toolchain
         uses: moonrepo/setup-rust@v0
       - name: Install libraries
@@ -55,4 +55,4 @@ jobs:
           pnpm --prefix npm/backend-jsonrpc run build
       - name: CI checks
         working-directory: npm/js-api
-        run: pnpm ci
+        run: pnpm run ci

@@ -40,6 +40,11 @@
 
 - Fixed the diagnostics emitted when running the `rome format` command;
 
+- Rome doesn't warn anymore when discovering (possibly infinite) symbolic links between directories.
+  This fixes [#4193](https://github.com/rome/tools/issues/4193) which resulted in incorrect warnings
+  when a single file or directory was pointed at by multiple symbolic links. Symbolic links to other
+  symbolic links do still trigger warnings if they are too deeply nested.
+
 ### Configuration
 
 #### Other changes
@@ -142,6 +147,10 @@ if no error diagnostics are emitted.
 
   This rule recommends using `Number.isNaN` instead of the global and unsafe `isNaN` that attempts a type coercion.
 
+- Add [`noUnsafeDeclarationMerging`](https://docs.rome.tools/lint/rules/noUnsafeDeclarationMerging/)
+
+  This rule disallows declaration merging between an interface and a class.
+
 - Add [`useArrowFunction`](https://docs.rome.tools/lint/rules/usearrowfunction/)
 
   This rule proposes turning function expressions into arrow functions.
@@ -191,6 +200,20 @@ if no error diagnostics are emitted.
 - Fix [`noInvalidConstructorSuper`](https://docs.rome.tools/lint/rules/noinvalidconstructorsuper/) rule that erroneously reported generic parents [#4624](https://github.com/rome/tools/issues/4624).
 
 -  Fix [`noDuplicateCase`](https://docs.rome.tools/lint/rules/noDuplicateCase/) rule that erroneously reported as equals the strings literals `"'"` and `'"'` [#4706](https://github.com/rome/tools/issues/4706).
+
+- Improve [`useEnumInitializers`](https://docs.rome.tools/lint/rules/useEnumInitializers/)
+
+  The rule now reports all uninitialized members of an enum in a single diagnostic.
+
+  Moreover, ambient enum declarations are now ignored.
+  This avoids reporting ambient enum declarations in _TypeScript_ declaration files.
+
+  ```ts
+  declare enum Weather {
+    Rainy,
+    Sunny,
+  }
+  ```
 
 - Relax [`noBannedTypes`](https://docs.rome.tools/lint/rules/nobannedtypes/) and improve documentation
 

@@ -65,7 +65,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 18
 
       - name: Install wasm-pack
         uses: jetli/wasm-pack-action@v0.4.0
@@ -81,7 +81,7 @@ jobs:
             ${{ runner.os }}-
       - uses: pnpm/action-setup@v2.2.4
         with:
-          version: 7
+          version: 8
 
       - name: Set release infos
         if: needs.check.outputs.prerelease == 'true'
@@ -133,7 +133,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 18
           registry-url: 'https://registry.npmjs.org'
 
       - name: Set release infos

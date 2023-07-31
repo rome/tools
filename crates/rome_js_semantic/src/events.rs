@@ -394,18 +394,20 @@ impl SemanticEventExtractor {
                 self.push_binding_into_scope(hoisted_scope_id, &name_token, &parent_kind);
                 self.export_function_declaration(node, &parent);
             }
-            JS_FUNCTION_EXPRESSION => {
+            JS_CLASS_EXPRESSION | JS_FUNCTION_EXPRESSION => {
                 self.push_binding_into_scope(None, &name_token, &parent_kind);
-                self.export_function_expression(node, &parent);
+                self.export_declaration_expression(node, &parent);
             }
-            JS_CLASS_DECLARATION | JS_CLASS_EXPORT_DEFAULT_DECLARATION => {
-                let hoisted_scope_id = self.scope_index_to_hoist_declarations(1);
-                self.push_binding_into_scope(hoisted_scope_id, &name_token, &parent_kind);
+            JS_CLASS_DECLARATION
+            | JS_CLASS_EXPORT_DEFAULT_DECLARATION
+            | TS_ENUM_DECLARATION
+            | TS_INTERFACE_DECLARATION
+            | TS_MODULE_DECLARATION
+            | TS_TYPE_ALIAS_DECLARATION => {
+                let parent_scope = self.scopes.get(self.scopes.len() - 2);
+                let parent_scope = parent_scope.map(|scope| scope.scope_id);
+                self.push_binding_into_scope(parent_scope, &name_token, &parent_kind);
                 self.export_declaration(node, &parent);
-            }
-            JS_CLASS_EXPRESSION => {
-                self.push_binding_into_scope(None, &name_token, &parent_kind);
-                self.export_class_expression(node, &parent);
             }
             JS_BINDING_PATTERN_WITH_DEFAULT
             | JS_OBJECT_BINDING_PATTERN
@@ -436,26 +438,6 @@ impl SemanticEventExtractor {
                 if let JS_VARIABLE_DECLARATOR = possible_declarator.kind() {
                     self.export_variable_declarator(node, &possible_declarator);
                 }
-            }
-            TS_TYPE_ALIAS_DECLARATION => {
-                let hoisted_scope_id = self.scope_index_to_hoist_declarations(1);
-                self.push_binding_into_scope(hoisted_scope_id, &name_token, &parent_kind);
-                self.export_declaration(node, &parent);
-            }
-            TS_ENUM_DECLARATION => {
-                let hoisted_scope_id = self.scope_index_to_hoist_declarations(1);
-                self.push_binding_into_scope(hoisted_scope_id, &name_token, &parent_kind);
-                self.export_declaration(node, &parent);
-            }
-            TS_INTERFACE_DECLARATION => {
-                let hoisted_scope_id = self.scope_index_to_hoist_declarations(1);
-                self.push_binding_into_scope(hoisted_scope_id, &name_token, &parent_kind);
-                self.export_declaration(node, &parent);
-            }
-            TS_MODULE_DECLARATION => {
-                let hoisted_scope_id = self.scope_index_to_hoist_declarations(1);
-                self.push_binding_into_scope(hoisted_scope_id, &name_token, &parent_kind);
-                self.export_declaration(node, &parent);
             }
             _ => {
                 self.push_binding_into_scope(None, &name_token, &parent_kind);
@@ -869,30 +851,18 @@ impl SemanticEventExtractor {
         }
     }
 
-    // Check if a function is exported and raise the [Exported] event.
-    fn export_function_expression(
+    // Check if a function or class expression is exported and raise the [Exported] event.
+    fn export_declaration_expression(
         &mut self,
         binding: &JsSyntaxNode,
-        function_expression: &JsSyntaxNode,
+        declaration_expression: &JsSyntaxNode,
     ) {
         use JsSyntaxKind::*;
-        debug_assert!(matches!(function_expression.kind(), JS_FUNCTION_EXPRESSION));
-        let is_module_exports = function_expression
-            .parent()
-            .map(|x| self.is_assignment_left_side_module_exports(&x))
-            .unwrap_or(false);
-        if is_module_exports {
-            self.stash.push_back(SemanticEvent::Exported {
-                range: binding.text_range(),
-            });
-        }
-    }
-
-    // Check if a function is exported and raise the [Exported] event.
-    fn export_class_expression(&mut self, binding: &JsSyntaxNode, class_expression: &JsSyntaxNode) {
-        use JsSyntaxKind::*;
-        debug_assert!(matches!(class_expression.kind(), JS_CLASS_EXPRESSION));
-        let is_module_exports = class_expression
+        debug_assert!(matches!(
+            declaration_expression.kind(),
+            JS_FUNCTION_EXPRESSION | JS_CLASS_EXPRESSION
+        ));
+        let is_module_exports = declaration_expression
             .parent()
             .map(|x| self.is_assignment_left_side_module_exports(&x))
             .unwrap_or(false);

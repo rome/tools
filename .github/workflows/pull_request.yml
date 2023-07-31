@@ -28,8 +28,11 @@ jobs:
         uses: moonrepo/setup-rust@v0
         with:
           components: rustfmt
-      - name: Run rustfmt
-        run: cargo fmt --all --check
+          bins: taplo-cli
+      - name: Run format
+        run: |
+          cargo fmt --all --check
+          taplo fmt -- --locked
 
   lint:
     name: Lint Rust Files
@@ -115,7 +118,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 18
       - name: Cache pnpm modules
         uses: actions/cache@v3
         with:
@@ -125,7 +128,7 @@ jobs:
             ${{ runner.os }}-
       - uses: pnpm/action-setup@v2.2.4
         with:
-          version: 7
+          version: 8
       - name: Install wasm-pack
         uses: jetli/wasm-pack-action@v0.4.0
         with:

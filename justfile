@@ -73,11 +73,11 @@ _touch file:
 
 # Run tests of all crates
 test:
-	cargo nextest run
+	cargo nextest run --no-fail-fast
 
 # Run tests for the crate passed as argument e.g. just test-create rome_cli
 test-crate name:
-	cargo nextest run -E 'package({{name}})'
+	cargo nextest run -E 'package({{name}})' --no-fail-fast
 
 # Run doc tests
 test-doc:

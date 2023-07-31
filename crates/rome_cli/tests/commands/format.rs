@@ -1866,11 +1866,86 @@ fn ignore_comments_error_when_allow_comments() {
         Args::from([("format"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
-    // assert!(result.is_ok(), "run_cli returned {result:?}");
+    assert!(result.is_ok(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
         "ignore_comments_error_when_allow_comments",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn format_jsonc_files() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let code = r#"
+/*test*/ [
+
+/* some other comment*/1, 2, 3]
+	"#;
+    let file_path = Path::new("file.jsonc");
+    fs.insert(file_path.into(), code.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Args::from([("format"), file_path.as_os_str().to_str().unwrap()].as_slice()),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "format_jsonc_files",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn treat_known_json_files_as_jsonc_files() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let code = r#"
+/*test*/ [
+
+/* some other comment*/1, 2, 3]
+	"#;
+    let ts = Path::new("files/typescript.json");
+    fs.insert(ts.into(), code.as_bytes());
+    let eslint = Path::new("files/.eslintrc.json");
+    fs.insert(eslint.into(), code.as_bytes());
+    let jshint = Path::new("files/.jshintrc");
+    fs.insert(jshint.into(), code.as_bytes());
+    let babel = Path::new("files/.babelrc");
+    fs.insert(babel.into(), code.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Args::from(
+            [
+                ("format"),
+                ts.as_os_str().to_str().unwrap(),
+                eslint.as_os_str().to_str().unwrap(),
+                jshint.as_os_str().to_str().unwrap(),
+                babel.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "treat_known_json_files_as_jsonc_files",
         fs,
         console,
         result,
