@@ -1,11 +1,11 @@
 ---
-source: crates/rome_js_formatter/tests/spec_test.rs
-expression: element.jsx
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info: jsx/element.jsx
 ---
 
 # Input
 
-```js
+```jsx
 // Single string attribute
 <div tooltip="A very long tooltip text that would otherwise make the attribute break onto the same line but it is not because of the single string layout"></div>;
 
@@ -275,6 +275,68 @@ const breadcrumbItems = [
 	),
 ].concat(extraBreadcrumbItems);
 
+function Component() {
+	return (
+		<Test
+			prop={value}
+			// comment
+		/>
+	);
+}
+
+let b = (
+	<section>
+		<div>
+			aVeryLongCOntentThat
+		</div // comment
+	>
+	</section>
+);
+
+
+let a = (
+	</*comment3*/Test
+		// comment before attribute
+		/*comment1*/prop/*comment2*/=/*comment3*/{/*comment4*/value /*comment5*/}/*comment6*/
+		// comment after attribute
+	>
+		<Test
+			// comment before attribute
+			/*comment1*/prop/*comment2*/=/*comment3*/{/*comment4*/value /*comment5*/}/*comment6*/
+			// comment after attribute
+		/>
+	</Test>
+);
+
+function Component() {
+	return (
+		<div>
+			{fn(data)}{' '}
+			<Component />
+		</div>
+	);
+}
+
+// jsx whitespace {' '} adds meaningful jsx text
+function Component() {
+	return (
+		<div>
+			{fn(datadatadatadatadatadatadatadatadatadatadatadatadatadatadatadata)}{' '}
+			<Component />
+		</div>
+	);
+}
+
+// not jsx whitespace doesn't add meaningful jsx text
+function Component() {
+	return (
+		<div>
+			{fn(datadatadatadatadatadatadatadatadatadatadatadatadatadatadatadata)}{'  '}
+			<Component />
+		</div>
+	);
+}
+
 ```
 
 
@@ -288,11 +350,14 @@ const breadcrumbItems = [
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
+Semicolons: Always
+Arrow parentheses: Always
 -----
 
-```js
+```jsx
 // Single string attribute
 <div tooltip="A very long tooltip text that would otherwise make the attribute break onto the same line but it is not because of the single string layout"></div>;
 
@@ -626,9 +691,74 @@ const breadcrumbItems = [
 	</Breadcrumb.Item>,
 ].concat(extraBreadcrumbItems);
 
+function Component() {
+	return (
+		<Test
+			prop={value}
+			// comment
+		/>
+	);
+}
 
-## Lines exceeding width of 80 characters
+let b = (
+	<section>
+		<div>
+			aVeryLongCOntentThat
+		</div // comment
+		>
+	</section>
+);
 
+let a = (
+	</*comment3*/ Test
+		// comment before attribute
+		/*comment1*/ prop /*comment2*/=/*comment3*/ {
+			/*comment4*/ value /*comment5*/
+		} /*comment6*/
+		// comment after attribute
+	>
+		<Test
+			// comment before attribute
+			/*comment1*/ prop /*comment2*/=/*comment3*/ {
+				/*comment4*/ value /*comment5*/
+			} /*comment6*/
+			// comment after attribute
+		/>
+	</Test>
+);
+
+function Component() {
+	return (
+		<div>
+			{fn(data)} <Component />
+		</div>
+	);
+}
+
+// jsx whitespace {' '} adds meaningful jsx text
+function Component() {
+	return (
+		<div>
+			{fn(datadatadatadatadatadatadatadatadatadatadatadatadatadatadatadata)}{" "}
+			<Component />
+		</div>
+	);
+}
+
+// not jsx whitespace doesn't add meaningful jsx text
+function Component() {
+	return (
+		<div>
+			{fn(datadatadatadatadatadatadatadatadatadatadatadatadatadatadatadata)}
+			{"  "}
+			<Component />
+		</div>
+	);
+}
+```
+
+# Lines exceeding max width of 80 characters
+```
     2: <div tooltip="A very long tooltip text that would otherwise make the attribute break onto the same line but it is not because of the single string layout"></div>;
     7: 		tooltip="A very long tooltip text that would otherwise make the attribute break
    14: 	<ASuperLongComponentNameThatWouldBreakButDoesntSinceTheComponent></ASuperLongComponentNameThatWouldBreakButDoesntSinceTheComponent>

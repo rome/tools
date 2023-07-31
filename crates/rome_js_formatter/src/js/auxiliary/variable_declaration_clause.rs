@@ -1,11 +1,12 @@
 use crate::prelude::*;
-use crate::utils::FormatWithSemicolon;
+use crate::utils::FormatStatementSemicolon;
+use rome_formatter::write;
 
 use rome_js_syntax::JsVariableDeclarationClause;
 use rome_js_syntax::JsVariableDeclarationClauseFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsVariableDeclarationClause;
+pub(crate) struct FormatJsVariableDeclarationClause;
 
 impl FormatNodeRule<JsVariableDeclarationClause> for FormatJsVariableDeclarationClause {
     fn fmt_fields(
@@ -18,6 +19,12 @@ impl FormatNodeRule<JsVariableDeclarationClause> for FormatJsVariableDeclaration
             semicolon_token,
         } = node.as_fields();
 
-        FormatWithSemicolon::new(&declaration.format(), semicolon_token.as_ref()).fmt(f)
+        write!(
+            f,
+            [
+                declaration.format(),
+                FormatStatementSemicolon::new(semicolon_token.as_ref())
+            ]
+        )
     }
 }

@@ -3,8 +3,8 @@ mod interner;
 mod path;
 
 pub use fs::{
-    ErrorEntry, FileSystem, FileSystemExt, MemoryFileSystem, OpenOptions, OsFileSystem,
-    TraversalContext, TraversalScope, CONFIG_NAME,
+    AutoSearchResult, ErrorEntry, File, FileSystem, FileSystemDiagnostic, FileSystemExt,
+    MemoryFileSystem, OpenOptions, OsFileSystem, TraversalContext, TraversalScope, CONFIG_NAME,
 };
-pub use interner::{AtomicInterner, IndexSetInterner, PathInterner};
+pub use interner::PathInterner;
 pub use path::RomePath;

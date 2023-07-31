@@ -2,16 +2,16 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 INTERFACE_KW@0..10 "interface" [] [Whitespace(" ")],
                 TsIdentifierBinding {
                     name_token: IDENT@10..12 "A" [] [Whitespace(" ")],
                 },
                 L_CURLY@12..13 "{" [] [],
-                JsUnknown {
+                JsBogus {
                     items: [
-                        JsUnknown {
+                        JsBogus {
                             items: [
                                 PUBLIC_KW@13..26 "public" [Newline("\n"), Whitespace("    ")] [Whitespace("  ")],
                                 L_BRACK@26..27 "[" [] [],
@@ -41,16 +41,16 @@ JsModule {
                 R_CURLY@46..48 "}" [Newline("\n")] [],
             ],
         },
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 INTERFACE_KW@48..59 "interface" [Newline("\n")] [Whitespace(" ")],
                 TsIdentifierBinding {
                     name_token: IDENT@59..61 "B" [] [Whitespace(" ")],
                 },
                 L_CURLY@61..62 "{" [] [],
-                JsUnknown {
+                JsBogus {
                     items: [
-                        JsUnknown {
+                        JsBogus {
                             items: [
                                 PRIVATE_KW@62..76 "private" [Newline("\n"), Whitespace("    ")] [Whitespace("  ")],
                                 L_BRACK@76..77 "[" [] [],
@@ -80,16 +80,16 @@ JsModule {
                 R_CURLY@96..98 "}" [Newline("\n")] [],
             ],
         },
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 INTERFACE_KW@98..109 "interface" [Newline("\n")] [Whitespace(" ")],
                 TsIdentifierBinding {
                     name_token: IDENT@109..111 "C" [] [Whitespace(" ")],
                 },
                 L_CURLY@111..112 "{" [] [],
-                JsUnknown {
+                JsBogus {
                     items: [
-                        JsUnknown {
+                        JsBogus {
                             items: [
                                 PROTECTED_KW@112..128 "protected" [Newline("\n"), Whitespace("    ")] [Whitespace("  ")],
                                 L_BRACK@128..129 "[" [] [],
@@ -127,13 +127,13 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..150
-    0: JS_UNKNOWN_STATEMENT@0..48
+    0: JS_BOGUS_STATEMENT@0..48
       0: INTERFACE_KW@0..10 "interface" [] [Whitespace(" ")]
       1: TS_IDENTIFIER_BINDING@10..12
         0: IDENT@10..12 "A" [] [Whitespace(" ")]
       2: L_CURLY@12..13 "{" [] []
-      3: JS_UNKNOWN@13..46
-        0: JS_UNKNOWN@13..46
+      3: JS_BOGUS@13..46
+        0: JS_BOGUS@13..46
           0: PUBLIC_KW@13..26 "public" [Newline("\n"), Whitespace("    ")] [Whitespace("  ")]
           1: L_BRACK@26..27 "[" [] []
           2: TS_INDEX_SIGNATURE_PARAMETER@27..36
@@ -150,13 +150,13 @@ JsModule {
               0: STRING_KW@39..45 "string" [] []
           5: SEMICOLON@45..46 ";" [] []
       4: R_CURLY@46..48 "}" [Newline("\n")] []
-    1: JS_UNKNOWN_STATEMENT@48..98
+    1: JS_BOGUS_STATEMENT@48..98
       0: INTERFACE_KW@48..59 "interface" [Newline("\n")] [Whitespace(" ")]
       1: TS_IDENTIFIER_BINDING@59..61
         0: IDENT@59..61 "B" [] [Whitespace(" ")]
       2: L_CURLY@61..62 "{" [] []
-      3: JS_UNKNOWN@62..96
-        0: JS_UNKNOWN@62..96
+      3: JS_BOGUS@62..96
+        0: JS_BOGUS@62..96
           0: PRIVATE_KW@62..76 "private" [Newline("\n"), Whitespace("    ")] [Whitespace("  ")]
           1: L_BRACK@76..77 "[" [] []
           2: TS_INDEX_SIGNATURE_PARAMETER@77..86
@@ -173,13 +173,13 @@ JsModule {
               0: STRING_KW@89..95 "string" [] []
           5: SEMICOLON@95..96 ";" [] []
       4: R_CURLY@96..98 "}" [Newline("\n")] []
-    2: JS_UNKNOWN_STATEMENT@98..150
+    2: JS_BOGUS_STATEMENT@98..150
       0: INTERFACE_KW@98..109 "interface" [Newline("\n")] [Whitespace(" ")]
       1: TS_IDENTIFIER_BINDING@109..111
         0: IDENT@109..111 "C" [] [Whitespace(" ")]
       2: L_CURLY@111..112 "{" [] []
-      3: JS_UNKNOWN@112..148
-        0: JS_UNKNOWN@112..148
+      3: JS_BOGUS@112..148
+        0: JS_BOGUS@112..148
           0: PROTECTED_KW@112..128 "protected" [Newline("\n"), Whitespace("    ")] [Whitespace("  ")]
           1: L_BRACK@128..129 "[" [] []
           2: TS_INDEX_SIGNATURE_PARAMETER@129..138

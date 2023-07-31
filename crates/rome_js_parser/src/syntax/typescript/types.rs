@@ -1,37 +1,100 @@
 use crate::parser::{RecoveryError, RecoveryResult};
+use crate::prelude::*;
 use crate::state::{EnterType, SignatureFlags};
 use crate::syntax::expr::{
-    is_at_identifier, is_nth_at_identifier, is_nth_at_identifier_or_keyword,
-    parse_big_int_literal_expression, parse_identifier, parse_literal_expression, parse_name,
-    parse_number_literal_expression, parse_reference_identifier, parse_template_elements,
-    ExpressionContext,
+    is_at_binary_operator, is_at_expression, is_at_identifier, is_nth_at_identifier,
+    is_nth_at_identifier_or_keyword, parse_big_int_literal_expression, parse_identifier,
+    parse_literal_expression, parse_name, parse_number_literal_expression,
+    parse_reference_identifier, parse_template_elements, ExpressionContext,
 };
 use crate::syntax::function::{
     parse_formal_parameter, parse_parameter_list, skip_parameter_start, ParameterContext,
 };
 use crate::syntax::js_parse_error::{
-    expected_identifier, expected_object_member_name, expected_parameter, expected_parameters,
-    expected_property_or_signature,
+    decorators_not_allowed, expected_identifier, expected_object_member_name, expected_parameter,
+    expected_parameters, expected_property_or_signature, modifier_already_seen,
+    modifier_must_precede_modifier,
 };
 use crate::syntax::object::{
     is_at_object_member_name, is_nth_at_type_member_name, parse_object_member_name,
 };
 use crate::syntax::stmt::optional_semi;
 use crate::syntax::typescript::try_parse;
-use crate::syntax::typescript::ts_parse_error::{expected_ts_type, expected_ts_type_parameter};
+use crate::syntax::typescript::ts_parse_error::{
+    expected_ts_type, expected_ts_type_parameter,
+    ts_const_modifier_cannot_appear_on_a_type_parameter,
+    ts_in_out_modifier_cannot_appear_on_a_type_parameter,
+};
+use bitflags::bitflags;
+use rome_parser::parse_lists::{ParseNodeList, ParseSeparatedList};
+use smallvec::SmallVec;
 
 use crate::lexer::{LexContext, ReLexContext};
+use crate::span::Span;
+use crate::syntax::class::parse_decorators;
 use crate::JsSyntaxFeature::TypeScript;
-use crate::{
-    Absent, CompletedMarker, ParseNodeList, ParseRecovery, ParseSeparatedList, ParsedSyntax,
-    Parser, Present, SyntaxFeature,
-};
-use rome_diagnostics::Span;
+use crate::{Absent, JsParser, ParseRecovery, ParsedSyntax, Present};
 use rome_js_syntax::JsSyntaxKind::TS_TYPE_ANNOTATION;
 use rome_js_syntax::T;
 use rome_js_syntax::{JsSyntaxKind::*, *};
 
 use super::{expect_ts_index_signature_member, is_at_ts_index_signature_member, MemberParent};
+
+bitflags! {
+    /// Context tracking state that applies to the parsing of all types
+    #[derive(Debug, Default, Copy, Clone, Eq, PartialEq)]
+    pub(crate) struct TypeContext: u8 {
+        /// Whether conditional types `extends string ? string : number` are allowed in the current context.
+        ///
+        /// By default, conditional types are allowed.
+        const DISALLOW_CONDITIONAL_TYPES = 1 << 0;
+
+        /// Whether 'in' and 'out' modifiers are allowed in the current context.
+        ///
+        /// By default, 'in' and 'out' modifiers are not allowed.
+        const ALLOW_IN_OUT_MODIFIER = 1 << 1;
+
+        /// Whether 'const' modifier is allowed in the current context.
+        ///
+        /// By default, 'const' modifier is not allowed.
+        const ALLOW_CONST_MODIFIER = 1 << 2;
+    }
+}
+
+impl TypeContext {
+    pub(crate) fn and_allow_conditional_types(self, allow: bool) -> Self {
+        self.and(TypeContext::DISALLOW_CONDITIONAL_TYPES, !allow)
+    }
+
+    pub(crate) fn and_allow_in_out_modifier(self, allow: bool) -> Self {
+        self.and(TypeContext::ALLOW_IN_OUT_MODIFIER, allow)
+    }
+
+    pub(crate) fn and_allow_const_modifier(self, allow: bool) -> Self {
+        self.and(TypeContext::ALLOW_CONST_MODIFIER, allow)
+    }
+
+    pub(crate) const fn is_conditional_type_allowed(&self) -> bool {
+        !self.contains(TypeContext::DISALLOW_CONDITIONAL_TYPES)
+    }
+
+    pub(crate) const fn is_in_out_modifier_allowed(&self) -> bool {
+        self.contains(TypeContext::ALLOW_IN_OUT_MODIFIER)
+    }
+
+    pub(crate) const fn is_const_modifier_allowed(&self) -> bool {
+        self.contains(TypeContext::ALLOW_CONST_MODIFIER)
+    }
+
+    /// Adds the `flag` if `set` is `true`, otherwise removes the `flag`
+    fn and(self, flag: TypeContext, set: bool) -> Self {
+        if set {
+            self | flag
+        } else {
+            self - flag
+        }
+    }
+}
 
 pub(crate) fn is_reserved_type_name(name: &str) -> bool {
     name.len() <= 6
@@ -56,14 +119,14 @@ pub(crate) fn is_reserved_module_name(name: &str) -> bool {
     name.len() == 4 && matches!(name, "void" | "null")
 }
 
-pub(crate) fn parse_ts_type_annotation(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_ts_type_annotation(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T![:]) {
         return Absent;
     }
 
     let m = p.start();
     p.bump(T![:]);
-    parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
+    parse_ts_type(p, TypeContext::default()).or_add_diagnostic(p, expected_ts_type);
     Present(m.complete(p, TS_TYPE_ANNOTATION))
 }
 
@@ -73,25 +136,25 @@ pub(crate) fn parse_ts_type_annotation(p: &mut Parser) -> ParsedSyntax {
 // type C = { (a): a is string }
 // const a = { test(x): x is string { return typeof x === "string" } }
 // class D { test(x): x is string { return typeof x === "string"; } }
-pub(crate) fn parse_ts_return_type_annotation(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_ts_return_type_annotation(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T![:]) {
         return Absent;
     }
 
     let m = p.start();
     p.bump(T![:]);
-    parse_ts_return_type(p).or_add_diagnostic(p, expected_ts_type);
+    parse_ts_return_type(p, TypeContext::default()).or_add_diagnostic(p, expected_ts_type);
     Present(m.complete(p, TS_RETURN_TYPE_ANNOTATION))
 }
 
-fn parse_ts_call_signature(p: &mut Parser) {
-    parse_ts_type_parameters(p).ok();
+fn parse_ts_call_signature(p: &mut JsParser, context: TypeContext) {
+    parse_ts_type_parameters(p, context).ok();
     parse_parameter_list(p, ParameterContext::Declaration, SignatureFlags::empty())
         .or_add_diagnostic(p, expected_parameters);
     parse_ts_return_type_annotation(p).ok();
 }
 
-fn parse_ts_type_parameter_name(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_type_parameter_name(p: &mut JsParser) -> ParsedSyntax {
     parse_identifier(p, TS_TYPE_PARAMETER_NAME)
 }
 
@@ -100,7 +163,7 @@ fn parse_ts_type_parameter_name(p: &mut Parser) -> ParsedSyntax {
 //
 // test_err ts ts_type_parameters_incomplete
 // type A<T
-pub(crate) fn parse_ts_type_parameters(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_ts_type_parameters(p: &mut JsParser, context: TypeContext) -> ParsedSyntax {
     if !is_nth_at_ts_type_parameters(p, 0) {
         return Absent;
     }
@@ -110,37 +173,38 @@ pub(crate) fn parse_ts_type_parameters(p: &mut Parser) -> ParsedSyntax {
     if p.at(T![>]) {
         p.error(expected_ts_type_parameter(p, p.cur_range()));
     }
-    TsTypeParameterList.parse_list(p);
+    TsTypeParameterList(context).parse_list(p);
     p.expect(T![>]);
 
     Present(m.complete(p, TS_TYPE_PARAMETERS))
 }
 
-struct TsTypeParameterList;
+struct TsTypeParameterList(TypeContext);
 
 impl ParseSeparatedList for TsTypeParameterList {
-    fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
-        parse_ts_type_parameter(p)
+    type Kind = JsSyntaxKind;
+    type Parser<'source> = JsParser<'source>;
+
+    const LIST_KIND: Self::Kind = TS_TYPE_PARAMETER_LIST;
+
+    fn parse_element(&mut self, p: &mut JsParser) -> ParsedSyntax {
+        parse_ts_type_parameter(p, self.0)
     }
 
-    fn is_at_list_end(&self, p: &mut Parser) -> bool {
+    fn is_at_list_end(&self, p: &mut JsParser) -> bool {
         p.at(T![>])
     }
 
-    fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult {
+    fn recover(&mut self, p: &mut JsParser, parsed_element: ParsedSyntax) -> RecoveryResult {
         parsed_element.or_recover(
             p,
             &ParseRecovery::new(
-                JS_UNKNOWN,
+                TS_BOGUS_TYPE,
                 token_set![T![>], T![,], T![ident], T![yield], T![await]],
             )
             .enable_recovery_on_line_break(),
             expected_ts_type_parameter,
         )
-    }
-
-    fn list_kind() -> JsSyntaxKind {
-        TS_TYPE_PARAMETER_LIST
     }
 
     fn separating_element_kind(&mut self) -> JsSyntaxKind {
@@ -152,19 +216,248 @@ impl ParseSeparatedList for TsTypeParameterList {
     }
 }
 
-fn parse_ts_type_parameter(p: &mut Parser) -> ParsedSyntax {
-    parse_ts_type_parameter_name(p).map(|name| {
-        let m = name.precede(p);
-        parse_ts_type_constraint_clause(p).ok();
-        parse_ts_default_type_clause(p).ok();
-        m.complete(p, TS_TYPE_PARAMETER)
-    })
+// test_err ts type_parameter_modifier
+// export default function foo<in T>() {}
+// export function foo<out T>() {}
+// export function foo1<in T>() {}
+// export function foo2<out T>() {}
+// let foo: Foo<in T>
+// let foo: Foo<out T>
+// declare function foo<in T>()
+// declare function foo<out T>()
+// declare let foo: Foo<in T>
+// declare let foo: Foo<out T>
+// foo = function <in T>() {}
+// foo = function <out T>() {}
+// class Foo { foo<in T>(): T {} }
+// class Foo { foo<out T>(): T {} }
+// foo = { foo<in T>(): T {} };
+// foo = { foo<out T>(): T {} };
+// <in T>() => {};
+// <out T>() => {};
+// <in T, out T>() => {};
+// let x: <in T>() => {};
+// let x: <out T>() => {};
+// let x: <in T, out T>() => {};
+// let x: new <in T>() => {};
+// let x: new <out T>() => {};
+// let x: new <in T, out T>() => {};
+// let x: { y<in T>(): any };
+// let x: { y<out T>(): any };
+// let x: { y<in T, out T>(): any };
+// type Foo<i\\u006E T> = {}
+// type Foo<ou\\u0074 T> = {}
+// type Foo<in in> = {}
+// type Foo<out in> = {}
+// type Foo<out in T> = {}
+// type Foo<public T> = {}
+// type Foo<innn T> = {}
+// type Foo<in out in T> = {}
+// type Foo<in out out T> = {}
+// function foo<in T>() {}
+// function foo<out T>() {}
+// type Foo<const U> = {};
+
+// test tsx type_parameter_modifier_tsx
+// <in T></in>;
+// <out T></out>;
+// <const T></const>;
+// <in out T></in>;
+// <out in T></out>;
+// <in T extends={true}></in>;
+// <out T extends={true}></out>;
+// <in out T extends={true}></in>;
+
+// test ts type_parameter_modifier
+// type Foo<in T> = {}
+// type Foo<out> = {}
+// type Foo<out T> = {}
+// type Foo<in out> = {}
+// type Foo<out out> = {}
+// type Foo<in out out> = {}
+// type Foo<in X, out Y> = {}
+// type Foo<out X, in Y> = {}
+// type Foo<out X, out Y extends keyof X> = {}
+// class Foo<in T> {}
+// class Foo<out T> {}
+// export default class Foo<in T> {}
+// class Foo<out T> {}
+// interface Foo<in T> {}
+// interface Foo<out T> {}
+// declare class Foo<in T> {}
+// declare class Foo<out T> {}
+// declare interface Foo<in T> {}
+// declare interface Foo<out T> {}
+// function a<const T>() {}
+// function b<const T extends U>() {}
+// function c<T, const U>() {}
+// declare function d<const T>();
+// <T>() => {};
+// <const T>() => {};
+// (function <const T>() {});
+// (function <const T extends U>() {});
+// (function <T, const U>() {});
+// class A<const T> {}
+// class B<const T extends U> {}
+// class C<T, const U> {}
+// class D<in const T> {}
+// class E<const in T> {}
+// class F<in const out T> {}
+// (class <const T> {});
+// (class <const T extends U> {});
+// (class <T, const U> {});
+// (class <in const T> {});
+// (class <const in T> {});
+// class _ {
+//   method<const T>() {}
+//   method<const T extends U>() {}
+//   method<T, const U>() {}
+// }
+// declare module a {
+//   function test<const T>(): T;
+// }
+// const obj = {
+//   a<const T>(b: any): b is T { return true; }
+// }
+
+fn parse_ts_type_parameter(p: &mut JsParser, context: TypeContext) -> ParsedSyntax {
+    let m = p.start();
+    parse_ts_type_parameter_modifiers(p, context).ok();
+
+    let name = parse_ts_type_parameter_name(p);
+    parse_ts_type_constraint_clause(p, context).ok();
+    parse_ts_default_type_clause(p).ok();
+
+    if name.is_absent() {
+        m.abandon(p);
+        Absent
+    } else {
+        Present(m.complete(p, TS_TYPE_PARAMETER))
+    }
+}
+
+#[derive(Eq, PartialEq, Clone, Copy, Debug)]
+enum TypeParameterModifierKind {
+    In,
+    Out,
+    Const,
+}
+
+/// Stores the range of a parsed modifier with its kind
+#[derive(Eq, PartialEq, Clone, Copy, Debug)]
+struct TypeParameterModifier {
+    kind: TypeParameterModifierKind,
+    range: TextRange,
+}
+
+impl TypeParameterModifier {
+    const fn as_syntax_kind(&self) -> JsSyntaxKind {
+        match self.kind {
+            TypeParameterModifierKind::In => TS_IN_MODIFIER,
+            TypeParameterModifierKind::Out => TS_OUT_MODIFIER,
+            TypeParameterModifierKind::Const => TS_CONST_MODIFIER,
+        }
+    }
+}
+
+#[derive(Debug, Default)]
+struct ClassMemberModifierList(SmallVec<[TypeParameterModifier; 3]>);
+
+impl ClassMemberModifierList {
+    fn add_modifier(&mut self, modifier: TypeParameterModifier) {
+        self.0.push(modifier);
+    }
+
+    fn find(&self, modifier_kind: &TypeParameterModifierKind) -> Option<&TypeParameterModifier> {
+        self.0
+            .iter()
+            .find(|predicate| predicate.kind == *modifier_kind)
+    }
+}
+
+pub(crate) fn is_nth_at_type_parameter_modifier(p: &mut JsParser, n: usize) -> bool {
+    match p.nth(n) {
+        T![in] | T![out] | T![const] => !p.nth_at(n + 1, T![,]) && !p.nth_at(n + 1, T![>]),
+        _ => false,
+    }
+}
+
+fn parse_ts_type_parameter_modifiers(p: &mut JsParser, context: TypeContext) -> ParsedSyntax {
+    let list = p.start();
+    let mut modifiers = ClassMemberModifierList::default();
+
+    while is_nth_at_type_parameter_modifier(p, 0) {
+        let modifier_kind = match p.cur() {
+            T![in] => TypeParameterModifierKind::In,
+            T![out] => TypeParameterModifierKind::Out,
+            T![const] => TypeParameterModifierKind::Const,
+            _ => unreachable!("keywords that are not 'in', 'out' and 'const' are checked earlier"),
+        };
+        let m = p.start();
+        let text_range = p.cur_range();
+        p.bump_any();
+
+        if matches!(
+            modifier_kind,
+            TypeParameterModifierKind::In | TypeParameterModifierKind::Out,
+        ) && !context.is_in_out_modifier_allowed()
+        {
+            p.error(ts_in_out_modifier_cannot_appear_on_a_type_parameter(
+                p, text_range,
+            ));
+            m.abandon(p);
+            continue;
+        }
+
+        if matches!(modifier_kind, TypeParameterModifierKind::Const)
+            && !context.is_const_modifier_allowed()
+        {
+            p.error(ts_const_modifier_cannot_appear_on_a_type_parameter(
+                p, text_range,
+            ));
+            m.abandon(p);
+            continue;
+        }
+
+        // check for duplicate modifiers
+        if let Some(existing_modifier) = modifiers.find(&modifier_kind) {
+            p.error(modifier_already_seen(
+                p,
+                text_range,
+                existing_modifier.range,
+            ));
+            m.abandon(p);
+            continue;
+        }
+
+        // check for modifier precedence
+        if let Some(ts_out_modifier) = modifiers.find(&TypeParameterModifierKind::Out) {
+            if modifier_kind == TypeParameterModifierKind::In {
+                p.error(modifier_must_precede_modifier(
+                    p,
+                    text_range,
+                    ts_out_modifier.range,
+                ));
+                m.abandon(p);
+                continue;
+            }
+        }
+
+        let modifier = TypeParameterModifier {
+            kind: modifier_kind,
+            range: text_range,
+        };
+        modifiers.add_modifier(modifier);
+        m.complete(p, modifier.as_syntax_kind());
+    }
+
+    Present(list.complete(p, TS_TYPE_PARAMETER_MODIFIER_LIST))
 }
 
 // test ts ts_type_constraint_clause
 // type A<X extends number> = X;
 // type B<X extends number | string> = { a: X }
-fn parse_ts_type_constraint_clause(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_type_constraint_clause(p: &mut JsParser, context: TypeContext) -> ParsedSyntax {
     if !p.at(T![extends]) {
         return Absent;
     }
@@ -172,73 +465,65 @@ fn parse_ts_type_constraint_clause(p: &mut Parser) -> ParsedSyntax {
     let m = p.start();
     p.expect(T![extends]);
 
-    parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
+    parse_ts_type(p, context).or_add_diagnostic(p, expected_ts_type);
     Present(m.complete(p, TS_TYPE_CONSTRAINT_CLAUSE))
 }
 
 // test ts ts_default_type_clause
 // type A<X=string> = X;
 // type B<X extends number | string = string> = { a: X }
-fn parse_ts_default_type_clause(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_default_type_clause(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T![=]) {
         return Absent;
     }
 
     let m = p.start();
     p.bump(T![=]);
-    parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
+    parse_ts_type(p, TypeContext::default()).or_add_diagnostic(p, expected_ts_type);
     Present(m.complete(p, TS_DEFAULT_TYPE_CLAUSE))
 }
 
-fn is_nth_at_ts_type_parameters(p: &mut Parser, n: usize) -> bool {
+fn is_nth_at_ts_type_parameters(p: &mut JsParser, n: usize) -> bool {
     p.nth_at(n, T![<])
 }
 
 #[inline(always)]
-pub(crate) fn parse_ts_type(p: &mut Parser) -> ParsedSyntax {
-    parse_ts_type_impl(p, ConditionalType::Allowed)
-}
-
-enum ConditionalType {
-    Allowed,
-    Disallowed,
-}
-
-impl ConditionalType {
-    fn is_allowed(&self) -> bool {
-        matches!(self, ConditionalType::Allowed)
-    }
-}
-
-fn parse_ts_type_impl(p: &mut Parser, conditional_type: ConditionalType) -> ParsedSyntax {
+pub(crate) fn parse_ts_type(p: &mut JsParser, context: TypeContext) -> ParsedSyntax {
     p.with_state(EnterType, |p| {
         if is_at_constructor_type(p) {
-            return parse_ts_constructor_type(p);
+            return parse_ts_constructor_type(p, context);
         }
 
         if is_at_function_type(p) {
-            return parse_ts_function_type(p);
+            return parse_ts_function_type(p, context);
         }
 
-        let left = parse_ts_union_type_or_higher(p);
+        let left = parse_ts_union_type_or_higher(p, context);
 
         // test ts ts_conditional_type_call_signature_lhs
         // type X<V> = V extends (...args: any[]) => any ? (...args: Parameters<V>) => void : Function;
-        if conditional_type.is_allowed() {
+        if context.is_conditional_type_allowed() {
             left.map(|left| {
                 // test ts ts_conditional_type
                 // type A = number;
                 // type B = string extends number ? string : number;
                 // type C = A extends (B extends A ? number : string) ? void : number;
+                // type D<T> = T extends [infer S extends string, ...unknown[]] ? S : never;
+                // type E<U, T> = T extends (infer U extends number ? U : T ) ? U : T
+                // type F<T> = T extends { [P in infer U extends keyof T ? 1 : 0]: 1; } ? 1 : 0;
+                // type G<T> = T extends [unknown, infer S extends string] ? S : never;
+                // type H = A extends () => B extends C ? D : E ? F : G;
+                // type J<T> = T extends ((...a: any[]) => infer R extends string) ? R : never;
                 if !p.has_preceding_line_break() && p.at(T![extends]) {
                     let m = left.precede(p);
                     p.expect(T![extends]);
-                    parse_ts_type_impl(p, ConditionalType::Disallowed)
+
+                    parse_ts_type(p, context.and_allow_conditional_types(false))
                         .or_add_diagnostic(p, expected_ts_type);
                     p.expect(T![?]);
-                    parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
+                    parse_ts_type(p, context).or_add_diagnostic(p, expected_ts_type);
                     p.expect(T![:]);
-                    parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
+                    parse_ts_type(p, context).or_add_diagnostic(p, expected_ts_type);
                     m.complete(p, TS_CONDITIONAL_TYPE)
                 } else {
                     left
@@ -254,15 +539,15 @@ fn parse_ts_type_impl(p: &mut Parser, conditional_type: ConditionalType) -> Pars
 // type A = string | number;
 // type B = | A | void | null;
 // type C = A & C | C;
-fn parse_ts_union_type_or_higher(p: &mut Parser) -> ParsedSyntax {
-    parse_ts_union_or_intersection_type(p, IntersectionOrUnionType::Union)
+fn parse_ts_union_type_or_higher(p: &mut JsParser, context: TypeContext) -> ParsedSyntax {
+    parse_ts_union_or_intersection_type(p, IntersectionOrUnionType::Union, context)
 }
 
 // test ts ts_intersection_type
 // type A = string & number;
 // type B = & A & void & null;
-fn parse_ts_intersection_type_or_higher(p: &mut Parser) -> ParsedSyntax {
-    parse_ts_union_or_intersection_type(p, IntersectionOrUnionType::Intersection)
+fn parse_ts_intersection_type_or_higher(p: &mut JsParser, context: TypeContext) -> ParsedSyntax {
+    parse_ts_union_or_intersection_type(p, IntersectionOrUnionType::Intersection, context)
 }
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
@@ -297,18 +582,19 @@ impl IntersectionOrUnionType {
     }
 
     #[inline]
-    fn parse_element(&self, p: &mut Parser) -> ParsedSyntax {
+    fn parse_element(&self, p: &mut JsParser, context: TypeContext) -> ParsedSyntax {
         match self {
-            IntersectionOrUnionType::Union => parse_ts_intersection_type_or_higher(p),
-            IntersectionOrUnionType::Intersection => parse_ts_primary_type(p),
+            IntersectionOrUnionType::Union => parse_ts_intersection_type_or_higher(p, context),
+            IntersectionOrUnionType::Intersection => parse_ts_primary_type(p, context),
         }
     }
 }
 
 #[inline]
 fn parse_ts_union_or_intersection_type(
-    p: &mut Parser,
+    p: &mut JsParser,
     ty_kind: IntersectionOrUnionType,
+    context: TypeContext,
 ) -> ParsedSyntax {
     // Leading operator: `& A & B`
     if p.at(ty_kind.operator()) {
@@ -316,21 +602,21 @@ fn parse_ts_union_or_intersection_type(
         p.bump(ty_kind.operator());
         let list = p.start();
         ty_kind
-            .parse_element(p)
+            .parse_element(p, context)
             .or_add_diagnostic(p, expected_ts_type);
 
-        eat_ts_union_or_intersection_type_elements(p, ty_kind);
+        eat_ts_union_or_intersection_type_elements(p, ty_kind, context);
 
         list.complete(p, ty_kind.list_kind());
 
         Present(m.complete(p, ty_kind.kind()))
     } else {
-        let first = ty_kind.parse_element(p);
+        let first = ty_kind.parse_element(p, context);
 
         if p.at(ty_kind.operator()) {
             let list = first.precede(p);
 
-            eat_ts_union_or_intersection_type_elements(p, ty_kind);
+            eat_ts_union_or_intersection_type_elements(p, ty_kind, context);
 
             let completed_list = list.complete(p, ty_kind.list_kind());
             let m = completed_list.precede(p);
@@ -343,17 +629,21 @@ fn parse_ts_union_or_intersection_type(
 }
 
 #[inline]
-fn eat_ts_union_or_intersection_type_elements(p: &mut Parser, ty_kind: IntersectionOrUnionType) {
+fn eat_ts_union_or_intersection_type_elements(
+    p: &mut JsParser,
+    ty_kind: IntersectionOrUnionType,
+    context: TypeContext,
+) {
     while p.at(ty_kind.operator()) {
         p.bump(ty_kind.operator());
 
         ty_kind
-            .parse_element(p)
+            .parse_element(p, context)
             .or_add_diagnostic(p, expected_ts_type);
     }
 }
 
-fn parse_ts_primary_type(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_primary_type(p: &mut JsParser, context: TypeContext) -> ParsedSyntax {
     // test ts ts_inferred_type
     // type A = infer B;
     // type B = { a: infer U; b: infer U};
@@ -361,6 +651,7 @@ fn parse_ts_primary_type(p: &mut Parser) -> ParsedSyntax {
         let m = p.start();
         p.expect(T![infer]);
         parse_ts_type_parameter_name(p).or_add_diagnostic(p, expected_identifier);
+        try_parse_constraint_of_infer_type(p, context).ok();
         return Present(m.complete(p, TS_INFER_TYPE));
     }
 
@@ -373,22 +664,42 @@ fn parse_ts_primary_type(p: &mut Parser) -> ParsedSyntax {
     if is_type_operator {
         let m = p.start();
         p.bump_any();
-        parse_ts_primary_type(p).or_add_diagnostic(p, expected_ts_type);
+        parse_ts_primary_type(p, context).or_add_diagnostic(p, expected_ts_type);
         return Present(m.complete(p, TS_TYPE_OPERATOR_TYPE));
     }
 
-    parse_postfix_type_or_higher(p)
+    parse_postfix_type_or_higher(p, context.and_allow_conditional_types(true))
 }
 
-fn parse_postfix_type_or_higher(p: &mut Parser) -> ParsedSyntax {
-    parse_ts_non_array_type(p).map(|primary_type| {
+fn try_parse_constraint_of_infer_type(p: &mut JsParser, context: TypeContext) -> ParsedSyntax {
+    if !p.at(T![extends]) {
+        return Absent;
+    }
+
+    try_parse(p, |p| {
+        let parsed = parse_ts_type_constraint_clause(p, context.and_allow_conditional_types(false))
+            .expect("Type constraint clause because parser is positioned at expect clause");
+
+        // Rewind if conditional types are allowed, and the parser is at the `?` token because
+        // this should instead be parsed as a conditional type.
+        if context.is_conditional_type_allowed() && p.at(T![?]) {
+            Err(())
+        } else {
+            Ok(Present(parsed))
+        }
+    })
+    .unwrap_or(Absent)
+}
+
+fn parse_postfix_type_or_higher(p: &mut JsParser, context: TypeContext) -> ParsedSyntax {
+    parse_ts_non_array_type(p, context).map(|primary_type| {
         let mut left = primary_type;
 
         while p.at(T!['[']) && !p.has_preceding_line_break() {
             let m = left.precede(p);
             p.bump(T!['[']);
 
-            left = if parse_ts_type(p).is_present() {
+            left = if parse_ts_type(p, context).is_present() {
                 // test ts ts_indexed_access_type
                 // type A = string[number];
                 // type B = string[number][number][number][];
@@ -407,7 +718,7 @@ fn parse_postfix_type_or_higher(p: &mut Parser) -> ParsedSyntax {
     })
 }
 
-fn parse_ts_non_array_type(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_non_array_type(p: &mut JsParser, context: TypeContext) -> ParsedSyntax {
     // test ts ts_predefined_type
     // type A = any
     // type B = number;
@@ -424,12 +735,12 @@ fn parse_ts_non_array_type(p: &mut Parser) -> ParsedSyntax {
         T!['('] => parse_ts_parenthesized_type(p),
         T!['{'] => {
             if is_at_start_of_mapped_type(p) {
-                parse_ts_mapped_type(p)
+                parse_ts_mapped_type(p, context)
             } else {
                 parse_ts_object_type(p)
             }
         }
-        T!['['] => parse_ts_tuple_type(p),
+        T!['['] => parse_ts_tuple_type(p, context),
         T![void] => {
             let m = p.start();
             p.expect(T![void]);
@@ -438,7 +749,7 @@ fn parse_ts_non_array_type(p: &mut Parser) -> ParsedSyntax {
         JS_NUMBER_LITERAL | JS_STRING_LITERAL | TRUE_KW | FALSE_KW | T![null] => {
             parse_ts_literal_type(p)
         }
-        BACKTICK => parse_ts_template_literal_type(p),
+        BACKTICK => parse_ts_template_literal_type(p, context),
         T![-] if p.nth_at(1, JS_NUMBER_LITERAL) => parse_ts_literal_type(p),
         T![this] => parse_ts_this_type(p),
         T![typeof] => {
@@ -483,7 +794,7 @@ fn parse_ts_non_array_type(p: &mut Parser) -> ParsedSyntax {
 // type C = A;
 // type D = B.a;
 // type E = D.c.b.a;
-fn parse_ts_reference_type(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_reference_type(p: &mut JsParser) -> ParsedSyntax {
     parse_ts_name(p).map(|name| {
         let m = name.precede(p);
 
@@ -495,7 +806,7 @@ fn parse_ts_reference_type(p: &mut Parser) -> ParsedSyntax {
     })
 }
 
-pub(crate) fn parse_ts_name(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_ts_name(p: &mut JsParser) -> ParsedSyntax {
     let mut left = if p.cur().is_non_contextual_keyword() && !p.cur().is_future_reserved_keyword() {
         let m = p.start();
         p.bump_remap(T![ident]);
@@ -523,7 +834,7 @@ pub(crate) fn parse_ts_name(p: &mut Parser) -> ParsedSyntax {
 // test tsx ts_typeof_type2
 // type X = typeof Array
 // <div>a</div>;
-fn parse_ts_typeof_type(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_typeof_type(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T![typeof]) {
         return Absent;
     }
@@ -547,7 +858,7 @@ fn parse_ts_typeof_type(p: &mut Parser) -> ParsedSyntax {
 //         return typeof this === "string"
 //     }
 // }
-fn parse_ts_this_type(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_this_type(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T![this]) {
         return Absent;
     }
@@ -559,19 +870,19 @@ fn parse_ts_this_type(p: &mut Parser) -> ParsedSyntax {
 
 // test ts ts_parenthesized_type
 // type A = (string)
-fn parse_ts_parenthesized_type(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_parenthesized_type(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T!['(']) {
         return Absent;
     }
 
     let m = p.start();
     p.bump(T!['(']);
-    parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
+    parse_ts_type(p, TypeContext::default()).or_add_diagnostic(p, expected_ts_type);
     p.expect(T![')']);
     Present(m.complete(p, TS_PARENTHESIZED_TYPE))
 }
 
-fn is_at_start_of_mapped_type(p: &mut Parser) -> bool {
+fn is_at_start_of_mapped_type(p: &mut JsParser) -> bool {
     if !p.at(T!['{']) {
         return false;
     }
@@ -610,7 +921,7 @@ fn is_at_start_of_mapped_type(p: &mut Parser) -> bool {
 // type Getters<Type> = {
 //     [Property in keyof Type as `get${Capitalize<string & Property>}`]: () => Type[Property]
 // };
-fn parse_ts_mapped_type(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_mapped_type(p: &mut JsParser, context: TypeContext) -> ParsedSyntax {
     if !p.at(T!['{']) {
         return Absent;
     }
@@ -621,8 +932,8 @@ fn parse_ts_mapped_type(p: &mut Parser) -> ParsedSyntax {
     p.expect(T!['[']);
     parse_ts_type_parameter_name(p).or_add_diagnostic(p, expected_ts_type_parameter);
     p.expect(T![in]);
-    parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
-    parse_ts_mapped_type_as_clause(p).ok();
+    parse_ts_type(p, context).or_add_diagnostic(p, expected_ts_type);
+    parse_ts_mapped_type_as_clause(p, context).ok();
     p.expect(T![']']);
     parse_ts_mapped_type_optional_modifier_clause(p).ok();
     parse_ts_type_annotation(p).ok();
@@ -632,18 +943,18 @@ fn parse_ts_mapped_type(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, TS_MAPPED_TYPE))
 }
 
-fn parse_ts_mapped_type_as_clause(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_mapped_type_as_clause(p: &mut JsParser, context: TypeContext) -> ParsedSyntax {
     if !p.at(T![as]) {
         return Absent;
     }
 
     let m = p.start();
     p.bump_remap(T![as]);
-    parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
+    parse_ts_type(p, context).or_add_diagnostic(p, expected_ts_type);
     Present(m.complete(p, TS_MAPPED_TYPE_AS_CLAUSE))
 }
 
-fn parse_ts_mapped_type_readonly_modifier_clause(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_mapped_type_readonly_modifier_clause(p: &mut JsParser) -> ParsedSyntax {
     if p.at(T![readonly]) {
         let m = p.start();
         p.expect(T![readonly]);
@@ -658,7 +969,7 @@ fn parse_ts_mapped_type_readonly_modifier_clause(p: &mut Parser) -> ParsedSyntax
     }
 }
 
-fn parse_ts_mapped_type_optional_modifier_clause(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_mapped_type_optional_modifier_clause(p: &mut JsParser) -> ParsedSyntax {
     match p.cur() {
         T![?] => {
             let m = p.start();
@@ -681,7 +992,7 @@ fn parse_ts_mapped_type_optional_modifier_clause(p: &mut Parser) -> ParsedSyntax
 // type C = typeof import("test").a.b.c.d.e.f;
 // type D = import("test")<string>;
 // type E = import("test").C<string>;
-fn parse_ts_import_type(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_import_type(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T![typeof]) && !p.at(T![import]) {
         return Absent;
     }
@@ -713,7 +1024,7 @@ fn parse_ts_import_type(p: &mut Parser) -> ParsedSyntax {
 // 	a: string
 //  b: number
 // }
-fn parse_ts_object_type(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_object_type(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T!['{']) {
         return Absent;
     }
@@ -728,29 +1039,30 @@ fn parse_ts_object_type(p: &mut Parser) -> ParsedSyntax {
 pub(crate) struct TypeMembers;
 
 impl ParseNodeList for TypeMembers {
-    fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
-        parse_ts_type_member(p)
+    type Kind = JsSyntaxKind;
+    type Parser<'source> = JsParser<'source>;
+
+    const LIST_KIND: Self::Kind = TS_TYPE_MEMBER_LIST;
+
+    fn parse_element(&mut self, p: &mut JsParser) -> ParsedSyntax {
+        parse_ts_type_member(p, TypeContext::default())
     }
 
-    fn is_at_list_end(&self, p: &mut Parser) -> bool {
+    fn is_at_list_end(&self, p: &mut JsParser) -> bool {
         p.at(T!['}'])
     }
 
-    fn recover(&mut self, p: &mut Parser, member: ParsedSyntax) -> RecoveryResult {
+    fn recover(&mut self, p: &mut JsParser, member: ParsedSyntax) -> RecoveryResult {
         member.or_recover(
             p,
-            &ParseRecovery::new(JS_UNKNOWN, token_set![T!['}'], T![,], T![;]])
+            &ParseRecovery::new(JS_BOGUS, token_set![T!['}'], T![,], T![;]])
                 .enable_recovery_on_line_break(),
             expected_property_or_signature,
         )
     }
-
-    fn list_kind() -> JsSyntaxKind {
-        TS_TYPE_MEMBER_LIST
-    }
 }
 
-fn parse_ts_type_member(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_type_member(p: &mut JsParser, context: TypeContext) -> ParsedSyntax {
     // test ts ts_index_signature_member
     // type A = { [a: number]: string }
     // type B = { readonly [a: number]: string }
@@ -767,13 +1079,13 @@ fn parse_ts_type_member(p: &mut Parser) -> ParsedSyntax {
     }
 
     match p.cur() {
-        T!['('] | T![<] => parse_ts_call_signature_type_member(p),
+        T!['('] | T![<] => parse_ts_call_signature_type_member(p, context),
         T![new] if is_at_ts_construct_signature_type_member(p) => {
-            parse_ts_construct_signature_type_member(p)
+            parse_ts_construct_signature_type_member(p, context)
         }
         T![get] if is_nth_at_type_member_name(p, 1) => parse_ts_getter_signature_type_member(p),
         T![set] if is_nth_at_type_member_name(p, 1) => parse_ts_setter_signature_type_member(p),
-        _ => parse_ts_property_or_method_signature_type_member(p),
+        _ => parse_ts_property_or_method_signature_type_member(p, context),
     }
 }
 
@@ -783,7 +1095,10 @@ fn parse_ts_type_member(p: &mut Parser) -> ParsedSyntax {
 // type C = { m(a: string, b: number, c: string): any }
 // type D = { readonly: string, readonly a: number }
 // type E = { m<A, B>(a: A, b: B): never }
-fn parse_ts_property_or_method_signature_type_member(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_property_or_method_signature_type_member(
+    p: &mut JsParser,
+    context: TypeContext,
+) -> ParsedSyntax {
     if !is_at_object_member_name(p) {
         return Absent;
     }
@@ -802,7 +1117,7 @@ fn parse_ts_property_or_method_signature_type_member(p: &mut Parser) -> ParsedSy
     p.eat(T![?]);
 
     if p.at(T!['(']) || p.at(T![<]) {
-        parse_ts_call_signature(p);
+        parse_ts_call_signature(p, context);
         parse_ts_type_member_semi(p);
         let method = m.complete(p, TS_METHOD_SIGNATURE_TYPE_MEMBER);
 
@@ -825,13 +1140,13 @@ fn parse_ts_property_or_method_signature_type_member(p: &mut Parser) -> ParsedSy
 // type A = { (): string; }
 // type B = { (a, b, c): number }
 // type C = { <A, B>(a: A, b: B): number }
-fn parse_ts_call_signature_type_member(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_call_signature_type_member(p: &mut JsParser, context: TypeContext) -> ParsedSyntax {
     if !(p.at(T!['(']) || p.at(T![<])) {
         return Absent;
     }
 
     let m = p.start();
-    parse_ts_call_signature(p);
+    parse_ts_call_signature(p, context);
     parse_ts_type_member_semi(p);
     Present(m.complete(p, TS_CALL_SIGNATURE_TYPE_MEMBER))
 }
@@ -840,14 +1155,17 @@ fn parse_ts_call_signature_type_member(p: &mut Parser) -> ParsedSyntax {
 // type A = { new (): string; }
 // type B = { new (a: string, b: number) }
 // type C = { new <A, B>(a: A, b: B): string }
-fn parse_ts_construct_signature_type_member(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_construct_signature_type_member(
+    p: &mut JsParser,
+    context: TypeContext,
+) -> ParsedSyntax {
     if !is_at_ts_construct_signature_type_member(p) {
         return Absent;
     }
 
     let m = p.start();
     p.expect(T![new]);
-    parse_ts_type_parameters(p).ok();
+    parse_ts_type_parameters(p, context.and_allow_in_out_modifier(true)).ok();
     parse_parameter_list(p, ParameterContext::Declaration, SignatureFlags::empty())
         .or_add_diagnostic(p, expected_parameters);
     parse_ts_type_annotation(p).ok();
@@ -863,7 +1181,7 @@ fn parse_ts_construct_signature_type_member(p: &mut Parser) -> ParsedSyntax {
 // type C = { get(): number }
 // type D = { get: number }
 // type E = { get }
-fn parse_ts_getter_signature_type_member(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_getter_signature_type_member(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T![get]) {
         return Absent;
     }
@@ -885,7 +1203,7 @@ fn parse_ts_getter_signature_type_member(p: &mut Parser) -> ParsedSyntax {
 // type C = { set(a) }
 // type D = { set: number }
 // type E = { set }
-fn parse_ts_setter_signature_type_member(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_setter_signature_type_member(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T![set]) {
         return Absent;
     }
@@ -894,8 +1212,27 @@ fn parse_ts_setter_signature_type_member(p: &mut Parser) -> ParsedSyntax {
     p.expect(T![set]);
     parse_object_member_name(p).or_add_diagnostic(p, expected_object_member_name);
     p.expect(T!['(']);
-    parse_formal_parameter(p, ParameterContext::Setter, ExpressionContext::default())
-        .or_add_diagnostic(p, expected_parameter);
+
+    // test_err ts ts_decorator_setter_signature
+    // type A = { set a(@dec b: number) }
+    // type B = { set a(@dec(val) b) }
+    // type AA = { set a(@dec b: number) }
+    // type BB = { set a(@dec(val) b) }
+    let decorator_list = parse_decorators(p)
+        .add_diagnostic_if_present(p, decorators_not_allowed)
+        .map(|mut decorator_list| {
+            decorator_list.change_to_bogus(p);
+            decorator_list
+        })
+        .into();
+
+    parse_formal_parameter(
+        p,
+        decorator_list,
+        ParameterContext::Setter,
+        ExpressionContext::default(),
+    )
+    .or_add_diagnostic(p, expected_parameter);
     p.expect(T![')']);
     parse_ts_type_member_semi(p);
     Present(m.complete(p, TS_SETTER_SIGNATURE_TYPE_MEMBER))
@@ -911,30 +1248,35 @@ fn parse_ts_setter_signature_type_member(p: &mut Parser) -> ParsedSyntax {
 //
 // test_err ts ts_tuple_type_incomplete
 // type A = [string,
-fn parse_ts_tuple_type(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_tuple_type(p: &mut JsParser, context: TypeContext) -> ParsedSyntax {
     if !p.at(T!['[']) {
         return Absent;
     }
 
     let m = p.start();
     p.bump(T!['[']);
-    TsTupleTypeElementList.parse_list(p);
+    TsTupleTypeElementList(context).parse_list(p);
     p.expect(T![']']);
 
     Present(m.complete(p, TS_TUPLE_TYPE))
 }
 
-struct TsTupleTypeElementList;
+struct TsTupleTypeElementList(TypeContext);
 
 impl ParseSeparatedList for TsTupleTypeElementList {
-    fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
+    type Kind = JsSyntaxKind;
+    type Parser<'source> = JsParser<'source>;
+
+    const LIST_KIND: Self::Kind = TS_TUPLE_TYPE_ELEMENT_LIST;
+
+    fn parse_element(&mut self, p: &mut JsParser) -> ParsedSyntax {
         if is_at_named_tuple_type_element(p) {
             let m = p.start();
             let has_ellipsis = p.eat(T![...]);
             parse_name(p).or_add_diagnostic(p, expected_identifier);
             let has_question_mark = p.eat(T![?]);
             p.bump(T![:]);
-            parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
+            parse_ts_type(p, self.0).or_add_diagnostic(p, expected_ts_type);
 
             let mut syntax = m.complete(p, TS_NAMED_TUPLE_TYPE_ELEMENT);
 
@@ -946,7 +1288,7 @@ impl ParseSeparatedList for TsTupleTypeElementList {
                     syntax.range(p).as_range(),
                 );
                 p.error(err);
-                syntax.change_to_unknown(p);
+                syntax.change_to_bogus(p);
             }
 
             return Present(syntax);
@@ -955,11 +1297,11 @@ impl ParseSeparatedList for TsTupleTypeElementList {
         if p.at(T![...]) {
             let m = p.start();
             p.bump(T![...]);
-            parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
+            parse_ts_type(p, self.0).or_add_diagnostic(p, expected_ts_type);
             return Present(m.complete(p, TS_REST_TUPLE_TYPE_ELEMENT));
         }
 
-        let ty = parse_ts_type(p);
+        let ty = parse_ts_type(p, self.0);
 
         if p.at(T![?]) {
             let m = ty.precede_or_add_diagnostic(p, expected_ts_type);
@@ -970,15 +1312,15 @@ impl ParseSeparatedList for TsTupleTypeElementList {
         ty
     }
 
-    fn is_at_list_end(&self, p: &mut Parser) -> bool {
+    fn is_at_list_end(&self, p: &mut JsParser) -> bool {
         p.at(T![']'])
     }
 
-    fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult {
+    fn recover(&mut self, p: &mut JsParser, parsed_element: ParsedSyntax) -> RecoveryResult {
         parsed_element.or_recover(
             p,
             &ParseRecovery::new(
-                JS_UNKNOWN,
+                TS_BOGUS_TYPE,
                 token_set![
                     T![']'],
                     T![...],
@@ -993,10 +1335,6 @@ impl ParseSeparatedList for TsTupleTypeElementList {
         )
     }
 
-    fn list_kind() -> JsSyntaxKind {
-        TS_TUPLE_TYPE_ELEMENT_LIST
-    }
-
     fn separating_element_kind(&mut self) -> JsSyntaxKind {
         T![,]
     }
@@ -1006,7 +1344,7 @@ impl ParseSeparatedList for TsTupleTypeElementList {
     }
 }
 
-fn is_at_named_tuple_type_element(p: &mut Parser) -> bool {
+fn is_at_named_tuple_type_element(p: &mut JsParser) -> bool {
     let offset = usize::from(p.at(T![...]));
 
     // a:
@@ -1026,7 +1364,7 @@ fn is_at_named_tuple_type_element(p: &mut Parser) -> bool {
 // type F = true;
 // type G = false;
 // type H = null;
-fn parse_ts_literal_type(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_literal_type(p: &mut JsParser) -> ParsedSyntax {
     if p.cur() == JS_REGEX_LITERAL {
         return Absent;
     }
@@ -1039,9 +1377,9 @@ fn parse_ts_literal_type(p: &mut Parser) -> ParsedSyntax {
             .or_else(|| parse_big_int_literal_expression(p))
             .unwrap();
 
-        let type_kind = match number_expr.kind() {
+        let type_kind = match number_expr.kind(p) {
             JS_NUMBER_LITERAL_EXPRESSION => TS_NUMBER_LITERAL_TYPE,
-            JS_BIG_INT_LITERAL_EXPRESSION => TS_BIG_INT_LITERAL_TYPE,
+            JS_BIGINT_LITERAL_EXPRESSION => TS_BIGINT_LITERAL_TYPE,
             _ => unreachable!(),
         };
 
@@ -1052,9 +1390,9 @@ fn parse_ts_literal_type(p: &mut Parser) -> ParsedSyntax {
     }
 
     parse_literal_expression(p).map(|mut expression| {
-        let type_kind = match expression.kind() {
+        let type_kind = match expression.kind(p) {
             JS_NUMBER_LITERAL_EXPRESSION => TS_NUMBER_LITERAL_TYPE,
-            JS_BIG_INT_LITERAL_EXPRESSION => TS_BIG_INT_LITERAL_TYPE,
+            JS_BIGINT_LITERAL_EXPRESSION => TS_BIGINT_LITERAL_TYPE,
             JS_NULL_LITERAL_EXPRESSION => TS_NULL_LITERAL_TYPE,
             JS_BOOLEAN_LITERAL_EXPRESSION => TS_BOOLEAN_LITERAL_TYPE,
             JS_STRING_LITERAL_EXPRESSION => TS_STRING_LITERAL_TYPE,
@@ -1076,7 +1414,7 @@ fn parse_ts_literal_type(p: &mut Parser) -> ParsedSyntax {
 // type B = "b"
 // type C = `${A B}bcd`
 // type D = `${A B`
-fn parse_ts_template_literal_type(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_template_literal_type(p: &mut JsParser, context: TypeContext) -> ParsedSyntax {
     if !p.at(BACKTICK) {
         return Absent;
     }
@@ -1090,14 +1428,14 @@ fn parse_ts_template_literal_type(p: &mut Parser) -> ParsedSyntax {
         TS_TEMPLATE_CHUNK_ELEMENT,
         TS_TEMPLATE_ELEMENT,
         false,
-        |p| parse_ts_type(p).or_add_diagnostic(p, expected_ts_type),
+        |p| parse_ts_type(p, context).or_add_diagnostic(p, expected_ts_type),
     );
     elements.complete(p, TS_TEMPLATE_ELEMENT_LIST);
     p.expect(BACKTICK);
     Present(m.complete(p, TS_TEMPLATE_LITERAL_TYPE))
 }
 
-fn is_at_ts_construct_signature_type_member(p: &mut Parser) -> bool {
+fn is_at_ts_construct_signature_type_member(p: &mut JsParser) -> bool {
     p.at(T![new]) && (p.nth_at(1, T!['(']) || is_nth_at_ts_type_parameters(p, 1))
 }
 
@@ -1106,7 +1444,7 @@ fn is_at_ts_construct_signature_type_member(p: &mut Parser) -> bool {
 // type B = abstract new(a: string, b: number) => string;
 // type C = new<A, B>(a: A, b: B) => string;
 // type D = abstract new<A, B>(a: A, b: B) => string;
-fn parse_ts_constructor_type(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_constructor_type(p: &mut JsParser, context: TypeContext) -> ParsedSyntax {
     if !is_at_constructor_type(p) {
         return Absent;
     }
@@ -1115,20 +1453,20 @@ fn parse_ts_constructor_type(p: &mut Parser) -> ParsedSyntax {
     p.eat(T![abstract]);
     p.expect(T![new]);
 
-    parse_ts_type_parameters(p).ok();
+    parse_ts_type_parameters(p, context).ok();
     parse_parameter_list(p, ParameterContext::Declaration, SignatureFlags::empty())
         .or_add_diagnostic(p, expected_parameters);
     p.expect(T![=>]);
-    parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
+    parse_ts_type(p, context).or_add_diagnostic(p, expected_ts_type);
     Present(m.complete(p, TS_CONSTRUCTOR_TYPE))
 }
 
-fn is_at_constructor_type(p: &mut Parser) -> bool {
+fn is_at_constructor_type(p: &mut JsParser) -> bool {
     p.at(T![new]) || (p.at(T![abstract]) && p.nth_at(1, T![new]))
 }
 
 /// Determines if the parser's currently located at a function type. Performs a lookahead of at most a single character.
-fn is_at_function_type(p: &mut Parser) -> bool {
+fn is_at_function_type(p: &mut JsParser) -> bool {
     if p.at(T![<]) {
         // <
         return true;
@@ -1172,17 +1510,17 @@ fn is_at_function_type(p: &mut Parser) -> bool {
 // type G = <A, B>(a: A, b: B) => string
 // type H = (a: any) => a is string;
 // type I = ({ a, b }?) => string;
-fn parse_ts_function_type(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_function_type(p: &mut JsParser, context: TypeContext) -> ParsedSyntax {
     if !p.at(T![<]) && !p.at(T!['(']) {
         return Absent;
     }
 
     let m = p.start();
-    parse_ts_type_parameters(p).ok();
+    parse_ts_type_parameters(p, context.and_allow_const_modifier(true)).ok();
     parse_parameter_list(p, ParameterContext::Declaration, SignatureFlags::empty())
         .or_add_diagnostic(p, expected_parameters);
     p.expect(T![=>]);
-    parse_ts_return_type(p).or_add_diagnostic(p, expected_ts_type);
+    parse_ts_return_type(p, TypeContext::default()).or_add_diagnostic(p, expected_ts_type);
 
     Present(m.complete(p, TS_FUNCTION_TYPE))
 }
@@ -1194,15 +1532,15 @@ fn parse_ts_function_type(p: &mut Parser) -> ParsedSyntax {
 //  bar(test: string): I
 //  asserts(): boolean;
 // }
-fn parse_ts_return_type(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_return_type(p: &mut JsParser, context: TypeContext) -> ParsedSyntax {
     let is_asserts_predicate =
         p.at(T![asserts]) && (is_nth_at_identifier(p, 1) || p.nth_at(1, T![this]));
     let is_is_predicate = (is_at_identifier(p) || p.at(T![this])) && p.nth_at(1, T![is]);
 
     if !p.has_nth_preceding_line_break(1) && (is_asserts_predicate || is_is_predicate) {
-        parse_ts_type_predicate(p)
+        parse_ts_type_predicate(p, context)
     } else {
-        parse_ts_type(p)
+        parse_ts_type(p, context)
     }
 }
 
@@ -1212,7 +1550,7 @@ fn parse_ts_return_type(p: &mut Parser) -> ParsedSyntax {
 // type C = (a) => asserts a;
 // type asserts = string;
 // type D = () => asserts;
-fn parse_ts_type_predicate(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_type_predicate(p: &mut JsParser, context: TypeContext) -> ParsedSyntax {
     let m = p.start();
     let is_asserts = p.eat(T![asserts]);
 
@@ -1223,11 +1561,11 @@ fn parse_ts_type_predicate(p: &mut Parser) -> ParsedSyntax {
     if is_asserts && p.at(T![is]) {
         let condition = p.start();
         p.expect(T![is]);
-        parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
+        parse_ts_type(p, context).or_add_diagnostic(p, expected_ts_type);
         condition.complete(p, TS_ASSERTS_CONDITION);
     } else if !is_asserts {
         p.expect(T![is]);
-        parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
+        parse_ts_type(p, context).or_add_diagnostic(p, expected_ts_type);
     }
 
     let kind = if is_asserts {
@@ -1244,8 +1582,6 @@ fn parse_ts_type_predicate(p: &mut Parser) -> ParsedSyntax {
 // let f2 = fx<string, number>;
 // let f3 = fx['test']<string>;
 // const a2 = f.g<number>;  // () => number
-// const a3 = f<number>.g;  // <U>() => U
-// const a4 = f<number>.g<number>;  // () => number
 // const a5 = f['g']<number>;  // () => number
 // const a7 = (f<number>)['g'];
 // const a6 = f<number>['g'];  // type Error
@@ -1254,25 +1590,248 @@ fn parse_ts_type_predicate(p: &mut Parser) -> ParsedSyntax {
 // const b4 = f<number>?.<number>();  // Type Error, expected no type arguments
 // const x1 = f<true>
 // (true);
-// // Parsed as relational expression
 // const x2 = f<true>
 // true;
-// // Parsed as instantiation expression
 // const x3 = f<true>;
 // true;
+// (f<T>)<K>;
+// (f<T>)<K>();
+// (f<T>)<K>?.();
+// (a?.f<T>)<K>();
+// new (a<T>)<K>();
+// f<<T>() => T>?.();
+// f?.<<T>() => T>();
+// f<x> ? g<y> : h<z>;
+// [f<x>];
+// { f<x> }
 
 // test ts ts_type_instantiation_expression
 // type StringBox = Box<string>;
 
-// test_err ts ts_instantiation_expressions1
+// test ts ts_instantiation_expressions_1
+// class A {
+//  constructor() {
+//    f<T> super();
+//  }
+// }
+// f<TemplateStringsArray>``;
+// f<T>(1);
+// f<T> ?? 1;
+// f<T> || 1;
+// f<T> && 1;
+// f<T> | 1;
+// f<T> ^ 1;
+// f<T> & 1;
+// f<T> == f<T>;
+// f<T> != f<T>;
+// f<T> === f<T>;
+// f<T> !== f<T>;
+// f<T> <= f<T>;
+// f<T> instanceof f<T>;
+// f<T> in {};
+// f<T> as {};
+// f<T> satisfies {};
+// f<T> * f<T>;
+// f<T> / f<T>;
+// f<T> % f<T>;
+// f<T> ** f<T>;
+// f < T > +f<T>;
+// f < T > -f<T>;
+// f < T > this;
+// f < T > null;
+// f < T > true;
+// f < T > false;
+// f < T > 1;
+// f < T > 123n;
+// f < T > [];
+// f < T > {};
+// f < T > function test() {};
+// f < T > class A {};
+// f < T > new A();
+// f<T> / 1;
+// f < T > +1;
+// f < T > -1;
+// f < T > ~1;
+// f < T > !1;
+// f < T > someIdentifier;
+// f < T > delete a[field];
+// f < T > typeof MyClass;
+// f < T > void a;
+// f<T> <= 1;
+// f < T > (await 1);
+// f < T > import.meta;
+// f < T > import("123");
+// a < b >> c;
+// f = h >>> 0 < j >>> 0;
+
+// test ts ts_instantiation_expressions_new_line
+// class A {
+//  constructor() {
+//    f<T>
+//      super();
+//  }
+// }
+// function *f() {
+//     const f = f<T>
+//     yield;
+// }
+// f<T>
+// ?? 1;
+// f<T>
+// || 1;
+// f<T>
+// && 1;
+// f<T>
+// | 1;
+// f<T>
+// ^ 1;
+// f<T>
+// & 1;
+// f<T>
+// == f<T>;
+// f<T>
+// <= f<T>;
+// f<T>
+// != f<T>;
+// f<T>
+// === f<T>;
+// f<T>
+// !== f<T>;
+// f<T>
+// instanceof f<T>;
+// f<T>
+// in {};
+// f<T>
+// * f<T>;
+// f<T>
+// / f<T>;
+// f<T>
+// % f<T>;
+// f<T>
+// ** f<T>;
+// f <T>
+// +f<T>;
+// f <T>
+// -f<T>;
+// f <T>
+// this;
+// f <T>
+// null;
+// f <T>
+// true;
+// f <T>
+// false;
+// f <T>
+// 1;
+// f <T>
+// 123n;
+// f <T>
+// {};
+// f <T>
+// function test() {};
+// f <T>
+// class A {};
+// f <T>
+// new A();
+// f<T>
+// / 1;
+// f <T>
+// +1;
+// f <T>
+// -1;
+// f <T>
+// ~1;
+// f <T>
+// !1;
+// f <T>
+// someIdentifier;
+// f <T>
+// delete a[field];
+// f <T>
+// typeof MyClass;
+// f <T>
+// void a;
+// f<T>
+// <= 1;
+// f <T>
+// (await 1);
+// f <T>
+// import.meta;
+// f <T>
+// import("123");
+
+// test ts ts_instantiation_expressions_asi
+// const x5 = f<true>
+// let yy = 0;
+// const x6 = f<true>
+// interface I {}
+// let x10 = f<true>
+// this.bar()
+// let x11 = f<true>
+// function bar() {}
+// let x12 = f<true>
+// class C {}
+// let x13 = f<true>
+// bar()
+// let x14 = f<true>
+// void bar()
+// class C1 {
+//     static specialFoo = f<string>
+//     static bar = 123
+// }
+// class C2 {
+//     public specialFoo = f<string>
+//     public bar = 123
+// }
+// class C3 {
+//     private specialFoo = f<string>
+//     private bar = 123
+// }
+// class C4 {
+//     protected specialFoo = f<string>
+//     protected bar = 123
+// }
+// class C5 {
+//     protected specialFoo = f<string>
+//     #bar = 123
+// }
+// const Bar = Foo<string>
+// const Baz = 123
+
+// test_err ts ts_instantiation_expressions_1
 // const a8 = f<number><number>;  // Relational operator error
 // const b1 = f?.<number>;  // Error, `(` expected
+// f<T> << f<T>;
+// f<T> = g<K>;
+// f<T> >> f<T>;
+// f<T> >= f<T>;
+// f<T> < f<T>;
+// f<T> > f<T>;
+// f<T> import<1>;
+// f<T> yield;
+// f<T> ++;
+// f<T> --;
+// f<T> /= 1;
+// f<T> <= f<T>;
+// f <T>
+// [];
+// f<T>
+// as {};
+// f<T>
+// satisfies {};
+// class C5 {
+//     protected specialFoo = f<string> #bar = 123
+// }
+// for (const a = b.test<string> in []) {}
 
-pub(crate) fn parse_ts_type_arguments_in_expression(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_ts_type_arguments_in_expression(
+    p: &mut JsParser,
+    context: ExpressionContext,
+) -> ParsedSyntax {
     // Don't parse type arguments in JS because the syntax is ambiguous
     // https://github.com/microsoft/TypeScript/issues/36662
 
-    // test type_arguments_like_expression
+    // test js type_arguments_like_expression
     // ((0)<5>(6))
 
     if TypeScript.is_unsupported(p) || !matches!(p.cur(), T![<] | T![<<]) {
@@ -1283,7 +1842,7 @@ pub(crate) fn parse_ts_type_arguments_in_expression(p: &mut Parser) -> ParsedSyn
         p.re_lex(ReLexContext::TypeArgumentLessThan);
         let arguments = parse_ts_type_arguments_impl(p, false);
 
-        if p.last() == Some(T![>]) && can_follow_type_arguments_in_expr(p.cur()) {
+        if p.last() == Some(T![>]) && can_follow_type_arguments_in_expr(p, context) {
             Ok(Present(arguments))
         } else {
             Err(())
@@ -1292,39 +1851,26 @@ pub(crate) fn parse_ts_type_arguments_in_expression(p: &mut Parser) -> ParsedSyn
     .unwrap_or(Absent)
 }
 
-#[inline]
-pub fn can_follow_type_arguments_in_expr(cur_kind: JsSyntaxKind) -> bool {
-    matches!(
-        cur_kind,
-        T!['(']
-        | BACKTICK
-         // These tokens can't follow in a call expression, nor can they start an
-        // expression. So, consider the type argument list part of an instantiation
-        // expression.
-        | T![,]
-        | T![.]
-        | T![?.]
-        | T![')']
-        | T![']']
-        | T![:]
-        | T![;]
-        | T![?]
-        | T![==]
-        | T![===]
-        | T![!=]
-        | T![!==]
-        | T![&&]
-        | T![||]
-        | T![??]
-        | T![^]
-        | T![&]
-        | T![|]
-        | T!['}']
-        | EOF
-    )
+fn can_follow_type_arguments_in_expr(p: &mut JsParser, context: ExpressionContext) -> bool {
+    let cur_kind = p.cur();
+    match cur_kind {
+        // These tokens can follow a type argument list in a call expression.
+        T!['('] | BACKTICK | EOF => true,
+        // A type argument list followed by `<` never makes sense, and a type argument list followed
+        // by `>` is ambiguous with a (re-scanned) `>>` operator, so we disqualify both. Also, in
+        // this context, `+` and `-` are unary operators, not binary operators.
+        T![<] | T![>] | T![+] | T![-] => false,
+        // We favor the type argument list interpretation when it is immediately followed by
+        // a line break, a binary operator, or something that can't start an expression.
+        _ => {
+            p.has_preceding_line_break()
+                || is_at_binary_operator(p, context)
+                || !is_at_expression(p)
+        }
+    }
 }
 
-pub(crate) fn parse_ts_type_arguments(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_ts_type_arguments(p: &mut JsParser) -> ParsedSyntax {
     // test ts ts_type_arguments_left_shift
     // type A<T> = T;
     // type B = A<<C>(c: C) => undefined>;
@@ -1339,7 +1885,7 @@ pub(crate) fn parse_ts_type_arguments(p: &mut Parser) -> ParsedSyntax {
 // test_err ts type_arguments_incomplete
 // func<T,
 pub(crate) fn parse_ts_type_arguments_impl(
-    p: &mut Parser,
+    p: &mut JsParser,
     recover_on_errors: bool,
 ) -> CompletedMarker {
     let m = p.start();
@@ -1358,15 +1904,20 @@ struct TypeArgumentsList {
 }
 
 impl ParseSeparatedList for TypeArgumentsList {
-    fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
-        parse_ts_type(p)
+    type Kind = JsSyntaxKind;
+    type Parser<'source> = JsParser<'source>;
+
+    const LIST_KIND: Self::Kind = TS_TYPE_ARGUMENT_LIST;
+
+    fn parse_element(&mut self, p: &mut JsParser) -> ParsedSyntax {
+        parse_ts_type(p, TypeContext::default())
     }
 
-    fn is_at_list_end(&self, p: &mut Parser) -> bool {
+    fn is_at_list_end(&self, p: &mut JsParser) -> bool {
         p.at(T![>])
     }
 
-    fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult {
+    fn recover(&mut self, p: &mut JsParser, parsed_element: ParsedSyntax) -> RecoveryResult {
         if parsed_element.is_absent() && !self.recover_on_errors {
             // test ts type_arguments_no_recovery
             // for (let i = 0 ; i < 3; ++i) {
@@ -1386,17 +1937,13 @@ impl ParseSeparatedList for TypeArgumentsList {
             parsed_element.or_recover(
                 p,
                 &ParseRecovery::new(
-                    JS_UNKNOWN,
+                    TS_BOGUS_TYPE,
                     token_set![T![>], T![,], T![ident], T![yield], T![await]],
                 )
                 .enable_recovery_on_line_break(),
                 expected_ts_type_parameter,
             )
         }
-    }
-
-    fn list_kind() -> JsSyntaxKind {
-        TS_TYPE_ARGUMENT_LIST
     }
 
     fn separating_element_kind(&mut self) -> JsSyntaxKind {
@@ -1408,7 +1955,7 @@ impl ParseSeparatedList for TypeArgumentsList {
     }
 }
 
-fn parse_ts_type_member_semi(p: &mut Parser) {
+fn parse_ts_type_member_semi(p: &mut JsParser) {
     // type members can either be separated by a comma
     if p.eat(T![,]) {
         return;

@@ -8,7 +8,7 @@ expression: content
 {
   "javascript": {
     "formatter": {
-        "quoteStyle": "single"
+      "quoteStyle": "single"
     }
   }
 }
@@ -24,5 +24,9 @@ function f() {
 ```
 
 # Emitted Messages
+
+```block
+Compared 1 file(s) in <TIME>
+```
 
 

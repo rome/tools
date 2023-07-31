@@ -7,26 +7,29 @@ use rome_json_syntax::{
     JsonSyntaxToken as SyntaxToken, *,
 };
 use rome_rowan::AstNode;
-pub fn json_array(l_brack_token: SyntaxToken, r_brack_token: SyntaxToken) -> JsonArrayBuilder {
-    JsonArrayBuilder {
+pub fn json_array_value(
+    l_brack_token: SyntaxToken,
+    r_brack_token: SyntaxToken,
+) -> JsonArrayValueBuilder {
+    JsonArrayValueBuilder {
         l_brack_token,
         r_brack_token,
         elements: None,
     }
 }
-pub struct JsonArrayBuilder {
+pub struct JsonArrayValueBuilder {
     l_brack_token: SyntaxToken,
     r_brack_token: SyntaxToken,
     elements: Option<JsonArrayElementList>,
 }
-impl JsonArrayBuilder {
+impl JsonArrayValueBuilder {
     pub fn with_elements(mut self, elements: JsonArrayElementList) -> Self {
         self.elements = Some(elements);
         self
     }
-    pub fn build(self) -> JsonArray {
-        JsonArray::unwrap_cast(SyntaxNode::new_detached(
-            JsonSyntaxKind::JSON_ARRAY,
+    pub fn build(self) -> JsonArrayValue {
+        JsonArrayValue::unwrap_cast(SyntaxNode::new_detached(
+            JsonSyntaxKind::JSON_ARRAY_VALUE,
             [
                 Some(SyntaxElement::Token(self.l_brack_token)),
                 self.elements
@@ -36,57 +39,67 @@ impl JsonArrayBuilder {
         ))
     }
 }
-pub fn json_boolean(true_token: SyntaxToken, false_token: SyntaxToken) -> JsonBoolean {
-    JsonBoolean::unwrap_cast(SyntaxNode::new_detached(
-        JsonSyntaxKind::JSON_BOOLEAN,
-        [
-            Some(SyntaxElement::Token(true_token)),
-            Some(SyntaxElement::Token(false_token)),
-        ],
+pub fn json_boolean_value(value_token_token: SyntaxToken) -> JsonBooleanValue {
+    JsonBooleanValue::unwrap_cast(SyntaxNode::new_detached(
+        JsonSyntaxKind::JSON_BOOLEAN_VALUE,
+        [Some(SyntaxElement::Token(value_token_token))],
     ))
 }
-pub fn json_member(key: JsonString, colon_token: SyntaxToken, value: JsonValue) -> JsonMember {
+pub fn json_member(
+    name: JsonMemberName,
+    colon_token: SyntaxToken,
+    value: AnyJsonValue,
+) -> JsonMember {
     JsonMember::unwrap_cast(SyntaxNode::new_detached(
         JsonSyntaxKind::JSON_MEMBER,
         [
-            Some(SyntaxElement::Node(key.into_syntax())),
+            Some(SyntaxElement::Node(name.into_syntax())),
             Some(SyntaxElement::Token(colon_token)),
             Some(SyntaxElement::Node(value.into_syntax())),
         ],
     ))
 }
-pub fn json_null(null_token: SyntaxToken) -> JsonNull {
-    JsonNull::unwrap_cast(SyntaxNode::new_detached(
-        JsonSyntaxKind::JSON_NULL,
-        [Some(SyntaxElement::Token(null_token))],
+pub fn json_member_name(value_token: SyntaxToken) -> JsonMemberName {
+    JsonMemberName::unwrap_cast(SyntaxNode::new_detached(
+        JsonSyntaxKind::JSON_MEMBER_NAME,
+        [Some(SyntaxElement::Token(value_token))],
     ))
 }
-pub fn json_number(json_number_literal_token: SyntaxToken) -> JsonNumber {
-    JsonNumber::unwrap_cast(SyntaxNode::new_detached(
-        JsonSyntaxKind::JSON_NUMBER,
-        [Some(SyntaxElement::Token(json_number_literal_token))],
+pub fn json_null_value(value_token: SyntaxToken) -> JsonNullValue {
+    JsonNullValue::unwrap_cast(SyntaxNode::new_detached(
+        JsonSyntaxKind::JSON_NULL_VALUE,
+        [Some(SyntaxElement::Token(value_token))],
     ))
 }
-pub fn json_object(l_curly_token: SyntaxToken, r_curly_token: SyntaxToken) -> JsonObjectBuilder {
-    JsonObjectBuilder {
+pub fn json_number_value(value_token: SyntaxToken) -> JsonNumberValue {
+    JsonNumberValue::unwrap_cast(SyntaxNode::new_detached(
+        JsonSyntaxKind::JSON_NUMBER_VALUE,
+        [Some(SyntaxElement::Token(value_token))],
+    ))
+}
+pub fn json_object_value(
+    l_curly_token: SyntaxToken,
+    r_curly_token: SyntaxToken,
+) -> JsonObjectValueBuilder {
+    JsonObjectValueBuilder {
         l_curly_token,
         r_curly_token,
         json_member_list: None,
     }
 }
-pub struct JsonObjectBuilder {
+pub struct JsonObjectValueBuilder {
     l_curly_token: SyntaxToken,
     r_curly_token: SyntaxToken,
     json_member_list: Option<JsonMemberList>,
 }
-impl JsonObjectBuilder {
+impl JsonObjectValueBuilder {
     pub fn with_json_member_list(mut self, json_member_list: JsonMemberList) -> Self {
         self.json_member_list = Some(json_member_list);
         self
     }
-    pub fn build(self) -> JsonObject {
-        JsonObject::unwrap_cast(SyntaxNode::new_detached(
-            JsonSyntaxKind::JSON_OBJECT,
+    pub fn build(self) -> JsonObjectValue {
+        JsonObjectValue::unwrap_cast(SyntaxNode::new_detached(
+            JsonSyntaxKind::JSON_OBJECT_VALUE,
             [
                 Some(SyntaxElement::Token(self.l_curly_token)),
                 self.json_member_list
@@ -96,21 +109,24 @@ impl JsonObjectBuilder {
         ))
     }
 }
-pub fn json_root(json_value: JsonValue) -> JsonRoot {
+pub fn json_root(value: AnyJsonValue, eof_token: SyntaxToken) -> JsonRoot {
     JsonRoot::unwrap_cast(SyntaxNode::new_detached(
         JsonSyntaxKind::JSON_ROOT,
-        [Some(SyntaxElement::Node(json_value.into_syntax()))],
+        [
+            Some(SyntaxElement::Node(value.into_syntax())),
+            Some(SyntaxElement::Token(eof_token)),
+        ],
     ))
 }
-pub fn json_string(json_string_literal_token: SyntaxToken) -> JsonString {
-    JsonString::unwrap_cast(SyntaxNode::new_detached(
-        JsonSyntaxKind::JSON_STRING,
-        [Some(SyntaxElement::Token(json_string_literal_token))],
+pub fn json_string_value(value_token: SyntaxToken) -> JsonStringValue {
+    JsonStringValue::unwrap_cast(SyntaxNode::new_detached(
+        JsonSyntaxKind::JSON_STRING_VALUE,
+        [Some(SyntaxElement::Token(value_token))],
     ))
 }
 pub fn json_array_element_list<I, S>(items: I, separators: S) -> JsonArrayElementList
 where
-    I: IntoIterator<Item = JsonValue>,
+    I: IntoIterator<Item = AnyJsonValue>,
     I::IntoIter: ExactSizeIterator,
     S: IntoIterator<Item = JsonSyntaxToken>,
     S::IntoIter: ExactSizeIterator,
@@ -150,13 +166,20 @@ where
         }),
     ))
 }
-pub fn json_unknown<I>(slots: I) -> JsonUnknown
+pub fn json_bogus<I>(slots: I) -> JsonBogus
 where
     I: IntoIterator<Item = Option<SyntaxElement>>,
     I::IntoIter: ExactSizeIterator,
 {
-    JsonUnknown::unwrap_cast(SyntaxNode::new_detached(
-        JsonSyntaxKind::JSON_UNKNOWN,
+    JsonBogus::unwrap_cast(SyntaxNode::new_detached(JsonSyntaxKind::JSON_BOGUS, slots))
+}
+pub fn json_bogus_value<I>(slots: I) -> JsonBogusValue
+where
+    I: IntoIterator<Item = Option<SyntaxElement>>,
+    I::IntoIter: ExactSizeIterator,
+{
+    JsonBogusValue::unwrap_cast(SyntaxNode::new_detached(
+        JsonSyntaxKind::JSON_BOGUS_VALUE,
         slots,
     ))
 }

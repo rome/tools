@@ -5,7 +5,7 @@ use rome_js_syntax::JsForVariableDeclaration;
 use rome_js_syntax::JsForVariableDeclarationFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsForVariableDeclaration;
+pub(crate) struct FormatJsForVariableDeclaration;
 
 impl FormatNodeRule<JsForVariableDeclaration> for FormatJsForVariableDeclaration {
     fn fmt_fields(&self, node: &JsForVariableDeclaration, f: &mut JsFormatter) -> FormatResult<()> {

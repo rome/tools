@@ -5,7 +5,7 @@ use rome_js_syntax::JsFunctionBody;
 use rome_js_syntax::JsFunctionBodyFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsFunctionBody;
+pub(crate) struct FormatJsFunctionBody;
 
 impl FormatNodeRule<JsFunctionBody> for FormatJsFunctionBody {
     fn fmt_fields(&self, node: &JsFunctionBody, f: &mut JsFormatter) -> FormatResult<()> {

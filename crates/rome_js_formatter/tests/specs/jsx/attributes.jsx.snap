@@ -1,11 +1,11 @@
 ---
-source: crates/rome_js_formatter/tests/spec_test.rs
-expression: attributes.jsx
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info: jsx/attributes.jsx
 ---
 
 # Input
 
-```js
+```jsx
 
 					<CodeEditor
 						value={formatted_code}
@@ -77,6 +77,12 @@ const a = <Popconfirm
 	</Popconfirm>
 ;
 
+<OtherComponent
+	value={
+		new Set(veryLongConditionZzzzzzzzzzzzzzzzzveryLongConditionZzzzzzzzzzzzzzzzzveryLongConditionZzzzzzzzzzzzzzzzz)
+	}
+/>
+
 ```
 
 
@@ -90,11 +96,14 @@ const a = <Popconfirm
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
+Semicolons: Always
+Arrow parentheses: Always
 -----
 
-```js
+```jsx
 <CodeEditor
 	value={formatted_code}
 	language={language}
@@ -176,17 +185,26 @@ const a = (
 	</Popconfirm>
 );
 
+<OtherComponent
+	value={
+		new Set(
+			veryLongConditionZzzzzzzzzzzzzzzzzveryLongConditionZzzzzzzzzzzzzzzzzveryLongConditionZzzzzzzzzzzzzzzzz,
+		)
+	}
+/>;
+```
+
+
 
 ## Unimplemented nodes/tokens
 
 " asd" => 1130..1134
 "\tasd" => 1182..1186
-
-
-## Lines exceeding width of 80 characters
-
+# Lines exceeding max width of 80 characters
+```
    10: 			"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
    30: 			"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+   85: 			veryLongConditionZzzzzzzzzzzzzzzzzveryLongConditionZzzzzzzzzzzzzzzzzveryLongConditionZzzzzzzzzzzzzzzzz,
 ```
 
 

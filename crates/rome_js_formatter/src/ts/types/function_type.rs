@@ -3,6 +3,7 @@ use crate::prelude::*;
 use crate::js::declarations::function_declaration::should_group_function_parameters;
 use crate::parentheses::{
     is_check_type, is_in_many_type_union_or_intersection_list,
+    is_includes_inferred_return_types_with_extends_constraints,
     operator_type_or_higher_needs_parens, NeedsParentheses,
 };
 use rome_formatter::write;
@@ -78,6 +79,7 @@ pub(super) fn function_like_type_needs_parentheses(
         }
         _ => {
             is_check_type(node, parent)
+                || is_includes_inferred_return_types_with_extends_constraints(node, parent)
                 || operator_type_or_higher_needs_parens(node, parent)
                 || is_in_many_type_union_or_intersection_list(node, parent)
         }

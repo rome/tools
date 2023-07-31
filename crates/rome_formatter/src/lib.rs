@@ -25,6 +25,7 @@ mod arguments;
 mod buffer;
 mod builders;
 pub mod comments;
+pub mod diagnostics;
 pub mod format_element;
 mod format_extensions;
 pub mod formatter;
@@ -34,13 +35,16 @@ pub mod prelude;
 #[cfg(debug_assertions)]
 pub mod printed_tokens;
 pub mod printer;
+pub mod separated;
 mod source_map;
+pub mod token;
 pub mod trivia;
 mod verbatim;
 
 use crate::formatter::Formatter;
 use crate::group_id::UniqueGroupIdBuilder;
 use crate::prelude::TagKind;
+use std::fmt::Debug;
 
 use crate::format_element::document::Document;
 #[cfg(debug_assertions)]
@@ -55,14 +59,16 @@ pub use builders::BestFitting;
 
 use crate::builders::syntax_token_cow_slice;
 use crate::comments::{CommentStyle, Comments, SourceComment};
+pub use crate::diagnostics::{ActualStart, FormatError, InvalidDocumentError, PrintError};
+use crate::trivia::{format_skipped_token_trivia, format_trimmed_token};
 pub use format_element::{normalize_newlines, FormatElement, LINE_TERMINATORS};
 pub use group_id::GroupId;
 use rome_rowan::{
-    Language, SyntaxElement, SyntaxError, SyntaxNode, SyntaxResult, SyntaxToken, SyntaxTriviaPiece,
+    Language, NodeOrToken, SyntaxElement, SyntaxNode, SyntaxResult, SyntaxToken, SyntaxTriviaPiece,
     TextLen, TextRange, TextSize, TokenAtOffset,
 };
 pub use source_map::{TransformSourceMap, TransformSourceMapBuilder};
-use std::error::Error;
+use std::marker::PhantomData;
 use std::num::ParseIntError;
 use std::str::FromStr;
 
@@ -122,7 +128,8 @@ impl std::fmt::Display for IndentStyle {
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[cfg_attr(
     feature = "serde",
-    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema),
+    serde(rename_all = "camelCase")
 )]
 pub struct LineWidth(u16);
 
@@ -143,7 +150,6 @@ impl Default for LineWidth {
 }
 
 /// Error type returned when parsing a [LineWidth] from a string fails
-#[derive(Debug)]
 pub enum ParseLineWidthError {
     /// The string could not be parsed as a valid [u16]
     ParseError(ParseIntError),
@@ -151,9 +157,18 @@ pub enum ParseLineWidthError {
     TryFromIntError(LineWidthFromIntError),
 }
 
+impl Debug for ParseLineWidthError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self, f)
+    }
+}
+
 impl std::fmt::Display for ParseLineWidthError {
     fn fmt(&self, fmt: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        std::write!(fmt, "{self:?}")
+        match self {
+            ParseLineWidthError::ParseError(err) => std::fmt::Display::fmt(err, fmt),
+            ParseLineWidthError::TryFromIntError(err) => std::fmt::Display::fmt(err, fmt),
+        }
     }
 }
 
@@ -355,111 +370,6 @@ where
         Ok(printed)
     }
 }
-
-#[derive(Debug, Clone, Eq, PartialEq)]
-pub enum PrintError {
-    InvalidDocument(InvalidDocumentError),
-}
-
-impl Error for PrintError {}
-
-impl std::fmt::Display for PrintError {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            PrintError::InvalidDocument(inner) => {
-                std::write!(f, "Invalid document: {inner}")
-            }
-        }
-    }
-}
-
-#[derive(Debug, Copy, Clone, Eq, PartialEq)]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub enum InvalidDocumentError {
-    /// Mismatching start/end kinds
-    ///
-    /// ```plain
-    /// StartIndent
-    /// ...
-    /// EndGroup
-    /// ```
-    StartEndTagMismatch {
-        start_kind: TagKind,
-        end_kind: TagKind,
-    },
-
-    /// End tag without a corresponding start tag.
-    ///
-    /// ```plain
-    /// Text
-    /// EndGroup
-    /// ```
-    StartTagMissing { kind: TagKind },
-
-    /// Expected a specific start tag but instead is:
-    /// * at the end of the document
-    /// * at another start tag
-    /// * at an end tag
-    ExpectedStart {
-        expected_start: TagKind,
-        actual: ActualStart,
-    },
-}
-
-#[derive(Debug, Copy, Clone, Eq, PartialEq)]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub enum ActualStart {
-    /// The actual element is not a tag.
-    Content,
-
-    /// The actual element was a start tag of another kind.
-    Start(TagKind),
-
-    /// The actual element is an end tag instead of a start tag.
-    End(TagKind),
-
-    /// Reached the end of the document
-    EndOfDocument,
-}
-
-impl std::fmt::Display for InvalidDocumentError {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            InvalidDocumentError::StartEndTagMismatch {
-                start_kind,
-                end_kind,
-            } => {
-                std::write!(
-                    f,
-                    "Expected end tag of kind {start_kind:?} but found {end_kind:?}."
-                )
-            }
-            InvalidDocumentError::StartTagMissing { kind } => {
-                std::write!(f, "End tag of kind {kind:?} without matching start tag.")
-            }
-            InvalidDocumentError::ExpectedStart {
-                expected_start,
-                actual,
-            } => {
-                match actual {
-                    ActualStart::EndOfDocument => {
-                        std::write!(f, "Expected start tag of kind {expected_start:?} but at the end of document.")
-                    }
-                    ActualStart::Start(start) => {
-                        std::write!(f, "Expected start tag of kind {expected_start:?} but found start tag of kind {start:?}.")
-                    }
-                    ActualStart::End(end) => {
-                        std::write!(f, "Expected start tag of kind {expected_start:?} but found end tag of kind {end:?}.")
-                    }
-                    ActualStart::Content => {
-                        std::write!(f, "Expected start tag of kind {expected_start:?} but found non-tag element.")
-                    }
-                }
-            }
-        }
-    }
-}
-
 pub type PrintResult<T> = Result<T, PrintError>;
 
 #[derive(Debug, Clone, Eq, PartialEq)]
@@ -554,75 +464,6 @@ impl Printed {
 
 /// Public return type of the formatter
 pub type FormatResult<F> = Result<F, FormatError>;
-
-#[derive(Debug, PartialEq, Eq, Copy, Clone)]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-/// Series of errors encountered during formatting
-pub enum FormatError {
-    /// In case a node can't be formatted because it either misses a require child element or
-    /// a child is present that should not (e.g. a trailing comma after a rest element).
-    SyntaxError,
-    /// In case range formatting failed because the provided range was larger
-    /// than the formatted syntax tree
-    RangeError { input: TextRange, tree: TextRange },
-
-    /// In case printing the document failed because it has an invalid structure.
-    InvalidDocument(InvalidDocumentError),
-
-    /// Formatting failed because some content encountered a situation where a layout
-    /// choice by an enclosing [`Format`] resulted in a poor layout for a child [`Format`].
-    ///
-    /// It's up to an enclosing [`Format`] to handle the error and pick another layout.
-    /// This error should not be raised if there's no outer [`Format`] handling the poor layout error,
-    /// avoiding that formatting of the whole document fails.
-    PoorLayout,
-}
-
-impl std::fmt::Display for FormatError {
-    fn fmt(&self, fmt: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            FormatError::SyntaxError => fmt.write_str("syntax error"),
-            FormatError::RangeError { input, tree } => std::write!(
-                fmt,
-                "formatting range {input:?} is larger than syntax tree {tree:?}"
-            ),
-            FormatError::InvalidDocument(error) => std::write!(fmt, "Invalid document: {error}\n\n This is an internal Rome error. Please report if necessary."),
-            FormatError::PoorLayout => {
-                std::write!(fmt, "Poor layout: The formatter wasn't able to pick a good layout for your document. This is an internal Rome error. Please report if necessary.")
-            }
-        }
-    }
-}
-
-impl Error for FormatError {}
-
-impl From<SyntaxError> for FormatError {
-    fn from(error: SyntaxError) -> Self {
-        FormatError::from(&error)
-    }
-}
-
-impl From<&SyntaxError> for FormatError {
-    fn from(syntax_error: &SyntaxError) -> Self {
-        match syntax_error {
-            SyntaxError::MissingRequiredChild => FormatError::SyntaxError,
-        }
-    }
-}
-
-impl From<PrintError> for FormatError {
-    fn from(error: PrintError) -> Self {
-        FormatError::from(&error)
-    }
-}
-
-impl From<&PrintError> for FormatError {
-    fn from(error: &PrintError) -> Self {
-        match error {
-            PrintError::InvalidDocument(reason) => FormatError::InvalidDocument(*reason),
-        }
-    }
-}
 
 /// Formatting trait for types that can create a formatted representation. The `rome_formatter` equivalent
 /// to [std::fmt::Display].
@@ -726,6 +567,43 @@ pub trait FormatRule<T> {
     type Context;
 
     fn fmt(&self, item: &T, f: &mut Formatter<Self::Context>) -> FormatResult<()>;
+}
+
+/// Default implementation for formatting a token
+pub struct FormatToken<C> {
+    context: PhantomData<C>,
+}
+
+impl<C> Default for FormatToken<C> {
+    fn default() -> Self {
+        Self {
+            context: PhantomData,
+        }
+    }
+}
+
+impl<C> FormatRule<SyntaxToken<C::Language>> for FormatToken<C>
+where
+    C: CstFormatContext,
+    C::Language: 'static,
+{
+    type Context = C;
+
+    fn fmt(
+        &self,
+        token: &SyntaxToken<C::Language>,
+        f: &mut Formatter<Self::Context>,
+    ) -> FormatResult<()> {
+        f.state_mut().track_token(token);
+
+        crate::write!(
+            f,
+            [
+                format_skipped_token_trivia(token),
+                format_trimmed_token(token),
+            ]
+        )
+    }
 }
 
 /// Rule that supports customizing how it formats an object of type `T`.
@@ -984,9 +862,6 @@ pub trait FormatLanguage {
     /// The type of the formatting context
     type Context: CstFormatContext<Language = Self::SyntaxLanguage>;
 
-    /// The type specifying how to format comments.
-    type CommentStyle: CommentStyle<Language = Self::SyntaxLanguage>;
-
     /// The rule type that can format a [SyntaxNode] of this language
     type FormatRule: FormatRule<SyntaxNode<Self::SyntaxLanguage>, Context = Self::Context> + Default;
 
@@ -1016,7 +891,7 @@ pub trait FormatLanguage {
     /// Creates the [FormatContext] with the given `source map` and `comments`
     fn create_context(
         self,
-        comments: Comments<Self::SyntaxLanguage>,
+        root: &SyntaxNode<Self::SyntaxLanguage>,
         source_map: Option<TransformSourceMap>,
     ) -> Self::Context;
 }
@@ -1029,15 +904,53 @@ pub fn format_node<L: FormatLanguage>(
     language: L,
 ) -> FormatResult<Formatted<L::Context>> {
     tracing::trace_span!("format_node").in_scope(move || {
-        let (root, source_map) = match language.transform(root) {
-            Some((root, source_map)) => (root, Some(source_map)),
+        let (root, source_map) = match language.transform(&root.clone()) {
+            Some((transformed, source_map)) => {
+                // we don't need to insert the node back if it has the same offset
+                if &transformed == root {
+                    (transformed, Some(source_map))
+                } else {
+                    match root
+                        .ancestors()
+                        // ancestors() always returns self as the first element of the iterator.
+                        .skip(1)
+                        .last()
+                    {
+                        // current root node is the topmost node we don't need to insert the transformed node back
+                        None => (transformed, Some(source_map)),
+                        Some(top_root) => {
+                            // we have to return transformed node back into subtree
+                            let transformed_range = transformed.text_range();
+                            let root_range = root.text_range();
+
+                            let transformed_root = top_root
+                                .replace_child(root.clone().into(), transformed.into())
+                                // SAFETY: Calling `unwrap` is safe because we know that `root` is part of the `top_root` subtree.
+                                .unwrap();
+                            let transformed = transformed_root.covering_element(TextRange::new(
+                                root_range.start(),
+                                root_range.start() + transformed_range.len(),
+                            ));
+
+                            let node = match transformed {
+                                NodeOrToken::Node(node) => node,
+                                NodeOrToken::Token(token) => {
+                                    // if we get a token we need to get the parent node
+                                    token.parent().unwrap_or(transformed_root)
+                                }
+                            };
+
+                            (node, Some(source_map))
+                        }
+                    }
+                }
+            }
             None => (root.clone(), None),
         };
 
-        let comments = Comments::from_node(&root, &L::CommentStyle::default(), source_map.as_ref());
+        let context = language.create_context(&root, source_map);
         let format_node = FormatRefWithRule::new(&root, L::FormatRule::default());
 
-        let context = language.create_context(comments, source_map);
         let mut state = FormatState::new(context);
         let mut buffer = VecBuffer::new(&mut state);
 
@@ -1265,36 +1178,65 @@ pub fn format_range<Language: FormatLanguage>(
     // starting before or at said starting point, and the closest
     // marker to the end of the source range starting after or at
     // said ending point respectively
-    let mut range_start = None;
-    let mut range_end = None;
+    let mut range_start: Option<&SourceMarker> = None;
+    let mut range_end: Option<&SourceMarker> = None;
 
     let sourcemap = printed.sourcemap();
     for marker in sourcemap {
-        // marker.source <= range.start()
-        if let Some(start_dist) = range.start().checked_sub(marker.source) {
+        if marker.source <= range.start() {
             range_start = match range_start {
-                Some((prev_marker, prev_dist)) => {
-                    if start_dist < prev_dist {
-                        Some((marker, start_dist))
+                Some(prev_marker) => {
+                    if marker.source > prev_marker.source {
+                        if prev_marker.dest == marker.dest {
+                            // we found a marker that is closer to the start range than we have
+                            // but we need to check if the marker has the same dest, otherwise we can get an incorrect substring in the source text
+                            // e.g
+                            // ...
+                            // SourceMarker {
+                            //     source: 94, <----- but we need to use this source position to get correct substring in the source
+                            //     dest: 99,
+                            // },
+                            // SourceMarker {
+                            //     source: 96,
+                            //     dest: 99, <----- both markers have the same dest.
+                            // },
+                            // ...
+                            Some(prev_marker)
+                        } else {
+                            Some(marker)
+                        }
                     } else {
-                        Some((prev_marker, prev_dist))
+                        Some(prev_marker)
                     }
                 }
-                None => Some((marker, start_dist)),
+                None => Some(marker),
             }
         }
 
-        // marker.source >= range.end()
-        if let Some(end_dist) = marker.source.checked_sub(range.end()) {
+        if marker.source >= range.end() {
             range_end = match range_end {
-                Some((prev_marker, prev_dist)) => {
-                    if end_dist <= prev_dist {
-                        Some((marker, end_dist))
+                Some(prev_marker) => {
+                    if marker.source <= prev_marker.source || marker.dest == prev_marker.dest {
+                        // 1. if we found a marker that is closer to the end we take it.
+                        // 2. if we found a marker that is farther to the end range than we have
+                        // but we need to check if the marker has the same dest, otherwise we can get an incorrect substring in the source text
+                        // e.g
+                        // ...
+                        // SourceMarker {
+                        //     source: 94,
+                        //     dest: 99, <----- both markers have the same dest.
+                        // },
+                        // SourceMarker {
+                        //     source: 96, <----- but we need to use this source position to get correct substring in the source
+                        //     dest: 99,
+                        // },
+                        // ...
+                        Some(marker)
                     } else {
-                        Some((prev_marker, prev_dist))
+                        Some(prev_marker)
                     }
                 }
-                None => Some((marker, end_dist)),
+                None => Some(marker),
             }
         }
     }
@@ -1304,11 +1246,11 @@ pub fn format_range<Language: FormatLanguage>(
     // the start (or after the end) of the formatting range: in this case
     // the start/end marker default to the start/end of the input
     let (start_source, start_dest) = match range_start {
-        Some((start_marker, _)) => (start_marker.source, start_marker.dest),
+        Some(start_marker) => (start_marker.source, start_marker.dest),
         None => (common_root.text_range().start(), TextSize::from(0)),
     };
     let (end_source, end_dest) = match range_end {
-        Some((end_marker, _)) => (end_marker.source, end_marker.dest),
+        Some(end_marker) => (end_marker.source, end_marker.dest),
         None => (
             common_root.text_range().end(),
             TextSize::try_from(printed.as_code().len()).expect("code length out of bounds"),

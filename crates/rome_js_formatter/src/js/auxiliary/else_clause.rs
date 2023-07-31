@@ -6,11 +6,11 @@ use rome_js_syntax::JsElseClause;
 use rome_js_syntax::JsElseClauseFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsElseClause;
+pub(crate) struct FormatJsElseClause;
 
 impl FormatNodeRule<JsElseClause> for FormatJsElseClause {
     fn fmt_fields(&self, node: &JsElseClause, f: &mut JsFormatter) -> FormatResult<()> {
-        use rome_js_syntax::JsAnyStatement::*;
+        use rome_js_syntax::AnyJsStatement::*;
 
         let JsElseClauseFields {
             else_token,

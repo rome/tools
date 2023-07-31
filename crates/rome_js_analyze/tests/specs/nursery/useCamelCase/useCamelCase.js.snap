@@ -14,6 +14,7 @@ function snake_function(snake_case, PascalCase) {}
 class PascalCase {
 	snake_property = 1;
 	#private_snake_property = 2;
+	#validPrivateMember = 3;
 
 	snake_function() {}
 
@@ -157,7 +158,7 @@ useCamelCase.js:9:2 lint/nursery/useCamelCase ━━━━━━━━━━━�
    > 9 │ 	snake_property = 1;
        │ 	^^^^^^^^^^^^^^
     10 │ 	#private_snake_property = 2;
-    11 │ 
+    11 │ 	#validPrivateMember = 3;
   
 
 ```
@@ -171,38 +172,23 @@ useCamelCase.js:10:2 lint/nursery/useCamelCase ━━━━━━━━━━━
      9 │ 	snake_property = 1;
   > 10 │ 	#private_snake_property = 2;
        │ 	^^^^^^^^^^^^^^^^^^^^^^^
-    11 │ 
-    12 │ 	snake_function() {}
+    11 │ 	#validPrivateMember = 3;
+    12 │ 
   
 
 ```
 
 ```
-useCamelCase.js:12:2 lint/nursery/useCamelCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useCamelCase.js:13:2 lint/nursery/useCamelCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Prefer methods names in camel case.
   
-    10 │ 	#private_snake_property = 2;
-    11 │ 
-  > 12 │ 	snake_function() {}
+    11 │ 	#validPrivateMember = 3;
+    12 │ 
+  > 13 │ 	snake_function() {}
        │ 	^^^^^^^^^^^^^^
-    13 │ 
-    14 │ 	get snake_getter() {}
-  
-
-```
-
-```
-useCamelCase.js:14:6 lint/nursery/useCamelCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! Prefer methods names in camel case.
-  
-    12 │ 	snake_function() {}
-    13 │ 
-  > 14 │ 	get snake_getter() {}
-       │ 	    ^^^^^^^^^^^^
-    15 │ 	set snake_setter(v) {
-    16 │ 		console.log(v);
+    14 │ 
+    15 │ 	get snake_getter() {}
   
 
 ```
@@ -212,60 +198,75 @@ useCamelCase.js:15:6 lint/nursery/useCamelCase ━━━━━━━━━━━
 
   ! Prefer methods names in camel case.
   
-    14 │ 	get snake_getter() {}
-  > 15 │ 	set snake_setter(v) {
+    13 │ 	snake_function() {}
+    14 │ 
+  > 15 │ 	get snake_getter() {}
        │ 	    ^^^^^^^^^^^^
-    16 │ 		console.log(v);
-    17 │ 	}
+    16 │ 	set snake_setter(v) {
+    17 │ 		console.log(v);
   
 
 ```
 
 ```
-useCamelCase.js:31:5 lint/nursery/useCamelCase  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useCamelCase.js:16:6 lint/nursery/useCamelCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Prefer methods names in camel case.
+  
+    15 │ 	get snake_getter() {}
+  > 16 │ 	set snake_setter(v) {
+       │ 	    ^^^^^^^^^^^^
+    17 │ 		console.log(v);
+    18 │ 	}
+  
+
+```
+
+```
+useCamelCase.js:32:5 lint/nursery/useCamelCase  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Prefer variables names in camel case.
   
-    29 │ let longCamelCase;
-    30 │ 
-  > 31 │ let UPPER_CASE = 1;
+    30 │ let longCamelCase;
+    31 │ 
+  > 32 │ let UPPER_CASE = 1;
        │     ^^^^^^^^^^
-    32 │ let { UPPER_CASE } = env;
-    33 │ let [ UPPER_CASE ] = env;
+    33 │ let { UPPER_CASE } = env;
+    34 │ let [ UPPER_CASE ] = env;
   
   i Safe fix: Rename this symbol to camel case
   
-    29 29 │   let longCamelCase;
-    30 30 │   
-    31    │ - let·UPPER_CASE·=·1;
-       31 │ + let·uPPERCASE·=·1;
-    32 32 │   let { UPPER_CASE } = env;
-    33 33 │   let [ UPPER_CASE ] = env;
+    30 30 │   let longCamelCase;
+    31 31 │   
+    32    │ - let·UPPER_CASE·=·1;
+       32 │ + let·uPPERCASE·=·1;
+    33 33 │   let { UPPER_CASE } = env;
+    34 34 │   let [ UPPER_CASE ] = env;
   
 
 ```
 
 ```
-useCamelCase.js:45:10 lint/nursery/useCamelCase  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useCamelCase.js:46:10 lint/nursery/useCamelCase  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Prefer functions names in camel case.
   
-    43 │ export default PascalCaseOkBecauseExport;
-    44 │ 
-  > 45 │ function PascalCaseNOk() { }
+    44 │ export default PascalCaseOkBecauseExport;
+    45 │ 
+  > 46 │ function PascalCaseNOk() { }
        │          ^^^^^^^^^^^^^
-    46 │ console.log(PascalCaseNOk());
-    47 │ 
+    47 │ console.log(PascalCaseNOk());
+    48 │ 
   
   i Safe fix: Rename this symbol to camel case
   
-    43 43 │   export default PascalCaseOkBecauseExport;
-    44 44 │   
-    45    │ - function·PascalCaseNOk()·{·}
-    46    │ - console.log(PascalCaseNOk());
-       45 │ + function·pascalCaseNOk()·{·}
-       46 │ + console.log(pascalCaseNOk());
-    47 47 │   
+    44 44 │   export default PascalCaseOkBecauseExport;
+    45 45 │   
+    46    │ - function·PascalCaseNOk()·{·}
+    47    │ - console.log(PascalCaseNOk());
+       46 │ + function·pascalCaseNOk()·{·}
+       47 │ + console.log(pascalCaseNOk());
+    48 48 │   
   
 
 ```

@@ -1,55 +1,32 @@
-use std::any::Any;
-use std::collections::HashMap;
-use std::fmt::{Debug, Display};
-use std::io;
-
-use crate::line_index::{LineCol, LineIndex};
-use anyhow::{Context, Result};
+use crate::converters::line_index::LineIndex;
+use crate::converters::{from_proto, to_proto, PositionEncoding};
+use anyhow::{ensure, Context, Result};
 use rome_analyze::ActionCategory;
 use rome_console::fmt::Termcolor;
 use rome_console::fmt::{self, Formatter};
 use rome_console::MarkupBuf;
 use rome_diagnostics::termcolor::NoColor;
 use rome_diagnostics::{
-    v2::{Diagnostic, DiagnosticTags, Location, PrintDescription, Severity, Visit},
-    Applicability,
+    Applicability, {Diagnostic, DiagnosticTags, Location, PrintDescription, Severity, Visit},
 };
-use rome_rowan::{TextRange, TextSize};
+use rome_rowan::TextSize;
 use rome_service::workspace::CodeAction;
 use rome_text_edit::{CompressedOp, DiffOp, TextEdit};
+use std::any::Any;
+use std::collections::HashMap;
+use std::fmt::{Debug, Display};
+use std::ops::Range;
+use std::{io, mem};
 use tower_lsp::jsonrpc::Error as LspError;
-use tower_lsp::lsp_types::{self as lsp};
+use tower_lsp::lsp_types;
+use tower_lsp::lsp_types::{self as lsp, CodeDescription, Url};
 use tracing::error;
 
-pub(crate) fn position(line_index: &LineIndex, offset: TextSize) -> lsp::Position {
-    let line_col = line_index.line_col(offset);
-    lsp::Position::new(line_col.line, line_col.col)
-}
-
-pub(crate) fn range(line_index: &LineIndex, range: TextRange) -> lsp::Range {
-    let start = position(line_index, range.start());
-    let end = position(line_index, range.end());
-    lsp::Range::new(start, end)
-}
-
-pub(crate) fn offset(line_index: &LineIndex, position: lsp::Position) -> Result<TextSize> {
-    let line_col = LineCol {
-        line: position.line as u32,
-        col: position.character as u32,
-    };
-
-    line_index
-        .offset(line_col)
-        .with_context(|| format!("position {position:?} is out of range"))
-}
-
-pub(crate) fn text_range(line_index: &LineIndex, range: lsp::Range) -> Result<TextRange> {
-    let start = offset(line_index, range.start)?;
-    let end = offset(line_index, range.end)?;
-    Ok(TextRange::new(start, end))
-}
-
-pub(crate) fn text_edit(line_index: &LineIndex, diff: TextEdit) -> Vec<lsp::TextEdit> {
+pub(crate) fn text_edit(
+    line_index: &LineIndex,
+    diff: TextEdit,
+    position_encoding: PositionEncoding,
+) -> Result<Vec<lsp::TextEdit>> {
     let mut result: Vec<lsp::TextEdit> = Vec::new();
     let mut offset = TextSize::from(0);
 
@@ -59,7 +36,7 @@ pub(crate) fn text_edit(line_index: &LineIndex, diff: TextEdit) -> Vec<lsp::Text
                 offset += range.len();
             }
             CompressedOp::DiffOp(DiffOp::Insert { range }) => {
-                let start = position(line_index, offset);
+                let start = to_proto::position(line_index, offset, position_encoding)?;
 
                 // Merge with a previous delete operation if possible
                 let last_edit = result.last_mut().filter(|text_edit| {
@@ -76,9 +53,9 @@ pub(crate) fn text_edit(line_index: &LineIndex, diff: TextEdit) -> Vec<lsp::Text
                 }
             }
             CompressedOp::DiffOp(DiffOp::Delete { range }) => {
-                let start = position(line_index, offset);
+                let start = to_proto::position(line_index, offset, position_encoding)?;
                 offset += range.len();
-                let end = position(line_index, offset);
+                let end = to_proto::position(line_index, offset, position_encoding)?;
 
                 result.push(lsp::TextEdit {
                     range: lsp::Range::new(start, end),
@@ -87,7 +64,10 @@ pub(crate) fn text_edit(line_index: &LineIndex, diff: TextEdit) -> Vec<lsp::Text
             }
 
             CompressedOp::EqualLines { line_count } => {
-                let mut line_col = line_index.line_col(offset);
+                let mut line_col = line_index
+                    .line_col(offset)
+                    .expect("diff length is overflowing the line count in the original file");
+
                 line_col.line += line_count.get() + 1;
                 line_col.col = 0;
 
@@ -102,45 +82,61 @@ pub(crate) fn text_edit(line_index: &LineIndex, diff: TextEdit) -> Vec<lsp::Text
         }
     }
 
-    result
+    Ok(result)
 }
 
 pub(crate) fn code_fix_to_lsp(
     url: &lsp::Url,
     line_index: &LineIndex,
+    position_encoding: PositionEncoding,
     diagnostics: &[lsp::Diagnostic],
     action: CodeAction,
-) -> lsp::CodeAction {
+) -> Result<lsp::CodeAction> {
     // Mark diagnostics emitted by the same rule as resolved by this action
-    let diagnostics: Vec<_> = if matches!(action.category, ActionCategory::QuickFix) {
-        diagnostics
-            .iter()
-            .filter_map(|d| {
-                let code = d.code.as_ref().and_then(|code| match code {
-                    lsp::NumberOrString::String(code) => Some(code.as_str()),
-                    lsp::NumberOrString::Number(_) => None,
-                })?;
+    let diagnostics: Vec<_> = action
+        .rule_name
+        .as_ref()
+        .filter(|_| action.category.matches("quickfix"))
+        .map(|(group_name, rule_name)| {
+            diagnostics
+                .iter()
+                .filter_map(|d| {
+                    let code = d.code.as_ref()?;
+                    let code = match code {
+                        lsp::NumberOrString::String(code) => code.as_str(),
+                        lsp::NumberOrString::Number(_) => return None,
+                    };
 
-                if code == action.rule_name {
-                    Some(d.clone())
-                } else {
-                    None
-                }
-            })
-            .collect()
-    } else {
-        Vec::new()
-    };
+                    let code = code.strip_prefix("lint/")?;
+                    let code = code.strip_prefix(group_name.as_ref())?;
+                    let code = code.strip_prefix('/')?;
 
-    let kind = match action.category {
-        ActionCategory::QuickFix => Some(lsp::CodeActionKind::QUICKFIX),
-        ActionCategory::Refactor => Some(lsp::CodeActionKind::REFACTOR),
-    };
+                    if code == rule_name {
+                        Some(d.clone())
+                    } else {
+                        None
+                    }
+                })
+                .collect()
+        })
+        .unwrap_or_default();
+
+    let kind = action.category.to_str();
+    let mut kind = kind.into_owned();
+
+    if !matches!(action.category, ActionCategory::Source(_)) {
+        if let Some((group, rule)) = action.rule_name {
+            kind.push('.');
+            kind.push_str(group.as_ref());
+            kind.push('.');
+            kind.push_str(rule.as_ref());
+        }
+    }
 
     let suggestion = action.suggestion;
 
     let mut changes = HashMap::new();
-    let edits = text_edit(line_index, suggestion.suggestion);
+    let edits = text_edit(line_index, suggestion.suggestion, position_encoding)?;
 
     changes.insert(url.clone(), edits);
 
@@ -150,9 +146,13 @@ pub(crate) fn code_fix_to_lsp(
         change_annotations: None,
     };
 
-    lsp::CodeAction {
+    let is_preferred = matches!(action.category, ActionCategory::Source(_))
+        || matches!(suggestion.applicability, Applicability::Always)
+            && !action.category.matches("quickfix.suppressRule");
+
+    Ok(lsp::CodeAction {
         title: print_markup(&suggestion.msg),
-        kind,
+        kind: Some(lsp::CodeActionKind::from(kind)),
         diagnostics: if !diagnostics.is_empty() {
             Some(diagnostics)
         } else {
@@ -160,14 +160,10 @@ pub(crate) fn code_fix_to_lsp(
         },
         edit: Some(edit),
         command: None,
-        is_preferred: if matches!(suggestion.applicability, Applicability::Always) {
-            Some(true)
-        } else {
-            None
-        },
+        is_preferred: is_preferred.then_some(true),
         disabled: None,
         data: None,
-    }
+    })
 }
 
 /// Convert an [rome_diagnostics::Diagnostic] to a [lsp::Diagnostic], using the span
@@ -178,9 +174,13 @@ pub(crate) fn diagnostic_to_lsp<D: Diagnostic>(
     diagnostic: D,
     url: &lsp::Url,
     line_index: &LineIndex,
-) -> Option<lsp::Diagnostic> {
-    let location = diagnostic.location()?;
-    let span = range(line_index, location.span?);
+    position_encoding: PositionEncoding,
+) -> Result<lsp::Diagnostic> {
+    let location = diagnostic.location();
+
+    let span = location.span.context("diagnostic location has no span")?;
+    let span = to_proto::range(line_index, span, position_encoding)
+        .context("failed to convert diagnostic span to LSP range")?;
 
     let severity = match diagnostic.severity() {
         Severity::Fatal | Severity::Error => lsp::DiagnosticSeverity::ERROR,
@@ -193,12 +193,22 @@ pub(crate) fn diagnostic_to_lsp<D: Diagnostic>(
         .category()
         .map(|category| lsp::NumberOrString::String(category.name().to_string()));
 
+    let code_description = diagnostic
+        .category()
+        .and_then(|category| category.link())
+        .and_then(|link| {
+            let href = Url::parse(link).ok()?;
+            Some(CodeDescription { href })
+        });
+
     let message = PrintDescription(&diagnostic).to_string();
+    ensure!(!message.is_empty(), "diagnostic description is empty");
 
     let mut related_information = None;
     let mut visitor = RelatedInformationVisitor {
         url,
         line_index,
+        position_encoding,
         related_information: &mut related_information,
     };
 
@@ -223,7 +233,7 @@ pub(crate) fn diagnostic_to_lsp<D: Diagnostic>(
         }
     };
 
-    Some(lsp::Diagnostic::new(
+    let mut diagnostic = lsp::Diagnostic::new(
         span,
         Some(severity),
         code,
@@ -231,12 +241,15 @@ pub(crate) fn diagnostic_to_lsp<D: Diagnostic>(
         message,
         related_information,
         tags,
-    ))
+    );
+    diagnostic.code_description = code_description;
+    Ok(diagnostic)
 }
 
 struct RelatedInformationVisitor<'a> {
     url: &'a lsp::Url,
     line_index: &'a LineIndex,
+    position_encoding: PositionEncoding,
     related_information: &'a mut Option<Vec<lsp::DiagnosticRelatedInformation>>,
 }
 
@@ -247,12 +260,17 @@ impl Visit for RelatedInformationVisitor<'_> {
             None => return Ok(()),
         };
 
+        let range = match to_proto::range(self.line_index, span, self.position_encoding) {
+            Ok(range) => range,
+            Err(_) => return Ok(()),
+        };
+
         let related_information = self.related_information.get_or_insert_with(Vec::new);
 
         related_information.push(lsp::DiagnosticRelatedInformation {
             location: lsp::Location {
                 uri: self.url.clone(),
-                range: range(self.line_index, span),
+                range,
             },
             message: String::new(),
         });
@@ -301,12 +319,68 @@ pub(crate) fn panic_to_lsp_error(err: Box<dyn Any + Send>) -> LspError {
     error
 }
 
+pub(crate) fn apply_document_changes(
+    position_encoding: PositionEncoding,
+    current_content: String,
+    mut content_changes: Vec<lsp_types::TextDocumentContentChangeEvent>,
+) -> String {
+    // Skip to the last full document change, as it invalidates all previous changes anyways.
+    let mut start = content_changes
+        .iter()
+        .rev()
+        .position(|change| change.range.is_none())
+        .map(|idx| content_changes.len() - idx - 1)
+        .unwrap_or(0);
+
+    let mut text: String = match content_changes.get_mut(start) {
+        // peek at the first content change as an optimization
+        Some(lsp_types::TextDocumentContentChangeEvent {
+            range: None, text, ..
+        }) => {
+            let text = mem::take(text);
+            start += 1;
+
+            // The only change is a full document update
+            if start == content_changes.len() {
+                return text;
+            }
+            text
+        }
+        Some(_) => current_content,
+        // we received no content changes
+        None => return current_content,
+    };
+
+    let mut line_index = LineIndex::new(&text);
+
+    // The changes we got must be applied sequentially, but can cross lines so we
+    // have to keep our line index updated.
+    // Some clients (e.g. Code) sort the ranges in reverse. As an optimization, we
+    // remember the last valid line in the index and only rebuild it if needed.
+    let mut index_valid = u32::MAX;
+    for change in content_changes {
+        // The None case can't happen as we have handled it above already
+        if let Some(range) = change.range {
+            if index_valid <= range.end.line {
+                line_index = LineIndex::new(&text);
+            }
+            index_valid = range.start.line;
+            if let Ok(range) = from_proto::text_range(&line_index, range, position_encoding) {
+                text.replace_range(Range::<usize>::from(range), &change.text);
+            }
+        }
+    }
+    text
+}
+
 #[cfg(test)]
 mod tests {
+    use super::apply_document_changes;
+    use crate::converters::line_index::LineIndex;
+    use crate::converters::{PositionEncoding, WideEncoding};
     use rome_text_edit::TextEdit;
     use tower_lsp::lsp_types as lsp;
-
-    use crate::line_index::LineIndex;
+    use tower_lsp::lsp_types::{Position, Range, TextDocumentContentChangeEvent};
 
     #[test]
     fn test_diff_1() {
@@ -329,7 +403,7 @@ line 7 new";
         let line_index = LineIndex::new(OLD);
         let diff = TextEdit::from_unicode_words(OLD, NEW);
 
-        let text_edit = super::text_edit(&line_index, diff);
+        let text_edit = super::text_edit(&line_index, diff, PositionEncoding::Utf8).unwrap();
 
         assert_eq!(
             text_edit.as_slice(),
@@ -372,7 +446,7 @@ line 7 new";
         let line_index = LineIndex::new(OLD);
         let diff = TextEdit::from_unicode_words(OLD, NEW);
 
-        let text_edit = super::text_edit(&line_index, diff);
+        let text_edit = super::text_edit(&line_index, diff, PositionEncoding::Utf8).unwrap();
 
         assert_eq!(
             text_edit.as_slice(),
@@ -418,5 +492,21 @@ line 7 new";
                 },
             ]
         );
+    }
+
+    #[test]
+    fn test_range_formatting() {
+        let encoding = PositionEncoding::Wide(WideEncoding::Utf16);
+        let input = "(\"Jan 1, 2018\u{2009}–\u{2009}Jan 1, 2019\");\n(\"Jan 1, 2018\u{2009}–\u{2009}Jan 1, 2019\");\nisSpreadAssignment;\n".to_string();
+        let change = TextDocumentContentChangeEvent {
+            range: Some(Range::new(Position::new(0, 30), Position::new(1, 0))),
+            range_length: Some(1),
+            text: "".to_string(),
+        };
+
+        let output = apply_document_changes(encoding, input, vec![change]);
+        let expected = "(\"Jan 1, 2018\u{2009}–\u{2009}Jan 1, 2019\");(\"Jan 1, 2018\u{2009}–\u{2009}Jan 1, 2019\");\nisSpreadAssignment;\n";
+
+        assert_eq!(output, expected);
     }
 }

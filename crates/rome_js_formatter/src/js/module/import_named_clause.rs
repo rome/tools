@@ -1,14 +1,14 @@
 use crate::prelude::*;
 
 use rome_formatter::{write, CstFormatContext};
-use rome_js_syntax::JsAnyNamedImport;
-use rome_js_syntax::JsAnyNamedImportSpecifier;
+use rome_js_syntax::AnyJsNamedImport;
+use rome_js_syntax::AnyJsNamedImportSpecifier;
 use rome_js_syntax::JsImportNamedClause;
 use rome_js_syntax::JsImportNamedClauseFields;
 use rome_js_syntax::JsNamedImportSpecifiersFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsImportNamedClause;
+pub(crate) struct FormatJsImportNamedClause;
 
 impl FormatNodeRule<JsImportNamedClause> for FormatJsImportNamedClause {
     fn fmt_fields(&self, node: &JsImportNamedClause, f: &mut JsFormatter) -> FormatResult<()> {
@@ -51,7 +51,7 @@ impl FormatNodeRule<JsImportNamedClause> for FormatJsImportNamedClause {
             write![f, [named_import.format()]]
         } else {
             match named_import {
-                JsAnyNamedImport::JsNamedImportSpecifiers(ref specifiers)
+                AnyJsNamedImport::JsNamedImportSpecifiers(ref specifiers)
                     if specifiers.specifiers().len() == 1
                         && !f.context().comments().is_suppressed(specifiers.syntax()) =>
                 {
@@ -59,18 +59,33 @@ impl FormatNodeRule<JsImportNamedClause> for FormatJsImportNamedClause {
                     let first_specifier = specifiers.specifiers().elements().next().unwrap();
                     match (first_specifier.node(), first_specifier.trailing_separator()) {
                         (
-                            Ok(JsAnyNamedImportSpecifier::JsShorthandNamedImportSpecifier(
+                            Ok(AnyJsNamedImportSpecifier::JsShorthandNamedImportSpecifier(
                                 specifier,
                             )),
                             Ok(separator),
                         ) => {
-                            if specifier.syntax().has_comments_direct()
-                                || separator
-                                    .map(|sep| {
-                                        sep.has_leading_comments() || sep.has_trailing_comments()
-                                    })
-                                    .unwrap_or(false)
-                            {
+                            if f.comments().has_comments(specifier.syntax()) {
+                                write!(f, [named_import.format()])
+                            } else {
+                                let JsNamedImportSpecifiersFields {
+                                    l_curly_token,
+                                    specifiers: _,
+                                    r_curly_token,
+                                } = specifiers.as_fields();
+                                write!(f, [l_curly_token.format(), space(), specifier.format(),])?;
+
+                                if let Some(separator) = separator {
+                                    format_removed(separator).fmt(f)?;
+                                }
+
+                                write!(f, [space(), r_curly_token.format()])
+                            }
+                        }
+                        (
+                            Ok(AnyJsNamedImportSpecifier::JsNamedImportSpecifier(specifier)),
+                            Ok(separator),
+                        ) => {
+                            if f.comments().has_comments(specifier.syntax()) {
                                 write!(f, [named_import.format()])
                             } else {
                                 let JsNamedImportSpecifiersFields {

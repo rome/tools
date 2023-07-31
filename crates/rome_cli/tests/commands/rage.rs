@@ -1,11 +1,10 @@
 use crate::run_cli;
 use crate::snap_test::{CliSnapshot, SnapshotPayload};
-use pico_args::Arguments;
-use rome_cli::Termination;
+use bpaf::Args;
+use rome_cli::CliDiagnostic;
 use rome_console::{BufferConsole, Console};
 use rome_fs::{FileSystem, MemoryFileSystem};
 use rome_service::DynRef;
-use std::ffi::OsString;
 use std::path::{Path, PathBuf};
 use std::sync::{Mutex, MutexGuard};
 use std::{env, fs};
@@ -17,8 +16,8 @@ fn ok() {
 
     let result = run_rage(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
-        Arguments::from_vec(vec![OsString::from("rage")]),
+        &mut console,
+        Args::from([("rage")].as_slice()),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -47,8 +46,8 @@ fn with_configuration() {
 
     let result = run_rage(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
-        Arguments::from_vec(vec![OsString::from("rage")]),
+        &mut console,
+        Args::from([("rage")].as_slice()),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -77,8 +76,8 @@ fn with_malformed_configuration() {
 
     let result = run_rage(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
-        Arguments::from_vec(vec![OsString::from("rage")]),
+        &mut console,
+        Args::from([("rage")].as_slice()),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -101,7 +100,7 @@ fn with_server_logs() {
         let log_dir = TestLogDir::new("rome-test-logs");
         fs::create_dir_all(&log_dir.path).expect("Failed to create test log directory");
 
-        fs::write(&log_dir.path.join("server.log.2022-10-14-16"), r#"
+        fs::write(log_dir.path.join("server.log.2022-10-14-16"), r#"
 ┐rome_cli::commands::daemon::Running Server{pid=195434}
 ├─2547ms INFO rome_lsp::server Starting Rome Language Server...
 ├─15333ms INFO rome_lsp::server Starting Rome Language Server...
@@ -135,7 +134,7 @@ INFO rome_cli::commands::daemon Received shutdown signal
         ).expect("Failed to write log file");
 
         fs::write(
-            &log_dir.path.join("server.log.2022-10-14-15"),
+            log_dir.path.join("server.log.2022-10-14-15"),
             r#"
 Not most recent log file
 "#,
@@ -144,8 +143,8 @@ Not most recent log file
 
         run_cli(
             DynRef::Borrowed(&mut fs),
-            DynRef::Borrowed(&mut console),
-            Arguments::from_vec(vec![OsString::from("rage")]),
+            &mut console,
+            Args::from([("rage")].as_slice()),
         )
     };
 
@@ -163,9 +162,9 @@ Not most recent log file
 /// Runs the `rage` command mocking out the log directory.
 fn run_rage<'app>(
     fs: DynRef<'app, dyn FileSystem>,
-    console: DynRef<'app, dyn Console>,
-    args: Arguments,
-) -> Result<(), Termination> {
+    console: &'app mut dyn Console,
+    args: Args,
+) -> Result<(), CliDiagnostic> {
     let _test_dir = TestLogDir::new("rome-rage-test");
     run_cli(fs, console, args)
 }

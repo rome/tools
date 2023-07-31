@@ -1,17 +1,24 @@
 {
     "name": "rome",
-    "version": "0.10.1",
+    "version": "12.1.3",
     "bin": "bin/rome",
     "scripts": {
         "postinstall": "node scripts/postinstall.js"
     },
     "homepage": "https://rome.tools",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/rome/tools.git",
+      "directory": "npm/rome"
+    },
     "author": "Sebastian McKenzie",
+    "license": "MIT",
     "bugs": "https://github.com/rome/tools/issues",
     "description": "Rome is a toolchain for the web: formatter, linter and more",
     "files": [
         "bin/rome",
         "scripts/postinstall.js",
+        "configuration_schema.json",
         "README.md"
     ],
     "keywords": [
@@ -19,7 +26,8 @@
         "TypeScript",
         "format",
         "lint",
-        "toolchain"
+        "toolchain",
+				"JSON"
     ],
     "engines": {
         "node": ">=14.*"

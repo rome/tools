@@ -122,6 +122,30 @@ impl Pattern {
         let mut is_recursive = false;
         let mut i = 0;
 
+        // A pattern is relative if it starts with "." followed by a separator,
+        // eg. "./test" or ".\test"
+        let is_relative = matches!(chars.get(..2), Some(['.', sep]) if path::is_separator(*sep));
+        if is_relative {
+            // If a pattern starts with a relative prefix, strip it from the
+            // pattern and replace it with a "**" sequence
+            i += 2;
+            tokens.push(AnyRecursiveSequence);
+        } else {
+            // A pattern is absolute if it starts with a path separator, eg. "/home" or "\\?\C:\Users"
+            let mut is_absolute = chars.first().map_or(false, |c| path::is_separator(*c));
+
+            // On windows a pattern may also be absolute if it starts with a
+            // drive letter, a colon and a separator, eg. "c:/Users" or "G:\Users"
+            if cfg!(windows) && !is_absolute {
+                is_absolute = matches!(chars.get(..3), Some(['a'..='z' | 'A'..='Z', ':', sep]) if path::is_separator(*sep));
+            }
+
+            // If a pattern is not absolute, insert a "**" sequence in front
+            if !is_absolute {
+                tokens.push(AnyRecursiveSequence);
+            }
+        }
+
         while i < chars.len() {
             match chars[i] {
                 '?' => {
@@ -834,5 +858,70 @@ mod test {
     fn test_path_join() {
         let pattern = Path::new("one").join(Path::new("**/*.rs"));
         assert!(Pattern::new(pattern.to_str().unwrap()).is_ok());
+    }
+
+    #[test]
+    fn test_pattern_relative() {
+        assert!(Pattern::new("./b").unwrap().matches_path(Path::new("a/b")));
+        assert!(Pattern::new("b").unwrap().matches_path(Path::new("a/b")));
+
+        if cfg!(windows) {
+            assert!(Pattern::new(".\\b")
+                .unwrap()
+                .matches_path(Path::new("a\\b")));
+            assert!(Pattern::new("b").unwrap().matches_path(Path::new("a\\b")));
+        }
+    }
+
+    #[test]
+    fn test_pattern_absolute() {
+        assert!(Pattern::new("/a/b")
+            .unwrap()
+            .matches_path(Path::new("/a/b")));
+
+        if cfg!(windows) {
+            assert!(Pattern::new("c:/a/b")
+                .unwrap()
+                .matches_path(Path::new("c:/a/b")));
+            assert!(Pattern::new("C:\\a\\b")
+                .unwrap()
+                .matches_path(Path::new("C:\\a\\b")));
+
+            assert!(Pattern::new("\\\\?\\c:\\a\\b")
+                .unwrap()
+                .matches_path(Path::new("\\\\?\\c:\\a\\b")));
+            assert!(Pattern::new("\\\\?\\C:/a/b")
+                .unwrap()
+                .matches_path(Path::new("\\\\?\\C:/a/b")));
+        }
+    }
+
+    #[test]
+    fn test_pattern_glob() {
+        assert!(Pattern::new("*.js")
+            .unwrap()
+            .matches_path(Path::new("b/c.js")));
+
+        assert!(Pattern::new("**/*.js")
+            .unwrap()
+            .matches_path(Path::new("b/c.js")));
+
+        assert!(Pattern::new("*.js")
+            .unwrap()
+            .matches_path(Path::new("/a/b/c.js")));
+
+        assert!(Pattern::new("**/*.js")
+            .unwrap()
+            .matches_path(Path::new("/a/b/c.js")));
+
+        if cfg!(windows) {
+            assert!(Pattern::new("*.js")
+                .unwrap()
+                .matches_path(Path::new("C:\\a\\b\\c.js")));
+
+            assert!(Pattern::new("**/*.js")
+                .unwrap()
+                .matches_path(Path::new("\\\\?\\C:\\a\\b\\c.js")));
+        }
     }
 }

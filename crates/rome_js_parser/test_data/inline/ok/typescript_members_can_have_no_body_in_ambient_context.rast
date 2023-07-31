@@ -5,6 +5,7 @@ JsModule {
         TsDeclareStatement {
             declare_token: DECLARE_KW@0..8 "declare" [] [Whitespace(" ")],
             declaration: JsClassDeclaration {
+                decorators: JsDecoratorList [],
                 abstract_token: missing (optional),
                 class_token: CLASS_KW@8..14 "class" [] [Whitespace(" ")],
                 id: JsIdentifierBinding {
@@ -67,6 +68,7 @@ JsModule {
                         },
                         l_paren_token: L_PAREN@88..89 "(" [] [],
                         parameter: JsFormalParameter {
+                            decorators: JsDecoratorList [],
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@89..90 "v" [] [],
                             },
@@ -92,6 +94,7 @@ JsModule {
                     l_curly_token: L_CURLY@115..116 "{" [] [],
                     items: JsModuleItemList [
                         JsClassDeclaration {
+                            decorators: JsDecoratorList [],
                             abstract_token: missing (optional),
                             class_token: CLASS_KW@116..128 "class" [Newline("\n"), Whitespace("     ")] [Whitespace(" ")],
                             id: JsIdentifierBinding {
@@ -154,6 +157,7 @@ JsModule {
                                     },
                                     l_paren_token: L_PAREN@219..220 "(" [] [],
                                     parameter: JsFormalParameter {
+                                        decorators: JsDecoratorList [],
                                         binding: JsIdentifierBinding {
                                             name_token: IDENT@220..221 "v" [] [],
                                         },
@@ -183,15 +187,16 @@ JsModule {
     0: TS_DECLARE_STATEMENT@0..94
       0: DECLARE_KW@0..8 "declare" [] [Whitespace(" ")]
       1: JS_CLASS_DECLARATION@8..94
-        0: (empty)
-        1: CLASS_KW@8..14 "class" [] [Whitespace(" ")]
-        2: JS_IDENTIFIER_BINDING@14..19
+        0: JS_DECORATOR_LIST@8..8
+        1: (empty)
+        2: CLASS_KW@8..14 "class" [] [Whitespace(" ")]
+        3: JS_IDENTIFIER_BINDING@14..19
           0: IDENT@14..19 "Test" [] [Whitespace(" ")]
-        3: (empty)
         4: (empty)
         5: (empty)
-        6: L_CURLY@19..20 "{" [] []
-        7: JS_CLASS_MEMBER_LIST@20..92
+        6: (empty)
+        7: L_CURLY@19..20 "{" [] []
+        8: JS_CLASS_MEMBER_LIST@20..92
           0: TS_CONSTRUCTOR_SIGNATURE_CLASS_MEMBER@20..39
             0: JS_CONSTRUCTOR_MODIFIER_LIST@20..20
             1: JS_LITERAL_MEMBER_NAME@20..36
@@ -233,14 +238,15 @@ JsModule {
               0: IDENT@84..88 "test" [] []
             3: L_PAREN@88..89 "(" [] []
             4: JS_FORMAL_PARAMETER@89..90
-              0: JS_IDENTIFIER_BINDING@89..90
+              0: JS_DECORATOR_LIST@89..89
+              1: JS_IDENTIFIER_BINDING@89..90
                 0: IDENT@89..90 "v" [] []
-              1: (empty)
               2: (empty)
               3: (empty)
+              4: (empty)
             5: R_PAREN@90..91 ")" [] []
             6: SEMICOLON@91..92 ";" [] []
-        8: R_CURLY@92..94 "}" [Newline("\n")] []
+        9: R_CURLY@92..94 "}" [Newline("\n")] []
     1: TS_DECLARE_STATEMENT@94..231
       0: DECLARE_KW@94..103 "declare" [Newline("\n")] [Whitespace(" ")]
       1: TS_MODULE_DECLARATION@103..231
@@ -251,15 +257,16 @@ JsModule {
           0: L_CURLY@115..116 "{" [] []
           1: JS_MODULE_ITEM_LIST@116..229
             0: JS_CLASS_DECLARATION@116..229
-              0: (empty)
-              1: CLASS_KW@116..128 "class" [Newline("\n"), Whitespace("     ")] [Whitespace(" ")]
-              2: JS_IDENTIFIER_BINDING@128..133
+              0: JS_DECORATOR_LIST@116..116
+              1: (empty)
+              2: CLASS_KW@116..128 "class" [Newline("\n"), Whitespace("     ")] [Whitespace(" ")]
+              3: JS_IDENTIFIER_BINDING@128..133
                 0: IDENT@128..133 "Test" [] [Whitespace(" ")]
-              3: (empty)
               4: (empty)
               5: (empty)
-              6: L_CURLY@133..134 "{" [] []
-              7: JS_CLASS_MEMBER_LIST@134..222
+              6: (empty)
+              7: L_CURLY@133..134 "{" [] []
+              8: JS_CLASS_MEMBER_LIST@134..222
                 0: TS_CONSTRUCTOR_SIGNATURE_CLASS_MEMBER@134..157
                   0: JS_CONSTRUCTOR_MODIFIER_LIST@134..134
                   1: JS_LITERAL_MEMBER_NAME@134..155
@@ -301,13 +308,14 @@ JsModule {
                     0: IDENT@215..219 "test" [] []
                   3: L_PAREN@219..220 "(" [] []
                   4: JS_FORMAL_PARAMETER@220..221
-                    0: JS_IDENTIFIER_BINDING@220..221
+                    0: JS_DECORATOR_LIST@220..220
+                    1: JS_IDENTIFIER_BINDING@220..221
                       0: IDENT@220..221 "v" [] []
-                    1: (empty)
                     2: (empty)
                     3: (empty)
+                    4: (empty)
                   5: R_PAREN@221..222 ")" [] []
                   6: (empty)
-              8: R_CURLY@222..229 "}" [Newline("\n"), Whitespace("     ")] []
+              9: R_CURLY@222..229 "}" [Newline("\n"), Whitespace("     ")] []
           2: R_CURLY@229..231 "}" [Newline("\n")] []
   3: EOF@231..232 "" [Newline("\n")] []

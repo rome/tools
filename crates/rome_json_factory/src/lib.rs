@@ -1,4 +1,4 @@
-use crate::generated::JsonSyntaxFactory;
+pub use crate::generated::JsonSyntaxFactory;
 use rome_json_syntax::JsonLanguage;
 use rome_rowan::TreeBuilder;
 

@@ -12,7 +12,7 @@ type Comments =
 trailing type */
 
 type A = [
-    /*leading comment with new line*/ 
+    /*leading comment with new line*/
     A | B,
     ];
 

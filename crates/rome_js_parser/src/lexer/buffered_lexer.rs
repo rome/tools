@@ -1,6 +1,6 @@
 use super::{LexContext, Lexer, LexerCheckpoint, ReLexContext, TextRange, TokenFlags};
-use crate::ParseDiagnostic;
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxKind::EOF};
+use rome_parser::diagnostic::ParseDiagnostic;
 use std::collections::VecDeque;
 use std::iter::FusedIterator;
 
@@ -144,7 +144,7 @@ impl<'l> BufferedLexer<'l> {
 
     /// Rewinds the lexer to the state stored in the checkpoint.
     pub fn rewind(&mut self, checkpoint: LexerCheckpoint) {
-        // test_err js_rewind_at_eof_token
+        // test_err js js_rewind_at_eof_token
         // (([zAgRvz=[=(e{V{
 
         self.inner.rewind(checkpoint);
@@ -283,13 +283,12 @@ impl From<&LexerCheckpoint> for LookaheadToken {
 mod tests {
     use super::BufferedLexer;
     use crate::lexer::{LexContext, Lexer, TextRange, TextSize};
-    use rome_diagnostics::file::FileId;
     use rome_js_syntax::JsSyntaxKind::{JS_NUMBER_LITERAL, NEWLINE, WHITESPACE};
     use rome_js_syntax::T;
 
     #[test]
     fn without_lookahead() {
-        let lexer = Lexer::from_str("let a\n = 5", FileId::zero());
+        let lexer = Lexer::from_str("let a\n = 5");
         let mut buffered = BufferedLexer::new(lexer);
 
         buffered.next_token(LexContext::default());
@@ -316,7 +315,7 @@ mod tests {
 
     #[test]
     fn lookahead() {
-        let lexer = Lexer::from_str("let a\n = 5", FileId::zero());
+        let lexer = Lexer::from_str("let a\n = 5");
         let mut buffered = BufferedLexer::new(lexer);
 
         buffered.next_token(LexContext::default());

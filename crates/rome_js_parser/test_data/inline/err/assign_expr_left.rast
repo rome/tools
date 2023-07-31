@@ -18,7 +18,7 @@ JsModule {
             },
             semicolon_token: missing (optional),
         },
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 R_PAREN@7..8 ")" [] [],
             ],
@@ -45,7 +45,7 @@ JsModule {
           0: JS_REFERENCE_IDENTIFIER@4..7
             0: IDENT@4..7 "foo" [] []
       1: (empty)
-    1: JS_UNKNOWN_STATEMENT@7..8
+    1: JS_BOGUS_STATEMENT@7..8
       0: R_PAREN@7..8 ")" [] []
     2: JS_EMPTY_STATEMENT@8..9
       0: SEMICOLON@8..9 ";" [] []

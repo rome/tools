@@ -48,6 +48,7 @@ JsModule {
                                             l_paren_token: L_PAREN@29..30 "(" [] [],
                                             items: JsParameterList [
                                                 JsFormalParameter {
+                                                    decorators: JsDecoratorList [],
                                                     binding: JsIdentifierBinding {
                                                         name_token: IDENT@30..31 "a" [] [],
                                                     },
@@ -57,6 +58,7 @@ JsModule {
                                                 },
                                                 COMMA@31..33 "," [] [Whitespace(" ")],
                                                 JsFormalParameter {
+                                                    decorators: JsDecoratorList [],
                                                     binding: JsIdentifierBinding {
                                                         name_token: IDENT@33..34 "b" [] [],
                                                     },
@@ -66,6 +68,7 @@ JsModule {
                                                 },
                                                 COMMA@34..36 "," [] [Whitespace(" ")],
                                                 JsFormalParameter {
+                                                    decorators: JsDecoratorList [],
                                                     binding: JsIdentifierBinding {
                                                         name_token: IDENT@36..37 "c" [] [],
                                                     },
@@ -106,6 +109,7 @@ JsModule {
                                             l_paren_token: L_PAREN@60..61 "(" [] [],
                                             items: JsParameterList [
                                                 JsFormalParameter {
+                                                    decorators: JsDecoratorList [],
                                                     binding: JsIdentifierBinding {
                                                         name_token: IDENT@61..62 "a" [] [],
                                                     },
@@ -136,6 +140,7 @@ JsModule {
                                             l_paren_token: L_PAREN@71..72 "(" [] [],
                                             items: JsParameterList [
                                                 JsRestParameter {
+                                                    decorators: JsDecoratorList [],
                                                     dotdotdot_token: DOT3@72..75 "..." [] [],
                                                     binding: JsIdentifierBinding {
                                                         name_token: IDENT@75..79 "rest" [] [],
@@ -210,25 +215,28 @@ JsModule {
                       0: L_PAREN@29..30 "(" [] []
                       1: JS_PARAMETER_LIST@30..37
                         0: JS_FORMAL_PARAMETER@30..31
-                          0: JS_IDENTIFIER_BINDING@30..31
+                          0: JS_DECORATOR_LIST@30..30
+                          1: JS_IDENTIFIER_BINDING@30..31
                             0: IDENT@30..31 "a" [] []
-                          1: (empty)
                           2: (empty)
                           3: (empty)
+                          4: (empty)
                         1: COMMA@31..33 "," [] [Whitespace(" ")]
                         2: JS_FORMAL_PARAMETER@33..34
-                          0: JS_IDENTIFIER_BINDING@33..34
+                          0: JS_DECORATOR_LIST@33..33
+                          1: JS_IDENTIFIER_BINDING@33..34
                             0: IDENT@33..34 "b" [] []
-                          1: (empty)
                           2: (empty)
                           3: (empty)
+                          4: (empty)
                         3: COMMA@34..36 "," [] [Whitespace(" ")]
                         4: JS_FORMAL_PARAMETER@36..37
-                          0: JS_IDENTIFIER_BINDING@36..37
+                          0: JS_DECORATOR_LIST@36..36
+                          1: JS_IDENTIFIER_BINDING@36..37
                             0: IDENT@36..37 "c" [] []
-                          1: (empty)
                           2: (empty)
                           3: (empty)
+                          4: (empty)
                       2: R_PAREN@37..39 ")" [] [Whitespace(" ")]
                     5: (empty)
                     6: JS_FUNCTION_BODY@39..41
@@ -254,11 +262,12 @@ JsModule {
                       0: L_PAREN@60..61 "(" [] []
                       1: JS_PARAMETER_LIST@61..62
                         0: JS_FORMAL_PARAMETER@61..62
-                          0: JS_IDENTIFIER_BINDING@61..62
+                          0: JS_DECORATOR_LIST@61..61
+                          1: JS_IDENTIFIER_BINDING@61..62
                             0: IDENT@61..62 "a" [] []
-                          1: (empty)
                           2: (empty)
                           3: (empty)
+                          4: (empty)
                       2: R_PAREN@62..64 ")" [] [Whitespace(" ")]
                     5: (empty)
                     6: JS_FUNCTION_BODY@64..66
@@ -277,10 +286,11 @@ JsModule {
                       0: L_PAREN@71..72 "(" [] []
                       1: JS_PARAMETER_LIST@72..79
                         0: JS_REST_PARAMETER@72..79
-                          0: DOT3@72..75 "..." [] []
-                          1: JS_IDENTIFIER_BINDING@75..79
+                          0: JS_DECORATOR_LIST@72..72
+                          1: DOT3@72..75 "..." [] []
+                          2: JS_IDENTIFIER_BINDING@75..79
                             0: IDENT@75..79 "rest" [] []
-                          2: (empty)
+                          3: (empty)
                       2: R_PAREN@79..81 ")" [] [Whitespace(" ")]
                     5: (empty)
                     6: JS_FUNCTION_BODY@81..83

@@ -1,11 +1,11 @@
 ---
-source: crates/rome_js_formatter/tests/spec_test.rs
-expression: type_trailing_comma.ts
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info: ts/type/trailing-comma/type_trailing_comma.ts
 ---
 
 # Input
 
-```js
+```ts
 
 type A = [
 	adsadasdasdasdasdasdasdasdasdasdas,
@@ -32,11 +32,14 @@ interface C<    	adsadasdasdasdasdasdasdasdasdasdas,
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
+Semicolons: Always
+Arrow parentheses: Always
 -----
 
-```js
+```ts
 type A = [
 	adsadasdasdasdasdasdasdasdasdasdas,
 	dsadsadasdasdasdasdasdasdasd,
@@ -56,11 +59,14 @@ interface C<
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: ES5
+Semicolons: Always
+Arrow parentheses: Always
 -----
 
-```js
+```ts
 type A = [
 	adsadasdasdasdasdasdasdasdasdasdas,
 	dsadsadasdasdasdasdasdasdasd,
@@ -80,11 +86,14 @@ interface C<
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: None
+Semicolons: Always
+Arrow parentheses: Always
 -----
 
-```js
+```ts
 type A = [
 	adsadasdasdasdasdasdasdasdasdasdas,
 	dsadsadasdasdasdasdasdasdasd,

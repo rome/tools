@@ -1,39 +1,35 @@
-use rome_analyze::{
-    AnalysisFilter, AnalyzerAction, AnalyzerDiagnostic, AnalyzerOptions, ControlFlow, Never,
-    RuleFilter,
+use rome_analyze::{AnalysisFilter, AnalyzerAction, ControlFlow, Never, RuleFilter};
+use rome_diagnostics::advice::CodeSuggestionAdvice;
+use rome_diagnostics::{DiagnosticExt, Severity};
+use rome_js_parser::{parse, JsParserOptions};
+use rome_js_syntax::{JsFileSource, JsLanguage};
+use rome_rowan::AstNode;
+use rome_test_utils::{
+    assert_errors_are_absent, code_fix_to_string, create_analyzer_options, diagnostic_to_string,
+    has_bogus_nodes_or_empty_slots, parse_test_path, register_leak_checker, scripts_from_json,
+    write_analyzer_snapshot, CheckActionType,
 };
-use rome_console::{
-    fmt::{Formatter, Termcolor},
-    markup, Markup,
-};
-use rome_diagnostics::file::FileId;
-use rome_diagnostics::termcolor::NoColor;
-use rome_diagnostics::v2::{DiagnosticExt, PrintDiagnostic, Severity};
-use rome_js_parser::{
-    parse,
-    test_utils::{assert_errors_are_absent, has_unknown_nodes_or_empty_slots},
-};
-use rome_js_syntax::{JsLanguage, SourceType};
-use similar::TextDiff;
-use std::{
-    ffi::OsStr, fmt::Write, fs::read_to_string, os::raw::c_int, path::Path, slice, sync::Once,
-};
+use std::{ffi::OsStr, fs::read_to_string, path::Path, slice};
 
-tests_macros::gen_tests! {"tests/specs/**/*.{cjs,js,jsx,tsx,ts}", crate::run_test, "module"}
+tests_macros::gen_tests! {"tests/specs/**/*.{cjs,js,jsx,tsx,ts,json,jsonc}", crate::run_test, "module"}
+tests_macros::gen_tests! {"tests/suppression/**/*.{cjs,js,jsx,tsx,ts,json,jsonc}", crate::run_suppression_test, "module"}
 
 fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
     register_leak_checker();
 
     let input_file = Path::new(input);
     let file_name = input_file.file_name().and_then(OsStr::to_str).unwrap();
-    let input_code = read_to_string(input_file)
-        .unwrap_or_else(|err| panic!("failed to read {:?}: {:?}", input_file, err));
-
-    let source_type = input_file.try_into().unwrap();
-    let parsed = parse(&input_code, FileId::zero(), source_type);
-    let root = parsed.tree();
 
     let (group, rule) = parse_test_path(input_file);
+    if rule == "specs" || rule == "suppression" {
+        panic!("the test file must be placed in the {rule}/<group-name>/<rule-name>/ directory");
+    }
+    if group == "specs" || group == "suppression" {
+        panic!("the test file must be placed in the {group}/{rule}/<rule-name>/ directory");
+    }
+    if rome_js_analyze::metadata().find_rule(group, rule).is_none() {
+        panic!("could not find rule {group}/{rule}");
+    }
 
     let rule_filter = RuleFilter::Rule(group, rule);
     let filter = AnalysisFilter {
@@ -41,56 +37,41 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
         ..AnalysisFilter::default()
     };
 
-    let mut diagnostics = Vec::new();
-    let mut code_fixes = Vec::new();
-    let options = AnalyzerOptions::default();
-    rome_js_analyze::analyze(FileId::zero(), &root, filter, &options, |event| {
-        if let Some(mut diag) = event.diagnostic() {
-            diag.set_severity(Severity::Warning);
-            if let Some(action) = event.action() {
-                check_code_action(input_file, &input_code, source_type, &action);
-                diag.add_code_suggestion(action.into());
-            }
-
-            diagnostics.push(diagnostic_to_string(file_name, &input_code, diag));
-            return ControlFlow::Continue(());
-        }
-
-        if let Some(action) = event.action() {
-            check_code_action(input_file, &input_code, source_type, &action);
-            code_fixes.push(code_fix_to_string(&input_code, action));
-        }
-
-        ControlFlow::<Never>::Continue(())
-    });
-
     let mut snapshot = String::new();
+    let extension = input_file.extension().unwrap_or_default();
 
-    writeln!(snapshot, "# Input").unwrap();
-    writeln!(snapshot, "```js").unwrap();
-    writeln!(snapshot, "{}", input_code).unwrap();
-    writeln!(snapshot, "```").unwrap();
-    writeln!(snapshot).unwrap();
-
-    if !diagnostics.is_empty() {
-        writeln!(snapshot, "# Diagnostics").unwrap();
-        for diagnostic in diagnostics {
-            writeln!(snapshot, "```").unwrap();
-            writeln!(snapshot, "{}", diagnostic).unwrap();
-            writeln!(snapshot, "```").unwrap();
-            writeln!(snapshot).unwrap();
+    let input_code = read_to_string(input_file)
+        .unwrap_or_else(|err| panic!("failed to read {:?}: {:?}", input_file, err));
+    let quantity_diagnostics = if let Some(scripts) = scripts_from_json(extension, &input_code) {
+        for script in scripts {
+            analyze_and_snap(
+                &mut snapshot,
+                &script,
+                JsFileSource::js_script(),
+                filter,
+                file_name,
+                input_file,
+                CheckActionType::Lint,
+                JsParserOptions::default(),
+            );
         }
-    }
 
-    if !code_fixes.is_empty() {
-        writeln!(snapshot, "# Actions").unwrap();
-        for action in code_fixes {
-            writeln!(snapshot, "```diff").unwrap();
-            writeln!(snapshot, "{}", action).unwrap();
-            writeln!(snapshot, "```").unwrap();
-            writeln!(snapshot).unwrap();
-        }
-    }
+        0
+    } else {
+        let Ok(source_type) = input_file.try_into() else {
+            return;
+        };
+        analyze_and_snap(
+            &mut snapshot,
+            &input_code,
+            source_type,
+            filter,
+            file_name,
+            input_file,
+            CheckActionType::Lint,
+            JsParserOptions::default(),
+        )
+    };
 
     insta::with_settings!({
         prepend_module_to_snapshot => false,
@@ -98,55 +79,108 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
     }, {
         insta::assert_snapshot!(file_name, snapshot, file_name);
     });
-}
 
-/// The test runner for the analyzer is currently designed to have a
-/// one-to-one mapping between test case and analyzer rules, so each testing
-/// file will be run through the analyzer with only the rule corresponding
-/// to the file name (or the name of the parent directory if it's not "specs")
-/// enabled, eg. `correctness/useWhile.js` and `correctness/useWhile/test.js` will be analyzed with
-/// just the `correctness-ignore lint(correctness/useW/useWhile` rule
-fn parse_test_path(file: &Path) -> (&str, &str) {
-    let file_stem = file.file_stem().unwrap();
-
-    let ancestor_0 = file.parent().unwrap();
-    let name_0 = ancestor_0.file_name().unwrap();
-
-    let ancestor_1 = ancestor_0.parent().unwrap();
-    let name_1 = ancestor_1.file_name().unwrap();
-
-    if name_1.to_str().unwrap() == "specs" {
-        (name_0.to_str().unwrap(), file_stem.to_str().unwrap())
-    } else {
-        (name_1.to_str().unwrap(), name_0.to_str().unwrap())
+    if input_code.contains("/* should not generate diagnostics */") && quantity_diagnostics > 0 {
+        panic!("This test should not generate diagnostics");
     }
 }
 
-fn markup_to_string(markup: Markup) -> String {
-    let mut buffer = Vec::new();
-    let mut write = Termcolor(NoColor::new(&mut buffer));
-    let mut fmt = Formatter::new(&mut write);
-    fmt.write_markup(markup).unwrap();
+#[allow(clippy::too_many_arguments)]
+pub(crate) fn analyze_and_snap(
+    snapshot: &mut String,
+    input_code: &str,
+    source_type: JsFileSource,
+    filter: AnalysisFilter,
+    file_name: &str,
+    input_file: &Path,
+    check_action_type: CheckActionType,
+    parser_options: JsParserOptions,
+) -> usize {
+    let parsed = parse(input_code, source_type, parser_options.clone());
+    let root = parsed.tree();
 
-    String::from_utf8(buffer).unwrap()
-}
-#[allow(clippy::let_and_return)]
-fn diagnostic_to_string(name: &str, source: &str, diag: AnalyzerDiagnostic) -> String {
-    let error = diag
-        .with_file_path((name, FileId::zero()))
-        .with_file_source_code(source);
-    let text = markup_to_string(markup! {
-        {PrintDiagnostic(&error)}
+    let mut diagnostics = Vec::new();
+    let mut code_fixes = Vec::new();
+    let options = create_analyzer_options(input_file, &mut diagnostics);
+
+    let (_, errors) = rome_js_analyze::analyze(&root, filter, &options, source_type, |event| {
+        if let Some(mut diag) = event.diagnostic() {
+            for action in event.actions() {
+                if check_action_type.is_suppression() {
+                    if action.is_suppression() {
+                        check_code_action(
+                            input_file,
+                            input_code,
+                            source_type,
+                            &action,
+                            parser_options.clone(),
+                        );
+                        diag = diag.add_code_suggestion(CodeSuggestionAdvice::from(action));
+                    }
+                } else if !action.is_suppression() {
+                    check_code_action(
+                        input_file,
+                        input_code,
+                        source_type,
+                        &action,
+                        parser_options.clone(),
+                    );
+                    diag = diag.add_code_suggestion(CodeSuggestionAdvice::from(action));
+                }
+            }
+
+            let error = diag.with_severity(Severity::Warning);
+            diagnostics.push(diagnostic_to_string(file_name, input_code, error));
+            return ControlFlow::Continue(());
+        }
+
+        for action in event.actions() {
+            if check_action_type.is_suppression() {
+                if action.category.matches("quickfix.suppressRule") {
+                    check_code_action(
+                        input_file,
+                        input_code,
+                        source_type,
+                        &action,
+                        parser_options.clone(),
+                    );
+                    code_fixes.push(code_fix_to_string(input_code, action));
+                }
+            } else if !action.category.matches("quickfix.suppressRule") {
+                check_code_action(
+                    input_file,
+                    input_code,
+                    source_type,
+                    &action,
+                    parser_options.clone(),
+                );
+                code_fixes.push(code_fix_to_string(input_code, action));
+            }
+        }
+
+        ControlFlow::<Never>::Continue(())
     });
 
-    text
+    for error in errors {
+        diagnostics.push(diagnostic_to_string(file_name, input_code, error));
+    }
+
+    write_analyzer_snapshot(
+        snapshot,
+        input_code,
+        diagnostics.as_slice(),
+        code_fixes.as_slice(),
+    );
+
+    diagnostics.len()
 }
 
 fn check_code_action(
     path: &Path,
     source: &str,
-    source_type: SourceType,
+    source_type: JsFileSource,
     action: &AnalyzerAction<JsLanguage>,
+    options: JsParserOptions,
 ) {
     let (_, text_edit) = action.mutation.as_text_edits().unwrap_or_default();
 
@@ -158,8 +192,11 @@ fn check_code_action(
     // returns the same code as printing the modified syntax tree
     assert_eq!(new_tree.to_string(), output);
 
-    if has_unknown_nodes_or_empty_slots(&new_tree) {
-        panic!("modified tree has unknown nodes or empty slots:\n{new_tree:#?}")
+    if has_bogus_nodes_or_empty_slots(&new_tree) {
+        panic!(
+            "modified tree has bogus nodes or empty slots:\n{new_tree:#?} \n\n {}",
+            new_tree
+        )
     }
 
     // Checks the returned tree contains no missing children node
@@ -168,41 +205,42 @@ fn check_code_action(
     }
 
     // Re-parse the modified code and panic if the resulting tree has syntax errors
-    let re_parse = parse(&output, FileId::zero(), source_type);
-    assert_errors_are_absent(&re_parse, path);
+    let re_parse = parse(&output, source_type, options);
+    assert_errors_are_absent(re_parse.tree().syntax(), re_parse.diagnostics(), path);
 }
 
-fn code_fix_to_string(source: &str, action: AnalyzerAction<JsLanguage>) -> String {
-    let (_, text_edit) = action.mutation.as_text_edits().unwrap_or_default();
+pub(crate) fn run_suppression_test(input: &'static str, _: &str, _: &str, _: &str) {
+    register_leak_checker();
 
-    let output = text_edit.new_string(source);
+    let input_file = Path::new(input);
+    let file_name = input_file.file_name().and_then(OsStr::to_str).unwrap();
+    let input_code = read_to_string(input_file)
+        .unwrap_or_else(|err| panic!("failed to read {:?}: {:?}", input_file, err));
 
-    let diff = TextDiff::from_lines(source, &output);
+    let (group, rule) = parse_test_path(input_file);
 
-    let mut diff = diff.unified_diff();
-    diff.context_radius(3);
+    let rule_filter = RuleFilter::Rule(group, rule);
+    let filter = AnalysisFilter {
+        enabled_rules: Some(slice::from_ref(&rule_filter)),
+        ..AnalysisFilter::default()
+    };
 
-    diff.to_string()
-}
+    let mut snapshot = String::new();
+    analyze_and_snap(
+        &mut snapshot,
+        &input_code,
+        JsFileSource::jsx(),
+        filter,
+        file_name,
+        input_file,
+        CheckActionType::Suppression,
+        JsParserOptions::default(),
+    );
 
-// Check that all red / green nodes have correctly been released on exit
-extern "C" fn check_leaks() {
-    if let Some(report) = rome_rowan::check_live() {
-        panic!("\n{report}")
-    }
-}
-
-fn register_leak_checker() {
-    // Import the atexit function from libc
-    extern "C" {
-        fn atexit(f: extern "C" fn()) -> c_int;
-    }
-
-    // Use an atomic Once to register the check_leaks function to be called
-    // when the process exits
-    static ONCE: Once = Once::new();
-    ONCE.call_once(|| unsafe {
-        countme::enable(true);
-        atexit(check_leaks);
+    insta::with_settings!({
+        prepend_module_to_snapshot => false,
+        snapshot_path => input_file.parent().unwrap(),
+    }, {
+        insta::assert_snapshot!(file_name, snapshot, file_name);
     });
 }

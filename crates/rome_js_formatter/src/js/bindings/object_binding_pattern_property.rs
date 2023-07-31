@@ -5,7 +5,7 @@ use rome_js_syntax::JsObjectBindingPatternProperty;
 use rome_js_syntax::JsObjectBindingPatternPropertyFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsObjectBindingPatternProperty;
+pub(crate) struct FormatJsObjectBindingPatternProperty;
 
 impl FormatNodeRule<JsObjectBindingPatternProperty> for FormatJsObjectBindingPatternProperty {
     fn fmt_fields(

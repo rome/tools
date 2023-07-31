@@ -16,10 +16,46 @@ expression: content
 
 ```js
 
-if(a != -0) {}
+(1 >= -0)
+
+```
+
+# Termination Message
+
+```block
+check ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Some errors were emitted while running checks.
+  
+
 
 ```
 
 # Emitted Messages
+
+```block
+fix.js format ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Formatter would have printed the following content:
+  
+    1   │ - 
+    2   │ - (1·>=·-0)
+      1 │ + 1·>=·-0;
+    3 2 │   
+  
+
+```
+
+```block
+check ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Some errors were emitted while running checks.
+  
+
+```
+
+```block
+Checked 1 file(s) in <TIME>
+```
 
 

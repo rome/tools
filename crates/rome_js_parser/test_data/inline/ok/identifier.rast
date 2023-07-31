@@ -10,17 +10,50 @@ JsModule {
             },
             semicolon_token: SEMICOLON@3..4 ";" [] [],
         },
+        JsVariableStatement {
+            declaration: JsVariableDeclaration {
+                kind: LET_KW@4..9 "let" [Newline("\n")] [Whitespace(" ")],
+                declarators: JsVariableDeclaratorList [
+                    JsVariableDeclarator {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@9..18 "accessor" [] [Whitespace(" ")],
+                        },
+                        variable_annotation: missing (optional),
+                        initializer: JsInitializerClause {
+                            eq_token: EQ@18..20 "=" [] [Whitespace(" ")],
+                            expression: JsNumberLiteralExpression {
+                                value_token: JS_NUMBER_LITERAL@20..21 "5" [] [],
+                            },
+                        },
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@21..22 ";" [] [],
+        },
     ],
-    eof_token: EOF@4..5 "" [Newline("\n")] [],
+    eof_token: EOF@22..23 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..5
+0: JS_MODULE@0..23
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..4
+  2: JS_MODULE_ITEM_LIST@0..22
     0: JS_EXPRESSION_STATEMENT@0..4
       0: JS_IDENTIFIER_EXPRESSION@0..3
         0: JS_REFERENCE_IDENTIFIER@0..3
           0: IDENT@0..3 "foo" [] []
       1: SEMICOLON@3..4 ";" [] []
-  3: EOF@4..5 "" [Newline("\n")] []
+    1: JS_VARIABLE_STATEMENT@4..22
+      0: JS_VARIABLE_DECLARATION@4..21
+        0: LET_KW@4..9 "let" [Newline("\n")] [Whitespace(" ")]
+        1: JS_VARIABLE_DECLARATOR_LIST@9..21
+          0: JS_VARIABLE_DECLARATOR@9..21
+            0: JS_IDENTIFIER_BINDING@9..18
+              0: IDENT@9..18 "accessor" [] [Whitespace(" ")]
+            1: (empty)
+            2: JS_INITIALIZER_CLAUSE@18..21
+              0: EQ@18..20 "=" [] [Whitespace(" ")]
+              1: JS_NUMBER_LITERAL_EXPRESSION@20..21
+                0: JS_NUMBER_LITERAL@20..21 "5" [] []
+      1: SEMICOLON@21..22 ";" [] []
+  3: EOF@22..23 "" [Newline("\n")] []

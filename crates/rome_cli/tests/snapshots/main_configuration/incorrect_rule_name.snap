@@ -9,12 +9,12 @@ expression: content
   "linter": {
     "enabled": true,
     "rules": {
-        "correctness": {
-            "foo_rule": "off"
-        },
-        "style": {
-            "what_the_hell": "off"
-        }
+      "correctness": {
+        "foo_rule": "off"
+      },
+      "style": {
+        "what_the_hell": "off"
+      }
     }
   }
 }
@@ -23,8 +23,59 @@ expression: content
 # Termination Message
 
 ```block
-Rome couldn't load the configuration file, here's why: 
-invalid rule name `foo_rule` at line 7 column 9
+configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Rome exited because the configuration resulted in errors. Please fix them.
+  
+
+
+```
+
+# Emitted Messages
+
+```block
+rome.json:6:13 deserialize ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Found an unknown key `foo_rule`.
+  
+    4 │     "rules": {
+    5 │         "correctness": {
+  > 6 │             "foo_rule": "off"
+      │             ^^^^^^^^^^
+    7 │         },
+    8 │         "style": {
+  
+  i Accepted keys
+  
+  - recommended
+  - all
+  - noChildrenProp
+  - noConstAssign
+  - noConstructorReturn
+  - noEmptyPattern
+  - noGlobalObjectCalls
+  - noInnerDeclarations
+  - noInvalidConstructorSuper
+  - noNewSymbol
+  - noPrecisionLoss
+  - noRenderReturnValue
+  - noSetterReturn
+  - noStringCaseMismatch
+  - noSwitchDeclarations
+  - noUndeclaredVariables
+  - noUnnecessaryContinue
+  - noUnreachable
+  - noUnreachableSuper
+  - noUnsafeFinally
+  - noUnsafeOptionalChaining
+  - noUnusedLabels
+  - noUnusedVariables
+  - noVoidElementsWithChildren
+  - noVoidTypeReturn
+  - useValidForDirection
+  - useYield
+  
+
 ```
 
 

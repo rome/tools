@@ -1,5 +1,7 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+assertion_line: 212
+info: js/multiparser-html/lit-html.js
 ---
 
 # Input
@@ -107,6 +109,7 @@ html`<div style="   color : red;
 ${ foo}:${bar};
             display    :inline ">
   </div>`
+
 ```
 
 
@@ -355,9 +358,9 @@ ${foo}:${bar};
   </div>`;
 ```
 
-
 # Lines exceeding max width of 80 characters
 ```
    81: const closingScriptTag2 = /* HTML */ `<script>const  scriptTag='<\\/script>'; <\/script>`;
 ```
+
 

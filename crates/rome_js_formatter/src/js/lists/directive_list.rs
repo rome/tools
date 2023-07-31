@@ -4,7 +4,7 @@ use rome_js_syntax::JsDirectiveList;
 use rome_rowan::{AstNode, AstNodeList};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsDirectiveList;
+pub(crate) struct FormatJsDirectiveList;
 
 impl FormatRule<JsDirectiveList> for FormatJsDirectiveList {
     type Context = JsFormatContext;

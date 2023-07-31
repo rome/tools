@@ -1,0 +1,420 @@
+---
+title: Configuration
+emoji: ⚙️
+category: reference
+description: How to customize and configure Rome with rome.json.
+---
+
+import LintGroups from "@src/components/generated/Groups.astro";
+import CodeBlockHeader from "@src/components/CodeBlockHeader.astro";
+
+{/** Make sure to update the redirect in `static/_redirects` when changing the configuration title --> **/}
+
+# Configuration
+
+The configuration file is considered **optional**, Rome has good defaults. Use the configuration
+file to change those defaults.
+
+The Rome configuration file is named `rome.json` and should be placed in the root directory of your project. The root
+directory is usually the directory containing your project's `package.json`.
+
+Here's an example:
+
+<CodeBlockHeader filename="rome.json" />
+
+```json
+{
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "tab",
+    "lineWidth": 120
+  },
+  "linter": {
+    "enabled": false
+  }
+}
+```
+
+This configuration file enables the formatter and sets the preferred indent style and width. The linter is disabled.
+
+## Configuration file resolution
+
+Rome uses auto discovery to find the nearest `rome.json` file. It starts looking for `rome.json` in the current
+working directory, and then it starts looking in the parent directories until:
+- it finds a `rome.json` file;
+- it applies Rome's defaults if **no `rome.json` is found**;
+
+Here's an example:
+
+```
+└── app
+    ├── backend
+    │   ├── package.json
+    │   └── rome.json
+    └── frontend
+        ├── legacy
+        │   └── package.json
+        ├── new
+        │   └── package.json
+        └── rome.json
+
+```
+
+- rome commands that run in `app/backend/package.json` will use the configuration file `app/backend/rome.json`;
+- rome commands that run in `app/frontend/legacy/package.json` and `app/frontend/new/package.json`
+will use the configuration file `app/frontend/rome.json`;
+
+## `$schema`
+
+Allows to pass a path to a JSON schema file.
+
+Since version `11.0.0`, a JSON schema file for the `rome.json` is published.
+
+You can specify a relative path to the schema of the `rome` npm package if `rome` is installed in the `node_modules` folder:
+
+<CodeBlockHeader filename="rome.json" />
+
+```json
+{
+  "$schema": "./node_modules/rome/configuration_schema.json"
+}
+```
+
+If you have problems with resolving the physical file, you can use the one published in this site:
+
+
+<CodeBlockHeader filename="rome.json" />
+
+```json
+{
+  "$schema": "https://docs.rome.tools/schemas/12.1.0/schema.json"
+}
+```
+
+## `files`
+
+### `files.maxSize`
+
+The maximum allowed size for source code files in bytes. Files above
+this limit will be ignored for performance reason.
+
+> Default: 1024*1024 (1MB)
+
+ ### `files.ignore`
+
+A list of Unix shell style patterns. Rome ignores files and folders that
+match these patterns.
+
+<CodeBlockHeader filename="rome.json" />
+
+```json
+{
+  "files": {
+    "ignore": ["scripts/*.js"]
+  }
+}
+```
+
+## `vcs`
+
+Set of properties to integrate Rome with a VCS software.
+
+### `vcs.enabled`
+
+Whether Rome should integrate itself with the VCS client
+
+> Default: false
+
+### `vcs.clientKind`
+
+The kind of client.
+
+Values:
+- `"git"`
+
+### `vcs.useIgnoreFile`
+
+Whether Rome should use the VCS ignore file. When `true`, Rome will ignore the files
+specified in the ignore file.
+
+### `vcs.root`
+
+The folder where Rome should check for VCS files. By default, Rome will use the same
+folder where `rome.json` was found.
+
+If Rome can't find the configuration, it will attempt to use the current working directory.
+If no current working directory can't be found, Rome won't use the VCS integration, and a diagnostic
+will be emitted
+
+## `linter`
+
+### `linter.enabled`
+
+Enables Rome's linter
+
+> Default: `true`
+
+### `linter.ignore`
+
+An array of Unix shell style patterns.
+
+<CodeBlockHeader filename="rome.json" />
+
+```json
+{
+  "linter": {
+    "ignore": ["scripts/*.js"]
+  }
+}
+```
+
+### `linter.rules.recommended`
+
+Enables the [recommended rules](/lint/rules) for all groups.
+
+> Default: `true`
+
+
+### `linter.rules.all`
+
+Enable or disable all [rules](/lint/rules) for all groups.
+
+If `recommended` and `all` are both `true`, Rome will emit a diagnostic and fallback to its defaults.
+
+<CodeBlockHeader filename="rome.json" />
+
+```json
+{
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "all": true
+    }
+  }
+}
+```
+
+It's also possible to combine this flag to enable/disable different rule groups:
+
+<CodeBlockHeader filename="rome.json" />
+
+```json
+{
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "all": true,
+      "style": {
+        "all": false
+      },
+      "complexity": {
+        "all": false
+      }
+    }
+  }
+}
+```
+
+In the previous example, Rome will enable all rules, exception for rules that belong to the `style` and `complexity` groups.
+
+
+### `linter.rules.[group]`
+
+Options that influence the rules of a single group. Rome supports the following groups:
+
+<LintGroups />
+
+### `linter.rules.[group].recommended`
+
+Enables the recommended rules for a single group.
+
+Example:
+
+<CodeBlockHeader filename="rome.json" />
+
+```json
+{
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "nursery": {
+        "recommended": true
+      }
+    }
+  }
+}
+```
+
+
+### `linter.rules.[group].all`
+
+Enables all rules for a single group.
+
+Example:
+
+<CodeBlockHeader filename="rome.json" />
+
+```json
+{
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "nursery": {
+        "all": true
+      }
+    }
+  }
+}
+```
+
+## `formatter`
+
+These options apply to all languages.  There are additional language-specific formatting options below.
+
+### `formatter.enabled`
+
+Enables Rome's formatter
+
+> Default: `true`
+
+### `formatter.ignore`
+
+An array of Unix shell style patterns.
+
+<CodeBlockHeader filename="rome.json" />
+
+```json
+{
+  "formatter": {
+    "ignore": ["scripts/*.js"]
+  }
+}
+```
+
+### `formatter.formatWithErrors`
+
+Allows to format a document that has syntax errors.
+
+<CodeBlockHeader filename="rome.json" />
+
+```json
+{
+  "formatter": {
+    "formatWithErrors": true
+  }
+}
+```
+
+> Default: `false`
+
+### `formatter.indentStyle`
+
+The style of the indentation. It can be `"tab"` or `"space"`.
+
+> Default: `tab`
+
+Rome's default is `"tab"`.
+
+### `formatter.indentSize`
+
+How big the indentation should be.
+
+> Default: `2`
+
+### `formatter.lineWidth`
+
+How many characters can be written on a single line.
+
+> Default: `80`
+
+## `organizeImports`
+
+### `organizeImports.enabled` (experimental)
+
+Enables Rome's sort imports.
+
+### `organizeImports.ignore`
+
+
+A list of Unix shell style patterns. Rome ignores files and folders that
+match these patterns.
+
+<CodeBlockHeader filename="rome.json" />
+
+```json
+{
+  "organizeImports": {
+    "enabled": true,
+    "ignore": ["scripts/*.js"]
+  }
+}
+```
+> Default: `false`
+
+## `javascript`
+
+These options apply only to JavaScript (and TypeScript) files.
+
+### `javascript.formatter.quoteStyle`
+
+The type of quote used when representing string literals. It can be `single` or `double`.
+
+> Default: `double`
+
+[//]: # (### `javascript.formatter.jsxQuoteStyle`)
+
+[//]: # ()
+[//]: # (The type of quote used when representing jsx string literals. It can be `single` or `double`.)
+
+[//]: # ()
+[//]: # (> Default: `double`)
+
+### `javascript.formatter.quoteProperties`
+
+When properties inside objects should be quoted. It can be `asNeeded` or `preserve`.
+
+> Default: `asNeeded`
+
+### `javascript.formatter.trailingComma`
+
+Print trailing commas wherever possible in multi-line comma-separated syntactic structures. Possible values:
+- `all`, the trailing comma is always added
+- `es5`, the trailing comma is added only in places where it's supported by older version of JavaScript
+- `none`, trailing commas are never added
+
+> Default: `all`
+
+### `javascript.formatter.semicolons`
+
+It configures where the formatter prints semicolons:
+- `always`, the semicolons is always added at the end of each statement;
+- `asNeeded`, the semicolons are added only in places where it's needed, to protect from [ASI](https://en.wikibooks.org/wiki/JavaScript/Automatic_semicolon_insertion)
+
+> Default: `always`
+
+Example:
+
+<CodeBlockHeader filename="rome.json" />
+
+```json
+{
+  "javascript": {
+    "formatter": {
+      "semicolons": "asNeeded"
+    }
+  }
+}
+```
+### `javascript.globals`
+
+A list of global names that Rome should ignore (analyzer, linter, etc.)
+
+<CodeBlockHeader filename="rome.json" />
+
+```json
+{
+  "javascript": {
+    "globals": ["$", "_", "externalVariable"]
+  }
+}
+```

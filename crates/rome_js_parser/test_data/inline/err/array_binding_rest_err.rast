@@ -31,77 +31,99 @@ JsModule {
             },
             semicolon_token: SEMICOLON@15..16 ";" [] [],
         },
-        JsVariableStatement {
-            declaration: JsVariableDeclaration {
-                kind: LET_KW@16..21 "let" [Newline("\n")] [Whitespace(" ")],
-                declarators: JsVariableDeclaratorList [
-                    JsVariableDeclarator {
-                        id: JsArrayBindingPattern {
-                            l_brack_token: L_BRACK@21..23 "[" [] [Whitespace(" ")],
-                            elements: JsArrayBindingPatternElementList [
-                                JsUnknownBinding {
+        JsBogusStatement {
+            items: [
+                JsBogus {
+                    items: [
+                        LET_KW@16..21 "let" [Newline("\n")] [Whitespace(" ")],
+                        JsBogus {
+                            items: [
+                                JsBogus {
                                     items: [
-                                        DOT3@23..26 "..." [] [],
-                                        JsIdentifierBinding {
-                                            name_token: IDENT@26..28 "c" [] [Whitespace(" ")],
+                                        JsBogus {
+                                            items: [
+                                                L_BRACK@21..23 "[" [] [Whitespace(" ")],
+                                                JsBogus {
+                                                    items: [
+                                                        JsBogus {
+                                                            items: [
+                                                                DOT3@23..26 "..." [] [],
+                                                                JsIdentifierBinding {
+                                                                    name_token: IDENT@26..28 "c" [] [Whitespace(" ")],
+                                                                },
+                                                                EQ@28..30 "=" [] [Whitespace(" ")],
+                                                                JS_STRING_LITERAL@30..40 "\"default\"" [] [Whitespace(" ")],
+                                                            ],
+                                                        },
+                                                    ],
+                                                },
+                                                R_BRACK@40..42 "]" [] [Whitespace(" ")],
+                                            ],
                                         },
-                                        EQ@28..30 "=" [] [Whitespace(" ")],
-                                        JS_STRING_LITERAL@30..40 "\"default\"" [] [Whitespace(" ")],
+                                        JsInitializerClause {
+                                            eq_token: EQ@42..44 "=" [] [Whitespace(" ")],
+                                            expression: JsIdentifierExpression {
+                                                name: JsReferenceIdentifier {
+                                                    value_token: IDENT@44..45 "a" [] [],
+                                                },
+                                            },
+                                        },
                                     ],
                                 },
                             ],
-                            r_brack_token: R_BRACK@40..42 "]" [] [Whitespace(" ")],
                         },
-                        variable_annotation: missing (optional),
-                        initializer: JsInitializerClause {
-                            eq_token: EQ@42..44 "=" [] [Whitespace(" ")],
-                            expression: JsIdentifierExpression {
-                                name: JsReferenceIdentifier {
-                                    value_token: IDENT@44..45 "a" [] [],
-                                },
-                            },
-                        },
-                    },
-                ],
-            },
-            semicolon_token: SEMICOLON@45..46 ";" [] [],
+                    ],
+                },
+                SEMICOLON@45..46 ";" [] [],
+            ],
         },
-        JsVariableStatement {
-            declaration: JsVariableDeclaration {
-                kind: LET_KW@46..51 "let" [Newline("\n")] [Whitespace(" ")],
-                declarators: JsVariableDeclaratorList [
-                    JsVariableDeclarator {
-                        id: JsArrayBindingPattern {
-                            l_brack_token: L_BRACK@51..53 "[" [] [Whitespace(" ")],
-                            elements: JsArrayBindingPatternElementList [
-                                JsUnknownBinding {
+        JsBogusStatement {
+            items: [
+                JsBogus {
+                    items: [
+                        LET_KW@46..51 "let" [Newline("\n")] [Whitespace(" ")],
+                        JsBogus {
+                            items: [
+                                JsBogus {
                                     items: [
-                                        DOT3@53..56 "..." [] [],
-                                        JsIdentifierBinding {
-                                            name_token: IDENT@56..60 "rest" [] [],
+                                        JsBogus {
+                                            items: [
+                                                L_BRACK@51..53 "[" [] [Whitespace(" ")],
+                                                JsBogus {
+                                                    items: [
+                                                        JsBogus {
+                                                            items: [
+                                                                DOT3@53..56 "..." [] [],
+                                                                JsIdentifierBinding {
+                                                                    name_token: IDENT@56..60 "rest" [] [],
+                                                                },
+                                                            ],
+                                                        },
+                                                        COMMA@60..62 "," [] [Whitespace(" ")],
+                                                        JsIdentifierBinding {
+                                                            name_token: IDENT@62..79 "other_assignment" [] [Whitespace(" ")],
+                                                        },
+                                                    ],
+                                                },
+                                                R_BRACK@79..81 "]" [] [Whitespace(" ")],
+                                            ],
+                                        },
+                                        JsInitializerClause {
+                                            eq_token: EQ@81..83 "=" [] [Whitespace(" ")],
+                                            expression: JsIdentifierExpression {
+                                                name: JsReferenceIdentifier {
+                                                    value_token: IDENT@83..84 "a" [] [],
+                                                },
+                                            },
                                         },
                                     ],
                                 },
-                                COMMA@60..62 "," [] [Whitespace(" ")],
-                                JsIdentifierBinding {
-                                    name_token: IDENT@62..79 "other_assignment" [] [Whitespace(" ")],
-                                },
                             ],
-                            r_brack_token: R_BRACK@79..81 "]" [] [Whitespace(" ")],
                         },
-                        variable_annotation: missing (optional),
-                        initializer: JsInitializerClause {
-                            eq_token: EQ@81..83 "=" [] [Whitespace(" ")],
-                            expression: JsIdentifierExpression {
-                                name: JsReferenceIdentifier {
-                                    value_token: IDENT@83..84 "a" [] [],
-                                },
-                            },
-                        },
-                    },
-                ],
-            },
-            semicolon_token: SEMICOLON@84..85 ";" [] [],
+                    ],
+                },
+                SEMICOLON@84..85 ";" [] [],
+            ],
         },
     ],
     eof_token: EOF@85..86 "" [Newline("\n")] [],
@@ -130,37 +152,36 @@ JsModule {
                 0: JS_REFERENCE_IDENTIFIER@14..15
                   0: IDENT@14..15 "a" [] []
       1: SEMICOLON@15..16 ";" [] []
-    1: JS_VARIABLE_STATEMENT@16..46
-      0: JS_VARIABLE_DECLARATION@16..45
+    1: JS_BOGUS_STATEMENT@16..46
+      0: JS_BOGUS@16..45
         0: LET_KW@16..21 "let" [Newline("\n")] [Whitespace(" ")]
-        1: JS_VARIABLE_DECLARATOR_LIST@21..45
-          0: JS_VARIABLE_DECLARATOR@21..45
-            0: JS_ARRAY_BINDING_PATTERN@21..42
+        1: JS_BOGUS@21..45
+          0: JS_BOGUS@21..45
+            0: JS_BOGUS@21..42
               0: L_BRACK@21..23 "[" [] [Whitespace(" ")]
-              1: JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST@23..40
-                0: JS_UNKNOWN_BINDING@23..40
+              1: JS_BOGUS@23..40
+                0: JS_BOGUS@23..40
                   0: DOT3@23..26 "..." [] []
                   1: JS_IDENTIFIER_BINDING@26..28
                     0: IDENT@26..28 "c" [] [Whitespace(" ")]
                   2: EQ@28..30 "=" [] [Whitespace(" ")]
                   3: JS_STRING_LITERAL@30..40 "\"default\"" [] [Whitespace(" ")]
               2: R_BRACK@40..42 "]" [] [Whitespace(" ")]
-            1: (empty)
-            2: JS_INITIALIZER_CLAUSE@42..45
+            1: JS_INITIALIZER_CLAUSE@42..45
               0: EQ@42..44 "=" [] [Whitespace(" ")]
               1: JS_IDENTIFIER_EXPRESSION@44..45
                 0: JS_REFERENCE_IDENTIFIER@44..45
                   0: IDENT@44..45 "a" [] []
       1: SEMICOLON@45..46 ";" [] []
-    2: JS_VARIABLE_STATEMENT@46..85
-      0: JS_VARIABLE_DECLARATION@46..84
+    2: JS_BOGUS_STATEMENT@46..85
+      0: JS_BOGUS@46..84
         0: LET_KW@46..51 "let" [Newline("\n")] [Whitespace(" ")]
-        1: JS_VARIABLE_DECLARATOR_LIST@51..84
-          0: JS_VARIABLE_DECLARATOR@51..84
-            0: JS_ARRAY_BINDING_PATTERN@51..81
+        1: JS_BOGUS@51..84
+          0: JS_BOGUS@51..84
+            0: JS_BOGUS@51..81
               0: L_BRACK@51..53 "[" [] [Whitespace(" ")]
-              1: JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST@53..79
-                0: JS_UNKNOWN_BINDING@53..60
+              1: JS_BOGUS@53..79
+                0: JS_BOGUS@53..60
                   0: DOT3@53..56 "..." [] []
                   1: JS_IDENTIFIER_BINDING@56..60
                     0: IDENT@56..60 "rest" [] []
@@ -168,8 +189,7 @@ JsModule {
                 2: JS_IDENTIFIER_BINDING@62..79
                   0: IDENT@62..79 "other_assignment" [] [Whitespace(" ")]
               2: R_BRACK@79..81 "]" [] [Whitespace(" ")]
-            1: (empty)
-            2: JS_INITIALIZER_CLAUSE@81..84
+            1: JS_INITIALIZER_CLAUSE@81..84
               0: EQ@81..83 "=" [] [Whitespace(" ")]
               1: JS_IDENTIFIER_EXPRESSION@83..84
                 0: JS_REFERENCE_IDENTIFIER@83..84

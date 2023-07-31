@@ -1,9 +1,7 @@
-use crate::options::OptionsDeserializationDiagnostic;
-use crate::{
-    registry::RuleRoot, AnalyzerOptions, FromServices, Queryable, Rule, RuleKey, ServiceBag,
-};
-use rome_diagnostics::v2::{Error, Result};
+use crate::{registry::RuleRoot, FromServices, Queryable, Rule, RuleKey, ServiceBag};
+use rome_diagnostics::{Error, Result};
 use std::ops::Deref;
+use std::path::Path;
 
 type RuleQueryResult<R> = <<R as Rule>::Query as Queryable>::Output;
 type RuleServiceBag<R> = <<R as Rule>::Query as Queryable>::Services;
@@ -14,40 +12,33 @@ where
 {
     query_result: &'a RuleQueryResult<R>,
     root: &'a RuleRoot<R>,
+    bag: &'a ServiceBag,
     services: RuleServiceBag<R>,
-    options: Option<R::Options>,
+    globals: &'a [&'a str],
+    file_path: &'a Path,
+    options: &'a R::Options,
 }
 
 impl<'a, R> RuleContext<'a, R>
 where
-    R: Rule + Sized,
+    R: Rule + Sized + 'static,
 {
     pub fn new(
         query_result: &'a RuleQueryResult<R>,
         root: &'a RuleRoot<R>,
-        services: &ServiceBag,
-        options: &'a AnalyzerOptions,
+        services: &'a ServiceBag,
+        globals: &'a [&'a str],
+        file_path: &'a Path,
+        options: &'a R::Options,
     ) -> Result<Self, Error> {
         let rule_key = RuleKey::rule::<R>();
-        let options = options.configuration.rules.get_rule(&rule_key);
-        let options = if let Some(options) = options {
-            let value = options.value();
-            let result = serde_json::from_value::<R::Options>(value.clone()).map_err(|error| {
-                OptionsDeserializationDiagnostic::new(
-                    rule_key.rule_name(),
-                    value.to_string(),
-                    error,
-                )
-            })?;
-            Some(result)
-        } else {
-            None
-        };
-
         Ok(Self {
             query_result,
             root,
+            bag: services,
             services: FromServices::from_services(&rule_key, services)?,
+            globals,
+            file_path,
             options,
         })
     }
@@ -72,7 +63,7 @@ where
     /// use rome_analyze::{declare_rule, Rule, RuleCategory, RuleMeta, RuleMetadata};
     /// use rome_analyze::context::RuleContext;
     /// use serde::Deserialize;
-    /// declare_rule! {    
+    /// declare_rule! {
     ///     /// Some doc
     ///     pub(crate) Name {
     ///         version: "0.0.0",
@@ -98,8 +89,25 @@ where
     ///     }
     /// }
     /// ```
-    pub fn options(&self) -> Option<&R::Options> {
-        self.options.as_ref()
+    pub fn options(&self) -> &R::Options {
+        self.options
+    }
+
+    /// Checks whether the provided text belongs to globals
+    pub fn is_global(&self, text: &str) -> bool {
+        self.globals.contains(&text)
+    }
+
+    /// Returns the source type of the current file
+    pub fn source_type<T: 'static>(&self) -> &T {
+        self.bag
+            .get_service::<T>()
+            .expect("Source type is not registered")
+    }
+
+    /// The file path of the current file
+    pub fn file_path(&self) -> &Path {
+        self.file_path
     }
 }
 

@@ -1,20 +1,20 @@
 use crate::prelude::*;
-use crate::utils::{FormatWithSemicolon, JsAnyBinaryLikeExpression, JsAnyBinaryLikeLeftExpression};
+use crate::utils::{AnyJsBinaryLikeExpression, FormatOptionalSemicolon, FormatStatementSemicolon};
 
 use rome_formatter::{format_args, write, CstFormatContext};
 
-use crate::parentheses::get_expression_left_side;
+use crate::parentheses::{get_expression_left_side, AnyJsExpressionLeftSide};
 use rome_js_syntax::{
-    JsAnyExpression, JsReturnStatement, JsSequenceExpression, JsSyntaxToken, JsThrowStatement,
+    AnyJsExpression, JsReturnStatement, JsSequenceExpression, JsSyntaxToken, JsThrowStatement,
 };
 use rome_rowan::{declare_node_union, SyntaxResult};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsReturnStatement;
+pub(crate) struct FormatJsReturnStatement;
 
 impl FormatNodeRule<JsReturnStatement> for FormatJsReturnStatement {
     fn fmt_fields(&self, node: &JsReturnStatement, f: &mut JsFormatter) -> FormatResult<()> {
-        JsAnyStatementWithArgument::from(node.clone()).fmt(f)
+        AnyJsStatementWithArgument::from(node.clone()).fmt(f)
     }
 
     fn fmt_dangling_comments(
@@ -28,10 +28,10 @@ impl FormatNodeRule<JsReturnStatement> for FormatJsReturnStatement {
 }
 
 declare_node_union! {
-    pub(super) JsAnyStatementWithArgument = JsThrowStatement | JsReturnStatement
+    pub(super) AnyJsStatementWithArgument = JsThrowStatement | JsReturnStatement
 }
 
-impl Format<JsFormatContext> for JsAnyStatementWithArgument {
+impl Format<JsFormatContext> for AnyJsStatementWithArgument {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
         write!(f, [self.operation_token().format()])?;
 
@@ -52,7 +52,7 @@ impl Format<JsFormatContext> for JsAnyStatementWithArgument {
                 .map_or(false, |comment| comment.kind().is_line());
 
             if is_last_comment_line {
-                write!(f, [semicolon.format()])?;
+                write!(f, [FormatOptionalSemicolon::new(Some(&semicolon))])?;
             }
 
             if has_dangling_comments {
@@ -60,62 +60,56 @@ impl Format<JsFormatContext> for JsAnyStatementWithArgument {
             }
 
             if !is_last_comment_line {
-                write!(f, [semicolon.format()])?;
+                write!(f, [FormatOptionalSemicolon::new(Some(&semicolon))])?;
             }
 
             Ok(())
         } else {
-            write!(
-                f,
-                [FormatWithSemicolon::new(
-                    &format_with(|f| {
-                        if let Some(argument) = &argument {
-                            write!(f, [space(), FormatReturnOrThrowArgument(argument)])?;
-                        }
+            if let Some(argument) = &argument {
+                write!(f, [space(), FormatReturnOrThrowArgument(argument)])?;
+            }
 
-                        Ok(())
-                    }),
-                    None
-                )]
-            )
+            write!(f, [FormatStatementSemicolon::new(None)])
         }
     }
 }
 
-impl JsAnyStatementWithArgument {
+impl AnyJsStatementWithArgument {
     fn operation_token(&self) -> SyntaxResult<JsSyntaxToken> {
         match self {
-            JsAnyStatementWithArgument::JsThrowStatement(throw) => throw.throw_token(),
-            JsAnyStatementWithArgument::JsReturnStatement(ret) => ret.return_token(),
+            AnyJsStatementWithArgument::JsThrowStatement(throw) => throw.throw_token(),
+            AnyJsStatementWithArgument::JsReturnStatement(ret) => ret.return_token(),
         }
     }
 
-    fn argument(&self) -> SyntaxResult<Option<JsAnyExpression>> {
+    fn argument(&self) -> SyntaxResult<Option<AnyJsExpression>> {
         match self {
-            JsAnyStatementWithArgument::JsThrowStatement(throw) => throw.argument().map(Some),
-            JsAnyStatementWithArgument::JsReturnStatement(ret) => Ok(ret.argument()),
+            AnyJsStatementWithArgument::JsThrowStatement(throw) => throw.argument().map(Some),
+            AnyJsStatementWithArgument::JsReturnStatement(ret) => Ok(ret.argument()),
         }
     }
 
     fn semicolon_token(&self) -> Option<JsSyntaxToken> {
         match self {
-            JsAnyStatementWithArgument::JsThrowStatement(throw) => throw.semicolon_token(),
-            JsAnyStatementWithArgument::JsReturnStatement(ret) => ret.semicolon_token(),
+            AnyJsStatementWithArgument::JsThrowStatement(throw) => throw.semicolon_token(),
+            AnyJsStatementWithArgument::JsReturnStatement(ret) => ret.semicolon_token(),
         }
     }
 }
 
-pub(super) struct FormatReturnOrThrowArgument<'a>(&'a JsAnyExpression);
+pub(super) struct FormatReturnOrThrowArgument<'a>(&'a AnyJsExpression);
 
 impl Format<JsFormatContext> for FormatReturnOrThrowArgument<'_> {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
         let argument = self.0;
+        let is_suppressed = f.comments().is_suppressed(argument.syntax());
 
         if has_argument_leading_comments(argument, f.context().comments())
-            && !matches!(argument, JsAnyExpression::JsxTagExpression(_))
+            && !matches!(argument, AnyJsExpression::JsxTagExpression(_))
+            && !is_suppressed
         {
             write!(f, [text("("), &block_indent(&argument.format()), text(")")])
-        } else if is_binary_or_sequence_argument(argument) {
+        } else if is_binary_or_sequence_argument(argument) && !is_suppressed {
             write!(
                 f,
                 [group(&format_args![
@@ -136,28 +130,21 @@ impl Format<JsFormatContext> for FormatReturnOrThrowArgument<'_> {
 ///
 /// Traversing the left nodes is necessary in case the first node is parenthesized because
 /// parentheses will be removed (and be re-added by the return statement, but only if the argument breaks)
-fn has_argument_leading_comments(argument: &JsAnyExpression, comments: &JsComments) -> bool {
-    let mut current: Option<JsAnyBinaryLikeLeftExpression> = Some(argument.clone().into());
+fn has_argument_leading_comments(argument: &AnyJsExpression, comments: &JsComments) -> bool {
+    let mut current: Option<AnyJsExpressionLeftSide> = Some(argument.clone().into());
 
     while let Some(expression) = current {
         if comments.has_leading_own_line_comment(expression.syntax()) {
             return true;
         }
 
-        match expression {
-            JsAnyBinaryLikeLeftExpression::JsAnyExpression(expression) => {
-                current = get_expression_left_side(&expression);
-            }
-            JsAnyBinaryLikeLeftExpression::JsPrivateName(_) => {
-                break;
-            }
-        }
+        current = get_expression_left_side(&expression);
     }
 
     false
 }
 
-fn is_binary_or_sequence_argument(argument: &JsAnyExpression) -> bool {
+fn is_binary_or_sequence_argument(argument: &AnyJsExpression) -> bool {
     JsSequenceExpression::can_cast(argument.syntax().kind())
-        || JsAnyBinaryLikeExpression::can_cast(argument.syntax().kind())
+        || AnyJsBinaryLikeExpression::can_cast(argument.syntax().kind())
 }

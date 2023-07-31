@@ -1,18 +1,18 @@
 use crate::globals::browser::BROWSER;
 use crate::globals::node::NODE;
-use crate::globals::runtime::ES_2021;
+use crate::globals::runtime::{BUILTIN, ES_2021};
 use crate::globals::typescript::TYPESCRIPT_BUILTIN;
 use crate::semantic_services::SemanticServices;
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_syntax::{
-    JsIdentifierAssignment, JsReferenceIdentifier, JsxReferenceIdentifier, TextRange,
-};
-use rome_rowan::{declare_node_union, AstNode};
+use rome_js_syntax::{JsFileSource, Language, TextRange, TsAsExpression, TsReferenceType};
+use rome_rowan::AstNode;
 
 declare_rule! {
-    /// Prevents the usage of variables that haven't been declared inside the document
+    /// Prevents the usage of variables that haven't been declared inside the document.
+    ///
+    /// If you need to allow-list some global bindings, you can use the [`javascript.globals`](/configuration/#javascriptglobals) configuration.
     ///
     /// ## Examples
     ///
@@ -21,15 +21,21 @@ declare_rule! {
     /// ```js,expect_diagnostic
     /// foobar;
     /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// // throw diagnostic for JavaScript files
+    /// PromiseLike;
+    /// ```
+    /// ### Valid
+    ///
+    /// ```ts
+    /// type B<T> = PromiseLike<T>
+    /// ```
     pub(crate) NoUndeclaredVariables {
         version: "0.10.0",
         name: "noUndeclaredVariables",
         recommended: false,
     }
-}
-
-declare_node_union! {
-    pub(crate) AnyIdentifier = JsReferenceIdentifier | JsIdentifierAssignment | JsxReferenceIdentifier
 }
 
 impl Rule for NoUndeclaredVariables {
@@ -42,17 +48,27 @@ impl Rule for NoUndeclaredVariables {
         ctx.query()
             .all_unresolved_references()
             .filter_map(|reference| {
-                let node = reference.node().clone();
-                let node = AnyIdentifier::unwrap_cast(node);
-                let token = match node {
-                    AnyIdentifier::JsReferenceIdentifier(node) => node.value_token(),
-                    AnyIdentifier::JsIdentifierAssignment(node) => node.name_token(),
-                    AnyIdentifier::JsxReferenceIdentifier(node) => node.value_token(),
-                };
+                let identifier = reference.tree();
+                let under_as_expression = identifier
+                    .parent::<TsReferenceType>()
+                    .and_then(|ty| ty.parent::<TsAsExpression>())
+                    .is_some();
 
-                let token = token.ok()?;
+                let token = identifier.value_token().ok()?;
                 let text = token.text_trimmed();
-                if is_global(text) {
+
+                let source_type = ctx.source_type::<JsFileSource>();
+
+                if ctx.is_global(text) {
+                    return None;
+                }
+
+                // Typescript Const Assertion
+                if text == "const" && under_as_expression {
+                    return None;
+                }
+
+                if is_global(text, source_type) {
                     return None;
                 }
 
@@ -74,9 +90,15 @@ impl Rule for NoUndeclaredVariables {
     }
 }
 
-fn is_global(reference_name: &str) -> bool {
+fn is_global(reference_name: &str, source_type: &JsFileSource) -> bool {
     ES_2021.binary_search(&reference_name).is_ok()
         || BROWSER.binary_search(&reference_name).is_ok()
         || NODE.binary_search(&reference_name).is_ok()
-        || TYPESCRIPT_BUILTIN.binary_search(&reference_name).is_ok()
+        || match source_type.language() {
+            Language::JavaScript => BUILTIN.binary_search(&reference_name).is_ok(),
+            Language::TypeScript { .. } => {
+                BUILTIN.binary_search(&reference_name).is_ok()
+                    || TYPESCRIPT_BUILTIN.binary_search(&reference_name).is_ok()
+            }
+        }
 }

@@ -1,13 +1,13 @@
 use crate::prelude::*;
-use rome_formatter::{format_args, write};
+use rome_formatter::write;
 
-use crate::utils::FormatWithSemicolon;
+use crate::utils::FormatStatementSemicolon;
 
 use rome_js_syntax::JsDebuggerStatement;
 use rome_js_syntax::JsDebuggerStatementFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsDebuggerStatement;
+pub(crate) struct FormatJsDebuggerStatement;
 
 impl FormatNodeRule<JsDebuggerStatement> for FormatJsDebuggerStatement {
     fn fmt_fields(&self, node: &JsDebuggerStatement, f: &mut JsFormatter) -> FormatResult<()> {
@@ -16,12 +16,21 @@ impl FormatNodeRule<JsDebuggerStatement> for FormatJsDebuggerStatement {
             semicolon_token,
         } = node.as_fields();
 
-        write!(
-            f,
-            [FormatWithSemicolon::new(
-                &format_args!(debugger_token.format()),
-                semicolon_token.as_ref()
-            ),]
-        )
+        write!(f, [debugger_token.format(),])?;
+
+        if f.comments().has_dangling_comments(node.syntax()) {
+            write!(f, [space(), format_dangling_comments(node.syntax())])?;
+        }
+
+        FormatStatementSemicolon::new(semicolon_token.as_ref()).fmt(f)
+    }
+
+    fn fmt_dangling_comments(
+        &self,
+        _: &JsDebuggerStatement,
+        _: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        // Handled in `fmt_fields`
+        Ok(())
     }
 }

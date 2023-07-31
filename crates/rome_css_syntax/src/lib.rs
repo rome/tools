@@ -52,11 +52,14 @@ impl CssSyntaxKind {
 }
 
 impl rome_rowan::SyntaxKind for CssSyntaxKind {
-    fn is_unknown(&self) -> bool {
-        matches!(self, CSS_UNKNOWN)
+    const TOMBSTONE: Self = CssSyntaxKind::TOMBSTONE;
+    const EOF: Self = EOF;
+
+    fn is_bogus(&self) -> bool {
+        matches!(self, CSS_BOGUS)
     }
 
-    fn to_unknown(&self) -> Self {
+    fn to_bogus(&self) -> Self {
         todo!()
     }
 
@@ -78,6 +81,10 @@ impl rome_rowan::SyntaxKind for CssSyntaxKind {
     fn is_list(&self) -> bool {
         CssSyntaxKind::is_list(*self)
     }
+
+    fn to_string(&self) -> Option<&'static str> {
+        CssSyntaxKind::to_string(self)
+    }
 }
 
 impl TryFrom<CssSyntaxKind> for TriviaPieceKind {
@@ -89,6 +96,7 @@ impl TryFrom<CssSyntaxKind> for TriviaPieceKind {
                 CssSyntaxKind::NEWLINE => Ok(TriviaPieceKind::Newline),
                 CssSyntaxKind::WHITESPACE => Ok(TriviaPieceKind::Whitespace),
                 CssSyntaxKind::COMMENT => Ok(TriviaPieceKind::SingleLineComment),
+                CssSyntaxKind::MULTILINE_COMMENT => Ok(TriviaPieceKind::MultiLineComment),
                 _ => unreachable!("Not Trivia"),
             }
         } else {

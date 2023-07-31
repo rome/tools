@@ -25,28 +25,30 @@ mod utility_types;
 mod arc;
 mod ast;
 mod cow_mut;
+mod file_source;
 pub mod raw_language;
 #[cfg(feature = "serde")]
 mod serde_impls;
 mod syntax_factory;
-mod syntax_rewriter;
-mod syntax_token_text;
+mod token_text;
 mod tree_builder;
 
 pub use rome_text_size::{TextLen, TextRange, TextSize};
 
 pub use crate::{
     ast::*,
-    green::RawSyntaxKind,
+    file_source::{AnyFileSource, FileSource, FileSourceError},
+    green::{NodeCache, RawSyntaxKind},
     syntax::{
-        Language, SendNode, SyntaxElement, SyntaxElementChildren, SyntaxKind, SyntaxList,
-        SyntaxNode, SyntaxNodeChildren, SyntaxNodeOptionExt, SyntaxSlot, SyntaxToken,
-        SyntaxTriviaPiece, SyntaxTriviaPieceComments, TriviaPiece, TriviaPieceKind,
+        chain_trivia_pieces, trim_leading_trivia_pieces, trim_trailing_trivia_pieces,
+        ChainTriviaPiecesIterator, Language, SendNode, SyntaxElement, SyntaxElementChildren,
+        SyntaxKind, SyntaxList, SyntaxNode, SyntaxNodeChildren, SyntaxNodeOptionExt,
+        SyntaxRewriter, SyntaxSlot, SyntaxToken, SyntaxTriviaPiece, SyntaxTriviaPieceComments,
+        TriviaPiece, TriviaPieceKind, VisitNodeSignal,
     },
     syntax_factory::*,
     syntax_node_text::SyntaxNodeText,
-    syntax_rewriter::{SyntaxRewriter, VisitNodeSignal},
-    syntax_token_text::SyntaxTokenText,
+    token_text::TokenText,
     tree_builder::{Checkpoint, TreeBuilder},
     utility_types::{Direction, NodeOrToken, TokenAtOffset, WalkEvent},
 };

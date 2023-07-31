@@ -1,0 +1,16 @@
+{
+	"$schema": "../../../../../../npm/rome/configuration_schema.json",
+	"linter": {
+		"rules": {
+			"nursery": {
+				"useNamingConvention": {
+					"level": "error",
+					"options": {
+						"enumMemberCase": "camelCase",
+						"strictCase": true
+					}
+				}
+			}
+		}
+	}
+}

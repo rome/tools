@@ -5,7 +5,7 @@ use rome_js_syntax::JsStaticModifier;
 use rome_js_syntax::JsStaticModifierFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsStaticModifier;
+pub(crate) struct FormatJsStaticModifier;
 
 impl FormatNodeRule<JsStaticModifier> for FormatJsStaticModifier {
     fn fmt_fields(&self, node: &JsStaticModifier, f: &mut JsFormatter) -> FormatResult<()> {

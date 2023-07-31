@@ -1,4 +1,4 @@
-//! Generated file, do not edit by hand, see `xtask/codegen`
+//! This is a generated file. Don't modify it by hand! Run 'cargo codegen formatter' to re-generate the file.
 
 pub(crate) mod array_assignment_pattern_element_list;
 pub(crate) mod array_binding_pattern_element_list;
@@ -7,6 +7,7 @@ pub(crate) mod call_argument_list;
 pub(crate) mod class_member_list;
 pub(crate) mod constructor_modifier_list;
 pub(crate) mod constructor_parameter_list;
+pub(crate) mod decorator_list;
 pub(crate) mod directive_list;
 pub(crate) mod export_named_from_specifier_list;
 pub(crate) mod export_named_specifier_list;

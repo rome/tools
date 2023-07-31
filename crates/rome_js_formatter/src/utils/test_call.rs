@@ -1,10 +1,10 @@
 use crate::prelude::*;
 use rome_js_syntax::{
-    JsAnyArrowFunctionParameters, JsAnyCallArgument, JsAnyExpression, JsAnyFunctionBody,
-    JsAnyLiteralExpression, JsAnyName, JsCallArgumentList, JsCallArguments, JsCallExpression,
-    JsSyntaxNode,
+    AnyJsArrowFunctionParameters, AnyJsCallArgument, AnyJsExpression, AnyJsFunctionBody,
+    AnyJsLiteralExpression, AnyJsName, AnyJsTemplateElement, JsCallArgumentList, JsCallArguments,
+    JsCallExpression, JsSyntaxNode, JsTemplateExpression,
 };
-use rome_rowan::{SyntaxResult, SyntaxTokenText};
+use rome_rowan::{SyntaxResult, TokenText};
 
 /// Returns `Ok(true)` if `maybe_argument` is an argument of a [test call expression](is_test_call_expression).
 pub(crate) fn is_test_call_argument(maybe_argument: &JsSyntaxNode) -> SyntaxResult<bool> {
@@ -34,12 +34,12 @@ pub(crate) fn is_test_call_argument(maybe_argument: &JsSyntaxNode) -> SyntaxResu
 /// 6. Both function must have zero or one parameters
 ///
 /// [call expression]: crate::rome_js_syntax::JsCallExpression
-/// [callee]: crate::rome_js_syntax::JsAnyExpression
+/// [callee]: crate::rome_js_syntax::AnyJsExpression
 /// [arguments]: crate::rome_js_syntax::JsCallArgumentList
 /// [arrow function expression]: crate::rome_js_syntax::JsArrowFunctionExpression
 /// [function expression]: crate::rome_js_syntax::JsCallArgumentList
 pub(crate) fn is_test_call_expression(call_expression: &JsCallExpression) -> SyntaxResult<bool> {
-    use JsAnyExpression::*;
+    use AnyJsExpression::*;
 
     let callee = call_expression.callee()?;
     let arguments = call_expression.arguments()?;
@@ -57,7 +57,7 @@ pub(crate) fn is_test_call_expression(call_expression: &JsCallExpression) -> Syn
             {
                 return Ok(matches!(
                     argument,
-                    JsAnyCallArgument::JsAnyExpression(
+                    AnyJsCallArgument::AnyJsExpression(
                         JsArrowFunctionExpression(_) | JsFunctionExpression(_)
                     )
                 ));
@@ -65,7 +65,7 @@ pub(crate) fn is_test_call_expression(call_expression: &JsCallExpression) -> Syn
 
             if is_unit_test_set_up_callee(&callee) {
                 return Ok(argument
-                    .as_js_any_expression()
+                    .as_any_js_expression()
                     .map_or(false, is_angular_test_wrapper));
             }
 
@@ -74,9 +74,9 @@ pub(crate) fn is_test_call_expression(call_expression: &JsCallExpression) -> Syn
 
         // it("description", ..)
         (
-            Some(Ok(JsAnyCallArgument::JsAnyExpression(
-                JsTemplate(_)
-                | JsAnyLiteralExpression(self::JsAnyLiteralExpression::JsStringLiteralExpression(_)),
+            Some(Ok(AnyJsCallArgument::AnyJsExpression(
+                JsTemplateExpression(_)
+                | AnyJsLiteralExpression(self::AnyJsLiteralExpression::JsStringLiteralExpression(_)),
             ))),
             Some(Ok(second)),
             third,
@@ -84,9 +84,9 @@ pub(crate) fn is_test_call_expression(call_expression: &JsCallExpression) -> Syn
             // it('name', callback, duration)
             if !matches!(
                 third,
-                None | Some(Ok(JsAnyCallArgument::JsAnyExpression(
-                    JsAnyLiteralExpression(
-                        self::JsAnyLiteralExpression::JsNumberLiteralExpression(_)
+                None | Some(Ok(AnyJsCallArgument::AnyJsExpression(
+                    AnyJsLiteralExpression(
+                        self::AnyJsLiteralExpression::JsNumberLiteralExpression(_)
                     )
                 )))
             ) {
@@ -94,23 +94,23 @@ pub(crate) fn is_test_call_expression(call_expression: &JsCallExpression) -> Syn
             }
 
             if second
-                .as_js_any_expression()
+                .as_any_js_expression()
                 .map_or(false, is_angular_test_wrapper)
             {
                 return Ok(true);
             }
 
             let (parameters, has_block_body) = match second {
-                JsAnyCallArgument::JsAnyExpression(JsFunctionExpression(function)) => (
+                AnyJsCallArgument::AnyJsExpression(JsFunctionExpression(function)) => (
                     function
                         .parameters()
-                        .map(JsAnyArrowFunctionParameters::from),
+                        .map(AnyJsArrowFunctionParameters::from),
                     true,
                 ),
-                JsAnyCallArgument::JsAnyExpression(JsArrowFunctionExpression(arrow)) => (
+                AnyJsCallArgument::AnyJsExpression(JsArrowFunctionExpression(arrow)) => (
                     arrow.parameters(),
                     arrow.body().map_or(false, |body| {
-                        matches!(body, JsAnyFunctionBody::JsFunctionBody(_))
+                        matches!(body, AnyJsFunctionBody::JsFunctionBody(_))
                     }),
                 ),
                 _ => return Ok(false),
@@ -131,8 +131,8 @@ pub(crate) fn is_test_call_expression(call_expression: &JsCallExpression) -> Syn
 /// @param {CallExpression} node
 /// @returns {boolean}
 ///
-fn is_angular_test_wrapper(expression: &JsAnyExpression) -> bool {
-    use JsAnyExpression::*;
+fn is_angular_test_wrapper(expression: &AnyJsExpression) -> bool {
+    use AnyJsExpression::*;
     match expression {
         JsCallExpression(call_expression) => match call_expression.callee() {
             Ok(JsIdentifierExpression(identifier)) => identifier
@@ -152,9 +152,9 @@ fn is_angular_test_wrapper(expression: &JsAnyExpression) -> bool {
 
 /// Tests if the callee is a `beforeEach`, `beforeAll`, `afterEach` or `afterAll` identifier
 /// that is commonly used in test frameworks.
-fn is_unit_test_set_up_callee(callee: &JsAnyExpression) -> bool {
+fn is_unit_test_set_up_callee(callee: &AnyJsExpression) -> bool {
     match callee {
-        JsAnyExpression::JsIdentifierExpression(identifier) => identifier
+        AnyJsExpression::JsIdentifierExpression(identifier) => identifier
             .name()
             .and_then(|name| name.value_token())
             .map_or(false, |name| {
@@ -164,6 +164,147 @@ fn is_unit_test_set_up_callee(callee: &JsAnyExpression) -> bool {
                 )
             }),
         _ => false,
+    }
+}
+
+pub(crate) fn is_test_each_pattern(template: &JsTemplateExpression) -> bool {
+    is_test_each_pattern_callee(template) && is_test_each_pattern_elements(template)
+}
+
+fn is_test_each_pattern_elements(template: &JsTemplateExpression) -> bool {
+    let mut iter = template.elements().into_iter();
+
+    // the table must have a header as JsTemplateChunkElement
+    // e.g. a | b | expected
+    if !matches!(
+        iter.next(),
+        Some(AnyJsTemplateElement::JsTemplateChunkElement(_))
+    ) {
+        return false;
+    }
+
+    // Guarding against skipped token trivia on elements that we remove.
+    // Because that would result in the skipped token trivia being emitted before the template.
+    for element in template.elements() {
+        if let AnyJsTemplateElement::JsTemplateChunkElement(element) = element {
+            if let Some(leading_trivia) = element.syntax().first_leading_trivia() {
+                if leading_trivia.has_skipped() {
+                    return false;
+                }
+            }
+        }
+    }
+
+    true
+}
+
+/// This function checks if a call expressions has one of the following members:
+/// - `describe.each`
+/// - `describe.only.each`
+/// - `describe.skip.each`
+/// - `test.concurrent.each`
+/// - `test.concurrent.only.each`
+/// - `test.concurrent.skip.each`
+/// - `test.each`
+/// - `test.only.each`
+/// - `test.skip.each`
+/// - `test.failing.each`
+/// - `it.concurrent.each`
+/// - `it.concurrent.only.each`
+/// - `it.concurrent.skip.each`
+/// - `it.each`
+/// - `it.only.each`
+/// - `it.skip.each`
+/// - `it.failing.each`
+///
+/// - `xdescribe.each`
+/// - `xdescribe.only.each`
+/// - `xdescribe.skip.each`
+/// - `xtest.concurrent.each`
+/// - `xtest.concurrent.only.each`
+/// - `xtest.concurrent.skip.each`
+/// - `xtest.each`
+/// - `xtest.only.each`
+/// - `xtest.skip.each`
+/// - `xtest.failing.each`
+/// - `xit.concurrent.each`
+/// - `xit.concurrent.only.each`
+/// - `xit.concurrent.skip.each`
+/// - `xit.each`
+/// - `xit.only.each`
+/// - `xit.skip.each`
+/// - `xit.failing.each`
+///
+/// - `fdescribe.each`
+/// - `fdescribe.only.each`
+/// - `fdescribe.skip.each`
+/// - `ftest.concurrent.each`
+/// - `ftest.concurrent.only.each`
+/// - `ftest.concurrent.skip.each`
+/// - `ftest.each`
+/// - `ftest.only.each`
+/// - `ftest.skip.each`
+/// - `ftest.failing.each`
+/// - `fit.concurrent.each`
+/// - `fit.concurrent.only.each`
+/// - `fit.concurrent.skip.each`
+/// - `fit.each`
+/// - `fit.only.each`
+/// - `fit.skip.each`
+/// - `xit.failing.each`
+///
+/// Based on this [article]
+///
+/// [article]: https://craftinginterpreters.com/scanning-on-demand.html#tries-and-state-machines
+fn is_test_each_pattern_callee(template: &JsTemplateExpression) -> bool {
+    if let Some(tag) = template.tag() {
+        let mut members = CalleeNamesIterator::new(tag);
+
+        let texts: [Option<TokenText>; 5] = [
+            members.next(),
+            members.next(),
+            members.next(),
+            members.next(),
+            members.next(),
+        ];
+
+        let mut rev = texts.iter().rev().flatten();
+
+        let first = rev.next().map(|t| t.text());
+        let second = rev.next().map(|t| t.text());
+        let third = rev.next().map(|t| t.text());
+        let fourth = rev.next().map(|t| t.text());
+        let fifth = rev.next().map(|t| t.text());
+
+        match first {
+            Some("describe" | "xdescribe" | "fdescribe") => match second {
+                Some("each") => third.is_none(),
+                Some("skip" | "only") => match third {
+                    Some("each") => fourth.is_none(),
+                    _ => false,
+                },
+                _ => false,
+            },
+            Some("test" | "xtest" | "ftest" | "it" | "xit" | "fit") => match second {
+                Some("each") => third.is_none(),
+                Some("skip" | "only" | "failing") => match third {
+                    Some("each") => fourth.is_none(),
+                    _ => false,
+                },
+                Some("concurrent") => match third {
+                    Some("each") => fourth.is_none(),
+                    Some("only" | "skip") => match fourth {
+                        Some("each") => fifth.is_none(),
+                        _ => false,
+                    },
+                    _ => false,
+                },
+                _ => false,
+            },
+            _ => false,
+        }
+    } else {
+        false
     }
 }
 
@@ -195,10 +336,10 @@ fn is_unit_test_set_up_callee(callee: &JsAnyExpression) -> bool {
 /// Based on this [article]
 ///
 /// [article]: https://craftinginterpreters.com/scanning-on-demand.html#tries-and-state-machines
-fn contains_a_test_pattern(callee: &JsAnyExpression) -> SyntaxResult<bool> {
+fn contains_a_test_pattern(callee: &AnyJsExpression) -> SyntaxResult<bool> {
     let mut members = CalleeNamesIterator::new(callee.clone());
 
-    let texts: [Option<SyntaxTokenText>; 5] = [
+    let texts: [Option<TokenText>; 5] = [
         members.next(),
         members.next(),
         members.next(),
@@ -248,20 +389,20 @@ fn contains_a_test_pattern(callee: &JsAnyExpression) -> SyntaxResult<bool> {
 /// it.only() -> [`only`, `it`]
 /// ```
 struct CalleeNamesIterator {
-    next: Option<JsAnyExpression>,
+    next: Option<AnyJsExpression>,
 }
 
 impl CalleeNamesIterator {
-    fn new(callee: JsAnyExpression) -> Self {
+    fn new(callee: AnyJsExpression) -> Self {
         Self { next: Some(callee) }
     }
 }
 
 impl Iterator for CalleeNamesIterator {
-    type Item = SyntaxTokenText;
+    type Item = TokenText;
 
     fn next(&mut self) -> Option<Self::Item> {
-        use JsAnyExpression::*;
+        use AnyJsExpression::*;
 
         let current = self.next.take()?;
 
@@ -272,7 +413,7 @@ impl Iterator for CalleeNamesIterator {
                 .ok()
                 .map(|value| value.token_text_trimmed()),
             JsStaticMemberExpression(member_expression) => match member_expression.member() {
-                Ok(JsAnyName::JsName(name)) => {
+                Ok(AnyJsName::JsName(name)) => {
                     self.next = member_expression.object().ok();
                     name.value_token()
                         .ok()
@@ -287,15 +428,14 @@ impl Iterator for CalleeNamesIterator {
 
 #[cfg(test)]
 mod test {
-    use super::contains_a_test_pattern;
-    use rome_diagnostics::file::FileId;
-    use rome_js_parser::parse;
-    use rome_js_syntax::{JsCallExpression, SourceType};
+    use super::{contains_a_test_pattern, is_test_each_pattern_callee};
+    use rome_js_parser::{parse, JsParserOptions};
+    use rome_js_syntax::{JsCallExpression, JsFileSource, JsTemplateExpression};
     use rome_rowan::AstNodeList;
 
     fn extract_call_expression(src: &str) -> JsCallExpression {
-        let source_type = SourceType::js_module();
-        let result = parse(src, FileId::zero(), source_type);
+        let source_type = JsFileSource::js_module();
+        let result = parse(src, source_type, JsParserOptions::default());
         let module = result
             .tree()
             .as_js_module()
@@ -305,13 +445,36 @@ mod test {
             .unwrap();
 
         module
-            .as_js_any_statement()
+            .as_any_js_statement()
             .unwrap()
             .as_js_expression_statement()
             .unwrap()
             .expression()
             .unwrap()
             .as_js_call_expression()
+            .unwrap()
+            .clone()
+    }
+
+    fn extract_template(src: &str) -> JsTemplateExpression {
+        let source_type = JsFileSource::js_module();
+        let result = parse(src, source_type, JsParserOptions::default());
+        let module = result
+            .tree()
+            .as_js_module()
+            .unwrap()
+            .items()
+            .first()
+            .unwrap();
+
+        module
+            .as_any_js_statement()
+            .unwrap()
+            .as_js_expression_statement()
+            .unwrap()
+            .expression()
+            .unwrap()
+            .as_js_template_expression()
             .unwrap()
             .clone()
     }
@@ -356,5 +519,179 @@ mod test {
             contains_a_test_pattern(&call_expression.callee().unwrap()),
             Ok(false)
         );
+    }
+
+    #[test]
+    fn matches_simple_each() {
+        let template = extract_template("describe.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("test.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("it.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("xdescribe.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("xtest.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("xit.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("fdescribe.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("ftest.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("fit.each``");
+        assert!(is_test_each_pattern_callee(&template));
+    }
+
+    #[test]
+    fn matches_skip_each() {
+        let template = extract_template("describe.skip.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("test.skip.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("it.skip.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("xdescribe.skip.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("xtest.skip.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("xit.skip.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("fdescribe.skip.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("ftest.skip.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("fit.skip.each``");
+        assert!(is_test_each_pattern_callee(&template));
+    }
+
+    #[test]
+    fn matches_only_each() {
+        let template = extract_template("describe.only.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("test.only.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("it.only.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("xdescribe.only.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("xtest.only.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("xit.only.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("fdescribe.only.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("ftest.only.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("fit.only.each``");
+        assert!(is_test_each_pattern_callee(&template));
+    }
+
+    #[test]
+    fn matches_failing_each() {
+        let template = extract_template("test.failing.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("it.failing.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("xtest.failing.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("xit.failing.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("ftest.failing.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("fit.failing.each``");
+        assert!(is_test_each_pattern_callee(&template));
+    }
+
+    #[test]
+    fn matches_concurrent_each() {
+        let template = extract_template("test.concurrent.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("it.concurrent.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("xtest.concurrent.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("xit.concurrent.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("ftest.concurrent.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("fit.concurrent.each``");
+        assert!(is_test_each_pattern_callee(&template));
+    }
+
+    #[test]
+    fn matches_concurrent_only_each() {
+        let template = extract_template("test.concurrent.only.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("it.concurrent.only.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("xtest.concurrent.only.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("xit.concurrent.only.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("ftest.concurrent.only.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("fit.concurrent.only.each``");
+        assert!(is_test_each_pattern_callee(&template));
+    }
+
+    #[test]
+    fn matches_concurrent_skip_each() {
+        let template = extract_template("test.concurrent.skip.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("it.concurrent.skip.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("xtest.concurrent.skip.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("xit.concurrent.skip.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("ftest.concurrent.skip.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("fit.concurrent.skip.each``");
+        assert!(is_test_each_pattern_callee(&template));
     }
 }

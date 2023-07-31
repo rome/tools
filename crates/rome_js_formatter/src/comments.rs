@@ -1,5 +1,7 @@
 use crate::prelude::*;
-use crate::utils::JsAnyConditional;
+use crate::utils::AnyJsConditional;
+use rome_diagnostics_categories::category;
+use rome_formatter::comments::is_doc_comment;
 use rome_formatter::{
     comments::{
         CommentKind, CommentPlacement, CommentStyle, CommentTextPosition, Comments,
@@ -7,9 +9,10 @@ use rome_formatter::{
     },
     write,
 };
-use rome_js_syntax::suppression::{parse_suppression_comment, SuppressionCategory};
+use rome_js_syntax::suppression::parse_suppression_comment;
+use rome_js_syntax::JsSyntaxKind::JS_EXPORT;
 use rome_js_syntax::{
-    JsAnyClass, JsAnyName, JsAnyRoot, JsAnyStatement, JsArrayHole, JsArrowFunctionExpression,
+    AnyJsClass, AnyJsName, AnyJsRoot, AnyJsStatement, JsArrayHole, JsArrowFunctionExpression,
     JsBlockStatement, JsCallArguments, JsCatchClause, JsEmptyStatement, JsFinallyClause,
     JsFormalParameter, JsFunctionBody, JsIdentifierExpression, JsIfStatement, JsLanguage,
     JsSyntaxKind, JsSyntaxNode, JsVariableDeclarator, JsWhileStatement, TsInterfaceDeclaration,
@@ -65,68 +68,6 @@ impl FormatRule<SourceComment<JsLanguage>> for FormatJsLeadingComment {
     }
 }
 
-/// Returns `true` if `comment` is a multi line block comment:
-///
-/// # Examples
-///
-/// ```
-/// # use rome_js_parser::parse_module;
-/// # use rome_js_syntax::JsLanguage;
-/// # use rome_rowan::{Direction, SyntaxTriviaPieceComments};
-/// # use rome_diagnostics::file::FileId;
-///  use rome_js_formatter::comments::is_doc_comment;
-///
-/// # fn parse_comment(source: &str) -> SyntaxTriviaPieceComments<JsLanguage> {
-/// #     let root = parse_module(source, FileId::zero()).tree();
-/// #     root
-/// #        .eof_token()
-/// #        .expect("Root to have an EOF token")
-/// #        .leading_trivia()
-/// #        .pieces()
-/// #        .filter_map(|piece| piece.as_comments())
-/// #        .next()
-/// #        .expect("Source to contain a comment.")
-/// # }
-///
-/// assert!(is_doc_comment(&parse_comment(r#"
-///     /**
-///      * Multiline doc comment
-///      */
-/// "#)));
-///
-/// assert!(is_doc_comment(&parse_comment(r#"
-///     /*
-///      * Single star
-///      */
-/// "#)));
-///
-///
-/// // Non doc-comments
-/// assert!(!is_doc_comment(&parse_comment(r#"/** has no line break */"#)));
-///
-/// assert!(!is_doc_comment(&parse_comment(r#"
-/// /*
-///  *
-///  this line doesn't start with a star
-///  */
-/// "#)));
-/// ```
-pub fn is_doc_comment(comment: &SyntaxTriviaPieceComments<JsLanguage>) -> bool {
-    if !comment.has_newline() {
-        return false;
-    }
-
-    let text = comment.text();
-
-    text.lines().enumerate().all(|(index, line)| {
-        if index == 0 {
-            line.starts_with("/*")
-        } else {
-            line.trim_start().starts_with('*')
-        }
-    })
-}
-
 #[derive(Eq, PartialEq, Copy, Clone, Debug, Default)]
 pub struct JsCommentStyle;
 
@@ -135,8 +76,9 @@ impl CommentStyle for JsCommentStyle {
 
     fn is_suppression(text: &str) -> bool {
         parse_suppression_comment(text)
+            .filter_map(Result::ok)
             .flat_map(|suppression| suppression.categories)
-            .any(|(category, _)| category == SuppressionCategory::Format)
+            .any(|(key, _)| key == category!("format"))
     }
 
     fn get_comment_kind(comment: &SyntaxTriviaPieceComments<JsLanguage>) -> CommentKind {
@@ -368,7 +310,30 @@ fn handle_class_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlaceme
         return CommentPlacement::Default(comment);
     }
 
-    let first_member = if let Some(class) = JsAnyClass::cast_ref(comment.enclosing_node()) {
+    // ```javascript
+    // @decorator
+    // // comment
+    // class Foo {}
+    // ```
+    if (AnyJsClass::can_cast(comment.enclosing_node().kind())
+        && comment
+            .following_token()
+            .map_or(false, |token| token.kind() == JsSyntaxKind::CLASS_KW))
+        // ```javascript
+        // @decorator
+        // // comment
+        // export class Foo {}
+        // ```
+        || comment.enclosing_node().kind() == JS_EXPORT
+    {
+        if let Some(preceding) = comment.preceding_node() {
+            if preceding.kind() == JsSyntaxKind::JS_DECORATOR {
+                return CommentPlacement::trailing(preceding.clone(), comment);
+            }
+        }
+    }
+
+    let first_member = if let Some(class) = AnyJsClass::cast_ref(comment.enclosing_node()) {
         class.members().first().map(AstNode::into_syntax)
     } else if let Some(interface) = TsInterfaceDeclaration::cast_ref(comment.enclosing_node()) {
         interface.members().first().map(AstNode::into_syntax)
@@ -471,7 +436,7 @@ fn handle_method_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlacem
             let first_non_empty = body
                 .statements()
                 .iter()
-                .find(|statement| !matches!(statement, JsAnyStatement::JsEmptyStatement(_)));
+                .find(|statement| !matches!(statement, AnyJsStatement::JsEmptyStatement(_)));
 
             return match first_non_empty {
                 None => CommentPlacement::dangling(body.into_syntax(), comment),
@@ -486,13 +451,13 @@ fn handle_method_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlacem
 /// Handle a all comments document.
 /// See `blank.js`
 fn handle_root_comments(comment: DecoratedComment<JsLanguage>) -> CommentPlacement<JsLanguage> {
-    if let Some(root) = JsAnyRoot::cast_ref(comment.enclosing_node()) {
+    if let Some(root) = AnyJsRoot::cast_ref(comment.enclosing_node()) {
         let is_blank = match &root {
-            JsAnyRoot::JsExpressionSnipped(_) => false,
-            JsAnyRoot::JsModule(module) => {
+            AnyJsRoot::JsExpressionSnipped(_) => false,
+            AnyJsRoot::JsModule(module) => {
                 module.directives().is_empty() && module.items().is_empty()
             }
-            JsAnyRoot::JsScript(script) => {
+            AnyJsRoot::JsScript(script) => {
                 script.directives().is_empty() && script.statements().is_empty()
             }
         };
@@ -527,7 +492,7 @@ fn handle_member_expression_comment(
     // a
     // /* comment */[b]
     // ```
-    if JsAnyName::can_cast(following.kind()) || JsIdentifierExpression::can_cast(following.kind()) {
+    if AnyJsName::can_cast(following.kind()) || JsIdentifierExpression::can_cast(following.kind()) {
         CommentPlacement::leading(comment.enclosing_node().clone(), comment)
     } else {
         CommentPlacement::Default(comment)
@@ -559,7 +524,7 @@ fn handle_function_declaration_comment(
         match body
             .statements()
             .iter()
-            .find(|statement| !matches!(statement, JsAnyStatement::JsEmptyStatement(_)))
+            .find(|statement| !matches!(statement, AnyJsStatement::JsEmptyStatement(_)))
         {
             Some(first) => CommentPlacement::leading(first.into_syntax(), comment),
             None => CommentPlacement::dangling(body.into_syntax(), comment),
@@ -575,7 +540,7 @@ fn handle_conditional_comment(
     let enclosing = comment.enclosing_node();
 
     let (conditional, following) = match (
-        JsAnyConditional::cast_ref(enclosing),
+        AnyJsConditional::cast_ref(enclosing),
         comment.following_node(),
     ) {
         (Some(conditional), Some(following)) => (conditional, following),
@@ -923,7 +888,7 @@ fn handle_variable_declarator_comment(
             value.kind(),
             JsSyntaxKind::JS_OBJECT_EXPRESSION
                 | JsSyntaxKind::JS_ARRAY_EXPRESSION
-                | JsSyntaxKind::JS_TEMPLATE
+                | JsSyntaxKind::JS_TEMPLATE_EXPRESSION
                 | JsSyntaxKind::TS_OBJECT_TYPE
                 | JsSyntaxKind::TS_UNION_TYPE
         )
@@ -1010,8 +975,28 @@ fn handle_parameter_comment(comment: DecoratedComment<JsLanguage>) -> CommentPla
     // )
     // ```
     match comment.enclosing_node().kind() {
-        JsSyntaxKind::JS_FORMAL_PARAMETER if comment.text_position().is_own_line() => {
-            return CommentPlacement::leading(comment.enclosing_node().clone(), comment)
+        JsSyntaxKind::JS_FORMAL_PARAMETER | JsSyntaxKind::TS_PROPERTY_PARAMETER => {
+            // Keep decorator comments near the decorator
+            // Attach leading parameter comments to the last decorator
+            // ```javascript
+            // class Foo {
+            // 	method(
+            // 	//leading own line
+            // 	/*leading same line*/ @Decorator /*trailing*/
+            // 	//leading own line between
+            // 	/*leading same line between*/ @dec //trailing
+            // 	/*leading parameter*/
+            // 	parameter
+            // 	) {}
+            // }
+            // ```
+            if let Some(preceding_node) = comment.preceding_node() {
+                if comment.following_node().kind() != Some(JsSyntaxKind::JS_DECORATOR) {
+                    return CommentPlacement::trailing(preceding_node.clone(), comment);
+                }
+            } else if comment.text_position().is_own_line() {
+                return CommentPlacement::leading(comment.enclosing_node().clone(), comment);
+            }
         }
         JsSyntaxKind::JS_INITIALIZER_CLAUSE => {
             if let Some(parameter) = comment
@@ -1115,11 +1100,11 @@ fn handle_import_export_specifier_comment(
 }
 
 fn place_leading_statement_comment(
-    statement: JsAnyStatement,
+    statement: AnyJsStatement,
     comment: DecoratedComment<JsLanguage>,
 ) -> CommentPlacement<JsLanguage> {
     match statement {
-        JsAnyStatement::JsBlockStatement(block) => place_block_statement_comment(block, comment),
+        AnyJsStatement::JsBlockStatement(block) => place_block_statement_comment(block, comment),
         statement => CommentPlacement::leading(statement.into_syntax(), comment),
     }
 }
@@ -1131,7 +1116,7 @@ fn place_block_statement_comment(
     let first_non_empty = block_statement
         .statements()
         .iter()
-        .find(|statement| !matches!(statement, JsAnyStatement::JsEmptyStatement(_)));
+        .find(|statement| !matches!(statement, AnyJsStatement::JsEmptyStatement(_)));
 
     match first_non_empty {
         None => CommentPlacement::dangling(block_statement.into_syntax(), comment),

@@ -1,15 +1,16 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
-info:
-  test_file: typescript/interface/abstract.ts
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+assertion_line: 212
+info: typescript/interface/abstract.ts
 ---
 
 # Input
 
-```js
+```ts
 abstract interface I {
 
 }
+
 ```
 
 
@@ -26,11 +27,10 @@ abstract interface I {
 
 # Output
 
-```js
+```ts
 abstract;
 interface I {}
 ```
-
 
 # Errors
 ```

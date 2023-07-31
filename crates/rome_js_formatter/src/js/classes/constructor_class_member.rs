@@ -1,11 +1,11 @@
 use crate::prelude::*;
 
-use crate::js::classes::method_class_member::FormatJsAnyMethodMember;
+use crate::js::classes::method_class_member::FormatAnyJsMethodMember;
 use rome_formatter::write;
 use rome_js_syntax::JsConstructorClassMember;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsConstructorClassMember;
+pub(crate) struct FormatJsConstructorClassMember;
 
 impl FormatNodeRule<JsConstructorClassMember> for FormatJsConstructorClassMember {
     fn fmt_fields(&self, node: &JsConstructorClassMember, f: &mut JsFormatter) -> FormatResult<()> {
@@ -14,7 +14,7 @@ impl FormatNodeRule<JsConstructorClassMember> for FormatJsConstructorClassMember
             [
                 node.modifiers().format(),
                 space(),
-                FormatJsAnyMethodMember::from(node.clone())
+                FormatAnyJsMethodMember::from(node.clone())
             ]
         ]
     }

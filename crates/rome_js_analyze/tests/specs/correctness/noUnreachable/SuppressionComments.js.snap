@@ -4,7 +4,7 @@ expression: SuppressionComments.js
 ---
 # Input
 ```js
-// rome-ignore lint(correctness/noUnreachable): this comment does nothing
+// rome-ignore lint/correctness/noUnreachable: this comment does nothing
 function SuppressionComments1() {
     beforeReturn();
     return;
@@ -14,7 +14,7 @@ function SuppressionComments1() {
 function SuppressionComments2() {
     beforeReturn();
     return;
-    // rome-ignore lint(correctness/noUnreachable): supress warning
+    // rome-ignore lint/correctness/noUnreachable: supress warning
     afterReturn();
 }
 
@@ -41,6 +41,19 @@ SuppressionComments.js:5:5 lint/correctness/noUnreachable ━━━━━━━�
       │     ^^^^^^^
     5 │     afterReturn();
     6 │ }
+  
+
+```
+
+```
+SuppressionComments.js:1:1 suppressions/unused ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Suppression comment is not being used
+  
+  > 1 │ // rome-ignore lint/correctness/noUnreachable: this comment does nothing
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    2 │ function SuppressionComments1() {
+    3 │     beforeReturn();
   
 
 ```

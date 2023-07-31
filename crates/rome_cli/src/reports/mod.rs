@@ -2,8 +2,8 @@ pub mod formatter;
 
 use crate::reports::formatter::{FormatterReportFileDetail, FormatterReportSummary};
 use formatter::FormatterReport;
-use rome_diagnostics::v2::{Category, Severity};
-use rome_service::RomeError;
+use rome_diagnostics::{Category, Severity};
+use rome_service::WorkspaceError;
 use serde::Serialize;
 use std::collections::HashMap;
 
@@ -85,7 +85,8 @@ impl Report {
         self.formatter.set_summary(summary);
     }
 
-    pub fn as_serialized_reports(&self) -> Result<String, RomeError> {
-        serde_json::to_string(&self).map_err(|_| RomeError::NotFound)
+    pub fn as_serialized_reports(&self) -> Result<String, WorkspaceError> {
+        serde_json::to_string(&self)
+            .map_err(|err| WorkspaceError::report_not_serializable(err.to_string()))
     }
 }

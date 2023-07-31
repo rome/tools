@@ -5,6 +5,7 @@
   # - runs the coverage and prints in the command line
 name: CI on main
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -27,14 +28,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: Install toolchain
-        run: rustup show
-      - name: Cache
-        uses: Swatinem/rust-cache@v1
-      - name: Run rustfmt
-        uses: actions-rs/cargo@v1
+        uses: moonrepo/setup-rust@v0
         with:
-          command: fmt
-          args: --all --verbose -- --check
+          components: rustfmt
+      - name: Run rustfmt
+        run: cargo fmt --all --verbose -- --check
 
   lint:
     name: Lint Rust Files
@@ -43,27 +41,39 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: Install toolchain
-        run: rustup show
-      - name: Cache
-        uses: Swatinem/rust-cache@v1
+        uses: moonrepo/setup-rust@v0
+        with:
+          components: clippy
       - name: Run cargo check
-        uses: actions-rs/cargo@v1
-        with:
-          command: check
-          args: --workspace --all-targets --release
+        run: cargo check --workspace --all-targets --release
       - name: Run clippy
-        uses: actions-rs/cargo@v1
+        run: cargo lint
+
+  check-dependencies:
+    name: Check Dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR Branch
+        uses: actions/checkout@v3
         with:
-          command: clippy
-          args: --workspace --all-targets --verbose -- --deny warnings
+          submodules: false
+      - name: Install toolchain
+        uses: moonrepo/setup-rust@v0
+        with:
+          channel: nightly
+      - name: Install udeps
+        run: cargo install cargo-udeps --locked
+      - name: Run udeps
+        run: cargo +nightly udeps
+
 
   test:
     strategy:
       matrix:
         include:
-          - os: windows-2022
-          - os: ubuntu-20.04
-          - os: macos-11
+          - os: windows-latest
+          - os: ubuntu-latest
+          - os: macos-latest
 
     name: Test
     runs-on: ${{ matrix.os }}
@@ -71,45 +81,34 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: Install toolchain
-        run: rustup show
-      - name: Cache
-        uses: Swatinem/rust-cache@v1
-      - name: Compile for tests
-        uses: actions-rs/cargo@v1
+        uses: moonrepo/setup-rust@v0
         with:
-          command: test
-          args: --no-run --workspace --verbose
+          bins: cargo-nextest
       - name: Run tests on ${{ matrix.os }}
-        uses: actions-rs/cargo@v1
-        env:
-          RUST_TEST_THREADS: 1
-        with:
-          command: test
-          args: --workspace --verbose
+        run: cargo nextest run --workspace --verbose
       - name: Clean cache
-        run: cargo install cargo-cache --no-default-features --features ci-autoclean && cargo-cache
+        run: cargo cache --autoclean
 
   documentation:
     name: Documentation
+    environment: netlify-rustdocs
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+      - name: Install netlify-cli
+        run: npm i -g netlify-cli
       - name: Install toolchain
-        run: rustup show
-      - name: Cache
-        uses: Swatinem/rust-cache@v1
-      - name: Compile for tests
-        uses: actions-rs/cargo@v1
+        uses: moonrepo/setup-rust@v0
       - name: Run doc command
-        uses: actions-rs/cargo@v1
-        with:
-          command: documentation
+        run: cargo documentation
+      - name: Write index.html
+        run: echo '<meta http-equiv="refresh" content="0; url=/rome/index.html">' >target/doc/index.html
+      - name: Write _redirects
+        run: echo '/ /rome/index.html' >target/doc/_redirects
       - name: Deploy documentation
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./target/doc
+        run: |
+          netlify deploy --dir=./target/doc --prod --site rustdocs-rometools --auth ${{ secrets.NETLIFY_AUTH_TOKEN }}
 
   coverage:
     name: Test262 Coverage
@@ -118,21 +117,23 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-       os: [windows-latest, ubuntu-latest]
+        os: [windows-latest, ubuntu-latest]
 
     steps:
+      # ref: https://github.com/orgs/community/discussions/26952
+      - name: Support longpaths
+        if: matrix.os == 'windows-latest'
+        run: git config --system core.longpaths true
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
           submodules: recursive
       - name: Install toolchain
-        run: rustup show
-      - name: Cache
-        uses: Swatinem/rust-cache@v1
+        uses: moonrepo/setup-rust@v0
       - name: Compile
         run: cargo build --release --locked -p xtask_coverage
       - name: Run Test262 suite
         continue-on-error: true
         run: cargo coverage
       - name: Clean cache
-        run: cargo install cargo-cache --no-default-features --features ci-autoclean && cargo-cache
+        run: cargo cache --autoclean

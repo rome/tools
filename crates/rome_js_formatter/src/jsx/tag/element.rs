@@ -4,7 +4,7 @@ use crate::jsx::lists::child_list::{FormatChildrenResult, FormatJsxChildList, Js
 use crate::utils::jsx::{is_jsx_suppressed, is_meaningful_jsx_text};
 use rome_formatter::{format_args, write, CstFormatContext, FormatResult, FormatRuleWithOptions};
 use rome_js_syntax::{
-    JsAnyExpression, JsxAnyChild, JsxChildList, JsxElement, JsxExpressionChild, JsxFragment,
+    AnyJsExpression, AnyJsxChild, JsxChildList, JsxElement, JsxExpressionChild, JsxFragment,
 };
 use rome_rowan::{declare_node_union, SyntaxResult};
 
@@ -13,7 +13,7 @@ pub struct FormatJsxElement;
 
 impl FormatNodeRule<JsxElement> for FormatJsxElement {
     fn fmt_fields(&self, node: &JsxElement, f: &mut JsFormatter) -> FormatResult<()> {
-        JsxAnyTagWithChildren::from(node.clone()).fmt(f)
+        AnyJsxTagWithChildren::from(node.clone()).fmt(f)
     }
 
     fn is_suppressed(&self, node: &JsxElement, f: &JsFormatter) -> bool {
@@ -46,10 +46,10 @@ impl FormatNodeRule<JsxElement> for FormatJsxElement {
 }
 
 declare_node_union! {
-    pub(super) JsxAnyTagWithChildren = JsxElement | JsxFragment
+    pub(super) AnyJsxTagWithChildren = JsxElement | JsxFragment
 }
 
-impl Format<JsFormatContext> for JsxAnyTagWithChildren {
+impl Format<JsFormatContext> for AnyJsxTagWithChildren {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
         let format_opening = format_with(|f| self.fmt_opening(f));
         let format_closing = format_with(|f| self.fmt_closing(f));
@@ -70,10 +70,10 @@ impl Format<JsFormatContext> for JsxAnyTagWithChildren {
                 let opening_breaks = format_opening.inspect(f)?.will_break();
 
                 let multiple_attributes = match self {
-                    JsxAnyTagWithChildren::JsxElement(element) => {
+                    AnyJsxTagWithChildren::JsxElement(element) => {
                         element.opening_element()?.attributes().len() > 1
                     }
-                    JsxAnyTagWithChildren::JsxFragment(_) => false,
+                    AnyJsxTagWithChildren::JsxFragment(_) => false,
                 };
 
                 let list_layout = if multiple_attributes || opening_breaks {
@@ -110,13 +110,13 @@ impl Format<JsFormatContext> for JsxAnyTagWithChildren {
     }
 }
 
-impl JsxAnyTagWithChildren {
+impl AnyJsxTagWithChildren {
     fn fmt_opening(&self, f: &mut JsFormatter) -> FormatResult<()> {
         match self {
-            JsxAnyTagWithChildren::JsxElement(element) => {
+            AnyJsxTagWithChildren::JsxElement(element) => {
                 write!(f, [element.opening_element().format()])
             }
-            JsxAnyTagWithChildren::JsxFragment(fragment) => {
+            AnyJsxTagWithChildren::JsxFragment(fragment) => {
                 write!(f, [fragment.opening_fragment().format()])
             }
         }
@@ -124,10 +124,10 @@ impl JsxAnyTagWithChildren {
 
     fn fmt_closing(&self, f: &mut JsFormatter) -> FormatResult<()> {
         match self {
-            JsxAnyTagWithChildren::JsxElement(element) => {
+            AnyJsxTagWithChildren::JsxElement(element) => {
                 write!(f, [element.closing_element().format()])
             }
-            JsxAnyTagWithChildren::JsxFragment(fragment) => {
+            AnyJsxTagWithChildren::JsxFragment(fragment) => {
                 write!(f, [fragment.closing_fragment().format()])
             }
         }
@@ -135,14 +135,14 @@ impl JsxAnyTagWithChildren {
 
     fn children(&self) -> JsxChildList {
         match self {
-            JsxAnyTagWithChildren::JsxElement(element) => element.children(),
-            JsxAnyTagWithChildren::JsxFragment(fragment) => fragment.children(),
+            AnyJsxTagWithChildren::JsxElement(element) => element.children(),
+            AnyJsxTagWithChildren::JsxFragment(fragment) => fragment.children(),
         }
     }
 
     fn layout(&self, f: &mut JsFormatter) -> SyntaxResult<ElementLayout> {
-        use JsAnyExpression::*;
-        use JsxAnyChild::*;
+        use AnyJsExpression::*;
+        use AnyJsxChild::*;
 
         let children = self.children();
 
@@ -169,7 +169,7 @@ impl JsxAnyTagWithChildren {
                         }
                     }
                     JsxExpressionChild(expression) => match expression.expression() {
-                        Some(JsTemplate(_)) => ElementLayout::Template(expression),
+                        Some(JsTemplateExpression(_)) => ElementLayout::Template(expression),
                         _ => ElementLayout::Default,
                     },
                     _ => ElementLayout::Default,

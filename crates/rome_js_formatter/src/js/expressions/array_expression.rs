@@ -1,15 +1,26 @@
 use crate::prelude::*;
 
 use crate::parentheses::NeedsParentheses;
-use rome_formatter::write;
+use rome_formatter::{write, FormatRuleWithOptions};
 use rome_js_syntax::{
-    JsAnyArrayElement, JsAnyExpression, JsArrayElementList, JsArrayExpressionFields,
+    AnyJsArrayElement, AnyJsExpression, JsArrayElementList, JsArrayExpressionFields,
 };
 use rome_js_syntax::{JsArrayExpression, JsSyntaxNode};
 use rome_rowan::SyntaxResult;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsArrayExpression;
+pub(crate) struct FormatJsArrayExpression {
+    options: FormatJsArrayExpressionOptions,
+}
+
+impl FormatRuleWithOptions<JsArrayExpression> for FormatJsArrayExpression {
+    type Options = FormatJsArrayExpressionOptions;
+
+    fn with_options(mut self, options: Self::Options) -> Self {
+        self.options = options;
+        self
+    }
+}
 
 impl FormatNodeRule<JsArrayExpression> for FormatJsArrayExpression {
     fn fmt_fields(&self, node: &JsArrayExpression, f: &mut JsFormatter) -> FormatResult<()> {
@@ -33,7 +44,7 @@ impl FormatNodeRule<JsArrayExpression> for FormatJsArrayExpression {
         } else {
             let group_id = f.group_id("array");
 
-            let should_expand = should_break(&elements)?;
+            let should_expand = !self.options.is_force_flat_mode && should_break(&elements)?;
             let elements = elements.format().with_options(Some(group_id));
 
             write!(
@@ -63,6 +74,11 @@ impl FormatNodeRule<JsArrayExpression> for FormatJsArrayExpression {
     }
 }
 
+#[derive(Debug, Copy, Clone, Default)]
+pub(crate) struct FormatJsArrayExpressionOptions {
+    pub(crate) is_force_flat_mode: bool,
+}
+
 /// Returns `true` for arrays containing at least two elements if:
 /// * all elements are either object or array expressions
 /// * each child array expression has at least two elements, or each child object expression has at least two members.
@@ -74,22 +90,22 @@ fn should_break(elements: &JsArrayElementList) -> SyntaxResult<bool> {
 
         while let Some(element) = elements.next() {
             match element? {
-                JsAnyArrayElement::JsAnyExpression(JsAnyExpression::JsArrayExpression(array)) => {
+                AnyJsArrayElement::AnyJsExpression(AnyJsExpression::JsArrayExpression(array)) => {
                     let next_is_array_or_end = matches!(
                         elements.peek(),
-                        None | Some(Ok(JsAnyArrayElement::JsAnyExpression(
-                            JsAnyExpression::JsArrayExpression(_)
+                        None | Some(Ok(AnyJsArrayElement::AnyJsExpression(
+                            AnyJsExpression::JsArrayExpression(_)
                         )))
                     );
                     if array.elements().len() < 2 || !next_is_array_or_end {
                         return Ok(false);
                     }
                 }
-                JsAnyArrayElement::JsAnyExpression(JsAnyExpression::JsObjectExpression(object)) => {
+                AnyJsArrayElement::AnyJsExpression(AnyJsExpression::JsObjectExpression(object)) => {
                     let next_is_object_or_empty = matches!(
                         elements.peek(),
-                        None | Some(Ok(JsAnyArrayElement::JsAnyExpression(
-                            JsAnyExpression::JsObjectExpression(_)
+                        None | Some(Ok(AnyJsArrayElement::AnyJsExpression(
+                            AnyJsExpression::JsObjectExpression(_)
                         )))
                     );
 

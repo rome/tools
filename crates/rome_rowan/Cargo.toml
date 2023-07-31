@@ -1,33 +1,33 @@
 [package]
-name = "rome_rowan"
-version = "0.0.0"
-authors = ["Aleksey Kladov <aleksey.kladov@gmail.com>"]
-repository = "https://github.com/rust-analyzer/rowan"
-license = "MIT OR Apache-2.0"
-description = "Library for generic lossless syntax trees"
-edition = "2021"
+authors              = ["Aleksey Kladov <aleksey.kladov@gmail.com>"]
+description          = "Library for generic lossless syntax trees"
+documentation        = "https://rustdocs.rome.tools/rome_rowan/index.html"
+edition.workspace    = true
+license              = "MIT OR Apache-2.0"
+name                 = "rome_rowan"
+repository.workspace = true
+version              = "0.0.1"
 
 [dependencies]
-rustc-hash = { workspace = true }
-hashbrown = { version = "0.12.3", features = [
-    "inline-more",
-], default-features = false }
-rome_text_size = { path = "../rome_text_size"}
-memoffset = "0.6.5"
-countme = { workspace = true }
-serde = { version = "1.0.133", optional = true, default-features = false }
-rome_text_edit = { path = "../rome_text_edit" }
-schemars = { version = "0.8.10", optional = true }
+countme        = { workspace = true }
+hashbrown      = { version = "0.12.3", features = ["inline-more"], default-features = false }
+memoffset      = "0.8.0"
+rome_text_edit = { workspace = true }
+rome_text_size = { workspace = true }
+rustc-hash     = { workspace = true }
+schemars       = { workspace = true, optional = true }
+serde          = { workspace = true, optional = true, default-features = false }
+tracing        = { workspace = true }
 
 [dev-dependencies]
-quickcheck = "1.0.3"
-quickcheck_macros = "1.0.0"
-serde_json = "1.0.79"
-iai = "*"
+iai               = "0.1.1"
+quickcheck        = { workspace = true }
+quickcheck_macros = { workspace = true }
+serde_json        = { workspace = true }
 
 [features]
 serde = ["dep:serde", "schemars", "rome_text_size/serde"]
 
 [[bench]]
-name = "mutation"
 harness = false
+name    = "mutation"

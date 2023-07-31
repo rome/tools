@@ -1,11 +1,11 @@
 ---
-source: crates/rome_js_formatter/tests/spec_test.rs
-expression: type_assertion_assignment.ts
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info: ts/assignment/type_assertion_assignment.ts
 ---
 
 # Input
 
-```js
+```ts
 let x;
 
 (<boolean> x) = true;
@@ -34,11 +34,14 @@ for (<boolean> x of []) {
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
+Semicolons: Always
+Arrow parentheses: Always
 -----
 
-```js
+```ts
 let x;
 
 (<boolean>x) = true;

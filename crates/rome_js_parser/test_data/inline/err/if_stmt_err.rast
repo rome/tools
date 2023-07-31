@@ -75,7 +75,7 @@ JsModule {
             consequent: missing (required),
             else_clause: missing (optional),
         },
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 R_CURLY@70..71 "}" [] [],
                 R_CURLY@71..72 "}" [] [],
@@ -153,7 +153,7 @@ JsModule {
       3: R_PAREN@69..70 ")" [] []
       4: (empty)
       5: (empty)
-    4: JS_UNKNOWN_STATEMENT@70..75
+    4: JS_BOGUS_STATEMENT@70..75
       0: R_CURLY@70..71 "}" [] []
       1: R_CURLY@71..72 "}" [] []
       2: R_CURLY@72..73 "}" [] []

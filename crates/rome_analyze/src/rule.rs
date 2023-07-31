@@ -1,19 +1,20 @@
 use crate::categories::{ActionCategory, RuleCategory};
 use crate::context::RuleContext;
 use crate::registry::{RegistryVisitor, RuleLanguage, RuleSuppressions};
-use crate::{AnalyzerDiagnostic, Phase, Phases, Queryable};
+use crate::{
+    Phase, Phases, Queryable, SuppressionCommentEmitter, SuppressionCommentEmitterPayload,
+};
 use rome_console::fmt::Display;
 use rome_console::{markup, MarkupBuf};
-use rome_diagnostics::file::FileId;
-use rome_diagnostics::v2::advice::CodeSuggestionAdvice;
-use rome_diagnostics::v2::location::AsSpan;
-use rome_diagnostics::v2::{
+use rome_diagnostics::advice::CodeSuggestionAdvice;
+use rome_diagnostics::location::AsSpan;
+use rome_diagnostics::Applicability;
+use rome_diagnostics::{
     Advices, Category, Diagnostic, DiagnosticTags, Location, LogCategory, MessageAndDescription,
     Visit,
 };
-use rome_diagnostics::Applicability;
-use rome_rowan::{BatchMutation, Language, TextRange};
-use serde::de::DeserializeOwned;
+use rome_rowan::{AstNode, BatchMutation, BatchMutationExt, Language, TextRange};
+use std::fmt::Debug;
 
 /// Static metadata containing information about a rule
 pub struct RuleMetadata {
@@ -228,13 +229,16 @@ macro_rules! impl_group_language {
 
 impl_group_language!(
     T00, T01, T02, T03, T04, T05, T06, T07, T08, T09, T10, T11, T12, T13, T14, T15, T16, T17, T18,
-    T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29
+    T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37,
+    T38, T39, T40, T41, T42, T43, T44, T45, T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56,
+    T57, T58, T59, T60, T61, T62, T63, T64, T65, T66, T67, T68, T69, T70, T71, T72, T73, T74, T75,
+    T76, T77, T78, T79, T80, T81, T82, T83, T84, T85, T86, T87, T88, T89
 );
 
 /// Trait implemented by all analysis rules: declares interest to a certain AstNode type,
 /// and a callback function to be executed on all nodes matching the query to possibly
 /// raise an analysis event
-pub trait Rule: RuleMeta {
+pub trait Rule: RuleMeta + Sized {
     /// The type of AstNode this rule is interested in
     type Query: Queryable;
     /// A generic type that will be kept in memory between a call to `run` and
@@ -246,7 +250,7 @@ pub trait Rule: RuleMeta {
     /// analyzer
     type Signals: IntoIterator<Item = Self::State>;
     /// The options that belong to a rule
-    type Options: DeserializeOwned;
+    type Options: Default + Clone + Debug;
 
     fn phase() -> Phases {
         <<<Self as Rule>::Query as Queryable>::Services as Phase>::phase()
@@ -328,6 +332,51 @@ pub trait Rule: RuleMeta {
         let (..) = (ctx, state);
         None
     }
+
+    /// Create a code action that allows to suppress the rule. The function
+    /// returns the node to which the suppression comment is applied.
+    fn suppress(
+        ctx: &RuleContext<Self>,
+        text_range: &TextRange,
+        apply_suppression_comment: SuppressionCommentEmitter<RuleLanguage<Self>>,
+    ) -> Option<SuppressAction<RuleLanguage<Self>>>
+    where
+        Self: 'static,
+    {
+        // if the rule belongs to `Lint`, we auto generate an action to suppress the rule
+        if <Self::Group as RuleGroup>::Category::CATEGORY == RuleCategory::Lint {
+            let rule_category = format!(
+                "lint/{}/{}",
+                <Self::Group as RuleGroup>::NAME,
+                Self::METADATA.name
+            );
+            let suppression_text = format!("rome-ignore {}", rule_category);
+            let root = ctx.root();
+            let token = root.syntax().token_at_offset(text_range.start());
+            let mut mutation = root.begin();
+            apply_suppression_comment(SuppressionCommentEmitterPayload {
+                suppression_text: suppression_text.as_str(),
+                mutation: &mut mutation,
+                token_offset: token,
+                diagnostic_text_range: text_range,
+            });
+
+            Some(SuppressAction {
+                mutation,
+                message: markup! { "Suppress rule " {rule_category} }.to_owned(),
+            })
+        } else {
+            None
+        }
+    }
+
+    /// Returns a mutation to apply to the code
+    fn transform(
+        _ctx: &RuleContext<Self>,
+        _state: &Self::State,
+    ) -> Option<BatchMutation<RuleLanguage<Self>>> {
+        None
+    }
 }
 
 /// Diagnostic object returned by a single analysis rule
@@ -351,7 +400,14 @@ pub struct RuleDiagnostic {
 pub struct RuleAdvice {
     pub(crate) details: Vec<Detail>,
     pub(crate) notes: Vec<(LogCategory, MarkupBuf)>,
+    pub(crate) suggestion_list: Option<SuggestionList>,
     pub(crate) code_suggestion_list: Vec<CodeSuggestionAdvice<MarkupBuf>>,
+}
+
+#[derive(Debug, Default)]
+pub struct SuggestionList {
+    pub(crate) message: MarkupBuf,
+    pub(crate) list: Vec<MarkupBuf>,
 }
 
 impl Advices for RuleAdvice {
@@ -361,13 +417,24 @@ impl Advices for RuleAdvice {
                 detail.log_category,
                 &markup! { {detail.message} }.to_owned(),
             )?;
-            if let Some(location) = Location::builder().span(&detail.range).build() {
-                visitor.record_frame(location)?;
-            }
+            visitor.record_frame(Location::builder().span(&detail.range).build())?;
         }
         // we then print notes
         for (log_category, note) in &self.notes {
             visitor.record_log(*log_category, &markup! { {note} }.to_owned())?;
+        }
+
+        if let Some(suggestion_list) = &self.suggestion_list {
+            visitor.record_log(
+                LogCategory::Info,
+                &markup! { {suggestion_list.message} }.to_owned(),
+            )?;
+            let list: Vec<_> = suggestion_list
+                .list
+                .iter()
+                .map(|suggestion| suggestion as &dyn Display)
+                .collect();
+            visitor.record_list(&list)?;
         }
 
         // finally, we print possible code suggestions on how to fix the issue
@@ -454,6 +521,22 @@ impl RuleDiagnostic {
         self.footer(LogCategory::Info, msg)
     }
 
+    /// It creates a new footer note which contains a message and a list of possible suggestions.
+    /// Useful when there's need to suggest a list of things inside a diagnostic.
+    pub fn footer_list(mut self, message: impl Display, list: &[impl Display]) -> Self {
+        if !list.is_empty() {
+            self.rule_advice.suggestion_list = Some(SuggestionList {
+                message: markup! { {message} }.to_owned(),
+                list: list
+                    .iter()
+                    .map(|msg| markup! { {msg} }.to_owned())
+                    .collect(),
+            });
+        }
+
+        self
+    }
+
     /// Adds a footer to this [`RuleDiagnostic`], with the `Warn` severity.
     pub fn warning(self, msg: impl Display) -> Self {
         self.footer(LogCategory::Warn, msg)
@@ -461,13 +544,6 @@ impl RuleDiagnostic {
 
     pub(crate) fn span(&self) -> Option<TextRange> {
         self.span
-    }
-
-    /// Convert this [`RuleDiagnostic`] into an instance of [`AnalyzerDiagnostic`] by
-    /// injecting the name of the rule that emitted it and the ID of the file
-    /// the rule was being run on
-    pub(crate) fn into_analyzer_diagnostic(self, file_id: FileId) -> AnalyzerDiagnostic {
-        AnalyzerDiagnostic::from_rule_diagnostic(file_id, self)
     }
 
     pub fn advices(&self) -> &RuleAdvice {
@@ -479,6 +555,13 @@ impl RuleDiagnostic {
 pub struct RuleAction<L: Language> {
     pub category: ActionCategory,
     pub applicability: Applicability,
+    pub message: MarkupBuf,
+    pub mutation: BatchMutation<L>,
+}
+
+/// An action meant to suppress a lint rule
+#[derive(Clone)]
+pub struct SuppressAction<L: Language> {
     pub message: MarkupBuf,
     pub mutation: BatchMutation<L>,
 }

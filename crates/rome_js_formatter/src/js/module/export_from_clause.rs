@@ -1,17 +1,18 @@
 use crate::prelude::*;
-use rome_formatter::{format_args, write};
+use rome_formatter::write;
 
-use crate::utils::FormatWithSemicolon;
+use crate::utils::FormatStatementSemicolon;
 
 use rome_js_syntax::JsExportFromClause;
 use rome_js_syntax::JsExportFromClauseFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsExportFromClause;
+pub(crate) struct FormatJsExportFromClause;
 
 impl FormatNodeRule<JsExportFromClause> for FormatJsExportFromClause {
     fn fmt_fields(&self, node: &JsExportFromClause, f: &mut JsFormatter) -> FormatResult<()> {
         let JsExportFromClauseFields {
+            type_token,
             star_token,
             export_as,
             from_token,
@@ -20,24 +21,22 @@ impl FormatNodeRule<JsExportFromClause> for FormatJsExportFromClause {
             semicolon_token,
         } = node.as_fields();
 
-        write!(
-            f,
-            [FormatWithSemicolon::new(
-                &format_args!(
-                    star_token.format(),
-                    space(),
-                    export_as
-                        .format()
-                        .with_or_empty(|as_token, f| write![f, [as_token, space()]]),
-                    from_token.format(),
-                    space(),
-                    source.format(),
-                    assertion
-                        .format()
-                        .with_or_empty(|assertion, f| write![f, [space(), assertion]]),
-                ),
-                semicolon_token.as_ref()
-            )]
-        )
+        if let Some(type_token) = type_token {
+            write!(f, [type_token.format(), space()])?;
+        }
+
+        write!(f, [star_token.format(), space(),])?;
+
+        if let Some(export_as) = export_as {
+            write!(f, [export_as.format(), space()])?;
+        }
+
+        write!(f, [from_token.format(), space(), source.format()])?;
+
+        if let Some(assertion) = assertion {
+            write!(f, [space(), assertion.format()])?;
+        }
+
+        FormatStatementSemicolon::new(semicolon_token.as_ref()).fmt(f)
     }
 }

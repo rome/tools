@@ -8,3 +8,7 @@ AwesomeReact.createElement('button', {
 awesomeCreateElement('button', {
     "type": "awesomeCreateElement"
 });
+
+awesomeCreateElement('button', {
+    "type": 1
+});

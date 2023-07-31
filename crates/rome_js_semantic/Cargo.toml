@@ -1,20 +1,21 @@
 [package]
-edition = "2021"
-name = "rome_js_semantic"
-version = "0.0.0"
-authors = ["Rome Tools Developers and Contributors"]
-license = "MIT"
-description = "Semantic model for the JavaScript language"
-repository = "https://github.com/rome/tools"
+authors.workspace    = true
+description          = "Semantic model for the JavaScript language"
+documentation        = "https://rustdocs.rome.tools/rome_js_semantic/index.html"
+edition.workspace    = true
+license.workspace    = true
+name                 = "rome_js_semantic"
+repository.workspace = true
+version              = "0.1.0"
 
 [dependencies]
-rome_rowan = { path = "../rome_rowan" }
-rome_js_syntax = { path = "../rome_js_syntax" }
-rust-lapper = "1.0.1"
-rustc-hash = { workspace = true }
+rome_js_syntax = { workspace = true }
+rome_rowan     = { workspace = true }
+rust-lapper    = "1.0.1"
+rustc-hash     = { workspace = true }
 
 [dev-dependencies]
-rome_markup = { path = "../rome_markup" }
-rome_diagnostics = { path = "../rome_diagnostics" }
-rome_console = { path = "../rome_console" }
-rome_js_parser = { path = "../rome_js_parser" }
+rome_console     = { workspace = true }
+rome_diagnostics = { workspace = true }
+rome_js_parser   = { workspace = true }
+rome_markup      = { workspace = true }

@@ -1,6 +1,5 @@
 ---
 source: crates/rome_cli/tests/snap_test.rs
-assertion_line: 147
 expression: content
 ---
 ## `rome.json`
@@ -14,7 +13,6 @@ expression: content
     "indentSize": 6
   }
 }
-
 ```
 
 ## `file.js`
@@ -27,5 +25,9 @@ function f() {
 ```
 
 # Emitted Messages
+
+```block
+Formatted 1 file(s) in <TIME>
+```
 
 

@@ -1,6 +1,6 @@
 ---
-source: crates/rome_js_formatter/tests/spec_test.rs
-expression: array_trailing_comma.js
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info: js/module/array/trailing-comma/array_trailing_comma.js
 ---
 
 # Input
@@ -30,8 +30,11 @@ const a = [
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
+Semicolons: Always
+Arrow parentheses: Always
 -----
 
 ```js
@@ -55,8 +58,11 @@ const a = [
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: ES5
+Semicolons: Always
+Arrow parentheses: Always
 -----
 
 ```js
@@ -80,8 +86,11 @@ const a = [
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: None
+Semicolons: Always
+Arrow parentheses: Always
 -----
 
 ```js

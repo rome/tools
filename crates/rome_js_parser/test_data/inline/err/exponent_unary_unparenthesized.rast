@@ -3,7 +3,7 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsExpressionStatement {
-            expression: JsUnknownExpression {
+            expression: JsBogusExpression {
                 items: [
                     JsUnaryExpression {
                         operator_token: DELETE_KW@0..7 "delete" [] [Whitespace(" ")],
@@ -28,7 +28,7 @@ JsModule {
             semicolon_token: SEMICOLON@15..16 ";" [] [],
         },
         JsExpressionStatement {
-            expression: JsUnknownExpression {
+            expression: JsBogusExpression {
                 items: [
                     JsUnaryExpression {
                         operator_token: VOID_KW@16..22 "void" [Newline("\n")] [Whitespace(" ")],
@@ -47,7 +47,7 @@ JsModule {
             semicolon_token: SEMICOLON@32..33 ";" [] [],
         },
         JsExpressionStatement {
-            expression: JsUnknownExpression {
+            expression: JsBogusExpression {
                 items: [
                     JsUnaryExpression {
                         operator_token: TYPEOF_KW@33..41 "typeof" [Newline("\n")] [Whitespace(" ")],
@@ -66,7 +66,7 @@ JsModule {
             semicolon_token: SEMICOLON@51..52 ";" [] [],
         },
         JsExpressionStatement {
-            expression: JsUnknownExpression {
+            expression: JsBogusExpression {
                 items: [
                     JsUnaryExpression {
                         operator_token: MINUS@52..54 "-" [Newline("\n")] [],
@@ -83,7 +83,7 @@ JsModule {
             semicolon_token: SEMICOLON@60..61 ";" [] [],
         },
         JsExpressionStatement {
-            expression: JsUnknownExpression {
+            expression: JsBogusExpression {
                 items: [
                     JsUnaryExpression {
                         operator_token: PLUS@61..63 "+" [Newline("\n")] [],
@@ -100,7 +100,7 @@ JsModule {
             semicolon_token: SEMICOLON@69..70 ";" [] [],
         },
         JsExpressionStatement {
-            expression: JsUnknownExpression {
+            expression: JsBogusExpression {
                 items: [
                     JsUnaryExpression {
                         operator_token: TILDE@70..72 "~" [Newline("\n")] [],
@@ -117,7 +117,7 @@ JsModule {
             semicolon_token: SEMICOLON@78..79 ";" [] [],
         },
         JsExpressionStatement {
-            expression: JsUnknownExpression {
+            expression: JsBogusExpression {
                 items: [
                     JsUnaryExpression {
                         operator_token: BANG@79..81 "!" [Newline("\n")] [],
@@ -142,7 +142,7 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..91
     0: JS_EXPRESSION_STATEMENT@0..16
-      0: JS_UNKNOWN_EXPRESSION@0..15
+      0: JS_BOGUS_EXPRESSION@0..15
         0: JS_UNARY_EXPRESSION@0..11
           0: DELETE_KW@0..7 "delete" [] [Whitespace(" ")]
           1: JS_STATIC_MEMBER_EXPRESSION@7..11
@@ -157,7 +157,7 @@ JsModule {
           0: JS_NUMBER_LITERAL@14..15 "2" [] []
       1: SEMICOLON@15..16 ";" [] []
     1: JS_EXPRESSION_STATEMENT@16..33
-      0: JS_UNKNOWN_EXPRESSION@16..32
+      0: JS_BOGUS_EXPRESSION@16..32
         0: JS_UNARY_EXPRESSION@16..28
           0: VOID_KW@16..22 "void" [Newline("\n")] [Whitespace(" ")]
           1: JS_IDENTIFIER_EXPRESSION@22..28
@@ -168,7 +168,7 @@ JsModule {
           0: JS_NUMBER_LITERAL@31..32 "2" [] []
       1: SEMICOLON@32..33 ";" [] []
     2: JS_EXPRESSION_STATEMENT@33..52
-      0: JS_UNKNOWN_EXPRESSION@33..51
+      0: JS_BOGUS_EXPRESSION@33..51
         0: JS_UNARY_EXPRESSION@33..47
           0: TYPEOF_KW@33..41 "typeof" [Newline("\n")] [Whitespace(" ")]
           1: JS_IDENTIFIER_EXPRESSION@41..47
@@ -179,7 +179,7 @@ JsModule {
           0: JS_NUMBER_LITERAL@50..51 "2" [] []
       1: SEMICOLON@51..52 ";" [] []
     3: JS_EXPRESSION_STATEMENT@52..61
-      0: JS_UNKNOWN_EXPRESSION@52..60
+      0: JS_BOGUS_EXPRESSION@52..60
         0: JS_UNARY_EXPRESSION@52..56
           0: MINUS@52..54 "-" [Newline("\n")] []
           1: JS_NUMBER_LITERAL_EXPRESSION@54..56
@@ -189,7 +189,7 @@ JsModule {
           0: JS_NUMBER_LITERAL@59..60 "2" [] []
       1: SEMICOLON@60..61 ";" [] []
     4: JS_EXPRESSION_STATEMENT@61..70
-      0: JS_UNKNOWN_EXPRESSION@61..69
+      0: JS_BOGUS_EXPRESSION@61..69
         0: JS_UNARY_EXPRESSION@61..65
           0: PLUS@61..63 "+" [Newline("\n")] []
           1: JS_NUMBER_LITERAL_EXPRESSION@63..65
@@ -199,7 +199,7 @@ JsModule {
           0: JS_NUMBER_LITERAL@68..69 "2" [] []
       1: SEMICOLON@69..70 ";" [] []
     5: JS_EXPRESSION_STATEMENT@70..79
-      0: JS_UNKNOWN_EXPRESSION@70..78
+      0: JS_BOGUS_EXPRESSION@70..78
         0: JS_UNARY_EXPRESSION@70..74
           0: TILDE@70..72 "~" [Newline("\n")] []
           1: JS_NUMBER_LITERAL_EXPRESSION@72..74
@@ -209,7 +209,7 @@ JsModule {
           0: JS_NUMBER_LITERAL@77..78 "2" [] []
       1: SEMICOLON@78..79 ";" [] []
     6: JS_EXPRESSION_STATEMENT@79..91
-      0: JS_UNKNOWN_EXPRESSION@79..90
+      0: JS_BOGUS_EXPRESSION@79..90
         0: JS_UNARY_EXPRESSION@79..86
           0: BANG@79..81 "!" [Newline("\n")] []
           1: JS_BOOLEAN_LITERAL_EXPRESSION@81..86

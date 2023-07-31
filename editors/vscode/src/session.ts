@@ -1,9 +1,9 @@
-import { ExtensionContext, commands, Disposable, window } from "vscode";
 import { Commands } from "./commands";
+import { RomeEditor, isRomeEditor } from "./utils";
+import { Disposable, ExtensionContext, commands, window } from "vscode";
 import { LanguageClient } from "vscode-languageclient/node";
-import { isRomeEditor, RomeEditor } from "./utils";
 
-export type Command = (...args: any[]) => unknown;
+export type Command = (...args: unknown[]) => unknown;
 
 /**
  * Client session of the LSP
@@ -18,7 +18,7 @@ export class Session {
 	}
 
 	registerCommand(name: Commands, factory: Command) {
-		let disposable = commands.registerCommand(name, factory);
+		const disposable = commands.registerCommand(name, factory);
 		this.context.subscriptions.push(disposable);
 	}
 

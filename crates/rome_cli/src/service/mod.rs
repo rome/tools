@@ -43,14 +43,16 @@ use tokio::{
 #[cfg(windows)]
 mod windows;
 #[cfg(windows)]
-pub(crate) use self::windows::{ensure_daemon, open_socket, print_socket, run_daemon};
+pub(crate) use self::windows::{
+    ensure_daemon, enumerate_pipes, open_socket, print_socket, run_daemon,
+};
 
 #[cfg(unix)]
 mod unix;
 #[cfg(unix)]
-pub(crate) use self::unix::open_socket;
-#[cfg(unix)]
-pub(crate) use self::unix::{ensure_daemon, print_socket, run_daemon};
+pub(crate) use self::unix::{
+    ensure_daemon, enumerate_pipes, open_socket, print_socket, run_daemon,
+};
 
 /// Tries to open a connection to a running daemon instance, returning a
 /// [WorkspaceTransport] instance if the socket is currently active

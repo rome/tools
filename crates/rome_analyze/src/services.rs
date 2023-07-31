@@ -1,5 +1,5 @@
 use crate::{RuleKey, TextRange};
-use rome_diagnostics::v2::{Diagnostic, LineIndexBuf, Resource, Result, SourceCode};
+use rome_diagnostics::{Diagnostic, LineIndexBuf, Resource, Result, SourceCode};
 use std::{
     any::{Any, TypeId},
     collections::HashMap,
@@ -41,21 +41,21 @@ pub trait FromServices: Sized {
     ) -> Result<Self, MissingServicesDiagnostic>;
 }
 
-#[derive(Default)]
+#[derive(Debug, Default)]
 pub struct ServiceBag {
     services: HashMap<TypeId, Box<dyn Any>>,
 }
 
 impl ServiceBag {
-    pub fn insert_service<T: 'static + Clone>(&mut self, service: T) {
+    pub fn insert_service<T: 'static>(&mut self, service: T) {
         let id = TypeId::of::<T>();
         self.services.insert(id, Box::new(service));
     }
 
-    pub fn get_service<T: 'static + Clone>(&self) -> Option<T> {
+    pub fn get_service<T: 'static>(&self) -> Option<&T> {
         let id = TypeId::of::<T>();
         let svc = self.services.get(&id)?;
-        svc.downcast_ref().cloned()
+        svc.downcast_ref()
     }
 }
 

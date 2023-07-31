@@ -1,80 +1,151 @@
 use crate::{
-    JsAnyMethodModifier, JsAnyPropertyModifier, TsAnyIndexSignatureModifier,
-    TsAnyMethodSignatureModifier, TsAnyPropertyParameterModifier, TsAnyPropertySignatureModifier,
+    AnyJsMethodModifier, AnyJsPropertyModifier, AnyTsIndexSignatureModifier,
+    AnyTsMethodSignatureModifier, AnyTsPropertyParameterModifier, AnyTsPropertySignatureModifier,
+    JsSyntaxKind, TsAccessibilityModifier,
 };
 
 /// Helpful data structure to make the order modifiers predictable inside the formatter
 #[derive(Debug, Ord, PartialOrd, Eq, PartialEq)]
 pub enum Modifiers {
     // modifiers must be sorted by precedence.
+    Decorator,
     Accessibility,
     Declare,
     Static,
     Abstract,
     Override,
     Readonly,
+    Accessor,
 }
 
-impl From<&TsAnyIndexSignatureModifier> for Modifiers {
-    fn from(modifier: &TsAnyIndexSignatureModifier) -> Self {
+impl From<&AnyTsIndexSignatureModifier> for Modifiers {
+    fn from(modifier: &AnyTsIndexSignatureModifier) -> Self {
         match modifier {
-            TsAnyIndexSignatureModifier::JsStaticModifier(_) => Modifiers::Static,
-            TsAnyIndexSignatureModifier::TsReadonlyModifier(_) => Modifiers::Readonly,
+            AnyTsIndexSignatureModifier::JsStaticModifier(_) => Modifiers::Static,
+            AnyTsIndexSignatureModifier::TsReadonlyModifier(_) => Modifiers::Readonly,
         }
     }
 }
 
-impl From<&JsAnyMethodModifier> for Modifiers {
-    fn from(modifier: &JsAnyMethodModifier) -> Self {
+impl From<&AnyJsMethodModifier> for Modifiers {
+    fn from(modifier: &AnyJsMethodModifier) -> Self {
         match modifier {
-            JsAnyMethodModifier::JsStaticModifier(_) => Modifiers::Static,
-            JsAnyMethodModifier::TsAccessibilityModifier(_) => Modifiers::Accessibility,
-            JsAnyMethodModifier::TsOverrideModifier(_) => Modifiers::Override,
+            AnyJsMethodModifier::JsDecorator(_) => Modifiers::Decorator,
+            AnyJsMethodModifier::JsStaticModifier(_) => Modifiers::Static,
+            AnyJsMethodModifier::TsAccessibilityModifier(_) => Modifiers::Accessibility,
+            AnyJsMethodModifier::TsOverrideModifier(_) => Modifiers::Override,
         }
     }
 }
 
-impl From<&TsAnyMethodSignatureModifier> for Modifiers {
-    fn from(modifier: &TsAnyMethodSignatureModifier) -> Self {
+impl From<&AnyTsMethodSignatureModifier> for Modifiers {
+    fn from(modifier: &AnyTsMethodSignatureModifier) -> Self {
         match modifier {
-            TsAnyMethodSignatureModifier::JsStaticModifier(_) => Modifiers::Static,
-            TsAnyMethodSignatureModifier::TsAbstractModifier(_) => Modifiers::Abstract,
-            TsAnyMethodSignatureModifier::TsAccessibilityModifier(_) => Modifiers::Accessibility,
-            TsAnyMethodSignatureModifier::TsOverrideModifier(_) => Modifiers::Override,
+            AnyTsMethodSignatureModifier::JsDecorator(_) => Modifiers::Decorator,
+            AnyTsMethodSignatureModifier::JsStaticModifier(_) => Modifiers::Static,
+            AnyTsMethodSignatureModifier::TsAbstractModifier(_) => Modifiers::Abstract,
+            AnyTsMethodSignatureModifier::TsAccessibilityModifier(_) => Modifiers::Accessibility,
+            AnyTsMethodSignatureModifier::TsOverrideModifier(_) => Modifiers::Override,
         }
     }
 }
 
-impl From<&JsAnyPropertyModifier> for Modifiers {
-    fn from(modifier: &JsAnyPropertyModifier) -> Self {
+impl From<&AnyJsPropertyModifier> for Modifiers {
+    fn from(modifier: &AnyJsPropertyModifier) -> Self {
         match modifier {
-            JsAnyPropertyModifier::JsStaticModifier(_) => Modifiers::Static,
-            JsAnyPropertyModifier::TsAccessibilityModifier(_) => Modifiers::Accessibility,
-            JsAnyPropertyModifier::TsOverrideModifier(_) => Modifiers::Override,
-            JsAnyPropertyModifier::TsReadonlyModifier(_) => Modifiers::Readonly,
+            AnyJsPropertyModifier::JsDecorator(_) => Modifiers::Decorator,
+            AnyJsPropertyModifier::JsStaticModifier(_) => Modifiers::Static,
+            AnyJsPropertyModifier::JsAccessorModifier(_) => Modifiers::Accessor,
+            AnyJsPropertyModifier::TsAccessibilityModifier(_) => Modifiers::Accessibility,
+            AnyJsPropertyModifier::TsOverrideModifier(_) => Modifiers::Override,
+            AnyJsPropertyModifier::TsReadonlyModifier(_) => Modifiers::Readonly,
         }
     }
 }
 
-impl From<&TsAnyPropertyParameterModifier> for Modifiers {
-    fn from(modifier: &TsAnyPropertyParameterModifier) -> Self {
+impl From<&AnyTsPropertyParameterModifier> for Modifiers {
+    fn from(modifier: &AnyTsPropertyParameterModifier) -> Self {
         match modifier {
-            TsAnyPropertyParameterModifier::TsAccessibilityModifier(_) => Modifiers::Accessibility,
-            TsAnyPropertyParameterModifier::TsOverrideModifier(_) => Modifiers::Override,
-            TsAnyPropertyParameterModifier::TsReadonlyModifier(_) => Modifiers::Readonly,
+            AnyTsPropertyParameterModifier::TsAccessibilityModifier(_) => Modifiers::Accessibility,
+            AnyTsPropertyParameterModifier::TsOverrideModifier(_) => Modifiers::Override,
+            AnyTsPropertyParameterModifier::TsReadonlyModifier(_) => Modifiers::Readonly,
         }
     }
 }
 
-impl From<&TsAnyPropertySignatureModifier> for Modifiers {
-    fn from(modifier: &TsAnyPropertySignatureModifier) -> Self {
+impl From<&AnyTsPropertySignatureModifier> for Modifiers {
+    fn from(modifier: &AnyTsPropertySignatureModifier) -> Self {
         match modifier {
-            TsAnyPropertySignatureModifier::TsAccessibilityModifier(_) => Modifiers::Accessibility,
-            TsAnyPropertySignatureModifier::TsDeclareModifier(_) => Modifiers::Declare,
-            TsAnyPropertySignatureModifier::JsStaticModifier(_) => Modifiers::Static,
-            TsAnyPropertySignatureModifier::TsAbstractModifier(_) => Modifiers::Abstract,
-            TsAnyPropertySignatureModifier::TsOverrideModifier(_) => Modifiers::Override,
-            TsAnyPropertySignatureModifier::TsReadonlyModifier(_) => Modifiers::Readonly,
+            AnyTsPropertySignatureModifier::JsDecorator(_) => Modifiers::Decorator,
+            AnyTsPropertySignatureModifier::TsAccessibilityModifier(_) => Modifiers::Accessibility,
+            AnyTsPropertySignatureModifier::TsDeclareModifier(_) => Modifiers::Declare,
+            AnyTsPropertySignatureModifier::JsStaticModifier(_) => Modifiers::Static,
+            AnyTsPropertySignatureModifier::JsAccessorModifier(_) => Modifiers::Accessor,
+            AnyTsPropertySignatureModifier::TsAbstractModifier(_) => Modifiers::Abstract,
+            AnyTsPropertySignatureModifier::TsOverrideModifier(_) => Modifiers::Override,
+            AnyTsPropertySignatureModifier::TsReadonlyModifier(_) => Modifiers::Readonly,
+        }
+    }
+}
+
+impl TsAccessibilityModifier {
+    /// Is `self` the `private` accessibility modifier?
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use rome_js_factory::make;
+    /// use rome_js_syntax::T;
+    ///
+    /// let modifier = make::ts_accessibility_modifier(make::token(T![private]));
+    ///
+    /// assert!(modifier.is_private());
+    /// ```
+    pub fn is_private(&self) -> bool {
+        if let Ok(modifier_token) = self.modifier_token() {
+            modifier_token.kind() == JsSyntaxKind::PRIVATE_KW
+        } else {
+            false
+        }
+    }
+
+    /// Is `self` the `protected` accessibility modifier?
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use rome_js_factory::make;
+    /// use rome_js_syntax::T;
+    ///
+    /// let modifier = make::ts_accessibility_modifier(make::token(T![protected]));
+    ///
+    /// assert!(modifier.is_protected());
+    /// ```
+    pub fn is_protected(&self) -> bool {
+        if let Ok(modifier_token) = self.modifier_token() {
+            modifier_token.kind() == JsSyntaxKind::PROTECTED_KW
+        } else {
+            false
+        }
+    }
+
+    /// Is `self` the `public` accessibility modifier?
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use rome_js_factory::make;
+    /// use rome_js_syntax::T;
+    ///
+    /// let modifier = make::ts_accessibility_modifier(make::token(T![public]));
+    ///
+    /// assert!(modifier.is_public());
+    /// ```
+    pub fn is_public(&self) -> bool {
+        if let Ok(modifier_token) = self.modifier_token() {
+            modifier_token.kind() == JsSyntaxKind::PUBLIC_KW
+        } else {
+            false
         }
     }
 }

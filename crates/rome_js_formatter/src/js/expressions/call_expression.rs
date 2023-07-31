@@ -4,11 +4,11 @@ use rome_formatter::write;
 use crate::parentheses::NeedsParentheses;
 use crate::utils::member_chain::MemberChain;
 use rome_js_syntax::{
-    JsAnyExpression, JsCallExpression, JsCallExpressionFields, JsSyntaxKind, JsSyntaxNode,
+    AnyJsExpression, JsCallExpression, JsCallExpressionFields, JsSyntaxKind, JsSyntaxNode,
 };
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsCallExpression;
+pub(crate) struct FormatJsCallExpression;
 
 impl FormatNodeRule<JsCallExpression> for FormatJsCallExpression {
     fn fmt_fields(&self, node: &JsCallExpression, f: &mut JsFormatter) -> FormatResult<()> {
@@ -23,8 +23,8 @@ impl FormatNodeRule<JsCallExpression> for FormatJsCallExpression {
 
         if matches!(
             callee,
-            JsAnyExpression::JsStaticMemberExpression(_)
-                | JsAnyExpression::JsComputedMemberExpression(_)
+            AnyJsExpression::JsStaticMemberExpression(_)
+                | AnyJsExpression::JsComputedMemberExpression(_)
         ) && !callee.needs_parentheses()
         {
             let member_chain = MemberChain::from_call_expression(
@@ -47,7 +47,7 @@ impl FormatNodeRule<JsCallExpression> for FormatJsCallExpression {
                 )
             });
 
-            if matches!(callee, JsAnyExpression::JsCallExpression(_)) {
+            if matches!(callee, AnyJsExpression::JsCallExpression(_)) {
                 write!(f, [group(&format_inner)])
             } else {
                 write!(f, [format_inner])

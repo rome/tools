@@ -1,6 +1,11 @@
+use crate::{
+    open_transport,
+    service::{self, ensure_daemon, open_socket, run_daemon},
+    CliDiagnostic, CliSession,
+};
 use rome_console::{markup, ConsoleExt};
 use rome_lsp::ServerFactory;
-use rome_service::{workspace::WorkspaceClient, RomeError, TransportError};
+use rome_service::{workspace::WorkspaceClient, TransportError, WorkspaceError};
 use std::{env, fs, path::PathBuf};
 use tokio::io;
 use tokio::runtime::Runtime;
@@ -13,15 +18,9 @@ use tracing_subscriber::{
 };
 use tracing_tree::HierarchicalLayer;
 
-use crate::{
-    open_transport,
-    service::{self, ensure_daemon, open_socket, run_daemon},
-    CliSession, Termination,
-};
-
-pub(crate) fn start(mut session: CliSession) -> Result<(), Termination> {
+pub(crate) fn start(session: CliSession) -> Result<(), CliDiagnostic> {
     let rt = Runtime::new()?;
-    let did_spawn = rt.block_on(ensure_daemon())?;
+    let did_spawn = rt.block_on(ensure_daemon(false))?;
 
     if did_spawn {
         session.app.console.log(markup! {
@@ -36,7 +35,7 @@ pub(crate) fn start(mut session: CliSession) -> Result<(), Termination> {
     Ok(())
 }
 
-pub(crate) fn stop(mut session: CliSession) -> Result<(), Termination> {
+pub(crate) fn stop(session: CliSession) -> Result<(), CliDiagnostic> {
     let rt = Runtime::new()?;
 
     if let Some(transport) = open_transport(rt)? {
@@ -44,8 +43,8 @@ pub(crate) fn stop(mut session: CliSession) -> Result<(), Termination> {
         match client.shutdown() {
             // The `ChannelClosed` error is expected since the server can
             // shutdown before sending a response
-            Ok(()) | Err(RomeError::TransportError(TransportError::ChannelClosed)) => {}
-            Err(err) => return Err(Termination::from(err)),
+            Ok(()) | Err(WorkspaceError::TransportError(TransportError::ChannelClosed)) => {}
+            Err(err) => return Err(CliDiagnostic::from(err)),
         };
 
         session.app.console.log(markup! {
@@ -60,11 +59,11 @@ pub(crate) fn stop(mut session: CliSession) -> Result<(), Termination> {
     Ok(())
 }
 
-pub(crate) fn run_server() -> Result<(), Termination> {
+pub(crate) fn run_server(stop_on_disconnect: bool) -> Result<(), CliDiagnostic> {
     setup_tracing_subscriber();
 
     let rt = Runtime::new()?;
-    let factory = ServerFactory::default();
+    let factory = ServerFactory::new(stop_on_disconnect);
     let cancellation = factory.cancellation();
     let span = debug_span!("Running Server", pid = std::process::id());
 
@@ -84,13 +83,13 @@ pub(crate) fn run_server() -> Result<(), Termination> {
     })
 }
 
-pub(crate) fn print_socket() -> Result<(), Termination> {
+pub(crate) fn print_socket() -> Result<(), CliDiagnostic> {
     let rt = Runtime::new()?;
     rt.block_on(service::print_socket())?;
     Ok(())
 }
 
-pub(crate) fn lsp_proxy() -> Result<(), Termination> {
+pub(crate) fn lsp_proxy() -> Result<(), CliDiagnostic> {
     let rt = Runtime::new()?;
     rt.block_on(start_lsp_proxy(&rt))?;
 
@@ -100,8 +99,8 @@ pub(crate) fn lsp_proxy() -> Result<(), Termination> {
 /// Start a proxy process.
 /// Receives a process via `stdin` and then copy the content to the LSP socket.
 /// Copy to the process on `stdout` when the LSP responds to a message
-async fn start_lsp_proxy(rt: &Runtime) -> Result<(), Termination> {
-    ensure_daemon().await?;
+async fn start_lsp_proxy(rt: &Runtime) -> Result<(), CliDiagnostic> {
+    ensure_daemon(true).await?;
 
     match open_socket().await? {
         Some((mut owned_read_half, mut owned_write_half)) => {
@@ -151,7 +150,6 @@ pub(crate) fn read_most_recent_log_file() -> io::Result<Option<String>> {
     let logs_dir = rome_log_dir();
 
     let most_recent = fs::read_dir(logs_dir)?
-        .into_iter()
         .flatten()
         .filter(|file| file.file_type().map_or(false, |ty| ty.is_file()))
         .filter_map(|file| {
@@ -207,10 +205,17 @@ pub(super) fn rome_log_dir() -> PathBuf {
 /// - All spans and events at level debug in crates whose name starts with `rome`
 struct LoggingFilter;
 
+/// Tracing filter used for spans emitted by `rome*` crates
+const SELF_FILTER: LevelFilter = if cfg!(debug_assertions) {
+    LevelFilter::TRACE
+} else {
+    LevelFilter::DEBUG
+};
+
 impl LoggingFilter {
     fn is_enabled(&self, meta: &Metadata<'_>) -> bool {
         let filter = if meta.target().starts_with("rome") {
-            LevelFilter::DEBUG
+            SELF_FILTER
         } else {
             LevelFilter::INFO
         };
@@ -233,6 +238,6 @@ impl<S> Filter<S> for LoggingFilter {
     }
 
     fn max_level_hint(&self) -> Option<LevelFilter> {
-        Some(LevelFilter::DEBUG)
+        Some(SELF_FILTER)
     }
 }

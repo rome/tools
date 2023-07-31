@@ -1,22 +1,22 @@
 [package]
-name = "rome_console"
-version = "0.0.0"
-edition = "2021"
-authors = ["Rome Tools Developers and Contributors"]
-repository = "https://github.com/rome/tools"
-license = "MIT"
-
+authors.workspace    = true
+description          = "Expose utilities to print HTML-syntax messages"
+documentation        = "https://rustdocs.rome.tools/rome_console/index.html"
+edition.workspace    = true
+license.workspace    = true
+name                 = "rome_console"
+repository.workspace = true
+version              = "0.0.1"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-rome_markup = { path = "../rome_markup" }
-atty = "0.2.14"
-rome_text_size = { path = "../rome_text_size"}
-lazy_static = "1.4.0"
-termcolor = "1.1.2"
-unicode-width = "0.1.9"
-serde = { version = "1.0.133", optional = true, features = ["derive"] }
-schemars = { version = "0.8.10", optional = true }
+atty           = "0.2.14"
+rome_markup    = { workspace = true }
+rome_text_size = { workspace = true }
+schemars       = { workspace = true, optional = true }
+serde          = { workspace = true, optional = true, features = ["derive"] }
+termcolor      = "1.1.2"
+unicode-width  = "0.1.9"
 
 [dev-dependencies]
 trybuild = "1.0"

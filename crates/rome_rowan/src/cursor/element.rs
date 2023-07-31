@@ -14,12 +14,8 @@ impl SyntaxElement {
         offset: TextSize,
     ) -> SyntaxElement {
         match element {
-            NodeOrToken::Node(node) => {
-                SyntaxNode::new_child(node, parent, slot as u32, offset).into()
-            }
-            NodeOrToken::Token(token) => {
-                SyntaxToken::new(token, parent, slot as u32, offset).into()
-            }
+            NodeOrToken::Node(node) => SyntaxNode::new_child(node, parent, slot, offset).into(),
+            NodeOrToken::Token(token) => SyntaxToken::new(token, parent, slot, offset).into(),
         }
     }
 

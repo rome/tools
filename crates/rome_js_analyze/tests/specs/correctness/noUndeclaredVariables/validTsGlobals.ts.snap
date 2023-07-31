@@ -1,0 +1,11 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: validTsGlobals.ts
+---
+# Input
+```js
+type B<T> = PromiseLike<T>;
+
+```
+
+

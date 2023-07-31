@@ -9,7 +9,7 @@ JsModule {
                     async_token: ASYNC_KW@1..7 "async" [] [Whitespace(" ")],
                     function_token: FUNCTION_KW@7..16 "function" [] [Whitespace(" ")],
                     star_token: missing (optional),
-                    id: JsUnknownBinding {
+                    id: JsBogusBinding {
                         items: [
                             IDENT@16..21 "await" [] [],
                         ],
@@ -39,7 +39,7 @@ JsModule {
                     async_token: missing (optional),
                     function_token: FUNCTION_KW@30..38 "function" [] [],
                     star_token: STAR@38..40 "*" [] [Whitespace(" ")],
-                    id: JsUnknownBinding {
+                    id: JsBogusBinding {
                         items: [
                             IDENT@40..45 "yield" [] [],
                         ],
@@ -84,7 +84,7 @@ JsModule {
                         async_token: missing (optional),
                         function_token: FUNCTION_KW@72..81 "function" [] [Whitespace(" ")],
                         star_token: missing (optional),
-                        id: JsUnknownBinding {
+                        id: JsBogusBinding {
                             items: [
                                 IDENT@81..86 "yield" [] [],
                             ],
@@ -122,7 +122,7 @@ JsModule {
           0: ASYNC_KW@1..7 "async" [] [Whitespace(" ")]
           1: FUNCTION_KW@7..16 "function" [] [Whitespace(" ")]
           2: (empty)
-          3: JS_UNKNOWN_BINDING@16..21
+          3: JS_BOGUS_BINDING@16..21
             0: IDENT@16..21 "await" [] []
           4: (empty)
           5: JS_PARAMETERS@21..24
@@ -144,7 +144,7 @@ JsModule {
           0: (empty)
           1: FUNCTION_KW@30..38 "function" [] []
           2: STAR@38..40 "*" [] [Whitespace(" ")]
-          3: JS_UNKNOWN_BINDING@40..45
+          3: JS_BOGUS_BINDING@40..45
             0: IDENT@40..45 "yield" [] []
           4: (empty)
           5: JS_PARAMETERS@45..48
@@ -179,7 +179,7 @@ JsModule {
             0: (empty)
             1: FUNCTION_KW@72..81 "function" [] [Whitespace(" ")]
             2: (empty)
-            3: JS_UNKNOWN_BINDING@81..86
+            3: JS_BOGUS_BINDING@81..86
               0: IDENT@81..86 "yield" [] []
             4: (empty)
             5: JS_PARAMETERS@86..89

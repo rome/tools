@@ -15,9 +15,32 @@ expression: content
 # Termination Message
 
 ```block
-Rome couldn't load the configuration file, here's why: 
-The line width exceeds the maximum value (320)
- at line 4 column 3
+configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Rome exited because the configuration resulted in errors. Please fix them.
+  
+
+
+```
+
+# Emitted Messages
+
+```block
+rome.json:3:18 deserialize ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × The line width exceeds the maximum value (320)
+  
+  
+    1 │ {
+    2 │   "formatter": {
+  > 3 │     "lineWidth": 500
+      │                  ^^^
+    4 │   }
+    5 │ }
+  
+  i Maximum value accepted is 320
+  
+
 ```
 
 

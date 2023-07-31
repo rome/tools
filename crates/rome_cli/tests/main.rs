@@ -1,3 +1,4 @@
+mod cases;
 mod commands;
 mod configs;
 #[cfg(test)]
@@ -6,11 +7,11 @@ mod snap_test;
 #[cfg(test)]
 use snap_test::assert_cli_snapshot;
 
-use std::{ffi::OsString, path::Path};
+use bpaf::ParseFailure;
+use std::path::Path;
 
-use pico_args::Arguments;
-use rome_cli::{CliSession, Termination};
-use rome_console::{BufferConsole, Console};
+use rome_cli::{rome_command, CliDiagnostic, CliSession};
+use rome_console::{markup, BufferConsole, Console, ConsoleExt};
 use rome_fs::{FileSystem, MemoryFileSystem};
 use rome_service::{App, DynRef};
 
@@ -28,6 +29,7 @@ return { something }
 
 mod help {
     use super::*;
+    use bpaf::Args;
 
     #[test]
     fn unknown_command() {
@@ -36,22 +38,17 @@ mod help {
 
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
-            DynRef::Borrowed(&mut console),
-            Arguments::from_vec(vec![OsString::from("unknown"), OsString::from("--help")]),
+            &mut console,
+            Args::from([("unknown"), ("--help")].as_slice()),
         );
 
-        match result {
-            Err(Termination::UnknownCommandHelp { command }) => assert_eq!(command, "unknown"),
-            _ => {
-                panic!("run_cli returned {result:?} for an unknown command help, expected an error")
-            }
-        }
+        assert!(result.is_ok(), "run_cli returned {result:?}");
     }
 }
 
 mod main {
     use super::*;
-    use rome_diagnostics::MAXIMUM_DISPLAYABLE_DIAGNOSTICS;
+    use bpaf::Args;
 
     #[test]
     fn unknown_command() {
@@ -60,14 +57,10 @@ mod main {
 
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
-            DynRef::Borrowed(&mut console),
-            Arguments::from_vec(vec![OsString::from("unknown")]),
+            &mut console,
+            Args::from([("unknown")].as_slice()),
         );
-
-        match result {
-            Err(Termination::UnknownCommand { command }) => assert_eq!(command, "unknown"),
-            _ => panic!("run_cli returned {result:?} for an unknown command, expected an error"),
-        }
+        assert!(result.is_err(), "run_cli returned {result:?}");
     }
 
     #[test]
@@ -77,24 +70,11 @@ mod main {
 
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
-            DynRef::Borrowed(&mut console),
-            Arguments::from_vec(vec![
-                OsString::from("format"),
-                OsString::from("--unknown"),
-                OsString::from("file.js"),
-            ]),
+            &mut console,
+            Args::from([("format"), ("--unknown"), ("file.js")].as_slice()),
         );
 
-        match result {
-            Err(Termination::UnexpectedArgument {
-                subcommand,
-                argument,
-            }) => {
-                assert_eq!(subcommand, "format");
-                assert_eq!(argument, OsString::from("--unknown"))
-            }
-            _ => panic!("run_cli returned {result:?} for an unknown argument, expected an error"),
-        }
+        assert!(result.is_err(), "run_cli returned {result:?}");
     }
 
     #[test]
@@ -104,14 +84,11 @@ mod main {
 
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
-            DynRef::Borrowed(&mut console),
-            Arguments::from_vec(vec![OsString::from("format")]),
+            &mut console,
+            Args::from([("format")].as_slice()),
         );
 
-        match result {
-            Err(Termination::EmptyArguments) => {}
-            _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
-        }
+        assert!(result.is_err(), "run_cli returned {result:?}");
     }
 
     #[test]
@@ -121,20 +98,10 @@ mod main {
 
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
-            DynRef::Borrowed(&mut console),
-            Arguments::from_vec(vec![OsString::from("format"), OsString::from("--write")]),
+            &mut console,
+            Args::from([("format"), ("--write")].as_slice()),
         );
-
-        match result {
-            Err(Termination::MissingArgument {
-                subcommand,
-                argument,
-            }) => {
-                assert_eq!(subcommand, "format");
-                assert_eq!(argument, "<INPUT>")
-            }
-            _ => panic!("run_cli returned {result:?} for a missing argument, expected an error"),
-        }
+        assert!(result.is_err(), "run_cli returned {result:?}");
     }
 
     #[test]
@@ -144,19 +111,11 @@ mod main {
 
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
-            DynRef::Borrowed(&mut console),
-            Arguments::from_vec(vec![
-                OsString::from("check"),
-                OsString::from("--max-diagnostics=foo"),
-            ]),
+            &mut console,
+            Args::from([("check"), ("--max-diagnostics=foo")].as_slice()),
         );
 
-        match result {
-            Err(Termination::ParseError { argument, .. }) => {
-                assert_eq!(argument, "--max-diagnostics");
-            }
-            _ => panic!("run_cli returned {result:?} for a malformed, expected an error"),
-        }
+        assert!(result.is_err(), "run_cli returned {result:?}");
     }
 
     #[test]
@@ -166,67 +125,35 @@ mod main {
 
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
-            DynRef::Borrowed(&mut console),
-            Arguments::from_vec(vec![
-                OsString::from("check"),
-                OsString::from("--max-diagnostics=500"),
-            ]),
+            &mut console,
+            Args::from([("check"), ("--max-diagnostics=500")].as_slice()),
         );
 
-        match result {
-            Err(Termination::OverflowNumberArgument(argument, limit)) => {
-                assert_eq!(argument, "--max-diagnostics");
-                assert_eq!(limit, MAXIMUM_DISPLAYABLE_DIAGNOSTICS);
-            }
-            _ => panic!("run_cli returned {result:?} for a malformed, expected an error"),
-        }
+        assert!(result.is_err(), "run_cli returned {result:?}");
     }
-}
-
-mod init {
-    use super::*;
-    use crate::configs::CONFIG_INIT_DEFAULT;
-    use crate::snap_test::SnapshotPayload;
-    use pico_args::Arguments;
-    use rome_console::BufferConsole;
-    use rome_fs::{FileSystemExt, MemoryFileSystem};
-    use rome_service::DynRef;
-    use std::ffi::OsString;
-    use std::path::Path;
-
-    #[test]
-    fn creates_config_file() {
-        let mut fs = MemoryFileSystem::default();
-        let mut console = BufferConsole::default();
-
-        let result = run_cli(
-            DynRef::Borrowed(&mut fs),
-            DynRef::Borrowed(&mut console),
-            Arguments::from_vec(vec![OsString::from("init")]),
-        );
-        assert!(result.is_ok(), "run_cli returned {result:?}");
-
-        let file_path = Path::new("rome.json");
-
-        let mut file = fs
-            .open(file_path)
-            .expect("configuration file was not written on disk");
-
-        let mut content = String::new();
-        file.read_to_string(&mut content)
-            .expect("failed to read file from memory FS");
-        assert_eq!(content, CONFIG_INIT_DEFAULT);
-
-        drop(file);
-
-        assert_cli_snapshot(SnapshotPayload::new(
-            module_path!(),
-            "creates_config_file",
-            fs,
-            console,
-            result,
-        ));
-    }
+    //
+    // #[test]
+    // fn no_colors() {
+    //     let mut args = Args::from([("--colors=off")]);
+    //     let result = color_from_arguments(&mut args);
+    //
+    //     assert!(result.is_ok(), "run_cli returned {result:?}");
+    // }
+    //
+    // #[test]
+    // fn force_colors() {
+    //     let mut args = Args::from([("--colors=force")]);
+    //     let result = color_from_arguments(&mut args);
+    //
+    //     assert!(result.is_ok(), "run_cli returned {result:?}");
+    // }
+    //
+    // #[test]
+    // fn invalid_colors() {
+    //     let mut args = Args::from([("--colors=other")]);
+    //     let result = color_from_arguments(&mut args);
+    //     assert!(result.is_err(), "run_cli returned {result:?}");
+    // }
 }
 
 mod configuration {
@@ -236,11 +163,10 @@ mod configuration {
         CONFIG_INCORRECT_GLOBALS_V2, CONFIG_LINTER_WRONG_RULE,
     };
     use crate::snap_test::SnapshotPayload;
-    use pico_args::Arguments;
+    use bpaf::Args;
     use rome_console::BufferConsole;
     use rome_fs::MemoryFileSystem;
     use rome_service::DynRef;
-    use std::ffi::OsString;
     use std::path::Path;
 
     #[test]
@@ -252,11 +178,11 @@ mod configuration {
 
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
-            DynRef::Borrowed(&mut console),
-            Arguments::from_vec(vec![OsString::from("format"), OsString::from("file.js")]),
+            &mut console,
+            Args::from([("format"), ("file.js")].as_slice()),
         );
 
-        assert!(result.is_ok(), "run_cli returned {result:?}");
+        assert!(result.is_err(), "run_cli returned {result:?}");
 
         assert_cli_snapshot(SnapshotPayload::new(
             module_path!(),
@@ -277,8 +203,8 @@ mod configuration {
 
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
-            DynRef::Borrowed(&mut console),
-            Arguments::from_vec(vec![OsString::from("format"), OsString::from("file.js")]),
+            &mut console,
+            Args::from([("format"), ("file.js")].as_slice()),
         );
 
         assert!(result.is_err(), "run_cli returned {result:?}");
@@ -302,8 +228,8 @@ mod configuration {
 
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
-            DynRef::Borrowed(&mut console),
-            Arguments::from_vec(vec![OsString::from("check"), OsString::from("file.js")]),
+            &mut console,
+            Args::from([("check"), ("file.js")].as_slice()),
         );
 
         assert!(result.is_err(), "run_cli returned {result:?}");
@@ -327,8 +253,8 @@ mod configuration {
 
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
-            DynRef::Borrowed(&mut console),
-            Arguments::from_vec(vec![OsString::from("check"), OsString::from("file.js")]),
+            &mut console,
+            Args::from([("check"), ("file.js")].as_slice()),
         );
 
         assert!(result.is_err(), "run_cli returned {result:?}");
@@ -347,16 +273,19 @@ mod configuration {
         let mut fs = MemoryFileSystem::default();
         let mut console = BufferConsole::default();
 
-        let file_path = Path::new("rome.json");
-        fs.insert(file_path.into(), CONFIG_INCORRECT_GLOBALS_V2.as_bytes());
+        fs.insert(
+            Path::new("rome.json").into(),
+            CONFIG_INCORRECT_GLOBALS_V2.as_bytes(),
+        );
+        fs.insert(Path::new("file.js").into(), UNFORMATTED.as_bytes());
 
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
-            DynRef::Borrowed(&mut console),
-            Arguments::from_vec(vec![OsString::from("check"), OsString::from("file.js")]),
+            &mut console,
+            Args::from([("check"), ("file.js")].as_slice()),
         );
 
-        assert!(result.is_ok(), "run_cli returned {result:?}");
+        assert!(result.is_err(), "run_cli returned {result:?}");
     }
 }
 
@@ -364,7 +293,7 @@ mod reporter_json {
     use super::*;
     use crate::snap_test::SnapshotPayload;
     use crate::UNFORMATTED;
-    use pico_args::Arguments;
+    use bpaf::Args;
     use rome_fs::FileSystemExt;
 
     #[test]
@@ -377,12 +306,15 @@ mod reporter_json {
 
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
-            DynRef::Borrowed(&mut console),
-            Arguments::from_vec(vec![
-                std::ffi::OsString::from("format"),
-                std::ffi::OsString::from("--json"),
-                file_path.as_os_str().into(),
-            ]),
+            &mut console,
+            Args::from(
+                [
+                    ("format"),
+                    ("--json"),
+                    file_path.as_os_str().to_str().unwrap(),
+                ]
+                .as_slice(),
+            ),
         );
 
         eprintln!("{:?}", console.out_buffer);
@@ -421,13 +353,16 @@ mod reporter_json {
 
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
-            DynRef::Borrowed(&mut console),
-            Arguments::from_vec(vec![
-                std::ffi::OsString::from("format"),
-                std::ffi::OsString::from("--write"),
-                std::ffi::OsString::from("--json"),
-                file_path.as_os_str().into(),
-            ]),
+            &mut console,
+            Args::from(
+                [
+                    "format",
+                    "--write",
+                    "--json",
+                    file_path.as_os_str().to_str().unwrap(),
+                ]
+                .as_slice(),
+            ),
         );
 
         assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -460,9 +395,9 @@ mod reporter_json {
 /// instance, and using an in-process "remote" instance of the workspace
 pub(crate) fn run_cli<'app>(
     fs: DynRef<'app, dyn FileSystem>,
-    console: DynRef<'app, dyn Console>,
-    args: Arguments,
-) -> Result<(), Termination> {
+    console: &'app mut dyn Console,
+    args: bpaf::Args,
+) -> Result<(), CliDiagnostic> {
     use rome_cli::SocketTransport;
     use rome_lsp::ServerFactory;
     use rome_service::{workspace, WorkspaceRef};
@@ -486,6 +421,18 @@ pub(crate) fn run_cli<'app>(
     let workspace = workspace::client(transport).unwrap();
     let app = App::new(fs, console, WorkspaceRef::Owned(workspace));
 
-    let session = CliSession { app, args };
-    session.run()
+    let mut session = CliSession { app };
+    let command = rome_command().run_inner(args);
+    match command {
+        Ok(command) => session.run(command),
+        Err(failure) => {
+            if let ParseFailure::Stdout(help, _) = &failure {
+                let console = &mut session.app.console;
+                console.log(markup! {{help.to_string()}});
+                Ok(())
+            } else {
+                Err(CliDiagnostic::parse_error_bpaf(failure))
+            }
+        }
+    }
 }

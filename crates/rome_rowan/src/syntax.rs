@@ -1,36 +1,37 @@
 mod element;
 mod node;
+mod rewriter;
 mod token;
 mod trivia;
 
-use std::fmt::Debug;
-
-pub use trivia::{
-    SyntaxTrivia, SyntaxTriviaPiece, SyntaxTriviaPieceComments, SyntaxTriviaPieceNewline,
-    SyntaxTriviaPieceSkipped, SyntaxTriviaPieceWhitespace, SyntaxTriviaPiecesIterator, TriviaPiece,
-    TriviaPieceKind,
-};
-
+use crate::{AstNode, RawSyntaxKind};
 pub use element::{SyntaxElement, SyntaxElementKey};
 pub(crate) use node::SyntaxSlots;
 pub use node::{
     Descendants, DescendantsTokens, DescendantsWithTokens, Preorder, PreorderWithTokens, SendNode,
     SyntaxElementChildren, SyntaxNode, SyntaxNodeChildren, SyntaxNodeOptionExt, SyntaxSlot,
 };
-
-pub use token::SyntaxToken;
-
+pub use rewriter::{SyntaxRewriter, VisitNodeSignal};
 use std::fmt;
-
-use crate::{AstNode, RawSyntaxKind};
+use std::fmt::Debug;
+pub use token::SyntaxToken;
+pub use trivia::{
+    chain_trivia_pieces, trim_leading_trivia_pieces, trim_trailing_trivia_pieces,
+    ChainTriviaPiecesIterator, SyntaxTrivia, SyntaxTriviaPiece, SyntaxTriviaPieceComments,
+    SyntaxTriviaPieceNewline, SyntaxTriviaPieceSkipped, SyntaxTriviaPieceWhitespace,
+    SyntaxTriviaPiecesIterator, TriviaPiece, TriviaPieceKind,
+};
 
 /// Type tag for each node or token of a language
 pub trait SyntaxKind: fmt::Debug + PartialEq + Copy {
-    /// Returns `true` if this is an unknown node kind.
-    fn is_unknown(&self) -> bool;
+    const TOMBSTONE: Self;
+    const EOF: Self;
 
-    /// Converts this into to the best matching unknown node kind.
-    fn to_unknown(&self) -> Self;
+    /// Returns `true` if this is a kind of a bogus node.
+    fn is_bogus(&self) -> bool;
+
+    /// Converts this into to the best matching bogus node kind.
+    fn to_bogus(&self) -> Self;
 
     /// Converts this kind to a raw syntax kind.
     fn to_raw(&self) -> RawSyntaxKind;
@@ -43,6 +44,9 @@ pub trait SyntaxKind: fmt::Debug + PartialEq + Copy {
 
     /// Returns `true` if this kind is a list node.
     fn is_list(&self) -> bool;
+
+    /// Returns a string for keywords and punctuation tokens or `None` otherwise.
+    fn to_string(&self) -> Option<&'static str>;
 }
 
 pub trait Language: Sized + Clone + Copy + fmt::Debug + Eq + Ord + std::hash::Hash {

@@ -1,0 +1,10 @@
+<div onMouseOver={() => {}} />;
+<div onMouseOut={() => {}} />;
+<div onMouseOver={() => {}} onFocus={undefined} />;
+<div onMouseOut={() => {}} onBlur={undefined} />;
+<div onMouseOver={() => {}} onFocus={null} />;
+<div onMouseOut={() => {}} onBlur={null} />;
+<div onMouseOver={() => {}}></div>;
+<div onMouseOut={() => {}}></div>;
+<div {...spread} onMouseOut={() => {}}></div>;
+<div {...spread} onMouseOver={() => {}}></div>;

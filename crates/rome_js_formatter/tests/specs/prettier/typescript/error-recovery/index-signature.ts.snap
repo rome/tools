@@ -1,12 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
-info:
-  test_file: typescript/error-recovery/index-signature.ts
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+assertion_line: 212
+info: typescript/error-recovery/index-signature.ts
 ---
 
 # Input
 
-```js
+```ts
 type A = { [key: string] };
 
 type TwoParams = {
@@ -26,6 +26,7 @@ type TooLong80 = { [loooooooooooooooooooooooooong: string, looooooooooooooooong:
 type TooLongSingleParam = {
   [looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong: string]: string;
 }
+
 ```
 
 
@@ -34,7 +35,7 @@ type TooLongSingleParam = {
 ```diff
 --- Prettier
 +++ Rome
-@@ -2,30 +2,20 @@
+@@ -2,30 +2,22 @@
  
  type TwoParams = {
    [a: string, b: string]: string;
@@ -62,9 +63,11 @@ type TooLongSingleParam = {
 -};
 +  [loooooooooooooooooooooooooong: string, looooooooooooooooooooooooooooooooooooooong: string]: string;
 +}
-+type TooLong81 = { [loooooooooooooooooooooooooong: string, loooooooooooooooooong: string]: string;
++type TooLong81 =
++  { [loooooooooooooooooooooooooong: string, loooooooooooooooooong: string]: string;
 +}
-+type TooLong80 = { [loooooooooooooooooooooooooong: string, looooooooooooooooong: string]: string;
++type TooLong80 =
++  { [loooooooooooooooooooooooooong: string, looooooooooooooooong: string]: string;
 +}
  
  // note lack of trailing comma in the index signature
@@ -78,7 +81,7 @@ type TooLongSingleParam = {
 
 # Output
 
-```js
+```ts
 type A = { [key: string] };
 
 type TwoParams = {
@@ -91,9 +94,11 @@ type ThreeParams = {
 type TooLong = {
   [loooooooooooooooooooooooooong: string, looooooooooooooooooooooooooooooooooooooong: string]: string;
 }
-type TooLong81 = { [loooooooooooooooooooooooooong: string, loooooooooooooooooong: string]: string;
+type TooLong81 =
+  { [loooooooooooooooooooooooooong: string, loooooooooooooooooong: string]: string;
 }
-type TooLong80 = { [loooooooooooooooooooooooooong: string, looooooooooooooooong: string]: string;
+type TooLong80 =
+  { [loooooooooooooooooooooooooong: string, looooooooooooooooong: string]: string;
 }
 
 // note lack of trailing comma in the index signature
@@ -101,7 +106,6 @@ type TooLongSingleParam = {
   [looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong: string]: string;
 };
 ```
-
 
 # Errors
 ```
@@ -442,8 +446,9 @@ index-signature.ts:14:99 parse ━━━━━━━━━━━━━━━━�
 # Lines exceeding max width of 80 characters
 ```
    11:   [loooooooooooooooooooooooooong: string, looooooooooooooooooooooooooooooooooooooong: string]: string;
-   13: type TooLong81 = { [loooooooooooooooooooooooooong: string, loooooooooooooooooong: string]: string;
-   15: type TooLong80 = { [loooooooooooooooooooooooooong: string, looooooooooooooooong: string]: string;
-   20:   [looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong: string]: string;
+   14:   { [loooooooooooooooooooooooooong: string, loooooooooooooooooong: string]: string;
+   17:   { [loooooooooooooooooooooooooong: string, looooooooooooooooong: string]: string;
+   22:   [looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong: string]: string;
 ```
+
 

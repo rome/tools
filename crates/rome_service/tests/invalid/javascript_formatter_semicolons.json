@@ -1,0 +1,7 @@
+{
+	"javascript": {
+		"formatter": {
+			"semicolons": "lorem"
+		}
+	}
+}

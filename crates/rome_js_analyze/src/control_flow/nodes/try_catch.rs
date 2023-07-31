@@ -8,7 +8,7 @@ use crate::control_flow::{
 };
 
 declare_node_union! {
-    pub(in crate::control_flow) JsAnyTryStatement = JsTryStatement | JsTryFinallyStatement
+    pub(in crate::control_flow) AnyJsTryStatement = JsTryStatement | JsTryFinallyStatement
 }
 
 pub(in crate::control_flow) struct TryVisitor {
@@ -18,7 +18,7 @@ pub(in crate::control_flow) struct TryVisitor {
 }
 
 impl NodeVisitor for TryVisitor {
-    type Node = JsAnyTryStatement;
+    type Node = AnyJsTryStatement;
 
     fn enter(
         node: Self::Node,
@@ -26,8 +26,8 @@ impl NodeVisitor for TryVisitor {
         _: StatementStack,
     ) -> SyntaxResult<Self> {
         let (has_catch, has_finally) = match node {
-            JsAnyTryStatement::JsTryStatement(_) => (true, false),
-            JsAnyTryStatement::JsTryFinallyStatement(node) => (node.catch_clause().is_some(), true),
+            AnyJsTryStatement::JsTryStatement(_) => (true, false),
+            AnyJsTryStatement::JsTryFinallyStatement(node) => (node.catch_clause().is_some(), true),
         };
 
         let next_block = builder.append_block();

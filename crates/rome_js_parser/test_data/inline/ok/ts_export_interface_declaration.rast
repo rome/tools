@@ -3,6 +3,7 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsExport {
+            decorators: JsDecoratorList [],
             export_token: EXPORT_KW@0..7 "export" [] [Whitespace(" ")],
             export_clause: TsInterfaceDeclaration {
                 interface_token: INTERFACE_KW@7..17 "interface" [] [Whitespace(" ")],
@@ -25,8 +26,9 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..21
     0: JS_EXPORT@0..21
-      0: EXPORT_KW@0..7 "export" [] [Whitespace(" ")]
-      1: TS_INTERFACE_DECLARATION@7..21
+      0: JS_DECORATOR_LIST@0..0
+      1: EXPORT_KW@0..7 "export" [] [Whitespace(" ")]
+      2: TS_INTERFACE_DECLARATION@7..21
         0: INTERFACE_KW@7..17 "interface" [] [Whitespace(" ")]
         1: TS_IDENTIFIER_BINDING@17..19
           0: IDENT@17..19 "A" [] [Whitespace(" ")]

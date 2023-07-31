@@ -2,23 +2,34 @@
 
 use std::str::FromStr;
 
-fn split_into_radix_and_number(num: &str) -> (u32, String) {
-    match num.get(0..2) {
-        Some("0x") | Some("0X") => (16, num.get(2..).unwrap().replace('_', "")),
-        Some("0b") | Some("0B") => (2, num.get(2..).unwrap().replace('_', "")),
-        Some("0o") | Some("0O") => (8, num.get(2..).unwrap().replace('_', "")),
-        _ => (10, num.replace('_', "")),
+/// Split given string into radix and number string.
+///
+/// It also removes any underscores.
+pub fn split_into_radix_and_number(num: &str) -> (u32, String) {
+    let (radix, raw) = parse_js_number_prefix(num).unwrap_or((10, num));
+    let raw = raw.replace('_', "");
+    (radix, raw)
+}
+
+fn parse_js_number_prefix(num: &str) -> Option<(u32, &str)> {
+    let mut chars = num.chars();
+    let c = chars.next()?;
+    if c != '0' {
+        return None;
     }
+    Some(match chars.next()? {
+        'x' | 'X' => (16, chars.as_str()),
+        'o' | 'O' => (8, chars.as_str()),
+        'b' | 'B' => (2, chars.as_str()),
+        // Legacy octal literals
+        '0'..='7' if !chars.as_str().contains(['8', '9']) => (8, &num[1..]),
+        _ => return None,
+    })
 }
 
 /// Parse a js number as a string into a number.
 pub fn parse_js_number(num: &str) -> Option<f64> {
-    let (mut radix, raw) = split_into_radix_and_number(num);
-
-    // account for legacy octal literals
-    if raw.starts_with('0') && !raw.contains(['8', '9']) {
-        radix = 8
-    }
+    let (radix, raw) = split_into_radix_and_number(num);
 
     if radix == 10 {
         f64::from_str(&raw).ok()
@@ -29,6 +40,7 @@ pub fn parse_js_number(num: &str) -> Option<f64> {
 
 #[cfg(test)]
 mod tests {
+    use super::split_into_radix_and_number;
     use rome_js_factory::syntax::{JsNumberLiteralExpression, JsSyntaxKind::*};
     use rome_js_factory::JsSyntaxTreeBuilder;
     use rome_rowan::AstNode;
@@ -81,5 +93,51 @@ mod tests {
     fn base_8_legacy_float() {
         assert_float("051", 41.0);
         assert_float("058", 58.0);
+    }
+
+    fn assert_split(raw: &str, expected_radix: u32, expected_num: &str) {
+        let (radix, num) = split_into_radix_and_number(raw);
+        assert_eq!(radix, expected_radix);
+        assert_eq!(num, expected_num);
+    }
+
+    #[test]
+    fn split_hex() {
+        assert_split("0x12", 16, "12");
+        assert_split("0X12", 16, "12");
+        assert_split("0x1_2", 16, "12");
+        assert_split("0X1_2", 16, "12");
+    }
+
+    #[test]
+    fn split_binary() {
+        assert_split("0b01", 2, "01");
+        assert_split("0b01", 2, "01");
+        assert_split("0b0_1", 2, "01");
+        assert_split("0b0_1", 2, "01");
+    }
+
+    #[test]
+    fn split_octal() {
+        assert_split("0o12", 8, "12");
+        assert_split("0o12", 8, "12");
+        assert_split("0o1_2", 8, "12");
+        assert_split("0o1_2", 8, "12");
+    }
+
+    #[test]
+    fn split_legacy_octal() {
+        assert_split("012", 8, "12");
+        assert_split("012", 8, "12");
+        assert_split("01_2", 8, "12");
+        assert_split("01_2", 8, "12");
+    }
+
+    #[test]
+    fn split_legacy_decimal() {
+        assert_split("1234", 10, "1234");
+        assert_split("1234", 10, "1234");
+        assert_split("12_34", 10, "1234");
+        assert_split("12_34", 10, "1234");
     }
 }

@@ -1,0 +1,66 @@
+# See https://github.com/actions/labeler
+
+A-Cli:
+  - crates/rome_cli/**
+  - crates/rome_fs/**
+  - crates/rome_console/**
+
+A-Core:
+  - crates/rome_deserializer/**
+  - crates/rome_fs/**
+  - crates/rome_rowan/**
+  - crates/rome_text_edit/**
+  - crates/rome_text_size/**
+  - crates/rome_suppression/**
+  - crates/rome_suppression/**
+  - crates/rome_markup/**
+
+A-Project:
+- crates/rome_service/**
+
+A-Linter:
+  - crates/rome_analyze/**
+  - crates/rome_js_analyze/**
+  - crates/rome_json_analyze/**
+
+A-Parser:
+  - crates/rome_parser/**
+  - crates/rome_js_parser/**
+  - crates/rome_js_syntax/**
+  - crates/rome_json_parser/**
+  - crates/rome_json_syntax/**
+  - crates/rome_css_parser/**
+  - crates/rome_css_syntax/**
+
+A-Formatter:
+  - crates/rome_formatter/**
+  - crates/rome_formatter_test/**
+  - crates/rome_js_formatter/**
+  - crates/rome_json_formatter/**
+  - crates/rome_css_formatter/**
+
+A-Editors:
+  - crates/editors/**
+
+A-Diagnostic:
+  - crates/rome_diagnostics/**
+  - crates/rome_diagnostics_categories/**
+  - crates/rome_diagnostics_macros/**
+
+A-Tooling:
+  - xtask/**
+
+A-Website:
+  - website/**
+
+A-LSP:
+  - crates/rome_lsp/**
+
+L-Javascript:
+  - crates/rome_js_*/**
+
+L-Json:
+  - crates/rome_json_*/**
+
+L-CSS:
+  - crates/rome_css_*/**

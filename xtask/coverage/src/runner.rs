@@ -1,13 +1,12 @@
 use super::*;
 use crate::reporters::TestReporter;
-use rome_diagnostics::file::{FileId, SimpleFiles};
+use rome_diagnostics::console::fmt::{Formatter, Termcolor};
+use rome_diagnostics::console::markup;
 use rome_diagnostics::termcolor::Buffer;
-use rome_diagnostics::v2::console::fmt::{Formatter, Termcolor};
-use rome_diagnostics::v2::console::markup;
-use rome_diagnostics::v2::Error;
-use rome_diagnostics::v2::PrintDiagnostic;
-use rome_js_parser::{parse, Parse};
-use rome_js_syntax::{JsAnyRoot, JsSyntaxNode, SourceType};
+use rome_diagnostics::Error;
+use rome_diagnostics::PrintDiagnostic;
+use rome_js_parser::{parse, JsParserOptions, Parse};
+use rome_js_syntax::{AnyJsRoot, JsFileSource, JsSyntaxNode};
 use rome_rowan::SyntaxKind;
 use std::fmt::Debug;
 use std::panic::RefUnwindSafe;
@@ -78,22 +77,18 @@ pub(crate) struct TestCaseFile {
     code: String,
 
     /// The source type used to parse the file
-    source_type: SourceType,
+    source_type: JsFileSource,
 
-    id: FileId,
+    options: JsParserOptions,
 }
 
 impl TestCaseFile {
-    pub(crate) fn parse(&self) -> Parse<JsAnyRoot> {
-        parse(&self.code, self.id, self.source_type)
+    pub(crate) fn parse(&self) -> Parse<AnyJsRoot> {
+        parse(&self.code, self.source_type, self.options.clone())
     }
 
     pub(crate) fn name(&self) -> &str {
         &self.name
-    }
-
-    pub(crate) fn id(&self) -> FileId {
-        self.id
     }
 
     pub(crate) fn code(&self) -> &str {
@@ -101,17 +96,13 @@ impl TestCaseFile {
     }
 }
 
-pub(crate) fn create_unknown_node_in_tree_diagnostic(
-    file_id: FileId,
-    node: JsSyntaxNode,
-) -> ParseDiagnostic {
-    assert!(node.kind().is_unknown());
+pub(crate) fn create_bogus_node_in_tree_diagnostic(node: JsSyntaxNode) -> ParseDiagnostic {
+    assert!(node.kind().is_bogus());
     ParseDiagnostic::new(
-        file_id,
-        "There are no parse errors but the parsed tree contains unknown nodes.",
+        "There are no parse errors but the parsed tree contains bogus nodes.",
         node.text_trimmed_range()
     )
-    .hint( "This unknown node is present in the parsed tree but the parser didn't emit a diagnostic for it. Change the parser to either emit a diagnostic, fix the grammar, or the parsing.")
+    .hint( "This bogus node is present in the parsed tree but the parser didn't emit a diagnostic for it. Change the parser to either emit a diagnostic, fix the grammar, or the parsing.")
 }
 
 #[derive(Clone, Debug)]
@@ -120,13 +111,18 @@ pub(crate) struct TestCaseFiles {
 }
 
 impl TestCaseFiles {
-    pub(crate) fn single(name: String, code: String, source_type: SourceType) -> Self {
+    pub(crate) fn single(
+        name: String,
+        code: String,
+        source_type: JsFileSource,
+        options: JsParserOptions,
+    ) -> Self {
         Self {
             files: vec![TestCaseFile {
                 name,
                 code,
                 source_type,
-                id: FileId::zero(),
+                options,
             }],
         }
     }
@@ -135,12 +131,18 @@ impl TestCaseFiles {
         Self { files: vec![] }
     }
 
-    pub(crate) fn add(&mut self, name: String, code: String, source_type: SourceType) {
+    pub(crate) fn add(
+        &mut self,
+        name: String,
+        code: String,
+        source_type: JsFileSource,
+        options: JsParserOptions,
+    ) {
         self.files.push(TestCaseFile {
             name,
             code,
             source_type,
-            id: FileId::from(self.files.len()),
+            options,
         })
     }
 
@@ -149,15 +151,9 @@ impl TestCaseFiles {
     }
 
     pub(crate) fn emit_errors(&self, errors: &[Error], buffer: &mut Buffer) {
-        let mut diag_files = SimpleFiles::new();
-
-        for file in &self.files {
-            diag_files.add(file.name.clone(), file.code.clone());
-        }
-
         for error in errors {
             if let Err(err) = Formatter::new(&mut Termcolor(&mut *buffer)).write_markup(markup! {
-                {PrintDiagnostic(error)}
+                {PrintDiagnostic::verbose(error)}
             }) {
                 eprintln!("Failed to print diagnostic: {}", err);
             }
@@ -171,18 +167,6 @@ impl<'a> IntoIterator for &'a TestCaseFiles {
 
     fn into_iter(self) -> Self::IntoIter {
         self.files.iter()
-    }
-}
-
-impl From<TestCaseFiles> for SimpleFiles {
-    fn from(files: TestCaseFiles) -> Self {
-        let mut result = SimpleFiles::new();
-
-        for file in files.files {
-            result.add(file.name, file.code);
-        }
-
-        result
     }
 }
 

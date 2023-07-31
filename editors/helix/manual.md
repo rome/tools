@@ -1,15 +1,11 @@
 # Configuration
+
 Currently, rome supports the following file extensions: `js`, `jsx`, `ts`, `tsx` and `d.ts`. 
 
-Rome uses a file socket to connect the editor client, which may be different from other language servers using a binary e.g. `rust-analyzer`.
+Rome has a an `lsp-proxy` command that acts as a server for the Language Server Protocol over stdin/stdout.
 
-You can use `nc -U ${LANGUAGE_SERVER_SOCKET_PATH}` to connect to the Rome language server. `LANGUAGE_SERVER_SOCKET_PATH` is path to where the Rome's socket is created. Rome creates that socket inside the temporary folder of the operative system, inside a folder called `rome-socket`. 
 
-To know the path of your OS, run the command:
-```shell
-rome __print_socket
-```
-More details why we need `nc`, please read the [wiki page of helix](https://github.com/helix-editor/helix/wiki/How-to-install-the-default-language-servers)
+## Helix 23.05
 
 **languages.toml**
 ```toml
@@ -17,7 +13,7 @@ More details why we need `nc`, please read the [wiki page of helix](https://gith
 name = "javascript"
 scope = "source.js"
 file-types = ["js"]
-language-server = { command = "nc", args = ["-U", "/tmp/rome-socket"] }
+language-server = { command = "rome", args = ["lsp-proxy"] }
 formatter = { command = "rome", args = ["format", "--stdin-file-path", "test.js"]}
 auto-format = true
 
@@ -25,14 +21,15 @@ auto-format = true
 name = "jsx"
 scope = "source.jsx"
 file-types = ["jsx"]
-language-server = { command = "nc", args = ["-U", "/tmp/rome-socket"] }
+language-server = { command = "rome", args = ["lsp-proxy"] }
 formatter = { command = "rome", args = ["format", "--stdin-file-path", "test.jsx"]}
 auto-format = true
+
 [[language]]
 name = "typescript"
 scope = "source.ts"
 file-types = ["ts"]
-language-server = { command = "nc", args = ["-U", "/tmp/rome-socket"] }
+language-server = { command = "rome", args = ["lsp-proxy"] }
 formatter = { command = "rome", args = ["format", "--stdin-file-path", "test.ts"]}
 auto-format = true
 
@@ -40,19 +37,121 @@ auto-format = true
 name = "tsx"
 scope = "source.tsx"
 file-types = ["tsx"]
-language-server = { command = "nc", args = ["-U", "/tmp/rome-socket"] }
+language-server = { command = "rome", args = ["lsp-proxy"] }
 formatter = { command = "rome", args = ["format", "--stdin-file-path", "test.tsx"]}
 auto-format = true
-
 ```
-`/tmp/rome-socket` is the default socket file path in Linux. Use the command `rome __print_socket` and use the correct value.
 
-# Limitation
-1. The socket is not automatically created, and you need to call the command [`rome start`](https://rome.tools/#rome-start) in order to create one. Use the command [`rome stop`](https://rome.tools/#rome-stop) to free the socket.
+
+## Helix Nightly
+
+The version of Helix after 23.05 will have [support for multiple language servers](https://github.com/helix-editor/helix/issues/1396) and the language server configuration has changed a bit.
+
+Now you can use rome alongside `typescript-language-server`.
+
+```toml
+[language-server]
+rome = { command = "rome", args = ["lsp-proxy"] }
+
+[[language]]
+name = "javascript"
+auto-format = true
+comment-token = "//"
+file-types = ["js", "mjs", "cjs"]
+injection-regex = "(js|javascript)"
+language-id = "javascript"
+language-servers = ["typescript-language-server", "rome"]
+roots = []
+scope = "source.js"
+shebangs = ["node"]
+
+[language.formatter]
+command = "rome"
+args = ["format", "--stdin-file-path", "test.js"]
+
+[language.indent]
+tab-width = 2
+unit = "  "
+
+[[language]]
+name = "typescript"
+auto-format = true
+file-types = ["ts", "mts", "cts"]
+injection-regex = "(ts|typescript)"
+language-id = "typescript"
+language-servers = ["typescript-language-server", "rome"]
+roots = []
+scope = "source.ts"
+shebangs = []
+
+[language.formatter]
+command = "rome"
+args = ["format", "--stdin-file-path", "test.ts"]
+
+[language.indent]
+tab-width = 2
+unit = "  "
+
+[[language]]
+name = "tsx"
+auto-format = true
+file-types = ["tsx"]
+injection-regex = "(tsx)"
+language-id = "typescriptreact"
+language-servers = ["typescript-language-server", "rome"]
+roots = []
+scope = "source.tsx"
+
+[language.formatter]
+command = "rome"
+args = ["format", "--stdin-file-path", "test.tsx"]
+
+[language.indent]
+tab-width = 2
+unit = "  "
+
+[[language]]
+name = "jsx"
+auto-format = true
+comment-token = "//"
+file-types = ["jsx"]
+grammar = "javascript"
+injection-regex = "jsx"
+language-id = "javascriptreact"
+language-servers = ["typescript-language-server", "rome"]
+roots = []
+scope = "source.jsx"
+
+[language.formatter]
+command = "rome"
+args = ["format", "--stdin-file-path", "test.jsx"]
+
+[language.indent]
+tab-width = 2
+unit = "  "
+
+[[language]]
+name = "json"
+auto-format = true
+file-types = ["json", "jsonc", "arb", "ipynb", "geojson"]
+injection-regex = "json"
+language-servers = ["rome"]
+roots = []
+scope = "source.json"
+
+[language.formatter]
+command = "rome"
+args = ["format", "--stdin-file-path", "test.json"]
+```
+
 
 # Video record
+
 ## Code Action
+
 https://user-images.githubusercontent.com/17974631/190205045-aeb86f87-1915-4d8b-8aad-2c046443ba83.mp4
 
+
 ## Formatting
+
 https://user-images.githubusercontent.com/17974631/190205065-ddfde866-5f7c-4f53-8a62-b6cbb577982f.mp4

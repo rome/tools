@@ -1,6 +1,6 @@
 use crate::prelude::*;
 
-use crate::jsx::tag::opening_element::JsxAnyOpeningElement;
+use crate::jsx::tag::opening_element::AnyJsxOpeningElement;
 
 use crate::utils::jsx::is_jsx_suppressed;
 use rome_js_syntax::JsxSelfClosingElement;
@@ -10,7 +10,7 @@ pub struct FormatJsxSelfClosingElement;
 
 impl FormatNodeRule<JsxSelfClosingElement> for FormatJsxSelfClosingElement {
     fn fmt_fields(&self, node: &JsxSelfClosingElement, f: &mut JsFormatter) -> FormatResult<()> {
-        JsxAnyOpeningElement::from(node.clone()).fmt(f)
+        AnyJsxOpeningElement::from(node.clone()).fmt(f)
     }
 
     fn is_suppressed(&self, node: &JsxSelfClosingElement, f: &JsFormatter) -> bool {

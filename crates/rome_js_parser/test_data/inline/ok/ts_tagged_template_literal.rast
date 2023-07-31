@@ -3,7 +3,7 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsExpressionStatement {
-            expression: JsTemplate {
+            expression: JsTemplateExpression {
                 tag: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
                         value_token: IDENT@0..4 "html" [] [],
@@ -40,7 +40,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsStaticMemberExpression {
-                object: JsTemplate {
+                object: JsTemplateExpression {
                     tag: JsIdentifierExpression {
                         name: JsReferenceIdentifier {
                             value_token: IDENT@16..21 "html" [Newline("\n")] [],
@@ -89,7 +89,7 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..41
     0: JS_EXPRESSION_STATEMENT@0..16
-      0: JS_TEMPLATE@0..16
+      0: JS_TEMPLATE_EXPRESSION@0..16
         0: JS_IDENTIFIER_EXPRESSION@0..4
           0: JS_REFERENCE_IDENTIFIER@0..4
             0: IDENT@0..4 "html" [] []
@@ -114,7 +114,7 @@ JsModule {
       1: (empty)
     1: JS_EXPRESSION_STATEMENT@16..41
       0: JS_STATIC_MEMBER_EXPRESSION@16..41
-        0: JS_TEMPLATE@16..33
+        0: JS_TEMPLATE_EXPRESSION@16..33
           0: JS_IDENTIFIER_EXPRESSION@16..21
             0: JS_REFERENCE_IDENTIFIER@16..21
               0: IDENT@16..21 "html" [Newline("\n")] []

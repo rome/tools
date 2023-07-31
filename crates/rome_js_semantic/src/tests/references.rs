@@ -30,6 +30,8 @@ f(1);"#,
             case 4: console.log(4, a/*READ A2*/, c/*READ C*/, d/*?*/);
         }
         console.log(5, a/*READ A1*/);",
+    ok_reference_recursive,
+        "const fn/*#A*/ = (callback) => { callback(fn/*READ A*/) };",
 }
 
 // Read Hoisting
@@ -39,7 +41,7 @@ assert_semantics! {
     a = 2;
     let b = a/*READ A*/ + 1;
     console.log(a, b);
-    
+
     var a/*#A*/;
 }
 f();",
@@ -47,8 +49,8 @@ f();",
     a = 1;
     let b = a/*READ A*/ + 1;
     console.log(a, b);
-    if (true) {  
-        var a/*#A*/;      
+    if (true) {
+        var a/*#A*/;
     }
 }
 f();"#,
@@ -123,6 +125,8 @@ assert_semantics! {
 }
 f(1);"#,
     ok_reference_write_expression, "let a/*#A*/ = 1; let b = a/*WRITE A*/ = 2;",
+    ok_reference_write_object_assignment_pattern,
+        "let a/*#A*/, b/*#B*/; ({a/*WRITE A*/, b/*WRITE B*/} = obj);",
 }
 
 // Write Hoisting
@@ -179,6 +183,11 @@ f()",
             return s;
         }
         overloaded/*READ C*/();",
+    ok_function_overloading_2,
+        "function a/*#A*/() {}
+        a/*READ A*/();
+        function add(a: string, b: string): string;
+        console.log(a/*READ A*/);",
 }
 
 // Imports
@@ -187,8 +196,16 @@ assert_semantics! {
 }
 
 assert_semantics! {
-    ok_unmatched_reference, r#"a/*?*/"#,
-    ok_function_expression_read,"let f/*#F*/ = function g/*#G*/(){}; g/*?*/();",
+    ok_unresolved_reference, r#"a/*?*/"#,
+    ok_unresolved_function_expression_read,"let f/*#F*/ = function g/*#G*/(){}; g/*?*/();",
+    ok_unresolved_reference_arguments,
+        r#"function f() {
+            console.log(arguments/*?*/);
+
+            for(let i = 0;i < arguments/*?*/.length; ++i) {
+                console.log(arguments/*?*/[i]);
+            }
+        }"#,
 }
 
 // Exports
@@ -198,15 +215,39 @@ assert_semantics! {
 }
 
 // Classes
-
 assert_semantics! {
     ok_class_reference,
         "class A/*#A*/ {} new A/*READ A*/();",
+    ok_class_expression_1,
+        "const A/*#A*/ = class B/*#B*/ {}; console.log(A/*READ A*/, B/*?*/);",
+    //https://github.com/rome/tools/issues/3779
+    ok_class_expression_2,
+        "const A/*#A1*/ = print(class A/*#A2*/ {}); console.log(A/*READ A1*/);",
+    ok_class_static_init,
+        "class C { static { () => a/*READ A*/; let a/*#A*/ = 1; } };",
+}
+
+// Static Initialization Block
+assert_semantics! {
+    ok_reference_static_initialization_block,
+        "const a/*#A1*/ = 1;
+        console.log(a/*READ A1*/);
+
+        class A {
+            static {
+                console.log(a/*READ A2*/);
+                const a/*#A2*/ = 2;
+                console.log(a/*READ A2*/);
+            }
+        };
+
+        console.log(a/*READ A1*/);",
 }
 
 // Typescript types
-
 assert_semantics! {
     ok_typescript_function_type,
         "function f (a/*#A1*/, b: (a/*#A2*/) => any) { return b(a/*READ A1*/); };",
+    ok_typescript_type_parameter_name,
+        "type A = { [key/*#A1*/ in P]: key/*READ A1*/ }",
 }

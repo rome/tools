@@ -1,11 +1,11 @@
 ---
-source: crates/rome_js_formatter/tests/spec_test.rs
-expression: global_declaration.ts
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info: ts/declaration/global_declaration.ts
 ---
 
 # Input
 
-```js
+```ts
 declare module "./test"
 {
     global {
@@ -26,11 +26,14 @@ declare module "./test"
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
+Semicolons: Always
+Arrow parentheses: Always
 -----
 
-```js
+```ts
 declare module "./test" {
 	global {
 		let VERSION: string;

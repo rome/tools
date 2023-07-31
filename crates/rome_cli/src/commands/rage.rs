@@ -1,18 +1,19 @@
 use rome_console::fmt::{Display, Formatter};
 use rome_console::{fmt, markup, ConsoleExt, HorizontalLine, Markup};
-use rome_diagnostics::termcolor;
 use rome_diagnostics::termcolor::{ColorChoice, WriteColor};
+use rome_diagnostics::{termcolor, PrintDescription};
 use rome_fs::FileSystem;
 use rome_service::workspace::{client, RageEntry, RageParams};
-use rome_service::{load_config, DynRef, Workspace};
+use rome_service::{load_config, ConfigurationBasePath, DynRef, Workspace};
 use std::{env, io, ops::Deref};
 use tokio::runtime::Runtime;
 
 use crate::commands::daemon::read_most_recent_log_file;
-use crate::{service, CliSession, Termination, VERSION};
+use crate::service::enumerate_pipes;
+use crate::{service, CliDiagnostic, CliSession, VERSION};
 
 /// Handler for the `rage` command
-pub(crate) fn rage(mut session: CliSession) -> Result<(), Termination> {
+pub(crate) fn rage(session: CliSession) -> Result<(), CliDiagnostic> {
     let terminal_supports_colors = termcolor::BufferWriter::stdout(ColorChoice::Auto)
         .buffer()
         .supports_color();
@@ -29,6 +30,9 @@ pub(crate) fn rage(mut session: CliSession) -> Result<(), Termination> {
     {EnvVarOs("ROME_LOG_DIR")}
     {EnvVarOs("NO_COLOR")}
     {EnvVarOs("TERM")}
+    {EnvVarOs("JS_RUNTIME_VERSION")}
+    {EnvVarOs("JS_RUNTIME_NAME")}
+    {EnvVarOs("NODE_PACKAGE_MANAGER")}
 
     {RageConfiguration(&session.app.fs)}
     {WorkspaceRage(session.app.workspace.deref())}
@@ -85,38 +89,71 @@ struct RunningRomeServer;
 
 impl Display for RunningRomeServer {
     fn fmt(&self, f: &mut Formatter) -> io::Result<()> {
-        let runtime = Runtime::new()?;
-
-        match service::open_transport(runtime) {
-            Ok(None) => {
-                return markup!(
-                    {Section("Server")}
-                    {KeyValuePair("Status", markup!(<Dim>"stopped"</Dim>))}
-                )
-                .fmt(f);
+        let versions = match enumerate_pipes() {
+            Ok(iter) => iter,
+            Err(err) => {
+                (markup! {<Error>"\u{2716} Enumerating Rome instances failed:"</Error>}).fmt(f)?;
+                return writeln!(f, " {err}");
             }
-            Ok(Some(transport)) => {
-                markup!("\n"<Emphasis>"Running Rome Server:"</Emphasis>" "{HorizontalLine::new(78)}"
+        };
+
+        for version in versions {
+            if version == rome_service::VERSION {
+                let runtime = Runtime::new()?;
+                match service::open_transport(runtime) {
+                    Ok(None) => {
+                        markup!(
+                            {Section("Server")}
+                            {KeyValuePair("Status", markup!(<Dim>"stopped"</Dim>))}
+                        )
+                        .fmt(f)?;
+                        continue;
+                    }
+                    Ok(Some(transport)) => {
+                        markup!("\n"<Emphasis>"Running Rome Server:"</Emphasis>" "{HorizontalLine::new(78)}"
 
 "<Info>"\u{2139} The client isn't connected to any server but rage discovered this running Rome server."</Info>"
 ")
                 .fmt(f)?;
 
-                match client(transport) {
-                    Ok(client) => WorkspaceRage(client.deref()).fmt(f)?,
+                        match client(transport) {
+                            Ok(client) => WorkspaceRage(client.deref()).fmt(f)?,
+                            Err(err) => {
+                                markup!(<Error>"\u{2716} Failed to connect: "</Error>).fmt(f)?;
+                                writeln!(f, "{err}")?;
+                            }
+                        }
+                    }
                     Err(err) => {
-                        markup!(<Error>"\u{2716} Failed to connect: "</Error>).fmt(f)?;
+                        markup!("\n"<Error>"\u{2716} Failed to connect: "</Error>).fmt(f)?;
                         writeln!(f, "{err}")?;
                     }
                 }
-            }
-            Err(err) => {
-                markup!("\n"<Error>"\u{2716} Failed to connect: "</Error>).fmt(f)?;
-                writeln!(f, "{err}")?;
-            }
-        };
 
-        RomeServerLog.fmt(f)
+                RomeServerLog.fmt(f)?;
+            } else {
+                markup!("\n"<Emphasis>"Incompatible Rome Server:"</Emphasis>" "{HorizontalLine::new(78)}"
+
+"<Info>"\u{2139} Rage discovered this running server using an incompatible version of Rome."</Info>"
+")
+        .fmt(f)?;
+
+                // Version 10.0.0 and below did not include a service version in the pipe name
+                let version = if version.is_empty() {
+                    "<=10.0.0"
+                } else {
+                    version.as_str()
+                };
+
+                markup!(
+                    {Section("Server")}
+                    {KeyValuePair("Version", markup!({version}))}
+                )
+                .fmt(f)?;
+            }
+        }
+
+        Ok(())
     }
 }
 
@@ -126,21 +163,37 @@ impl Display for RageConfiguration<'_, '_> {
     fn fmt(&self, fmt: &mut Formatter) -> io::Result<()> {
         Section("Rome Configuration").fmt(fmt)?;
 
-        match load_config(self.0, None) {
+        match load_config(self.0, ConfigurationBasePath::default()) {
             Ok(None) => KeyValuePair("Status", markup!(<Dim>"unset"</Dim>)).fmt(fmt)?,
-            Ok(Some(configuration)) => {
+            Ok(Some(result)) => {
+                let (configuration, diagnostics) = result.deserialized.consume();
+                let status = if !diagnostics.is_empty() {
+                    for diagnostic in diagnostics {
+                        (markup! {
+                             {KeyValuePair("Error", markup!{
+                                 {format!{"{}", PrintDescription(&diagnostic)}}
+                             })}
+                        })
+                        .fmt(fmt)?;
+                    }
+                    markup!(<Dim>"Loaded with errors"</Dim>)
+                } else {
+                    markup!(<Dim>"Loaded successfully"</Dim>)
+                };
+
                 markup! (
-                    {KeyValuePair("Status", markup!(<Dim>"loaded"</Dim>))}
+                    {KeyValuePair("Status", status)}
                     {KeyValuePair("Formatter disabled", markup!({DebugDisplay(configuration.is_formatter_disabled())}))}
                     {KeyValuePair("Linter disabled", markup!({DebugDisplay(configuration.is_linter_disabled())}))}
+                    {KeyValuePair("Organize imports disabled", markup!({DebugDisplay(configuration.is_organize_imports_disabled())}))}
+                    {KeyValuePair("VCS disabled", markup!({DebugDisplay(configuration.is_vcs_disabled())}))}
                 ).fmt(fmt)?
             }
-            Err(err) => {
-                markup! (
-                    {KeyValuePair("Status", markup!(<Error>"Failed to load"</Error>))}
-                    {KeyValuePair("Error", markup!({format!("{err:?}")}))}
-                ).fmt(fmt)?
-            }
+            Err(err) => markup! (
+                {KeyValuePair("Status", markup!(<Error>"Failed to load"</Error>))}
+                {KeyValuePair("Error", markup!({format!("{err}")}))}
+            )
+            .fmt(fmt)?,
         }
 
         Ok(())
@@ -185,7 +238,7 @@ impl Display for KeyValuePair<'_> {
         let KeyValuePair(key, value) = self;
         write!(fmt, "  {key}:")?;
 
-        let padding_width = 22usize.saturating_sub(key.len() + 1);
+        let padding_width = 30usize.saturating_sub(key.len() + 1);
 
         for _ in 0..padding_width {
             fmt.write_str(" ")?;

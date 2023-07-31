@@ -1,11 +1,13 @@
 use crate::{
-    configuration::FilesConfiguration, Configuration, MatchOptions, Matcher, RomeError, Rules,
+    configuration::FilesConfiguration, Configuration, ConfigurationDiagnostic, MatchOptions,
+    Matcher, Rules, WorkspaceError,
 };
 use indexmap::IndexSet;
-use rome_diagnostics::v2::Category;
+use rome_diagnostics::Category;
 use rome_formatter::{IndentStyle, LineWidth};
 use rome_fs::RomePath;
 use rome_js_syntax::JsLanguage;
+use rome_json_syntax::JsonLanguage;
 use std::{
     num::NonZeroU64,
     sync::{RwLock, RwLockReadGuard},
@@ -22,6 +24,8 @@ pub struct WorkspaceSettings {
     pub languages: LanguagesSettings,
     /// Filesystem settings for the workspace
     pub files: FilesSettings,
+    /// Analyzer settings
+    pub organize_imports: OrganizeImportsSettings,
 }
 
 impl WorkspaceSettings {
@@ -35,24 +39,20 @@ impl WorkspaceSettings {
         &self.linter
     }
 
+    /// Retrieves the settings of the organize imports
+    pub fn organize_imports(&self) -> &OrganizeImportsSettings {
+        &self.organize_imports
+    }
+
     /// The (configuration)[Configuration] is merged into the workspace
     #[tracing::instrument(level = "debug", skip(self))]
     pub fn merge_with_configuration(
         &mut self,
         configuration: Configuration,
-    ) -> Result<(), RomeError> {
+    ) -> Result<(), WorkspaceError> {
         // formatter part
         if let Some(formatter) = configuration.formatter {
             self.formatter = FormatSettings::try_from(formatter)?;
-        }
-        let formatter = configuration
-            .javascript
-            .as_ref()
-            .and_then(|j| j.formatter.as_ref());
-        if let Some(formatter) = formatter {
-            self.languages.javascript.format.quote_style = Some(formatter.quote_style);
-            self.languages.javascript.format.quote_properties = Some(formatter.quote_properties);
-            self.languages.javascript.format.trailing_comma = Some(formatter.trailing_comma);
         }
 
         // linter part
@@ -60,12 +60,49 @@ impl WorkspaceSettings {
             self.linter = LinterSettings::try_from(linter)?;
         }
 
-        let globals = configuration.javascript.and_then(|j| j.globals);
-        self.languages.javascript.globals = globals;
-
         // Filesystem settings
         if let Some(files) = configuration.files {
             self.files = FilesSettings::try_from(files)?;
+        }
+
+        if let Some(organize_imports) = configuration.organize_imports {
+            self.organize_imports = OrganizeImportsSettings::try_from(organize_imports)?;
+        }
+
+        // javascript settings
+        let javascript = configuration.javascript;
+        if let Some(javascript) = javascript {
+            self.languages.javascript.globals = javascript.globals.map(|g| g.into_index_set());
+            let formatter = javascript.formatter;
+            if let Some(formatter) = formatter {
+                self.languages.javascript.formatter.quote_style = formatter.quote_style;
+                self.languages.javascript.formatter.jsx_quote_style = formatter.jsx_quote_style;
+                self.languages.javascript.formatter.quote_properties = formatter.quote_properties;
+                self.languages.javascript.formatter.trailing_comma = formatter.trailing_comma;
+                self.languages.javascript.formatter.semicolons = formatter.semicolons;
+                self.languages.javascript.formatter.arrow_parentheses = formatter.arrow_parentheses;
+            }
+
+            if let Some(parser) = javascript.parser {
+                self.languages
+                    .javascript
+                    .parser
+                    .parse_class_parameter_decorators = parser
+                    .unsafe_parameter_decorators_enabled
+                    .unwrap_or_default();
+            }
+
+            let organize_imports = javascript.organize_imports;
+            if let Some(_organize_imports) = organize_imports {}
+        }
+
+        // json settings
+        let json = configuration.json;
+        if let Some(json) = json {
+            if let Some(parser) = json.parser {
+                self.languages.json.parser.allow_comments =
+                    parser.allow_comments.unwrap_or_default();
+            }
         }
 
         Ok(())
@@ -79,7 +116,7 @@ impl WorkspaceSettings {
     pub fn get_severity_from_rule_code(
         &self,
         code: &Category,
-    ) -> Option<rome_diagnostics::v2::Severity> {
+    ) -> Option<rome_diagnostics::Severity> {
         let rules = self.linter.rules.as_ref();
         if let Some(rules) = rules {
             rules.get_severity_from_code(code)
@@ -146,20 +183,51 @@ impl Default for LinterSettings {
     }
 }
 
+/// Linter settings for the entire workspace
+#[derive(Debug)]
+pub struct OrganizeImportsSettings {
+    /// Enabled by default
+    pub enabled: bool,
+
+    /// List of paths/files to matcher
+    pub ignored_files: Matcher,
+}
+
+impl Default for OrganizeImportsSettings {
+    fn default() -> Self {
+        Self {
+            // currently experimental
+            enabled: false,
+            ignored_files: Matcher::new(MatchOptions {
+                case_sensitive: true,
+                require_literal_leading_dot: false,
+                require_literal_separator: false,
+            }),
+        }
+    }
+}
+
 /// Static map of language names to language-specific settings
 #[derive(Debug, Default)]
 pub struct LanguagesSettings {
     pub javascript: LanguageSettings<JsLanguage>,
+    pub json: LanguageSettings<JsonLanguage>,
 }
 
 pub trait Language: rome_rowan::Language {
     /// Formatter settings type for this language
-    type FormatSettings: Default;
+    type FormatterSettings: Default;
 
     type LinterSettings: Default;
 
+    /// Organize imports settings type for this language
+    type OrganizeImportsSettings: Default;
+
     /// Fully resolved formatter options type for this language
     type FormatOptions: rome_formatter::FormatOptions;
+
+    /// Settings that belong to the parser
+    type ParserSettings: Default;
 
     /// Read the settings type for this language from the [LanguagesSettings] map
     fn lookup_settings(languages: &LanguagesSettings) -> &LanguageSettings<Self>;
@@ -168,7 +236,7 @@ pub trait Language: rome_rowan::Language {
     /// per-language and editor provided formatter settings
     fn resolve_format_options(
         global: &FormatSettings,
-        language: &Self::FormatSettings,
+        language: &Self::FormatterSettings,
         path: &RomePath,
     ) -> Self::FormatOptions;
 }
@@ -176,13 +244,19 @@ pub trait Language: rome_rowan::Language {
 #[derive(Debug, Default)]
 pub struct LanguageSettings<L: Language> {
     /// Formatter settings for this language
-    pub format: L::FormatSettings,
+    pub formatter: L::FormatterSettings,
 
     /// Linter settings for this language
     pub linter: L::LinterSettings,
 
     /// Globals variables/bindings that can be found in a file
     pub globals: Option<IndexSet<String>>,
+
+    /// Organize imports settings for this language
+    pub organize_imports: L::OrganizeImportsSettings,
+
+    /// Parser settings for this language
+    pub parser: L::ParserSettings,
 }
 
 /// Filesystem settings for the entire workspace
@@ -190,6 +264,12 @@ pub struct LanguageSettings<L: Language> {
 pub struct FilesSettings {
     /// File size limit in bytes
     pub max_size: NonZeroU64,
+
+    /// List of paths/files to matcher
+    pub ignored_files: Matcher,
+
+    /// Files not recognized by Rome should not emit a diagnostic
+    pub ignore_unknown: bool,
 }
 
 /// Limit the size of files to 1.0 MiB by default
@@ -201,16 +281,41 @@ impl Default for FilesSettings {
     fn default() -> Self {
         Self {
             max_size: DEFAULT_FILE_SIZE_LIMIT,
+            ignored_files: Matcher::new(MatchOptions {
+                case_sensitive: true,
+                require_literal_leading_dot: false,
+                require_literal_separator: false,
+            }),
+            ignore_unknown: false,
         }
     }
 }
 
 impl TryFrom<FilesConfiguration> for FilesSettings {
-    type Error = RomeError;
+    type Error = WorkspaceError;
 
     fn try_from(config: FilesConfiguration) -> Result<Self, Self::Error> {
+        let mut matcher = Matcher::new(MatchOptions {
+            case_sensitive: true,
+            require_literal_leading_dot: false,
+            require_literal_separator: false,
+        });
+        if let Some(ignore) = config.ignore {
+            for pattern in ignore.index_set() {
+                matcher.add_pattern(pattern).map_err(|err| {
+                    WorkspaceError::Configuration(
+                        ConfigurationDiagnostic::new_invalid_ignore_pattern(
+                            pattern.to_string(),
+                            err.msg.to_string(),
+                        ),
+                    )
+                })?;
+            }
+        }
         Ok(Self {
             max_size: config.max_size.unwrap_or(DEFAULT_FILE_SIZE_LIMIT),
+            ignored_files: matcher,
+            ignore_unknown: config.ignore_unknown.unwrap_or_default(),
         })
     }
 }
@@ -244,7 +349,7 @@ impl<'a> SettingsHandle<'a> {
     {
         L::resolve_format_options(
             &self.inner.formatter,
-            &L::lookup_settings(&self.inner.languages).format,
+            &L::lookup_settings(&self.inner.languages).formatter,
             path,
         )
     }

@@ -5,7 +5,7 @@ use rome_js_syntax::JsPrivateClassMemberName;
 use rome_js_syntax::JsPrivateClassMemberNameFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsPrivateClassMemberName;
+pub(crate) struct FormatJsPrivateClassMemberName;
 
 impl FormatNodeRule<JsPrivateClassMemberName> for FormatJsPrivateClassMemberName {
     fn fmt_fields(&self, node: &JsPrivateClassMemberName, f: &mut JsFormatter) -> FormatResult<()> {

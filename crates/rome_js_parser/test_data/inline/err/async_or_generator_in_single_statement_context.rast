@@ -9,7 +9,7 @@ JsModule {
                 value_token: TRUE_KW@4..8 "true" [] [],
             },
             r_paren_token: R_PAREN@8..10 ")" [] [Whitespace(" ")],
-            consequent: JsUnknownStatement {
+            consequent: JsBogusStatement {
                 items: [
                     ASYNC_KW@10..16 "async" [] [Whitespace(" ")],
                     FUNCTION_KW@16..25 "function" [] [Whitespace(" ")],
@@ -38,7 +38,7 @@ JsModule {
                 value_token: TRUE_KW@36..40 "true" [] [],
             },
             r_paren_token: R_PAREN@40..42 ")" [] [Whitespace(" ")],
-            consequent: JsUnknownStatement {
+            consequent: JsBogusStatement {
                 items: [
                     FUNCTION_KW@42..50 "function" [] [],
                     STAR@50..52 "*" [] [Whitespace(" ")],
@@ -74,7 +74,7 @@ JsModule {
       2: JS_BOOLEAN_LITERAL_EXPRESSION@4..8
         0: TRUE_KW@4..8 "true" [] []
       3: R_PAREN@8..10 ")" [] [Whitespace(" ")]
-      4: JS_UNKNOWN_STATEMENT@10..31
+      4: JS_BOGUS_STATEMENT@10..31
         0: ASYNC_KW@10..16 "async" [] [Whitespace(" ")]
         1: FUNCTION_KW@16..25 "function" [] [Whitespace(" ")]
         2: JS_IDENTIFIER_BINDING@25..26
@@ -95,7 +95,7 @@ JsModule {
       2: JS_BOOLEAN_LITERAL_EXPRESSION@36..40
         0: TRUE_KW@36..40 "true" [] []
       3: R_PAREN@40..42 ")" [] [Whitespace(" ")]
-      4: JS_UNKNOWN_STATEMENT@42..58
+      4: JS_BOGUS_STATEMENT@42..58
         0: FUNCTION_KW@42..50 "function" [] []
         1: STAR@50..52 "*" [] [Whitespace(" ")]
         2: JS_IDENTIFIER_BINDING@52..53

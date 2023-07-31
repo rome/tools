@@ -1,6 +1,5 @@
 ---
 source: crates/rome_cli/tests/snap_test.rs
-assertion_line: 223
 expression: content
 ---
 ## `rome.json`
@@ -20,6 +19,17 @@ statement1();
 statement2();
 ```
 
+# Termination Message
+
+```block
+ci ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Some errors were emitted while running checks.
+  
+
+
+```
+
 # Emitted Messages
 
 ```block
@@ -31,7 +41,23 @@ ci.js lint ━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
 ```block
-Skipped 1 files
+ci.js format ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Size of ci.js is 27 B which exceeds configured maximum of 16 B for this project. The file size limit exists to prevent us inadvertently slowing down and loading large files that we shouldn't.
+  
+
+```
+
+```block
+ci ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Some errors were emitted while running checks.
+  
+
+```
+
+```block
+Checked 1 file(s) in <TIME>
 ```
 
 

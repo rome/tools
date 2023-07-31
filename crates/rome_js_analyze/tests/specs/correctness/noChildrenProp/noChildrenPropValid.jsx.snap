@@ -4,6 +4,9 @@ expression: noChildrenPropValid.jsx
 ---
 # Input
 ```js
+import { cloneElement } from "react";
+import React from "react";
+
 <>
     <Component><AnotherComponent /></Component>
     <React.StrictMode>
@@ -13,6 +16,9 @@ expression: noChildrenPropValid.jsx
 
 createElement('div', {}, 'foo')
 
+
+cloneElement('div', { children: <br /> });
+React.cloneElement('div', { children: <br /> });
 
 ```
 

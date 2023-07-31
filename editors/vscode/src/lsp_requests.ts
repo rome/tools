@@ -15,7 +15,7 @@ export const syntaxTreeRequest = new RequestType<
 
 // Empty parameters
 export interface UpdateSettingsParams {
-	configuration: any;
+	configuration: unknown;
 }
 /**
  * Request to send to the server when the configuration file changed

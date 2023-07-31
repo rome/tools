@@ -10,7 +10,6 @@ expression: content
     "enabled": false
   }
 }
-
 ```
 
 ## `file.js`
@@ -22,25 +21,47 @@ let a = !b || !c
 # Termination Message
 
 ```block
-errors where emitted while running checks
+ci ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Some errors were emitted while running checks.
+  
+
+
 ```
 
 # Emitted Messages
 
 ```block
-file.js:1:9 lint/complexity/useSimplifiedLogicExpression  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+file.js:1:1 lint/style/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Logical expression contains unnecessary complexity.
+  × This 'let' declares a variable which is never re-assigned.
   
   > 1 │ let a = !b || !c
-      │         ^^^^^^^^
+      │ ^^^
   
-  i Suggested fix: Reduce the complexity of the logical expression.
+  i 'a' is never re-assigned.
+  
+  > 1 │ let a = !b || !c
+      │     ^
+  
+  i Suggested fix: Use 'const' instead.
   
   - let·a·=·!b·||·!c
-  + let·a·=·!(b·&&·c)
+  + const·a·=·!b·||·!c
   
 
+```
+
+```block
+file.js lint ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Fixes applied to the file, but there are still diagnostics to address.
+  
+
+```
+
+```block
+Checked 1 file(s) in <TIME>
 ```
 
 

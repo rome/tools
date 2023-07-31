@@ -8,27 +8,25 @@ use crate::context::trailing_comma::FormatTrailingComma;
 use crate::js::expressions::call_arguments::GroupedCallArgumentLayout;
 use crate::parentheses::{
     is_binary_like_left_or_right, is_callee, is_conditional_test,
-    update_or_lower_expression_needs_parentheses, NeedsParentheses,
+    update_or_lower_expression_needs_parentheses, AnyJsExpressionLeftSide, NeedsParentheses,
 };
 use crate::utils::function_body::{FormatMaybeCachedFunctionBody, FunctionBodyCacheMode};
 use crate::utils::test_call::is_test_call_argument;
-use crate::utils::{
-    resolve_left_most_expression, AssignmentLikeLayout, JsAnyBinaryLikeLeftExpression,
-};
+use crate::utils::{resolve_left_most_expression, AssignmentLikeLayout};
 use rome_js_syntax::{
-    JsAnyArrowFunctionParameters, JsAnyBindingPattern, JsAnyExpression, JsAnyFormalParameter,
-    JsAnyFunctionBody, JsAnyParameter, JsAnyTemplateElement, JsArrowFunctionExpression,
-    JsSyntaxKind, JsSyntaxNode, JsTemplate,
+    AnyJsArrowFunctionParameters, AnyJsBindingPattern, AnyJsExpression, AnyJsFormalParameter,
+    AnyJsFunctionBody, AnyJsParameter, AnyJsTemplateElement, JsArrowFunctionExpression,
+    JsFormalParameter, JsSyntaxKind, JsSyntaxNode, JsTemplateExpression,
 };
 use rome_rowan::{SyntaxNodeOptionExt, SyntaxResult};
 
 #[derive(Debug, Copy, Clone, Default)]
-pub struct FormatJsArrowFunctionExpression {
+pub(crate) struct FormatJsArrowFunctionExpression {
     options: FormatJsArrowFunctionExpressionOptions,
 }
 
 #[derive(Debug, Clone, Copy, Default)]
-pub struct FormatJsArrowFunctionExpressionOptions {
+pub(crate) struct FormatJsArrowFunctionExpressionOptions {
     pub assignment_layout: Option<AssignmentLikeLayout>,
     pub call_arg_layout: Option<GroupedCallArgumentLayout>,
     pub body_cache_mode: FunctionBodyCacheMode,
@@ -57,8 +55,8 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
                 write!(f, [chain])
             }
             ArrowFunctionLayout::Single(arrow) => {
-                use self::JsAnyExpression::*;
-                use JsAnyFunctionBody::*;
+                use self::AnyJsExpression::*;
+                use AnyJsFunctionBody::*;
 
                 let body = arrow.body()?;
 
@@ -97,14 +95,14 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
                 // going to get broken anyways.
                 let body_has_soft_line_break = match &body {
                     JsFunctionBody(_)
-                    | JsAnyExpression(
+                    | AnyJsExpression(
                         JsArrowFunctionExpression(_) | JsArrayExpression(_) | JsObjectExpression(_),
                     ) => !f.comments().has_leading_own_line_comment(body.syntax()),
-                    JsAnyExpression(JsxTagExpression(_)) => true,
-                    JsAnyExpression(JsTemplate(template)) => {
+                    AnyJsExpression(JsxTagExpression(_)) => true,
+                    AnyJsExpression(JsTemplateExpression(template)) => {
                         is_multiline_template_starting_on_same_line(template)
                     }
-                    JsAnyExpression(JsSequenceExpression(_)) => {
+                    AnyJsExpression(JsSequenceExpression(_)) => {
                         return write!(
                             f,
                             [group(&format_args![
@@ -128,10 +126,10 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
                     // but only if the body isn't an object/function or class expression because parentheses are always required in that
                     // case and added by the object expression itself
                     let should_add_parens = match &body {
-                        JsAnyExpression(expression @ JsConditionalExpression(_)) => {
+                        AnyJsExpression(expression @ JsConditionalExpression(_)) => {
                             let are_parentheses_mandatory = matches!(
                                 resolve_left_most_expression(expression),
-                                JsAnyBinaryLikeLeftExpression::JsAnyExpression(
+                                AnyJsExpressionLeftSide::AnyJsExpression(
                                     JsObjectExpression(_)
                                         | JsFunctionExpression(_)
                                         | JsClassExpression(_)
@@ -219,10 +217,14 @@ fn format_signature(
             write!(f, [arrow.type_parameters().format()])?;
 
             match arrow.parameters()? {
-                JsAnyArrowFunctionParameters::JsAnyBinding(binding) => {
+                AnyJsArrowFunctionParameters::AnyJsBinding(binding) => {
                     let should_hug = is_test_call_argument(arrow.syntax())?;
 
-                    write!(f, [text("(")])?;
+                    let parentheses_not_needed = can_avoid_parentheses(arrow, f);
+
+                    if !parentheses_not_needed {
+                        write!(f, [text("(")])?;
+                    }
 
                     if should_hug {
                         write!(f, [binding.format()])?;
@@ -236,9 +238,11 @@ fn format_signature(
                         )?
                     }
 
-                    write!(f, [text(")")])?;
+                    if !parentheses_not_needed {
+                        write!(f, [text(")")])?;
+                    }
                 }
-                JsAnyArrowFunctionParameters::JsParameters(params) => {
+                AnyJsArrowFunctionParameters::JsParameters(params) => {
                     write!(f, [params.format()])?;
                 }
             };
@@ -287,8 +291,8 @@ fn should_break_chain(arrow: &JsArrowFunctionExpression) -> SyntaxResult<bool> {
     let parameters = arrow.parameters()?;
 
     let has_parameters = match &parameters {
-        JsAnyArrowFunctionParameters::JsAnyBinding(_) => true,
-        JsAnyArrowFunctionParameters::JsParameters(parameters) => !parameters.items().is_empty(),
+        AnyJsArrowFunctionParameters::AnyJsBinding(_) => true,
+        AnyJsArrowFunctionParameters::JsParameters(parameters) => !parameters.items().is_empty(),
     };
 
     if arrow.return_type_annotation().is_some() && has_parameters {
@@ -296,31 +300,56 @@ fn should_break_chain(arrow: &JsArrowFunctionExpression) -> SyntaxResult<bool> {
     }
 
     // Break if the function has any rest, object, or array parameter
-    let result = match parameters {
-        JsAnyArrowFunctionParameters::JsAnyBinding(_) => false,
-        JsAnyArrowFunctionParameters::JsParameters(parameters) => parameters
+    let result = has_rest_object_or_array_parameter(&parameters);
+
+    Ok(result)
+}
+
+fn has_rest_object_or_array_parameter(parameters: &AnyJsArrowFunctionParameters) -> bool {
+    match parameters {
+        AnyJsArrowFunctionParameters::AnyJsBinding(_) => false,
+        AnyJsArrowFunctionParameters::JsParameters(parameters) => parameters
             .items()
             .iter()
             .flatten()
             .any(|parameter| match parameter {
-                JsAnyParameter::JsAnyFormalParameter(JsAnyFormalParameter::JsFormalParameter(
+                AnyJsParameter::AnyJsFormalParameter(AnyJsFormalParameter::JsFormalParameter(
                     parameter,
                 )) => {
                     matches!(
                         parameter.binding(),
-                        Ok(JsAnyBindingPattern::JsArrayBindingPattern(_)
-                            | JsAnyBindingPattern::JsObjectBindingPattern(_))
+                        Ok(AnyJsBindingPattern::JsArrayBindingPattern(_)
+                            | AnyJsBindingPattern::JsObjectBindingPattern(_))
                     )
                 }
-                JsAnyParameter::JsAnyFormalParameter(JsAnyFormalParameter::JsUnknownParameter(
-                    _,
-                )) => false,
-                JsAnyParameter::TsThisParameter(_) => false,
-                JsAnyParameter::JsRestParameter(_) => true,
+                AnyJsParameter::AnyJsFormalParameter(AnyJsFormalParameter::JsBogusParameter(_)) => {
+                    false
+                }
+                AnyJsParameter::TsThisParameter(_) => false,
+                AnyJsParameter::JsRestParameter(_) => true,
             }),
-    };
+    }
+}
 
-    Ok(result)
+/// Returns `true` if parentheses can be safely avoided and the `arrow_parentheses` formatter option allows it
+pub fn can_avoid_parentheses(arrow: &JsArrowFunctionExpression, f: &mut JsFormatter) -> bool {
+    arrow.parameters().map_or(false, |parameters| {
+        f.options().arrow_parentheses().is_as_needed()
+            && parameters.len() == 1
+            && arrow.type_parameters().is_none()
+            && arrow.return_type_annotation().is_none()
+            && !has_rest_object_or_array_parameter(&parameters)
+            && !parameters
+                .as_js_parameters()
+                .and_then(|p| p.items().first()?.ok())
+                .and_then(|p| JsFormalParameter::cast(p.syntax().clone()))
+                .is_some_and(|p| {
+                    f.context().comments().has_comments(p.syntax())
+                        || p.initializer().is_some()
+                        || p.question_mark_token().is_some()
+                        || p.type_annotation().is_some()
+                })
+    })
 }
 
 #[derive(Clone, Debug)]
@@ -393,10 +422,10 @@ impl Format<JsFormatContext> for ArrowChain {
 
         let body_on_separate_line = !matches!(
             tail_body,
-            JsAnyFunctionBody::JsFunctionBody(_)
-                | JsAnyFunctionBody::JsAnyExpression(
-                    JsAnyExpression::JsObjectExpression(_)
-                        | JsAnyExpression::JsSequenceExpression(_)
+            AnyJsFunctionBody::JsFunctionBody(_)
+                | AnyJsFunctionBody::AnyJsExpression(
+                    AnyJsExpression::JsObjectExpression(_)
+                        | AnyJsExpression::JsSequenceExpression(_)
                 )
         );
 
@@ -454,7 +483,7 @@ impl Format<JsFormatContext> for ArrowChain {
             // body breaks
             if matches!(
                 tail_body,
-                JsAnyFunctionBody::JsAnyExpression(JsAnyExpression::JsSequenceExpression(_))
+                AnyJsFunctionBody::AnyJsExpression(AnyJsExpression::JsSequenceExpression(_))
             ) {
                 write!(
                     f,
@@ -535,7 +564,7 @@ impl ArrowFunctionLayout {
 
         let result = loop {
             match current.body()? {
-                JsAnyFunctionBody::JsAnyExpression(JsAnyExpression::JsArrowFunctionExpression(
+                AnyJsFunctionBody::AnyJsExpression(AnyJsExpression::JsArrowFunctionExpression(
                     next,
                 )) if matches!(
                     options.call_arg_layout,
@@ -575,6 +604,7 @@ impl NeedsParentheses for JsArrowFunctionExpression {
     fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
         match parent.kind() {
             JsSyntaxKind::TS_AS_EXPRESSION
+            | JsSyntaxKind::TS_SATISFIES_EXPRESSION
             | JsSyntaxKind::JS_UNARY_EXPRESSION
             | JsSyntaxKind::JS_AWAIT_EXPRESSION
             | JsSyntaxKind::TS_TYPE_ASSERTION_EXPRESSION => true,
@@ -589,12 +619,12 @@ impl NeedsParentheses for JsArrowFunctionExpression {
 }
 
 /// Returns `true` if the template contains any new lines inside of its text chunks.
-fn template_literal_contains_new_line(template: &JsTemplate) -> bool {
+fn template_literal_contains_new_line(template: &JsTemplateExpression) -> bool {
     template.elements().iter().any(|element| match element {
-        JsAnyTemplateElement::JsTemplateChunkElement(chunk) => chunk
+        AnyJsTemplateElement::JsTemplateChunkElement(chunk) => chunk
             .template_chunk_token()
             .map_or(false, |chunk| chunk.text().contains('\n')),
-        JsAnyTemplateElement::JsTemplateElement(_) => false,
+        AnyJsTemplateElement::JsTemplateElement(_) => false,
     })
 }
 
@@ -624,7 +654,7 @@ fn template_literal_contains_new_line(template: &JsTemplate) -> bool {
 /// ```
 ///
 /// Returns `false` because the template isn't on the same line as the '+' token.
-pub(crate) fn is_multiline_template_starting_on_same_line(template: &JsTemplate) -> bool {
+pub(crate) fn is_multiline_template_starting_on_same_line(template: &JsTemplateExpression) -> bool {
     let contains_new_line = template_literal_contains_new_line(template);
 
     let starts_on_same_line = template.syntax().first_token().map_or(false, |token| {
@@ -648,7 +678,7 @@ pub(crate) fn is_multiline_template_starting_on_same_line(template: &JsTemplate)
 mod tests {
 
     use crate::{assert_needs_parentheses, assert_not_needs_parentheses};
-    use rome_js_syntax::{JsArrowFunctionExpression, SourceType};
+    use rome_js_syntax::{JsArrowFunctionExpression, JsFileSource};
 
     #[test]
     fn needs_parentheses() {
@@ -669,7 +699,7 @@ mod tests {
         assert_needs_parentheses!(
             "<Function>(a => a)",
             JsArrowFunctionExpression,
-            SourceType::ts()
+            JsFileSource::ts()
         );
         assert_needs_parentheses!("(a => a) ? b : c", JsArrowFunctionExpression);
         assert_not_needs_parentheses!("a ? b => b : c", JsArrowFunctionExpression);

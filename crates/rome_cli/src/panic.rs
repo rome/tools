@@ -11,7 +11,7 @@ pub fn setup_panic_handler() {
 }
 
 fn panic_handler(info: &PanicInfo) {
-    // Buffer the error message to a string before printing it to stderr at once
+    // Buffer the error message to a string before printing it at once
     // to prevent it from getting mixed with other errors if multiple threads
     // panic at the same time
     let mut error = String::new();
@@ -37,5 +37,11 @@ fn panic_handler(info: &PanicInfo) {
         writeln!(error, "Message: {msg}").unwrap();
     }
 
+    // Write the panic to stderr
     eprintln!("{error}");
+
+    // Write the panic to the log file, this is done last since the `tracing`
+    // infrastructure could panic a second time and abort the process, so we
+    // want to ensure the error has at least been logged to stderr beforehand
+    tracing::error!("{error}");
 }

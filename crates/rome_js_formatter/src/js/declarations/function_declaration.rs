@@ -4,14 +4,15 @@ use crate::js::expressions::call_arguments::GroupedCallArgumentLayout;
 use crate::utils::function_body::{FormatMaybeCachedFunctionBody, FunctionBodyCacheMode};
 use rome_formatter::{write, RemoveSoftLinesBuffer};
 use rome_js_syntax::{
-    JsAnyBinding, JsFunctionBody, JsFunctionDeclaration, JsFunctionExportDefaultDeclaration,
-    JsFunctionExpression, JsParameters, JsSyntaxToken, TsAnyReturnType,
-    TsDeclareFunctionDeclaration, TsReturnTypeAnnotation, TsType, TsTypeParameters,
+    AnyJsBinding, AnyTsReturnType, AnyTsType, JsFunctionBody, JsFunctionDeclaration,
+    JsFunctionExportDefaultDeclaration, JsFunctionExpression, JsParameters, JsSyntaxToken,
+    TsDeclareFunctionDeclaration, TsDeclareFunctionExportDefaultDeclaration,
+    TsReturnTypeAnnotation, TsTypeParameters,
 };
 use rome_rowan::{declare_node_union, SyntaxResult};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsFunctionDeclaration;
+pub(crate) struct FormatJsFunctionDeclaration;
 
 impl FormatNodeRule<JsFunctionDeclaration> for FormatJsFunctionDeclaration {
     fn fmt_fields(&self, node: &JsFunctionDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
@@ -24,11 +25,12 @@ declare_node_union! {
         JsFunctionDeclaration |
         JsFunctionExpression |
         JsFunctionExportDefaultDeclaration |
-        TsDeclareFunctionDeclaration
+        TsDeclareFunctionDeclaration |
+        TsDeclareFunctionExportDefaultDeclaration
 }
 
 #[derive(Copy, Clone, Debug, Default)]
-pub struct FormatFunctionOptions {
+pub(crate) struct FormatFunctionOptions {
     pub call_argument_layout: Option<GroupedCallArgumentLayout>,
     pub body_cache_mode: FunctionBodyCacheMode,
 }
@@ -42,6 +44,9 @@ impl FormatFunction {
                 declaration.async_token()
             }
             FormatFunction::TsDeclareFunctionDeclaration(member) => member.async_token(),
+            FormatFunction::TsDeclareFunctionExportDefaultDeclaration(member) => {
+                member.async_token()
+            }
         }
     }
 
@@ -52,7 +57,12 @@ impl FormatFunction {
             FormatFunction::JsFunctionExportDefaultDeclaration(declaration) => {
                 declaration.function_token()
             }
-            FormatFunction::TsDeclareFunctionDeclaration(member) => member.function_token(),
+            FormatFunction::TsDeclareFunctionDeclaration(declaration) => {
+                declaration.function_token()
+            }
+            FormatFunction::TsDeclareFunctionExportDefaultDeclaration(declaration) => {
+                declaration.function_token()
+            }
         }
     }
 
@@ -64,15 +74,19 @@ impl FormatFunction {
                 declaration.star_token()
             }
             FormatFunction::TsDeclareFunctionDeclaration(_) => None,
+            FormatFunction::TsDeclareFunctionExportDefaultDeclaration(_) => None,
         }
     }
 
-    fn id(&self) -> SyntaxResult<Option<JsAnyBinding>> {
+    fn id(&self) -> SyntaxResult<Option<AnyJsBinding>> {
         match self {
             FormatFunction::JsFunctionDeclaration(declaration) => declaration.id().map(Some),
             FormatFunction::JsFunctionExpression(expression) => Ok(expression.id()),
             FormatFunction::JsFunctionExportDefaultDeclaration(declaration) => Ok(declaration.id()),
-            FormatFunction::TsDeclareFunctionDeclaration(member) => member.id().map(Some),
+            FormatFunction::TsDeclareFunctionDeclaration(declaration) => declaration.id().map(Some),
+            FormatFunction::TsDeclareFunctionExportDefaultDeclaration(declaration) => {
+                Ok(declaration.id())
+            }
         }
     }
 
@@ -83,7 +97,12 @@ impl FormatFunction {
             FormatFunction::JsFunctionExportDefaultDeclaration(declaration) => {
                 declaration.type_parameters()
             }
-            FormatFunction::TsDeclareFunctionDeclaration(member) => member.type_parameters(),
+            FormatFunction::TsDeclareFunctionDeclaration(declaration) => {
+                declaration.type_parameters()
+            }
+            FormatFunction::TsDeclareFunctionExportDefaultDeclaration(declaration) => {
+                declaration.type_parameters()
+            }
         }
     }
 
@@ -94,7 +113,10 @@ impl FormatFunction {
             FormatFunction::JsFunctionExportDefaultDeclaration(declaration) => {
                 declaration.parameters()
             }
-            FormatFunction::TsDeclareFunctionDeclaration(member) => member.parameters(),
+            FormatFunction::TsDeclareFunctionDeclaration(declaration) => declaration.parameters(),
+            FormatFunction::TsDeclareFunctionExportDefaultDeclaration(declaration) => {
+                declaration.parameters()
+            }
         }
     }
 
@@ -107,7 +129,12 @@ impl FormatFunction {
             FormatFunction::JsFunctionExportDefaultDeclaration(declaration) => {
                 declaration.return_type_annotation()
             }
-            FormatFunction::TsDeclareFunctionDeclaration(member) => member.return_type_annotation(),
+            FormatFunction::TsDeclareFunctionDeclaration(declaration) => {
+                declaration.return_type_annotation()
+            }
+            FormatFunction::TsDeclareFunctionExportDefaultDeclaration(declaration) => {
+                declaration.return_type_annotation()
+            }
         }
     }
 
@@ -119,6 +146,7 @@ impl FormatFunction {
                 Some(declaration.body()?)
             }
             FormatFunction::TsDeclareFunctionDeclaration(_) => None,
+            FormatFunction::TsDeclareFunctionExportDefaultDeclaration(_) => None,
         })
     }
 
@@ -230,7 +258,7 @@ impl Format<JsFormatContext> for FormatFunction {
 pub(crate) fn should_group_function_parameters(
     type_parameters: Option<&TsTypeParameters>,
     parameter_count: usize,
-    return_type: Option<SyntaxResult<TsAnyReturnType>>,
+    return_type: Option<SyntaxResult<AnyTsReturnType>>,
     formatted_return_type: &mut Memoized<impl Format<JsFormatContext>, JsFormatContext>,
     f: &mut JsFormatter,
 ) -> FormatResult<bool> {
@@ -261,7 +289,7 @@ pub(crate) fn should_group_function_parameters(
     } else {
         matches!(
             return_type,
-            TsAnyReturnType::TsType(TsType::TsObjectType(_) | TsType::TsMappedType(_))
+            AnyTsReturnType::AnyTsType(AnyTsType::TsObjectType(_) | AnyTsType::TsMappedType(_))
         ) || formatted_return_type.inspect(f)?.will_break()
     };
 

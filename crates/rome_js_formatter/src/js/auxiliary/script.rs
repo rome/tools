@@ -6,7 +6,7 @@ use rome_js_syntax::JsScript;
 use rome_js_syntax::JsScriptFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsScript;
+pub(crate) struct FormatJsScript;
 
 impl FormatNodeRule<JsScript> for FormatJsScript {
     fn fmt_fields(&self, node: &JsScript, f: &mut JsFormatter) -> FormatResult<()> {

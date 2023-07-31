@@ -7,7 +7,7 @@ use rome_js_syntax::{JsSyntaxKind, JsYieldExpressionFields};
 use rome_js_syntax::{JsSyntaxNode, JsYieldExpression};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsYieldExpression;
+pub(crate) struct FormatJsYieldExpression;
 
 impl FormatNodeRule<JsYieldExpression> for FormatJsYieldExpression {
     fn fmt_fields(&self, node: &JsYieldExpression, f: &mut JsFormatter) -> FormatResult<()> {

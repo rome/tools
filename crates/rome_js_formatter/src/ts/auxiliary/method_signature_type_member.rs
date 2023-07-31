@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use crate::utils::FormatTypeMemberSeparator;
 
-use crate::js::classes::method_class_member::FormatJsAnyMethodMember;
+use crate::js::classes::method_class_member::FormatAnyJsMethodMember;
 use rome_formatter::write;
 use rome_js_syntax::TsMethodSignatureTypeMember;
 
@@ -17,7 +17,7 @@ impl FormatNodeRule<TsMethodSignatureTypeMember> for FormatTsMethodSignatureType
         write![
             f,
             [
-                FormatJsAnyMethodMember::from(node.clone()),
+                FormatAnyJsMethodMember::from(node.clone()),
                 FormatTypeMemberSeparator::new(node.separator_token().as_ref())
             ]
         ]

@@ -36,7 +36,7 @@ JsModule {
             semicolon_token: SEMICOLON@13..14 ";" [] [],
         },
         JsExpressionStatement {
-            expression: JsTemplate {
+            expression: JsTemplateExpression {
                 tag: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
                         value_token: IDENT@14..18 "BAR" [Newline("\n")] [],
@@ -86,7 +86,7 @@ JsModule {
         2: (empty)
       1: SEMICOLON@13..14 ";" [] []
     1: JS_EXPRESSION_STATEMENT@14..21
-      0: JS_TEMPLATE@14..21
+      0: JS_TEMPLATE_EXPRESSION@14..21
         0: JS_IDENTIFIER_EXPRESSION@14..18
           0: JS_REFERENCE_IDENTIFIER@14..18
             0: IDENT@14..18 "BAR" [Newline("\n")] []

@@ -3,7 +3,7 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyLiteralExpression, JsSyntaxKind, JsxAnyAttributeValue, JsxAttribute, JsxAttributeFields, T,
+    AnyJsLiteralExpression, AnyJsxAttributeValue, JsSyntaxKind, JsxAttribute, JsxAttributeFields, T,
 };
 use rome_rowan::{AstNode, AstNodeExt, BatchMutationExt};
 
@@ -44,7 +44,7 @@ declare_rule! {
     pub(crate) NoImplicitBoolean {
         version: "0.7.0",
         name: "noImplicitBoolean",
-        recommended: true,
+        recommended: false,
     }
 }
 
@@ -95,8 +95,7 @@ impl Rule for NoImplicitBoolean {
         let last_token_of_name_syntax = name_syntax.last_token()?;
         // drop the trailing trivia of name_syntax, at CST level it means
         // clean the trailing trivia of last token of name_syntax
-        let next_last_token_of_name_syntax =
-            last_token_of_name_syntax.with_trailing_trivia(std::iter::empty());
+        let next_last_token_of_name_syntax = last_token_of_name_syntax.with_trailing_trivia([]);
 
         let next_name = name.replace_token_discard_trivia(
             last_token_of_name_syntax,
@@ -104,8 +103,8 @@ impl Rule for NoImplicitBoolean {
         )?;
         let attr_value = make::jsx_expression_attribute_value(
             make::token(JsSyntaxKind::L_CURLY),
-            rome_js_syntax::JsAnyExpression::JsAnyLiteralExpression(
-                JsAnyLiteralExpression::JsBooleanLiteralExpression(
+            rome_js_syntax::AnyJsExpression::AnyJsLiteralExpression(
+                AnyJsLiteralExpression::JsBooleanLiteralExpression(
                     make::js_boolean_literal_expression(make::token(T![true])),
                 ),
             ),
@@ -114,7 +113,7 @@ impl Rule for NoImplicitBoolean {
         let next_attr = make::jsx_attribute(next_name).with_initializer(
             make::jsx_attribute_initializer_clause(
                 make::token(T![=]),
-                JsxAnyAttributeValue::JsxExpressionAttributeValue(attr_value),
+                AnyJsxAttributeValue::JsxExpressionAttributeValue(attr_value),
             ),
         );
         let next_attr = next_attr.build();

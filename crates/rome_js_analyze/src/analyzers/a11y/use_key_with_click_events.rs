@@ -1,10 +1,13 @@
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_syntax::{JsxAnyAttribute, JsxOpeningElement, JsxSelfClosingElement};
-use rome_rowan::{declare_node_union, AstNode, AstNodeList};
+use rome_js_syntax::{jsx_ext::AnyJsxElement, AnyJsxAttribute, AnyJsxElementName};
+use rome_rowan::AstNode;
 
 declare_rule! {
-    /// Enforce to have the `onClick` mouse event with the `onKeyUp`, the `onKeyDown`, or the `noKeyPress` keyboard event.
+    /// Enforce onClick is accompanied by at least one of the following: `onKeyUp`, `onKeyDown`, `onKeyPress`.
+    ///
+    /// Coding for the keyboard is important for users with physical disabilities who cannot use a mouse, AT compatibility, and screenreader users.
+    /// This does not apply for interactive or hidden elements.
     ///
     /// ## Examples
     ///
@@ -44,6 +47,15 @@ declare_rule! {
     /// ```jsx
     /// <div {...spread} onClick={() => {}} ></div>
     /// ```
+    ///
+    /// ```jsx
+    /// <button onClick={() => console.log("test")}>Submit</button>
+    /// ```
+    ///
+    /// ## Accessibility guidelines
+    ///
+    /// - [WCAG 2.1.1](https://www.w3.org/WAI/WCAG21/Understanding/keyboard)
+    ///
     pub(crate) UseKeyWithClickEvents {
         version: "10.0.0",
         name: "useKeyWithClickEvents",
@@ -51,94 +63,62 @@ declare_rule! {
     }
 }
 
-declare_node_union! {
-    pub(crate) JsxAnyElement = JsxOpeningElement | JsxSelfClosingElement
-}
-
-impl JsxAnyElement {
-    fn has_spread_attribute(&self) -> bool {
-        match self {
-            JsxAnyElement::JsxOpeningElement(element) => element
-                .attributes()
-                .iter()
-                .any(|attribute| matches!(attribute, JsxAnyAttribute::JsxSpreadAttribute(_))),
-            JsxAnyElement::JsxSelfClosingElement(element) => element
-                .attributes()
-                .iter()
-                .any(|attribute| matches!(attribute, JsxAnyAttribute::JsxSpreadAttribute(_))),
-        }
-    }
-}
-
-impl UseKeyWithClickEvents {
-    const REQUIRED_PROPS: [&'static str; 3] = ["onKeyDown", "onKeyUp", "onKeyPress"];
-}
-
 impl Rule for UseKeyWithClickEvents {
-    type Query = Ast<JsxAnyElement>;
+    type Query = Ast<AnyJsxElement>;
     type State = ();
     type Signals = Option<Self::State>;
     type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
-        let node = ctx.query();
+        let element = ctx.query();
 
-        match node {
-            JsxAnyElement::JsxOpeningElement(element) => {
-                let on_click_attribute = element.find_attribute_by_name("onClick").ok()?;
-                if element.name().ok()?.as_jsx_name().is_none()
-                    || on_click_attribute.is_none()
-                    || node.has_spread_attribute()
-                {
+        match element.name() {
+            Ok(AnyJsxElementName::JsxName(name)) => {
+                let element_name = name.value_token().ok()?.text_trimmed().to_lowercase();
+
+                // Don't handle interactive roles
+                // TODO Support aria roles https://github.com/rome/tools/issues/3640
+                if matches!(
+                    element_name.as_str(),
+                    "button" | "checkbox" | "combobox" | "a" | "input"
+                ) {
                     return None;
                 }
-
-                for attribute in element.attributes().into_iter() {
-                    if let JsxAnyAttribute::JsxAttribute(attribute) = attribute {
-                        let name = attribute
-                            .name()
-                            .ok()?
-                            .as_jsx_name()?
-                            .syntax()
-                            .text_trimmed()
-                            .to_string();
-
-                        if Self::REQUIRED_PROPS.contains(&name.as_str()) {
-                            return None;
-                        }
-                    }
-                }
-
-                Some(())
             }
-            JsxAnyElement::JsxSelfClosingElement(element) => {
-                let on_click_attribute = element.find_attribute_by_name("onClick").ok()?;
-                if element.name().ok()?.as_jsx_name().is_none()
-                    || on_click_attribute.is_none()
-                    || node.has_spread_attribute()
-                {
-                    return None;
-                }
-
-                for attribute in element.attributes().into_iter() {
-                    if let JsxAnyAttribute::JsxAttribute(attribute) = attribute {
-                        let name = attribute
-                            .name()
-                            .ok()?
-                            .as_jsx_name()?
-                            .syntax()
-                            .text_trimmed()
-                            .to_string();
-
-                        if Self::REQUIRED_PROPS.contains(&name.as_str()) {
-                            return None;
-                        }
-                    }
-                }
-
-                Some(())
+            _ => {
+                return None;
             }
         }
+
+        let attributes = element.attributes();
+        let on_click_attribute = attributes.find_by_name("onClick").ok()?;
+
+        #[allow(clippy::question_mark)]
+        if on_click_attribute.is_none() {
+            return None;
+        }
+
+        for attribute in attributes {
+            match attribute {
+                AnyJsxAttribute::JsxAttribute(attribute) => {
+                    let attribute_name = attribute.name().ok()?;
+                    let name = attribute_name.as_jsx_name()?;
+                    let name_token = name.value_token().ok()?;
+
+                    if matches!(
+                        name_token.text_trimmed(),
+                        "onKeyDown" | "onKeyUp" | "onKeyPress"
+                    ) {
+                        return None;
+                    }
+                }
+                AnyJsxAttribute::JsxSpreadAttribute(_) => {
+                    return None;
+                }
+            }
+        }
+
+        Some(())
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {

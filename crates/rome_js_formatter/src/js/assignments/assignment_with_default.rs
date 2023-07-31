@@ -5,7 +5,7 @@ use rome_js_syntax::JsAssignmentWithDefault;
 use rome_js_syntax::JsAssignmentWithDefaultFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsAssignmentWithDefault;
+pub(crate) struct FormatJsAssignmentWithDefault;
 
 impl FormatNodeRule<JsAssignmentWithDefault> for FormatJsAssignmentWithDefault {
     fn fmt_fields(&self, node: &JsAssignmentWithDefault, f: &mut JsFormatter) -> FormatResult<()> {

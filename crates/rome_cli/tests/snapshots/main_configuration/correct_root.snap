@@ -16,33 +16,51 @@ expression: content
   "linter": {
     "enabled": true,
     "rules": {
-        "complexity": {
-            "useSimplifiedLogicExpression": "warn"
-        },
-        "style": {        
-            "useTemplate": {
-                "level": "error"
-            }
-        },
-        "correctness": {
-            "noCatchAssign": "error",
-            "noLabelVar": {
-                "level": "warn"
-            },
-            "noUnreachable": "off"
+      "complexity": {
+        "useSimplifiedLogicExpression": "warn"
+      },
+      "style": {
+        "useTemplate": {
+          "level": "error"
         }
+      },
+      "correctness": {
+        "noUnreachable": "off"
+      },
+      "suspicious": {
+        "noCatchAssign": "error",
+        "noLabelVar": {
+          "level": "warn"
+        }
+      }
     }
   },
   "javascript": {
     "globals": ["$"],
     "formatter": {
       "quoteStyle": "double",
+      "jsxQuoteStyle": "double",
       "quoteProperties": "asNeeded"
     }
   }
 }
 ```
 
+# Termination Message
+
+```block
+internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × No files were processed in the specified paths.
+  
+
+
+```
+
 # Emitted Messages
+
+```block
+Compared 0 file(s) in <TIME>
+```
 
 

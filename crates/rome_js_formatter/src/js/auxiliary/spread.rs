@@ -5,7 +5,7 @@ use rome_js_syntax::JsSpread;
 use rome_js_syntax::JsSpreadFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsSpread;
+pub(crate) struct FormatJsSpread;
 
 impl FormatNodeRule<JsSpread> for FormatJsSpread {
     fn fmt_fields(&self, node: &JsSpread, f: &mut JsFormatter) -> FormatResult<()> {

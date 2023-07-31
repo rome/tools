@@ -3,14 +3,17 @@ use rome_analyze::{
     AnalysisFilter, AnalyzerOptions, ControlFlow, GroupCategory, Queryable, RegistryVisitor, Rule,
     RuleCategory, RuleFilter, RuleGroup, RuleMetadata,
 };
+use rome_console::fmt::Termcolor;
 use rome_console::{
     fmt::{Formatter, HTML},
-    markup, Console, Markup,
+    markup, Console, Markup, MarkupBuf,
 };
-use rome_diagnostics::file::FileId;
-use rome_diagnostics::v2::{Diagnostic, DiagnosticExt, PrintDiagnostic};
-use rome_js_analyze::{analyze, visit_registry};
-use rome_js_syntax::{JsLanguage, Language, LanguageVariant, ModuleKind, SourceType};
+use rome_diagnostics::termcolor::NoColor;
+use rome_diagnostics::{Diagnostic, DiagnosticExt, PrintDiagnostic};
+use rome_js_parser::JsParserOptions;
+use rome_js_syntax::{JsFileSource, JsLanguage, Language, LanguageVariant, ModuleKind};
+use rome_json_parser::JsonParserOptions;
+use rome_json_syntax::JsonLanguage;
 use rome_service::settings::WorkspaceSettings;
 use std::{
     collections::BTreeMap,
@@ -23,8 +26,10 @@ use std::{
 use xtask::{glue::fs2, *};
 
 fn main() -> Result<()> {
-    let root = project_root().join("website/docs/src/lint/rules");
-
+    let root = project_root().join("website/src/pages/lint/rules");
+    let reference_groups = project_root().join("website/src/components/generated/Groups.astro");
+    let reference_number_of_rules =
+        project_root().join("website/src/components/generated/NumberOfRules.astro");
     // Clear the rules directory ignoring "not found" errors
     if let Err(err) = fs2::remove_dir_all(&root) {
         let is_not_found = err
@@ -41,9 +46,14 @@ fn main() -> Result<()> {
 
     // Content of the index page
     let mut index = Vec::new();
+    let mut reference_buffer = Vec::new();
     writeln!(index, "---")?;
     writeln!(index, "title: Lint Rules")?;
-    writeln!(index, "main-class: rules")?;
+    writeln!(index, "parent: linter/index")?;
+    writeln!(index, "emoji: 📏")?;
+    writeln!(index, "description: List of available lint rules.")?;
+    writeln!(index, "category: reference")?;
+    writeln!(index, "mainClass: rules")?;
     writeln!(index, "---")?;
     writeln!(index)?;
 
@@ -57,6 +67,7 @@ fn main() -> Result<()> {
     #[derive(Default)]
     struct LintRulesVisitor {
         groups: BTreeMap<&'static str, BTreeMap<&'static str, RuleMetadata>>,
+        number_or_rules: u16,
     }
 
     impl RegistryVisitor<JsLanguage> for LintRulesVisitor {
@@ -72,6 +83,28 @@ fn main() -> Result<()> {
             R::Query: Queryable<Language = JsLanguage>,
             <R::Query as Queryable>::Output: Clone,
         {
+            self.number_or_rules += 1;
+            self.groups
+                .entry(<R::Group as RuleGroup>::NAME)
+                .or_insert_with(BTreeMap::new)
+                .insert(R::METADATA.name, R::METADATA);
+        }
+    }
+
+    impl RegistryVisitor<JsonLanguage> for LintRulesVisitor {
+        fn record_category<C: GroupCategory<Language = JsonLanguage>>(&mut self) {
+            if matches!(C::CATEGORY, RuleCategory::Lint) {
+                C::record_groups(self);
+            }
+        }
+
+        fn record_rule<R>(&mut self)
+        where
+            R: Rule + 'static,
+            R::Query: Queryable<Language = JsonLanguage>,
+            <R::Query as Queryable>::Output: Clone,
+        {
+            self.number_or_rules += 1;
             self.groups
                 .entry(<R::Group as RuleGroup>::NAME)
                 .or_insert_with(BTreeMap::new)
@@ -80,20 +113,31 @@ fn main() -> Result<()> {
     }
 
     let mut visitor = LintRulesVisitor::default();
-    visit_registry(&mut visitor);
+    rome_js_analyze::visit_registry(&mut visitor);
+    rome_json_analyze::visit_registry(&mut visitor);
 
-    let LintRulesVisitor { mut groups } = visitor;
+    let LintRulesVisitor {
+        mut groups,
+        number_or_rules,
+    } = visitor;
 
     let nursery_rules = groups
         .remove("nursery")
         .expect("Expected nursery group to exist");
 
+    writeln!(
+        reference_buffer,
+        "<!-- this file is auto generated, use `cargo lintdoc` to update it -->"
+    )?;
+    write!(reference_buffer, "<ul>")?;
     for (group, rules) in groups {
         generate_group(group, rules, &root, &mut index, &mut errors)?;
+        generate_reference(group, &mut reference_buffer)?;
     }
 
     generate_group("nursery", nursery_rules, &root, &mut index, &mut errors)?;
-
+    generate_reference("nursery", &mut reference_buffer)?;
+    write!(reference_buffer, "</ul>")?;
     if !errors.is_empty() {
         bail!(
             "failed to generate documentation pages for the following rules:\n{}",
@@ -104,7 +148,14 @@ fn main() -> Result<()> {
         );
     }
 
-    fs2::write(root.join("index.md"), index)?;
+    let number_of_rules_buffer = format!(
+        "<!-- this file is auto generated, use `cargo lintdoc` to update it -->\n \
+    <p>Rome's linter has a total of <strong><a href='/lint/rules'>{} rules</a></strong><p>",
+        number_or_rules
+    );
+    fs2::write(root.join("index.mdx"), index)?;
+    fs2::write(reference_groups, reference_buffer)?;
+    fs2::write(reference_number_of_rules, number_of_rules_buffer)?;
 
     Ok(())
 }
@@ -116,66 +167,24 @@ fn generate_group(
     mut index: &mut dyn io::Write,
     errors: &mut Vec<(&'static str, Error)>,
 ) -> io::Result<()> {
-    let (group_name, description) = match group {
-        "a11y" => (
-            "Accessibility",
-            markup! {
-                "Rules focused on preventing accessibility problems."
-            },
-        ),
-        "correctness" => (
-            "Correctness",
-            markup! {
-                "Rules that detect incorrect or useless code."
-            },
-        ),
-
-        "nursery" => (
-            "Nursery",
-            markup! {
-                "New rules that are still under development.
-
-Nursery rules require explicit opt-in via configuration because they may still have bugs or performance problems.
-Nursery rules get promoted to other groups once they become stable or may be removed.
-
-Rules that belong to this group "<Emphasis>"are not subject to semantic version"</Emphasis>"."
-            },
-        ),
-        "style" => (
-            "Style",
-            markup! {
-                "Rules enforcing a consistent way of writing your code. "
-            },
-        ),
-        "complexity" => (
-            "Complexity",
-            markup! {
-                "Rules that focus on inspecting complex code that could be simplified."
-            },
-        ),
-        "security" => (
-            "Security",
-            markup! {
-                "Rules that detect potential security flaws."
-            },
-        ),
-        _ => panic!("Unknown group ID {group:?}"),
-    };
+    let (group_name, description) = extract_group_metadata(group);
+    let is_nursery = group == "nursery";
 
     writeln!(index, "\n## {group_name}")?;
     writeln!(index)?;
-    markup_to_string(index, description)?;
+    write_markup_to_string(index, description)?;
     writeln!(index)?;
 
     writeln!(index, "<div class=\"category-rules\">")?;
     for (rule, meta) in rules {
-        match generate_rule(root, group, rule, meta.docs, meta.version, meta.recommended) {
+        let is_recommended = !is_nursery && meta.recommended;
+        match generate_rule(root, group, rule, meta.docs, meta.version, is_recommended) {
             Ok(summary) => {
                 writeln!(index, "<section class=\"rule\">")?;
                 writeln!(index, "<h3 data-toc-exclude id=\"{rule}\">")?;
                 writeln!(index, "	<a href=\"/lint/rules/{rule}\">{rule}</a>")?;
 
-                if meta.recommended {
+                if is_recommended {
                     writeln!(index, "	<span class=\"recommended\">recommended</span>")?;
                 }
                 writeln!(index, "</h3>")?;
@@ -208,6 +217,7 @@ fn generate_rule(
     // Write the header for this lint rule
     writeln!(content, "---")?;
     writeln!(content, "title: Lint Rule {rule}")?;
+    writeln!(content, "parent: lint/rules/index")?;
     writeln!(content, "---")?;
     writeln!(content)?;
 
@@ -220,6 +230,11 @@ fn generate_rule(
     }
 
     let summary = parse_documentation(group, rule, docs, &mut content)?;
+
+    writeln!(content, "## Related links")?;
+    writeln!(content)?;
+    writeln!(content, "- [Disable a rule](/linter/#disable-a-lint-rule)")?;
+    writeln!(content, "- [Rule options](/linter/#rule-options)")?;
 
     fs2::write(root.join(format!("{rule}.md")), content)?;
 
@@ -264,13 +279,15 @@ fn parse_documentation(
                 // re-generating the language ID from the source type
                 write!(content, "```")?;
                 if !meta.is_empty() {
-                    match test.source_type.language() {
-                        Language::JavaScript => write!(content, "js")?,
-                        Language::TypeScript { .. } => write!(content, "ts")?,
-                    }
-                    match test.source_type.variant() {
-                        LanguageVariant::Standard => {}
-                        LanguageVariant::Jsx => write!(content, "x")?,
+                    if let BlockType::Js(source_type) = test.block_type {
+                        match source_type.language() {
+                            Language::JavaScript => write!(content, "js")?,
+                            Language::TypeScript { .. } => write!(content, "ts")?,
+                        }
+                        match source_type.variant() {
+                            LanguageVariant::Standard => {}
+                            LanguageVariant::Jsx => write!(content, "x")?,
+                        }
                     }
                 }
                 writeln!(content)?;
@@ -286,7 +303,7 @@ fn parse_documentation(
                     if test.expect_diagnostic {
                         write!(
                             content,
-                            "{{% raw %}}<pre class=\"language-text\"><code class=\"language-text\">"
+                            "<pre class=\"language-text\"><code class=\"language-text\">"
                         )?;
                     }
 
@@ -294,7 +311,7 @@ fn parse_documentation(
                         .context("snapshot test failed")?;
 
                     if test.expect_diagnostic {
-                        writeln!(content, "</code></pre>{{% endraw %}}")?;
+                        writeln!(content, "</code></pre>")?;
                         writeln!(content)?;
                     }
                 }
@@ -419,9 +436,15 @@ fn parse_documentation(
     Ok(summary)
 }
 
+enum BlockType {
+    Js(JsFileSource),
+    Json,
+}
+
 struct CodeBlockTest {
-    source_type: SourceType,
+    block_type: BlockType,
     expect_diagnostic: bool,
+    ignore: bool,
 }
 
 impl FromStr for CodeBlockTest {
@@ -436,32 +459,40 @@ impl FromStr for CodeBlockTest {
             .filter(|token| !token.is_empty());
 
         let mut test = CodeBlockTest {
-            source_type: SourceType::default(),
+            block_type: BlockType::Js(JsFileSource::default()),
             expect_diagnostic: false,
+            ignore: false,
         };
 
         for token in tokens {
             match token {
                 // Determine the language, using the same list of extensions as `compute_source_type_from_path_or_extension`
                 "cjs" => {
-                    test.source_type = SourceType::js_module().with_module_kind(ModuleKind::Script);
+                    test.block_type = BlockType::Js(
+                        JsFileSource::js_module().with_module_kind(ModuleKind::Script),
+                    );
                 }
                 "js" | "mjs" | "jsx" => {
-                    test.source_type = SourceType::jsx();
+                    test.block_type = BlockType::Js(JsFileSource::jsx());
                 }
-                "ts" | "mts" => {
-                    test.source_type = SourceType::ts();
-                }
-                "cts" => {
-                    test.source_type = SourceType::ts().with_module_kind(ModuleKind::Script);
+                "ts" | "mts" | "cts" => {
+                    test.block_type = BlockType::Js(JsFileSource::ts());
                 }
                 "tsx" => {
-                    test.source_type = SourceType::tsx();
+                    test.block_type = BlockType::Js(JsFileSource::tsx());
                 }
 
                 // Other attributes
                 "expect_diagnostic" => {
                     test.expect_diagnostic = true;
+                }
+
+                "ignore" => {
+                    test.ignore = true;
+                }
+
+                "json" => {
+                    test.block_type = BlockType::Json;
                 }
 
                 _ => {
@@ -491,10 +522,11 @@ fn assert_lint(
 
     let mut all_diagnostics = vec![];
 
-    let mut write_diagnostic = |code: &str, diag: rome_diagnostics::v2::Error| {
+    let mut write_diagnostic = |code: &str, diag: rome_diagnostics::Error| {
         let category = diag.category().map_or("", |code| code.name());
+
         Formatter::new(&mut write).write_markup(markup! {
-            {PrintDiagnostic(&diag)}
+            {PrintDiagnostic::verbose(&diag)}
         })?;
 
         all_diagnostics.push(diag);
@@ -502,12 +534,12 @@ fn assert_lint(
         if test.expect_diagnostic {
             // Print all diagnostics to help the user
             if all_diagnostics.len() > 1 {
-                let mut console = rome_console::EnvConsole::new(false);
+                let mut console = rome_console::EnvConsole::default();
                 for diag in all_diagnostics.iter() {
-                    console.print(
+                    console.println(
                         rome_console::LogLevel::Error,
                         markup! {
-                            {PrintDiagnostic(diag)}
+                            {PrintDiagnostic::verbose(diag)}
                         },
                     );
                 }
@@ -520,12 +552,12 @@ fn assert_lint(
             );
         } else {
             // Print all diagnostics to help the user
-            let mut console = rome_console::EnvConsole::new(false);
+            let mut console = rome_console::EnvConsole::default();
             for diag in all_diagnostics.iter() {
-                console.print(
+                console.println(
                     rome_console::LogLevel::Error,
                     markup! {
-                        {PrintDiagnostic(diag)}
+                        {PrintDiagnostic::verbose(diag)}
                     },
                 );
             }
@@ -539,74 +571,232 @@ fn assert_lint(
         diagnostic_count += 1;
         Ok(())
     };
+    if test.ignore {
+        return Ok(());
+    }
+    match test.block_type {
+        BlockType::Js(source_type) => {
+            let parse = rome_js_parser::parse(code, source_type, JsParserOptions::default());
 
-    let parse = rome_js_parser::parse(code, FileId::zero(), test.source_type);
-
-    if parse.has_errors() {
-        for diag in parse.into_diagnostics() {
-            let error = diag
-                .with_file_path((file.clone(), FileId::zero()))
-                .with_file_source_code(code);
-            write_diagnostic(code, error)?;
-        }
-    } else {
-        let root = parse.tree();
-
-        let settings = WorkspaceSettings::default();
-
-        let rule_filter = RuleFilter::Rule(group, rule);
-        let filter = AnalysisFilter {
-            enabled_rules: Some(slice::from_ref(&rule_filter)),
-            ..AnalysisFilter::default()
-        };
-
-        let options = AnalyzerOptions::default();
-        let result = analyze(FileId::zero(), &root, filter, &options, |signal| {
-            if let Some(mut diag) = signal.diagnostic() {
-                let category = diag.category().expect("linter diagnostic has no code");
-                let severity = settings.get_severity_from_rule_code(category).expect(
-                    "If you see this error, it means you need to run cargo codegen-configuration",
-                );
-                diag.set_severity(severity);
-
-                if let Some(action) = signal.action() {
-                    diag.add_code_suggestion(action.into());
+            if parse.has_errors() {
+                for diag in parse.into_diagnostics() {
+                    let error = diag
+                        .with_file_path(file.clone())
+                        .with_file_source_code(code);
+                    write_diagnostic(code, error)?;
                 }
+            } else {
+                let root = parse.tree();
 
-                let error = diag
-                    .with_file_path((file.clone(), FileId::zero()))
-                    .with_file_source_code(code);
-                let res = write_diagnostic(code, error);
+                let settings = WorkspaceSettings::default();
 
-                // Abort the analysis on error
-                if let Err(err) = res {
-                    return ControlFlow::Break(err);
+                let rule_filter = RuleFilter::Rule(group, rule);
+                let filter = AnalysisFilter {
+                    enabled_rules: Some(slice::from_ref(&rule_filter)),
+                    ..AnalysisFilter::default()
+                };
+
+                let options = AnalyzerOptions::default();
+                let (_, diagnostics) = rome_js_analyze::analyze(
+                    &root,
+                    filter,
+                    &options,
+                    source_type,
+                    |signal| {
+                        if let Some(mut diag) = signal.diagnostic() {
+                            let category = diag.category().expect("linter diagnostic has no code");
+                            let severity = settings.get_severity_from_rule_code(category).expect(
+                                "If you see this error, it means you need to run cargo codegen-configuration",
+                            );
+
+                            for action in signal.actions() {
+                                if !action.is_suppression() {
+                                    diag = diag.add_code_suggestion(action.into());
+                                }
+                            }
+
+                            let error = diag
+                                .with_severity(severity)
+                                .with_file_path(file.clone())
+                                .with_file_source_code(code);
+                            let res = write_diagnostic(code, error);
+
+                            // Abort the analysis on error
+                            if let Err(err) = res {
+                                return ControlFlow::Break(err);
+                            }
+                        }
+
+                        ControlFlow::Continue(())
+                    },
+                );
+
+                // Result is Some(_) if analysis aborted with an error
+                for diagnostic in diagnostics {
+                    write_diagnostic(code, diagnostic)?;
                 }
             }
 
-            ControlFlow::Continue(())
-        });
-
-        // Result is Some(_) if analysis aborted with an error
-        if let Some(err) = result {
-            return Err(err);
+            if test.expect_diagnostic {
+                // Fail the test if the analysis didn't emit any diagnostic
+                ensure!(
+                    diagnostic_count == 1,
+                    "analysis returned no diagnostics.\n code snippet:\n {}",
+                    code
+                );
+            }
         }
-    }
+        BlockType::Json => {
+            let parse = rome_json_parser::parse_json(code, JsonParserOptions::default());
 
-    if test.expect_diagnostic {
-        // Fail the test if the analysis didn't emit any diagnostic
-        ensure!(
-            diagnostic_count == 1,
-            "analysis returned no diagnostics.\n code snippet:\n {}",
-            code
-        );
+            if parse.has_errors() {
+                for diag in parse.into_diagnostics() {
+                    let error = diag
+                        .with_file_path(file.clone())
+                        .with_file_source_code(code);
+                    write_diagnostic(code, error)?;
+                }
+            } else {
+                let root = parse.tree();
+
+                let settings = WorkspaceSettings::default();
+
+                let rule_filter = RuleFilter::Rule(group, rule);
+                let filter = AnalysisFilter {
+                    enabled_rules: Some(slice::from_ref(&rule_filter)),
+                    ..AnalysisFilter::default()
+                };
+
+                let options = AnalyzerOptions::default();
+                let (_, diagnostics) = rome_json_analyze::analyze(
+                    &root.value().unwrap(),
+                    filter,
+                    &options,
+                    |signal| {
+                        if let Some(mut diag) = signal.diagnostic() {
+                            let category = diag.category().expect("linter diagnostic has no code");
+                            let severity = settings.get_severity_from_rule_code(category).expect(
+                                "If you see this error, it means you need to run cargo codegen-configuration",
+                            );
+
+                            for action in signal.actions() {
+                                if !action.is_suppression() {
+                                    diag = diag.add_code_suggestion(action.into());
+                                }
+                            }
+
+                            let error = diag
+                                .with_severity(severity)
+                                .with_file_path(file.clone())
+                                .with_file_source_code(code);
+                            let res = write_diagnostic(code, error);
+
+                            // Abort the analysis on error
+                            if let Err(err) = res {
+                                return ControlFlow::Break(err);
+                            }
+                        }
+
+                        ControlFlow::Continue(())
+                    },
+                );
+
+                // Result is Some(_) if analysis aborted with an error
+                for diagnostic in diagnostics {
+                    write_diagnostic(code, diagnostic)?;
+                }
+            }
+        }
     }
 
     Ok(())
 }
 
-pub fn markup_to_string(buffer: &mut dyn io::Write, markup: Markup) -> io::Result<()> {
+fn generate_reference(group: &'static str, buffer: &mut dyn io::Write) -> io::Result<()> {
+    let (group_name, description) = extract_group_metadata(group);
+    let description = markup_to_string(&description.to_owned());
+    let description = description.replace('\n', " ");
+    writeln!(
+        buffer,
+        "<li><code>{}</code>: {}</li>",
+        group_name.to_lowercase(),
+        description
+    )
+}
+
+fn extract_group_metadata(group: &str) -> (&str, Markup) {
+    match group {
+        "a11y" => (
+            "Accessibility",
+            markup! {
+                "Rules focused on preventing accessibility problems."
+            },
+        ),
+        "complexity" => (
+            "Complexity",
+            markup! {
+                "Rules that focus on inspecting complex code that could be simplified."
+            },
+        ),
+        "correctness" => (
+            "Correctness",
+            markup! {
+                "Rules that detect code that is guaranteed to be incorrect or useless."
+            },
+        ),
+        "nursery" => (
+            "Nursery",
+            markup! {
+                "New rules that are still under development.
+
+Nursery rules require explicit opt-in via configuration on stable versions because they may still have bugs or performance problems.
+They are enabled by default on nightly builds, but as they are unstable their diagnostic severity may be set to either error or
+warning, depending on whether we intend for the rule to be recommended or not when it eventually gets stabilized.
+Nursery rules get promoted to other groups once they become stable or may be removed.
+
+Rules that belong to this group "<Emphasis>"are not subject to semantic version"</Emphasis>"."
+            },
+        ),
+        "performance" => (
+            "Performance",
+            markup! {
+                "Rules catching ways your code could be written to run faster, or generally be more efficient."
+            },
+        ),
+        "security" => (
+            "Security",
+            markup! {
+                "Rules that detect potential security flaws."
+            },
+        ),
+        "style" => (
+            "Style",
+            markup! {
+                "Rules enforcing a consistent and idiomatic way of writing your code."
+            },
+        ),
+        "suspicious" => (
+            "Suspicious",
+            markup! {
+                "Rules that detect code that is likely to be incorrect or useless."
+            },
+        ),
+        _ => panic!("Unknown group ID {group:?}"),
+    }
+}
+
+pub fn write_markup_to_string(buffer: &mut dyn io::Write, markup: Markup) -> io::Result<()> {
     let mut write = HTML(buffer);
     let mut fmt = Formatter::new(&mut write);
     fmt.write_markup(markup)
+}
+
+fn markup_to_string(markup: &MarkupBuf) -> String {
+    let mut buffer = Vec::new();
+    let mut write = Termcolor(NoColor::new(&mut buffer));
+    let mut fmt = Formatter::new(&mut write);
+    fmt.write_markup(markup! { {markup} })
+        .expect("to have written in the buffer");
+
+    String::from_utf8(buffer).expect("to have convert a buffer into a String")
 }

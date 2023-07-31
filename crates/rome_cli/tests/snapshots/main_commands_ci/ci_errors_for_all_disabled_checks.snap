@@ -5,19 +5,17 @@ expression: content
 ## `rome.json`
 
 ```json
-
 {
-    "formatter": {
-        "enabled": true
-    },
-    "linter": {
-        "enabled": true,
-        "rules": {
-            "recommended": true
-        }
+  "formatter": {
+    "enabled": true
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true
     }
+  }
 }
-
 ```
 
 ## `file.js`
@@ -29,8 +27,13 @@ statement(    ) ; let a = !b || !c;
 # Termination Message
 
 ```block
-The combination of configuration and arguments is invalid: 
- Formatter and Linter are both disabled, can't perform the command. This probably and error.
+internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × The combination of configuration and arguments is invalid: 
+    Formatter, linter and organize imports are disabled, can't perform the command. This is probably and error.
+  
+
+
 ```
 
 

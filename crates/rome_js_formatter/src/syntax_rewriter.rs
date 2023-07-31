@@ -1,19 +1,19 @@
 use crate::comments::is_type_comment;
-use crate::parentheses::JsAnyParenthesized;
+use crate::parentheses::AnyJsParenthesized;
 use rome_formatter::{TransformSourceMap, TransformSourceMapBuilder};
 use rome_js_syntax::{
-    JsAnyAssignment, JsAnyExpression, JsLanguage, JsLogicalExpression, JsSyntaxKind, JsSyntaxNode,
-    TsType,
+    AnyJsAssignment, AnyJsExpression, AnyTsType, JsLanguage, JsLogicalExpression, JsSyntaxKind,
+    JsSyntaxNode,
 };
 use rome_rowan::syntax::SyntaxTrivia;
 use rome_rowan::{
-    AstNode, SyntaxKind, SyntaxRewriter, SyntaxToken, SyntaxTriviaPiece, TextSize, VisitNodeSignal,
+    chain_trivia_pieces, AstNode, SyntaxKind, SyntaxRewriter, SyntaxToken, TextSize,
+    VisitNodeSignal,
 };
 use std::collections::BTreeSet;
-use std::iter::FusedIterator;
 
 pub(super) fn transform(root: JsSyntaxNode) -> (JsSyntaxNode, TransformSourceMap) {
-    let mut rewriter = JsFormatSyntaxRewriter::default();
+    let mut rewriter = JsFormatSyntaxRewriter::with_offset(root.text_range().start());
     let transformed = rewriter.transform(root);
     (transformed, rewriter.finish())
 }
@@ -44,10 +44,19 @@ struct JsFormatSyntaxRewriter {
 }
 
 impl JsFormatSyntaxRewriter {
+    pub fn with_offset(offset: TextSize) -> Self {
+        JsFormatSyntaxRewriter {
+            source_map: TransformSourceMapBuilder::with_offset(offset),
+            ..Default::default()
+        }
+    }
+}
+
+impl JsFormatSyntaxRewriter {
     /// Replaces parenthesized expression that:
     /// * have no syntax error: has no missing required child or no skipped token trivia attached to the left or right paren
-    /// * inner expression isn't an unknown node
-    /// * no closure or type cast type cast comment
+    /// * inner expression isn't an bogus node
+    /// * no closure or type cast comment
     ///
     /// with the inner expression.
     ///
@@ -122,7 +131,7 @@ impl JsFormatSyntaxRewriter {
     /// Which may turn `//comment` into a trailing comment that then gets formatted differently on the next formatting pass, resulting in instability issues.
     fn visit_parenthesized(
         &mut self,
-        parenthesized: JsAnyParenthesized,
+        parenthesized: AnyJsParenthesized,
     ) -> VisitNodeSignal<JsLanguage> {
         let (l_paren, inner, r_paren) = match (
             parenthesized.l_paren_token(),
@@ -133,7 +142,9 @@ impl JsFormatSyntaxRewriter {
                 let prev_token = l_paren.prev_token();
 
                 // Keep parentheses around unknown expressions. Rome can't know the precedence.
-                if inner.kind().is_unknown()
+                if inner.kind().is_bogus()
+                    // Don't remove parentheses if the expression is a decorator
+                    || inner.grand_parent().map_or(false, |node| node.kind() == JsSyntaxKind::JS_DECORATOR)
                     // Don't remove parentheses if they have skipped trivia. We don't know for certain what the intended syntax is.
                     // Nor if there's a leading type cast comment
                     || has_type_cast_comment_or_skipped(&l_paren.leading_trivia())
@@ -164,20 +175,20 @@ impl JsFormatSyntaxRewriter {
             // Return the parenthesized expression as is. This will be formatted as verbatim
             None => {
                 let updated = match parenthesized {
-                    JsAnyParenthesized::JsParenthesizedExpression(expression) => {
+                    AnyJsParenthesized::JsParenthesizedExpression(expression) => {
                         // SAFETY: Safe because the rewriter never rewrites an expression to a non expression.
                         expression
-                            .with_expression(JsAnyExpression::unwrap_cast(inner))
+                            .with_expression(AnyJsExpression::unwrap_cast(inner))
                             .into_syntax()
                     }
-                    JsAnyParenthesized::JsParenthesizedAssignment(assignment) => {
+                    AnyJsParenthesized::JsParenthesizedAssignment(assignment) => {
                         // SAFETY: Safe because the rewriter never rewrites an assignment to a non assignment.
                         assignment
-                            .with_assignment(JsAnyAssignment::unwrap_cast(inner))
+                            .with_assignment(AnyJsAssignment::unwrap_cast(inner))
                             .into_syntax()
                     }
-                    JsAnyParenthesized::TsParenthesizedType(ty) => {
-                        ty.with_ty(TsType::unwrap_cast(inner)).into_syntax()
+                    AnyJsParenthesized::TsParenthesizedType(ty) => {
+                        ty.with_ty(AnyTsType::unwrap_cast(inner)).into_syntax()
                     }
                 };
 
@@ -214,7 +225,7 @@ impl JsFormatSyntaxRewriter {
                     .map_or(false, |piece| piece.is_skipped() || piece.is_comments());
 
                 let l_paren_trivia =
-                    chain_pieces(l_paren.leading_trivia().pieces(), l_paren_trailing);
+                    chain_trivia_pieces(l_paren.leading_trivia().pieces(), l_paren_trailing);
 
                 let mut leading_trivia = first_token.leading_trivia().pieces().peekable();
                 let mut first_new_line = None;
@@ -256,12 +267,12 @@ impl JsFormatSyntaxRewriter {
                 }
                 // }
 
-                let leading_trivia = chain_pieces(
+                let leading_trivia = chain_trivia_pieces(
                     first_new_line.map(|(_, trivia)| trivia).into_iter(),
                     leading_trivia,
                 );
 
-                let new_leading = chain_pieces(l_paren_trivia, leading_trivia);
+                let new_leading = chain_trivia_pieces(l_paren_trivia, leading_trivia);
                 let new_first = first_token.with_leading_trivia_pieces(new_leading);
 
                 // SAFETY: Calling `unwrap` is safe because we know that `inner_first` is part of the `inner` subtree.
@@ -269,7 +280,7 @@ impl JsFormatSyntaxRewriter {
                     .replace_child(first_token.into(), new_first.into())
                     .unwrap();
 
-                let r_paren_trivia = chain_pieces(
+                let r_paren_trivia = chain_trivia_pieces(
                     r_paren.leading_trivia().pieces(),
                     r_paren.trailing_trivia().pieces(),
                 );
@@ -278,10 +289,7 @@ impl JsFormatSyntaxRewriter {
                 // doesn't contain ANY token, but we know that the subtree contains at least the first token.
                 let last_token = updated.last_token().unwrap();
 
-                let new_last = last_token.with_trailing_trivia_pieces(chain_pieces(
-                    last_token.trailing_trivia().pieces(),
-                    r_paren_trivia,
-                ));
+                let new_last = last_token.append_trivia_pieces(r_paren_trivia);
 
                 self.source_map
                     .add_deleted_range(r_paren.text_trimmed_range());
@@ -332,13 +340,13 @@ impl JsFormatSyntaxRewriter {
                 let right_key = right.syntax().key();
 
                 // SAFETY: Safe because the rewriter never rewrites an expression to a non expression.
-                let left = JsAnyExpression::unwrap_cast(self.transform(left.into_syntax()));
+                let left = AnyJsExpression::unwrap_cast(self.transform(left.into_syntax()));
                 let operator = self.visit_token(operator);
                 // SAFETY: Safe because the rewriter never rewrites an expression to a non expression.
-                let right = JsAnyExpression::unwrap_cast(self.transform(right.into_syntax()));
+                let right = AnyJsExpression::unwrap_cast(self.transform(right.into_syntax()));
 
                 let updated = match right {
-                    JsAnyExpression::JsLogicalExpression(right_logical) => {
+                    AnyJsExpression::JsLogicalExpression(right_logical) => {
                         match (
                             right_logical.left(),
                             right_logical.operator_token(),
@@ -400,8 +408,8 @@ impl SyntaxRewriter for JsFormatSyntaxRewriter {
 
     fn visit_node(&mut self, node: JsSyntaxNode) -> VisitNodeSignal<Self::Language> {
         match node.kind() {
-            kind if JsAnyParenthesized::can_cast(kind) => {
-                let parenthesized = JsAnyParenthesized::unwrap_cast(node);
+            kind if AnyJsParenthesized::can_cast(kind) => {
+                let parenthesized = AnyJsParenthesized::unwrap_cast(node);
 
                 self.visit_parenthesized(parenthesized)
             }
@@ -430,120 +438,22 @@ fn has_type_cast_comment_or_skipped(trivia: &SyntaxTrivia<JsLanguage>) -> bool {
     })
 }
 
-fn chain_pieces<F, S>(first: F, second: S) -> ChainTriviaPiecesIterator<F, S>
-where
-    F: Iterator<Item = SyntaxTriviaPiece<JsLanguage>>,
-    S: Iterator<Item = SyntaxTriviaPiece<JsLanguage>>,
-{
-    ChainTriviaPiecesIterator::new(first, second)
-}
-
-/// Chain iterator that chains two iterators over syntax trivia together.
-///
-/// This is the same as Rust's [Chain] iterator but implements [ExactSizeIterator].
-/// Rust doesn't implement [ExactSizeIterator] because adding the sizes of both pieces may overflow.
-///
-/// Implementing [ExactSizeIterator] in our case is safe because this may only overflow if
-/// a source document has more than 2^32 trivia which isn't possible because our source documents are limited to 2^32
-/// length.
-struct ChainTriviaPiecesIterator<F, S> {
-    first: Option<F>,
-    second: S,
-}
-
-impl<F, S> ChainTriviaPiecesIterator<F, S> {
-    fn new(first: F, second: S) -> Self {
-        Self {
-            first: Some(first),
-            second,
-        }
-    }
-}
-
-impl<F, S> Iterator for ChainTriviaPiecesIterator<F, S>
-where
-    F: Iterator<Item = SyntaxTriviaPiece<JsLanguage>>,
-    S: Iterator<Item = SyntaxTriviaPiece<JsLanguage>>,
-{
-    type Item = SyntaxTriviaPiece<JsLanguage>;
-
-    fn next(&mut self) -> Option<Self::Item> {
-        match &mut self.first {
-            Some(first) => match first.next() {
-                Some(next) => Some(next),
-                None => {
-                    self.first.take();
-                    self.second.next()
-                }
-            },
-            None => self.second.next(),
-        }
-    }
-
-    fn size_hint(&self) -> (usize, Option<usize>) {
-        match &self.first {
-            Some(first) => {
-                let (first_lower, first_upper) = first.size_hint();
-                let (second_lower, second_upper) = self.second.size_hint();
-
-                let lower = first_lower.saturating_add(second_lower);
-
-                let upper = match (first_upper, second_upper) {
-                    (Some(first), Some(second)) => first.checked_add(second),
-                    _ => None,
-                };
-
-                (lower, upper)
-            }
-            None => self.second.size_hint(),
-        }
-    }
-}
-
-impl<F, S> FusedIterator for ChainTriviaPiecesIterator<F, S>
-where
-    F: Iterator<Item = SyntaxTriviaPiece<JsLanguage>>,
-    S: Iterator<Item = SyntaxTriviaPiece<JsLanguage>>,
-{
-}
-
-impl<F, S> ExactSizeIterator for ChainTriviaPiecesIterator<F, S>
-where
-    F: ExactSizeIterator<Item = SyntaxTriviaPiece<JsLanguage>>,
-    S: ExactSizeIterator<Item = SyntaxTriviaPiece<JsLanguage>>,
-{
-    fn len(&self) -> usize {
-        match &self.first {
-            Some(first) => {
-                let first_len = first.len();
-                let second_len = self.second.len();
-
-                // SAFETY: Should be safe because a program can never contain more than u32 pieces
-                // because the text ranges are represented as u32 (and each piece must at least contain a single character).
-                first_len + second_len
-            }
-            None => self.second.len(),
-        }
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::JsFormatSyntaxRewriter;
     use crate::{format_node, JsFormatOptions, TextRange};
-    use rome_diagnostics::file::FileId;
     use rome_formatter::{SourceMarker, TransformSourceMap};
-    use rome_js_parser::{parse, parse_module};
+    use rome_js_parser::{parse, parse_module, JsParserOptions};
     use rome_js_syntax::{
-        JsArrayExpression, JsBinaryExpression, JsExpressionStatement, JsIdentifierExpression,
-        JsLogicalExpression, JsSequenceExpression, JsStringLiteralExpression, JsSyntaxNode,
-        JsUnaryExpression, JsxTagExpression, SourceType,
+        JsArrayExpression, JsBinaryExpression, JsExpressionStatement, JsFileSource,
+        JsIdentifierExpression, JsLogicalExpression, JsSequenceExpression,
+        JsStringLiteralExpression, JsSyntaxNode, JsUnaryExpression, JsxTagExpression,
     };
     use rome_rowan::{AstNode, SyntaxRewriter, TextSize};
 
     #[test]
     fn rebalances_logical_expressions() {
-        let root = parse_module("a && (b && c)", FileId::zero()).syntax();
+        let root = parse_module("a && (b && c)", JsParserOptions::default()).syntax();
 
         let transformed = JsFormatSyntaxRewriter::default().transform(root.clone());
 
@@ -572,7 +482,7 @@ mod tests {
 
     #[test]
     fn only_rebalances_logical_expressions_with_same_operator() {
-        let root = parse_module("a && (b || c)", FileId::zero()).syntax();
+        let root = parse_module("a && (b || c)", JsParserOptions::default()).syntax();
         let transformed = JsFormatSyntaxRewriter::default().transform(root);
 
         // Removes parentheses
@@ -896,7 +806,7 @@ mod tests {
     }
 
     fn source_map_test(input: &str) -> (JsSyntaxNode, TransformSourceMap) {
-        let tree = parse(input, FileId::zero(), SourceType::jsx()).syntax();
+        let tree = parse(input, JsFileSource::jsx(), JsParserOptions::default()).syntax();
 
         let mut rewriter = JsFormatSyntaxRewriter::default();
         let transformed = rewriter.transform(tree);
@@ -910,7 +820,7 @@ mod tests {
         let (transformed, source_map) = source_map_test("(((a * b) * c)) / 3");
 
         let formatted =
-            format_node(JsFormatOptions::new(SourceType::default()), &transformed).unwrap();
+            format_node(JsFormatOptions::new(JsFileSource::default()), &transformed).unwrap();
         let printed = formatted.print().unwrap();
 
         assert_eq!(printed.as_code(), "(a * b * c) / 3;\n");

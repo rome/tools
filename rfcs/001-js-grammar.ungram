@@ -388,7 +388,7 @@ JsStringLiteral = value: 'js_string'
 JsNumberLiteral = value: 'js_number' // Called JsNumericLiteral in Rome, helper for retrieving representation (hex|octal| etc)
 
 // 45n
-JsBigIntLiteral =  value: 'js_big_int' // should the `n` be part of the big_int token or not? Should quotes be part of a string token? -> 5.5d is a numeric_token in roslyn
+JsBigIntLiteral =  value: 'js_bigint' // should the `n` be part of the bigint token or not? Should quotes be part of a string token? -> 5.5d is a numeric_token in roslyn
 
 // true, false
 JsBooleanLiteral = value: ('true' | 'false')

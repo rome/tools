@@ -5,7 +5,15 @@ expression: content
 # Termination Message
 
 ```block
-failed to parse argument '--line-width': failed to parse '-1': ParseError(ParseIntError { kind: InvalidDigit })
+flags/invalid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Failed to parse CLI arguments.
+    
+    Caused by:
+      couldn't parse `-1`: invalid digit found in string
+  
+
+
 ```
 
 

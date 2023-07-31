@@ -6,7 +6,7 @@ use rome_js_syntax::JsRegexLiteralExpressionFields;
 use rome_js_syntax::{JsRegexLiteralExpression, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsRegexLiteralExpression;
+pub(crate) struct FormatJsRegexLiteralExpression;
 
 impl FormatNodeRule<JsRegexLiteralExpression> for FormatJsRegexLiteralExpression {
     fn fmt_fields(&self, node: &JsRegexLiteralExpression, f: &mut JsFormatter) -> FormatResult<()> {

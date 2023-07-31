@@ -5,6 +5,7 @@ JsModule {
         TsDeclareStatement {
             declare_token: DECLARE_KW@0..8 "declare" [] [Whitespace(" ")],
             declaration: JsClassDeclaration {
+                decorators: JsDecoratorList [],
                 abstract_token: missing (optional),
                 class_token: CLASS_KW@8..14 "class" [] [Whitespace(" ")],
                 id: JsIdentifierBinding {
@@ -78,15 +79,16 @@ JsModule {
     0: TS_DECLARE_STATEMENT@0..48
       0: DECLARE_KW@0..8 "declare" [] [Whitespace(" ")]
       1: JS_CLASS_DECLARATION@8..48
-        0: (empty)
-        1: CLASS_KW@8..14 "class" [] [Whitespace(" ")]
-        2: JS_IDENTIFIER_BINDING@14..16
+        0: JS_DECORATOR_LIST@8..8
+        1: (empty)
+        2: CLASS_KW@8..14 "class" [] [Whitespace(" ")]
+        3: JS_IDENTIFIER_BINDING@14..16
           0: IDENT@14..16 "A" [] [Whitespace(" ")]
-        3: (empty)
         4: (empty)
         5: (empty)
-        6: L_CURLY@16..18 "{" [] [Whitespace(" ")]
-        7: JS_CLASS_MEMBER_LIST@18..47
+        6: (empty)
+        7: L_CURLY@16..18 "{" [] [Whitespace(" ")]
+        8: JS_CLASS_MEMBER_LIST@18..47
           0: TS_METHOD_SIGNATURE_CLASS_MEMBER@18..27
             0: TS_METHOD_SIGNATURE_MODIFIER_LIST@18..18
             1: (empty)
@@ -126,7 +128,7 @@ JsModule {
               2: R_PAREN@45..47 ")" [] [Whitespace(" ")]
             6: (empty)
             7: (empty)
-        8: R_CURLY@47..48 "}" [] []
+        9: R_CURLY@47..48 "}" [] []
   3: EOF@48..49 "" [Newline("\n")] []
 --
 ts_ambient_context_semi.ts:1:19 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

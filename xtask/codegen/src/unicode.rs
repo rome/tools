@@ -5,7 +5,7 @@ use quote::quote;
 
 mod paths {
     pub const DERIVED_CORE_PROPERTIES: &str = "target/DerivedCoreProperties.txt";
-    pub const TABLES: &str = "crates/rome_js_parser/src/lexer/tables.rs";
+    pub const TABLES: &str = "crates/rome_js_unicode_table/src/tables.rs";
 }
 
 pub fn generate_tables() -> Result<()> {
@@ -28,9 +28,7 @@ pub fn generate_tables() -> Result<()> {
                     #(#ranges),*
                 ];
 
-                pub fn #fn_ident(c: char) -> bool {
-                    super::bsearch_range_table(c, #table_ident)
-                }
+                pub fn #fn_ident(c: char) -> bool { super::bsearch_range_table(c, #table_ident) }
             })
         })
         .collect::<Result<Vec<_>, _>>()?;

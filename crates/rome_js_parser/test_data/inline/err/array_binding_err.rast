@@ -90,7 +90,7 @@ JsModule {
                         id: JsArrayBindingPattern {
                             l_brack_token: L_BRACK@51..52 "[" [] [],
                             elements: JsArrayBindingPatternElementList [
-                                JsUnknownBinding {
+                                JsBogusBinding {
                                     items: [
                                         JS_STRING_LITERAL@52..61 "\"default\"" [] [],
                                     ],
@@ -225,7 +225,7 @@ JsModule {
             0: JS_ARRAY_BINDING_PATTERN@51..63
               0: L_BRACK@51..52 "[" [] []
               1: JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST@52..61
-                0: JS_UNKNOWN_BINDING@52..61
+                0: JS_BOGUS_BINDING@52..61
                   0: JS_STRING_LITERAL@52..61 "\"default\"" [] []
               2: R_BRACK@61..63 "]" [] [Whitespace(" ")]
             1: (empty)

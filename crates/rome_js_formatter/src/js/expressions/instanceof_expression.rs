@@ -1,11 +1,11 @@
 use crate::prelude::*;
-use crate::utils::{needs_binary_like_parentheses, JsAnyBinaryLikeExpression};
+use crate::utils::{needs_binary_like_parentheses, AnyJsBinaryLikeExpression};
 
 use crate::parentheses::NeedsParentheses;
 use rome_js_syntax::{JsInstanceofExpression, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsInstanceofExpression;
+pub(crate) struct FormatJsInstanceofExpression;
 
 impl FormatNodeRule<JsInstanceofExpression> for FormatJsInstanceofExpression {
     fn fmt_fields(
@@ -13,7 +13,7 @@ impl FormatNodeRule<JsInstanceofExpression> for FormatJsInstanceofExpression {
         node: &JsInstanceofExpression,
         formatter: &mut JsFormatter,
     ) -> FormatResult<()> {
-        JsAnyBinaryLikeExpression::JsInstanceofExpression(node.clone()).fmt(formatter)
+        AnyJsBinaryLikeExpression::JsInstanceofExpression(node.clone()).fmt(formatter)
     }
 
     fn needs_parentheses(&self, item: &JsInstanceofExpression) -> bool {
@@ -23,14 +23,14 @@ impl FormatNodeRule<JsInstanceofExpression> for FormatJsInstanceofExpression {
 
 impl NeedsParentheses for JsInstanceofExpression {
     fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
-        needs_binary_like_parentheses(&JsAnyBinaryLikeExpression::from(self.clone()), parent)
+        needs_binary_like_parentheses(&AnyJsBinaryLikeExpression::from(self.clone()), parent)
     }
 }
 
 #[cfg(test)]
 mod tests {
     use crate::{assert_needs_parentheses, assert_not_needs_parentheses};
-    use rome_js_syntax::{JsInstanceofExpression, SourceType};
+    use rome_js_syntax::{JsFileSource, JsInstanceofExpression};
 
     #[test]
     fn needs_parentheses() {
@@ -54,12 +54,12 @@ mod tests {
         assert_needs_parentheses!(
             "<test {...(a instanceof B)} />",
             JsInstanceofExpression,
-            SourceType::tsx()
+            JsFileSource::tsx()
         );
         assert_needs_parentheses!(
             "<test>{...(a instanceof B)}</test>",
             JsInstanceofExpression,
-            SourceType::tsx()
+            JsFileSource::tsx()
         );
 
         assert_needs_parentheses!("(a instanceof B).member", JsInstanceofExpression);

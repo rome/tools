@@ -1,5 +1,7 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+assertion_line: 212
+info: js/template-literals/styled-components-with-expressions.js
 ---
 
 # Input
@@ -48,6 +50,7 @@ margin: 0;
 	left: 0;right: 0;
 }
 `;
+
 ```
 
 
@@ -179,6 +182,5 @@ margin: 0;
 }
 `;
 ```
-
 
 

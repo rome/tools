@@ -1,9 +1,10 @@
 use crate::check_file_encoding;
 use crate::runner::{
-    create_unknown_node_in_tree_diagnostic, TestCase, TestCaseFiles, TestRunOutcome, TestSuite,
+    create_bogus_node_in_tree_diagnostic, TestCase, TestCaseFiles, TestRunOutcome, TestSuite,
 };
 use regex::Regex;
-use rome_js_syntax::{ModuleKind, SourceType};
+use rome_js_parser::JsParserOptions;
+use rome_js_syntax::{JsFileSource, ModuleKind};
 use rome_rowan::{AstNode, SyntaxKind};
 use std::convert::TryFrom;
 use std::fmt::Write;
@@ -34,18 +35,17 @@ impl TestCase for MicrosoftTypeScriptTestCase {
         let TestCaseMetadata { files, run_options } = extract_metadata(&self.code, &self.name);
 
         let mut all_errors = Vec::new();
-        let mut unknowns_errors = Vec::new();
+        let mut bogus_errors = Vec::new();
 
         for file in &files {
             match file.parse().ok() {
                 Ok(root) => {
-                    if let Some(unknown) = root
+                    if let Some(bogus) = root
                         .syntax()
                         .descendants()
-                        .find(|descendant| descendant.kind().is_unknown())
+                        .find(|descendant| descendant.kind().is_bogus())
                     {
-                        unknowns_errors
-                            .push(create_unknown_node_in_tree_diagnostic(file.id(), unknown));
+                        bogus_errors.push(create_bogus_node_in_tree_diagnostic(bogus));
                     }
                 }
                 Err(errors) => all_errors.extend(errors),
@@ -61,9 +61,9 @@ impl TestCase for MicrosoftTypeScriptTestCase {
                 errors: all_errors,
                 files,
             }
-        } else if !unknowns_errors.is_empty() {
+        } else if !bogus_errors.is_empty() {
             TestRunOutcome::IncorrectlyErrored {
-                errors: unknowns_errors,
+                errors: bogus_errors,
                 files,
             }
         } else {
@@ -127,7 +127,6 @@ fn extract_metadata(code: &str, path: &str) -> TestCaseMetadata {
                 run_options.extend(
                     option_value
                         .split(',')
-                        .into_iter()
                         .map(|module_value| format!("{option_name}={}", module_value.trim())),
                 );
             }
@@ -173,7 +172,7 @@ fn extract_metadata(code: &str, path: &str) -> TestCaseMetadata {
 fn add_file_if_supported(files: &mut TestCaseFiles, name: String, content: String) {
     let path = Path::new(&name);
     // Skip files that aren't JS/TS files (JSON, CSS...)
-    if let Ok(mut source_type) = SourceType::try_from(path) {
+    if let Ok(mut source_type) = JsFileSource::try_from(path) {
         let is_module_regex = Regex::new("(import|export)\\s").unwrap();
         // A very basic heuristic to determine if a module is a `Script` or a `Module`.
         // The TypeScript parser automatically detects whatever a file is a module or a script
@@ -186,7 +185,12 @@ fn add_file_if_supported(files: &mut TestCaseFiles, name: String, content: Strin
             source_type = source_type.with_module_kind(ModuleKind::Script);
         }
 
-        files.add(name, content, source_type)
+        files.add(
+            name,
+            content,
+            source_type,
+            JsParserOptions::default().with_parse_class_parameter_decorators(),
+        )
     }
 }
 
@@ -222,7 +226,7 @@ fn should_error(name: &str, run_options: &[String]) -> bool {
             .map(|name| format!("{name}({option}).errors.txt"))
             .unwrap();
 
-        let path = Path::new(REFERENCE_PATH).join(&errors_file_name);
+        let path = Path::new(REFERENCE_PATH).join(errors_file_name);
 
         path.exists()
     })

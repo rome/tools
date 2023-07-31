@@ -87,6 +87,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@53..60 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -120,6 +121,7 @@ JsModule {
                         l_paren_token: L_PAREN@80..81 "(" [] [],
                         items: JsParameterList [
                             JsFormalParameter {
+                                decorators: JsDecoratorList [],
                                 binding: JsIdentifierBinding {
                                     name_token: IDENT@81..86 "other" [] [],
                                 },
@@ -261,15 +263,16 @@ JsModule {
           0: IDENT@50..53 "bar" [] []
       1: (empty)
     6: JS_CLASS_DECLARATION@53..159
-      0: (empty)
-      1: CLASS_KW@53..60 "class" [Newline("\n")] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@60..65
+      0: JS_DECORATOR_LIST@53..53
+      1: (empty)
+      2: CLASS_KW@53..60 "class" [Newline("\n")] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@60..65
         0: IDENT@60..65 "Test" [] [Whitespace(" ")]
-      3: (empty)
       4: (empty)
       5: (empty)
-      6: L_CURLY@65..66 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@66..157
+      6: (empty)
+      7: L_CURLY@65..66 "{" [] []
+      8: JS_CLASS_MEMBER_LIST@66..157
         0: JS_PROPERTY_CLASS_MEMBER@66..73
           0: JS_PROPERTY_MODIFIER_LIST@66..66
           1: JS_PRIVATE_CLASS_MEMBER_NAME@66..73
@@ -290,11 +293,12 @@ JsModule {
             0: L_PAREN@80..81 "(" [] []
             1: JS_PARAMETER_LIST@81..86
               0: JS_FORMAL_PARAMETER@81..86
-                0: JS_IDENTIFIER_BINDING@81..86
+                0: JS_DECORATOR_LIST@81..81
+                1: JS_IDENTIFIER_BINDING@81..86
                   0: IDENT@81..86 "other" [] []
-                1: (empty)
                 2: (empty)
                 3: (empty)
+                4: (empty)
             2: R_PAREN@86..88 ")" [] [Whitespace(" ")]
           7: (empty)
           8: JS_FUNCTION_BODY@88..157
@@ -340,5 +344,5 @@ JsModule {
                     1: IDENT@149..152 "bar" [] []
                 1: SEMICOLON@152..153 ";" [] []
             3: R_CURLY@153..157 "}" [Newline("\n"), Whitespace("  ")] []
-      8: R_CURLY@157..159 "}" [Newline("\n")] []
+      9: R_CURLY@157..159 "}" [Newline("\n")] []
   3: EOF@159..160 "" [Newline("\n")] []

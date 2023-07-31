@@ -5,6 +5,7 @@ mod css_kinds_src;
 mod formatter;
 mod generate_analyzer;
 mod generate_macros;
+pub mod generate_new_lintrule;
 mod generate_node_factory;
 mod generate_nodes;
 mod generate_nodes_mut;
@@ -14,9 +15,11 @@ mod generate_v8;
 mod json_kinds_src;
 mod kinds_src;
 mod parser_tests;
+pub mod promote_rule;
 mod termcolorful;
 mod unicode;
-use proc_macro2::TokenStream;
+
+use proc_macro2::{Ident, Span, TokenStream};
 use quote::quote;
 use std::path::Path;
 use std::str::FromStr;
@@ -24,7 +27,7 @@ use std::str::FromStr;
 use xtask::{glue::fs2, Mode, Result};
 
 pub use self::ast::generate_ast;
-pub use self::formatter::generate_formatter;
+pub use self::formatter::generate_formatters;
 pub use self::generate_analyzer::generate_analyzer;
 pub use self::parser_tests::generate_parser_tests;
 pub use self::unicode::generate_tables;
@@ -95,12 +98,8 @@ impl FromStr for LanguageKind {
 }
 
 impl LanguageKind {
-    pub(crate) fn syntax_crate(&self) -> TokenStream {
-        match self {
-            LanguageKind::Js => quote! { rome_js_syntax },
-            LanguageKind::Css => quote! { rome_css_syntax },
-            LanguageKind::Json => quote! { rome_json_syntax },
-        }
+    pub(crate) fn syntax_crate_ident(&self) -> Ident {
+        Ident::new(self.syntax_crate_name(), Span::call_site())
     }
 
     pub(crate) fn syntax_kind(&self) -> TokenStream {
@@ -156,6 +155,30 @@ impl LanguageKind {
             LanguageKind::Js => quote! { JsLanguage },
             LanguageKind::Css => quote! { CssLanguage },
             LanguageKind::Json => quote! { JsonLanguage },
+        }
+    }
+
+    pub fn formatter_crate_name(&self) -> &'static str {
+        match self {
+            LanguageKind::Js => "rome_js_formatter",
+            LanguageKind::Css => "rome_css_formatter",
+            LanguageKind::Json => "rome_json_formatter",
+        }
+    }
+
+    pub fn syntax_crate_name(&self) -> &'static str {
+        match self {
+            LanguageKind::Js => "rome_js_syntax",
+            LanguageKind::Css => "rome_css_syntax",
+            LanguageKind::Json => "rome_json_syntax",
+        }
+    }
+
+    pub fn factory_crate_name(&self) -> &'static str {
+        match self {
+            LanguageKind::Js => "rome_js_factory",
+            LanguageKind::Css => "rome_css_factory",
+            LanguageKind::Json => "rome_json_factory",
         }
     }
 }

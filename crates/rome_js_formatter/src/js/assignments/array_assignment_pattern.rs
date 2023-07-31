@@ -5,7 +5,7 @@ use rome_js_syntax::JsArrayAssignmentPattern;
 use rome_js_syntax::{JsArrayAssignmentPatternFields, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsArrayAssignmentPattern;
+pub(crate) struct FormatJsArrayAssignmentPattern;
 
 impl FormatNodeRule<JsArrayAssignmentPattern> for FormatJsArrayAssignmentPattern {
     fn fmt_fields(&self, node: &JsArrayAssignmentPattern, f: &mut JsFormatter) -> FormatResult<()> {

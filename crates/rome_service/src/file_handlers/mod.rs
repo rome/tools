@@ -1,18 +1,22 @@
 use self::{javascript::JsFileHandler, json::JsonFileHandler, unknown::UnknownFileHandler};
-use crate::workspace::FixFileMode;
+use crate::workspace::{FixFileMode, OrganizeImportsResult};
 use crate::{
     settings::SettingsHandle,
-    workspace::{
-        server::AnyParse, FixFileResult, GetSyntaxTreeResult, PullActionsResult, RenameResult,
-    },
-    RomeError, Rules,
+    workspace::{FixFileResult, GetSyntaxTreeResult, PullActionsResult, RenameResult},
+    Rules, WorkspaceError,
 };
-pub use javascript::JsFormatSettings;
-use rome_analyze::AnalysisFilter;
+pub use javascript::JsFormatterSettings;
+use rome_analyze::{AnalysisFilter, AnalyzerDiagnostic};
+use rome_console::fmt::Formatter;
+use rome_console::markup;
+use rome_diagnostics::{Diagnostic, Severity};
 use rome_formatter::Printed;
 use rome_fs::RomePath;
 use rome_js_syntax::{TextRange, TextSize};
+use rome_parser::AnyParse;
+use rome_rowan::NodeCache;
 use std::ffi::OsStr;
+use std::path::Path;
 
 mod javascript;
 mod json;
@@ -20,7 +24,7 @@ mod unknown;
 
 /// Supported languages by Rome
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Default, serde::Serialize, serde::Deserialize)]
-#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 pub enum Language {
     /// JavaScript
     JavaScript,
@@ -32,12 +36,31 @@ pub enum Language {
     TypeScriptReact,
     /// JSON
     Json,
+    /// JSONC
+    Jsonc,
     /// Any language that is not supported
     #[default]
     Unknown,
 }
 
 impl Language {
+    /// Files that can be bypassed, because correctly handled by the JSON parser
+    pub(crate) const ALLOWED_FILES: &'static [&'static str; 13] = &[
+        "typescript.json",
+        "tslint.json",
+        "babel.config.json",
+        ".babelrc.json",
+        ".ember-cli",
+        "typedoc.json",
+        ".eslintrc.json",
+        ".eslintrc",
+        ".jsfmtrc",
+        ".jshintrc",
+        ".swcrc",
+        ".hintrc",
+        ".babelrc",
+    ];
+
     /// Returns the language corresponding to this file extension
     pub fn from_extension(s: &str) -> Self {
         match s.to_lowercase().as_str() {
@@ -46,8 +69,25 @@ impl Language {
             "ts" | "mts" | "cts" => Language::TypeScript,
             "tsx" => Language::TypeScriptReact,
             "json" => Language::Json,
+            "jsonc" => Language::Jsonc,
             _ => Language::Unknown,
         }
+    }
+
+    pub fn from_known_filename(s: &str) -> Self {
+        if Self::ALLOWED_FILES.contains(&s.to_lowercase().as_str()) {
+            Language::Jsonc
+        } else {
+            Language::Unknown
+        }
+    }
+
+    /// Returns the language corresponding to the file path
+    pub fn from_path(path: &Path) -> Self {
+        path.extension()
+            .and_then(|path| path.to_str())
+            .map(Language::from_extension)
+            .unwrap_or(Language::Unknown)
     }
 
     /// Returns the language corresponding to this language ID
@@ -63,6 +103,7 @@ impl Language {
             "javascriptreact" => Language::JavaScriptReact,
             "typescriptreact" => Language::TypeScriptReact,
             "json" => Language::Json,
+            "jsonc" => Language::Jsonc,
             _ => Language::Unknown,
         }
     }
@@ -98,6 +139,20 @@ impl Language {
     }
 }
 
+impl rome_console::fmt::Display for Language {
+    fn fmt(&self, fmt: &mut Formatter) -> std::io::Result<()> {
+        match self {
+            Language::JavaScript => fmt.write_markup(markup! { "JavaScript" }),
+            Language::JavaScriptReact => fmt.write_markup(markup! { "JSX" }),
+            Language::TypeScript => fmt.write_markup(markup! { "TypeScript" }),
+            Language::TypeScriptReact => fmt.write_markup(markup! { "TSX" }),
+            Language::Json => fmt.write_markup(markup! { "JSON" }),
+            Language::Jsonc => fmt.write_markup(markup! { "JSONC" }),
+            Language::Unknown => fmt.write_markup(markup! { "Unknown" }),
+        }
+    }
+}
+
 // TODO: The Css variant is unused at the moment
 #[allow(dead_code)]
 pub(crate) enum Mime {
@@ -118,37 +173,45 @@ impl std::fmt::Display for Mime {
     }
 }
 
+impl rome_console::fmt::Display for Mime {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::io::Result<()> {
+        write!(f, "{self}")
+    }
+}
+
 pub struct FixAllParams<'a> {
-    pub(crate) rome_path: &'a RomePath,
     pub(crate) parse: AnyParse,
     pub(crate) rules: Option<&'a Rules>,
     pub(crate) fix_file_mode: FixFileMode,
     pub(crate) settings: SettingsHandle<'a>,
+    /// Whether it should format the code action
+    pub(crate) should_format: bool,
+    pub(crate) rome_path: &'a RomePath,
 }
 
 #[derive(Default)]
 /// The list of capabilities that are available for a language
-pub(crate) struct Capabilities {
+pub struct Capabilities {
     pub(crate) parser: ParserCapabilities,
     pub(crate) debug: DebugCapabilities,
     pub(crate) analyzer: AnalyzerCapabilities,
     pub(crate) formatter: FormatterCapabilities,
 }
 
-type Parse = fn(&RomePath, Language, &str) -> AnyParse;
+type Parse = fn(&RomePath, Language, &str, SettingsHandle, &mut NodeCache) -> AnyParse;
 
 #[derive(Default)]
-pub(crate) struct ParserCapabilities {
+pub struct ParserCapabilities {
     /// Parse a file
     pub(crate) parse: Option<Parse>,
 }
 
 type DebugSyntaxTree = fn(&RomePath, AnyParse) -> GetSyntaxTreeResult;
-type DebugControlFlow = fn(&RomePath, AnyParse, TextSize) -> String;
-type DebugFormatterIR = fn(&RomePath, AnyParse, SettingsHandle) -> Result<String, RomeError>;
+type DebugControlFlow = fn(AnyParse, TextSize) -> String;
+type DebugFormatterIR = fn(&RomePath, AnyParse, SettingsHandle) -> Result<String, WorkspaceError>;
 
 #[derive(Default)]
-pub(crate) struct DebugCapabilities {
+pub struct DebugCapabilities {
     /// Prints the syntax tree
     pub(crate) debug_syntax_tree: Option<DebugSyntaxTree>,
     /// Prints the control flow graph
@@ -158,28 +221,29 @@ pub(crate) struct DebugCapabilities {
 }
 
 pub(crate) struct LintParams<'a> {
-    pub(crate) rome_path: &'a RomePath,
     pub(crate) parse: AnyParse,
     pub(crate) filter: AnalysisFilter<'a>,
     pub(crate) rules: Option<&'a Rules>,
     pub(crate) settings: SettingsHandle<'a>,
     pub(crate) max_diagnostics: u64,
+    pub(crate) path: &'a RomePath,
 }
 
 pub(crate) struct LintResults {
-    pub(crate) diagnostics: Vec<rome_diagnostics::v2::serde::Diagnostic>,
-    pub(crate) has_errors: bool,
+    pub(crate) diagnostics: Vec<rome_diagnostics::serde::Diagnostic>,
+    pub(crate) errors: usize,
     pub(crate) skipped_diagnostics: u64,
 }
 
 type Lint = fn(LintParams) -> LintResults;
 type CodeActions =
-    fn(&RomePath, AnyParse, TextRange, Option<&Rules>, SettingsHandle) -> PullActionsResult;
-type FixAll = fn(FixAllParams) -> Result<FixFileResult, RomeError>;
-type Rename = fn(&RomePath, AnyParse, TextSize, String) -> Result<RenameResult, RomeError>;
+    fn(AnyParse, TextRange, Option<&Rules>, SettingsHandle, &RomePath) -> PullActionsResult;
+type FixAll = fn(FixAllParams) -> Result<FixFileResult, WorkspaceError>;
+type Rename = fn(&RomePath, AnyParse, TextSize, String) -> Result<RenameResult, WorkspaceError>;
+type OrganizeImports = fn(AnyParse) -> Result<OrganizeImportsResult, WorkspaceError>;
 
 #[derive(Default)]
-pub(crate) struct AnalyzerCapabilities {
+pub struct AnalyzerCapabilities {
     /// It lints a file
     pub(crate) lint: Option<Lint>,
     /// It extracts code actions for a file
@@ -188,11 +252,15 @@ pub(crate) struct AnalyzerCapabilities {
     pub(crate) fix_all: Option<FixAll>,
     /// It renames a binding inside a file
     pub(crate) rename: Option<Rename>,
+    /// It organize imports
+    pub(crate) organize_imports: Option<OrganizeImports>,
 }
 
-type Format = fn(&RomePath, AnyParse, SettingsHandle) -> Result<Printed, RomeError>;
-type FormatRange = fn(&RomePath, AnyParse, SettingsHandle, TextRange) -> Result<Printed, RomeError>;
-type FormatOnType = fn(&RomePath, AnyParse, SettingsHandle, TextSize) -> Result<Printed, RomeError>;
+type Format = fn(&RomePath, AnyParse, SettingsHandle) -> Result<Printed, WorkspaceError>;
+type FormatRange =
+    fn(&RomePath, AnyParse, SettingsHandle, TextRange) -> Result<Printed, WorkspaceError>;
+type FormatOnType =
+    fn(&RomePath, AnyParse, SettingsHandle, TextSize) -> Result<Printed, WorkspaceError>;
 
 #[derive(Default)]
 pub(crate) struct FormatterCapabilities {
@@ -253,6 +321,10 @@ impl Features {
             .extension()
             .and_then(OsStr::to_str)
             .map(Language::from_extension)
+            .or(rome_path
+                .file_name()
+                .and_then(OsStr::to_str)
+                .map(Language::from_known_filename))
             .unwrap_or_default()
     }
 
@@ -267,8 +339,28 @@ impl Features {
             | Language::JavaScriptReact
             | Language::TypeScript
             | Language::TypeScriptReact => self.js.capabilities(),
-            Language::Json => self.json.capabilities(),
+            Language::Json | Language::Jsonc => self.json.capabilities(),
             Language::Unknown => self.unknown.capabilities(),
         }
     }
+}
+
+/// Checks whether a diagnostic coming from the analyzer is an [error](Severity::Error)
+///
+/// The function checks the diagnostic against the current configured rules.
+pub(crate) fn is_diagnostic_error(
+    diagnostic: &'_ AnalyzerDiagnostic,
+    rules: Option<&'_ Rules>,
+) -> bool {
+    let severity = diagnostic
+        .category()
+        .filter(|category| category.name().starts_with("lint/"))
+        .map(|category| {
+            rules
+                .and_then(|rules| rules.get_severity_from_code(category))
+                .unwrap_or(Severity::Warning)
+        })
+        .unwrap_or_else(|| diagnostic.severity());
+
+    severity >= Severity::Error
 }

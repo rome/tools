@@ -1,0 +1,121 @@
+---
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info: js/explicit-resource-management/for-await-using-of-comments.js
+---
+
+# Input
+
+```js
+/*1*/ for /* 2 */ await /*3*/ ( /*4*/ using /*5*/ fo /*6*/ of /*7*/ of /*8*/) /*9*/;
+
+```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1 +1,2 @@
+-/*1*/ for await (/* 2 */ /*3*/ /*4*/ using /*5*/ fo /*6*/ of /*7*/ of /*8*/ /*9*/);
++/*1*/ for /* 2 */ await /*3*/ ( /*4*/ using /*5*/ fo /*6*/ of /*7*/ of /*8*/
++) /*9*/
+```
+
+# Output
+
+```js
+/*1*/ for /* 2 */ await /*3*/ ( /*4*/ using /*5*/ fo /*6*/ of /*7*/ of /*8*/
+) /*9*/
+```
+
+# Errors
+```
+for-await-using-of-comments.js:1:51 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `;` but instead found `fo`
+  
+  > 1 │ /*1*/ for /* 2 */ await /*3*/ ( /*4*/ using /*5*/ fo /*6*/ of /*7*/ of /*8*/) /*9*/;
+      │                                                   ^^
+    2 │ 
+  
+  i Remove fo
+  
+for-await-using-of-comments.js:1:60 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `;` but instead found `of`
+  
+  > 1 │ /*1*/ for /* 2 */ await /*3*/ ( /*4*/ using /*5*/ fo /*6*/ of /*7*/ of /*8*/) /*9*/;
+      │                                                            ^^
+    2 │ 
+  
+  i Remove of
+  
+for-await-using-of-comments.js:1:69 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `)` but instead found `of`
+  
+  > 1 │ /*1*/ for /* 2 */ await /*3*/ ( /*4*/ using /*5*/ fo /*6*/ of /*7*/ of /*8*/) /*9*/;
+      │                                                                     ^^
+    2 │ 
+  
+  i Remove of
+  
+for-await-using-of-comments.js:1:77 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  > 1 │ /*1*/ for /* 2 */ await /*3*/ ( /*4*/ using /*5*/ fo /*6*/ of /*7*/ of /*8*/) /*9*/;
+      │                                                                             ^
+    2 │ 
+  
+  i An explicit or implicit semicolon is expected here...
+  
+  > 1 │ /*1*/ for /* 2 */ await /*3*/ ( /*4*/ using /*5*/ fo /*6*/ of /*7*/ of /*8*/) /*9*/;
+      │                                                                             ^
+    2 │ 
+  
+  i ...Which is required to end this statement
+  
+  > 1 │ /*1*/ for /* 2 */ await /*3*/ ( /*4*/ using /*5*/ fo /*6*/ of /*7*/ of /*8*/) /*9*/;
+      │                                                                     ^^^^^^^^^
+    2 │ 
+  
+for-await-using-of-comments.js:1:19 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × await can only be used in conjunction with `for...of` statements
+  
+  > 1 │ /*1*/ for /* 2 */ await /*3*/ ( /*4*/ using /*5*/ fo /*6*/ of /*7*/ of /*8*/) /*9*/;
+      │                   ^^^^^
+    2 │ 
+  
+  i Remove the await here
+  
+  > 1 │ /*1*/ for /* 2 */ await /*3*/ ( /*4*/ using /*5*/ fo /*6*/ of /*7*/ of /*8*/) /*9*/;
+      │                   ^^^^^
+    2 │ 
+  
+  i or convert this to a `for...of` statement
+  
+  > 1 │ /*1*/ for /* 2 */ await /*3*/ ( /*4*/ using /*5*/ fo /*6*/ of /*7*/ of /*8*/) /*9*/;
+      │       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    2 │ 
+  
+for-await-using-of-comments.js:1:77 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected a statement but instead found ')'
+  
+  > 1 │ /*1*/ for /* 2 */ await /*3*/ ( /*4*/ using /*5*/ fo /*6*/ of /*7*/ of /*8*/) /*9*/;
+      │                                                                             ^
+    2 │ 
+  
+  i Expected a statement here
+  
+  > 1 │ /*1*/ for /* 2 */ await /*3*/ ( /*4*/ using /*5*/ fo /*6*/ of /*7*/ of /*8*/) /*9*/;
+      │                                                                             ^
+    2 │ 
+  
+
+```
+
+

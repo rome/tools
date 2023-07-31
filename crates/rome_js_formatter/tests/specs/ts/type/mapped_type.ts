@@ -1,0 +1,1 @@
+type LongNameHereToCauseLineBreak_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ={ [K in "foo"]: string };

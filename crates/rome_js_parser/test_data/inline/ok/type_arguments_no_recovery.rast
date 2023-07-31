@@ -71,7 +71,7 @@ JsModule {
                                                     value: IDENT@55..70 "marker" [Newline("\n"), Whitespace("        ")] [],
                                                 },
                                                 colon_token: COLON@70..72 ":" [] [Whitespace(" ")],
-                                                value: JsTemplate {
+                                                value: JsTemplateExpression {
                                                     tag: missing (optional),
                                                     type_arguments: missing (optional),
                                                     l_tick_token: BACKTICK@72..73 "`" [] [],
@@ -287,7 +287,7 @@ JsModule {
                         0: JS_LITERAL_MEMBER_NAME@55..70
                           0: IDENT@55..70 "marker" [Newline("\n"), Whitespace("        ")] []
                         1: COLON@70..72 ":" [] [Whitespace(" ")]
-                        2: JS_TEMPLATE@72..82
+                        2: JS_TEMPLATE_EXPRESSION@72..82
                           0: (empty)
                           1: (empty)
                           2: BACKTICK@72..73 "`" [] []

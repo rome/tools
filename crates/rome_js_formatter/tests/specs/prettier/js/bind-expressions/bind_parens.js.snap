@@ -1,7 +1,7 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
-info:
-  test_file: js/bind-expressions/bind_parens.js
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+assertion_line: 212
+info: js/bind-expressions/bind_parens.js
 ---
 
 # Input
@@ -41,6 +41,7 @@ new (a::b)();
 new f(a::b);
 f[a::b];
 f[a::b()];
+
 ```
 
 
@@ -221,7 +222,6 @@ f[a
 f[a
 ::b()]
 ```
-
 
 # Errors
 ```

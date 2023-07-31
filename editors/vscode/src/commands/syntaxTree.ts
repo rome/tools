@@ -1,24 +1,24 @@
+import { SyntaxTreeParams, syntaxTreeRequest } from "../lsp_requests";
 import { Command, Session } from "../session";
+import { isRomeEditor } from "../utils";
+import { SyntaxTreeDocument } from "./syntaxTreeDocument";
 import {
 	CancellationToken,
-	ProviderResult,
-	Uri,
-	window,
-	TextDocumentContentProvider,
-	workspace,
-	ViewColumn,
 	Disposable,
-	DocumentLinkProvider,
-	TextDocument,
 	DocumentLink,
+	DocumentLinkProvider,
 	EventEmitter,
-	TextEditor,
+	ProviderResult,
+	TextDocument,
 	TextDocumentChangeEvent,
+	TextDocumentContentProvider,
+	TextEditor,
+	Uri,
+	ViewColumn,
 	languages,
+	window,
+	workspace,
 } from "vscode";
-import { SyntaxTreeParams, syntaxTreeRequest } from "../lsp_requests";
-import { SyntaxTreeDocument } from "./syntaxTreeDocument";
-import { isRomeEditor } from "../utils";
 
 type FilePath = string;
 
@@ -80,7 +80,7 @@ class SyntaxTreeProvider
 		uri: Uri,
 		token: CancellationToken,
 	): ProviderResult<string> {
-		let documentUri = this.session.editor.document.uri.toString();
+		const documentUri = this.session.editor.document.uri.toString();
 		// if the document is already cached, we show it
 		const document = this.documents.get(documentUri);
 		if (document) {
@@ -102,7 +102,7 @@ class SyntaxTreeProvider
 			});
 	}
 
-	dispose(): any {
+	dispose(): void {
 		this.documents.clear();
 	}
 

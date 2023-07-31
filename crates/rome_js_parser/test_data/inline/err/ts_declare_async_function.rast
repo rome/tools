@@ -2,10 +2,10 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 DECLARE_KW@0..8 "declare" [] [Whitespace(" ")],
-                JsUnknownStatement {
+                JsBogusStatement {
                     items: [
                         ASYNC_KW@8..14 "async" [] [Whitespace(" ")],
                         FUNCTION_KW@14..23 "function" [] [Whitespace(" ")],
@@ -30,9 +30,9 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..30
-    0: JS_UNKNOWN_STATEMENT@0..30
+    0: JS_BOGUS_STATEMENT@0..30
       0: DECLARE_KW@0..8 "declare" [] [Whitespace(" ")]
-      1: JS_UNKNOWN_STATEMENT@8..30
+      1: JS_BOGUS_STATEMENT@8..30
         0: ASYNC_KW@8..14 "async" [] [Whitespace(" ")]
         1: FUNCTION_KW@14..23 "function" [] [Whitespace(" ")]
         2: JS_IDENTIFIER_BINDING@23..27

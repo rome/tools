@@ -42,7 +42,7 @@ impl FormatNodeRule<JsxClosingFragment> for FormatJsxClosingFragment {
                 slash_token.format(),
                 indent(&format_comments),
                 has_own_line_comment.then_some(hard_line_break()),
-                r_angle_token.format()
+                r_angle_token.format(),
             ]
         ]
     }

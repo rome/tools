@@ -11,17 +11,19 @@ expression: content
     "ignore": ["test.js"]
   }
 }
-
 ```
 
 ## `test.js`
 
 ```js
-
-if(a != -0) {}
+1 >= -0;
 
 ```
 
 # Emitted Messages
+
+```block
+Fixed 1 file(s) in <TIME>
+```
 
 

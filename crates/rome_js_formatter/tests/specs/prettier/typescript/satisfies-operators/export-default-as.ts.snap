@@ -1,0 +1,31 @@
+---
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+assertion_line: 212
+info: typescript/satisfies-operators/export-default-as.ts
+---
+
+# Input
+
+```ts
+export default (function log() {} satisfies typeof console.log)
+
+```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1 +1 @@
+-export default (function log() {} satisfies typeof console.log);
++export default (function log() {}) satisfies typeof console.log;
+```
+
+# Output
+
+```ts
+export default (function log() {}) satisfies typeof console.log;
+```
+
+

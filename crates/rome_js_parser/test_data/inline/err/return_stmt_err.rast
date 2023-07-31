@@ -2,13 +2,13 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 RETURN_KW@0..6 "return" [] [],
                 SEMICOLON@6..7 ";" [] [],
             ],
         },
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 RETURN_KW@7..15 "return" [Newline("\n")] [Whitespace(" ")],
                 JsIdentifierExpression {
@@ -27,10 +27,10 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..19
-    0: JS_UNKNOWN_STATEMENT@0..7
+    0: JS_BOGUS_STATEMENT@0..7
       0: RETURN_KW@0..6 "return" [] []
       1: SEMICOLON@6..7 ";" [] []
-    1: JS_UNKNOWN_STATEMENT@7..19
+    1: JS_BOGUS_STATEMENT@7..19
       0: RETURN_KW@7..15 "return" [Newline("\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_EXPRESSION@15..18
         0: JS_REFERENCE_IDENTIFIER@15..18

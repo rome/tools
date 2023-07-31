@@ -3,6 +3,7 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: ABSTRACT_KW@0..9 "abstract" [] [Whitespace(" ")],
             class_token: CLASS_KW@9..15 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -13,9 +14,9 @@ JsModule {
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@31..32 "{" [] [],
             members: JsClassMemberList [
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
-                        JsUnknown {
+                        JsBogus {
                             items: [
                                 TsAbstractModifier {
                                     modifier_token: ABSTRACT_KW@32..46 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
@@ -38,7 +39,7 @@ JsModule {
                         },
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         TsMethodSignatureModifierList [
                             TsAbstractModifier {
@@ -67,7 +68,7 @@ JsModule {
                         },
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         TsMethodSignatureModifierList [
                             TsAbstractModifier {
@@ -88,7 +89,7 @@ JsModule {
                         },
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         TsMethodSignatureModifierList [
                             TsAbstractModifier {
@@ -101,6 +102,7 @@ JsModule {
                         },
                         L_PAREN@152..153 "(" [] [],
                         JsFormalParameter {
+                            decorators: JsDecoratorList [],
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@153..157 "name" [] [],
                             },
@@ -117,7 +119,7 @@ JsModule {
                         },
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         TsMethodSignatureModifierList [
                             TsAbstractModifier {
@@ -153,17 +155,18 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..197
     0: JS_CLASS_DECLARATION@0..197
-      0: ABSTRACT_KW@0..9 "abstract" [] [Whitespace(" ")]
-      1: CLASS_KW@9..15 "class" [] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@15..31
+      0: JS_DECORATOR_LIST@0..0
+      1: ABSTRACT_KW@0..9 "abstract" [] [Whitespace(" ")]
+      2: CLASS_KW@9..15 "class" [] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@15..31
         0: IDENT@15..31 "AbstractMembers" [] [Whitespace(" ")]
-      3: (empty)
       4: (empty)
       5: (empty)
-      6: L_CURLY@31..32 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@32..195
-        0: JS_UNKNOWN_MEMBER@32..63
-          0: JS_UNKNOWN@32..46
+      6: (empty)
+      7: L_CURLY@31..32 "{" [] []
+      8: JS_CLASS_MEMBER_LIST@32..195
+        0: JS_BOGUS_MEMBER@32..63
+          0: JS_BOGUS@32..46
             0: TS_ABSTRACT_MODIFIER@32..46
               0: ABSTRACT_KW@32..46 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
           1: JS_LITERAL_MEMBER_NAME@46..57
@@ -177,7 +180,7 @@ JsModule {
             1: JS_DIRECTIVE_LIST@62..62
             2: JS_STATEMENT_LIST@62..62
             3: R_CURLY@62..63 "}" [] []
-        1: JS_UNKNOWN_MEMBER@63..96
+        1: JS_BOGUS_MEMBER@63..96
           0: TS_METHOD_SIGNATURE_MODIFIER_LIST@63..77
             0: TS_ABSTRACT_MODIFIER@63..77
               0: ABSTRACT_KW@63..77 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
@@ -196,7 +199,7 @@ JsModule {
             1: JS_DIRECTIVE_LIST@95..95
             2: JS_STATEMENT_LIST@95..95
             3: R_CURLY@95..96 "}" [] []
-        2: JS_UNKNOWN_MEMBER@96..127
+        2: JS_BOGUS_MEMBER@96..127
           0: TS_METHOD_SIGNATURE_MODIFIER_LIST@96..110
             0: TS_ABSTRACT_MODIFIER@96..110
               0: ABSTRACT_KW@96..110 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
@@ -210,7 +213,7 @@ JsModule {
             1: JS_DIRECTIVE_LIST@126..126
             2: JS_STATEMENT_LIST@126..126
             3: R_CURLY@126..127 "}" [] []
-        3: JS_UNKNOWN_MEMBER@127..162
+        3: JS_BOGUS_MEMBER@127..162
           0: TS_METHOD_SIGNATURE_MODIFIER_LIST@127..141
             0: TS_ABSTRACT_MODIFIER@127..141
               0: ABSTRACT_KW@127..141 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
@@ -219,18 +222,19 @@ JsModule {
             0: IDENT@145..152 "my_name" [] []
           3: L_PAREN@152..153 "(" [] []
           4: JS_FORMAL_PARAMETER@153..157
-            0: JS_IDENTIFIER_BINDING@153..157
+            0: JS_DECORATOR_LIST@153..153
+            1: JS_IDENTIFIER_BINDING@153..157
               0: IDENT@153..157 "name" [] []
-            1: (empty)
             2: (empty)
             3: (empty)
+            4: (empty)
           5: R_PAREN@157..159 ")" [] [Whitespace(" ")]
           6: JS_FUNCTION_BODY@159..162
             0: L_CURLY@159..161 "{" [] [Whitespace(" ")]
             1: JS_DIRECTIVE_LIST@161..161
             2: JS_STATEMENT_LIST@161..161
             3: R_CURLY@161..162 "}" [] []
-        4: JS_UNKNOWN_MEMBER@162..195
+        4: JS_BOGUS_MEMBER@162..195
           0: TS_METHOD_SIGNATURE_MODIFIER_LIST@162..176
             0: TS_ABSTRACT_MODIFIER@162..176
               0: ABSTRACT_KW@162..176 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
@@ -246,7 +250,7 @@ JsModule {
             1: JS_DIRECTIVE_LIST@194..194
             2: JS_STATEMENT_LIST@194..194
             3: R_CURLY@194..195 "}" [] []
-      8: R_CURLY@195..197 "}" [Newline("\n")] []
+      9: R_CURLY@195..197 "}" [Newline("\n")] []
   3: EOF@197..198 "" [Newline("\n")] []
 --
 typescript_abstract_class_member_should_not_have_body.ts:2:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

@@ -1,24 +1,24 @@
-//! Generated file, do not edit by hand, see `xtask/codegen`
+//! This is a generated file. Don't modify it by hand! Run 'cargo codegen formatter' to re-generate the file.
 
 use crate::prelude::*;
-use rome_js_syntax::JsAnyDeclarationClause;
+use rome_js_syntax::AnyJsDeclarationClause;
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsAnyDeclarationClause;
-impl FormatRule<JsAnyDeclarationClause> for FormatJsAnyDeclarationClause {
+pub(crate) struct FormatAnyJsDeclarationClause;
+impl FormatRule<AnyJsDeclarationClause> for FormatAnyJsDeclarationClause {
     type Context = JsFormatContext;
-    fn fmt(&self, node: &JsAnyDeclarationClause, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &AnyJsDeclarationClause, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            JsAnyDeclarationClause::JsClassDeclaration(node) => node.format().fmt(f),
-            JsAnyDeclarationClause::JsFunctionDeclaration(node) => node.format().fmt(f),
-            JsAnyDeclarationClause::JsVariableDeclarationClause(node) => node.format().fmt(f),
-            JsAnyDeclarationClause::TsEnumDeclaration(node) => node.format().fmt(f),
-            JsAnyDeclarationClause::TsTypeAliasDeclaration(node) => node.format().fmt(f),
-            JsAnyDeclarationClause::TsInterfaceDeclaration(node) => node.format().fmt(f),
-            JsAnyDeclarationClause::TsDeclareFunctionDeclaration(node) => node.format().fmt(f),
-            JsAnyDeclarationClause::TsModuleDeclaration(node) => node.format().fmt(f),
-            JsAnyDeclarationClause::TsExternalModuleDeclaration(node) => node.format().fmt(f),
-            JsAnyDeclarationClause::TsGlobalDeclaration(node) => node.format().fmt(f),
-            JsAnyDeclarationClause::TsImportEqualsDeclaration(node) => node.format().fmt(f),
+            AnyJsDeclarationClause::JsClassDeclaration(node) => node.format().fmt(f),
+            AnyJsDeclarationClause::JsFunctionDeclaration(node) => node.format().fmt(f),
+            AnyJsDeclarationClause::JsVariableDeclarationClause(node) => node.format().fmt(f),
+            AnyJsDeclarationClause::TsEnumDeclaration(node) => node.format().fmt(f),
+            AnyJsDeclarationClause::TsTypeAliasDeclaration(node) => node.format().fmt(f),
+            AnyJsDeclarationClause::TsInterfaceDeclaration(node) => node.format().fmt(f),
+            AnyJsDeclarationClause::TsDeclareFunctionDeclaration(node) => node.format().fmt(f),
+            AnyJsDeclarationClause::TsModuleDeclaration(node) => node.format().fmt(f),
+            AnyJsDeclarationClause::TsExternalModuleDeclaration(node) => node.format().fmt(f),
+            AnyJsDeclarationClause::TsGlobalDeclaration(node) => node.format().fmt(f),
+            AnyJsDeclarationClause::TsImportEqualsDeclaration(node) => node.format().fmt(f),
         }
     }
 }

@@ -1,6 +1,8 @@
+/* should not generate diagnostics */
+
+import { useEffect } from "react";
 
 // capturing declarations
-function overloaded(): number;
 function overloaded(s: string): string;
 function overloaded(s?: string) {
   return s;
@@ -8,20 +10,31 @@ function overloaded(s?: string) {
 
 enum A { B = 1 }
 abstract class C { static D = 1 }
-class D {}
+class D {
+    constructor() {
 
-export type E = D;
+    }
+}
 
 declare module M {
-    function m1();
+    function f();
 }
 
 function MyComponent() {
     useEffect(() => {
-        overloaded();
+        overloaded("");
         console.log(A.B);
         console.log(C.D);
-        console.log(new E());
-        console.log(m1());
+        console.log(new D());
+        console.log(M.f());
     }, []);
+}
+
+// Capturing an object property with optional chaining
+export function MyComponent2() {
+    let selectedArticle: { redirectUrl: string } | undefined;
+
+    useEffect(() => {
+        if (selectedArticle?.redirectUrl) {}
+    }, [selectedArticle?.redirectUrl]);
 }

@@ -6,7 +6,7 @@ use rome_js_syntax::JsSuperExpressionFields;
 use rome_js_syntax::{JsSuperExpression, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsSuperExpression;
+pub(crate) struct FormatJsSuperExpression;
 
 impl FormatNodeRule<JsSuperExpression> for FormatJsSuperExpression {
     fn fmt_fields(&self, node: &JsSuperExpression, f: &mut JsFormatter) -> FormatResult<()> {

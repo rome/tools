@@ -6,7 +6,7 @@ mod stack;
 
 pub use printer_options::*;
 
-use crate::format_element::{BestFitting, LineMode, PrintMode};
+use crate::format_element::{BestFittingElement, LineMode, PrintMode};
 use crate::{
     ActualStart, FormatElement, GroupId, IndentStyle, InvalidDocumentError, PrintError,
     PrintResult, Printed, SourceMarker, TextRange,
@@ -99,7 +99,7 @@ impl<'a> Printer<'a> {
                 text,
                 source_position,
             } => self.print_text(text, Some(*source_position)),
-            FormatElement::SyntaxTokenTextSlice {
+            FormatElement::LocatedTokenText {
                 slice,
                 source_position,
             } => self.print_text(slice, Some(*source_position)),
@@ -380,7 +380,7 @@ impl<'a> Printer<'a> {
 
     fn print_best_fitting(
         &mut self,
-        best_fitting: &'a BestFitting,
+        best_fitting: &'a BestFittingElement,
         queue: &mut PrintQueue<'a>,
         stack: &mut PrintCallStack,
     ) -> PrintResult<()> {
@@ -1001,7 +1001,7 @@ impl<'a, 'print> FitsMeasurer<'a, 'print> {
 
             FormatElement::StaticText { text } => return Ok(self.fits_text(text)),
             FormatElement::DynamicText { text, .. } => return Ok(self.fits_text(text)),
-            FormatElement::SyntaxTokenTextSlice { slice, .. } => return Ok(self.fits_text(slice)),
+            FormatElement::LocatedTokenText { slice, .. } => return Ok(self.fits_text(slice)),
 
             FormatElement::LineSuffixBoundary => {
                 if self.state.has_line_suffix {

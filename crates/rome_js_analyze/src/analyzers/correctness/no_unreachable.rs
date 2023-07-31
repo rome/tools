@@ -2,7 +2,9 @@ use std::{cmp::Ordering, collections::VecDeque, num::NonZeroU32, vec::IntoIter};
 
 use roaring::bitmap::RoaringBitmap;
 use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleDiagnostic};
-use rome_control_flow::{builder::BlockId, ExceptionHandler, Instruction, InstructionKind};
+use rome_control_flow::{
+    builder::BlockId, ExceptionHandler, ExceptionHandlerKind, Instruction, InstructionKind,
+};
 use rome_js_syntax::{
     JsBlockStatement, JsCaseClause, JsDefaultClause, JsDoWhileStatement, JsForInStatement,
     JsForOfStatement, JsForStatement, JsFunctionBody, JsIfStatement, JsLabeledStatement,
@@ -12,7 +14,7 @@ use rome_js_syntax::{
 use rome_rowan::{declare_node_union, AstNode};
 use rustc_hash::FxHashMap;
 
-use crate::control_flow::ControlFlowGraph;
+use crate::control_flow::{ControlFlowGraph, JsControlFlowGraph};
 
 declare_rule! {
     /// Disallow unreachable code
@@ -200,13 +202,13 @@ impl Rule for NoUnreachable {
 /// simple reachability analysis instead of the fine analysis
 const COMPLEXITY_THRESHOLD: u32 = 20;
 
-/// Returns true if the "complexity score" for the [ControlFlowGraph] is higher
+/// Returns true if the "complexity score" for the [JsControlFlowGraph] is higher
 /// than [COMPLEXITY_THRESHOLD]. This score is an arbritrary value (the formula
 /// is similar to the cyclomatic complexity of the function but this is only
 /// approximative) used to determine whether the NoDeadCode rule should perform
 /// a fine reachability analysis or fall back to a simpler algorithm to avoid
 /// spending too much time analyzing exceedingly complex functions
-fn exceeds_complexity_threshold(cfg: &ControlFlowGraph) -> bool {
+fn exceeds_complexity_threshold(cfg: &JsControlFlowGraph) -> bool {
     let nodes = cfg.blocks.len() as u32;
 
     let mut edges: u32 = 0;
@@ -254,7 +256,7 @@ fn exceeds_complexity_threshold(cfg: &ControlFlowGraph) -> bool {
 /// Perform a simple reachability analysis, does not attempt to determine a
 /// terminator instruction for unreachable ranges allowing blocks to be visited
 /// at most once and ensuring the algorithm finishes in a bounded time
-fn analyze_simple(cfg: &ControlFlowGraph, signals: &mut UnreachableRanges) {
+fn analyze_simple(cfg: &JsControlFlowGraph, signals: &mut UnreachableRanges) {
     // Perform a simple reachability analysis on the control flow graph by
     // traversing the function starting at the entry point
     let mut reachable_blocks = RoaringBitmap::new();
@@ -294,7 +296,7 @@ fn analyze_simple(cfg: &ControlFlowGraph, signals: &mut UnreachableRanges) {
                 // catch or finally block
                 if let Some((handler, handlers)) = exception_handlers.take() {
                     if reachable_blocks.insert(handler.target) {
-                        queue.push_back((handler.target, Some(handlers)));
+                        queue.push_back((handler.target, find_catch_handlers(handlers)));
                     }
                 }
             }
@@ -359,7 +361,7 @@ fn analyze_simple(cfg: &ControlFlowGraph, signals: &mut UnreachableRanges) {
 /// the reachability of each block and instruction but also find one or more
 /// "terminator instructions" for each unreachable range of code that cause it
 /// to be impossible to reach
-fn analyze_fine(cfg: &ControlFlowGraph, signals: &mut UnreachableRanges) {
+fn analyze_fine(cfg: &JsControlFlowGraph, signals: &mut UnreachableRanges) {
     // Traverse the CFG and calculate block / instruction reachability
     let block_paths = traverse_cfg(cfg, signals);
 
@@ -425,7 +427,7 @@ struct PathState<'cfg> {
 /// Perform a simple reachability analysis on the control flow graph by
 /// traversing the function starting at the entry points
 fn traverse_cfg(
-    cfg: &ControlFlowGraph,
+    cfg: &JsControlFlowGraph,
     signals: &mut UnreachableRanges,
 ) -> FxHashMap<u32, Vec<Option<Option<PathTerminator>>>> {
     let mut queue = VecDeque::new();
@@ -473,7 +475,7 @@ fn traverse_cfg(
                             next_block: handler.target,
                             visited: path.visited.clone(),
                             terminator: path.terminator,
-                            exception_handlers: Some(handlers),
+                            exception_handlers: find_catch_handlers(handlers),
                         });
                     }
                 }
@@ -539,6 +541,22 @@ fn has_side_effects(inst: &Instruction<JsLanguage>) -> bool {
 
         JsSyntaxKind::JS_BREAK_STATEMENT | JsSyntaxKind::JS_CONTINUE_STATEMENT => false,
         kind => element.as_node().is_some() && !kind.is_literal(),
+    }
+}
+
+/// Returns the list of all `finally` exception handlers up to and including
+/// the first `catch` handler to be executed when an exception is thrown
+fn find_catch_handlers(handlers: &[ExceptionHandler]) -> Option<&[ExceptionHandler]> {
+    let handlers = handlers
+        .iter()
+        .position(|handler| matches!(handler.kind, ExceptionHandlerKind::Catch))
+        .map(|index| &handlers[index..])
+        .unwrap_or(handlers);
+
+    if handlers.is_empty() {
+        None
+    } else {
+        Some(handlers)
     }
 }
 

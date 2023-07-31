@@ -3,9 +3,9 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsExpressionStatement {
-            expression: JsUnknownExpression {
+            expression: JsBogusExpression {
                 items: [
-                    JsUnknown {
+                    JsBogus {
                         items: [
                             JsxOpeningFragment {
                                 l_angle_token: L_ANGLE@0..1 "<" [] [],
@@ -16,7 +16,7 @@ JsModule {
                                     value_token: JSX_TEXT_LITERAL@2..6 "test" [] [],
                                 },
                             ],
-                            JsUnknown {
+                            JsBogus {
                                 items: [
                                     L_ANGLE@6..7 "<" [] [],
                                     SLASH@7..8 "/" [] [],
@@ -89,15 +89,15 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..48
     0: JS_EXPRESSION_STATEMENT@0..14
-      0: JS_UNKNOWN_EXPRESSION@0..13
-        0: JS_UNKNOWN@0..13
+      0: JS_BOGUS_EXPRESSION@0..13
+        0: JS_BOGUS@0..13
           0: JSX_OPENING_FRAGMENT@0..2
             0: L_ANGLE@0..1 "<" [] []
             1: R_ANGLE@1..2 ">" [] []
           1: JSX_CHILD_LIST@2..6
             0: JSX_TEXT@2..6
               0: JSX_TEXT_LITERAL@2..6 "test" [] []
-          2: JS_UNKNOWN@6..13
+          2: JS_BOGUS@6..13
             0: L_ANGLE@6..7 "<" [] []
             1: SLASH@7..8 "/" [] []
             2: JSX_NAME@8..12

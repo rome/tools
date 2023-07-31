@@ -1,5 +1,7 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+assertion_line: 212
+info: js/method-chain/issue-11298.js
 ---
 
 # Input
@@ -8,6 +10,7 @@ source: crates/rome_js_formatter/tests/prettier_tests.rs
 foo1(/𠮟𠮟𠮟/).foo2(bar).foo3(baz);
 
 foo1(/叱叱叱/).foo2(bar).foo3(baz);
+
 ```
 
 
@@ -35,6 +38,5 @@ foo1(/𠮟𠮟𠮟/).foo2(bar).foo3(baz);
 
 foo1(/叱叱叱/).foo2(bar).foo3(baz);
 ```
-
 
 

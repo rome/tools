@@ -1,4 +1,4 @@
-use rome_rowan::{Language, SyntaxElement};
+use rome_rowan::{Language, SyntaxElement, SyntaxNode};
 
 use crate::{
     BasicBlock, ControlFlowGraph, ExceptionHandler, ExceptionHandlerKind, Instruction,
@@ -27,19 +27,21 @@ pub struct FunctionBuilder<L: Language> {
     block_cursor: BlockId,
 }
 
-impl<L: Language> Default for FunctionBuilder<L> {
-    fn default() -> Self {
+impl<L: Language> FunctionBuilder<L> {
+    /// Create a new [FunctionBuilder] instance from a function node
+    pub fn new(node: SyntaxNode<L>) -> Self {
         Self {
-            result: ControlFlowGraph::new(),
+            result: ControlFlowGraph::new(node),
             exception_target: Vec::new(),
             block_cursor: BlockId { index: 0 },
         }
     }
-}
 
-impl<L: Language> FunctionBuilder<L> {
     /// Finishes building the function
-    pub fn finish(self) -> ControlFlowGraph<L> {
+    pub fn finish(mut self) -> ControlFlowGraph<L> {
+        // Append the implicit return instruction that resumes execution of the
+        // parent procedure when control flow reaches the end of a function
+        self.append_return();
         self.result
     }
 

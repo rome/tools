@@ -1,14 +1,16 @@
 use crate::green::{GreenToken, GreenTrivia};
 use crate::syntax::element::SyntaxElementKey;
 use crate::syntax::SyntaxTrivia;
-use crate::syntax_token_text::SyntaxTokenText;
+use crate::token_text::TokenText;
 use crate::{
-    cursor, Direction, Language, NodeOrToken, SyntaxElement, SyntaxKind, SyntaxNode,
-    SyntaxTriviaPiece, TriviaPiece, TriviaPieceKind,
+    chain_trivia_pieces, cursor, Direction, Language, NodeOrToken, SyntaxElement, SyntaxKind,
+    SyntaxNode, SyntaxTriviaPiece, TriviaPiece, TriviaPieceKind,
 };
 use rome_text_size::{TextLen, TextRange, TextSize};
 use std::fmt;
 use std::marker::PhantomData;
+
+use super::trivia::{trim_leading_trivia_pieces, trim_trailing_trivia_pieces};
 
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct SyntaxToken<L: Language> {
@@ -117,11 +119,11 @@ impl<L: Language> SyntaxToken<L> {
     ///     format!("{:?}", token.token_text())
     /// );
     /// ```
-    pub fn token_text(&self) -> SyntaxTokenText {
+    pub fn token_text(&self) -> TokenText {
         self.raw.token_text()
     }
 
-    pub fn token_text_trimmed(&self) -> SyntaxTokenText {
+    pub fn token_text_trimmed(&self) -> TokenText {
         self.raw.token_text_trimmed()
     }
 
@@ -310,6 +312,138 @@ impl<L: Language> SyntaxToken<L> {
         }
     }
 
+    // Return a new version of this token with `trivia` prepended to its leading trivia.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind};
+    /// use rome_rowan::{RawSyntaxToken, SyntaxToken, TriviaPiece};
+    ///
+    /// let token = SyntaxToken::<RawLanguage>::new_detached(
+    ///     RawLanguageKind::LET_TOKEN,  
+    ///     "/*c*/ let \t",
+    ///     [TriviaPiece::multi_line_comment(5), TriviaPiece::whitespace(1)],
+    ///     [TriviaPiece::whitespace(2)]
+    /// );
+    /// let new_token = token.prepend_trivia_pieces(token.trailing_trivia().pieces());
+    ///
+    /// assert_eq!(
+    ///     format!("{:?}", new_token),
+    ///     "LET_TOKEN@0..13 \"let\" [Whitespace(\" \\t\"), Comments(\"/*c*/\"), Whitespace(\" \")] [Whitespace(\" \\t\")]"
+    /// );
+    /// ```
+    #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
+    pub fn prepend_trivia_pieces<I>(&self, trivia: I) -> Self
+    where
+        I: IntoIterator<Item = SyntaxTriviaPiece<L>>,
+        I::IntoIter: ExactSizeIterator,
+    {
+        self.with_leading_trivia_pieces(chain_trivia_pieces(
+            trivia.into_iter(),
+            self.leading_trivia().pieces(),
+        ))
+    }
+
+    // Return a new version of this token with `trivia` appended to its trailing trivia.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind};
+    /// use rome_rowan::{RawSyntaxToken, SyntaxToken, TriviaPiece};
+    ///
+    /// let token = SyntaxToken::<RawLanguage>::new_detached(
+    ///     RawLanguageKind::LET_TOKEN,  
+    ///     "\t let /*c*/",
+    ///     [TriviaPiece::whitespace(2)],
+    ///     [TriviaPiece::whitespace(1), TriviaPiece::multi_line_comment(5)],
+    /// );
+    /// let new_token = token.append_trivia_pieces(token.leading_trivia().pieces());
+    ///
+    /// assert_eq!(
+    ///     format!("{:?}", new_token),
+    ///     "LET_TOKEN@0..13 \"let\" [Whitespace(\"\\t \")] [Whitespace(\" \"), Comments(\"/*c*/\"), Whitespace(\"\\t \")]"
+    /// );
+    /// ```
+    #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
+    pub fn append_trivia_pieces<I>(&self, trivia: I) -> Self
+    where
+        I: IntoIterator<Item = SyntaxTriviaPiece<L>>,
+        I::IntoIter: ExactSizeIterator,
+    {
+        self.with_trailing_trivia_pieces(chain_trivia_pieces(
+            self.trailing_trivia().pieces(),
+            trivia.into_iter(),
+        ))
+    }
+
+    /// Return a new version of this token without leading newlines and whitespaces.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind};
+    /// use rome_rowan::{RawSyntaxToken, SyntaxToken, TriviaPiece};
+    ///
+    /// let token = SyntaxToken::<RawLanguage>::new_detached(
+    ///     RawLanguageKind::LET_TOKEN,  
+    ///     "\n\t /*c*/ let \t",
+    ///     [TriviaPiece::newline(1), TriviaPiece::whitespace(2), TriviaPiece::multi_line_comment(5), TriviaPiece::whitespace(1)],
+    ///     [TriviaPiece::whitespace(2)]
+    /// );
+    /// let new_token = token.trim_leading_trivia();
+    ///
+    /// assert_eq!(
+    ///     format!("{:?}", new_token),
+    ///     "LET_TOKEN@0..11 \"let\" [Comments(\"/*c*/\"), Whitespace(\" \")] [Whitespace(\" \\t\")]"
+    /// );
+    /// ```
+    #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
+    pub fn trim_leading_trivia(&self) -> Self {
+        self.with_leading_trivia_pieces(trim_leading_trivia_pieces(self.leading_trivia().pieces()))
+    }
+
+    /// Return a new version of this token without trailing whitespaces.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind};
+    /// use rome_rowan::{RawSyntaxToken, SyntaxToken, TriviaPiece};
+    ///
+    /// let token = SyntaxToken::<RawLanguage>::new_detached(
+    ///     RawLanguageKind::LET_TOKEN,  
+    ///     "\n let /*c*/\t ",
+    ///     [TriviaPiece::newline(1), TriviaPiece::whitespace(1)],
+    ///     [TriviaPiece::whitespace(1), TriviaPiece::multi_line_comment(5), TriviaPiece::whitespace(2)]
+    /// );
+    /// let new_token = token.trim_trailing_trivia();
+    ///
+    /// assert_eq!(
+    ///     format!("{:?}", new_token),
+    ///     "LET_TOKEN@0..11 \"let\" [Newline(\"\\n\"), Whitespace(\" \")] [Whitespace(\" \"), Comments(\"/*c*/\")]"
+    /// );
+    /// ```
+    #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
+    pub fn trim_trailing_trivia(&self) -> Self {
+        self.with_trailing_trivia_pieces(trim_trailing_trivia_pieces(
+            self.trailing_trivia().pieces(),
+        ))
+    }
+
+    /// Return whitespace that juxtapose the token until the first non-whitespace item.
+    pub fn indentation_trivia_pieces(&self) -> impl ExactSizeIterator<Item = SyntaxTriviaPiece<L>> {
+        let leading_trivia = self.leading_trivia().pieces();
+        let skip_count = leading_trivia.len()
+            - leading_trivia
+                .rev()
+                .position(|x| !x.is_whitespace())
+                .map(|pos| pos + 1)
+                .unwrap_or(0);
+        self.leading_trivia().pieces().skip(skip_count)
+    }
+
     /// Returns the token's leading trivia.
     ///
     /// Looking backward in the text, a token owns all of its preceding trivia up to and including the first newline character.
@@ -377,6 +511,13 @@ impl<L: Language> SyntaxToken<L> {
         self.leading_trivia()
             .pieces()
             .any(|piece| piece.is_whitespace() || piece.is_newline())
+    }
+
+    /// Checks if the current token has leading newline
+    pub fn has_leading_newline(&self) -> bool {
+        self.leading_trivia()
+            .pieces()
+            .any(|piece| piece.is_newline())
     }
 }
 

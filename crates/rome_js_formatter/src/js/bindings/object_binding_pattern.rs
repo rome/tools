@@ -4,7 +4,7 @@ use rome_formatter::write;
 use rome_js_syntax::JsObjectBindingPattern;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsObjectBindingPattern;
+pub(crate) struct FormatJsObjectBindingPattern;
 
 impl FormatNodeRule<JsObjectBindingPattern> for FormatJsObjectBindingPattern {
     fn fmt_fields(&self, node: &JsObjectBindingPattern, f: &mut JsFormatter) -> FormatResult<()> {

@@ -1,7 +1,9 @@
+use crate::{
+    chain_trivia_pieces, AstNode, Language, SyntaxElement, SyntaxKind, SyntaxNode, SyntaxSlot,
+    SyntaxToken,
+};
 use rome_text_edit::TextEdit;
 use rome_text_size::TextRange;
-
-use crate::{AstNode, Language, SyntaxElement, SyntaxKind, SyntaxNode, SyntaxSlot, SyntaxToken};
 use std::{
     cmp,
     collections::BinaryHeap,
@@ -160,7 +162,7 @@ where
                         Some(prev_trailing_trivia) => {
                             token.with_trailing_trivia_pieces(prev_trailing_trivia.pieces())
                         }
-                        None => token.with_trailing_trivia_pieces(empty()),
+                        None => token.with_trailing_trivia_pieces([]),
                     };
 
                     node = node.replace_child(token.into(), new_token.into()).unwrap();
@@ -173,14 +175,14 @@ where
                     Some(prev_leading_trivia) => {
                         token.with_leading_trivia_pieces(prev_leading_trivia.pieces())
                     }
-                    None => token.with_leading_trivia_pieces(empty()),
+                    None => token.with_leading_trivia_pieces([]),
                 };
 
                 let new_token = match prev_trailing_trivia {
                     Some(prev_trailing_trivia) => {
                         new_token.with_trailing_trivia_pieces(prev_trailing_trivia.pieces())
                     }
-                    None => new_token.with_trailing_trivia_pieces(empty()),
+                    None => new_token.with_trailing_trivia_pieces([]),
                 };
                 SyntaxElement::Token(new_token)
             }
@@ -213,6 +215,33 @@ where
         self.replace_element_discard_trivia(prev_token.into(), next_token.into())
     }
 
+    /// Push a change to replace the "prev_token" with "next_token".
+    ///
+    /// - leading trivia of `prev_token`
+    /// - leading trivia of `next_token`
+    /// - trailing trivia of `prev_token`
+    /// - trailing trivia of `next_token`
+    pub fn replace_token_transfer_trivia(
+        &mut self,
+        prev_token: SyntaxToken<L>,
+        next_token: SyntaxToken<L>,
+    ) {
+        let leading_trivia = chain_trivia_pieces(
+            prev_token.leading_trivia().pieces(),
+            next_token.leading_trivia().pieces(),
+        );
+
+        let trailing_trivia = chain_trivia_pieces(
+            prev_token.trailing_trivia().pieces(),
+            next_token.trailing_trivia().pieces(),
+        );
+        let new_token = next_token
+            .with_leading_trivia_pieces(leading_trivia)
+            .with_trailing_trivia_pieces(trailing_trivia);
+
+        self.replace_token_discard_trivia(prev_token, new_token)
+    }
+
     /// Push a change to replace the "prev_element" with "next_element".
     ///
     /// Changes to take effect must be committed.
@@ -226,14 +255,14 @@ where
 
     /// Push a change to remove the specified token.
     ///
-    /// Changes to take effect must be commited.
+    /// Changes to take effect must be committed.
     pub fn remove_token(&mut self, prev_token: SyntaxToken<L>) {
         self.remove_element(prev_token.into())
     }
 
     /// Push a change to remove the specified node.
     ///
-    /// Changes to take effect must be commited.
+    /// Changes to take effect must be committed.
     pub fn remove_node<T>(&mut self, prev_node: T)
     where
         T: AstNode<Language = L>,
@@ -243,7 +272,7 @@ where
 
     /// Push a change to remove the specified element.
     ///
-    /// Changes to take effect must be commited.
+    /// Changes to take effect must be committed.
     pub fn remove_element(&mut self, prev_element: SyntaxElement<L>) {
         self.push_change(prev_element, None)
     }
@@ -261,6 +290,7 @@ where
         });
         let parent_depth = parent.as_ref().map(|p| p.ancestors().count()).unwrap_or(0);
 
+        tracing::debug!("pushing change...");
         self.changes.push(CommitChange {
             parent_depth,
             parent,
@@ -275,6 +305,8 @@ where
     /// [None] if the mutation is empty
     pub fn as_text_edits(&self) -> Option<(TextRange, TextEdit)> {
         let mut range = None;
+
+        tracing::debug!(" changes {:?}", &self.changes);
 
         for change in &self.changes {
             let parent = change.parent.as_ref().unwrap_or(&self.root);
@@ -304,10 +336,10 @@ where
     /// 2 - Insert them into a heap (priority queue) by depth. Deeper changes are done first;
     /// 3 - Loop popping requested changes from the heap, taking the deepest change we have for the moment;
     /// 4 - Each requested change has a "parent", an "index" and the "new node" (or None);
-    /// 5 - Clone the current parent's "parent", the "greatparent";
+    /// 5 - Clone the current parent's "parent", the "grandparent";
     /// 6 - Detach the current "parent" from the tree;
     /// 7 - Replace the old node at "index" at the current "parent" with the current "new node";
-    /// 8 - Insert into the heap the greatparent as the parent and the current "parent" as the "new node";
+    /// 8 - Insert into the heap the grandparent as the parent and the current "parent" as the "new node";
     ///
     /// This is the simple case. The algorithm also has a more complex case when to changes have a common ancestor,
     /// which can actually be one of the changed nodes.
@@ -330,7 +362,7 @@ where
                     let range = g.text_range();
                     (range.start().into(), range.end().into())
                 });
-                let currentparent_slot = current_parent.index();
+                let current_parent_slot = current_parent.index();
 
                 // Aggregate all modifications to the current parent
                 // This works because of the Ord we defined in the [CommitChange] struct
@@ -342,6 +374,14 @@ where
                         if *next_change_parent == current_parent {
                             // SAFETY: We can .pop().unwrap() because we .peek() above
                             let next_change = changes.pop().expect("changes.pop");
+
+                            // If we have two modification to the same slot,
+                            // last write wins
+                            if let Some(last) = modifications.last() {
+                                if last.0 == next_change.new_node_slot {
+                                    modifications.pop();
+                                }
+                            }
                             modifications.push((next_change.new_node_slot, next_change.new_node));
                             continue;
                         }
@@ -357,7 +397,9 @@ where
                 let mut removed_slots = 0;
 
                 for (index, replace_with) in modifications {
-                    let index = index.checked_sub( removed_slots).unwrap_or_else(|| panic!("cannot replace element in slot {index} with {removed_slots} removed slots"));
+                    debug_assert!(index >= removed_slots);
+                    let index = index.checked_sub(removed_slots)
+                        .unwrap_or_else(|| panic!("cannot replace element in slot {index} with {removed_slots} removed slots"));
 
                     current_parent = if is_list && replace_with.is_none() {
                         removed_slots += 1;
@@ -373,7 +415,7 @@ where
                     parent_depth: item.parent_depth - 1,
                     parent: grandparent,
                     parent_range: grandparent_range,
-                    new_node_slot: currentparent_slot,
+                    new_node_slot: current_parent_slot,
                     new_node: Some(SyntaxElement::Node(current_parent)),
                 });
             } else {
@@ -388,6 +430,10 @@ where
         }
 
         root
+    }
+
+    pub fn root(&self) -> &SyntaxNode<L> {
+        &self.root
     }
 }
 

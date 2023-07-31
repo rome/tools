@@ -5,7 +5,7 @@ use rome_js_syntax::JsGetterClassMember;
 use rome_js_syntax::JsGetterClassMemberFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsGetterClassMember;
+pub(crate) struct FormatJsGetterClassMember;
 
 impl FormatNodeRule<JsGetterClassMember> for FormatJsGetterClassMember {
     fn fmt_fields(&self, node: &JsGetterClassMember, f: &mut JsFormatter) -> FormatResult<()> {

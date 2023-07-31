@@ -1,4 +1,4 @@
-use rome_diagnostics::v2::Diagnostic;
+use rome_diagnostics::Diagnostic;
 
 #[derive(Debug, Diagnostic)]
 #[diagnostic(message(description = "text {unclosed"))]

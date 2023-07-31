@@ -1,12 +1,12 @@
-use crate::js::bindings::parameters::{should_hug_function_parameters, FormatJsAnyParameters};
+use crate::js::bindings::parameters::{should_hug_function_parameters, FormatAnyJsParameters};
 use crate::prelude::*;
 use crate::JsFormatContext;
 use rome_formatter::formatter::Formatter;
 use rome_formatter::write;
 use rome_formatter::{Format, FormatResult};
 use rome_js_syntax::{
-    JsAnyAssignmentPattern, JsAnyBindingPattern, JsAnyFormalParameter,
-    JsAnyObjectAssignmentPatternMember, JsAnyObjectBindingPatternMember, JsObjectAssignmentPattern,
+    AnyJsAssignmentPattern, AnyJsBindingPattern, AnyJsFormalParameter,
+    AnyJsObjectAssignmentPatternMember, AnyJsObjectBindingPatternMember, JsObjectAssignmentPattern,
     JsObjectBindingPattern, JsSyntaxKind, JsSyntaxToken,
 };
 use rome_rowan::{declare_node_union, AstNode, SyntaxNodeOptionExt, SyntaxResult};
@@ -48,6 +48,16 @@ impl JsObjectPatternLike {
         }
     }
 
+    fn is_inline(&self, comments: &JsComments) -> FormatResult<bool> {
+        let parent_kind = self.syntax().parent().kind();
+
+        Ok(
+            (matches!(parent_kind, Some(JsSyntaxKind::JS_FORMAL_PARAMETER))
+                || self.is_hug_parameter(comments))
+                && !self.l_curly_token()?.leading_trivia().has_skipped(),
+        )
+    }
+
     fn should_break_properties(&self) -> bool {
         let parent_kind = self.syntax().parent().kind();
 
@@ -60,7 +70,6 @@ impl JsObjectPatternLike {
                     | JsSyntaxKind::JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY
                     | JsSyntaxKind::JS_CATCH_DECLARATION
                     | JsSyntaxKind::JS_OBJECT_BINDING_PATTERN_PROPERTY
-                    | JsSyntaxKind::JS_FORMAL_PARAMETER
             )
         );
 
@@ -72,14 +81,14 @@ impl JsObjectPatternLike {
             JsObjectPatternLike::JsObjectAssignmentPattern(node) => {
                 node.properties().iter().any(|property| {
                     if let Ok(
-                        JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternProperty(node),
+                        AnyJsObjectAssignmentPatternMember::JsObjectAssignmentPatternProperty(node),
                     ) = property
                     {
                         let pattern = node.pattern();
                         matches!(
                             pattern,
-                            Ok(JsAnyAssignmentPattern::JsObjectAssignmentPattern(_)
-                                | JsAnyAssignmentPattern::JsArrayAssignmentPattern(_))
+                            Ok(AnyJsAssignmentPattern::JsObjectAssignmentPattern(_)
+                                | AnyJsAssignmentPattern::JsArrayAssignmentPattern(_))
                         )
                     } else {
                         false
@@ -88,7 +97,7 @@ impl JsObjectPatternLike {
             }
             JsObjectPatternLike::JsObjectBindingPattern(node) => {
                 node.properties().iter().any(|property| {
-                    if let Ok(JsAnyObjectBindingPatternMember::JsObjectBindingPatternProperty(
+                    if let Ok(AnyJsObjectBindingPatternMember::JsObjectBindingPatternProperty(
                         node,
                     )) = property
                     {
@@ -96,8 +105,8 @@ impl JsObjectPatternLike {
 
                         matches!(
                             pattern,
-                            Ok(JsAnyBindingPattern::JsObjectBindingPattern(_)
-                                | JsAnyBindingPattern::JsArrayBindingPattern(_))
+                            Ok(AnyJsBindingPattern::JsObjectBindingPattern(_)
+                                | AnyJsBindingPattern::JsArrayBindingPattern(_))
                         )
                     } else {
                         false
@@ -118,9 +127,9 @@ impl JsObjectPatternLike {
         match self {
             JsObjectPatternLike::JsObjectAssignmentPattern(_) => false,
             JsObjectPatternLike::JsObjectBindingPattern(binding) => binding
-                .parent::<JsAnyFormalParameter>()
+                .parent::<AnyJsFormalParameter>()
                 .and_then(|parameter| parameter.syntax().grand_parent())
-                .and_then(FormatJsAnyParameters::cast)
+                .and_then(FormatAnyJsParameters::cast)
                 .map_or(false, |parameters| {
                     should_hug_function_parameters(&parameters, comments).unwrap_or(false)
                 }),
@@ -132,8 +141,7 @@ impl JsObjectPatternLike {
             return Ok(ObjectPatternLayout::Empty);
         }
 
-        if self.is_hug_parameter(comments) && !self.l_curly_token()?.leading_trivia().has_skipped()
-        {
+        if self.is_inline(comments)? {
             return Ok(ObjectPatternLayout::Inline);
         }
 

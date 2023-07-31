@@ -3,6 +3,7 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -26,6 +27,7 @@ JsModule {
                         l_paren_token: L_PAREN@13..14 "(" [] [],
                         items: JsParameterList [
                             JsFormalParameter {
+                                decorators: JsDecoratorList [],
                                 binding: JsIdentifierBinding {
                                     name_token: IDENT@14..16 "a" [] [Whitespace(" ")],
                                 },
@@ -35,6 +37,7 @@ JsModule {
                             },
                             missing separator,
                             JsFormalParameter {
+                                decorators: JsDecoratorList [],
                                 binding: JsObjectBindingPattern {
                                     l_curly_token: L_CURLY@16..17 "{" [] [],
                                     properties: JsObjectBindingPatternPropertyList [],
@@ -45,7 +48,7 @@ JsModule {
                                 initializer: missing (optional),
                             },
                             missing separator,
-                            JsUnknownParameter {
+                            JsBogusParameter {
                                 items: [
                                     R_CURLY@19..20 "}" [] [],
                                 ],
@@ -68,15 +71,16 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..20
     0: JS_CLASS_DECLARATION@0..20
-      0: (empty)
-      1: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@6..8
+      0: JS_DECORATOR_LIST@0..0
+      1: (empty)
+      2: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@6..8
         0: IDENT@6..8 "B" [] [Whitespace(" ")]
-      3: (empty)
       4: (empty)
       5: (empty)
-      6: L_CURLY@8..10 "{" [] [Whitespace(" ")]
-      7: JS_CLASS_MEMBER_LIST@10..20
+      6: (empty)
+      7: L_CURLY@8..10 "{" [] [Whitespace(" ")]
+      8: JS_CLASS_MEMBER_LIST@10..20
         0: JS_METHOD_CLASS_MEMBER@10..20
           0: JS_METHOD_MODIFIER_LIST@10..10
           1: (empty)
@@ -89,27 +93,29 @@ JsModule {
             0: L_PAREN@13..14 "(" [] []
             1: JS_PARAMETER_LIST@14..20
               0: JS_FORMAL_PARAMETER@14..16
-                0: JS_IDENTIFIER_BINDING@14..16
+                0: JS_DECORATOR_LIST@14..14
+                1: JS_IDENTIFIER_BINDING@14..16
                   0: IDENT@14..16 "a" [] [Whitespace(" ")]
-                1: (empty)
                 2: (empty)
                 3: (empty)
+                4: (empty)
               1: (empty)
               2: JS_FORMAL_PARAMETER@16..19
-                0: JS_OBJECT_BINDING_PATTERN@16..19
+                0: JS_DECORATOR_LIST@16..16
+                1: JS_OBJECT_BINDING_PATTERN@16..19
                   0: L_CURLY@16..17 "{" [] []
                   1: JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST@17..17
                   2: R_CURLY@17..19 "}" [] [Whitespace(" ")]
-                1: (empty)
                 2: (empty)
                 3: (empty)
+                4: (empty)
               3: (empty)
-              4: JS_UNKNOWN_PARAMETER@19..20
+              4: JS_BOGUS_PARAMETER@19..20
                 0: R_CURLY@19..20 "}" [] []
             2: (empty)
           7: (empty)
           8: (empty)
-      8: (empty)
+      9: (empty)
   3: EOF@20..21 "" [Newline("\n")] []
 --
 class_member_method_parameters.js:1:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

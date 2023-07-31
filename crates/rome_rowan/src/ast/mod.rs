@@ -16,7 +16,9 @@ mod batch;
 mod mutation;
 
 use crate::syntax::{SyntaxSlot, SyntaxSlots};
-use crate::{Language, RawSyntaxKind, SyntaxKind, SyntaxList, SyntaxNode, SyntaxToken};
+use crate::{
+    Language, RawSyntaxKind, SyntaxKind, SyntaxList, SyntaxNode, SyntaxToken, SyntaxTriviaPiece,
+};
 pub use batch::*;
 pub use mutation::{AstNodeExt, AstNodeListExt, AstSeparatedListExt};
 
@@ -252,6 +254,61 @@ pub trait AstNode: Clone {
     fn parent<T: AstNode<Language = Self::Language>>(&self) -> Option<T> {
         self.syntax().parent().and_then(T::cast)
     }
+
+    /// Return a new version of this node with the leading trivia of its first token replaced with `trivia`.
+    fn with_leading_trivia_pieces<I>(self, trivia: I) -> Option<Self>
+    where
+        I: IntoIterator<Item = SyntaxTriviaPiece<Self::Language>>,
+        I::IntoIter: ExactSizeIterator,
+    {
+        Self::cast(self.into_syntax().with_leading_trivia_pieces(trivia)?)
+    }
+
+    /// Return a new version of this node with the trailing trivia of its last token replaced with `trivia`.
+    fn with_trailing_trivia_pieces<I>(self, trivia: I) -> Option<Self>
+    where
+        I: IntoIterator<Item = SyntaxTriviaPiece<Self::Language>>,
+        I::IntoIter: ExactSizeIterator,
+    {
+        Self::cast(self.into_syntax().with_trailing_trivia_pieces(trivia)?)
+    }
+
+    // Return a new version of this node with `trivia` prepended to the leading trivia of the first token.
+    fn prepend_trivia_pieces<I>(self, trivia: I) -> Option<Self>
+    where
+        I: IntoIterator<Item = SyntaxTriviaPiece<Self::Language>>,
+        I::IntoIter: ExactSizeIterator,
+    {
+        Self::cast(self.into_syntax().prepend_trivia_pieces(trivia)?)
+    }
+
+    // Return a new version of this node with `trivia` appended to the trailing trivia of the last token.
+    fn append_trivia_pieces<I>(self, trivia: I) -> Option<Self>
+    where
+        I: IntoIterator<Item = SyntaxTriviaPiece<Self::Language>>,
+        I::IntoIter: ExactSizeIterator,
+    {
+        Self::cast(self.into_syntax().append_trivia_pieces(trivia)?)
+    }
+
+    /// Return a new version of this node without leading and trailing newlines and whitespaces.
+    fn trim(self) -> Option<Self> {
+        Self::cast(
+            self.into_syntax()
+                .trim_leading_trivia()?
+                .trim_trailing_trivia()?,
+        )
+    }
+
+    /// Return a new version of this node without leading newlines and whitespaces.
+    fn trim_start(self) -> Option<Self> {
+        Self::cast(self.into_syntax().trim_leading_trivia()?)
+    }
+
+    /// Return a new version of this node without trailing newlines and whitespaces.
+    fn trim_end(self) -> Option<Self> {
+        Self::cast(self.into_syntax().trim_trailing_trivia()?)
+    }
 }
 
 pub trait SyntaxNodeCast<L: Language> {
@@ -368,8 +425,8 @@ impl<L: Language, N: AstNode<Language = L>> DoubleEndedIterator for AstNodeListI
 #[derive(Clone, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct AstSeparatedElement<L: Language, N> {
-    node: SyntaxResult<N>,
-    trailing_separator: SyntaxResult<Option<SyntaxToken<L>>>,
+    pub node: SyntaxResult<N>,
+    pub trailing_separator: SyntaxResult<Option<SyntaxToken<L>>>,
 }
 
 impl<L: Language, N: AstNode<Language = L>> AstSeparatedElement<L, N> {

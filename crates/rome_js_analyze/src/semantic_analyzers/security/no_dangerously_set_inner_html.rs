@@ -3,7 +3,7 @@ use crate::semantic_services::Semantic;
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_syntax::{JsCallExpression, JsLiteralMemberName, JsxAnyAttributeName, JsxAttribute};
+use rome_js_syntax::{AnyJsxAttributeName, JsCallExpression, JsLiteralMemberName, JsxAttribute};
 use rome_rowan::{declare_node_union, AstNode};
 
 declare_rule! {
@@ -33,7 +33,7 @@ declare_rule! {
 }
 
 declare_node_union! {
-    pub(crate) JsAnyCreateElement = JsxAttribute | JsCallExpression
+    pub(crate) AnyJsCreateElement = JsxAttribute | JsCallExpression
 }
 
 pub(crate) enum NoDangerState {
@@ -42,7 +42,7 @@ pub(crate) enum NoDangerState {
 }
 
 impl Rule for NoDangerouslySetInnerHtml {
-    type Query = Semantic<JsAnyCreateElement>;
+    type Query = Semantic<AnyJsCreateElement>;
     type State = NoDangerState;
     type Signals = Option<Self::State>;
     type Options = ();
@@ -51,18 +51,18 @@ impl Rule for NoDangerouslySetInnerHtml {
         let node = ctx.query();
         let model = ctx.model();
         match node {
-            JsAnyCreateElement::JsxAttribute(jsx_attribute) => {
+            AnyJsCreateElement::JsxAttribute(jsx_attribute) => {
                 let name = jsx_attribute.name().ok()?;
                 match name {
-                    JsxAnyAttributeName::JsxName(jsx_name) => {
+                    AnyJsxAttributeName::JsxName(jsx_name) => {
                         if jsx_name.syntax().text_trimmed() == "dangerouslySetInnerHTML" {
                             return Some(NoDangerState::Attribute(jsx_attribute.clone()));
                         }
                     }
-                    JsxAnyAttributeName::JsxNamespaceName(_) => return None,
+                    AnyJsxAttributeName::JsxNamespaceName(_) => return None,
                 }
             }
-            JsAnyCreateElement::JsCallExpression(call_expression) => {
+            AnyJsCreateElement::JsCallExpression(call_expression) => {
                 if let Some(react_create_element) =
                     ReactCreateElementCall::from_call_expression(call_expression, model)
                 {

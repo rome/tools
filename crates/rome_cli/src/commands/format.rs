@@ -1,33 +1,65 @@
-use rome_formatter::IndentStyle;
-use rome_service::configuration::{
-    FormatterConfiguration, JavascriptConfiguration, JavascriptFormatter, PlainIndentStyle,
-};
-use rome_service::{workspace::UpdateSettingsParams, Configuration};
+use crate::cli_options::CliOptions;
+use crate::configuration::{load_configuration, LoadedConfiguration};
+use crate::execute::ReportMode;
+use crate::vcs::store_path_to_ignore_from_vcs;
+use crate::{execute_mode, CliDiagnostic, CliSession, Execution, TraversalMode};
+use rome_service::configuration::vcs::VcsConfiguration;
+use rome_service::configuration::{FilesConfiguration, FormatterConfiguration};
+use rome_service::workspace::UpdateSettingsParams;
+use rome_service::{JavascriptFormatter, MergeWith};
+use std::ffi::OsString;
 use std::path::PathBuf;
 
-use crate::configuration::load_configuration;
-use crate::execute::ReportMode;
-use crate::{execute_mode, CliSession, Execution, Termination, TraversalMode};
+pub(crate) struct FormatCommandPayload {
+    pub(crate) javascript_formatter: Option<JavascriptFormatter>,
+    pub(crate) formatter_configuration: Option<FormatterConfiguration>,
+    pub(crate) vcs_configuration: Option<VcsConfiguration>,
+    pub(crate) files_configuration: Option<FilesConfiguration>,
+    pub(crate) stdin_file_path: Option<String>,
+    pub(crate) write: bool,
+    pub(crate) cli_options: CliOptions,
+    pub(crate) paths: Vec<OsString>,
+}
 
 /// Handler for the "format" command of the Rome CLI
-pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
-    let mut configuration = load_configuration(&mut session)?;
-    apply_format_settings_from_cli(&mut session, &mut configuration)?;
+pub(crate) fn format(
+    mut session: CliSession,
+    payload: FormatCommandPayload,
+) -> Result<(), CliDiagnostic> {
+    let FormatCommandPayload {
+        javascript_formatter,
+        formatter_configuration,
+        vcs_configuration,
+        paths,
+        cli_options,
+        stdin_file_path,
+        files_configuration,
+        write,
+    } = payload;
+    let LoadedConfiguration {
+        mut configuration,
+        directory_path: configuration_path,
+        ..
+    } = load_configuration(&mut session, &cli_options)?
+        .or_diagnostic(session.app.console, cli_options.verbose)?;
 
+    configuration.merge_with(javascript_formatter);
+    configuration.merge_with(formatter_configuration);
+    configuration.merge_with(vcs_configuration);
+    configuration.merge_with(files_configuration);
+
+    // check if support of git ignore files is enabled
+    let vcs_base_path = configuration_path.or(session.app.fs.working_directory());
+    store_path_to_ignore_from_vcs(
+        &mut session,
+        &mut configuration,
+        vcs_base_path,
+        &cli_options,
+    )?;
     session
         .app
         .workspace
         .update_settings(UpdateSettingsParams { configuration })?;
-
-    let is_write = session.args.contains("--write");
-    let ignore_errors = session.args.contains("--skip-errors");
-    let stdin_file_path: Option<String> = session
-        .args
-        .opt_value_from_str("--stdin-file-path")
-        .map_err(|source| Termination::ParseError {
-            argument: "--stdin-file-path",
-            source,
-        })?;
 
     let stdin = if let Some(stdin_file_path) = stdin_file_path {
         let console = &mut session.app.console;
@@ -37,126 +69,28 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
             Some((path, input_code))
         } else {
             // we provided the argument without a piped stdin, we bail
-            return Err(Termination::MissingArgument {
-                subcommand: "format",
-                argument: "stdin",
-            });
+            return Err(CliDiagnostic::missing_argument("stdin", "format"));
         }
     } else {
         None
     };
 
-    let execution = if session.args.contains("--json") {
+    let execution = if cli_options.json {
         Execution::with_report(
             TraversalMode::Format {
-                ignore_errors,
-                write: is_write,
+                ignore_errors: cli_options.skip_errors,
+                write,
                 stdin,
             },
             ReportMode::Json,
         )
     } else {
         Execution::new(TraversalMode::Format {
-            ignore_errors,
-            write: is_write,
+            ignore_errors: cli_options.skip_errors,
+            write,
             stdin,
         })
     };
 
-    execute_mode(execution, session)
-}
-
-/// Read the formatting options for the command line arguments and inject them
-/// into the workspace settings
-pub(crate) fn apply_format_settings_from_cli(
-    session: &mut CliSession,
-    configuration: &mut Configuration,
-) -> Result<(), Termination> {
-    let formatter = configuration
-        .formatter
-        .get_or_insert_with(FormatterConfiguration::default);
-
-    let size = session
-        .args
-        .opt_value_from_str("--indent-size")
-        .map_err(|source| Termination::ParseError {
-            argument: "--indent-size",
-            source,
-        })?;
-
-    let indent_style = session
-        .args
-        .opt_value_from_str("--indent-style")
-        .map_err(|source| Termination::ParseError {
-            argument: "--indent-style",
-            source,
-        })?;
-
-    let line_width = session
-        .args
-        .opt_value_from_str("--line-width")
-        .map_err(|source| Termination::ParseError {
-            argument: "--line-width",
-            source,
-        })?;
-
-    match indent_style {
-        Some(IndentStyle::Tab) => {
-            formatter.indent_style = PlainIndentStyle::Tab;
-        }
-        Some(IndentStyle::Space(default_size)) => {
-            formatter.indent_style = PlainIndentStyle::Space;
-            formatter.indent_size = size.unwrap_or(default_size);
-        }
-        None => {}
-    }
-
-    if let Some(line_width) = line_width {
-        formatter.line_width = line_width;
-    }
-
-    let quote_properties = session
-        .args
-        .opt_value_from_str("--quote-properties")
-        .map_err(|source| Termination::ParseError {
-            argument: "--quote-properties",
-            source,
-        })?;
-
-    let quote_style = session
-        .args
-        .opt_value_from_str("--quote-style")
-        .map_err(|source| Termination::ParseError {
-            argument: "--quote-style",
-            source,
-        })?;
-
-    let trailing_comma = session
-        .args
-        .opt_value_from_str("--trailing-comma")
-        .map_err(|source| Termination::ParseError {
-            argument: "--trailing-comma",
-            source,
-        })?;
-
-    let javascript = configuration
-        .javascript
-        .get_or_insert_with(JavascriptConfiguration::default);
-    let javascript_formatter = javascript
-        .formatter
-        .get_or_insert_with(JavascriptFormatter::default);
-
-    if let Some(quote_properties) = quote_properties {
-        javascript_formatter.quote_properties = quote_properties;
-    }
-
-    if let Some(quote_style) = quote_style {
-        javascript_formatter.quote_style = quote_style;
-    }
-
-    if let Some(trailing_comma) = trailing_comma {
-        javascript_formatter.trailing_comma = trailing_comma;
-    }
-
-    Ok(())
+    execute_mode(execution, session, &cli_options, paths)
 }

@@ -4,7 +4,7 @@ use rome_js_syntax::JsCatchClause;
 use rome_js_syntax::JsCatchClauseFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsCatchClause;
+pub(crate) struct FormatJsCatchClause;
 
 impl FormatNodeRule<JsCatchClause> for FormatJsCatchClause {
     fn fmt_fields(&self, node: &JsCatchClause, f: &mut JsFormatter) -> FormatResult<()> {

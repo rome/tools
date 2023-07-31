@@ -6,7 +6,7 @@ use crate::{
 use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
-use rome_js_semantic::{AllReferencesExtensions, CanBeImportedExported, SemanticModel};
+use rome_js_semantic::{CanBeImportedExported, ReferencesExtensions, SemanticModel};
 use rome_js_syntax::{
     JsFormalParameter, JsFunctionDeclaration, JsFunctionExportDefaultDeclaration,
     JsGetterClassMember, JsIdentifierBinding, JsLiteralMemberName, JsMethodClassMember,
@@ -76,13 +76,13 @@ fn is_non_camel_ok(binding: &JsIdentifierBinding, model: &SemanticModel) -> Opti
             };
             Some(is_ok)
         }
-        JS_FUNCTION_DECLARATION => {
+        JS_FUNCTION_DECLARATION | JS_FUNCTION_EXPORT_DEFAULT_DECLARATION => {
             if binding.is_exported(model) {
                 return Some(true);
             }
 
             for reference in binding.all_reads(model) {
-                let greatparent = reference.node().grand_parent()?;
+                let greatparent = reference.syntax().grand_parent()?;
                 if let JS_NEW_EXPRESSION = greatparent.kind() {
                     return Some(true);
                 }
@@ -95,7 +95,7 @@ fn is_non_camel_ok(binding: &JsIdentifierBinding, model: &SemanticModel) -> Opti
 }
 
 impl Rule for UseCamelCase {
-    type Query = Semantic<JsAnyCamelCaseName>;
+    type Query = Semantic<AnyJsCamelCaseName>;
     type State = State;
     type Signals = Option<Self::State>;
     type Options = ();
@@ -105,7 +105,7 @@ impl Rule for UseCamelCase {
         let model = ctx.model();
 
         match name {
-            JsAnyCamelCaseName::JsIdentifierBinding(binding) => {
+            AnyJsCamelCaseName::JsIdentifierBinding(binding) => {
                 let is_non_camel_ok = is_non_camel_ok(binding, model);
                 match is_non_camel_ok {
                     Some(false) | None => {
@@ -120,8 +120,9 @@ impl Rule for UseCamelCase {
                             let name = binding.name_token().ok()?;
                             let is_camel_case = check_is_camel(name.text_trimmed());
                             if is_camel_case.is_some() {
-                                let is_jsx_component = model.all_reads(binding).any(|reference| {
-                                    JsxReferenceIdentifier::can_cast(reference.node().kind())
+                                let binding = model.as_binding(binding);
+                                let is_jsx_component = binding.all_reads().any(|reference| {
+                                    JsxReferenceIdentifier::can_cast(reference.syntax().kind())
                                 });
                                 if !is_jsx_component {
                                     return is_camel_case;
@@ -134,7 +135,7 @@ impl Rule for UseCamelCase {
                     _ => None,
                 }
             }
-            JsAnyCamelCaseName::JsLiteralMemberName(name) => {
+            AnyJsCamelCaseName::JsLiteralMemberName(name) => {
                 let is_method_class = name.parent::<JsMethodClassMember>().is_some();
                 let is_getter = name.parent::<JsGetterClassMember>().is_some();
                 let is_setter = name.parent::<JsSetterClassMember>().is_some();
@@ -146,11 +147,11 @@ impl Rule for UseCamelCase {
                     None
                 }
             }
-            JsAnyCamelCaseName::JsPrivateClassMemberName(name) => {
+            AnyJsCamelCaseName::JsPrivateClassMemberName(name) => {
                 let is_property = name.parent::<JsPropertyClassMember>().is_some();
                 if is_property {
                     let name = name.text();
-                    check_is_camel(&name)
+                    check_is_camel(&name[1..])
                 } else {
                     None
                 }
@@ -192,12 +193,12 @@ impl Rule for UseCamelCase {
         let candidates = once(Cow::from(new_name)).chain(candidates);
 
         match ctx.query() {
-            JsAnyCamelCaseName::JsIdentifierBinding(binding) => {
+            AnyJsCamelCaseName::JsIdentifierBinding(binding) => {
                 let renamed =
                     batch.rename_node_declaration_with_retry(model, binding.clone(), candidates);
                 if renamed {
                     Some(JsRuleAction {
-                        category: ActionCategory::Refactor,
+                        category: ActionCategory::QuickFix,
                         applicability: Applicability::Always,
                         message: markup! { "Rename this symbol to camel case" }.to_owned(),
                         mutation: batch,
@@ -212,5 +213,5 @@ impl Rule for UseCamelCase {
 }
 
 declare_node_union! {
-    pub(crate) JsAnyCamelCaseName = JsIdentifierBinding | JsLiteralMemberName | JsPrivateClassMemberName
+    pub(crate) AnyJsCamelCaseName = JsIdentifierBinding | JsLiteralMemberName | JsPrivateClassMemberName
 }

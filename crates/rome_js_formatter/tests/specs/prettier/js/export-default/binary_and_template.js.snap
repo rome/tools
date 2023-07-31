@@ -1,11 +1,14 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+assertion_line: 212
+info: js/export-default/binary_and_template.js
 ---
 
 # Input
 
 ```js
 export default (function() {} + foo)``;
+
 ```
 
 
@@ -24,6 +27,5 @@ export default (function() {} + foo)``;
 ```js
 export default ((function () {}) + foo)``;
 ```
-
 
 

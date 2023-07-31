@@ -3,7 +3,9 @@ use cmp::Ordering;
 use {
     crate::TextSize,
     std::{
-        cmp, fmt,
+        cmp,
+        convert::TryFrom,
+        fmt,
         ops::{Add, AddAssign, Bound, Index, IndexMut, Range, RangeBounds, Sub, SubAssign},
     },
 };
@@ -527,5 +529,16 @@ where
     #[inline]
     fn sub_assign(&mut self, rhs: S) {
         *self = *self - rhs
+    }
+}
+
+impl TryFrom<(usize, usize)> for TextRange {
+    type Error = std::num::TryFromIntError;
+    #[inline]
+    fn try_from((start, end): (usize, usize)) -> Result<Self, Self::Error> {
+        Ok(TextRange::new(
+            TextSize::try_from(start)?,
+            TextSize::try_from(end)?,
+        ))
     }
 }

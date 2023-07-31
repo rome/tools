@@ -20,7 +20,7 @@ JsModule {
                 l_curly_token: L_CURLY@15..17 "{" [] [Whitespace(" ")],
                 directives: JsDirectiveList [],
                 statements: JsStatementList [
-                    JsUnknownStatement {
+                    JsBogusStatement {
                         items: [
                             BREAK_KW@17..22 "break" [] [],
                             SEMICOLON@22..24 ";" [] [Whitespace(" ")],
@@ -40,7 +40,7 @@ JsModule {
             body: JsBlockStatement {
                 l_curly_token: L_CURLY@39..40 "{" [] [],
                 statements: JsStatementList [
-                    JsUnknownStatement {
+                    JsBogusStatement {
                         items: [
                             BREAK_KW@40..49 "break" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
                             IDENT@49..52 "foo" [] [],
@@ -75,7 +75,7 @@ JsModule {
         0: L_CURLY@15..17 "{" [] [Whitespace(" ")]
         1: JS_DIRECTIVE_LIST@17..17
         2: JS_STATEMENT_LIST@17..24
-          0: JS_UNKNOWN_STATEMENT@17..24
+          0: JS_BOGUS_STATEMENT@17..24
             0: BREAK_KW@17..22 "break" [] []
             1: SEMICOLON@22..24 ";" [] [Whitespace(" ")]
         3: R_CURLY@24..25 "}" [] []
@@ -88,7 +88,7 @@ JsModule {
       4: JS_BLOCK_STATEMENT@39..55
         0: L_CURLY@39..40 "{" [] []
         1: JS_STATEMENT_LIST@40..53
-          0: JS_UNKNOWN_STATEMENT@40..53
+          0: JS_BOGUS_STATEMENT@40..53
             0: BREAK_KW@40..49 "break" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
             1: IDENT@49..52 "foo" [] []
             2: SEMICOLON@52..53 ";" [] []

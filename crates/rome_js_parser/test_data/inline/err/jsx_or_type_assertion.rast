@@ -32,7 +32,7 @@ JsScript {
                                     initializer: JsInitializerClause {
                                         eq_token: EQ@35..37 "=" [] [Whitespace(" ")],
                                         expression: JsBinaryExpression {
-                                            left: JsUnknownExpression {
+                                            left: JsBogusExpression {
                                                 items: [
                                                     L_ANGLE@37..38 "<" [] [],
                                                     TsReferenceType {
@@ -79,7 +79,7 @@ JsScript {
                                     variable_annotation: missing (optional),
                                     initializer: JsInitializerClause {
                                         eq_token: EQ@68..70 "=" [] [Whitespace(" ")],
-                                        expression: JsUnknownExpression {
+                                        expression: JsBogusExpression {
                                             items: [
                                                 L_ANGLE@70..71 "<" [] [],
                                                 TsStringType {
@@ -112,7 +112,7 @@ JsScript {
                                         eq_token: EQ@109..111 "=" [] [Whitespace(" ")],
                                         expression: JsBinaryExpression {
                                             left: JsBinaryExpression {
-                                                left: JsUnknownExpression {
+                                                left: JsBogusExpression {
                                                     items: [
                                                         L_ANGLE@111..112 "<" [] [],
                                                         TsStringType {
@@ -158,7 +158,7 @@ JsScript {
                                     initializer: JsInitializerClause {
                                         eq_token: EQ@154..156 "=" [] [Whitespace(" ")],
                                         expression: JsBinaryExpression {
-                                            left: JsUnknownExpression {
+                                            left: JsBogusExpression {
                                                 items: [
                                                     L_ANGLE@156..157 "<" [] [],
                                                     TsReferenceType {
@@ -198,7 +198,7 @@ JsScript {
                                     initializer: JsInitializerClause {
                                         eq_token: EQ@259..261 "=" [] [Whitespace(" ")],
                                         expression: JsBinaryExpression {
-                                            left: JsUnknownExpression {
+                                            left: JsBogusExpression {
                                                 items: [
                                                     L_ANGLE@261..262 "<" [] [],
                                                     TsStringType {
@@ -262,7 +262,7 @@ JsScript {
                   2: JS_INITIALIZER_CLAUSE@35..57
                     0: EQ@35..37 "=" [] [Whitespace(" ")]
                     1: JS_BINARY_EXPRESSION@37..57
-                      0: JS_UNKNOWN_EXPRESSION@37..43
+                      0: JS_BOGUS_EXPRESSION@37..43
                         0: L_ANGLE@37..38 "<" [] []
                         1: TS_REFERENCE_TYPE@38..41
                           0: JS_REFERENCE_IDENTIFIER@38..41
@@ -291,7 +291,7 @@ JsScript {
                   1: (empty)
                   2: JS_INITIALIZER_CLAUSE@68..79
                     0: EQ@68..70 "=" [] [Whitespace(" ")]
-                    1: JS_UNKNOWN_EXPRESSION@70..79
+                    1: JS_BOGUS_EXPRESSION@70..79
                       0: L_ANGLE@70..71 "<" [] []
                       1: TS_STRING_TYPE@71..77
                         0: STRING_KW@71..77 "string" [] []
@@ -312,7 +312,7 @@ JsScript {
                     0: EQ@109..111 "=" [] [Whitespace(" ")]
                     1: JS_BINARY_EXPRESSION@111..124
                       0: JS_BINARY_EXPRESSION@111..122
-                        0: JS_UNKNOWN_EXPRESSION@111..120
+                        0: JS_BOGUS_EXPRESSION@111..120
                           0: L_ANGLE@111..112 "<" [] []
                           1: TS_STRING_TYPE@112..118
                             0: STRING_KW@112..118 "string" [] []
@@ -340,7 +340,7 @@ JsScript {
                   2: JS_INITIALIZER_CLAUSE@154..169
                     0: EQ@154..156 "=" [] [Whitespace(" ")]
                     1: JS_BINARY_EXPRESSION@156..169
-                      0: JS_UNKNOWN_EXPRESSION@156..162
+                      0: JS_BOGUS_EXPRESSION@156..162
                         0: L_ANGLE@156..157 "<" [] []
                         1: TS_REFERENCE_TYPE@157..160
                           0: JS_REFERENCE_IDENTIFIER@157..160
@@ -365,7 +365,7 @@ JsScript {
                   2: JS_INITIALIZER_CLAUSE@259..280
                     0: EQ@259..261 "=" [] [Whitespace(" ")]
                     1: JS_BINARY_EXPRESSION@261..280
-                      0: JS_UNKNOWN_EXPRESSION@261..270
+                      0: JS_BOGUS_EXPRESSION@261..270
                         0: L_ANGLE@261..262 "<" [] []
                         1: TS_STRING_TYPE@262..268
                           0: STRING_KW@262..268 "string" [] []

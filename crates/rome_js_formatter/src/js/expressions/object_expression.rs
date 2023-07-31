@@ -5,7 +5,7 @@ use rome_formatter::write;
 use rome_js_syntax::{JsObjectExpression, JsSyntaxKind, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsObjectExpression;
+pub(crate) struct FormatJsObjectExpression;
 
 impl FormatNodeRule<JsObjectExpression> for FormatJsObjectExpression {
     fn fmt_fields(&self, node: &JsObjectExpression, f: &mut JsFormatter) -> FormatResult<()> {

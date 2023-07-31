@@ -3,6 +3,7 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: missing (required),
@@ -14,6 +15,7 @@ JsModule {
             r_curly_token: R_CURLY@7..8 "}" [] [],
         },
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@8..15 "class" [Newline("\n")] [Whitespace(" ")],
             id: missing (required),
@@ -43,31 +45,33 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..30
     0: JS_CLASS_DECLARATION@0..8
-      0: (empty)
-      1: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
-      2: (empty)
+      0: JS_DECORATOR_LIST@0..0
+      1: (empty)
+      2: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       3: (empty)
       4: (empty)
       5: (empty)
-      6: L_CURLY@6..7 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@7..7
-      8: R_CURLY@7..8 "}" [] []
+      6: (empty)
+      7: L_CURLY@6..7 "{" [] []
+      8: JS_CLASS_MEMBER_LIST@7..7
+      9: R_CURLY@7..8 "}" [] []
     1: JS_CLASS_DECLARATION@8..30
-      0: (empty)
-      1: CLASS_KW@8..15 "class" [Newline("\n")] [Whitespace(" ")]
-      2: (empty)
+      0: JS_DECORATOR_LIST@8..8
+      1: (empty)
+      2: CLASS_KW@8..15 "class" [Newline("\n")] [Whitespace(" ")]
       3: (empty)
       4: (empty)
-      5: TS_IMPLEMENTS_CLAUSE@15..28
+      5: (empty)
+      6: TS_IMPLEMENTS_CLAUSE@15..28
         0: IMPLEMENTS_KW@15..26 "implements" [] [Whitespace(" ")]
         1: TS_TYPE_LIST@26..28
           0: TS_NAME_WITH_TYPE_ARGUMENTS@26..28
             0: JS_REFERENCE_IDENTIFIER@26..28
               0: IDENT@26..28 "B" [] [Whitespace(" ")]
             1: (empty)
-      6: L_CURLY@28..29 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@29..29
-      8: R_CURLY@29..30 "}" [] []
+      7: L_CURLY@28..29 "{" [] []
+      8: JS_CLASS_MEMBER_LIST@29..29
+      9: R_CURLY@29..30 "}" [] []
   3: EOF@30..31 "" [Newline("\n")] []
 --
 class_decl_no_id.ts:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

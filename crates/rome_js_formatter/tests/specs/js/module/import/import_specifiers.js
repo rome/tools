@@ -18,3 +18,15 @@ import {loooooooooooooooooooong3,loooooooooooooooooooong5,loooooooooooooooooooon
 import { f as x, default as w, "a-b-c" as y } from "b";
 
 import loooooooooooooooooooong7, { loooooooooooooooooooong8, loooooooooooooooooooong9, loooooooooooooooooooong10} from "module"
+
+import { loooooooooooooooooooooooooooooooooooooooooooooooooong } from "loooooooooooooooooooooooooooooooooooooooooooooong"
+
+import { loooooooooooooooooooooooooooooooooooooooooooooooooong, } from "loooooooooooooooooooooooooooooooooooooooooooooong"
+
+import { 
+// comment 
+loooooooooooooooooooooooooooooooooooooooooooooooooong } from "loooooooooooooooooooooooooooooooooooooooooooooong"
+
+import { a as b } from "loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong"
+
+import a, { loooooooooooooooooooooong } from "loooooooooooooooooooooooooooooooooooooooooooooooonnoong"

@@ -24,7 +24,7 @@ JsModule {
                         async_token: missing (optional),
                         function_token: FUNCTION_KW@18..30 "function" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
                         star_token: missing (optional),
-                        id: JsUnknownBinding {
+                        id: JsBogusBinding {
                             items: [
                                 IDENT@30..35 "yield" [] [],
                             ],
@@ -34,6 +34,7 @@ JsModule {
                             l_paren_token: L_PAREN@35..36 "(" [] [],
                             items: JsParameterList [
                                 JsFormalParameter {
+                                    decorators: JsDecoratorList [],
                                     binding: JsIdentifierBinding {
                                         name_token: IDENT@36..40 "test" [] [],
                                     },
@@ -84,18 +85,19 @@ JsModule {
             0: (empty)
             1: FUNCTION_KW@18..30 "function" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
             2: (empty)
-            3: JS_UNKNOWN_BINDING@30..35
+            3: JS_BOGUS_BINDING@30..35
               0: IDENT@30..35 "yield" [] []
             4: (empty)
             5: JS_PARAMETERS@35..42
               0: L_PAREN@35..36 "(" [] []
               1: JS_PARAMETER_LIST@36..40
                 0: JS_FORMAL_PARAMETER@36..40
-                  0: JS_IDENTIFIER_BINDING@36..40
+                  0: JS_DECORATOR_LIST@36..36
+                  1: JS_IDENTIFIER_BINDING@36..40
                     0: IDENT@36..40 "test" [] []
-                  1: (empty)
                   2: (empty)
                   3: (empty)
+                  4: (empty)
               2: R_PAREN@40..42 ")" [] [Whitespace(" ")]
             6: (empty)
             7: JS_FUNCTION_BODY@42..44

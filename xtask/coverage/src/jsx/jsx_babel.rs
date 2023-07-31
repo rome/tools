@@ -1,11 +1,10 @@
-use crate::runner::create_unknown_node_in_tree_diagnostic;
+use crate::runner::create_bogus_node_in_tree_diagnostic;
 use crate::{
     check_file_encoding,
     runner::{TestCase, TestCaseFiles, TestRunOutcome, TestSuite},
 };
-use rome_diagnostics::file::FileId;
-use rome_js_parser::parse;
-use rome_js_syntax::{ModuleKind, SourceType};
+use rome_js_parser::{parse, JsParserOptions};
+use rome_js_syntax::{JsFileSource, ModuleKind};
 use rome_rowan::SyntaxKind;
 use std::path::Path;
 
@@ -36,22 +35,26 @@ impl TestCase for BabelJsxTestCase {
     }
 
     fn run(&self) -> TestRunOutcome {
-        let source_type = SourceType::jsx().with_module_kind(ModuleKind::Script);
-        let files = TestCaseFiles::single(self.name().to_string(), self.code.clone(), source_type);
-        let result = parse(&self.code, FileId::zero(), source_type);
+        let source_type = JsFileSource::jsx().with_module_kind(ModuleKind::Script);
+        let options = JsParserOptions::default().with_parse_class_parameter_decorators();
+
+        let files = TestCaseFiles::single(
+            self.name().to_string(),
+            self.code.clone(),
+            source_type,
+            options.clone(),
+        );
+        let result = parse(&self.code, source_type, options);
 
         if result.diagnostics().is_empty() {
-            if let Some(unknown) = result
+            if let Some(bogus) = result
                 .syntax()
                 .descendants()
-                .find(|descendant| descendant.kind().is_unknown())
+                .find(|descendant| descendant.kind().is_bogus())
             {
                 TestRunOutcome::IncorrectlyErrored {
                     files,
-                    errors: vec![create_unknown_node_in_tree_diagnostic(
-                        FileId::zero(),
-                        unknown,
-                    )],
+                    errors: vec![create_bogus_node_in_tree_diagnostic(bogus)],
                 }
             } else {
                 TestRunOutcome::Passed(files)

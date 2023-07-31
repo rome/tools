@@ -1,7 +1,8 @@
 use crate::prelude::*;
 use rome_formatter::{write, Buffer};
-use rome_js_syntax::{TsAnyTypeMember, TsTypeMemberList};
+use rome_js_syntax::{AnyTsTypeMember, TsTypeMemberList};
 
+use crate::context::Semicolons;
 use rome_rowan::AstNodeList;
 
 #[derive(Debug, Clone, Default)]
@@ -32,7 +33,7 @@ impl FormatRule<TsTypeMemberList> for FormatTsTypeMemberList {
 
 struct TsTypeMemberItem<'a> {
     last: bool,
-    member: &'a TsAnyTypeMember,
+    member: &'a AnyTsTypeMember,
 }
 
 impl Format<JsFormatContext> for TsTypeMemberItem<'_> {
@@ -54,10 +55,19 @@ impl Format<JsFormatContext> for TsTypeMemberItem<'_> {
         if !is_verbatim {
             // Children don't format the separator on purpose, so it's up to the parent - this node,
             // to decide to print their separator
-            if self.last {
-                write!(f, [if_group_breaks(&text(";"))])?;
-            } else {
-                text(";").fmt(f)?;
+            match f.options().semicolons() {
+                Semicolons::Always => {
+                    if self.last {
+                        write!(f, [if_group_breaks(&text(";"))])?;
+                    } else {
+                        text(";").fmt(f)?;
+                    }
+                }
+                Semicolons::AsNeeded => {
+                    if !self.last {
+                        write!(f, [if_group_fits_on_line(&text(";"))])?;
+                    }
+                }
             }
         }
 

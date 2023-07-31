@@ -7,6 +7,7 @@ expression: createElement.js
 React.createElement('div', { dangerouslySetInnerHTML: { __html: 'HTML' } }, ['children'])
 React.createElement('div', { dangerouslySetInnerHTML: { __html: 'HTML' } }, 'children')
 React.createElement('div', { dangerouslySetInnerHTML: { __html: 'HTML' }, children: 'children' })
+
 ```
 
 # Diagnostics
@@ -41,6 +42,7 @@ createElement.js:2:30 lint/security/noDangerouslySetInnerHtmlWithChildren ━━
   > 2 │ React.createElement('div', { dangerouslySetInnerHTML: { __html: 'HTML' } }, 'children')
       │                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     3 │ React.createElement('div', { dangerouslySetInnerHTML: { __html: 'HTML' }, children: 'children' })
+    4 │ 
   
   i This is the source of the children prop
   
@@ -48,6 +50,7 @@ createElement.js:2:30 lint/security/noDangerouslySetInnerHtmlWithChildren ━━
   > 2 │ React.createElement('div', { dangerouslySetInnerHTML: { __html: 'HTML' } }, 'children')
       │                                                                             ^^^^^^^^^^
     3 │ React.createElement('div', { dangerouslySetInnerHTML: { __html: 'HTML' }, children: 'children' })
+    4 │ 
   
   i Setting HTML content will inadvertently override any passed children in React
   
@@ -63,6 +66,7 @@ createElement.js:3:30 lint/security/noDangerouslySetInnerHtmlWithChildren ━━
     2 │ React.createElement('div', { dangerouslySetInnerHTML: { __html: 'HTML' } }, 'children')
   > 3 │ React.createElement('div', { dangerouslySetInnerHTML: { __html: 'HTML' }, children: 'children' })
       │                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    4 │ 
   
   i This is the source of the children prop
   
@@ -70,6 +74,7 @@ createElement.js:3:30 lint/security/noDangerouslySetInnerHtmlWithChildren ━━
     2 │ React.createElement('div', { dangerouslySetInnerHTML: { __html: 'HTML' } }, 'children')
   > 3 │ React.createElement('div', { dangerouslySetInnerHTML: { __html: 'HTML' }, children: 'children' })
       │                                                                           ^^^^^^^^^^^^^^^^^^^^
+    4 │ 
   
   i Setting HTML content will inadvertently override any passed children in React
   

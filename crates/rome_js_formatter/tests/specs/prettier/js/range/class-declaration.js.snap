@@ -1,5 +1,7 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+assertion_line: 212
+info: js/range/class-declaration.js
 ---
 
 # Input
@@ -11,7 +13,8 @@ class    a {
   b(   ) {}
 }
 
-let    x```
+let    x
+```
 
 
 # Prettier differences
@@ -41,6 +44,5 @@ class a {
 }
 
 let    x```
-
 
 

@@ -5,7 +5,7 @@ use rome_js_syntax::JsParenthesizedAssignment;
 use rome_js_syntax::{JsParenthesizedAssignmentFields, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsParenthesizedAssignment;
+pub(crate) struct FormatJsParenthesizedAssignment;
 
 impl FormatNodeRule<JsParenthesizedAssignment> for FormatJsParenthesizedAssignment {
     fn fmt_fields(

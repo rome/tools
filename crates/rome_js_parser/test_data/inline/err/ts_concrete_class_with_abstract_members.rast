@@ -3,6 +3,7 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -13,7 +14,7 @@ JsModule {
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@8..9 "{" [] [],
             members: JsClassMemberList [
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         TsPropertySignatureModifierList [
                             TsAbstractModifier {
@@ -32,7 +33,7 @@ JsModule {
                         SEMICOLON@36..37 ";" [] [],
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         TsMethodSignatureModifierList [
                             TsAbstractModifier {
@@ -56,7 +57,7 @@ JsModule {
                         SEMICOLON@64..65 ";" [] [],
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         TsMethodSignatureModifierList [
                             TsAbstractModifier {
@@ -78,7 +79,7 @@ JsModule {
                         SEMICOLON@95..96 ";" [] [],
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         TsMethodSignatureModifierList [
                             TsAbstractModifier {
@@ -91,6 +92,7 @@ JsModule {
                         },
                         L_PAREN@116..117 "(" [] [],
                         JsFormalParameter {
+                            decorators: JsDecoratorList [],
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@117..118 "v" [] [],
                             },
@@ -114,16 +116,17 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..122
     0: JS_CLASS_DECLARATION@0..122
-      0: (empty)
-      1: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@6..8
+      0: JS_DECORATOR_LIST@0..0
+      1: (empty)
+      2: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@6..8
         0: IDENT@6..8 "A" [] [Whitespace(" ")]
-      3: (empty)
       4: (empty)
       5: (empty)
-      6: L_CURLY@8..9 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@9..120
-        0: JS_UNKNOWN_MEMBER@9..37
+      6: (empty)
+      7: L_CURLY@8..9 "{" [] []
+      8: JS_CLASS_MEMBER_LIST@9..120
+        0: JS_BOGUS_MEMBER@9..37
           0: TS_PROPERTY_SIGNATURE_MODIFIER_LIST@9..22
             0: TS_ABSTRACT_MODIFIER@9..22
               0: ABSTRACT_KW@9..22 "abstract" [Newline("\n"), Whitespace("   ")] [Whitespace(" ")]
@@ -134,7 +137,7 @@ JsModule {
             1: TS_NUMBER_TYPE@30..36
               0: NUMBER_KW@30..36 "number" [] []
           3: SEMICOLON@36..37 ";" [] []
-        1: JS_UNKNOWN_MEMBER@37..65
+        1: JS_BOGUS_MEMBER@37..65
           0: TS_METHOD_SIGNATURE_MODIFIER_LIST@37..50
             0: TS_ABSTRACT_MODIFIER@37..50
               0: ABSTRACT_KW@37..50 "abstract" [Newline("\n"), Whitespace("   ")] [Whitespace(" ")]
@@ -149,7 +152,7 @@ JsModule {
             1: TS_STRING_TYPE@58..64
               0: STRING_KW@58..64 "string" [] []
           4: SEMICOLON@64..65 ";" [] []
-        2: JS_UNKNOWN_MEMBER@65..96
+        2: JS_BOGUS_MEMBER@65..96
           0: TS_METHOD_SIGNATURE_MODIFIER_LIST@65..78
             0: TS_ABSTRACT_MODIFIER@65..78
               0: ABSTRACT_KW@65..78 "abstract" [Newline("\n"), Whitespace("   ")] [Whitespace(" ")]
@@ -163,7 +166,7 @@ JsModule {
             1: TS_NUMBER_TYPE@89..95
               0: NUMBER_KW@89..95 "number" [] []
           6: SEMICOLON@95..96 ";" [] []
-        3: JS_UNKNOWN_MEMBER@96..120
+        3: JS_BOGUS_MEMBER@96..120
           0: TS_METHOD_SIGNATURE_MODIFIER_LIST@96..109
             0: TS_ABSTRACT_MODIFIER@96..109
               0: ABSTRACT_KW@96..109 "abstract" [Newline("\n"), Whitespace("   ")] [Whitespace(" ")]
@@ -172,14 +175,15 @@ JsModule {
             0: IDENT@113..116 "age" [] []
           3: L_PAREN@116..117 "(" [] []
           4: JS_FORMAL_PARAMETER@117..118
-            0: JS_IDENTIFIER_BINDING@117..118
+            0: JS_DECORATOR_LIST@117..117
+            1: JS_IDENTIFIER_BINDING@117..118
               0: IDENT@117..118 "v" [] []
-            1: (empty)
             2: (empty)
             3: (empty)
+            4: (empty)
           5: R_PAREN@118..119 ")" [] []
           6: SEMICOLON@119..120 ";" [] []
-      8: R_CURLY@120..122 "}" [Newline("\n")] []
+      9: R_CURLY@120..122 "}" [Newline("\n")] []
   3: EOF@122..123 "" [Newline("\n")] []
 --
 ts_concrete_class_with_abstract_members.ts:2:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

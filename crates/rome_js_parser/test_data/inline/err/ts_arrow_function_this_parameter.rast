@@ -19,7 +19,7 @@ JsModule {
                                 parameters: JsParameters {
                                     l_paren_token: L_PAREN@8..9 "(" [] [],
                                     items: JsParameterList [
-                                        JsUnknownParameter {
+                                        JsBogusParameter {
                                             items: [
                                                 THIS_KW@9..13 "this" [] [],
                                                 TsTypeAnnotation {
@@ -72,7 +72,7 @@ JsModule {
                 2: JS_PARAMETERS@8..23
                   0: L_PAREN@8..9 "(" [] []
                   1: JS_PARAMETER_LIST@9..21
-                    0: JS_UNKNOWN_PARAMETER@9..21
+                    0: JS_BOGUS_PARAMETER@9..21
                       0: THIS_KW@9..13 "this" [] []
                       1: TS_TYPE_ANNOTATION@13..21
                         0: COLON@13..15 ":" [] [Whitespace(" ")]

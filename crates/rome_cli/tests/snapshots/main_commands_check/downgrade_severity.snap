@@ -8,10 +8,10 @@ expression: content
 {
   "linter": {
     "rules": {
-        "recommended": true,
-        "correctness": {
-            "noDebugger": "warn"
-        }
+      "recommended": true,
+      "suspicious": {
+        "noDebugger": "warn"
+      }
     }
   }
 }
@@ -23,10 +23,21 @@ expression: content
 debugger;
 ```
 
+# Termination Message
+
+```block
+check ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Some errors were emitted while running checks.
+  
+
+
+```
+
 # Emitted Messages
 
 ```block
-file.js:1:1 lint/correctness/noDebugger  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+file.js:1:1 lint/suspicious/noDebugger  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This is an unexpected use of the debugger statement.
   
@@ -38,6 +49,30 @@ file.js:1:1 lint/correctness/noDebugger  FIXABLE  ━━━━━━━━━━
     1 │ debugger;
       │ ---------
 
+```
+
+```block
+file.js format ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Formatter would have printed the following content:
+  
+    1   │ - debugger;
+      1 │ + debugger;
+      2 │ + 
+  
+
+```
+
+```block
+check ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Some errors were emitted while running checks.
+  
+
+```
+
+```block
+Checked 1 file(s) in <TIME>
 ```
 
 

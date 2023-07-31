@@ -1,0 +1,35 @@
+// Vitest Snapshot v1
+
+exports[`Rome WebAssembly formatContent > should not format and have diagnostics > syntax error 1`] = `
+[
+  {
+    "advices": {
+      "advices": [],
+    },
+    "category": "parse",
+    "description": "expected a name for the function in a function declaration, but found none",
+    "location": {
+      "path": {
+        "file": "example.js",
+      },
+      "source_code": null,
+      "span": [
+        11,
+        12,
+      ],
+    },
+    "message": [
+      {
+        "content": "expected a name for the function in a function declaration, but found none",
+        "elements": [],
+      },
+    ],
+    "severity": "error",
+    "source": null,
+    "tags": [],
+    "verbose_advices": {
+      "advices": [],
+    },
+  },
+]
+`;

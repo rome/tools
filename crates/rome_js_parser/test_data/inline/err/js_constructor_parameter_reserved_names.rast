@@ -3,6 +3,7 @@ JsScript {
     directives: JsDirectiveList [],
     statements: JsStatementList [
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@0..16 "class" [Comments("// SCRIPT"), Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -22,6 +23,7 @@ JsScript {
                         l_paren_token: L_PAREN@31..32 "(" [] [],
                         parameters: JsConstructorParameterList [
                             JsFormalParameter {
+                                decorators: JsDecoratorList [],
                                 binding: JsIdentifierBinding {
                                     name_token: IDENT@32..40 "readonly" [] [],
                                 },
@@ -31,7 +33,8 @@ JsScript {
                             },
                             COMMA@40..42 "," [] [Whitespace(" ")],
                             JsFormalParameter {
-                                binding: JsUnknownBinding {
+                                decorators: JsDecoratorList [],
+                                binding: JsBogusBinding {
                                     items: [
                                         IDENT@42..49 "private" [] [],
                                     ],
@@ -42,7 +45,8 @@ JsScript {
                             },
                             COMMA@49..51 "," [] [Whitespace(" ")],
                             JsFormalParameter {
-                                binding: JsUnknownBinding {
+                                decorators: JsDecoratorList [],
+                                binding: JsBogusBinding {
                                     items: [
                                         IDENT@51..60 "protected" [] [],
                                     ],
@@ -53,7 +57,8 @@ JsScript {
                             },
                             COMMA@60..62 "," [] [Whitespace(" ")],
                             JsFormalParameter {
-                                binding: JsUnknownBinding {
+                                decorators: JsDecoratorList [],
+                                binding: JsBogusBinding {
                                     items: [
                                         IDENT@62..68 "public" [] [],
                                     ],
@@ -84,15 +89,16 @@ JsScript {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_STATEMENT_LIST@0..74
     0: JS_CLASS_DECLARATION@0..74
-      0: (empty)
-      1: CLASS_KW@0..16 "class" [Comments("// SCRIPT"), Newline("\n")] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@16..18
+      0: JS_DECORATOR_LIST@0..0
+      1: (empty)
+      2: CLASS_KW@0..16 "class" [Comments("// SCRIPT"), Newline("\n")] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@16..18
         0: IDENT@16..18 "A" [] [Whitespace(" ")]
-      3: (empty)
       4: (empty)
       5: (empty)
-      6: L_CURLY@18..20 "{" [] [Whitespace(" ")]
-      7: JS_CLASS_MEMBER_LIST@20..73
+      6: (empty)
+      7: L_CURLY@18..20 "{" [] [Whitespace(" ")]
+      8: JS_CLASS_MEMBER_LIST@20..73
         0: JS_CONSTRUCTOR_CLASS_MEMBER@20..73
           0: JS_CONSTRUCTOR_MODIFIER_LIST@20..20
           1: JS_LITERAL_MEMBER_NAME@20..31
@@ -101,39 +107,43 @@ JsScript {
             0: L_PAREN@31..32 "(" [] []
             1: JS_CONSTRUCTOR_PARAMETER_LIST@32..68
               0: JS_FORMAL_PARAMETER@32..40
-                0: JS_IDENTIFIER_BINDING@32..40
+                0: JS_DECORATOR_LIST@32..32
+                1: JS_IDENTIFIER_BINDING@32..40
                   0: IDENT@32..40 "readonly" [] []
-                1: (empty)
                 2: (empty)
                 3: (empty)
+                4: (empty)
               1: COMMA@40..42 "," [] [Whitespace(" ")]
               2: JS_FORMAL_PARAMETER@42..49
-                0: JS_UNKNOWN_BINDING@42..49
+                0: JS_DECORATOR_LIST@42..42
+                1: JS_BOGUS_BINDING@42..49
                   0: IDENT@42..49 "private" [] []
-                1: (empty)
                 2: (empty)
                 3: (empty)
+                4: (empty)
               3: COMMA@49..51 "," [] [Whitespace(" ")]
               4: JS_FORMAL_PARAMETER@51..60
-                0: JS_UNKNOWN_BINDING@51..60
+                0: JS_DECORATOR_LIST@51..51
+                1: JS_BOGUS_BINDING@51..60
                   0: IDENT@51..60 "protected" [] []
-                1: (empty)
                 2: (empty)
                 3: (empty)
+                4: (empty)
               5: COMMA@60..62 "," [] [Whitespace(" ")]
               6: JS_FORMAL_PARAMETER@62..68
-                0: JS_UNKNOWN_BINDING@62..68
+                0: JS_DECORATOR_LIST@62..62
+                1: JS_BOGUS_BINDING@62..68
                   0: IDENT@62..68 "public" [] []
-                1: (empty)
                 2: (empty)
                 3: (empty)
+                4: (empty)
             2: R_PAREN@68..70 ")" [] [Whitespace(" ")]
           3: JS_FUNCTION_BODY@70..73
             0: L_CURLY@70..71 "{" [] []
             1: JS_DIRECTIVE_LIST@71..71
             2: JS_STATEMENT_LIST@71..71
             3: R_CURLY@71..73 "}" [] [Whitespace(" ")]
-      8: R_CURLY@73..74 "}" [] []
+      9: R_CURLY@73..74 "}" [] []
   3: EOF@74..75 "" [Newline("\n")] []
 --
 js_constructor_parameter_reserved_names.js:2:33 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

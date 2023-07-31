@@ -3,6 +3,7 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsExport {
+            decorators: JsDecoratorList [],
             export_token: EXPORT_KW@0..7 "export" [] [Whitespace(" ")],
             export_clause: JsExportDefaultExpressionClause {
                 default_token: DEFAULT_KW@7..15 "default" [] [Whitespace(" ")],
@@ -14,7 +15,7 @@ JsModule {
                 semicolon_token: missing (optional),
             },
         },
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 COMMA@16..18 "," [] [Whitespace(" ")],
                 IDENT@18..19 "b" [] [],
@@ -32,14 +33,15 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..20
     0: JS_EXPORT@0..16
-      0: EXPORT_KW@0..7 "export" [] [Whitespace(" ")]
-      1: JS_EXPORT_DEFAULT_EXPRESSION_CLAUSE@7..16
+      0: JS_DECORATOR_LIST@0..0
+      1: EXPORT_KW@0..7 "export" [] [Whitespace(" ")]
+      2: JS_EXPORT_DEFAULT_EXPRESSION_CLAUSE@7..16
         0: DEFAULT_KW@7..15 "default" [] [Whitespace(" ")]
         1: JS_IDENTIFIER_EXPRESSION@15..16
           0: JS_REFERENCE_IDENTIFIER@15..16
             0: IDENT@15..16 "a" [] []
         2: (empty)
-    1: JS_UNKNOWN_STATEMENT@16..19
+    1: JS_BOGUS_STATEMENT@16..19
       0: COMMA@16..18 "," [] [Whitespace(" ")]
       1: IDENT@18..19 "b" [] []
     2: JS_EMPTY_STATEMENT@19..20

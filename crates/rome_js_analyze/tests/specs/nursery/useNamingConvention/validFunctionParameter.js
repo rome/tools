@@ -1,0 +1,1 @@
+function f(a, specialParameter, _unused, $1, stream$, _, $, __doubledUnderscore, __) {}

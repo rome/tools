@@ -15,11 +15,14 @@ expression: content
 ## `fix.js`
 
 ```js
-
-if(a != -0) {}
+1 >= -0;
 
 ```
 
 # Emitted Messages
+
+```block
+Fixed 1 file(s) in <TIME>
+```
 
 

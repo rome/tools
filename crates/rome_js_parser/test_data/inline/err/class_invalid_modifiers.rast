@@ -3,6 +3,7 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -13,7 +14,7 @@ JsModule {
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         JsMethodModifierList [
                             TsAccessibilityModifier {
@@ -40,6 +41,7 @@ JsModule {
             r_curly_token: R_CURLY@26..27 "}" [] [],
         },
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@27..34 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -50,7 +52,7 @@ JsModule {
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@36..38 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         JsMethodModifierList [
                             JsStaticModifier {
@@ -79,25 +81,66 @@ JsModule {
             ],
             r_curly_token: R_CURLY@61..62 "}" [] [],
         },
+        JsClassDeclaration {
+            decorators: JsDecoratorList [],
+            abstract_token: missing (optional),
+            class_token: CLASS_KW@62..69 "class" [Newline("\n")] [Whitespace(" ")],
+            id: JsIdentifierBinding {
+                name_token: IDENT@69..71 "C" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (optional),
+            extends_clause: missing (optional),
+            implements_clause: missing (optional),
+            l_curly_token: L_CURLY@71..73 "{" [] [Whitespace(" ")],
+            members: JsClassMemberList [
+                JsBogusMember {
+                    items: [
+                        JsBogus {
+                            items: [
+                                JsAccessorModifier {
+                                    modifier_token: ACCESSOR_KW@73..82 "accessor" [] [Whitespace(" ")],
+                                },
+                            ],
+                        },
+                        JsLiteralMemberName {
+                            value: IDENT@82..85 "foo" [] [],
+                        },
+                        JsParameters {
+                            l_paren_token: L_PAREN@85..86 "(" [] [],
+                            items: JsParameterList [],
+                            r_paren_token: R_PAREN@86..88 ")" [] [Whitespace(" ")],
+                        },
+                        JsFunctionBody {
+                            l_curly_token: L_CURLY@88..89 "{" [] [],
+                            directives: JsDirectiveList [],
+                            statements: JsStatementList [],
+                            r_curly_token: R_CURLY@89..91 "}" [] [Whitespace(" ")],
+                        },
+                    ],
+                },
+            ],
+            r_curly_token: R_CURLY@91..92 "}" [] [],
+        },
     ],
-    eof_token: EOF@62..63 "" [Newline("\n")] [],
+    eof_token: EOF@92..93 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..63
+0: JS_MODULE@0..93
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..62
+  2: JS_MODULE_ITEM_LIST@0..92
     0: JS_CLASS_DECLARATION@0..27
-      0: (empty)
-      1: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@6..8
+      0: JS_DECORATOR_LIST@0..0
+      1: (empty)
+      2: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@6..8
         0: IDENT@6..8 "A" [] [Whitespace(" ")]
-      3: (empty)
       4: (empty)
       5: (empty)
-      6: L_CURLY@8..10 "{" [] [Whitespace(" ")]
-      7: JS_CLASS_MEMBER_LIST@10..26
-        0: JS_UNKNOWN_MEMBER@10..26
+      6: (empty)
+      7: L_CURLY@8..10 "{" [] [Whitespace(" ")]
+      8: JS_CLASS_MEMBER_LIST@10..26
+        0: JS_BOGUS_MEMBER@10..26
           0: JS_METHOD_MODIFIER_LIST@10..17
             0: TS_ACCESSIBILITY_MODIFIER@10..17
               0: PUBLIC_KW@10..17 "public" [] [Whitespace(" ")]
@@ -112,18 +155,19 @@ JsModule {
             1: JS_DIRECTIVE_LIST@24..24
             2: JS_STATEMENT_LIST@24..24
             3: R_CURLY@24..26 "}" [] [Whitespace(" ")]
-      8: R_CURLY@26..27 "}" [] []
+      9: R_CURLY@26..27 "}" [] []
     1: JS_CLASS_DECLARATION@27..62
-      0: (empty)
-      1: CLASS_KW@27..34 "class" [Newline("\n")] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@34..36
+      0: JS_DECORATOR_LIST@27..27
+      1: (empty)
+      2: CLASS_KW@27..34 "class" [Newline("\n")] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@34..36
         0: IDENT@34..36 "B" [] [Whitespace(" ")]
-      3: (empty)
       4: (empty)
       5: (empty)
-      6: L_CURLY@36..38 "{" [] [Whitespace(" ")]
-      7: JS_CLASS_MEMBER_LIST@38..61
-        0: JS_UNKNOWN_MEMBER@38..61
+      6: (empty)
+      7: L_CURLY@36..38 "{" [] [Whitespace(" ")]
+      8: JS_CLASS_MEMBER_LIST@38..61
+        0: JS_BOGUS_MEMBER@38..61
           0: JS_METHOD_MODIFIER_LIST@38..52
             0: JS_STATIC_MODIFIER@38..45
               0: STATIC_KW@38..45 "static" [] [Whitespace(" ")]
@@ -140,8 +184,35 @@ JsModule {
             1: JS_DIRECTIVE_LIST@59..59
             2: JS_STATEMENT_LIST@59..59
             3: R_CURLY@59..61 "}" [] [Whitespace(" ")]
-      8: R_CURLY@61..62 "}" [] []
-  3: EOF@62..63 "" [Newline("\n")] []
+      9: R_CURLY@61..62 "}" [] []
+    2: JS_CLASS_DECLARATION@62..92
+      0: JS_DECORATOR_LIST@62..62
+      1: (empty)
+      2: CLASS_KW@62..69 "class" [Newline("\n")] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@69..71
+        0: IDENT@69..71 "C" [] [Whitespace(" ")]
+      4: (empty)
+      5: (empty)
+      6: (empty)
+      7: L_CURLY@71..73 "{" [] [Whitespace(" ")]
+      8: JS_CLASS_MEMBER_LIST@73..91
+        0: JS_BOGUS_MEMBER@73..91
+          0: JS_BOGUS@73..82
+            0: JS_ACCESSOR_MODIFIER@73..82
+              0: ACCESSOR_KW@73..82 "accessor" [] [Whitespace(" ")]
+          1: JS_LITERAL_MEMBER_NAME@82..85
+            0: IDENT@82..85 "foo" [] []
+          2: JS_PARAMETERS@85..88
+            0: L_PAREN@85..86 "(" [] []
+            1: JS_PARAMETER_LIST@86..86
+            2: R_PAREN@86..88 ")" [] [Whitespace(" ")]
+          3: JS_FUNCTION_BODY@88..91
+            0: L_CURLY@88..89 "{" [] []
+            1: JS_DIRECTIVE_LIST@89..89
+            2: JS_STATEMENT_LIST@89..89
+            3: R_CURLY@89..91 "}" [] [Whitespace(" ")]
+      9: R_CURLY@91..92 "}" [] []
+  3: EOF@92..93 "" [Newline("\n")] []
 --
 class_invalid_modifiers.js:1:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -150,7 +221,7 @@ class_invalid_modifiers.js:1:11 parse ━━━━━━━━━━━━━━
   > 1 │ class A { public foo() {} }
       │           ^^^^^^
     2 │ class B { static static foo() {} }
-    3 │ 
+    3 │ class C { accessor foo() {} }
   
 --
 class_invalid_modifiers.js:2:18 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -160,22 +231,37 @@ class_invalid_modifiers.js:2:18 parse ━━━━━━━━━━━━━━
     1 │ class A { public foo() {} }
   > 2 │ class B { static static foo() {} }
       │                  ^^^^^^
-    3 │ 
+    3 │ class C { accessor foo() {} }
+    4 │ 
   
   i duplicate modifier
   
     1 │ class A { public foo() {} }
   > 2 │ class B { static static foo() {} }
       │                  ^^^^^^
-    3 │ 
+    3 │ class C { accessor foo() {} }
+    4 │ 
   
   i first seen here
   
     1 │ class A { public foo() {} }
   > 2 │ class B { static static foo() {} }
       │           ^^^^^^
-    3 │ 
+    3 │ class C { accessor foo() {} }
+    4 │ 
+  
+--
+class_invalid_modifiers.js:3:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × 'accessor' modifier is only allowed on properties.
+  
+    1 │ class A { public foo() {} }
+    2 │ class B { static static foo() {} }
+  > 3 │ class C { accessor foo() {} }
+      │           ^^^^^^^^
+    4 │ 
   
 --
 class A { public foo() {} }
 class B { static static foo() {} }
+class C { accessor foo() {} }

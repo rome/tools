@@ -1,7 +1,7 @@
-use rome_js_syntax::{JsAnyExpression, JsSyntaxKind};
+use rome_js_syntax::{AnyJsExpression, JsSyntaxKind};
 use rome_rowan::AstNode;
 
-pub fn is_constant(expr: &JsAnyExpression) -> bool {
+pub fn is_constant(expr: &AnyJsExpression) -> bool {
     for node in expr.syntax().descendants() {
         if matches!(node.kind(), JsSyntaxKind::JS_REFERENCE_IDENTIFIER) {
             return false;
@@ -12,15 +12,15 @@ pub fn is_constant(expr: &JsAnyExpression) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use rome_diagnostics::v2::FileId;
-    use rome_js_syntax::{JsIdentifierBinding, JsVariableDeclarator, SourceType};
+    use rome_js_parser::JsParserOptions;
+    use rome_js_syntax::{JsFileSource, JsIdentifierBinding, JsVariableDeclarator};
 
     use crate::{semantic_model, SemanticModelOptions};
 
     fn assert_is_const(code: &str, is_const: bool) {
         use rome_rowan::AstNode;
         use rome_rowan::SyntaxNodeCast;
-        let r = rome_js_parser::parse(code, FileId::zero(), SourceType::js_module());
+        let r = rome_js_parser::parse(code, JsFileSource::js_module(), JsParserOptions::default());
         let model = semantic_model(&r.tree(), SemanticModelOptions::default());
 
         let a_reference = r

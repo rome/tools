@@ -1,32 +1,105 @@
 # Rome VS Code Extension
 
-Adds support for the Rome language server to provide formatting, diagnostics, and code actions.
+[Rome](https://rome.tools/) unifies your development stack by combining the functionality of separate tools. It uses a single configuration file, has fantastic performance, and works with any stack. This extension brings Rome to your editor so that you can:
 
-## How the extension works
+- Format files *on save* or when issuing the *Format Document* command
+- See lints while you type and apply code fixes
+- Perform refactors
 
-The extension acts as a language server, which means that you will get all the features
-provided by the extension (formatting, diagnostics, etc.) for any file supported by Rome.
+## Installation
 
-The extension automatically discovers the `rome.json` file in the workspace root directory.
+You can install the code extension by heading to the extension's [Visual Studio Code Market Place page](https://marketplace.visualstudio.com/items?itemName=rome.rome) or from within VS Code by either:
 
-## Known limitations
+- Open the *extensions* tab (_View_ → _Extensions)_ and search for Rome.
+- Open the _Quick Open Overlay_ (<kbd>Ctrl</kbd>/<kbd title="Cmd">⌘</kbd>+<kbd>P</kbd> or _Go -> Go to File_), enter `ext install rome.rome`, and hit enter.
 
-There are a few limitations that the team plans to remove in the following releases.
+## Getting Started
 
-- the discovery of the `rome.json` is limited to the root of the workspace
-- changes to the configuration `rome.json` won't be picked automatically; use the VSCode command
-  `Restart LSP Server` or use `rome stop` command;
-- when updating `rome` inside you `package.json`, the rome server needs to be restarted;
-  you can use `rome stop` command or kill the process manually;
-- if you don't want to see Rome's diagnostics in projects that don't use Rome, you need to disable
-  the extension;
+### Default Formatter
 
-## Supported languages
+Configure Rome as the default formatter for supported files to ensure that VS Code uses Rome over other formatters that you may have installed. You can do so by opening a JavaScript or TypeScript and then:
 
-Check the [website](https://rome.tools/#language-support) for more information.
+- Open the Command Palette (<kbd>Ctrl</kbd>/<kbd title="Cmd">⌘</kbd>+<kbd title="Shift">⇧</kbd>+<kbd>P</kbd> or View → Command Palette)
+- Select _Format Document With…_
+- Select _Configure Default Formatter…_
+- Select Rome
+
+You can also enable Rome for specific languages only:
+
+- [Open the `settings.json`](https://code.visualstudio.com/docs/getstarted/settings#_settingsjson): open the _Command Palette_(<kbd>Ctrl</kbd>/<kbd title="Cmd">⌘</kbd>+<kbd title="Shift">⇧</kbd>+<kbd>P</kbd>) and select _Preferences: Open User Settings (JSON)_
+- And set the `editor.defaultFormatter` to `rome.rome` for the desired language
+
+```json
+{
+	"editor.defaultFormatter": "<other formatter>",
+	"[javascript]": {
+		"editor.defaultFormatter": "rome.rome"
+	}
+}
+```
+
+This configuration sets Rome as the default formatter for JavaScript files. All other files will be formatted using `<other formatter>`
+
+## Configuration Resolution
+
+The extension automatically loads the `rome.json` file from the workspace’s root directory.
+
+## Rome Resolution
+
+The extension tries to use Rome from your project's local dependencies (`node_modules/rome`). We recommend adding Rome as a project dependency to ensure that NPM scripts and the extension use the same Rome version.
+
+You can also explicitly specify the `rome` binary the extension should use by configuring the `rome.lspBin` setting in your editor options.
+
+If the project has no dependency on Rome and no explicit path is configured, the extension uses the Rome version included in its bundle.
 
 ## Usage
 
-This extension may be bundled with a prebuilt binary for `rome_lsp`, the Rome language server.
+### Format document
 
-You can set the path to a `rome_lsp` executable using the `"rome.lspBin"` setting in your VS Code Settings.
+To format an entire document, open the _Command Palette_ (<kbd>Ctrl</kbd>/<kbd title="Cmd">⌘</kbd>+<kbd title="Shift">⇧</kbd>+<kbd>P</kbd>) and select _Format Document_.
+
+To format a text range, select the text you want to format, open the _Command Palette_ (<kbd>Ctrl</kbd>/<kbd title="Cmd">⌘</kbd>+<kbd title="Shift">⇧</kbd>+<kbd>P</kbd>), and select _Format Selection_.
+
+### Format on save
+
+Rome respects VS Code's _Format on Save_ setting. To enable format on save, open the settings (_File_ -> _Preferences_ -> _Settings_), search for `editor.formatOnSave`, and enable the option.
+
+### Fix on save
+
+Rome respects VS Code's _Code Actions On Save_ setting. To enable fix on save, add `"editor.codeActionsOnSave": { "quickfix.rome": true }` in vscode settings.json.
+
+### Imports Sorting [Experimental]
+
+The Rome VS Code extension has experimental support for imports sorting through the "Organize Imports" code action. By default this action can be run using the <kbd title="Shift">⇧</kbd>+<kbd>Alt</kbd>+<kbd>O</kbd> keyboard shortcut, or is accessible through the _Command Palette_ (<kbd>Ctrl</kbd>/<kbd title="Cmd">⌘</kbd>+<kbd title="Shift">⇧</kbd>+<kbd>P</kbd>) by selecting _Organize Imports_.
+
+You can add the following to your editor configuration if you want the action to run automatically on save instead of calling it manually:
+
+```json
+{
+	"editor.codeActionsOnSave":{
+		"source.organizeImports.rome": true
+	}
+}
+```
+
+## Extension Settings
+
+### `rome.lspBin`
+
+The `rome.lspBin` option overrides the Rome binary used by the extension. The workspace folder is used as the base path if the path is relative.
+
+### `rome.rename`
+
+Enables Rome to handle renames in the workspace (experimental).
+
+### `rome.requireConfiguration`
+
+Disables formatting, linting, and syntax errors for projects without a `rome.json` file. Requires Rome 12 or newer.
+Enabled by default.
+
+## Versioning
+
+We follow the specs suggested by [the official documentation](https://code.visualstudio.com/api/working-with-extensions/publishing-extension#prerelease-extensions):
+
+Odd minor versions are dedicated to pre-releases, e.g. `*.5.*` .
+Even minor versions are dedicated to official releases, e.g. `*.6.*`.

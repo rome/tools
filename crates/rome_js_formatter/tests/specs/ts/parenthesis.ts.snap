@@ -1,11 +1,11 @@
 ---
-source: crates/rome_js_formatter/tests/spec_test.rs
-expression: parenthesis.ts
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info: ts/parenthesis.ts
 ---
 
 # Input
 
-```js
+```ts
 const a = (c && b) as boolean;
 const a = <any>(c && b) as boolean;
 const a = !(c && b) as boolean;
@@ -22,11 +22,14 @@ const a = !(c && b) as boolean;
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
+Semicolons: Always
+Arrow parentheses: Always
 -----
 
-```js
+```ts
 const a = (c && b) as boolean;
 const a = (<any>(c && b)) as boolean;
 const a = !(c && b) as boolean;

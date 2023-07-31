@@ -1,0 +1,33 @@
+[
+	// Array - Arrow return
+	"foo.reduce((acc, bar) => [...acc, bar], [])",
+	"foo.reduceRight((acc, bar) => [...acc, bar], [])",
+
+	// Array - Body return
+	"foo.reduce((acc, bar) => {return [...acc, bar];}, [])",
+	"foo.reduceRight((acc, bar) => {return [...acc, bar];}, [])",
+
+	// Array - Arrow return with item spread
+	"foo.reduce((acc, bar) => [...acc, ...bar], [])",
+	"foo.reduceRight((acc, bar) => [...acc, ...bar], [])",
+
+	// Array - Body return with item spread
+	"foo.reduce((acc, bar) => {return [...acc, ...bar];}, [])",
+	"foo.reduceRight((acc, bar) => {return [...acc, ...bar];}, [])",
+
+	// Object - Arrow return
+	"foo.reduce((acc, bar) => ({...acc, [bar.key]: bar.value}), {})",
+	"foo.reduceRight((acc, bar) => ({...acc, [bar.key]: bar.value}), {})",
+
+	// Object - Body return
+	"foo.reduce((acc, bar) => {return {...acc, [bar.key]: bar.value};}, {})",
+	"foo.reduceRight((acc, bar) => {return {...acc, [bar.key]: bar.value};}, {})",
+
+	// Object - Arrow return with item spread
+	"foo.reduce((acc, bar) => ({...acc, ...bar}), {})",
+	"foo.reduceRight((acc, bar) => ({...acc, ...bar}), {})",
+
+	// Object - Body return with item spread
+	"foo.reduce((acc, bar) => {return {...acc, ...bar};}, {})",
+	"foo.reduceRight((acc, bar) => {return {...acc, ...bar};}, {})"
+]

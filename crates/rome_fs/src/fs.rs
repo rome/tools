@@ -1,22 +1,18 @@
-use std::{
-    io,
-    panic::RefUnwindSafe,
-    path::{Path, PathBuf},
-    sync::Arc,
-};
-
 use crate::{PathInterner, RomePath};
-use rome_diagnostics::{
-    file::FileId,
-    v2::{console, Advices, Diagnostic, LogCategory, Visit},
-};
+pub use memory::{ErrorEntry, MemoryFileSystem};
+pub use os::OsFileSystem;
+use rome_diagnostics::{console, Advices, Diagnostic, LogCategory, Visit};
+use rome_diagnostics::{Error, Severity};
+use serde::{Deserialize, Serialize};
+use std::io;
+use std::panic::RefUnwindSafe;
+use std::path::{Path, PathBuf};
+use std::sync::Arc;
+use tracing::{error, info};
 
 mod memory;
 mod os;
 
-pub use memory::{ErrorEntry, MemoryFileSystem};
-pub use os::OsFileSystem;
-use rome_diagnostics::v2::Error;
 pub const CONFIG_NAME: &str = "rome.json";
 
 pub trait FileSystem: Send + Sync + RefUnwindSafe {
@@ -33,6 +29,112 @@ pub trait FileSystem: Send + Sync + RefUnwindSafe {
     fn config_name(&self) -> &str {
         CONFIG_NAME
     }
+
+    /// Return the path to the working directory
+    fn working_directory(&self) -> Option<PathBuf>;
+
+    /// Checks if the given path exists in the file system
+    fn path_exists(&self, path: &Path) -> bool;
+
+    /// Method that takes a path to a folder `file_path`, and a `file_name`. It attempts to find
+    /// and read the file from that folder and if not found, it reads the parent directories recursively
+    /// until:
+    /// - the file is found, then it reads and return its contents
+    /// - the file is not found
+    ///
+    /// If `should_error_if_file_not_found` it `true`, it returns an error.
+    ///
+    /// ## Errors
+    ///
+    /// - The file can't be read
+    ///
+    fn auto_search(
+        &self,
+        mut file_path: PathBuf,
+        file_name: &str,
+        should_error_if_file_not_found: bool,
+    ) -> Result<Option<AutoSearchResult>, FileSystemDiagnostic> {
+        let mut from_parent = false;
+        let mut file_directory_path = file_path.join(file_name);
+        loop {
+            let options = OpenOptions::default().read(true);
+            let file = self.open_with_options(&file_directory_path, options);
+            return match file {
+                Ok(mut file) => {
+                    let mut buffer = String::new();
+                    file.read_to_string(&mut buffer)
+                        .map_err(|_| FileSystemDiagnostic {
+                            path: file_directory_path.display().to_string(),
+                            severity: Severity::Error,
+                            error_kind: ErrorKind::CantReadFile(
+                                file_directory_path.display().to_string(),
+                            ),
+                        })?;
+
+                    if from_parent {
+                        info!(
+                        "Rome auto discovered the file at following path that wasn't in the working directory: {}",
+                        file_path.display()
+                    );
+                    }
+
+                    return Ok(Some(AutoSearchResult {
+                        content: buffer,
+                        file_path: file_directory_path,
+                        directory_path: file_path,
+                    }));
+                }
+                Err(err) => {
+                    // base paths from users are not eligible for auto discovery
+                    if !should_error_if_file_not_found {
+                        let parent_directory = if let Some(path) = file_path.parent() {
+                            if path.is_dir() {
+                                Some(PathBuf::from(path))
+                            } else {
+                                None
+                            }
+                        } else {
+                            None
+                        };
+                        if let Some(parent_directory) = parent_directory {
+                            file_path = parent_directory;
+                            file_directory_path = file_path.join(file_name);
+                            from_parent = true;
+                            continue;
+                        }
+                    }
+                    // We skip the error when the configuration file is not found.
+                    // Not having a configuration file is only an error when the `base_path` is
+                    // set to `BasePath::FromUser`.
+                    if should_error_if_file_not_found || err.kind() != io::ErrorKind::NotFound {
+                        return Err(FileSystemDiagnostic {
+                            path: file_directory_path.display().to_string(),
+                            severity: Severity::Error,
+                            error_kind: ErrorKind::CantReadFile(
+                                file_directory_path.display().to_string(),
+                            ),
+                        });
+                    }
+                    error!(
+                        "Could not read the file from {:?}, reason:\n {}",
+                        file_directory_path.display(),
+                        err
+                    );
+                    Ok(None)
+                }
+            };
+        }
+    }
+}
+
+/// Result of the auto search
+pub struct AutoSearchResult {
+    /// The content of the file
+    pub content: String,
+    /// The path of the directory where the file was found
+    pub directory_path: PathBuf,
+    /// The path of the file found
+    pub file_path: PathBuf,
 }
 
 pub trait File {
@@ -44,15 +146,17 @@ pub trait File {
     /// This will write to the associated memory buffer, as well as flush the
     /// new content to the disk if this is a physical file
     fn set_content(&mut self, content: &[u8]) -> io::Result<()>;
+
+    /// Returns the version of the current file
+    fn file_version(&self) -> i32;
 }
 
 /// This struct is a "mirror" of [std::fs::FileOptions].
 /// Refer to their documentation for more details
-#[derive(Default)]
+#[derive(Default, Debug)]
 pub struct OpenOptions {
     read: bool,
     write: bool,
-    append: bool,
     truncate: bool,
     create: bool,
     create_new: bool,
@@ -65,10 +169,6 @@ impl OpenOptions {
     }
     pub fn write(mut self, write: bool) -> Self {
         self.write = write;
-        self
-    }
-    pub fn append(mut self, append: bool) -> Self {
-        self.append = append;
         self
     }
     pub fn truncate(mut self, truncate: bool) -> Self {
@@ -88,7 +188,6 @@ impl OpenOptions {
         options
             .read(self.read)
             .write(self.write)
-            .append(self.append)
             .truncate(self.truncate)
             .create(self.create)
             .create_new(self.create_new)
@@ -97,17 +196,42 @@ impl OpenOptions {
 
 /// Trait that contains additional methods to work with [FileSystem]
 pub trait FileSystemExt: FileSystem {
-    /// Open a file with `read` and `write` options
+    /// Open a file with the `read` option
+    ///
+    /// Equivalent to [std::fs::File::open]
     fn open(&self, path: &Path) -> io::Result<Box<dyn File>> {
-        self.open_with_options(path, OpenOptions::default().read(true).write(true))
+        self.open_with_options(path, OpenOptions::default().read(true))
     }
-    /// Open a file with `write` and `create_new` options
+
+    /// Open a file with the `write` and `create` options
+    ///
+    /// Equivalent to [std::fs::File::create]
     fn create(&self, path: &Path) -> io::Result<Box<dyn File>> {
-        self.open_with_options(path, OpenOptions::default().write(true).create_new(true))
+        self.open_with_options(
+            path,
+            OpenOptions::default()
+                .write(true)
+                .create(true)
+                .truncate(true),
+        )
     }
+
     /// Opens a file with read options
     fn read(&self, path: &Path) -> io::Result<Box<dyn File>> {
         self.open_with_options(path, OpenOptions::default().read(true))
+    }
+
+    /// Opens a file with the `read`, `write` and `create_new` options
+    ///
+    /// Equivalent to [std::fs::File::create_new]
+    fn create_new(&self, path: &Path) -> io::Result<Box<dyn File>> {
+        self.open_with_options(
+            path,
+            OpenOptions::default()
+                .read(true)
+                .write(true)
+                .create_new(true),
+        )
     }
 }
 
@@ -129,7 +253,7 @@ pub trait TraversalScope<'scope> {
 pub trait TraversalContext: Sync {
     /// Provides the traversal scope with an instance of [PathInterner], used
     /// to emit diagnostics for IO errors that may happen in the traversal process
-    fn interner(&self) -> &dyn PathInterner;
+    fn interner(&self) -> &PathInterner;
 
     /// Called by the traversal process to emit an error diagnostic associated
     /// with a particular file ID when an IO error happens
@@ -142,7 +266,7 @@ pub trait TraversalContext: Sync {
 
     /// This method will be called by the traversal for each file it finds
     /// where [TraversalContext::can_handle] returned true
-    fn handle_file(&self, path: &Path, file_id: FileId);
+    fn handle_file(&self, path: &Path);
 }
 
 impl<T> FileSystem for Arc<T>
@@ -156,53 +280,86 @@ where
     fn traversal<'scope>(&'scope self, func: BoxedTraversal<'_, 'scope>) {
         T::traversal(self, func)
     }
+
+    fn working_directory(&self) -> Option<PathBuf> {
+        T::working_directory(self)
+    }
+
+    fn path_exists(&self, path: &Path) -> bool {
+        T::path_exists(self, path)
+    }
 }
 
-#[derive(Debug, Diagnostic)]
-#[diagnostic(severity = Warning, category = "internalError/fs")]
-struct UnhandledDiagnostic {
+#[derive(Debug, Diagnostic, Deserialize, Serialize)]
+#[diagnostic(category = "internalError/fs")]
+pub struct FileSystemDiagnostic {
+    #[severity]
+    pub severity: Severity,
     #[location(resource)]
-    file_id: FileId,
+    pub path: String,
     #[message]
     #[description]
     #[advice]
-    file_kind: UnhandledKind,
+    pub error_kind: ErrorKind,
 }
 
-#[derive(Clone, Copy, Debug)]
-enum UnhandledKind {
-    Symlink,
-    Other,
+#[derive(Clone, Debug, Deserialize, Serialize)]
+pub enum ErrorKind {
+    /// File not found
+    CantReadFile(String),
+    /// Unknown file type
+    UnknownFileType,
+    /// Dereferenced (broken) symbolic link
+    DereferencedSymlink(String),
+    /// Too deeply nested symbolic link expansion
+    DeeplyNestedSymlinkExpansion(String),
 }
 
-impl console::fmt::Display for UnhandledKind {
+impl console::fmt::Display for ErrorKind {
     fn fmt(&self, fmt: &mut console::fmt::Formatter) -> io::Result<()> {
         match self {
-            UnhandledKind::Symlink => fmt.write_str("Symbolic links are not supported"),
-            UnhandledKind::Other => fmt.write_str("Encountered an unknown file type"),
+            ErrorKind::CantReadFile(_) => fmt.write_str("Rome couldn't read the file"),
+            ErrorKind::UnknownFileType => fmt.write_str("Unknown file type"),
+            ErrorKind::DereferencedSymlink(_) => fmt.write_str("Dereferenced symlink"),
+            ErrorKind::DeeplyNestedSymlinkExpansion(_) => {
+                fmt.write_str("Deeply nested symlink expansion")
+            }
         }
     }
 }
 
-impl std::fmt::Display for UnhandledKind {
+impl std::fmt::Display for ErrorKind {
     fn fmt(&self, fmt: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            UnhandledKind::Symlink => write!(fmt, "Symbolic links are not supported"),
-            UnhandledKind::Other => write!(fmt, "Encountered an unknown file type"),
+            ErrorKind::CantReadFile(_) => fmt.write_str("Rome couldn't read the file"),
+            ErrorKind::UnknownFileType => write!(fmt, "Unknown file type"),
+            ErrorKind::DereferencedSymlink(_) => write!(fmt, "Dereferenced symlink"),
+            ErrorKind::DeeplyNestedSymlinkExpansion(_) => {
+                write!(fmt, "Deeply nested symlink expansion")
+            }
         }
     }
 }
 
-impl Advices for UnhandledKind {
+impl Advices for ErrorKind {
     fn record(&self, visitor: &mut dyn Visit) -> io::Result<()> {
         match self {
-            UnhandledKind::Symlink => visitor.record_log(
-                LogCategory::Info,
-                &"Rome does not currently support visiting the content of symbolic links since it could lead to an infinite traversal loop",
-            ),
-            UnhandledKind::Other => visitor.record_log(
+			ErrorKind::CantReadFile(path) => visitor.record_log(
+		LogCategory::Error,
+			&format!("Rome couldn't read the following file, maybe for permissions reasons or it doesn't exists: {}", path)
+			),
+
+            ErrorKind::UnknownFileType => visitor.record_log(
                 LogCategory::Info,
                 &"Rome encountered a file system entry that's neither a file, directory or symbolic link",
+            ),
+            ErrorKind::DereferencedSymlink(path) => visitor.record_log(
+                LogCategory::Info,
+                &format!("Rome encountered a file system entry that is a broken symbolic link: {}", path),
+            ),
+            ErrorKind::DeeplyNestedSymlinkExpansion(path) => visitor.record_log(
+                LogCategory::Error,
+                &format!("Rome encountered a file system entry with too many nested symbolic links, possibly forming an infinite cycle: {}", path),
             ),
         }
     }

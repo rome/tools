@@ -1,11 +1,11 @@
 ---
-source: crates/rome_js_formatter/tests/spec_test.rs
-expression: type_expression.ts
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info: ts/expression/type_expression.ts
 ---
 
 # Input
 
-```js
+```ts
 import * as assert from "assert";
 
 type A = string;
@@ -124,11 +124,14 @@ type Type01 = 0 extends
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
+Semicolons: Always
+Arrow parentheses: Always
 -----
 
-```js
+```ts
 import * as assert from "assert";
 
 type A = string;

@@ -9,7 +9,7 @@ use rome_js_syntax::{
 use rome_rowan::AstNode;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsSequenceExpression;
+pub(crate) struct FormatJsSequenceExpression;
 
 impl FormatNodeRule<JsSequenceExpression> for FormatJsSequenceExpression {
     fn fmt_fields(&self, node: &JsSequenceExpression, f: &mut JsFormatter) -> FormatResult<()> {

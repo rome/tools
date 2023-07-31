@@ -1,0 +1,119 @@
+---
+title: CLI
+emoji: ⌨️
+category: reference
+description: Available commands and arguments in the Rome CLI.
+---
+
+# CLI
+
+## Commands
+
+### `rome init`
+
+Help you to set up Rome for a new project by guiding you through the creation of a new `rome.json` [configuration](/configuration) file.
+
+The command fails if the project already has a `rome.json` configuration file.
+
+### `rome version`
+
+Print the version of the CLI and whether there's a server (daemon) connected
+
+### `rome rage`
+
+Print information for debugging purpose
+
+### `rome lsp-proxy`
+
+It starts a server for the LSP protocol, which communicates over `stdin` and `stdout`.
+
+This command is useful to interact with the Rome server when developing editors/IDEs.
+
+### `rome format`
+
+Run the formatter on a set of files.
+
+### `rome check`
+
+Run the linter on a set of files and reports errors and warnings to the console.
+
+### `rome ci`
+
+Run the linter and verifies the formatting of a set of files. It reports errors to the console. If any errors are found the process exits with a code of `1`.
+
+This command is intended to be used in CI workflows.
+
+### `rome start`
+
+Start the Rome [daemon](/internals/architecture#daemon) server
+
+### `rome stop`
+
+Stop the Rome [daemon](/internals/architecture#deamon) server
+
+### `rome migrate`
+
+Automatically updates the configuration file to use the latest version, in case there were breaking changes among versions.
+
+## Global Options
+
+### `--colors`
+
+Set the formatting mode for markup: `off` prints everything as plain text,
+`force` forces the formatting of markup using ANSI even if the console output
+is determined to be incompatible
+
+> Default: `force`
+
+### `--use-server`
+
+Connect to a running instance of the Rome daemon server
+
+##### `--files-max-size`
+
+The maximum allowed size for source code files in bytes.
+
+> Default: 1024*1024 bytes (1 MB)
+
+### `--config-path`
+
+Tell Rome in which path to find the configuration file `rome.json`.
+
+> **Warning**: when passing `--config-path`, the auto discovery of the `rome.json` file is disabled.
+
+If Rome doesn't find a `rome.json`, it will abort the operation and exit with and error code.
+
+### `--vcs-enabled`
+
+Whether Rome should integrate itself with the VCS client.
+
+### `--vcs-client-kind`
+
+The kind of VCS client rome should support.
+
+Options available:
+- `git`
+
+### `--vcs-use-ignore-file`
+
+Whether Rome should use the VCS ignore file. When [true], Rome will ignore the files specified in the ignore file.
+
+### `--vcs-root`
+
+## Global Options
+The folder where Rome should check for VCS files. By default, Rome will use the same
+folder where `rome.json` was found.
+
+Use these flags to get information about the Rome CLI.
+If Rome can't fine the configuration, it will attempt to use the current working directory.
+If no current working directory can't be found, Rome won't use the VCS integration.
+
+
+### `--version`
+
+Print the Rome version and exits.
+
+### `--help`
+
+Print the help message and exits.
+

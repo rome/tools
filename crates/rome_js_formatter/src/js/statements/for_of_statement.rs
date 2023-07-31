@@ -6,7 +6,7 @@ use crate::utils::FormatStatementBody;
 use rome_js_syntax::JsForOfStatementFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsForOfStatement;
+pub(crate) struct FormatJsForOfStatement;
 
 impl FormatNodeRule<JsForOfStatement> for FormatJsForOfStatement {
     fn fmt_fields(&self, node: &JsForOfStatement, f: &mut JsFormatter) -> FormatResult<()> {

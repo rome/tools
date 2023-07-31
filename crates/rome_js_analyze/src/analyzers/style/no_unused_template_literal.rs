@@ -4,7 +4,9 @@ use rome_analyze::{declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression, JsAnyTemplateElement, JsTemplate};
+use rome_js_syntax::{
+    AnyJsExpression, AnyJsLiteralExpression, AnyJsTemplateElement, JsTemplateExpression,
+};
 use rome_rowan::{AstNode, AstNodeList, BatchMutationExt};
 
 declare_rule! {
@@ -44,7 +46,7 @@ declare_rule! {
 }
 
 impl Rule for NoUnusedTemplateLiteral {
-    type Query = Ast<JsTemplate>;
+    type Query = Ast<JsTemplateExpression>;
     type State = ();
     type Signals = Option<Self::State>;
     type Options = ();
@@ -78,13 +80,13 @@ impl Rule for NoUnusedTemplateLiteral {
             .iter()
             .fold(String::from(""), |mut acc, cur| {
                 match cur {
-                    JsAnyTemplateElement::JsTemplateChunkElement(ele) => {
+                    AnyJsTemplateElement::JsTemplateChunkElement(ele) => {
                         // Safety: if `ele.template_chunk_token()` is `Err` variant, [can_convert_to_string_lit] should return false,
                         // thus `run` will return None
                         acc += ele.template_chunk_token().unwrap().text();
                         acc
                     }
-                    JsAnyTemplateElement::JsTemplateElement(_) => {
+                    AnyJsTemplateElement::JsTemplateElement(_) => {
                         // Because we know if TemplateLit has any `JsTemplateElement` will return `None` in `run` function
                         unreachable!()
                     }
@@ -92,9 +94,9 @@ impl Rule for NoUnusedTemplateLiteral {
             });
 
         mutation.replace_node(
-            JsAnyExpression::JsTemplate(node.clone()),
-            JsAnyExpression::JsAnyLiteralExpression(
-                JsAnyLiteralExpression::JsStringLiteralExpression(
+            AnyJsExpression::JsTemplateExpression(node.clone()),
+            AnyJsExpression::AnyJsLiteralExpression(
+                AnyJsLiteralExpression::JsStringLiteralExpression(
                     make::js_string_literal_expression(make::js_string_literal(&inner_content)),
                 ),
             ),
@@ -109,14 +111,14 @@ impl Rule for NoUnusedTemplateLiteral {
     }
 }
 
-fn can_convert_to_string_literal(node: &JsTemplate) -> bool {
+fn can_convert_to_string_literal(node: &JsTemplateExpression) -> bool {
     !node.elements().iter().any(|element| {
         // We want to test if any templateElement has violated rule that can convert to string literal, rules are listed below
         // 1. Variant of element is `JsTemplateElement`
         // 2. Content of `ChunkElement` has any special characters, any of `\n`, `'`, `"`
         match element {
-            JsAnyTemplateElement::JsTemplateElement(_) => true,
-            JsAnyTemplateElement::JsTemplateChunkElement(chunk) => {
+            AnyJsTemplateElement::JsTemplateElement(_) => true,
+            AnyJsTemplateElement::JsTemplateChunkElement(chunk) => {
                 match chunk.template_chunk_token() {
                     Ok(token) => {
                         // if token text has any special character

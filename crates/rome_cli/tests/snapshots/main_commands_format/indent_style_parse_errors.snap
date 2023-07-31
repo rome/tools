@@ -5,7 +5,15 @@ expression: content
 # Termination Message
 
 ```block
-failed to parse argument '--indent-style': failed to parse 'invalid': Value not supported for IndentStyle
+flags/invalid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Failed to parse CLI arguments.
+    
+    Caused by:
+      couldn't parse `invalid`: Unsupported value for this option
+  
+
+
 ```
 
 

@@ -3,6 +3,7 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: ABSTRACT_KW@0..9 "abstract" [] [Whitespace(" ")],
             class_token: CLASS_KW@9..15 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -16,6 +17,7 @@ JsModule {
             r_curly_token: R_CURLY@18..19 "}" [] [],
         },
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: ABSTRACT_KW@19..29 "abstract" [Newline("\n")] [Whitespace(" ")],
             class_token: CLASS_KW@29..35 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -49,6 +51,7 @@ JsModule {
                         l_paren_token: L_PAREN@86..87 "(" [] [],
                         parameters: JsConstructorParameterList [
                             JsFormalParameter {
+                                decorators: JsDecoratorList [],
                                 binding: JsIdentifierBinding {
                                     name_token: IDENT@87..91 "name" [] [],
                                 },
@@ -199,6 +202,7 @@ JsModule {
                     },
                     l_paren_token: L_PAREN@240..241 "(" [] [],
                     parameter: JsFormalParameter {
+                        decorators: JsDecoratorList [],
                         binding: JsIdentifierBinding {
                             name_token: IDENT@241..245 "name" [] [],
                         },
@@ -262,6 +266,7 @@ JsModule {
             r_curly_token: R_CURLY@294..296 "}" [Newline("\n")] [],
         },
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: ABSTRACT_KW@296..306 "abstract" [Newline("\n")] [Whitespace(" ")],
             class_token: CLASS_KW@306..312 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -336,6 +341,7 @@ JsModule {
                     },
                     l_paren_token: L_PAREN@433..434 "(" [] [],
                     parameter: JsFormalParameter {
+                        decorators: JsDecoratorList [],
                         binding: JsIdentifierBinding {
                             name_token: IDENT@434..437 "val" [] [],
                         },
@@ -358,26 +364,28 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..441
     0: JS_CLASS_DECLARATION@0..19
-      0: ABSTRACT_KW@0..9 "abstract" [] [Whitespace(" ")]
-      1: CLASS_KW@9..15 "class" [] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@15..17
+      0: JS_DECORATOR_LIST@0..0
+      1: ABSTRACT_KW@0..9 "abstract" [] [Whitespace(" ")]
+      2: CLASS_KW@9..15 "class" [] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@15..17
         0: IDENT@15..17 "A" [] [Whitespace(" ")]
-      3: (empty)
       4: (empty)
       5: (empty)
-      6: L_CURLY@17..18 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@18..18
-      8: R_CURLY@18..19 "}" [] []
+      6: (empty)
+      7: L_CURLY@17..18 "{" [] []
+      8: JS_CLASS_MEMBER_LIST@18..18
+      9: R_CURLY@18..19 "}" [] []
     1: JS_CLASS_DECLARATION@19..296
-      0: ABSTRACT_KW@19..29 "abstract" [Newline("\n")] [Whitespace(" ")]
-      1: CLASS_KW@29..35 "class" [] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@35..51
+      0: JS_DECORATOR_LIST@19..19
+      1: ABSTRACT_KW@19..29 "abstract" [Newline("\n")] [Whitespace(" ")]
+      2: CLASS_KW@29..35 "class" [] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@35..51
         0: IDENT@35..51 "ConcreteMembers" [] [Whitespace(" ")]
-      3: (empty)
       4: (empty)
       5: (empty)
-      6: L_CURLY@51..52 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@52..294
+      6: (empty)
+      7: L_CURLY@51..52 "{" [] []
+      8: JS_CLASS_MEMBER_LIST@52..294
         0: JS_PROPERTY_CLASS_MEMBER@52..70
           0: JS_PROPERTY_MODIFIER_LIST@52..52
           1: JS_LITERAL_MEMBER_NAME@52..61
@@ -396,14 +404,15 @@ JsModule {
             0: L_PAREN@86..87 "(" [] []
             1: JS_CONSTRUCTOR_PARAMETER_LIST@87..99
               0: JS_FORMAL_PARAMETER@87..99
-                0: JS_IDENTIFIER_BINDING@87..91
+                0: JS_DECORATOR_LIST@87..87
+                1: JS_IDENTIFIER_BINDING@87..91
                   0: IDENT@87..91 "name" [] []
-                1: (empty)
-                2: TS_TYPE_ANNOTATION@91..99
+                2: (empty)
+                3: TS_TYPE_ANNOTATION@91..99
                   0: COLON@91..93 ":" [] [Whitespace(" ")]
                   1: TS_STRING_TYPE@93..99
                     0: STRING_KW@93..99 "string" [] []
-                3: (empty)
+                4: (empty)
             2: R_PAREN@99..101 ")" [] [Whitespace(" ")]
           3: JS_FUNCTION_BODY@101..122
             0: L_CURLY@101..103 "{" [] [Whitespace(" ")]
@@ -499,11 +508,12 @@ JsModule {
             0: IDENT@233..240 "my_name" [] []
           3: L_PAREN@240..241 "(" [] []
           4: JS_FORMAL_PARAMETER@241..245
-            0: JS_IDENTIFIER_BINDING@241..245
+            0: JS_DECORATOR_LIST@241..241
+            1: JS_IDENTIFIER_BINDING@241..245
               0: IDENT@241..245 "name" [] []
-            1: (empty)
             2: (empty)
             3: (empty)
+            4: (empty)
           5: R_PAREN@245..247 ")" [] [Whitespace(" ")]
           6: JS_FUNCTION_BODY@247..268
             0: L_CURLY@247..249 "{" [] [Whitespace(" ")]
@@ -542,17 +552,18 @@ JsModule {
             1: JS_DIRECTIVE_LIST@293..293
             2: JS_STATEMENT_LIST@293..293
             3: R_CURLY@293..294 "}" [] []
-      8: R_CURLY@294..296 "}" [Newline("\n")] []
+      9: R_CURLY@294..296 "}" [Newline("\n")] []
     2: JS_CLASS_DECLARATION@296..441
-      0: ABSTRACT_KW@296..306 "abstract" [Newline("\n")] [Whitespace(" ")]
-      1: CLASS_KW@306..312 "class" [] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@312..328
+      0: JS_DECORATOR_LIST@296..296
+      1: ABSTRACT_KW@296..306 "abstract" [Newline("\n")] [Whitespace(" ")]
+      2: CLASS_KW@306..312 "class" [] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@312..328
         0: IDENT@312..328 "AbstractMembers" [] [Whitespace(" ")]
-      3: (empty)
       4: (empty)
       5: (empty)
-      6: L_CURLY@328..329 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@329..439
+      6: (empty)
+      7: L_CURLY@328..329 "{" [] []
+      8: JS_CLASS_MEMBER_LIST@329..439
         0: TS_PROPERTY_SIGNATURE_CLASS_MEMBER@329..356
           0: TS_PROPERTY_SIGNATURE_MODIFIER_LIST@329..343
             0: TS_ABSTRACT_MODIFIER@329..343
@@ -599,12 +610,13 @@ JsModule {
             0: IDENT@426..433 "my_name" [] []
           3: L_PAREN@433..434 "(" [] []
           4: JS_FORMAL_PARAMETER@434..437
-            0: JS_IDENTIFIER_BINDING@434..437
+            0: JS_DECORATOR_LIST@434..434
+            1: JS_IDENTIFIER_BINDING@434..437
               0: IDENT@434..437 "val" [] []
-            1: (empty)
             2: (empty)
             3: (empty)
+            4: (empty)
           5: R_PAREN@437..438 ")" [] []
           6: SEMICOLON@438..439 ";" [] []
-      8: R_CURLY@439..441 "}" [Newline("\n")] []
+      9: R_CURLY@439..441 "}" [Newline("\n")] []
   3: EOF@441..442 "" [Newline("\n")] []

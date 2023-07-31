@@ -3,6 +3,7 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -61,6 +62,7 @@ JsModule {
                     },
                     l_paren_token: L_PAREN@65..66 "(" [] [],
                     parameter: JsFormalParameter {
+                        decorators: JsDecoratorList [],
                         binding: JsIdentifierBinding {
                             name_token: IDENT@66..71 "value" [] [],
                         },
@@ -83,15 +85,16 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..74
     0: JS_CLASS_DECLARATION@0..74
-      0: (empty)
-      1: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@6..11
+      0: JS_DECORATOR_LIST@0..0
+      1: (empty)
+      2: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@6..11
         0: IDENT@6..11 "Test" [] [Whitespace(" ")]
-      3: (empty)
       4: (empty)
       5: (empty)
-      6: L_CURLY@11..12 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@12..72
+      6: (empty)
+      7: L_CURLY@11..12 "{" [] []
+      8: JS_CLASS_MEMBER_LIST@12..72
         0: JS_CONSTRUCTOR_CLASS_MEMBER@12..32
           0: JS_CONSTRUCTOR_MODIFIER_LIST@12..12
           1: JS_LITERAL_MEMBER_NAME@12..29
@@ -131,14 +134,15 @@ JsModule {
             0: IDENT@61..65 "test" [] []
           3: L_PAREN@65..66 "(" [] []
           4: JS_FORMAL_PARAMETER@66..71
-            0: JS_IDENTIFIER_BINDING@66..71
+            0: JS_DECORATOR_LIST@66..66
+            1: JS_IDENTIFIER_BINDING@66..71
               0: IDENT@66..71 "value" [] []
-            1: (empty)
             2: (empty)
             3: (empty)
+            4: (empty)
           5: R_PAREN@71..72 ")" [] []
           6: (empty)
-      8: R_CURLY@72..74 "}" [Newline("\n")] []
+      9: R_CURLY@72..74 "}" [Newline("\n")] []
   3: EOF@74..75 "" [Newline("\n")] []
 --
 ts_method_members_with_missing_body.ts:2:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

@@ -6,7 +6,7 @@ use rome_js_syntax::JsExtendsClauseFields;
 use rome_js_syntax::JsSyntaxKind::JS_ASSIGNMENT_EXPRESSION;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsExtendsClause;
+pub(crate) struct FormatJsExtendsClause;
 
 impl FormatNodeRule<JsExtendsClause> for FormatJsExtendsClause {
     fn fmt_fields(&self, node: &JsExtendsClause, f: &mut JsFormatter) -> FormatResult<()> {

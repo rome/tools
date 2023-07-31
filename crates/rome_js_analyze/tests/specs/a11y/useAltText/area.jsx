@@ -1,20 +1,24 @@
 // invalid
 
 <>
-	<area alt={undefined} />
-	<area alt={null} />
 	<area />
-	<area alt />
-	<area {...spread} alt />
-</>
+  <area alt />
+  <area alt={undefined} />
+  <area src="xyz" />
+  <area {...this.props} />
+  <area aria-label="" />
+  <area aria-label={undefined} />
+  <area aria-labelledby="" />
+  <area aria-labelledby={undefined} />
+</>;
 
 //valid
 
 <>
-	<area alt {...spread} />
-	<area aria-label="foo" />
-	<area aria-label {...spread} />
-	<area aria-labelledby="id1" />
-	<area aria-labelledby {...spread} />
-	<area alt="This is descriptive!" />
-</>
+  <area aria-label="foo" />
+  <area aria-labelledby="id1" />
+  <area alt="" />
+  <area alt="This is descriptive!" />
+  <area alt={altText} />
+  <Area />
+</>;

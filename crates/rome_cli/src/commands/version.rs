@@ -2,20 +2,10 @@ use rome_console::fmt::Formatter;
 use rome_console::{fmt, markup, ConsoleExt};
 use rome_service::workspace::ServerInfo;
 
-use crate::{CliSession, Termination, VERSION};
-
-/// Handler for the `--version` argument. Prints a brief rome version.
-pub(crate) fn brief_version(mut session: CliSession) -> Result<(), Termination> {
-    session
-        .app
-        .console
-        .log(markup!("Rome CLI version "{VERSION}));
-
-    Ok(())
-}
+use crate::{CliDiagnostic, CliSession, VERSION};
 
 /// Handle of the `version` command. Prints a more in detail version of rome.
-pub(crate) fn full_version(mut session: CliSession) -> Result<(), Termination> {
+pub(crate) fn full_version(session: CliSession) -> Result<(), CliDiagnostic> {
     session.app.console.log(markup! {
     "CLI:        "{VERSION}
     });

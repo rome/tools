@@ -13,6 +13,7 @@ JsModule {
                 l_paren_token: L_PAREN@10..11 "(" [] [],
                 items: JsParameterList [
                     JsRestParameter {
+                        decorators: JsDecoratorList [],
                         dotdotdot_token: DOT3@11..14 "..." [] [],
                         binding: JsIdentifierBinding {
                             name_token: IDENT@14..23 "arguments" [] [],
@@ -57,10 +58,11 @@ JsModule {
         0: L_PAREN@10..11 "(" [] []
         1: JS_PARAMETER_LIST@11..30
           0: JS_REST_PARAMETER@11..30
-            0: DOT3@11..14 "..." [] []
-            1: JS_IDENTIFIER_BINDING@14..23
+            0: JS_DECORATOR_LIST@11..11
+            1: DOT3@11..14 "..." [] []
+            2: JS_IDENTIFIER_BINDING@14..23
               0: IDENT@14..23 "arguments" [] []
-            2: TS_TYPE_ANNOTATION@23..30
+            3: TS_TYPE_ANNOTATION@23..30
               0: COLON@23..25 ":" [] [Whitespace(" ")]
               1: TS_ARRAY_TYPE@25..30
                 0: TS_ANY_TYPE@25..28

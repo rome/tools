@@ -1,7 +1,7 @@
 use quote::{format_ident, quote};
 use std::{env, fs, io, path::PathBuf};
 
-macro_rules! define_dategories {
+macro_rules! define_categories {
     ( $( $name_link:literal : $link:literal, )* ; $( $name:literal , )* ) => {
         const CATEGORIES: &[(&str, Option<&str>)] = &[
             $( ($name_link, Some($link)), )*

@@ -1,6 +1,6 @@
 import { readFile, writeFile } from "node:fs/promises";
-import { fileURLToPath } from "node:url";
 import { resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 
 const EXTENSION_ROOT = resolve(fileURLToPath(import.meta.url), "../..");
 const MANIFEST_PATH = resolve(EXTENSION_ROOT, "package.json");

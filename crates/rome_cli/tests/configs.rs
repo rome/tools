@@ -9,13 +9,31 @@ pub const CONFIG_FORMAT: &str = r#"{
 "#;
 
 pub const CONFIG_INIT_DEFAULT: &str = r#"{
-  "linter": {
-    "enabled": true,
-    "rules": {
-      "recommended": true
-    }
-  }
-}"#;
+	"organizeImports": {
+	 	 "enabled": false
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true
+		}
+	}
+}
+"#;
+
+pub const CONFIG_INIT_DEFAULT_WHEN_INSTALLED: &str = r#"{
+	"$schema": "./node_modules/rome/configuration_schema.json",
+    "organizeImports": {
+	 	 "enabled": false
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true
+		}
+	}
+}
+"#;
 
 pub const CONFIG_DISABLED_FORMATTER: &str = r#"{
   "formatter": {
@@ -38,17 +56,19 @@ pub const CONFIG_ALL_FIELDS: &str = r#"{
         "complexity": {
             "useSimplifiedLogicExpression": "warn"
         },
-        "style": {        
+        "style": {
             "useTemplate": {
                 "level": "error"
             }
         },
         "correctness": {
+            "noUnreachable": "off"
+        },
+        "suspicious": {
             "noCatchAssign": "error",
             "noLabelVar": {
                 "level": "warn"
-            },
-            "noUnreachable": "off"
+            }
         }
     }
   },
@@ -56,6 +76,7 @@ pub const CONFIG_ALL_FIELDS: &str = r#"{
     "globals": ["$"],
     "formatter": {
       "quoteStyle": "double",
+      "jsxQuoteStyle": "double",
       "quoteProperties": "asNeeded"
     }
   }
@@ -100,7 +121,7 @@ pub const CONFIG_LINTER_SUPPRESSED_RULE: &str = r#"{
   "linter": {
     "rules": {
         "recommended": true,
-        "correctness": {
+        "suspicious": {
             "noDebugger": "off"
         }
     }
@@ -111,7 +132,7 @@ pub const CONFIG_LINTER_SUPPRESSED_GROUP: &str = r#"{
   "linter": {
     "rules": {
         "recommended": true,
-        "correctness": {
+        "suspicious": {
             "recommended": false
         }
     }
@@ -122,7 +143,7 @@ pub const CONFIG_LINTER_DOWNGRADE_DIAGNOSTIC: &str = r#"{
   "linter": {
     "rules": {
         "recommended": true,
-        "correctness": {
+        "suspicious": {
             "noDebugger": "warn"
         }
     }
@@ -133,8 +154,19 @@ pub const CONFIG_LINTER_UPGRADE_DIAGNOSTIC: &str = r#"{
   "linter": {
     "rules": {
         "recommended": true,
-        "nursery": {
-            "noInvalidConstructorSuper": "error"
+        "style": {
+            "noNegationElse": "error"
+        }
+    }
+  }
+}"#;
+
+pub const CONFIG_RECOMMENDED_GROUP: &str = r#"{
+  "linter": {
+    "rules": {
+        "recommended": false,
+        "correctness": {
+            "recommended": true
         }
     }
   }
@@ -172,9 +204,27 @@ pub const CONFIG_FORMATTER_IGNORED_FILES: &str = r#"{
 }
 "#;
 
+pub const CONFIG_FORMATTER_AND_FILES_IGNORE: &str = r#"{
+  "files": {
+    "ignore": ["test1.js"]
+  },
+  "formatter": {
+    "enabled": true,
+    "ignore": ["test2.js"]
+  }
+}"#;
+
 pub const CONFIG_FORMATTER_IGNORED_DIRECTORIES: &str = r#"{
   "formatter": {
-    "ignore": ["scripts/*"]
+    "ignore": [
+      "test1.js",
+      "./test2.js",
+      "./test3/**/*",
+      "/test4/**/*",
+      "test5/**/*",
+      "**/test6/*.js",
+      "*.test7.js"
+    ]
   }
 }
 "#;
@@ -187,8 +237,26 @@ pub const CONFIG_LINTER_IGNORED_FILES: &str = r#"{
 }
 "#;
 
+pub const CONFIG_LINTER_AND_FILES_IGNORE: &str = r#"{
+  "files": {
+    "ignore": ["test1.js"]
+  },
+  "linter": {
+    "enabled": true,
+    "ignore": ["test2.js"]
+  }
+}"#;
+
 pub const CONFIG_FILE_SIZE_LIMIT: &str = r#"{
   "files": {
     "maxSize": 16
+  }
+}"#;
+
+pub const CONFIG_IGNORE_SYMLINK: &str = r#"{
+  "files": {
+    "ignore": [
+      "symlink_testcase2/**/*.ts"
+    ]
   }
 }"#;

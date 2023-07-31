@@ -1,12 +1,12 @@
 use crate::prelude::*;
-use crate::utils::number_utils::CleanedNumberLiteralText;
+use rome_formatter::token::number::format_number_token;
 
 use crate::parentheses::{is_member_object, NeedsParentheses};
 use rome_js_syntax::JsNumberLiteralExpression;
 use rome_js_syntax::{JsNumberLiteralExpressionFields, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsNumberLiteralExpression;
+pub(crate) struct FormatJsNumberLiteralExpression;
 
 impl FormatNodeRule<JsNumberLiteralExpression> for FormatJsNumberLiteralExpression {
     fn fmt_fields(
@@ -15,7 +15,7 @@ impl FormatNodeRule<JsNumberLiteralExpression> for FormatJsNumberLiteralExpressi
         f: &mut JsFormatter,
     ) -> FormatResult<()> {
         let JsNumberLiteralExpressionFields { value_token } = node.as_fields();
-        CleanedNumberLiteralText::from_number_literal_token(&value_token?).fmt(f)
+        format_number_token(&value_token?).fmt(f)
     }
 
     fn needs_parentheses(&self, item: &JsNumberLiteralExpression) -> bool {

@@ -1,14 +1,15 @@
+use crate::workspace::{
+    FileFeaturesResult, GetFileContentParams, IsPathIgnoredParams, OrganizeImportsParams,
+    OrganizeImportsResult, RageParams, RageResult, ServerInfo,
+};
+use crate::{TransportError, Workspace, WorkspaceError};
+use rome_formatter::Printed;
+use serde::{de::DeserializeOwned, Deserialize, Serialize};
+use serde_json::json;
 use std::{
     panic::RefUnwindSafe,
     sync::atomic::{AtomicU64, Ordering},
 };
-
-use rome_formatter::Printed;
-use serde::{de::DeserializeOwned, Deserialize, Serialize};
-use serde_json::json;
-
-use crate::workspace::{RageParams, RageResult, ServerInfo, SupportsFeatureResult};
-use crate::{RomeError, TransportError, Workspace};
 
 use super::{
     ChangeFileParams, CloseFileParams, FixFileParams, FixFileResult, FormatFileParams,
@@ -50,7 +51,7 @@ impl<T> WorkspaceClient<T>
 where
     T: WorkspaceTransport + RefUnwindSafe + Send + Sync,
 {
-    pub fn new(transport: T) -> Result<Self, RomeError> {
+    pub fn new(transport: T) -> Result<Self, WorkspaceError> {
         let mut client = Self {
             transport,
             request_id: AtomicU64::new(0),
@@ -77,7 +78,7 @@ where
         Ok(client)
     }
 
-    fn request<P, R>(&self, method: &'static str, params: P) -> Result<R, RomeError>
+    fn request<P, R>(&self, method: &'static str, params: P) -> Result<R, WorkspaceError>
     where
         P: Serialize,
         R: DeserializeOwned,
@@ -90,7 +91,7 @@ where
         Ok(response)
     }
 
-    pub fn shutdown(self) -> Result<(), RomeError> {
+    pub fn shutdown(self) -> Result<(), WorkspaceError> {
         self.request("rome/shutdown", ())
     }
 }
@@ -99,83 +100,98 @@ impl<T> Workspace for WorkspaceClient<T>
 where
     T: WorkspaceTransport + RefUnwindSafe + Send + Sync,
 {
-    fn supports_feature(
+    fn file_features(
         &self,
         params: SupportsFeatureParams,
-    ) -> Result<SupportsFeatureResult, RomeError> {
-        self.request("rome/supports_feature", params)
+    ) -> Result<FileFeaturesResult, WorkspaceError> {
+        self.request("rome/file_features", params)
     }
 
-    fn update_settings(&self, params: UpdateSettingsParams) -> Result<(), RomeError> {
+    fn is_path_ignored(&self, params: IsPathIgnoredParams) -> Result<bool, WorkspaceError> {
+        self.request("rome/is_path_ignored", params)
+    }
+
+    fn update_settings(&self, params: UpdateSettingsParams) -> Result<(), WorkspaceError> {
         self.request("rome/update_settings", params)
     }
 
-    fn open_file(&self, params: OpenFileParams) -> Result<(), RomeError> {
+    fn open_file(&self, params: OpenFileParams) -> Result<(), WorkspaceError> {
         self.request("rome/open_file", params)
     }
 
     fn get_syntax_tree(
         &self,
         params: GetSyntaxTreeParams,
-    ) -> Result<GetSyntaxTreeResult, RomeError> {
+    ) -> Result<GetSyntaxTreeResult, WorkspaceError> {
         self.request("rome/get_syntax_tree", params)
     }
 
     fn get_control_flow_graph(
         &self,
         params: GetControlFlowGraphParams,
-    ) -> Result<String, RomeError> {
+    ) -> Result<String, WorkspaceError> {
         self.request("rome/get_control_flow_graph", params)
     }
 
-    fn get_formatter_ir(&self, params: GetFormatterIRParams) -> Result<String, RomeError> {
+    fn get_formatter_ir(&self, params: GetFormatterIRParams) -> Result<String, WorkspaceError> {
         self.request("rome/get_formatter_ir", params)
     }
 
-    fn change_file(&self, params: ChangeFileParams) -> Result<(), RomeError> {
+    fn get_file_content(&self, params: GetFileContentParams) -> Result<String, WorkspaceError> {
+        self.request("rome/get_file_content", params)
+    }
+
+    fn change_file(&self, params: ChangeFileParams) -> Result<(), WorkspaceError> {
         self.request("rome/change_file", params)
     }
 
-    fn close_file(&self, params: CloseFileParams) -> Result<(), RomeError> {
+    fn close_file(&self, params: CloseFileParams) -> Result<(), WorkspaceError> {
         self.request("rome/close_file", params)
     }
 
     fn pull_diagnostics(
         &self,
         params: PullDiagnosticsParams,
-    ) -> Result<PullDiagnosticsResult, RomeError> {
+    ) -> Result<PullDiagnosticsResult, WorkspaceError> {
         self.request("rome/pull_diagnostics", params)
     }
 
-    fn pull_actions(&self, params: PullActionsParams) -> Result<PullActionsResult, RomeError> {
+    fn pull_actions(&self, params: PullActionsParams) -> Result<PullActionsResult, WorkspaceError> {
         self.request("rome/pull_actions", params)
     }
 
-    fn format_file(&self, params: FormatFileParams) -> Result<Printed, RomeError> {
+    fn format_file(&self, params: FormatFileParams) -> Result<Printed, WorkspaceError> {
         self.request("rome/format_file", params)
     }
 
-    fn format_range(&self, params: FormatRangeParams) -> Result<Printed, RomeError> {
+    fn format_range(&self, params: FormatRangeParams) -> Result<Printed, WorkspaceError> {
         self.request("rome/format_range", params)
     }
 
-    fn format_on_type(&self, params: FormatOnTypeParams) -> Result<Printed, RomeError> {
+    fn format_on_type(&self, params: FormatOnTypeParams) -> Result<Printed, WorkspaceError> {
         self.request("rome/format_on_type", params)
     }
 
-    fn fix_file(&self, params: FixFileParams) -> Result<FixFileResult, RomeError> {
+    fn fix_file(&self, params: FixFileParams) -> Result<FixFileResult, WorkspaceError> {
         self.request("rome/fix_file", params)
     }
 
-    fn rename(&self, params: RenameParams) -> Result<RenameResult, RomeError> {
+    fn rename(&self, params: RenameParams) -> Result<RenameResult, WorkspaceError> {
         self.request("rome/rename", params)
     }
 
-    fn rage(&self, params: RageParams) -> Result<RageResult, RomeError> {
+    fn rage(&self, params: RageParams) -> Result<RageResult, WorkspaceError> {
         self.request("rome/rage", params)
     }
 
     fn server_info(&self) -> Option<&ServerInfo> {
         self.server_info.as_ref()
+    }
+
+    fn organize_imports(
+        &self,
+        params: OrganizeImportsParams,
+    ) -> Result<OrganizeImportsResult, WorkspaceError> {
+        self.request("rome/organize_imports", params)
     }
 }

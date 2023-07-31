@@ -5,7 +5,7 @@ use rome_js_syntax::JsArrayAssignmentPatternRestElement;
 use rome_js_syntax::JsArrayAssignmentPatternRestElementFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsArrayAssignmentPatternRestElement;
+pub(crate) struct FormatJsArrayAssignmentPatternRestElement;
 
 impl FormatNodeRule<JsArrayAssignmentPatternRestElement>
     for FormatJsArrayAssignmentPatternRestElement

@@ -1,10 +1,10 @@
-use crate::runner::create_unknown_node_in_tree_diagnostic;
+use crate::runner::create_bogus_node_in_tree_diagnostic;
 use crate::{
     check_file_encoding,
     runner::{TestCase, TestCaseFiles, TestRunOutcome, TestSuite},
 };
-use rome_diagnostics::file::FileId;
-use rome_js_syntax::{LanguageVariant, SourceType};
+use rome_js_parser::JsParserOptions;
+use rome_js_syntax::{JsFileSource, LanguageVariant};
 use rome_rowan::SyntaxKind;
 use std::path::Path;
 
@@ -42,10 +42,16 @@ impl TestCase for BabelTypescriptTestCase {
     }
 
     fn run(&self) -> TestRunOutcome {
-        let source_type = SourceType::ts().with_variant(self.variant);
-        let files = TestCaseFiles::single(self.name().to_string(), self.code.clone(), source_type);
+        let source_type = JsFileSource::ts().with_variant(self.variant);
+        let options = JsParserOptions::default().with_parse_class_parameter_decorators();
+        let files = TestCaseFiles::single(
+            self.name().to_string(),
+            self.code.clone(),
+            source_type,
+            options.clone(),
+        );
 
-        let result = rome_js_parser::parse(&self.code, FileId::zero(), source_type);
+        let result = rome_js_parser::parse(&self.code, source_type, options);
 
         if self.expected_to_fail && result.diagnostics().is_empty() {
             TestRunOutcome::IncorrectlyPassed(files)
@@ -56,17 +62,14 @@ impl TestCase for BabelTypescriptTestCase {
                 files,
                 errors: result.diagnostics().to_vec(),
             }
-        } else if let Some(unknown) = result
+        } else if let Some(bogus) = result
             .syntax()
             .descendants()
-            .find(|descendant| descendant.kind().is_unknown())
+            .find(|descendant| descendant.kind().is_bogus())
         {
             TestRunOutcome::IncorrectlyErrored {
                 files,
-                errors: vec![create_unknown_node_in_tree_diagnostic(
-                    FileId::zero(),
-                    unknown,
-                )],
+                errors: vec![create_bogus_node_in_tree_diagnostic(bogus)],
             }
         } else {
             TestRunOutcome::Passed(files)

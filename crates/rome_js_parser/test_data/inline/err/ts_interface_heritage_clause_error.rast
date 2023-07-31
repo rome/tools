@@ -13,7 +13,7 @@ JsModule {
             members: TsTypeMemberList [],
             r_curly_token: R_CURLY@13..14 "}" [] [],
         },
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 INTERFACE_KW@14..25 "interface" [Newline("\n")] [Whitespace(" ")],
                 TsIdentifierBinding {
@@ -35,7 +35,7 @@ JsModule {
                 R_CURLY@41..42 "}" [] [],
             ],
         },
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 INTERFACE_KW@42..53 "interface" [Newline("\n")] [Whitespace(" ")],
                 TsIdentifierBinding {
@@ -122,7 +122,7 @@ JsModule {
       4: L_CURLY@12..13 "{" [] []
       5: TS_TYPE_MEMBER_LIST@13..13
       6: R_CURLY@13..14 "}" [] []
-    1: JS_UNKNOWN_STATEMENT@14..42
+    1: JS_BOGUS_STATEMENT@14..42
       0: INTERFACE_KW@14..25 "interface" [Newline("\n")] [Whitespace(" ")]
       1: TS_IDENTIFIER_BINDING@25..27
         0: IDENT@25..27 "B" [] [Whitespace(" ")]
@@ -136,7 +136,7 @@ JsModule {
       3: L_CURLY@40..41 "{" [] []
       4: TS_TYPE_MEMBER_LIST@41..41
       5: R_CURLY@41..42 "}" [] []
-    2: JS_UNKNOWN_STATEMENT@42..77
+    2: JS_BOGUS_STATEMENT@42..77
       0: INTERFACE_KW@42..53 "interface" [Newline("\n")] [Whitespace(" ")]
       1: TS_IDENTIFIER_BINDING@53..55
         0: IDENT@53..55 "C" [] [Whitespace(" ")]

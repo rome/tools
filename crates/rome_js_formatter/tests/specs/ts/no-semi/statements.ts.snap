@@ -1,0 +1,89 @@
+---
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info: ts/no-semi/statements.ts
+---
+
+# Input
+
+```ts
+declare module "test";
+
+
+declare module "a.b.c"
+
+type OptionsFlags<Type> = {
+	[Property in keyof Type]: boolean;
+};
+
+declare function test(): string;
+
+export declare function abcd(): string;
+
+declare let a;
+
+```
+
+
+=============================
+
+# Outputs
+
+## Output 1
+
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+JSX quote style: Double Quotes
+Quote properties: As needed
+Trailing comma: All
+Semicolons: Always
+Arrow parentheses: Always
+-----
+
+```ts
+declare module "test";
+
+declare module "a.b.c";
+
+type OptionsFlags<Type> = {
+	[Property in keyof Type]: boolean;
+};
+
+declare function test(): string;
+
+export declare function abcd(): string;
+
+declare let a;
+```
+
+## Output 2
+
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+JSX quote style: Double Quotes
+Quote properties: As needed
+Trailing comma: All
+Semicolons: As needed
+Arrow parentheses: Always
+-----
+
+```ts
+declare module "test"
+
+declare module "a.b.c"
+
+type OptionsFlags<Type> = {
+	[Property in keyof Type]: boolean
+}
+
+declare function test(): string
+
+export declare function abcd(): string
+
+declare let a
+```
+
+

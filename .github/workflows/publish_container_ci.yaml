@@ -1,0 +1,22 @@
+name: publish_container_ci
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'ci/**'
+
+jobs:
+  publish-container:
+    name: Publish Container
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish Container
+        run: ./ci/publish.sh

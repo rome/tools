@@ -1,10 +1,10 @@
 use crate::prelude::*;
-use crate::utils::JsAnyAssignmentLike;
+use crate::utils::AnyJsAssignmentLike;
 use rome_formatter::write;
 use rome_js_syntax::JsObjectAssignmentPatternProperty;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsObjectAssignmentPatternProperty;
+pub(crate) struct FormatJsObjectAssignmentPatternProperty;
 
 impl FormatNodeRule<JsObjectAssignmentPatternProperty> for FormatJsObjectAssignmentPatternProperty {
     fn fmt_fields(
@@ -12,6 +12,6 @@ impl FormatNodeRule<JsObjectAssignmentPatternProperty> for FormatJsObjectAssignm
         node: &JsObjectAssignmentPatternProperty,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {
-        write!(f, [JsAnyAssignmentLike::from(node.clone())])
+        write!(f, [AnyJsAssignmentLike::from(node.clone())])
     }
 }

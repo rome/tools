@@ -1,11 +1,16 @@
 use crate::comments::{FormatJsLeadingComment, JsCommentStyle, JsComments};
 use crate::context::trailing_comma::TrailingComma;
+use rome_deserialize::json::with_only_known_variants;
+use rome_deserialize::{DeserializationDiagnostic, VisitNode};
 use rome_formatter::printer::PrinterOptions;
+use rome_formatter::token::string::Quote;
 use rome_formatter::{
     CstFormatContext, FormatContext, FormatElement, FormatOptions, IndentStyle, LineWidth,
     TransformSourceMap,
 };
-use rome_js_syntax::{JsAnyFunctionBody, JsLanguage, SourceType};
+use rome_js_syntax::{AnyJsFunctionBody, JsFileSource, JsLanguage};
+use rome_json_syntax::JsonLanguage;
+use rome_rowan::SyntaxNode;
 use std::fmt;
 use std::fmt::Debug;
 use std::rc::Rc;
@@ -40,7 +45,7 @@ pub struct JsFormatContext {
     ///  ```
     ///
     /// This should be rare enough for us not to care about it.
-    cached_function_body: Option<(JsAnyFunctionBody, FormatElement)>,
+    cached_function_body: Option<(AnyJsFunctionBody, FormatElement)>,
 
     source_map: Option<TransformSourceMap>,
 }
@@ -61,7 +66,7 @@ impl JsFormatContext {
     /// See [JsFormatContext::cached_function_body] for more in depth documentation.
     pub(crate) fn get_cached_function_body(
         &self,
-        body: &JsAnyFunctionBody,
+        body: &AnyJsFunctionBody,
     ) -> Option<FormatElement> {
         self.cached_function_body
             .as_ref()
@@ -79,7 +84,7 @@ impl JsFormatContext {
     /// See [JsFormatContext::cached_function_body] for more in depth documentation.
     pub(crate) fn set_cached_function_body(
         &mut self,
-        body: &JsAnyFunctionBody,
+        body: &AnyJsFunctionBody,
         formatted: FormatElement,
     ) {
         self.cached_function_body = Some((body.clone(), formatted))
@@ -139,26 +144,43 @@ pub struct JsFormatOptions {
     /// The style for quotes. Defaults to double.
     quote_style: QuoteStyle,
 
+    /// The style for JSX quotes. Defaults to double.
+    jsx_quote_style: QuoteStyle,
+
     /// When properties in objects are quoted. Defaults to as-needed.
     quote_properties: QuoteProperties,
 
     /// Print trailing commas wherever possible in multi-line comma-separated syntactic structures. Defaults to "all".
     trailing_comma: TrailingComma,
 
+    /// Whether the formatter prints semicolons for all statements, class members, and type members or only when necessary because of [ASI](https://tc39.es/ecma262/multipage/ecmascript-language-lexical-grammar.html#sec-automatic-semicolon-insertion).
+    semicolons: Semicolons,
+
+    /// Whether to add non-necessary parentheses to arrow functions. Defaults to "always".
+    arrow_parentheses: ArrowParentheses,
+
     /// Information related to the current file
-    source_type: SourceType,
+    source_type: JsFileSource,
 }
 
 impl JsFormatOptions {
-    pub fn new(source_type: SourceType) -> Self {
+    pub fn new(source_type: JsFileSource) -> Self {
         Self {
             source_type,
             indent_style: IndentStyle::default(),
             line_width: LineWidth::default(),
             quote_style: QuoteStyle::default(),
+            jsx_quote_style: QuoteStyle::default(),
             quote_properties: QuoteProperties::default(),
             trailing_comma: TrailingComma::default(),
+            semicolons: Semicolons::default(),
+            arrow_parentheses: ArrowParentheses::default(),
         }
+    }
+
+    pub fn with_arrow_parentheses(mut self, arrow_parentheses: ArrowParentheses) -> Self {
+        self.arrow_parentheses = arrow_parentheses;
+        self
     }
 
     pub fn with_indent_style(mut self, indent_style: IndentStyle) -> Self {
@@ -176,6 +198,11 @@ impl JsFormatOptions {
         self
     }
 
+    pub fn with_jsx_quote_style(mut self, jsx_quote_style: QuoteStyle) -> Self {
+        self.jsx_quote_style = jsx_quote_style;
+        self
+    }
+
     pub fn with_quote_properties(mut self, quote_properties: QuoteProperties) -> Self {
         self.quote_properties = quote_properties;
         self
@@ -186,20 +213,37 @@ impl JsFormatOptions {
         self
     }
 
+    pub fn with_semicolons(mut self, semicolons: Semicolons) -> Self {
+        self.semicolons = semicolons;
+        self
+    }
+
+    pub fn arrow_parentheses(&self) -> ArrowParentheses {
+        self.arrow_parentheses
+    }
+
     pub fn quote_style(&self) -> QuoteStyle {
         self.quote_style
+    }
+
+    pub fn jsx_quote_style(&self) -> QuoteStyle {
+        self.jsx_quote_style
     }
 
     pub fn quote_properties(&self) -> QuoteProperties {
         self.quote_properties
     }
 
-    pub fn source_type(&self) -> SourceType {
+    pub fn source_type(&self) -> JsFileSource {
         self.source_type
     }
 
     pub fn trailing_comma(&self) -> TrailingComma {
         self.trailing_comma
+    }
+
+    pub fn semicolons(&self) -> Semicolons {
+        self.semicolons
     }
 
     pub fn tab_width(&self) -> TabWidth {
@@ -220,9 +264,7 @@ impl FormatOptions for JsFormatOptions {
     }
 
     fn as_print_options(&self) -> PrinterOptions {
-        PrinterOptions::default()
-            .with_indent(self.indent_style)
-            .with_print_width(self.line_width.into())
+        PrinterOptions::from(self)
     }
 }
 
@@ -231,15 +273,19 @@ impl fmt::Display for JsFormatOptions {
         writeln!(f, "Indent style: {}", self.indent_style)?;
         writeln!(f, "Line width: {}", self.line_width.value())?;
         writeln!(f, "Quote style: {}", self.quote_style)?;
+        writeln!(f, "JSX quote style: {}", self.jsx_quote_style)?;
         writeln!(f, "Quote properties: {}", self.quote_properties)?;
-        writeln!(f, "Trailing comma: {}", self.trailing_comma)
+        writeln!(f, "Trailing comma: {}", self.trailing_comma)?;
+        writeln!(f, "Semicolons: {}", self.semicolons)?;
+        writeln!(f, "Arrow parentheses: {}", self.arrow_parentheses)
     }
 }
 
 #[derive(Debug, Eq, PartialEq, Clone, Copy)]
 #[cfg_attr(
     feature = "serde",
-    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema),
+    serde(rename_all = "camelCase")
 )]
 #[derive(Default)]
 pub enum QuoteStyle {
@@ -271,6 +317,8 @@ impl fmt::Display for QuoteStyle {
 }
 
 impl QuoteStyle {
+    pub(crate) const KNOWN_VALUES: &'static [&'static str] = &["double", "single"];
+
     pub fn as_char(&self) -> char {
         match self {
             QuoteStyle::Double => '"',
@@ -314,20 +362,41 @@ impl QuoteStyle {
     }
 }
 
-#[derive(Debug, Eq, PartialEq, Clone, Copy)]
-#[cfg_attr(
-    feature = "serde",
-    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
-)]
-pub enum QuoteProperties {
-    AsNeeded,
-    Preserve,
+impl From<QuoteStyle> for Quote {
+    fn from(quote: QuoteStyle) -> Self {
+        match quote {
+            QuoteStyle::Double => Quote::Double,
+            QuoteStyle::Single => Quote::Single,
+        }
+    }
 }
 
-impl Default for QuoteProperties {
-    fn default() -> Self {
-        Self::AsNeeded
+impl VisitNode<JsonLanguage> for QuoteStyle {
+    fn visit_member_value(
+        &mut self,
+        node: &SyntaxNode<JsonLanguage>,
+        diagnostics: &mut Vec<DeserializationDiagnostic>,
+    ) -> Option<()> {
+        let node = with_only_known_variants(node, QuoteStyle::KNOWN_VALUES, diagnostics)?;
+        if node.inner_string_text().ok()?.text() == "single" {
+            *self = QuoteStyle::Single;
+        } else {
+            *self = QuoteStyle::Double;
+        }
+        Some(())
     }
+}
+
+#[derive(Debug, Eq, PartialEq, Clone, Copy, Default)]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema),
+    serde(rename_all = "camelCase")
+)]
+pub enum QuoteProperties {
+    #[default]
+    AsNeeded,
+    Preserve,
 }
 
 impl FromStr for QuoteProperties {
@@ -349,5 +418,147 @@ impl fmt::Display for QuoteProperties {
             QuoteProperties::AsNeeded => write!(f, "As needed"),
             QuoteProperties::Preserve => write!(f, "Preserve"),
         }
+    }
+}
+
+impl QuoteProperties {
+    pub(crate) const KNOWN_VALUES: &'static [&'static str] = &["preserve", "asNeeded"];
+}
+
+impl VisitNode<JsonLanguage> for QuoteProperties {
+    fn visit_member_value(
+        &mut self,
+        node: &SyntaxNode<JsonLanguage>,
+        diagnostics: &mut Vec<DeserializationDiagnostic>,
+    ) -> Option<()> {
+        let node = with_only_known_variants(node, QuoteProperties::KNOWN_VALUES, diagnostics)?;
+        if node.inner_string_text().ok()?.text() == "asNeeded" {
+            *self = QuoteProperties::AsNeeded;
+        } else {
+            *self = QuoteProperties::Preserve;
+        }
+        Some(())
+    }
+}
+
+#[derive(Debug, Eq, PartialEq, Clone, Copy, Default)]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema),
+    serde(rename_all = "camelCase")
+)]
+pub enum Semicolons {
+    #[default]
+    Always,
+    AsNeeded,
+}
+
+impl Semicolons {
+    pub(crate) const KNOWN_VALUES: &'static [&'static str] = &["always", "asNeeded"];
+
+    pub const fn is_as_needed(&self) -> bool {
+        matches!(self, Self::AsNeeded)
+    }
+
+    pub const fn is_always(&self) -> bool {
+        matches!(self, Self::Always)
+    }
+}
+
+impl FromStr for Semicolons {
+    type Err = &'static str;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "as-needed" | "AsNeeded" => Ok(Self::AsNeeded),
+            "always" | "Always" => Ok(Self::Always),
+            _ => Err("Value not supported for Semicolons. Supported values are 'as-needed' and 'always'."),
+        }
+    }
+}
+
+impl fmt::Display for Semicolons {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Semicolons::AsNeeded => write!(f, "As needed"),
+            Semicolons::Always => write!(f, "Always"),
+        }
+    }
+}
+
+impl VisitNode<JsonLanguage> for Semicolons {
+    fn visit_member_value(
+        &mut self,
+        node: &SyntaxNode<JsonLanguage>,
+        diagnostics: &mut Vec<DeserializationDiagnostic>,
+    ) -> Option<()> {
+        let node = with_only_known_variants(node, Semicolons::KNOWN_VALUES, diagnostics)?;
+        if node.inner_string_text().ok()?.text() == "asNeeded" {
+            *self = Semicolons::AsNeeded;
+        } else {
+            *self = Semicolons::Always;
+        }
+        Some(())
+    }
+}
+
+#[derive(Debug, Eq, PartialEq, Clone, Copy, Default)]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema),
+    serde(rename_all = "camelCase")
+)]
+pub enum ArrowParentheses {
+    #[default]
+    Always,
+    AsNeeded,
+}
+
+impl ArrowParentheses {
+    pub(crate) const KNOWN_VALUES: &'static [&'static str] = &["always", "asNeeded"];
+
+    pub const fn is_as_needed(&self) -> bool {
+        matches!(self, Self::AsNeeded)
+    }
+
+    pub const fn is_always(&self) -> bool {
+        matches!(self, Self::Always)
+    }
+}
+
+impl FromStr for ArrowParentheses {
+    type Err = &'static str;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "as-needed" | "AsNeeded" => Ok(Self::AsNeeded),
+            "always" | "Always" => Ok(Self::Always),
+            _ => Err("Value not supported for Arrow parentheses. Supported values are 'as-needed' and 'always'."),
+        }
+    }
+}
+
+impl fmt::Display for ArrowParentheses {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ArrowParentheses::AsNeeded => write!(f, "As needed"),
+            ArrowParentheses::Always => write!(f, "Always"),
+        }
+    }
+}
+
+impl VisitNode<JsonLanguage> for ArrowParentheses {
+    fn visit_member_value(
+        &mut self,
+        node: &SyntaxNode<JsonLanguage>,
+        diagnostics: &mut Vec<DeserializationDiagnostic>,
+    ) -> Option<()> {
+        let node = with_only_known_variants(node, ArrowParentheses::KNOWN_VALUES, diagnostics)?;
+        if node.inner_string_text().ok()?.text() == "asNeeded" {
+            *self = ArrowParentheses::AsNeeded;
+        } else {
+            *self = ArrowParentheses::Always;
+        }
+        Some(())
     }
 }

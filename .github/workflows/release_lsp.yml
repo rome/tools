@@ -109,8 +109,10 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Install Rust toolchain
-        run: rustup target add ${{ matrix.target }}
+      - name: Install toolchain
+        uses: moonrepo/setup-rust@v0
+        with:
+          targets: ${{ matrix.target }}
 
       - name: Install arm64 toolchain
         if: matrix.code-target == 'linux-arm64'
@@ -147,7 +149,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 18
 
       - name: Update package.json version
         if: needs.check.outputs.prerelease == 'true'
@@ -193,19 +195,30 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 18
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Publish extension (pre-release)
+      - name: Publish extension to Microsoft Marketplace (pre-release)
         run: npx vsce publish --pre-release --packagePath rome_lsp-*.vsix
         if: needs.build.outputs.prerelease == 'true'
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
-      - name: Publish extension
+      - name: Publish extension to Microsoft Marketplace
         run: npx vsce publish --packagePath rome_lsp-*.vsix
         if: needs.build.outputs.prerelease != 'true'
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
+
+      - name: Publish extension to Open VSX (pre-release)
+        run: npx ovsx publish --pre-release --packagePath rome_lsp-*.vsix
+        if: needs.build.outputs.prerelease == 'true'
+        env:
+          OVSX_PAT: ${{ secrets.OVSX_PAT }}
+      - name: Publish extension to Open VSX
+        run: npx ovsx publish --packagePath rome_lsp-*.vsix
+        if: needs.build.outputs.prerelease != 'true'
+        env:
+          OVSX_PAT: ${{ secrets.OVSX_PAT }}
 
       - name: Create GitHub release and tag
         uses: softprops/action-gh-release@v1

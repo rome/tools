@@ -5,7 +5,7 @@ use rome_js_syntax::JsName;
 use rome_js_syntax::JsNameFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsName;
+pub(crate) struct FormatJsName;
 
 impl FormatNodeRule<JsName> for FormatJsName {
     fn fmt_fields(&self, node: &JsName, f: &mut JsFormatter) -> FormatResult<()> {

@@ -1,7 +1,7 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
-info:
-  test_file: js/template-literals/styled-jsx-with-expressions.js
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+assertion_line: 212
+info: js/template-literals/styled-jsx-with-expressions.js
 ---
 
 # Input
@@ -48,6 +48,7 @@ info:
   animation: 3s ease-in 1s ${foo => foo.getIterations()} reverse both paused slidein;
   }
 `}</style>;
+
 ```
 
 
@@ -162,9 +163,9 @@ info:
 `}</style>;
 ```
 
-
 # Lines exceeding max width of 80 characters
 ```
    39:   animation: 3s ease-in 1s ${(foo) => foo.getIterations()} reverse both paused slidein;
 ```
+
 

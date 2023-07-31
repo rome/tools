@@ -12,10 +12,14 @@ impl FormatNodeRule<TsTypeParameter> for FormatTsTypeParameter {
             name,
             constraint,
             default,
+            modifiers,
         } = node.as_fields();
 
-        write!(f, [name.format()])?;
+        if !modifiers.is_empty() {
+            write!(f, [modifiers.format(), space()])?;
+        }
 
+        write!(f, [name.format()])?;
         if let Some(constraint) = constraint {
             write!(f, [space(), constraint.format()])?;
         }

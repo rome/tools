@@ -1,11 +1,11 @@
 ---
-source: crates/rome_js_formatter/tests/spec_test.rs
-expression: object_trailing_comma.ts
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info: ts/object/object_trailing_comma.ts
 ---
 
 # Input
 
-```js
+```ts
 
 // object method
 const obj = {
@@ -42,11 +42,14 @@ const obj = {
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
+Semicolons: Always
+Arrow parentheses: Always
 -----
 
-```js
+```ts
 // object method
 const obj = {
 	one<
@@ -76,11 +79,14 @@ const obj = {
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: ES5
+Semicolons: Always
+Arrow parentheses: Always
 -----
 
-```js
+```ts
 // object method
 const obj = {
 	one<
@@ -110,11 +116,14 @@ const obj = {
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: None
+Semicolons: Always
+Arrow parentheses: Always
 -----
 
-```js
+```ts
 // object method
 const obj = {
 	one<

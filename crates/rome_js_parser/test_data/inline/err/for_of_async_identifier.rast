@@ -21,7 +21,7 @@ JsModule {
             for_token: FOR_KW@10..15 "for" [Newline("\n")] [Whitespace(" ")],
             await_token: missing (optional),
             l_paren_token: L_PAREN@15..16 "(" [] [],
-            initializer: JsUnknownAssignment {
+            initializer: JsBogusAssignment {
                 items: [
                     IDENT@16..22 "async" [] [Whitespace(" ")],
                 ],
@@ -63,7 +63,7 @@ JsModule {
       0: FOR_KW@10..15 "for" [Newline("\n")] [Whitespace(" ")]
       1: (empty)
       2: L_PAREN@15..16 "(" [] []
-      3: JS_UNKNOWN_ASSIGNMENT@16..22
+      3: JS_BOGUS_ASSIGNMENT@16..22
         0: IDENT@16..22 "async" [] [Whitespace(" ")]
       4: OF_KW@22..25 "of" [] [Whitespace(" ")]
       5: JS_ARRAY_EXPRESSION@25..28

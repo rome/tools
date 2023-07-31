@@ -1,35 +1,33 @@
-use std::collections::BinaryHeap;
-
-use rome_diagnostics::file::FileId;
-use rome_rowan::{AstNode, Language, SyntaxNode, TextRange, WalkEvent};
-
 use crate::{
-    matcher::MatchQueryParams,
+    matcher::{MatchQueryParams, Query},
     registry::{NodeLanguage, Phases},
     AnalyzerOptions, LanguageRoot, QueryMatch, QueryMatcher, ServiceBag, SignalEntry,
+    SuppressionCommentEmitter,
 };
+use rome_rowan::{AstNode, Language, SyntaxNode, TextRange, WalkEvent};
+use std::collections::BinaryHeap;
 
 /// Mutable context objects shared by all visitors
 pub struct VisitorContext<'phase, 'query, L: Language> {
     pub phase: Phases,
-    pub file_id: FileId,
     pub root: &'phase LanguageRoot<L>,
     pub services: &'phase ServiceBag,
     pub range: Option<TextRange>,
     pub(crate) query_matcher: &'query mut dyn QueryMatcher<L>,
     pub(crate) signal_queue: &'query mut BinaryHeap<SignalEntry<'phase, L>>,
-    pub options: &'query AnalyzerOptions,
+    pub apply_suppression_comment: SuppressionCommentEmitter<L>,
+    pub options: &'phase AnalyzerOptions,
 }
 
 impl<'phase, 'query, L: Language> VisitorContext<'phase, 'query, L> {
-    pub fn match_query(&mut self, query: QueryMatch<L>) {
+    pub fn match_query<T: QueryMatch>(&mut self, query: T) {
         self.query_matcher.match_query(MatchQueryParams {
             phase: self.phase,
-            file_id: self.file_id,
             root: self.root,
-            query,
+            query: Query::new(query),
             services: self.services,
             signal_queue: self.signal_queue,
+            apply_suppression_comment: self.apply_suppression_comment,
             options: self.options,
         })
     }

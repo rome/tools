@@ -1,11 +1,11 @@
 ---
-source: crates/rome_js_formatter/tests/spec_test.rs
-expression: parameters.ts
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info: ts/parameters/parameters.ts
 ---
 
 # Input
 
-```js
+```ts
 function a(
     this: string
 ) {}
@@ -22,11 +22,14 @@ function a(
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
+Semicolons: Always
+Arrow parentheses: Always
 -----
 
-```js
+```ts
 function a(this: string) {}
 ```
 

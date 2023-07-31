@@ -1,4 +1,4 @@
-import { commands, TextDocument, TextEditor } from "vscode";
+import { TextDocument, TextEditor, commands } from "vscode";
 
 const SUPPORTED_LANGUAGES = new Set(["javascript", "typescript"]);
 
@@ -8,7 +8,7 @@ export type RomeDocument = TextDocument & {
 export type RomeEditor = TextEditor & { document: RomeDocument };
 
 /** Sets ['when'](https://code.visualstudio.com/docs/getstarted/keybindings#_when-clause-contexts) clause contexts */
-export function setContextValue(key: string, value: any): Thenable<void> {
+export function setContextValue(key: string, value: unknown): Thenable<void> {
 	return commands.executeCommand("setContext", key, value);
 }
 

@@ -5,7 +5,7 @@ use rome_js_syntax::JsNamedImportSpecifiers;
 use rome_js_syntax::JsNamedImportSpecifiersFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsNamedImportSpecifiers;
+pub(crate) struct FormatJsNamedImportSpecifiers;
 
 impl FormatNodeRule<JsNamedImportSpecifiers> for FormatJsNamedImportSpecifiers {
     fn fmt_fields(&self, node: &JsNamedImportSpecifiers, f: &mut JsFormatter) -> FormatResult<()> {

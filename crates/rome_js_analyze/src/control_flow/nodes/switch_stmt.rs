@@ -1,5 +1,5 @@
 use rome_control_flow::builder::BlockId;
-use rome_js_syntax::{JsAnySwitchClause, JsLabeledStatement, JsSwitchStatement, JsSyntaxToken};
+use rome_js_syntax::{AnyJsSwitchClause, JsLabeledStatement, JsSwitchStatement, JsSyntaxToken};
 use rome_rowan::{AstNode, SyntaxResult};
 
 use crate::control_flow::{
@@ -83,7 +83,7 @@ impl NodeVisitor for SwitchVisitor {
 pub(in crate::control_flow) struct CaseVisitor;
 
 impl NodeVisitor for CaseVisitor {
-    type Node = JsAnySwitchClause;
+    type Node = AnyJsSwitchClause;
 
     fn enter(
         node: Self::Node,
@@ -101,13 +101,13 @@ impl NodeVisitor for CaseVisitor {
         }
 
         match node {
-            JsAnySwitchClause::JsCaseClause(node) => {
+            AnyJsSwitchClause::JsCaseClause(node) => {
                 builder.set_cursor(switch_stmt.entry_block);
                 builder
                     .append_jump(true, case_block)
                     .with_node(node.test()?.into_syntax());
             }
-            JsAnySwitchClause::JsDefaultClause(node) => {
+            AnyJsSwitchClause::JsDefaultClause(node) => {
                 let token = node.default_token()?;
                 switch_stmt.default_block = Some((case_block, token));
             }

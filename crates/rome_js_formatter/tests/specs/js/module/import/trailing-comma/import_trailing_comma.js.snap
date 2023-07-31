@@ -1,6 +1,6 @@
 ---
-source: crates/rome_js_formatter/tests/spec_test.rs
-expression: import_trailing_comma.js
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info: js/module/import/trailing-comma/import_trailing_comma.js
 ---
 
 # Input
@@ -17,6 +17,26 @@ import {
 	dsadsadasdasdasdasdasdasdasd,
 	dsadsadasdasdasdasdasdasdasd, } from "W";
 
+const StandaloneBackendWASMModule = await import(/* webpackChunkName: "standalone" */'./StandaloneBackendWASM');
+
+const StandaloneBackendWASMModule = await import(/* webpackChunkName: "standalone" */'./StandaloneBackendWASM',
+	/* webpackChunkName: "standalone" */'./StandaloneBackendWASM');
+
+import(
+	'myreallylongdynamicallyloadedmodulenamemyreallylongdynamicallyloadedmodulename'
+	);
+
+import(/* Hello */ "something");
+import("something" /* Hello */);
+import(/* Hello */ "something" /* Hello */);
+import("something" /* Hello */ + "else");
+import(
+	/* Hello */
+	"something",
+	/* Hello */
+	);
+wrap(import(/* Hello */ "something"));
+
 ```
 
 
@@ -30,8 +50,11 @@ import {
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
+Semicolons: Always
+Arrow parentheses: Always
 -----
 
 ```js
@@ -46,6 +69,35 @@ import {
 	dsadsadasdasdasdasdasdasdasd,
 	dsadsadasdasdasdasdasdasdasd,
 } from "W";
+
+const StandaloneBackendWASMModule = await import(
+	/* webpackChunkName: "standalone" */ "./StandaloneBackendWASM"
+);
+
+const StandaloneBackendWASMModule = await import(
+	/* webpackChunkName: "standalone" */ "./StandaloneBackendWASM",
+	/* webpackChunkName: "standalone" */ "./StandaloneBackendWASM"
+);
+
+import(
+	"myreallylongdynamicallyloadedmodulenamemyreallylongdynamicallyloadedmodulename"
+);
+
+import(/* Hello */ "something");
+import("something" /* Hello */);
+import(/* Hello */ "something" /* Hello */);
+import("something" /* Hello */ + "else");
+import(
+	/* Hello */
+	"something"
+	/* Hello */
+);
+wrap(import(/* Hello */ "something"));
+```
+
+# Lines exceeding max width of 80 characters
+```
+   23: 	"myreallylongdynamicallyloadedmodulenamemyreallylongdynamicallyloadedmodulename"
 ```
 
 ## Output 2
@@ -54,8 +106,11 @@ import {
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: ES5
+Semicolons: Always
+Arrow parentheses: Always
 -----
 
 ```js
@@ -70,6 +125,35 @@ import {
 	dsadsadasdasdasdasdasdasdasd,
 	dsadsadasdasdasdasdasdasdasd,
 } from "W";
+
+const StandaloneBackendWASMModule = await import(
+	/* webpackChunkName: "standalone" */ "./StandaloneBackendWASM"
+);
+
+const StandaloneBackendWASMModule = await import(
+	/* webpackChunkName: "standalone" */ "./StandaloneBackendWASM",
+	/* webpackChunkName: "standalone" */ "./StandaloneBackendWASM"
+);
+
+import(
+	"myreallylongdynamicallyloadedmodulenamemyreallylongdynamicallyloadedmodulename"
+);
+
+import(/* Hello */ "something");
+import("something" /* Hello */);
+import(/* Hello */ "something" /* Hello */);
+import("something" /* Hello */ + "else");
+import(
+	/* Hello */
+	"something"
+	/* Hello */
+);
+wrap(import(/* Hello */ "something"));
+```
+
+# Lines exceeding max width of 80 characters
+```
+   23: 	"myreallylongdynamicallyloadedmodulenamemyreallylongdynamicallyloadedmodulename"
 ```
 
 ## Output 3
@@ -78,8 +162,11 @@ import {
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: None
+Semicolons: Always
+Arrow parentheses: Always
 -----
 
 ```js
@@ -94,6 +181,35 @@ import {
 	dsadsadasdasdasdasdasdasdasd,
 	dsadsadasdasdasdasdasdasdasd
 } from "W";
+
+const StandaloneBackendWASMModule = await import(
+	/* webpackChunkName: "standalone" */ "./StandaloneBackendWASM"
+);
+
+const StandaloneBackendWASMModule = await import(
+	/* webpackChunkName: "standalone" */ "./StandaloneBackendWASM",
+	/* webpackChunkName: "standalone" */ "./StandaloneBackendWASM"
+);
+
+import(
+	"myreallylongdynamicallyloadedmodulenamemyreallylongdynamicallyloadedmodulename"
+);
+
+import(/* Hello */ "something");
+import("something" /* Hello */);
+import(/* Hello */ "something" /* Hello */);
+import("something" /* Hello */ + "else");
+import(
+	/* Hello */
+	"something"
+	/* Hello */
+);
+wrap(import(/* Hello */ "something"));
+```
+
+# Lines exceeding max width of 80 characters
+```
+   23: 	"myreallylongdynamicallyloadedmodulenamemyreallylongdynamicallyloadedmodulename"
 ```
 
 

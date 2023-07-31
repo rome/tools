@@ -5,11 +5,11 @@ on:
     branches:
       - main
     paths:
-      - 'crates/rome_js_syntax/**/*'
-      - 'crates/rome_js_factory/**/*'
-      - 'crates/rome_js_parser/**/*'
-      - 'crates/rome_rowan/**/*'
-      - 'xtask/**/*'
+      - 'crates/rome_js_syntax/**'
+      - 'crates/rome_js_factory/**'
+      - 'crates/rome_js_parser/**'
+      - 'crates/rome_rowan/**'
+      - 'xtask/**'
 
 env:
   RUST_LOG: info
@@ -40,10 +40,7 @@ jobs:
           submodules: recursive
 
       - name: Install toolchain
-        run: rustup show
-
-      - name: Cache
-        uses: Swatinem/rust-cache@v1
+        uses: moonrepo/setup-rust@v0
 
       - name: Compile
         run: cargo build --release --locked -p xtask_coverage
@@ -71,11 +68,10 @@ jobs:
           echo "## Parser conformance results on ${{ matrix.os }}" > output
           cargo coverage compare ./base_results.json ./new_results.json --markdown >> output
           cat output
-          comment="$(cat output)"
-          comment="${comment//'%'/'%25'}"
-          comment="${comment//$'\n'/'%0A'}"
-          comment="${comment//$'\r'/'%0D'}"
-          echo "::set-output name=comment::$comment"
+          echo "comment<<EOF" >> $GITHUB_OUTPUT
+          cat output >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
 
       - name: Get the PR number
         if: github.event_name == 'pull_request'
@@ -110,4 +106,4 @@ jobs:
             ${{ steps.comparison.outputs.comment }}
 
       - name: Clean cache
-        run: cargo install cargo-cache --no-default-features --features ci-autoclean && cargo-cache
+        run: cargo cache --autoclean

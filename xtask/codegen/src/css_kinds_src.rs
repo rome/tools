@@ -39,6 +39,8 @@ pub const CSS_KINDS_SRC: KindsSrc = KindsSrc {
         ("@", "AT"),
         ("$=", "DOLLAR_EQ"),
         ("~=", "TILDE_EQ"),
+        ("-->", "CDC"),
+        ("<!--", "CDO"),
     ],
     keywords: &[
         "aliceblue",
@@ -200,9 +202,17 @@ pub const CSS_KINDS_SRC: KindsSrc = KindsSrc {
         "CSS_CUSTOM_PROPERTY",
         "CSS_SPACE_LITERAL",
     ],
-    tokens: &["ERROR_TOKEN", "IDENT", "NEWLINE", "WHITESPACE", "COMMENT"],
+    tokens: &[
+        "ERROR_TOKEN",
+        "IDENT",
+        "NEWLINE",
+        "WHITESPACE",
+        "COMMENT",
+        "MULTILINE_COMMENT",
+    ],
     nodes: &[
         "CSS_ROOT",
+        "CSS_RULE_LIST",
         "CSS_ID_SELECTOR_PATTERN",
         "CSS_RULE",
         "CSS_SELECTOR_LIST",
@@ -253,7 +263,7 @@ pub const CSS_KINDS_SRC: KindsSrc = KindsSrc {
         "CSS_KEYFRAMES_SELECTOR_LIST",
         "CSS_PARAMETER_LIST",
         "CSS_DECLARATION_IMPORTANT",
-        // unknown nodes
-        "CSS_UNKNOWN",
+        // Bogs nodes
+        "CSS_BOGUS",
     ],
 };

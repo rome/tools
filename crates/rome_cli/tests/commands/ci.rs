@@ -4,12 +4,10 @@ use crate::{
     assert_cli_snapshot, run_cli, CUSTOM_FORMAT_BEFORE, FORMATTED, LINT_ERROR, PARSE_ERROR,
     UNFORMATTED,
 };
-use pico_args::Arguments;
-use rome_cli::Termination;
-use rome_console::BufferConsole;
+use bpaf::Args;
+use rome_console::{BufferConsole, MarkupBuf};
 use rome_fs::{FileSystemExt, MemoryFileSystem};
 use rome_service::DynRef;
-use std::ffi::OsString;
 use std::path::{Path, PathBuf};
 
 const INCORRECT_CODE: &str = "let a = !b || !c";
@@ -31,6 +29,28 @@ const CI_CONFIGURATION: &str = r#"
 "#;
 
 #[test]
+fn ci_help() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Args::from([("ci"), "--help"].as_slice()),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "ci_help",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
 fn ok() {
     let mut fs = MemoryFileSystem::default();
     let mut console = BufferConsole::default();
@@ -40,8 +60,8 @@ fn ok() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
-        Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
+        &mut console,
+        Args::from([("ci"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -81,14 +101,11 @@ fn formatting_error() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
-        Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
+        &mut console,
+        Args::from([("ci"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
-    match result {
-        Err(Termination::CheckError) => {}
-        _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
-    }
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
@@ -109,15 +126,11 @@ fn ci_parse_error() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
-        Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
+        &mut console,
+        Args::from([("ci"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
-    match &result {
-        Err(Termination::CheckError) => {}
-        _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
-    }
-
+    assert!(result.is_err(), "run_cli returned {result:?}");
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
         "ci_parse_error",
@@ -137,14 +150,11 @@ fn ci_lint_error() {
     let mut console = BufferConsole::default();
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
-        Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
+        &mut console,
+        Args::from([("ci"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
-    match &result {
-        Err(Termination::CheckError) => {}
-        _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
-    }
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
@@ -160,29 +170,32 @@ fn ci_does_not_run_formatter() {
     let mut fs = MemoryFileSystem::default();
     let mut console = BufferConsole::default();
 
-    let file_path = Path::new("rome.json");
-    fs.insert(file_path.into(), CONFIG_DISABLED_FORMATTER.as_bytes());
+    fs.insert(
+        PathBuf::from("rome.json"),
+        CONFIG_DISABLED_FORMATTER.as_bytes(),
+    );
 
-    let file_path = Path::new("file.js");
-    fs.insert(file_path.into(), UNFORMATTED_AND_INCORRECT.as_bytes());
+    let input_file = Path::new("file.js");
+
+    fs.insert(input_file.into(), UNFORMATTED.as_bytes());
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
-        Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
+        &mut console,
+        Args::from([("ci"), input_file.as_os_str().to_str().unwrap()].as_slice()),
     );
 
-    assert!(result.is_err(), "run_cli returned {result:?}");
+    assert!(result.is_ok(), "run_cli returned {result:?}");
 
     let mut file = fs
-        .open(file_path)
+        .open(input_file)
         .expect("formatting target file was removed by the CLI");
 
     let mut content = String::new();
     file.read_to_string(&mut content)
         .expect("failed to read file from memory FS");
 
-    assert_eq!(content, UNFORMATTED_AND_INCORRECT);
+    assert_eq!(content, UNFORMATTED);
 
     drop(file);
     assert_cli_snapshot(SnapshotPayload::new(
@@ -199,30 +212,33 @@ fn ci_does_not_run_formatter_via_cli() {
     let mut fs = MemoryFileSystem::default();
     let mut console = BufferConsole::default();
 
-    let file_path = Path::new("file.js");
-    fs.insert(file_path.into(), UNFORMATTED_AND_INCORRECT.as_bytes());
+    let input_file = Path::new("file.js");
+    fs.insert(input_file.into(), UNFORMATTED.as_bytes());
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
-        Arguments::from_vec(vec![
-            OsString::from("ci"),
-            OsString::from("--formatter-enabled=false"),
-            file_path.as_os_str().into(),
-        ]),
+        &mut console,
+        Args::from(
+            [
+                ("ci"),
+                ("--formatter-enabled=false"),
+                input_file.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
-    assert!(result.is_err(), "run_cli returned {result:?}");
+    assert!(result.is_ok(), "run_cli returned {result:?}");
 
     let mut file = fs
-        .open(file_path)
+        .open(input_file)
         .expect("formatting target file was removed by the CLI");
 
     let mut content = String::new();
     file.read_to_string(&mut content)
         .expect("failed to read file from memory FS");
 
-    assert_eq!(content, UNFORMATTED_AND_INCORRECT);
+    assert_eq!(content, UNFORMATTED);
 
     drop(file);
     assert_cli_snapshot(SnapshotPayload::new(
@@ -239,16 +255,18 @@ fn ci_does_not_run_linter() {
     let mut fs = MemoryFileSystem::default();
     let mut console = BufferConsole::default();
 
-    let file_path = Path::new("rome.json");
-    fs.insert(file_path.into(), CONFIG_LINTER_DISABLED.as_bytes());
+    fs.insert(
+        PathBuf::from("rome.json"),
+        CONFIG_LINTER_DISABLED.as_bytes(),
+    );
 
     let file_path = Path::new("file.js");
     fs.insert(file_path.into(), CUSTOM_FORMAT_BEFORE.as_bytes());
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
-        Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
+        &mut console,
+        Args::from([("ci"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -283,12 +301,15 @@ fn ci_does_not_run_linter_via_cli() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
-        Arguments::from_vec(vec![
-            OsString::from("ci"),
-            OsString::from("--linter-enabled=false"),
-            file_path.as_os_str().into(),
-        ]),
+        &mut console,
+        Args::from(
+            [
+                ("ci"),
+                ("--linter-enabled=false"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -314,6 +335,53 @@ fn ci_does_not_run_linter_via_cli() {
 }
 
 #[test]
+fn ci_does_not_organize_imports_via_cli() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let file_path = Path::new("file.js");
+
+    let content = r#"import { lorem, foom, bar } from "foo";
+import * as something from "../something";
+"#;
+    fs.insert(file_path.into(), content.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Args::from(
+            [
+                ("ci"),
+                ("--organize-imports-enabled=false"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
+    );
+
+    // assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    let mut file = fs
+        .open(file_path)
+        .expect("formatting target file was removed by the CLI");
+
+    let mut received = String::new();
+    file.read_to_string(&mut received)
+        .expect("failed to read file from memory FS");
+
+    assert_eq!(received, content);
+
+    drop(file);
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "ci_does_not_organize_imports_via_cli",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
 fn ci_errors_for_all_disabled_checks() {
     let mut fs = MemoryFileSystem::default();
     let mut console = BufferConsole::default();
@@ -326,13 +394,17 @@ fn ci_errors_for_all_disabled_checks() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
-        Arguments::from_vec(vec![
-            OsString::from("ci"),
-            OsString::from("--linter-enabled=false"),
-            OsString::from("--formatter-enabled=false"),
-            file_path.as_os_str().into(),
-        ]),
+        &mut console,
+        Args::from(
+            [
+                ("ci"),
+                ("--linter-enabled=false"),
+                ("--formatter-enabled=false"),
+                ("--organize-imports-enabled=false"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -367,11 +439,11 @@ fn file_too_large() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
-        Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
+        &mut console,
+        Args::from([("ci"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
-    assert!(result.is_ok(), "run_cli returned {result:?}");
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     // Do not store the content of the file in the snapshot
     fs.remove(file_path);
@@ -397,11 +469,11 @@ fn file_too_large_config_limit() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
-        Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
+        &mut console,
+        Args::from([("ci"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
-    assert!(result.is_ok(), "run_cli returned {result:?}");
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
@@ -422,16 +494,18 @@ fn file_too_large_cli_limit() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
-        Arguments::from_vec(vec![
-            OsString::from("ci"),
-            OsString::from("--files-max-size"),
-            OsString::from("16"),
-            file_path.as_os_str().into(),
-        ]),
+        &mut console,
+        Args::from(
+            [
+                ("ci"),
+                ("--files-max-size=16"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
-    assert!(result.is_ok(), "run_cli returned {result:?}");
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
@@ -452,19 +526,18 @@ fn files_max_size_parse_error() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
-        Arguments::from_vec(vec![
-            OsString::from("ci"),
-            OsString::from("--files-max-size"),
-            OsString::from("-1"),
-            file_path.as_os_str().into(),
-        ]),
+        &mut console,
+        Args::from(
+            [
+                ("ci"),
+                ("--files-max-size=-1"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
     );
 
-    match result {
-        Err(Termination::ParseError { argument, .. }) => assert_eq!(argument, "--files-max-size"),
-        _ => panic!("run_cli returned {result:?} for an invalid argument value, expected an error"),
-    }
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
@@ -488,8 +561,8 @@ fn ci_runs_linter_not_formatter_issue_3495() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
-        Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
+        &mut console,
+        Args::from([("ci"), file_path.as_os_str().to_str().unwrap()].as_slice()),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
@@ -506,6 +579,381 @@ fn ci_runs_linter_not_formatter_issue_3495() {
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
         "ci_runs_linter_not_formatter_issue_3495",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn max_diagnostics_default() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    for i in 0..60 {
+        let file_path = PathBuf::from(format!("src/file_{i}.js"));
+        fs.insert(file_path, UNFORMATTED.as_bytes());
+    }
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Args::from([("ci"), ("src")].as_slice()),
+    );
+
+    assert!(result.is_err(), "run_cli returned {result:?}");
+
+    let mut diagnostic_count = 0;
+    let mut filtered_messages = Vec::new();
+
+    for msg in console.out_buffer {
+        let MarkupBuf(nodes) = &msg.content;
+        let is_diagnostic = nodes.iter().any(|node| {
+            node.content
+                .contains("File content differs from formatting output")
+                || node.content.contains("format")
+                || node.content.contains("lint")
+                || node.content.contains("ci")
+        });
+
+        if is_diagnostic {
+            diagnostic_count += 1;
+        } else {
+            filtered_messages.push(msg);
+        }
+    }
+
+    console.out_buffer = filtered_messages;
+
+    for i in 0..60 {
+        let file_path = format!("src/file_{i}.js");
+        fs.remove(Path::new(&file_path));
+    }
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "max_diagnostics_default",
+        fs,
+        console,
+        result,
+    ));
+
+    assert_eq!(diagnostic_count, 20);
+}
+
+#[test]
+fn max_diagnostics() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    for i in 0..60 {
+        let file_path = PathBuf::from(format!("src/file_{i}.js"));
+        fs.insert(file_path, UNFORMATTED.as_bytes());
+    }
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Args::from([("ci"), ("--max-diagnostics"), ("10"), ("src")].as_slice()),
+    );
+
+    assert!(result.is_err(), "run_cli returned {result:?}");
+
+    let mut diagnostic_count = 0;
+    let mut filtered_messages = Vec::new();
+
+    for msg in console.out_buffer {
+        let MarkupBuf(nodes) = &msg.content;
+        let is_diagnostic = nodes.iter().any(|node| {
+            node.content
+                .contains("File content differs from formatting output")
+                || node.content.contains("format")
+                || node.content.contains("ci")
+        });
+
+        if is_diagnostic {
+            diagnostic_count += 1;
+        } else {
+            filtered_messages.push(msg);
+        }
+    }
+
+    console.out_buffer = filtered_messages;
+
+    for i in 0..60 {
+        let file_path = format!("src/file_{i}.js");
+        fs.remove(Path::new(&file_path));
+    }
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "max_diagnostics",
+        fs,
+        console,
+        result,
+    ));
+
+    assert_eq!(diagnostic_count, 10);
+}
+
+#[test]
+fn print_verbose() {
+    let mut fs = MemoryFileSystem::default();
+
+    let file_path = Path::new("ci.js");
+    fs.insert(file_path.into(), LINT_ERROR.as_bytes());
+
+    let mut console = BufferConsole::default();
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Args::from(
+            [
+                ("ci"),
+                ("--verbose"),
+                file_path.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
+    );
+
+    assert!(result.is_err(), "run_cli returned {result:?}");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "print_verbose",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn ci_formatter_linter_organize_imports() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let rome_json = r#"{
+    "linter": {
+        "enabled": true,
+        "rules": {
+            "recommended": true
+        }
+    },
+    "organizeImports": {
+        "enabled": true
+    }
+}"#;
+
+    let input = r#"
+import { B, C } from "b.js"
+import A from "a.js"
+
+
+something( )
+    "#;
+
+    let file_path = Path::new("rome.json");
+    fs.insert(file_path.into(), rome_json.as_bytes());
+
+    let file_path = Path::new("file.js");
+    fs.insert(file_path.into(), input.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Args::from([("ci"), file_path.as_os_str().to_str().unwrap()].as_slice()),
+    );
+
+    assert!(result.is_err(), "run_cli returned {result:?}");
+
+    let mut file = fs
+        .open(file_path)
+        .expect("ci target file was removed by the CLI");
+
+    let mut content = String::new();
+    file.read_to_string(&mut content)
+        .expect("failed to read file from memory FS");
+
+    drop(file);
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "ci_formatter_linter_organize_imports",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn ignore_vcs_ignored_file() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let rome_json = r#"{
+        "vcs": {
+            "enabled": true,
+            "clientKind": "git",
+            "useIgnoreFile": true
+        }
+    }"#;
+
+    let git_ignore = r#"
+file2.js
+"#;
+
+    let code2 = r#"foo.call(); bar.call();"#;
+    let code1 = r#"array.map(sentence => sentence.split(' ')).flat();"#;
+
+    // ignored files
+    let file_path1 = Path::new("file1.js");
+    fs.insert(file_path1.into(), code1.as_bytes());
+    let file_path2 = Path::new("file2.js");
+    fs.insert(file_path2.into(), code2.as_bytes());
+
+    // configuration
+    let config_path = Path::new("rome.json");
+    fs.insert(config_path.into(), rome_json.as_bytes());
+
+    // git folder
+    let git_folder = Path::new(".git");
+    fs.insert(git_folder.into(), "".as_bytes());
+
+    // git ignore file
+    let ignore_file = Path::new(".gitignore");
+    fs.insert(ignore_file.into(), git_ignore.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Args::from(
+            [
+                ("ci"),
+                file_path1.as_os_str().to_str().unwrap(),
+                file_path2.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
+    );
+
+    assert!(result.is_err(), "run_cli returned {result:?}");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "ignore_vcs_ignored_file",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn ignore_vcs_ignored_file_via_cli() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let git_ignore = r#"
+file2.js
+"#;
+
+    let code2 = r#"foo.call();
+
+
+	bar.call();"#;
+    let code1 = r#"array.map(sentence => sentence.split(' ')).flat();"#;
+
+    // ignored files
+    let file_path1 = Path::new("file1.js");
+    fs.insert(file_path1.into(), code1.as_bytes());
+    let file_path2 = Path::new("file2.js");
+    fs.insert(file_path2.into(), code2.as_bytes());
+
+    // git folder
+    let git_folder = Path::new("./.git");
+    fs.insert(git_folder.into(), "".as_bytes());
+
+    // git ignore file
+    let ignore_file = Path::new("./.gitignore");
+    fs.insert(ignore_file.into(), git_ignore.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Args::from(
+            [
+                ("ci"),
+                ("--vcs-enabled=true"),
+                ("--vcs-client-kind=git"),
+                ("--vcs-use-ignore-file=true"),
+                ("--vcs-root=."),
+                file_path1.as_os_str().to_str().unwrap(),
+                file_path2.as_os_str().to_str().unwrap(),
+            ]
+            .as_slice(),
+        ),
+    );
+
+    assert!(result.is_err(), "run_cli returned {result:?}");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "ignore_vcs_ignored_file_via_cli",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn ignores_unknown_file() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let file_path1 = Path::new("test.txt");
+    fs.insert(file_path1.into(), *b"content");
+
+    let file_path2 = Path::new("test.js");
+    fs.insert(file_path2.into(), *b"console.log('bar');\n");
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Args::from(
+            [
+                ("ci"),
+                file_path1.as_os_str().to_str().unwrap(),
+                file_path2.as_os_str().to_str().unwrap(),
+                "--files-ignore-unknown=true",
+            ]
+            .as_slice(),
+        ),
+    );
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "ignores_unknown_file",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn doesnt_error_if_no_files_were_processed() {
+    let mut console = BufferConsole::default();
+    let mut fs = MemoryFileSystem::default();
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Args::from([("ci"), "--no-errors-on-unmatched", ("file.js")].as_slice()),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "doesnt_error_if_no_files_were_processed",
         fs,
         console,
         result,

@@ -1,11 +1,11 @@
 use crate::prelude::*;
-use crate::utils::{needs_binary_like_parentheses, JsAnyBinaryLikeExpression};
+use crate::utils::{needs_binary_like_parentheses, AnyJsBinaryLikeExpression};
 
 use crate::parentheses::NeedsParentheses;
 use rome_js_syntax::{JsBinaryExpression, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsBinaryExpression;
+pub(crate) struct FormatJsBinaryExpression;
 
 impl FormatNodeRule<JsBinaryExpression> for FormatJsBinaryExpression {
     fn fmt_fields(
@@ -13,7 +13,7 @@ impl FormatNodeRule<JsBinaryExpression> for FormatJsBinaryExpression {
         node: &JsBinaryExpression,
         formatter: &mut JsFormatter,
     ) -> FormatResult<()> {
-        JsAnyBinaryLikeExpression::JsBinaryExpression(node.clone()).fmt(formatter)
+        AnyJsBinaryLikeExpression::JsBinaryExpression(node.clone()).fmt(formatter)
     }
 
     fn needs_parentheses(&self, item: &JsBinaryExpression) -> bool {
@@ -23,14 +23,14 @@ impl FormatNodeRule<JsBinaryExpression> for FormatJsBinaryExpression {
 
 impl NeedsParentheses for JsBinaryExpression {
     fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
-        needs_binary_like_parentheses(&JsAnyBinaryLikeExpression::from(self.clone()), parent)
+        needs_binary_like_parentheses(&AnyJsBinaryLikeExpression::from(self.clone()), parent)
     }
 }
 
 #[cfg(test)]
 mod tests {
     use crate::{assert_needs_parentheses, assert_not_needs_parentheses};
-    use rome_js_syntax::{JsBinaryExpression, SourceType};
+    use rome_js_syntax::{JsBinaryExpression, JsFileSource};
 
     #[test]
     fn needs_parentheses() {
@@ -51,12 +51,12 @@ mod tests {
         assert_needs_parentheses!(
             "<test {...(4 + 4)} />",
             JsBinaryExpression,
-            SourceType::tsx()
+            JsFileSource::tsx()
         );
         assert_needs_parentheses!(
             "<test>{...(4 + 4)}</test>",
             JsBinaryExpression,
-            SourceType::tsx()
+            JsFileSource::tsx()
         );
 
         assert_needs_parentheses!("(4 + 4).member", JsBinaryExpression);

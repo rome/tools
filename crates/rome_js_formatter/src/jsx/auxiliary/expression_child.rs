@@ -2,9 +2,9 @@ use crate::jsx::attribute::expression_attribute_value::should_inline_jsx_express
 use crate::prelude::*;
 use crate::prelude::{format_args, write};
 
-use crate::utils::JsAnyBinaryLikeExpression;
+use crate::utils::AnyJsBinaryLikeExpression;
 use rome_formatter::{CstFormatContext, FormatResult};
-use rome_js_syntax::{JsAnyExpression, JsxExpressionChild, JsxExpressionChildFields};
+use rome_js_syntax::{AnyJsExpression, JsxExpressionChild, JsxExpressionChildFields};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsxExpressionChild;
@@ -21,8 +21,8 @@ impl FormatNodeRule<JsxExpressionChild> for FormatJsxExpressionChild {
             Some(expression) => {
                 let comments = f.context().comments();
                 let is_conditional_or_binary =
-                    matches!(expression, JsAnyExpression::JsConditionalExpression(_))
-                        || JsAnyBinaryLikeExpression::can_cast(expression.syntax().kind());
+                    matches!(expression, AnyJsExpression::JsConditionalExpression(_))
+                        || AnyJsBinaryLikeExpression::can_cast(expression.syntax().kind());
 
                 let should_inline = !comments.has_comments(expression.syntax())
                     && (is_conditional_or_binary

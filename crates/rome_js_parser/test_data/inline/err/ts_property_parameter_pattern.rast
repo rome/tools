@@ -3,6 +3,7 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -22,13 +23,15 @@ JsModule {
                         l_paren_token: L_PAREN@21..22 "(" [] [],
                         parameters: JsConstructorParameterList [
                             TsPropertyParameter {
+                                decorators: JsDecoratorList [],
                                 modifiers: TsPropertyParameterModifierList [
                                     TsAccessibilityModifier {
                                         modifier_token: PRIVATE_KW@22..30 "private" [] [Whitespace(" ")],
                                     },
                                 ],
-                                formal_parameter: JsUnknownParameter {
+                                formal_parameter: JsBogusParameter {
                                     items: [
+                                        JsDecoratorList [],
                                         JsObjectBindingPattern {
                                             l_curly_token: L_CURLY@30..32 "{" [] [Whitespace(" ")],
                                             properties: JsObjectBindingPatternPropertyList [
@@ -53,13 +56,15 @@ JsModule {
                             },
                             COMMA@38..40 "," [] [Whitespace(" ")],
                             TsPropertyParameter {
+                                decorators: JsDecoratorList [],
                                 modifiers: TsPropertyParameterModifierList [
                                     TsAccessibilityModifier {
                                         modifier_token: PROTECTED_KW@40..50 "protected" [] [Whitespace(" ")],
                                     },
                                 ],
-                                formal_parameter: JsUnknownParameter {
+                                formal_parameter: JsBogusParameter {
                                     items: [
+                                        JsDecoratorList [],
                                         JsArrayBindingPattern {
                                             l_brack_token: L_BRACK@50..51 "[" [] [],
                                             elements: JsArrayBindingPatternElementList [
@@ -98,15 +103,16 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..62
     0: JS_CLASS_DECLARATION@0..62
-      0: (empty)
-      1: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@6..8
+      0: JS_DECORATOR_LIST@0..0
+      1: (empty)
+      2: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@6..8
         0: IDENT@6..8 "A" [] [Whitespace(" ")]
-      3: (empty)
       4: (empty)
       5: (empty)
-      6: L_CURLY@8..10 "{" [] [Whitespace(" ")]
-      7: JS_CLASS_MEMBER_LIST@10..61
+      6: (empty)
+      7: L_CURLY@8..10 "{" [] [Whitespace(" ")]
+      8: JS_CLASS_MEMBER_LIST@10..61
         0: JS_CONSTRUCTOR_CLASS_MEMBER@10..61
           0: JS_CONSTRUCTOR_MODIFIER_LIST@10..10
           1: JS_LITERAL_MEMBER_NAME@10..21
@@ -115,11 +121,13 @@ JsModule {
             0: L_PAREN@21..22 "(" [] []
             1: JS_CONSTRUCTOR_PARAMETER_LIST@22..56
               0: TS_PROPERTY_PARAMETER@22..38
-                0: TS_PROPERTY_PARAMETER_MODIFIER_LIST@22..30
+                0: JS_DECORATOR_LIST@22..22
+                1: TS_PROPERTY_PARAMETER_MODIFIER_LIST@22..30
                   0: TS_ACCESSIBILITY_MODIFIER@22..30
                     0: PRIVATE_KW@22..30 "private" [] [Whitespace(" ")]
-                1: JS_UNKNOWN_PARAMETER@30..38
-                  0: JS_OBJECT_BINDING_PATTERN@30..38
+                2: JS_BOGUS_PARAMETER@30..38
+                  0: JS_DECORATOR_LIST@30..30
+                  1: JS_OBJECT_BINDING_PATTERN@30..38
                     0: L_CURLY@30..32 "{" [] [Whitespace(" ")]
                     1: JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST@32..37
                       0: JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY@32..33
@@ -134,11 +142,13 @@ JsModule {
                     2: R_CURLY@37..38 "}" [] []
               1: COMMA@38..40 "," [] [Whitespace(" ")]
               2: TS_PROPERTY_PARAMETER@40..56
-                0: TS_PROPERTY_PARAMETER_MODIFIER_LIST@40..50
+                0: JS_DECORATOR_LIST@40..40
+                1: TS_PROPERTY_PARAMETER_MODIFIER_LIST@40..50
                   0: TS_ACCESSIBILITY_MODIFIER@40..50
                     0: PROTECTED_KW@40..50 "protected" [] [Whitespace(" ")]
-                1: JS_UNKNOWN_PARAMETER@50..56
-                  0: JS_ARRAY_BINDING_PATTERN@50..56
+                2: JS_BOGUS_PARAMETER@50..56
+                  0: JS_DECORATOR_LIST@50..50
+                  1: JS_ARRAY_BINDING_PATTERN@50..56
                     0: L_BRACK@50..51 "[" [] []
                     1: JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST@51..55
                       0: JS_IDENTIFIER_BINDING@51..52
@@ -153,7 +163,7 @@ JsModule {
             1: JS_DIRECTIVE_LIST@59..59
             2: JS_STATEMENT_LIST@59..59
             3: R_CURLY@59..61 "}" [] [Whitespace(" ")]
-      8: R_CURLY@61..62 "}" [] []
+      9: R_CURLY@61..62 "}" [] []
   3: EOF@62..63 "" [Newline("\n")] []
 --
 ts_property_parameter_pattern.ts:1:31 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

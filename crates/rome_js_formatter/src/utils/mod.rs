@@ -2,10 +2,10 @@ pub(crate) mod array;
 mod assignment_like;
 mod binary_like_expression;
 mod conditional;
-pub mod number_utils;
 pub mod string_utils;
 
 pub(crate) mod format_class;
+pub(crate) mod format_modifiers;
 pub(crate) mod function_body;
 pub mod jsx;
 pub(crate) mod member_chain;
@@ -15,26 +15,28 @@ mod object_pattern_like;
 #[cfg(test)]
 mod quickcheck_utils;
 pub(crate) mod test_call;
+pub(crate) mod test_each_template;
 mod typescript;
 
 use crate::context::trailing_comma::FormatTrailingComma;
+use crate::context::Semicolons;
 use crate::parentheses::is_callee;
 pub(crate) use crate::parentheses::resolve_left_most_expression;
 use crate::prelude::*;
 pub(crate) use assignment_like::{
-    with_assignment_layout, AssignmentLikeLayout, JsAnyAssignmentLike,
+    with_assignment_layout, AnyJsAssignmentLike, AssignmentLikeLayout,
 };
 pub(crate) use binary_like_expression::{
-    needs_binary_like_parentheses, JsAnyBinaryLikeExpression, JsAnyBinaryLikeLeftExpression,
+    needs_binary_like_parentheses, AnyJsBinaryLikeExpression, AnyJsBinaryLikeLeftExpression,
 };
-pub(crate) use conditional::{ConditionalJsxChain, JsAnyConditional};
+pub(crate) use conditional::{AnyJsConditional, ConditionalJsxChain};
 pub(crate) use object_like::JsObjectLike;
 pub(crate) use object_pattern_like::JsObjectPatternLike;
 use rome_formatter::{format_args, write, Buffer};
+use rome_js_syntax::JsSyntaxToken;
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyStatement, JsCallExpression, JsInitializerClause, JsLanguage, Modifiers,
+    AnyJsExpression, AnyJsStatement, JsCallExpression, JsInitializerClause, JsLanguage, Modifiers,
 };
-use rome_js_syntax::{JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::{AstNode, AstNodeList};
 pub(crate) use string_utils::*;
 pub(crate) use typescript::{
@@ -69,7 +71,7 @@ pub(crate) fn is_long_curried_call(expression: Option<&JsCallExpression>) -> boo
 /// We can have two kind of separators: `,`, `;` or ASI.
 /// Because of how the grammar crafts the nodes, the parent will add the separator to the node.
 /// So here, we create - on purpose - an empty node.
-pub struct FormatTypeMemberSeparator<'a> {
+pub(crate) struct FormatTypeMemberSeparator<'a> {
     token: Option<&'a JsSyntaxToken>,
 }
 
@@ -90,7 +92,7 @@ impl Format<JsFormatContext> for FormatTypeMemberSeparator<'_> {
 }
 
 /// Utility function to format the node [rome_js_syntax::JsInitializerClause]
-pub struct FormatInitializerClause<'a> {
+pub(crate) struct FormatInitializerClause<'a> {
     initializer: Option<&'a JsInitializerClause>,
 }
 
@@ -110,7 +112,7 @@ impl Format<JsFormatContext> for FormatInitializerClause<'_> {
     }
 }
 
-pub struct FormatInterpreterToken<'a> {
+pub(crate) struct FormatInterpreterToken<'a> {
     token: Option<&'a JsSyntaxToken>,
 }
 
@@ -140,27 +142,15 @@ impl Format<JsFormatContext> for FormatInterpreterToken<'_> {
     }
 }
 
-/// Returns true if this node contains newlines in trivias.
-pub(crate) fn node_has_leading_newline(node: &JsSyntaxNode) -> bool {
-    if let Some(leading_trivia) = node.first_leading_trivia() {
-        for piece in leading_trivia.pieces() {
-            if piece.is_newline() {
-                return true;
-            }
-        }
-    }
-    false
-}
-
 /// Formats the body of a statement where it can either be a single statement, an empty statement,
 /// or a block statement.
 pub(crate) struct FormatStatementBody<'a> {
-    body: &'a JsAnyStatement,
+    body: &'a AnyJsStatement,
     force_space: bool,
 }
 
 impl<'a> FormatStatementBody<'a> {
-    pub fn new(body: &'a JsAnyStatement) -> Self {
+    pub fn new(body: &'a AnyJsStatement) -> Self {
         Self {
             body,
             force_space: false,
@@ -177,7 +167,7 @@ impl<'a> FormatStatementBody<'a> {
 
 impl Format<JsFormatContext> for FormatStatementBody<'_> {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
-        use JsAnyStatement::*;
+        use AnyJsStatement::*;
 
         if let JsEmptyStatement(empty) = &self.body {
             write!(f, [empty.format()])
@@ -209,45 +199,67 @@ where
     nodes_and_modifiers
 }
 
-/// Format a some code followed by an optional semicolon, and performs
-/// semicolon insertion if it was missing in the input source and the
-/// preceding element wasn't an unknown node
-pub struct FormatWithSemicolon<'a> {
-    content: &'a dyn Format<JsFormatContext>,
+pub(crate) type FormatStatementSemicolon<'a> = FormatOptionalSemicolon<'a>;
+
+/// Formats a semicolon in a position where it is optional (not needed to maintain syntactical correctness).
+///
+/// * Inserts a new semicolon if it is absent and [JsFormatOptions::semicolons] is [Semicolons::Always].
+/// * Removes the semicolon if it is present and [JsFormatOptions::semicolons] is [Semicolons::AsNeeded].
+pub(crate) struct FormatOptionalSemicolon<'a> {
     semicolon: Option<&'a JsSyntaxToken>,
 }
 
-impl<'a> FormatWithSemicolon<'a> {
-    pub fn new(
-        content: &'a dyn Format<JsFormatContext>,
-        semicolon: Option<&'a JsSyntaxToken>,
-    ) -> Self {
-        Self { content, semicolon }
+impl<'a> FormatOptionalSemicolon<'a> {
+    pub(crate) fn new(semicolon: Option<&'a JsSyntaxToken>) -> Self {
+        Self { semicolon }
     }
 }
 
-impl Format<JsFormatContext> for FormatWithSemicolon<'_> {
-    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
-        let mut recording = f.start_recording();
-        write!(recording, [self.content])?;
-
-        let written = recording.stop();
-
-        let is_unknown =
-            written
-                .start_tag(TagKind::Verbatim)
-                .map_or(false, |signal| match signal {
-                    Tag::StartVerbatim(kind) => kind.is_unknown(),
-                    _ => unreachable!(),
-                });
-
-        if let Some(semicolon) = self.semicolon {
-            write!(f, [semicolon.format()])?;
-        } else if !is_unknown {
-            text(";").fmt(f)?;
+impl Format<JsFormatContext> for FormatOptionalSemicolon<'_> {
+    fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
+        match f.options().semicolons() {
+            Semicolons::Always => FormatSemicolon::new(self.semicolon).fmt(f),
+            Semicolons::AsNeeded => match self.semicolon {
+                None => Ok(()),
+                Some(semicolon) => format_removed(semicolon).fmt(f),
+            },
         }
+    }
+}
 
-        Ok(())
+/// Format some code followed by an optional semicolon.
+/// Performs semicolon insertion if it is missing in the input source, the [semicolons option](crate::JsFormatOptions::semicolons) is [Semicolons::Always], and the
+/// preceding element isn't an bogus node
+pub(crate) struct FormatSemicolon<'a> {
+    semicolon: Option<&'a JsSyntaxToken>,
+}
+
+impl<'a> FormatSemicolon<'a> {
+    pub fn new(semicolon: Option<&'a JsSyntaxToken>) -> Self {
+        Self { semicolon }
+    }
+}
+
+impl Format<JsFormatContext> for FormatSemicolon<'_> {
+    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
+        match self.semicolon {
+            Some(semicolon) => semicolon.format().fmt(f),
+            None => {
+                let is_after_bogus = f.elements().start_tag(TagKind::Verbatim).map_or(
+                    false,
+                    |signal| match signal {
+                        Tag::StartVerbatim(kind) => kind.is_bogus(),
+                        _ => unreachable!(),
+                    },
+                );
+
+                if !is_after_bogus {
+                    write!(f, [text(";")])?;
+                }
+
+                Ok(())
+            }
+        }
     }
 }
 
@@ -256,12 +268,12 @@ impl Format<JsFormatContext> for FormatWithSemicolon<'_> {
 /// - [JsNewExpression]
 /// - [JsImportCallExpression]
 /// - [JsCallExpression]
-pub(crate) fn is_call_like_expression(expression: &JsAnyExpression) -> bool {
+pub(crate) fn is_call_like_expression(expression: &AnyJsExpression) -> bool {
     matches!(
         expression,
-        JsAnyExpression::JsNewExpression(_)
-            | JsAnyExpression::JsImportCallExpression(_)
-            | JsAnyExpression::JsCallExpression(_)
+        AnyJsExpression::JsNewExpression(_)
+            | AnyJsExpression::JsImportCallExpression(_)
+            | AnyJsExpression::JsCallExpression(_)
     )
 }
 

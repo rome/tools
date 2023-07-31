@@ -50,7 +50,7 @@ JsModule {
                                 eq_token: EQ@30..31 "=" [] [],
                                 value: JsxExpressionAttributeValue {
                                     l_curly_token: L_CURLY@31..32 "{" [] [],
-                                    expression: JsTemplate {
+                                    expression: JsTemplateExpression {
                                         tag: JsIdentifierExpression {
                                             name: JsReferenceIdentifier {
                                                 value_token: IDENT@32..38 "prefix" [] [],
@@ -120,7 +120,7 @@ JsModule {
                 0: EQ@30..31 "=" [] []
                 1: JSX_EXPRESSION_ATTRIBUTE_VALUE@31..46
                   0: L_CURLY@31..32 "{" [] []
-                  1: JS_TEMPLATE@32..44
+                  1: JS_TEMPLATE_EXPRESSION@32..44
                     0: JS_IDENTIFIER_EXPRESSION@32..38
                       0: JS_REFERENCE_IDENTIFIER@32..38
                         0: IDENT@32..38 "prefix" [] []

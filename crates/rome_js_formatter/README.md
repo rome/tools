@@ -1,66 +1,35 @@
+<p align="center">
+	<picture>
+		<source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/rome/brand/main/PNG/logo_white_yellow_transparent.png" width="700">
+		<img alt="Rome's logo depicting an ancient Roman arch with the word Rome to its side" src="https://raw.githubusercontent.com/rome/brand/main/PNG/logo_transparent.png" width="700">
+	</picture>
+</p>
+
+<div align="center">
+
+[![MIT licensed][mit-badge]][mit-url]
+[![Discord chat][discord-badge]][discord-url]
+[![CI on main][ci-badge]][ci-url]
+[![npm version][npm-badge]][npm-url]
+[![VSCode version][vscode-badge]][vscode-url]
+[![cargo version][cargo-badge]][cargo-url]
+
+
+[mit-badge]: https://img.shields.io/badge/license-MIT-blue.svg?color=brightgreen
+[mit-url]: LICENSE
+[discord-badge]: https://img.shields.io/discord/678763474494423051?logo=discord&label=discord&color=brightgreen
+[discord-url]: https://discord.gg/rome
+[ci-badge]: https://github.com/rome/tools/actions/workflows/main.yml/badge.svg
+[ci-url]: https://github.com/rome/tools/actions/workflows/main.yml
+[npm-badge]: https://img.shields.io/npm/v/rome/latest?color=brightgreen
+[npm-url]: https://www.npmjs.com/package/rome/v/latest
+[vscode-badge]: https://img.shields.io/visual-studio-marketplace/v/rome.rome?color=brightgreen&label=vscode
+[vscode-url]: https://marketplace.visualstudio.com/items?itemName=rome.rome
+[cargo-badge]: https://img.shields.io/crates/v/rome_js_formatter?&color=brightgreen
+[cargo-url]: https://crates.io/crates/rome_js_formatter
+
+</div>
+
 # `rome_js_formatter`
 
-The official formatter used by Rome.
-
-## Internal installation
-
-```toml
-rome_js_formatter = { version = "0.0.0", path = "../rome_js_formatter" }
-```
-
-## Usage
-
-The foundation of the formatter relies on two pillars:
-
-- the usage of the [*trait*](https://doc.rust-lang.org/reference/items/traits.html) generic `Format` trait and `FormatNode` for nodes.
-- the creation of an intermediate IR via a series of helpers
-
-Import the `FormatNode` trait and implement it for your Node.
-
-```rust
-use rome_js_formatter::prelude::*;
-use rome_formatter::{write, format_args};
-
-struct Buzz {
- blast: String
-}
-
-impl Format for Buzz {
- fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
- 	// implementation goes here
-	 write!(f, [token("Hello"), dynamic_token(&self.blast)])
- }
-}
-
-```
-
-## Rules when formatting AST nodes
-
-1. if a token is mandatory and the AST has that information, please use that token instead, for example:
-
-	```rust
-	fn fmt_fields(node: Node, f: &mut JsFormatter) -> FormatResult<()> {
-    write!(f, [node.l_paren_token().format()])?; // yes
-    write!(f, [token("(")])?; // no
-	}
-	```
-
-2. for tokens that are not mandatory, use our helpers
-3. do not attempt to "fix" the code. If you know a token/node is mandatory, return `None` instead
-
-## Debugging formatter output
-
-You can use the `dbg_write!` macro to output the written IR elements to the console (similar to how the `dbg!` macro works).
-
-```rust
-dbg_write!(f, [
-	token("hello"),
-	space_token(),
-	token("world")
-])?;
-
-// Writes
-// [src/main.rs:1][0] = StaticToken("hello")
-// [src/main.rs:1][1] = Space
-// [src/main.rs:1][0] = StaticToken("world")
-```
+Rome's JavaScript formatter implementation. Follow the [documentation](https://rustdocs.rome.tools/rome_js_formatter/index.html).

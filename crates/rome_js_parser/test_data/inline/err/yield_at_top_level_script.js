@@ -1,0 +1,2 @@
+// SCRIPT
+yield 10;

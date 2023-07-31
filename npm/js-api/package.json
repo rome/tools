@@ -1,12 +1,16 @@
 {
   "name": "@rometools/js-api",
-  "version": "0.0.0",
+  "version": "0.3.0",
   "description": "JavaScript APIs for the Rome package",
   "scripts": {
     "tsc": "tsc --noEmit",
     "format": "cargo rome-cli-dev format ./ --write",
     "ci": "cargo rome-cli-dev ci ./src && tsc --noEmit",
-    "check": "cargo rome-cli-dev check ./src && tsc --noEmit",
+    "check": "pnpm rome:check && tsc --noEmit",
+		"rome:check": "cargo rome-cli-dev check ./",
+		"check:apply": "cargo rome-cli-dev check ./ --apply-unsafe",
+    "build:wasm-bundler-dev": "wasm-pack build --out-dir ../../npm/wasm-bundler --target bundler --dev --scope rometools ../../crates/rome_wasm",
+    "build:wasm-bundler": "wasm-pack build --out-dir ../../npm/wasm-bundler --target bundler --release --scope rometools ../../crates/rome_wasm",
     "build:wasm-node-dev": "wasm-pack build --out-dir ../../npm/wasm-nodejs --target nodejs --dev --scope rometools ../../crates/rome_wasm",
     "build:wasm-node": "wasm-pack build --out-dir ../../npm/wasm-nodejs --target nodejs --release --scope rometools ../../crates/rome_wasm",
     "build:wasm-web-dev": "wasm-pack build --out-dir ../../npm/wasm-web --target web --dev --scope rometools ../../crates/rome_wasm",
@@ -29,29 +33,34 @@
   ],
   "license": "MIT",
   "homepage": "https://rome.tools",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rome/tools.git",
+    "directory": "npm/js-api"
+  },
   "author": "Rome Tools Developers and Contributors",
   "bugs": "https://github.com/rome/tools/issues",
   "devDependencies": {
     "typescript": "^4.8.2",
     "vitest": "^0.22.0",
     "vite": "^3.0.8",
+    "@rometools/wasm-bundler": "../wasm-bundler",
     "@rometools/wasm-nodejs": "../wasm-nodejs",
-    "@rometools/backend-jsonrpc": "../backend-jsonrpc",
-    "rome": "../rome"
+    "@rometools/wasm-web": "../wasm-web"
   },
   "peerDependencies": {
-    "rome": "^0.10.1-next",
-    "@rometools/wasm-nodejs": "^0.10.1-next",
-    "@rometools/backend-jsonrpc": "^0.10.1-next"
+    "@rometools/wasm-bundler": "^10.0.0",
+    "@rometools/wasm-nodejs": "^10.0.0",
+    "@rometools/wasm-web": "^10.0.0"
   },
   "peerDependenciesMeta": {
-    "rome": {
-      "optional": false
+    "@rometools/wasm-bundler": {
+      "optional": true
     },
     "@rometools/wasm-nodejs": {
       "optional": true
     },
-    "@rometools/backend-jsonrpc": {
+    "@rometools/wasm-web": {
       "optional": true
     }
   }

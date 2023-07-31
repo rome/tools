@@ -2,20 +2,30 @@
 mod generate_bindings;
 #[cfg(feature = "configuration")]
 mod generate_configuration;
+mod generate_new_lintrule;
 #[cfg(feature = "schema")]
 mod generate_schema;
+#[cfg(feature = "website")]
+mod generate_website;
+mod promote_rule;
 
 use pico_args::Arguments;
 use xtask::{project_root, pushd, Mode, Result};
 
+#[cfg(feature = "aria")]
+use crate::generate_aria::generate_aria;
 #[cfg(feature = "schema")]
 use crate::generate_bindings::generate_workspace_bindings;
 #[cfg(feature = "configuration")]
 use crate::generate_configuration::generate_rules_configuration;
 #[cfg(feature = "schema")]
 use crate::generate_schema::generate_configuration_schema;
+#[cfg(feature = "website")]
+use crate::generate_website::generate_files;
+use crate::promote_rule::promote_rule;
+use generate_new_lintrule::*;
 use xtask_codegen::{
-    generate_analyzer, generate_ast, generate_formatter, generate_parser_tests, generate_tables,
+    generate_analyzer, generate_ast, generate_formatters, generate_parser_tests, generate_tables,
 };
 
 fn main() -> Result<()> {
@@ -29,7 +39,7 @@ fn main() -> Result<()> {
             Ok(())
         }
         "formatter" => {
-            generate_formatter();
+            generate_formatters();
             Ok(())
         }
         "test" => {
@@ -42,6 +52,18 @@ fn main() -> Result<()> {
         }
         "analyzer" => {
             generate_analyzer()?;
+            Ok(())
+        }
+        "newlintrule" => {
+            let path: String = args.value_from_str("--path").unwrap();
+            let rule_name: String = args.value_from_str("--name").unwrap();
+            generate_new_lintrule(&path, &rule_name);
+            Ok(())
+        }
+        "promoterule" => {
+            let rule: String = args.value_from_str("--rule").unwrap();
+            let group: String = args.value_from_str("--group").unwrap();
+            promote_rule(&rule, &group);
             Ok(())
         }
         #[cfg(feature = "configuration")]
@@ -59,18 +81,27 @@ fn main() -> Result<()> {
             generate_workspace_bindings(Mode::Overwrite)?;
             Ok(())
         }
+        #[cfg(feature = "website")]
+        "website" => {
+            generate_files()?;
+            Ok(())
+        }
         "all" => {
             generate_tables()?;
             generate_grammar(args);
             generate_parser_tests(Mode::Overwrite)?;
-            generate_formatter();
+            generate_formatters();
             generate_analyzer()?;
+            #[cfg(feature = "website")]
+            generate_files()?;
             #[cfg(feature = "configuration")]
             generate_rules_configuration(Mode::Overwrite)?;
             #[cfg(feature = "schema")]
             generate_configuration_schema(Mode::Overwrite)?;
             #[cfg(feature = "schema")]
             generate_workspace_bindings(Mode::Overwrite)?;
+            #[cfg(feature = "aria")]
+            generate_aria(Mode::Overwrite)?;
             Ok(())
         }
         _ => {
@@ -81,14 +112,16 @@ Run codegen command.
 USAGE:
 	cargo codegen <SUBCOMMAND> [option]
 SUBCOMMANDS:
+	aria            Generate aria bindings for lint rules
 	analyzer        Generate factory functions for the analyzer and the configuration of the analyzers
-	configuration   Generate the part of the configuration that depends on some metadata
+	configuration    Generate the part of the configuration that depends on some metadata
 	schema          Generate the JSON schema for the Rome configuration file format
 	bindings        Generate TypeScript definitions for the JavaScript bindings to the Workspace API
 	grammar         Transforms ungram files into AST
 	formatter       Generates formatters for each language
 	test            Extracts parser inline comments into test files
 	unicode         Generates unicode table inside lexer
+    newlintrule     Generates a template for an empty lint rule
     all             Run all generators
 			"
             );

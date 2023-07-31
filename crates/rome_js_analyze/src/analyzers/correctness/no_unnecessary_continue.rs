@@ -101,10 +101,8 @@ impl Rule for NoUnnecessaryContinue {
 
     fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
         let node = ctx.query();
-
         let mut mutation = ctx.root().begin();
         utils::remove_statement(&mut mutation, node)?;
-
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,

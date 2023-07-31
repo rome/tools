@@ -13,7 +13,7 @@ JsModule {
                         variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
-                            expression: JsTemplate {
+                            expression: JsTemplateExpression {
                                 tag: missing (optional),
                                 type_arguments: missing (optional),
                                 l_tick_token: BACKTICK@8..9 "`" [] [],
@@ -50,7 +50,7 @@ JsModule {
                         variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@28..30 "=" [] [Whitespace(" ")],
-                            expression: JsTemplate {
+                            expression: JsTemplateExpression {
                                 tag: missing (optional),
                                 type_arguments: missing (optional),
                                 l_tick_token: BACKTICK@30..31 "`" [] [],
@@ -74,7 +74,7 @@ JsModule {
                         variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@40..42 "=" [] [Whitespace(" ")],
-                            expression: JsTemplate {
+                            expression: JsTemplateExpression {
                                 tag: missing (optional),
                                 type_arguments: missing (optional),
                                 l_tick_token: BACKTICK@42..43 "`" [] [],
@@ -108,7 +108,7 @@ JsModule {
                         variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@58..60 "=" [] [Whitespace(" ")],
-                            expression: JsTemplate {
+                            expression: JsTemplateExpression {
                                 tag: missing (optional),
                                 type_arguments: missing (optional),
                                 l_tick_token: BACKTICK@60..61 "`" [] [],
@@ -136,7 +136,7 @@ JsModule {
                         variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@73..75 "=" [] [Whitespace(" ")],
-                            expression: JsTemplate {
+                            expression: JsTemplateExpression {
                                 tag: missing (optional),
                                 type_arguments: missing (optional),
                                 l_tick_token: BACKTICK@75..76 "`" [] [],
@@ -187,7 +187,7 @@ JsModule {
             1: (empty)
             2: JS_INITIALIZER_CLAUSE@6..20
               0: EQ@6..8 "=" [] [Whitespace(" ")]
-              1: JS_TEMPLATE@8..20
+              1: JS_TEMPLATE_EXPRESSION@8..20
                 0: (empty)
                 1: (empty)
                 2: BACKTICK@8..9 "`" [] []
@@ -212,7 +212,7 @@ JsModule {
             1: (empty)
             2: JS_INITIALIZER_CLAUSE@28..32
               0: EQ@28..30 "=" [] [Whitespace(" ")]
-              1: JS_TEMPLATE@30..32
+              1: JS_TEMPLATE_EXPRESSION@30..32
                 0: (empty)
                 1: (empty)
                 2: BACKTICK@30..31 "`" [] []
@@ -229,7 +229,7 @@ JsModule {
             1: (empty)
             2: JS_INITIALIZER_CLAUSE@40..50
               0: EQ@40..42 "=" [] [Whitespace(" ")]
-              1: JS_TEMPLATE@42..50
+              1: JS_TEMPLATE_EXPRESSION@42..50
                 0: (empty)
                 1: (empty)
                 2: BACKTICK@42..43 "`" [] []
@@ -252,7 +252,7 @@ JsModule {
             1: (empty)
             2: JS_INITIALIZER_CLAUSE@58..65
               0: EQ@58..60 "=" [] [Whitespace(" ")]
-              1: JS_TEMPLATE@60..65
+              1: JS_TEMPLATE_EXPRESSION@60..65
                 0: (empty)
                 1: (empty)
                 2: BACKTICK@60..61 "`" [] []
@@ -271,7 +271,7 @@ JsModule {
             1: (empty)
             2: JS_INITIALIZER_CLAUSE@73..95
               0: EQ@73..75 "=" [] [Whitespace(" ")]
-              1: JS_TEMPLATE@75..95
+              1: JS_TEMPLATE_EXPRESSION@75..95
                 0: (empty)
                 1: (empty)
                 2: BACKTICK@75..76 "`" [] []

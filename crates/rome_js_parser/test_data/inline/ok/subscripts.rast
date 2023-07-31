@@ -3,7 +3,7 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsExpressionStatement {
-            expression: JsTemplate {
+            expression: JsTemplateExpression {
                 tag: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
                         value_token: IDENT@0..3 "foo" [] [],
@@ -92,7 +92,7 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..32
     0: JS_EXPRESSION_STATEMENT@0..8
-      0: JS_TEMPLATE@0..8
+      0: JS_TEMPLATE_EXPRESSION@0..8
         0: JS_IDENTIFIER_EXPRESSION@0..3
           0: JS_REFERENCE_IDENTIFIER@0..3
             0: IDENT@0..3 "foo" [] []

@@ -3,13 +3,14 @@
 
 use std::cmp::Ordering;
 use std::collections::{BTreeMap, BinaryHeap};
-use std::fmt::{Debug, Formatter};
+use std::fmt::{Debug, Display, Formatter};
 use std::ops;
 
 mod categories;
 pub mod context;
+mod diagnostics;
 mod matcher;
-mod options;
+pub mod options;
 mod query;
 mod registry;
 mod rule;
@@ -19,34 +20,36 @@ mod syntax;
 mod visitor;
 
 // Re-exported for use in the `declare_group` macro
-pub use rome_diagnostics::v2::category_concat;
+pub use rome_diagnostics::category_concat;
 
-pub use crate::categories::{ActionCategory, RuleCategories, RuleCategory};
+pub use crate::categories::{
+    ActionCategory, RefactorKind, RuleCategories, RuleCategory, SourceActionKind,
+};
+pub use crate::diagnostics::AnalyzerDiagnostic;
+use crate::diagnostics::SuppressionDiagnostic;
 pub use crate::matcher::{InspectMatcher, MatchQueryParams, QueryMatcher, RuleKey, SignalEntry};
 pub use crate::options::{AnalyzerConfiguration, AnalyzerOptions, AnalyzerRules};
-pub use crate::query::{Ast, QueryKey, QueryMatch, Queryable};
+pub use crate::query::{AddVisitor, QueryKey, QueryMatch, Queryable};
 pub use crate::registry::{
     LanguageRoot, MetadataRegistry, Phase, Phases, RegistryRuleMetadata, RegistryVisitor,
     RuleRegistry, RuleRegistryBuilder, RuleSuppressions,
 };
 pub use crate::rule::{
     CategoryLanguage, GroupCategory, GroupLanguage, Rule, RuleAction, RuleDiagnostic, RuleGroup,
-    RuleMeta, RuleMetadata,
+    RuleMeta, RuleMetadata, SuppressAction,
 };
 pub use crate::services::{FromServices, MissingServicesDiagnostic, ServiceBag};
-use crate::signals::DiagnosticSignal;
-pub use crate::signals::{AnalyzerAction, AnalyzerSignal};
-pub use crate::syntax::SyntaxVisitor;
-pub use crate::visitor::{NodeVisitor, Visitor, VisitorContext, VisitorFinishContext};
-use rome_console::{markup, MarkupBuf};
-use rome_diagnostics::file::FileId;
-use rome_diagnostics::v2::advice::CodeSuggestionAdvice;
-use rome_diagnostics::v2::{
-    category, Advices, Category, Diagnostic, DiagnosticTags, Error, Location, Severity, Visit,
+pub use crate::signals::{
+    AnalyzerAction, AnalyzerSignal, AnalyzerTransformation, DiagnosticSignal,
 };
+pub use crate::syntax::{Ast, SyntaxVisitor};
+pub use crate::visitor::{NodeVisitor, Visitor, VisitorContext, VisitorFinishContext};
+
+use rome_console::markup;
+use rome_diagnostics::{category, Applicability, Diagnostic, DiagnosticExt, DiagnosticTags};
 use rome_rowan::{
-    AstNode, Direction, Language, SyntaxElement, SyntaxToken, TextRange, TextSize, TriviaPieceKind,
-    WalkEvent,
+    AstNode, BatchMutation, Direction, Language, SyntaxElement, SyntaxToken, TextRange, TextSize,
+    TokenAtOffset, TriviaPieceKind, WalkEvent,
 };
 
 /// The analyzer is the main entry point into the `rome_analyze` infrastructure.
@@ -55,7 +58,7 @@ use rome_rowan::{
 /// auxiliary data structures as well as emit "query match" events to be
 /// processed by lint rules and in turn emit "analyzer signals" in the form of
 /// diagnostics, code actions or both
-pub struct Analyzer<'analyzer, L: Language, Matcher, Break> {
+pub struct Analyzer<'analyzer, L: Language, Matcher, Break, Diag> {
     /// List of visitors being run by this instance of the analyzer for each phase
     phases: BTreeMap<Phases, Vec<Box<dyn Visitor<Language = L> + 'analyzer>>>,
     /// Holds the metadata for all the rules statically known to the analyzer
@@ -63,30 +66,33 @@ pub struct Analyzer<'analyzer, L: Language, Matcher, Break> {
     /// Executor for the query matches emitted by the visitors
     query_matcher: Matcher,
     /// Language-specific suppression comment parsing function
-    parse_suppression_comment: SuppressionParser,
+    parse_suppression_comment: SuppressionParser<Diag>,
+    /// Language-specific suppression comment emitter
+    apply_suppression_comment: SuppressionCommentEmitter<L>,
     /// Handles analyzer signals emitted by individual rules
     emit_signal: SignalHandler<'analyzer, L, Break>,
 }
 
 pub struct AnalyzerContext<'a, L: Language> {
-    pub file_id: FileId,
     pub root: LanguageRoot<L>,
     pub services: ServiceBag,
     pub range: Option<TextRange>,
     pub options: &'a AnalyzerOptions,
 }
 
-impl<'analyzer, L, Matcher, Break> Analyzer<'analyzer, L, Matcher, Break>
+impl<'analyzer, L, Matcher, Break, Diag> Analyzer<'analyzer, L, Matcher, Break, Diag>
 where
     L: Language,
     Matcher: QueryMatcher<L>,
+    Diag: Diagnostic + Clone + Send + Sync + 'static,
 {
     /// Construct a new instance of the analyzer with the given rule registry
     /// and suppression comment parser
     pub fn new(
         metadata: &'analyzer MetadataRegistry,
         query_matcher: Matcher,
-        parse_suppression_comment: SuppressionParser,
+        parse_suppression_comment: SuppressionParser<Diag>,
+        apply_suppression_comment: SuppressionCommentEmitter<L>,
         emit_signal: SignalHandler<'analyzer, L, Break>,
     ) -> Self {
         Self {
@@ -94,18 +100,18 @@ where
             metadata,
             query_matcher,
             parse_suppression_comment,
+            apply_suppression_comment,
             emit_signal,
         }
     }
 
-    pub fn add_visitor<V>(&mut self, phase: Phases, visitor: V)
-    where
-        V: Visitor<Language = L> + 'analyzer,
-    {
-        self.phases
-            .entry(phase)
-            .or_default()
-            .push(Box::new(visitor));
+    /// Registers a [Visitor] to be executed as part of a given `phase` of the analyzer run
+    pub fn add_visitor(
+        &mut self,
+        phase: Phases,
+        visitor: Box<dyn Visitor<Language = L> + 'analyzer>,
+    ) {
+        self.phases.entry(phase).or_default().push(visitor);
     }
 
     pub fn run(self, mut ctx: AnalyzerContext<L>) -> Option<Break> {
@@ -115,6 +121,7 @@ where
             mut query_matcher,
             parse_suppression_comment,
             mut emit_signal,
+            apply_suppression_comment,
         } = self;
 
         let mut line_index = 0;
@@ -131,10 +138,10 @@ where
                 line_index: &mut line_index,
                 line_suppressions: &mut line_suppressions,
                 emit_signal: &mut emit_signal,
-                file_id: ctx.file_id,
                 root: &ctx.root,
                 services: &ctx.services,
                 range: ctx.range,
+                apply_suppression_comment,
                 options: ctx.options,
             };
 
@@ -162,12 +169,30 @@ where
             }
         }
 
+        for suppression in line_suppressions {
+            if suppression.did_suppress_signal {
+                continue;
+            }
+
+            let signal = DiagnosticSignal::new(|| {
+                SuppressionDiagnostic::new(
+                    category!("suppressions/unused"),
+                    suppression.comment_span,
+                    "Suppression comment is not being used",
+                )
+            });
+
+            if let ControlFlow::Break(br) = (emit_signal)(&signal) {
+                return Some(br);
+            }
+        }
+
         None
     }
 }
 
 /// Holds all the state required to run a single analysis phase to completion
-struct PhaseRunner<'analyzer, 'phase, L: Language, Matcher, Break> {
+struct PhaseRunner<'analyzer, 'phase, L: Language, Matcher, Break, Diag> {
     /// Identifier of the phase this runner is executing
     phase: Phases,
     /// List of visitors being run by this instance of the analyzer for each phase
@@ -179,22 +204,22 @@ struct PhaseRunner<'analyzer, 'phase, L: Language, Matcher, Break> {
     /// Queue for pending analyzer signals
     signal_queue: BinaryHeap<SignalEntry<'phase, L>>,
     /// Language-specific suppression comment parsing function
-    parse_suppression_comment: SuppressionParser,
+    parse_suppression_comment: SuppressionParser<Diag>,
+    /// Language-specific suppression comment emitter
+    apply_suppression_comment: SuppressionCommentEmitter<L>,
     /// Line index at the current position of the traversal
     line_index: &'phase mut usize,
     /// Track active suppression comments per-line, ordered by line index
     line_suppressions: &'phase mut Vec<LineSuppression>,
-    /// Handles analyzer signals emitted by invidual rules
+    /// Handles analyzer signals emitted by individual rules
     emit_signal: &'phase mut SignalHandler<'analyzer, L, Break>,
-    /// ID if the file being analyzed
-    file_id: FileId,
     /// Root node of the file being analyzed
     root: &'phase L::Root,
     /// Service bag handle for this phase
     services: &'phase ServiceBag,
     /// Optional text range to restrict the analysis to
     range: Option<TextRange>,
-
+    /// Analyzer options
     options: &'phase AnalyzerOptions,
 }
 
@@ -203,6 +228,8 @@ struct PhaseRunner<'analyzer, 'phase, L: Language, Matcher, Break> {
 struct LineSuppression {
     /// Line index this comment is suppressing lint rules for
     line_index: usize,
+    /// Range of source text covered by the suppression comment
+    comment_span: TextRange,
     /// Range of source text this comment is suppressing lint rules for
     text_range: TextRange,
     /// Set to true if this comment has set the `suppress_all` flag to true
@@ -211,12 +238,16 @@ struct LineSuppression {
     /// List of all the rules this comment has started suppressing (must be
     /// removed from the suppressed set on expiration)
     suppressed_rules: Vec<RuleFilter<'static>>,
+    /// Set to `true` when a signal matching this suppression was emitted and
+    /// suppressed
+    did_suppress_signal: bool,
 }
 
-impl<'a, 'phase, L, Matcher, Break> PhaseRunner<'a, 'phase, L, Matcher, Break>
+impl<'a, 'phase, L, Matcher, Break, Diag> PhaseRunner<'a, 'phase, L, Matcher, Break, Diag>
 where
     L: Language,
     Matcher: QueryMatcher<L>,
+    Diag: Diagnostic + Clone + Send + Sync + 'static,
 {
     /// Runs phase 0 over nodes and tokens to process line breaks and
     /// suppression comments
@@ -229,7 +260,7 @@ where
 
                 // If this is a token enter event, process its text content
                 WalkEvent::Enter(SyntaxElement::Token(token)) => {
-                    self.handle_token(self.file_id, token)?;
+                    self.handle_token(token)?;
 
                     continue;
                 }
@@ -242,12 +273,12 @@ where
             for visitor in self.visitors.iter_mut() {
                 let ctx = VisitorContext {
                     phase: self.phase,
-                    file_id: self.file_id,
                     root: self.root,
                     services: self.services,
                     range: self.range,
                     query_matcher: self.query_matcher,
                     signal_queue: &mut self.signal_queue,
+                    apply_suppression_comment: self.apply_suppression_comment,
                     options: self.options,
                 };
 
@@ -263,16 +294,16 @@ where
     /// processed and cached in `run_initial_phase`
     fn run_remaining_phases(mut self) -> ControlFlow<Break> {
         for event in self.root.syntax().preorder() {
-            // Run all the active visitors for the phace on the event
+            // Run all the active visitors for the phase on the event
             for visitor in self.visitors.iter_mut() {
                 let ctx = VisitorContext {
                     phase: self.phase,
-                    file_id: self.file_id,
                     root: self.root,
                     services: self.services,
                     range: self.range,
                     query_matcher: self.query_matcher,
                     signal_queue: &mut self.signal_queue,
+                    apply_suppression_comment: self.apply_suppression_comment,
                     options: self.options,
                 };
 
@@ -289,9 +320,9 @@ where
     /// Process the text for a single token, parsing suppression comments and
     /// handling line breaks, then flush all pending query signals in the queue
     /// whose position is less then the end of the token within the file
-    fn handle_token(&mut self, file_id: FileId, token: SyntaxToken<L>) -> ControlFlow<Break> {
+    fn handle_token(&mut self, token: SyntaxToken<L>) -> ControlFlow<Break> {
         // Process the content of the token for comments and newline
-        for piece in token.leading_trivia().pieces() {
+        for (index, piece) in token.leading_trivia().pieces().enumerate() {
             if matches!(
                 piece.kind(),
                 TriviaPieceKind::Newline
@@ -302,13 +333,13 @@ where
             }
 
             if let Some(comment) = piece.as_comments() {
-                self.handle_comment(file_id, comment.text(), piece.text_range())?;
+                self.handle_comment(&token, true, index, comment.text(), piece.text_range())?;
             }
         }
 
         self.bump_line_index(token.text_trimmed(), token.text_trimmed_range());
 
-        for piece in token.trailing_trivia().pieces() {
+        for (index, piece) in token.trailing_trivia().pieces().enumerate() {
             if matches!(
                 piece.kind(),
                 TriviaPieceKind::Newline
@@ -319,7 +350,7 @@ where
             }
 
             if let Some(comment) = piece.as_comments() {
-                self.handle_comment(file_id, comment.text(), piece.text_range())?;
+                self.handle_comment(&token, false, index, comment.text(), piece.text_range())?;
             }
         }
 
@@ -341,17 +372,17 @@ where
 
             // Search for an active suppression comment covering the range of
             // this signal: first try to load the last line suppression and see
-            // if it matchs the current line index, otherwise perform a binary
+            // if it matches the current line index, otherwise perform a binary
             // search over all the previously seen suppressions to find one
             // with a matching range
-            let suppression = self
-                .line_suppressions
-                .last()
-                .filter(|suppression| {
-                    suppression.line_index == *self.line_index
-                        && suppression.text_range.start() <= start
-                })
-                .or_else(|| {
+            let suppression = self.line_suppressions.last_mut().filter(|suppression| {
+                suppression.line_index == *self.line_index
+                    && suppression.text_range.start() <= start
+            });
+
+            let suppression = match suppression {
+                Some(suppression) => Some(suppression),
+                None => {
                     let index = self.line_suppressions.binary_search_by(|suppression| {
                         if suppression.text_range.end() < entry.text_range.start() {
                             Ordering::Less
@@ -362,21 +393,26 @@ where
                         }
                     });
 
-                    Some(&self.line_suppressions[index.ok()?])
-                });
+                    index.ok().map(|index| &mut self.line_suppressions[index])
+                }
+            };
 
-            let is_suppressed = suppression.map_or(false, |suppression| {
+            let suppression = suppression.filter(|suppression| {
                 if suppression.suppress_all {
                     return true;
                 }
+
                 suppression
                     .suppressed_rules
                     .iter()
                     .any(|filter| *filter == entry.rule)
             });
 
-            // Emit the signal if the rule that created it is not currently being suppressed
-            if !is_suppressed {
+            // If the signal is being suppressed mark the line suppression as
+            // hit, otherwise emit the signal
+            if let Some(suppression) = suppression {
+                suppression.did_suppress_signal = true;
+            } else if range_match(self.range, entry.text_range) {
                 (self.emit_signal)(&*entry.signal)?;
             }
 
@@ -392,14 +428,38 @@ where
     /// comments, and create line suppression entries accordingly
     fn handle_comment(
         &mut self,
-        file_id: FileId,
+        token: &SyntaxToken<L>,
+        is_leading: bool,
+        index: usize,
         text: &str,
         range: TextRange,
     ) -> ControlFlow<Break> {
         let mut suppress_all = false;
         let mut suppressions = Vec::new();
+        let mut has_legacy = false;
 
-        for rule in (self.parse_suppression_comment)(text) {
+        for result in (self.parse_suppression_comment)(text) {
+            let kind = match result {
+                Ok(kind) => kind,
+                Err(diag) => {
+                    // Emit the suppression parser diagnostic
+                    let signal = DiagnosticSignal::new(move || {
+                        let location = diag.location();
+                        let span = location.span.map_or(range, |span| span + range.start());
+                        diag.clone().with_file_span(span)
+                    });
+
+                    (self.emit_signal)(&signal)?;
+                    continue;
+                }
+            };
+
+            let rule = match kind {
+                SuppressionKind::Everything => None,
+                SuppressionKind::Rule(rule) => Some(rule),
+                SuppressionKind::MaybeLegacy(rule) => Some(rule),
+            };
+
             if let Some(rule) = rule {
                 let group_rule = rule.find('/').map(|index| {
                     let (start, end) = rule.split_at(index);
@@ -415,30 +475,21 @@ where
 
                 if let Some(key) = key {
                     suppressions.push(key);
-                } else {
+                    has_legacy |= matches!(kind, SuppressionKind::MaybeLegacy(_));
+                } else if range_match(self.range, range) {
                     // Emit a warning for the unknown rule
-                    let signal = DiagnosticSignal::new(move || {
-                        let diag = match group_rule {
-                            Some((group, rule)) => SuppressionDiagnostic::new(
-                                file_id,
-                                category!("suppressions/unknownRule"),
-                                range,
-                                markup! {
-                                    "Unknown lint rule "{group}"/"{rule}" in suppression comment"
-                                },
-                            ),
+                    let signal = DiagnosticSignal::new(move || match group_rule {
+                        Some((group, rule)) => SuppressionDiagnostic::new(
+                            category!("suppressions/unknownRule"),
+                            range,
+                            format_args!("Unknown lint rule {group}/{rule} in suppression comment"),
+                        ),
 
-                            None => SuppressionDiagnostic::new(
-                                file_id,
-                                category!("suppressions/unknownGroup"),
-                                range,
-                                markup! {
-                                    "Unknown lint rule group "{rule}" in suppression comment"
-                                },
-                            ),
-                        };
-
-                        AnalyzerDiagnostic::from_error(diag.into())
+                        None => SuppressionDiagnostic::new(
+                            category!("suppressions/unknownGroup"),
+                            range,
+                            format_args!("Unknown lint rule group {rule} in suppression comment"),
+                        ),
                     });
 
                     (self.emit_signal)(&signal)?;
@@ -450,6 +501,23 @@ where
                 // parse anything else
                 break;
             }
+        }
+
+        // Emit a warning for legacy suppression syntax
+        if has_legacy && range_match(self.range, range) {
+            let signal = DiagnosticSignal::new(move || {
+                SuppressionDiagnostic::new(
+                    category!("suppressions/deprecatedSyntax"),
+                    range,
+                    "Suppression is using a deprecated syntax",
+                )
+                .with_tags(DiagnosticTags::DEPRECATED_CODE)
+            });
+
+            let signal = signal
+                .with_action(|| update_suppression(self.root, token, is_leading, index, text));
+
+            (self.emit_signal)(&signal)?;
         }
 
         if !suppress_all && suppressions.is_empty() {
@@ -479,9 +547,11 @@ where
 
         let entry = LineSuppression {
             line_index,
+            comment_span: range,
             text_range: range,
             suppress_all,
             suppressed_rules: suppressions,
+            did_suppress_signal: false,
         };
 
         self.line_suppressions.push(entry);
@@ -519,6 +589,10 @@ where
     }
 }
 
+fn range_match(filter: Option<TextRange>, range: TextRange) -> bool {
+    filter.map_or(true, |filter| filter.intersect(range).is_some())
+}
+
 /// Signature for a suppression comment parser function
 ///
 /// This function receives the text content of a comment and returns a list of
@@ -528,15 +602,97 @@ where
 /// # Examples
 ///
 /// - `// rome-ignore format` -> `vec![]`
-/// - `// rome-ignore lint` -> `vec![None]`
-/// - `// rome-ignore lint(correctness/useWhile)` -> `vec![Some("correctness/useWhile")]`
-/// - `// rome-ignore lint(correctness/useWhile) lint(nursery/noUnreachable)` -> `vec![Some("correctness/useWhile"), Some("nursery/noUnreachable")]`
-type SuppressionParser = fn(&str) -> Vec<Option<&str>>;
+/// - `// rome-ignore lint` -> `vec![Everything]`
+/// - `// rome-ignore lint/style/useWhile` -> `vec![Rule("style/useWhile")]`
+/// - `// rome-ignore lint/style/useWhile lint/nursery/noUnreachable` -> `vec![Rule("style/useWhile"), Rule("nursery/noUnreachable")]`
+/// - `// rome-ignore lint(style/useWhile)` -> `vec![MaybeLegacy("style/useWhile")]`
+/// - `// rome-ignore lint(style/useWhile) lint(nursery/noUnreachable)` -> `vec![MaybeLegacy("style/useWhile"), MaybeLegacy("nursery/noUnreachable")]`
+type SuppressionParser<D> = fn(&str) -> Vec<Result<SuppressionKind, D>>;
+
+/// This enum is used to categorize what is disabled by a suppression comment and with what syntax
+pub enum SuppressionKind<'a> {
+    /// A suppression disabling all lints eg. `// rome-ignore lint`
+    Everything,
+    /// A suppression disabling a specific rule eg. `// rome-ignore lint/style/useWhile`
+    Rule(&'a str),
+    /// A suppression using the legacy syntax to disable a specific rule eg. `// rome-ignore lint(style/useWhile)`
+    MaybeLegacy(&'a str),
+}
+
+fn update_suppression<L: Language>(
+    root: &L::Root,
+    token: &SyntaxToken<L>,
+    is_leading: bool,
+    index: usize,
+    text: &str,
+) -> Option<AnalyzerAction<L>> {
+    let old_token = token.clone();
+    let new_token = token.clone().detach();
+
+    let old_trivia = if is_leading {
+        old_token.leading_trivia()
+    } else {
+        old_token.trailing_trivia()
+    };
+
+    let old_trivia: Vec<_> = old_trivia.pieces().collect();
+
+    let mut text = text.to_string();
+
+    while let Some(range_start) = text.find("lint(") {
+        let range_end = range_start + text[range_start..].find(')')?;
+        text.replace_range(range_end..range_end + 1, "");
+        text.replace_range(range_start + 4..range_start + 5, "/");
+    }
+
+    let new_trivia = old_trivia.iter().enumerate().map(|(piece_index, piece)| {
+        if piece_index == index {
+            (piece.kind(), text.as_str())
+        } else {
+            (piece.kind(), piece.text())
+        }
+    });
+
+    let new_token = if is_leading {
+        new_token.with_leading_trivia(new_trivia)
+    } else {
+        new_token.with_trailing_trivia(new_trivia)
+    };
+
+    let mut mutation = BatchMutation::new(root.syntax().clone());
+    mutation.replace_token_discard_trivia(old_token, new_token);
+
+    Some(AnalyzerAction {
+        rule_name: None,
+        category: ActionCategory::QuickFix,
+        applicability: Applicability::Always,
+        message: markup! {
+            "Rewrite suppression to use the newer syntax"
+        }
+        .to_owned(),
+        mutation,
+    })
+}
+
+/// Payload received by the function responsible to mark a suppression comment
+pub struct SuppressionCommentEmitterPayload<'a, L: Language> {
+    /// The possible offset found in the [TextRange] of the emitted diagnostic
+    pub token_offset: TokenAtOffset<SyntaxToken<L>>,
+    /// A [BatchMutation] where the consumer can apply the suppression comment
+    pub mutation: &'a mut BatchMutation<L>,
+    /// A string equals to "rome-ignore: lint(<RULE_GROUP>/<RULE_NAME>)"
+    pub suppression_text: &'a str,
+    /// The original range of the diagnostic where the rule was triggered
+    pub diagnostic_text_range: &'a TextRange,
+}
+
+/// Convenient type that to mark a function that is responsible to create a mutation to add a suppression comment.
+type SuppressionCommentEmitter<L> = fn(SuppressionCommentEmitterPayload<L>);
 
 type SignalHandler<'a, L, Break> = &'a mut dyn FnMut(&dyn AnalyzerSignal<L>) -> ControlFlow<Break>;
 
 /// Allow filtering a single rule or group of rules by their names
-#[derive(Debug, Clone, Copy, Eq, PartialEq, Hash)]
+#[derive(Clone, Copy, Eq, PartialEq, Hash)]
 pub enum RuleFilter<'a> {
     Group(&'a str),
     Rule(&'a str, &'a str),
@@ -560,6 +716,25 @@ impl RuleFilter<'_> {
             RuleFilter::Group(group) => group == <R::Group as RuleGroup>::NAME,
             RuleFilter::Rule(group, rule) => {
                 group == <R::Group as RuleGroup>::NAME && rule == R::METADATA.name
+            }
+        }
+    }
+}
+
+impl<'a> Debug for RuleFilter<'a> {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        Display::fmt(self, f)
+    }
+}
+
+impl<'a> Display for RuleFilter<'a> {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        match self {
+            RuleFilter::Group(group) => {
+                write!(f, "{group}")
+            }
+            RuleFilter::Rule(group, rule) => {
+                write!(f, "{group}/{rule}")
             }
         }
     }
@@ -617,206 +792,6 @@ impl<'analysis> AnalysisFilter<'analysis> {
         Self {
             enabled_rules,
             ..AnalysisFilter::default()
-        }
-    }
-}
-
-/// Small wrapper for diagnostics during the analysis phase.
-///
-/// During these phases, analyzers can create various type diagnostics and some of them
-/// don't have all the info to actually create a real [Diagnostic].
-///
-/// This wrapper serves as glue, which eventually is able to spit out full fledged diagnostics.
-///
-#[derive(Debug)]
-pub enum AnalyzerDiagnostic {
-    /// It holds various info related to diagnostics emitted by the rules
-    Rule {
-        /// Reference to the file
-        file_id: FileId,
-        /// The severity of the rule
-        severity: Option<Severity>,
-        /// The diagnostic emitted by a rule
-        rule_diagnostic: RuleDiagnostic,
-        /// Series of code suggestions offered by rule code actions
-        code_suggestion_list: Vec<CodeSuggestionAdvice<MarkupBuf>>,
-    },
-    /// We have raw information to create a basic [Diagnostic]
-    Raw(Error),
-}
-
-impl Diagnostic for AnalyzerDiagnostic {
-    fn category(&self) -> Option<&'static Category> {
-        match self {
-            AnalyzerDiagnostic::Rule {
-                rule_diagnostic, ..
-            } => Some(rule_diagnostic.category),
-            AnalyzerDiagnostic::Raw(error) => error.category(),
-        }
-    }
-    fn description(&self, fmt: &mut Formatter<'_>) -> std::fmt::Result {
-        match self {
-            AnalyzerDiagnostic::Rule {
-                rule_diagnostic, ..
-            } => Debug::fmt(&rule_diagnostic.message, fmt),
-            AnalyzerDiagnostic::Raw(error) => error.description(fmt),
-        }
-    }
-
-    fn message(&self, fmt: &mut rome_console::fmt::Formatter<'_>) -> std::io::Result<()> {
-        match self {
-            AnalyzerDiagnostic::Rule {
-                rule_diagnostic, ..
-            } => rome_console::fmt::Display::fmt(&rule_diagnostic.message, fmt),
-            AnalyzerDiagnostic::Raw(error) => error.message(fmt),
-        }
-    }
-
-    fn severity(&self) -> Severity {
-        match self {
-            AnalyzerDiagnostic::Rule { severity, .. } => severity.unwrap_or(Severity::Error),
-            AnalyzerDiagnostic::Raw(error) => error.severity(),
-        }
-    }
-
-    fn tags(&self) -> DiagnosticTags {
-        match self {
-            AnalyzerDiagnostic::Rule {
-                rule_diagnostic, ..
-            } => rule_diagnostic.tags,
-            AnalyzerDiagnostic::Raw(error) => error.tags(),
-        }
-    }
-
-    fn location(&self) -> Option<Location<'_>> {
-        match self {
-            AnalyzerDiagnostic::Rule {
-                rule_diagnostic,
-                file_id,
-                ..
-            } => {
-                let builder = Location::builder()
-                    .span(&rule_diagnostic.span)
-                    .resource(file_id);
-                builder.build()
-            }
-            AnalyzerDiagnostic::Raw(error) => error.location(),
-        }
-    }
-
-    fn advices(&self, visitor: &mut dyn Visit) -> std::io::Result<()> {
-        match self {
-            AnalyzerDiagnostic::Rule {
-                rule_diagnostic,
-                code_suggestion_list,
-                file_id,
-                ..
-            } => {
-                let rule_advices = rule_diagnostic.advices();
-                // we first print the details emitted by the rules
-                for detail in &rule_advices.details {
-                    visitor.record_log(
-                        detail.log_category,
-                        &markup! { {detail.message} }.to_owned(),
-                    )?;
-                    if let Some(location) = Location::builder()
-                        .span(&detail.range)
-                        .resource(file_id)
-                        .build()
-                    {
-                        visitor.record_frame(location)?;
-                    }
-                }
-                // we then print notes
-                for (log_category, note) in &rule_advices.notes {
-                    visitor.record_log(*log_category, &markup! { {note} }.to_owned())?;
-                }
-
-                // finally, we print possible code suggestions on how to fix the issue
-                for suggestion in code_suggestion_list {
-                    suggestion.record(visitor)?;
-                }
-                Ok(())
-            }
-            AnalyzerDiagnostic::Raw(error) => error.advices(visitor),
-        }
-    }
-}
-
-impl AnalyzerDiagnostic {
-    /// Creates a diagnostic from a [RuleDiagnostic]
-    pub fn from_rule_diagnostic(file_id: FileId, rule_diagnostic: RuleDiagnostic) -> Self {
-        Self::Rule {
-            file_id,
-            rule_diagnostic,
-            severity: None,
-            code_suggestion_list: vec![],
-        }
-    }
-
-    /// Creates a diagnostic from a generic [Error]
-    pub fn from_error(error: Error) -> Self {
-        Self::Raw(error)
-    }
-
-    /// Sets the severity of the current diagnostic
-    pub fn set_severity(&mut self, new_severity: Severity) {
-        if let AnalyzerDiagnostic::Rule { severity, .. } = self {
-            *severity = Some(new_severity);
-        }
-    }
-
-    pub fn get_span(&self) -> Option<TextRange> {
-        match self {
-            AnalyzerDiagnostic::Rule {
-                rule_diagnostic, ..
-            } => rule_diagnostic.span,
-            AnalyzerDiagnostic::Raw(error) => error.location().and_then(|location| location.span),
-        }
-    }
-
-    /// It adds a code suggestion, use this API to tell the user that a rule can benefit from
-    /// a automatic code fix.
-    pub fn add_code_suggestion(&mut self, suggestion: CodeSuggestionAdvice<MarkupBuf>) {
-        if let AnalyzerDiagnostic::Rule {
-            code_suggestion_list: suggestions,
-            rule_diagnostic,
-            ..
-        } = self
-        {
-            rule_diagnostic.tags = DiagnosticTags::FIXABLE;
-            suggestions.push(suggestion)
-        }
-    }
-}
-
-#[derive(Debug, Diagnostic)]
-pub(crate) struct SuppressionDiagnostic {
-    #[category]
-    category: &'static Category,
-    #[severity]
-    severity: Severity,
-    #[location(span)]
-    range: TextRange,
-    #[location(resource)]
-    file_id: FileId,
-    #[message]
-    message: MarkupBuf,
-}
-
-impl SuppressionDiagnostic {
-    pub(crate) fn new(
-        file_id: FileId,
-        category: &'static Category,
-        range: TextRange,
-        message: impl rome_console::fmt::Display,
-    ) -> Self {
-        Self {
-            file_id,
-            category,
-            severity: Severity::Warning,
-            range,
-            message: markup!({ message }).to_owned(),
         }
     }
 }

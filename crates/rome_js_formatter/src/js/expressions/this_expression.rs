@@ -6,7 +6,7 @@ use rome_js_syntax::JsThisExpressionFields;
 use rome_js_syntax::{JsSyntaxNode, JsThisExpression};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsThisExpression;
+pub(crate) struct FormatJsThisExpression;
 
 impl FormatNodeRule<JsThisExpression> for FormatJsThisExpression {
     fn fmt_fields(&self, node: &JsThisExpression, f: &mut JsFormatter) -> FormatResult<()> {

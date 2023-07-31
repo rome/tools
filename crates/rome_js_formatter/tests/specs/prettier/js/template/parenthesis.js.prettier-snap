@@ -16,7 +16,7 @@ async function f() {
 b()``;
 
 // "ClassExpression"
-(class {}``);
+(class {})``;
 
 // "ConditionalExpression"
 (b ? c : d)``;
@@ -34,7 +34,7 @@ b.c``;
 new B()``;
 
 // "ObjectExpression"
-({}``);
+({})``;
 
 // "SequenceExpression"
 (b, c)``;

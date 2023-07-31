@@ -15,6 +15,7 @@ JsModule {
                     l_paren_token: L_PAREN@9..10 "(" [] [],
                     items: JsParameterList [
                         JsFormalParameter {
+                            decorators: JsDecoratorList [],
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@10..11 "a" [] [],
                             },
@@ -51,6 +52,7 @@ JsModule {
                     l_paren_token: L_PAREN@38..39 "(" [] [],
                     items: JsParameterList [
                         JsFormalParameter {
+                            decorators: JsDecoratorList [],
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@39..40 "a" [] [],
                             },
@@ -90,6 +92,7 @@ JsModule {
                     l_paren_token: L_PAREN@75..76 "(" [] [],
                     items: JsParameterList [
                         JsFormalParameter {
+                            decorators: JsDecoratorList [],
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@76..77 "a" [] [],
                             },
@@ -167,11 +170,12 @@ JsModule {
           0: L_PAREN@9..10 "(" [] []
           1: JS_PARAMETER_LIST@10..11
             0: JS_FORMAL_PARAMETER@10..11
-              0: JS_IDENTIFIER_BINDING@10..11
+              0: JS_DECORATOR_LIST@10..10
+              1: JS_IDENTIFIER_BINDING@10..11
                 0: IDENT@10..11 "a" [] []
-              1: (empty)
               2: (empty)
               3: (empty)
+              4: (empty)
           2: R_PAREN@11..13 ")" [] [Whitespace(" ")]
         2: FAT_ARROW@13..16 "=>" [] [Whitespace(" ")]
         3: TS_PREDICATE_RETURN_TYPE@16..27
@@ -193,11 +197,12 @@ JsModule {
           0: L_PAREN@38..39 "(" [] []
           1: JS_PARAMETER_LIST@39..40
             0: JS_FORMAL_PARAMETER@39..40
-              0: JS_IDENTIFIER_BINDING@39..40
+              0: JS_DECORATOR_LIST@39..39
+              1: JS_IDENTIFIER_BINDING@39..40
                 0: IDENT@39..40 "a" [] []
-              1: (empty)
               2: (empty)
               3: (empty)
+              4: (empty)
           2: R_PAREN@40..42 ")" [] [Whitespace(" ")]
         2: FAT_ARROW@42..45 "=>" [] [Whitespace(" ")]
         3: TS_ASSERTS_RETURN_TYPE@45..64
@@ -221,11 +226,12 @@ JsModule {
           0: L_PAREN@75..76 "(" [] []
           1: JS_PARAMETER_LIST@76..77
             0: JS_FORMAL_PARAMETER@76..77
-              0: JS_IDENTIFIER_BINDING@76..77
+              0: JS_DECORATOR_LIST@76..76
+              1: JS_IDENTIFIER_BINDING@76..77
                 0: IDENT@76..77 "a" [] []
-              1: (empty)
               2: (empty)
               3: (empty)
+              4: (empty)
           2: R_PAREN@77..79 ")" [] [Whitespace(" ")]
         2: FAT_ARROW@79..82 "=>" [] [Whitespace(" ")]
         3: TS_ASSERTS_RETURN_TYPE@82..91

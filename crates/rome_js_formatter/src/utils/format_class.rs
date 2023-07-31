@@ -1,9 +1,9 @@
 use crate::prelude::*;
 use rome_formatter::{format_args, write};
-use rome_js_syntax::JsAnyClass;
+use rome_js_syntax::AnyJsClass;
 
 pub struct FormatClass<'a> {
-    class: &'a JsAnyClass,
+    class: &'a AnyJsClass,
 }
 
 impl FormatClass<'_> {
@@ -34,14 +34,15 @@ impl FormatClass<'_> {
     }
 }
 
-impl<'a> From<&'a JsAnyClass> for FormatClass<'a> {
-    fn from(class: &'a JsAnyClass) -> Self {
+impl<'a> From<&'a AnyJsClass> for FormatClass<'a> {
+    fn from(class: &'a AnyJsClass) -> Self {
         Self { class }
     }
 }
 
 impl Format<JsFormatContext> for FormatClass<'_> {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
+        let decorators = self.class.decorators();
         let abstract_token = self.class.abstract_token();
         let id = self.class.id()?;
         let extends = self.class.extends_clause();
@@ -51,6 +52,8 @@ impl Format<JsFormatContext> for FormatClass<'_> {
         let members = self.class.members();
 
         let group_mode = self.should_group(f.comments())?;
+
+        write!(f, [decorators.format()])?;
 
         if let Some(abstract_token) = abstract_token {
             write!(f, [abstract_token.format(), space()])?;

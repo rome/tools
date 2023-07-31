@@ -8,6 +8,7 @@ function snake_function(snake_case, PascalCase) {}
 class PascalCase {
 	snake_property = 1;
 	#private_snake_property = 2;
+	#validPrivateMember = 3;
 
 	snake_function() {}
 

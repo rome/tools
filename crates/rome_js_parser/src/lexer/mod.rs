@@ -16,12 +16,10 @@
 #![allow(clippy::or_fun_call)]
 
 #[rustfmt::skip]
-mod tables;
 mod errors;
 mod tests;
 
 pub mod buffered_lexer;
-mod bytes;
 #[cfg(feature = "highlight")]
 mod highlight;
 
@@ -29,18 +27,14 @@ use bitflags::bitflags;
 #[cfg(feature = "highlight")]
 pub use highlight::*;
 
-use tables::derived_property::*;
-
 pub(crate) use buffered_lexer::BufferedLexer;
+use rome_js_syntax::JsSyntaxKind::*;
 pub use rome_js_syntax::*;
-
-use self::bytes::{
-    lookup_byte,
+use rome_js_unicode_table::{
+    is_id_continue, is_id_start, lookup_byte,
     Dispatch::{self, *},
 };
-use crate::ParseDiagnostic;
-use rome_diagnostics::file::FileId;
-use rome_js_syntax::JsSyntaxKind::*;
+use rome_parser::diagnostic::ParseDiagnostic;
 
 use self::errors::invalid_digits_after_unicode_escape_sequence;
 
@@ -60,14 +54,6 @@ const UNICODE_SPACES: [char; 19] = [
     '\u{2005}', '\u{2006}', '\u{2007}', '\u{2008}', '\u{2009}', '\u{200A}', '\u{200B}', '\u{202F}',
     '\u{205F}', '\u{3000}', '\u{FEFF}',
 ];
-
-fn is_id_start(c: char) -> bool {
-    c == '_' || c == '$' || ID_Start(c)
-}
-
-fn is_id_continue(c: char) -> bool {
-    c == '$' || c == '\u{200d}' || c == '\u{200c}' || ID_Continue(c)
-}
 
 /// Context in which the lexer should lex the next token
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Default)]
@@ -125,6 +111,7 @@ pub enum ReLexContext {
 
 bitflags! {
     /// Flags for a lexed token.
+    #[derive(Debug, Copy, Clone, Eq, PartialEq)]
     pub(crate) struct TokenFlags: u8 {
         /// Indicates that there has been a line break between the last non-trivia token
         const PRECEDING_LINE_BREAK = 1 << 0;
@@ -166,15 +153,12 @@ pub(crate) struct Lexer<'src> {
     /// Flags for the current token
     current_flags: TokenFlags,
 
-    /// The id of the file, used for diagnostics
-    file_id: FileId,
-
     diagnostics: Vec<ParseDiagnostic>,
 }
 
 impl<'src> Lexer<'src> {
     /// Make a new lexer from a str, this is safe because strs are valid utf8
-    pub fn from_str(string: &'src str, file_id: FileId) -> Self {
+    pub fn from_str(string: &'src str) -> Self {
         Self {
             source: string,
             after_newline: false,
@@ -183,7 +167,6 @@ impl<'src> Lexer<'src> {
             current_flags: TokenFlags::empty(),
             position: 0,
             diagnostics: vec![],
-            file_id,
         }
     }
 
@@ -402,7 +385,6 @@ impl<'src> Lexer<'src> {
                         b'<' | b'{' => break,
                         b'>' => {
                             self.diagnostics.push(ParseDiagnostic::new(
-                                self.file_id,
                                 "Unexpected token. Did you mean `{'>'}` or `&gt;`?",
                                 self.position..self.position + 1,
                             ));
@@ -410,7 +392,6 @@ impl<'src> Lexer<'src> {
                         }
                         b'}' => {
                             self.diagnostics.push(ParseDiagnostic::new(
-                                self.file_id,
                                 "Unexpected token. Did you mean `{'}'}` or `&rbrace;`?",
                                 self.position..self.position + 1,
                             ));
@@ -662,7 +643,7 @@ impl<'src> Lexer<'src> {
             // We should not yield diagnostics on a unicode char boundary. That wont make codespan panic
             // but it may cause a panic for other crates which just consume the diagnostics
             let invalid = self.current_char_unchecked();
-            let err = ParseDiagnostic::new(self.file_id,  "expected hex digits for a unicode code point escape, but encountered an invalid character",
+            let err = ParseDiagnostic::new(  "expected hex digits for a unicode code point escape, but encountered an invalid character",
                 self.position..self.position + invalid.len_utf8() );
             self.diagnostics.push(err);
             self.position -= 1;
@@ -693,7 +674,6 @@ impl<'src> Lexer<'src> {
                     Ok(chr)
                 } else {
                     let err = ParseDiagnostic::new(
-                        self.file_id,
                         "invalid codepoint for unicode escape",
                         start..self.position,
                     );
@@ -704,7 +684,6 @@ impl<'src> Lexer<'src> {
 
             _ => {
                 let err = ParseDiagnostic::new(
-                    self.file_id,
                     "out of bounds codepoint for unicode codepoint escape sequence",
                     start..self.position,
                 )
@@ -727,7 +706,6 @@ impl<'src> Lexer<'src> {
                         self.position -= idx + 1;
                     }
                     let err = invalid_digits_after_unicode_escape_sequence(
-                        self.file_id,
                         self.position - 1,
                         self.position + 1,
                     );
@@ -736,7 +714,6 @@ impl<'src> Lexer<'src> {
                 }
                 Some(b) if !b.is_ascii_hexdigit() => {
                     let err = invalid_digits_after_unicode_escape_sequence(
-                        self.file_id,
                         self.position - 1,
                         self.position + 1,
                     );
@@ -776,7 +753,6 @@ impl<'src> Lexer<'src> {
         self.assert_byte(b'x');
 
         let diagnostic = ParseDiagnostic::new(
-            self.file_id,
             "invalid digits after hex escape sequence",
             (self.position - 1)..(self.position + 1),
         )
@@ -788,7 +764,7 @@ impl<'src> Lexer<'src> {
                     self.diagnostics.push(diagnostic);
                     return false;
                 }
-                Some(b) if !(b as u8).is_ascii_hexdigit() => {
+                Some(b) if !b.is_ascii_hexdigit() => {
                     self.diagnostics.push(diagnostic);
                     return false;
                 }
@@ -834,7 +810,7 @@ impl<'src> Lexer<'src> {
             }
         } else {
             self.diagnostics.push(
-                ParseDiagnostic::new(self.file_id, "", cur..cur + 1)
+                ParseDiagnostic::new("", cur..cur + 1)
                     .hint("expected an escape sequence following a backslash, but found none"),
             );
             false
@@ -894,13 +870,10 @@ impl<'src> Lexer<'src> {
                     valid &= self.consume_escape_sequence();
                 }
                 b'\r' | b'\n' if !jsx_attribute => {
-                    let unterminated = ParseDiagnostic::new(
-                        self.file_id,
-                        "unterminated string literal",
-                        start..self.position,
-                    )
-                    .detail(start..self.position, "")
-                    .detail(self.position..self.position + 2, "line breaks here");
+                    let unterminated =
+                        ParseDiagnostic::new("unterminated string literal", start..self.position)
+                            .detail(start..self.position, "")
+                            .detail(self.position..self.position + 2, "line breaks here");
                     self.diagnostics.push(unterminated);
                     return false;
                 }
@@ -918,13 +891,10 @@ impl<'src> Lexer<'src> {
             }
         }
 
-        let unterminated = ParseDiagnostic::new(
-            self.file_id,
-            "unterminated string literal",
-            self.position..self.position,
-        )
-        .detail(self.position..self.position, "input ends here")
-        .detail(start..start + 1, "string literal starts here");
+        let unterminated =
+            ParseDiagnostic::new("unterminated string literal", self.position..self.position)
+                .detail(self.position..self.position, "input ends here")
+                .detail(start..start + 1, "string literal starts here");
         self.diagnostics.push(unterminated);
 
         false
@@ -1088,6 +1058,7 @@ impl<'src> Lexer<'src> {
             b"yield" => YIELD_KW,
             // contextual keywords
             b"abstract" => ABSTRACT_KW,
+            b"accessor" => ACCESSOR_KW,
             b"as" => AS_KW,
             b"asserts" => ASSERTS_KW,
             b"assert" => ASSERT_KW,
@@ -1108,6 +1079,7 @@ impl<'src> Lexer<'src> {
             b"require" => REQUIRE_KW,
             b"number" => NUMBER_KW,
             b"object" => OBJECT_KW,
+            b"satisfies" => SATISFIES_KW,
             b"set" => SET_KW,
             b"string" => STRING_KW,
             b"symbol" => SYMBOL_KW,
@@ -1120,6 +1092,7 @@ impl<'src> Lexer<'src> {
             b"bigint" => BIGINT_KW,
             b"override" => OVERRIDE_KW,
             b"of" => OF_KW,
+            b"out" => OUT_KW,
             _ => T![ident],
         }
     }
@@ -1215,7 +1188,6 @@ impl<'src> Lexer<'src> {
         self.assert_byte(b'_');
 
         let err_diag = ParseDiagnostic::new(
-            self.file_id,
             "numeric separators are only allowed between two digits",
             self.position..self.position + 1,
         );
@@ -1258,7 +1230,6 @@ impl<'src> Lexer<'src> {
                 Some(b'_') => {
                     if leading_zero {
                         self.diagnostics.push(ParseDiagnostic::new(
-                            self.file_id,
                             "numeric separator can not be used after leading 0",
                             self.position..self.position,
                         ));
@@ -1269,7 +1240,6 @@ impl<'src> Lexer<'src> {
                 Some(b'.') => {
                     if leading_zero {
                         self.diagnostics.push(ParseDiagnostic::new(
-                            self.file_id,
                             "unexpected number",
                             start..self.position + 1,
                         ));
@@ -1301,7 +1271,6 @@ impl<'src> Lexer<'src> {
                 Some(b'n') => {
                     if leading_zero {
                         self.diagnostics.push(ParseDiagnostic::new(
-                            self.file_id,
                             "Octal literals are not allowed for BigInts.",
                             start..self.position + 1,
                         ));
@@ -1401,7 +1370,6 @@ impl<'src> Lexer<'src> {
         if !self.is_eof() && self.cur_is_ident_start() {
             self.consume_ident();
             let err = ParseDiagnostic::new(
-                self.file_id,
                 "numbers cannot be followed by identifiers directly after",
                 err_start..self.position,
             )
@@ -1434,7 +1402,6 @@ impl<'src> Lexer<'src> {
             JS_SHEBANG
         } else {
             let err = ParseDiagnostic::new(
-                self.file_id,
                 "expected `!` following a `#`, but found none",
                 0usize..1usize,
             );
@@ -1477,7 +1444,6 @@ impl<'src> Lexer<'src> {
                 }
 
                 let err = ParseDiagnostic::new(
-                    self.file_id,
                     "unterminated block comment",
                     self.position..self.position + 1,
                 )
@@ -1519,7 +1485,6 @@ impl<'src> Lexer<'src> {
     #[inline]
     fn flag_err(&self, flag: char) -> ParseDiagnostic {
         ParseDiagnostic::new(
-            self.file_id,
             format!("duplicate flag `{}`", flag),
             self.position..self.position + 1,
         )
@@ -1610,7 +1575,6 @@ impl<'src> Lexer<'src> {
                                 _ if self.cur_ident_part().is_some() => {
                                     self.diagnostics.push(
                                         ParseDiagnostic::new(
-                                            self.file_id,
                                             "invalid regex flag",
                                             chr_start..self.position + 1,
                                         )
@@ -1632,7 +1596,6 @@ impl<'src> Lexer<'src> {
                     if self.next_byte_bounded().is_none() {
                         self.diagnostics.push(
                             ParseDiagnostic::new(
-                                self.file_id,
                                 "expected a character after a regex escape, but found none",
                                 self.position..self.position + 1,
                             )
@@ -1645,7 +1608,6 @@ impl<'src> Lexer<'src> {
                 b'\r' | b'\n' => {
                     self.diagnostics.push(
                         ParseDiagnostic::new(
-                            self.file_id,
                             "unterminated regex literal",
                             self.position..self.position,
                         )
@@ -1663,7 +1625,6 @@ impl<'src> Lexer<'src> {
                         if is_linebreak(chr) {
                             self.diagnostics.push(
                                 ParseDiagnostic::new(
-                                    self.file_id,
                                     "unterminated regex literal",
                                     self.position..self.position,
                                 )
@@ -1680,13 +1641,9 @@ impl<'src> Lexer<'src> {
         }
 
         self.diagnostics.push(
-            ParseDiagnostic::new(
-                self.file_id,
-                "unterminated regex literal",
-                self.position..self.position,
-            )
-            .detail(self.position..self.position, "...but the file ends here")
-            .detail(start..start + 1, "a regex literal starts there..."),
+            ParseDiagnostic::new("unterminated regex literal", self.position..self.position)
+                .detail(self.position..self.position, "...but the file ends here")
+                .detail(start..start + 1, "a regex literal starts there..."),
         );
 
         JsSyntaxKind::JS_REGEX_LITERAL
@@ -1926,7 +1883,7 @@ impl<'src> Lexer<'src> {
                                 self.current_flags |= TokenFlags::UNICODE_ESCAPE;
                                 self.resolve_identifier(chr)
                             } else {
-                                let err = ParseDiagnostic::new(self.file_id,  "unexpected unicode escape",
+                                let err = ParseDiagnostic::new(  "unexpected unicode escape",
                                     start..self.position).hint("this escape is unexpected, as it does not designate the start of an identifier");
                                 self.diagnostics.push(err);
                                 self.next_byte();
@@ -1937,7 +1894,6 @@ impl<'src> Lexer<'src> {
                     }
                 } else {
                     let err = ParseDiagnostic::new(
-                        self.file_id,
                         format!("unexpected token `{}`", byte as char),
                         start..self.position + 1,
                     );
@@ -1984,8 +1940,7 @@ impl<'src> Lexer<'src> {
                         self.resolve_identifier(chr)
                     } else {
                         let err = ParseDiagnostic::new(
-                            self.file_id,
-                            format!("Unexpected token `{}`", chr as char),
+                            format!("Unexpected token `{}`", chr),
                             start..self.position + 1,
                         );
                         self.diagnostics.push(err);
@@ -1998,7 +1953,6 @@ impl<'src> Lexer<'src> {
             AT_ => self.eat_byte(T![@]),
             _ => {
                 let err = ParseDiagnostic::new(
-                    self.file_id,
                     format!("unexpected token `{}`", byte as char),
                     start..self.position + 1,
                 );
@@ -2059,11 +2013,8 @@ impl<'src> Lexer<'src> {
 
         match token {
             None => {
-                let err = ParseDiagnostic::new(
-                    self.file_id,
-                    "unterminated template literal",
-                    start..self.position + 1,
-                );
+                let err =
+                    ParseDiagnostic::new("unterminated template literal", start..self.position + 1);
                 self.diagnostics.push(err);
                 JsSyntaxKind::TEMPLATE_CHUNK
             }

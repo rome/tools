@@ -1,7 +1,7 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
-info:
-  test_file: jsx/text-wrap/test.js
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+assertion_line: 212
+info: jsx/text-wrap/test.js
 ---
 
 # Input
@@ -465,6 +465,7 @@ let myDiv = ReactTestUtils.renderIntoDocument(
     <div key="theBird" className="bird" />
   </div>
 );
+
 ```
 
 
@@ -494,65 +495,6 @@ let myDiv = ReactTestUtils.renderIntoDocument(
      <div>First</div>
      Second
    </div>
-@@ -436,13 +441,16 @@
- 
- x = (
-   <div>
--    <div>First</div>-<div>Second</div>
-+    <div>First</div>-
-+    <div>Second</div>
-   </div>
- );
- 
- x = (
-   <div>
--    <div>First</div>-<div>Second</div>
-+    <div>First</div>
-+    -
-+    <div>Second</div>
-   </div>
- );
- 
-@@ -496,19 +504,26 @@
- 
- x = (
-   <div>
--    {hour}:{minute}:{second}
-+    {hour}
-+    :
-+    {minute}
-+    :
-+    {second}
-   </div>
- );
- 
- x = (
-   <div>
--    {hour}:{minute}:{second}
-+    {hour}:
-+    {minute}:
-+    {second}
-   </div>
- );
- 
- x = (
-   <div>
--    <strong>text here</strong>.<br />
-+    <strong>text here</strong>.
-+    <br />
-   </div>
- );
- 
-@@ -528,7 +543,8 @@
-     <span>
-       <strong>{name}</strong>’s{" "}
-     </span>
--    Hello <strong>world</strong>.<br />
-+    Hello <strong>world</strong>.
-+    <br />
-     <Text>You {type}ed this shipment to</Text>
-   </div>
- );
 ```
 
 # Output
@@ -1001,16 +943,13 @@ x = (
 
 x = (
   <div>
-    <div>First</div>-
-    <div>Second</div>
+    <div>First</div>-<div>Second</div>
   </div>
 );
 
 x = (
   <div>
-    <div>First</div>
-    -
-    <div>Second</div>
+    <div>First</div>-<div>Second</div>
   </div>
 );
 
@@ -1064,26 +1003,19 @@ x = (
 
 x = (
   <div>
-    {hour}
-    :
-    {minute}
-    :
-    {second}
+    {hour}:{minute}:{second}
   </div>
 );
 
 x = (
   <div>
-    {hour}:
-    {minute}:
-    {second}
+    {hour}:{minute}:{second}
   </div>
 );
 
 x = (
   <div>
-    <strong>text here</strong>.
-    <br />
+    <strong>text here</strong>.<br />
   </div>
 );
 
@@ -1103,8 +1035,7 @@ x = (
     <span>
       <strong>{name}</strong>’s{" "}
     </span>
-    Hello <strong>world</strong>.
-    <br />
+    Hello <strong>world</strong>.<br />
     <Text>You {type}ed this shipment to</Text>
   </div>
 );
@@ -1146,7 +1077,6 @@ let myDiv = ReactTestUtils.renderIntoDocument(
 );
 ```
 
-
 # Lines exceeding max width of 80 characters
 ```
    69:     before {stuff} after {stuff} after {stuff} after {stuff} after {stuff} after{" "}
@@ -1155,4 +1085,5 @@ let myDiv = ReactTestUtils.renderIntoDocument(
   231:         "Enough text to make this element wrap on to multiple lines when formatting"
   387:     ENDS IN <div>text text text text text text text text text text text</div>{" "}
 ```
+
 

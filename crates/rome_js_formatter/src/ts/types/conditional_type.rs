@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use crate::utils::JsAnyConditional;
+use crate::utils::AnyJsConditional;
 
 use crate::parentheses::{
     is_check_type, is_in_many_type_union_or_intersection_list,
@@ -17,7 +17,7 @@ impl FormatNodeRule<TsConditionalType> for FormatTsConditionalType {
         node: &TsConditionalType,
         formatter: &mut JsFormatter,
     ) -> FormatResult<()> {
-        JsAnyConditional::from(node.clone()).format().fmt(formatter)
+        AnyJsConditional::from(node.clone()).format().fmt(formatter)
     }
 
     fn needs_parentheses(&self, item: &TsConditionalType) -> bool {

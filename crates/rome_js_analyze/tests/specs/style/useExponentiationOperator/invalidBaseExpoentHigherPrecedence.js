@@ -1,0 +1,10 @@
+ // base and exponent with a higher precedence
+ Math.pow(2, 3)
+ Math.pow(a.foo, b)
+ Math.pow(a, b.foo)
+ Math.pow(a(), b)
+ Math.pow(a, b())
+ Math.pow(++a, ++b)
+ Math.pow(a++, ++b)
+ Math.pow(a--, b--)
+ Math.pow(--a, b--)

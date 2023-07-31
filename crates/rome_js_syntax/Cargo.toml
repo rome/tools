@@ -1,16 +1,19 @@
 [package]
-edition = "2021"
-name = "rome_js_syntax"
-version = "0.0.0"
-authors = ["Rome Tools"]
-description = "SyntaxKind and common rowan definitions for rome_js_parser"
-license = "MIT"
-repository = "https://github.com/rome/tools"
+authors.workspace    = true
+description          = "SyntaxKind and common rowan definitions for rome_js_parser"
+documentation        = "https://rustdocs.rome.tools/rome_js_syntax/index.html"
+edition.workspace    = true
+license.workspace    = true
+name                 = "rome_js_syntax"
+repository.workspace = true
+version              = "0.0.2"
 
 [dependencies]
-rome_rowan = { path = "../rome_rowan" }
-serde = { version = "1.0.136", features = ["derive"], optional = true }
-schemars = { version = "0.8.10", optional = true }
+rome_console     = { version = "0.0.1", path = "../rome_console" }
+rome_diagnostics = { version = "0.0.1", path = "../rome_diagnostics" }
+rome_rowan       = { version = "0.0.1", path = "../rome_rowan" }
+schemars         = { version = "0.8.10", optional = true }
+serde            = { version = "1.0.136", features = ["derive"], optional = true }
 
 [dev-dependencies]
 rome_js_factory = { path = "../rome_js_factory" }

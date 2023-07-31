@@ -1,11 +1,8 @@
+use crate::converters::{from_proto, to_proto};
+use crate::diagnostics::LspError;
 use crate::session::Session;
-use crate::utils;
-use anyhow::{Context, Error, Result};
-use rome_rowan::TextRange;
-use rome_service::{
-    workspace::{FormatFileParams, FormatOnTypeParams, FormatRangeParams},
-    RomeError,
-};
+use anyhow::Context;
+use rome_service::workspace::{FormatFileParams, FormatOnTypeParams, FormatRangeParams};
 use tower_lsp::lsp_types::*;
 use tracing::debug;
 
@@ -13,26 +10,18 @@ use tracing::debug;
 pub(crate) fn format(
     session: &Session,
     params: DocumentFormattingParams,
-) -> Result<Option<Vec<TextEdit>>> {
+) -> Result<Option<Vec<TextEdit>>, LspError> {
     let url = params.text_document.uri;
-    let rome_path = session.file_path(&url);
+    let rome_path = session.file_path(&url)?;
 
     let doc = session.document(&url)?;
 
     debug!("Formatting...");
-    let result = session
+    let printed = session
         .workspace
-        .format_file(FormatFileParams { path: rome_path });
+        .format_file(FormatFileParams { path: rome_path })?;
 
-    let printed = match result {
-        Ok(printed) => printed,
-        Err(RomeError::FormatWithErrorsDisabled) | Err(RomeError::FileIgnored(_)) => {
-            return Ok(None)
-        }
-        Err(err) => return Err(Error::from(err)),
-    };
-
-    let num_lines: u32 = doc.line_index.newlines.len().try_into()?;
+    let num_lines: u32 = doc.line_index.len();
 
     let range = Range {
         start: Position::default(),
@@ -50,62 +39,39 @@ pub(crate) fn format(
     Ok(Some(edits))
 }
 
-#[tracing::instrument(level = "trace", skip(session), err)]
+#[tracing::instrument(level = "debug", skip(session), err)]
 pub(crate) fn format_range(
     session: &Session,
     params: DocumentRangeFormattingParams,
-) -> Result<Option<Vec<TextEdit>>> {
+) -> Result<Option<Vec<TextEdit>>, LspError> {
     let url = params.text_document.uri;
-    let rome_path = session.file_path(&url);
+    let rome_path = session.file_path(&url)?;
     let doc = session.document(&url)?;
 
-    let start_index = utils::offset(&doc.line_index, params.range.start).with_context(|| {
-        format!(
-            "failed to access position {:?} in document {url}",
-            params.range.start
-        )
-    })?;
-    let end_index = utils::offset(&doc.line_index, params.range.end).with_context(|| {
-        format!(
-            "failed to access position {:?} in document {url}",
-            params.range.end
-        )
-    })?;
+    let position_encoding = session.position_encoding();
+    let format_range = from_proto::text_range(&doc.line_index, params.range, position_encoding)
+        .with_context(|| {
+            format!(
+                "failed to convert range {:?} in document {url}",
+                params.range.end
+            )
+        })?;
 
-    let format_range = TextRange::new(start_index, end_index);
-    let result = session.workspace.format_range(FormatRangeParams {
+    let formatted = session.workspace.format_range(FormatRangeParams {
         path: rome_path,
         range: format_range,
-    });
-
-    let formatted = match result {
-        Ok(formatted) => formatted,
-        Err(RomeError::FormatWithErrorsDisabled) | Err(RomeError::FileIgnored(_)) => {
-            return Ok(None)
-        }
-        Err(err) => return Err(Error::from(err)),
-    };
+    })?;
 
     // Recalculate the actual range that was reformatted from the formatter result
     let formatted_range = match formatted.range() {
         Some(range) => {
-            let start_loc = doc.line_index.line_col(range.start());
-            let end_loc = doc.line_index.line_col(range.end());
-            Range {
-                start: Position {
-                    line: start_loc.line,
-                    character: start_loc.col,
-                },
-                end: Position {
-                    line: end_loc.line,
-                    character: end_loc.col,
-                },
-            }
+            let position_encoding = session.position_encoding();
+            to_proto::range(&doc.line_index, range, position_encoding)?
         }
         None => Range {
             start: Position::default(),
             end: Position {
-                line: doc.line_index.newlines.len().try_into()?,
+                line: doc.line_index.len(),
                 character: 0,
             },
         },
@@ -117,53 +83,41 @@ pub(crate) fn format_range(
     }]))
 }
 
-#[tracing::instrument(level = "trace", skip(session), err)]
+#[tracing::instrument(level = "debug", skip(session), err)]
 pub(crate) fn format_on_type(
     session: &Session,
     params: DocumentOnTypeFormattingParams,
-) -> Result<Option<Vec<TextEdit>>> {
+) -> Result<Option<Vec<TextEdit>>, LspError> {
     let url = params.text_document_position.text_document.uri;
     let position = params.text_document_position.position;
 
-    let rome_path = session.file_path(&url);
+    let rome_path = session.file_path(&url)?;
     let doc = session.document(&url)?;
 
-    let offset = utils::offset(&doc.line_index, position)
+    let position_encoding = session.position_encoding();
+    let offset = from_proto::offset(&doc.line_index, position, position_encoding)
         .with_context(|| format!("failed to access position {position:?} in document {url}"))?;
 
-    let result = session.workspace.format_on_type(FormatOnTypeParams {
+    let formatted = session.workspace.format_on_type(FormatOnTypeParams {
         path: rome_path,
         offset,
-    });
-
-    let formatted = match result {
-        Ok(formatted) => formatted,
-        Err(RomeError::FormatWithErrorsDisabled) | Err(RomeError::FileIgnored(_)) => {
-            return Ok(None)
-        }
-        Err(err) => return Err(Error::from(err)),
-    };
+    })?;
 
     // Recalculate the actual range that was reformatted from the formatter result
     let formatted_range = match formatted.range() {
         Some(range) => {
-            let start_loc = doc.line_index.line_col(range.start());
-            let end_loc = doc.line_index.line_col(range.end());
+            let position_encoding = session.position_encoding();
+            let start_loc = to_proto::position(&doc.line_index, range.start(), position_encoding)?;
+            let end_loc = to_proto::position(&doc.line_index, range.end(), position_encoding)?;
             Range {
-                start: Position {
-                    line: start_loc.line,
-                    character: start_loc.col,
-                },
-                end: Position {
-                    line: end_loc.line,
-                    character: end_loc.col,
-                },
+                start: start_loc,
+                end: end_loc,
             }
         }
         None => Range {
             start: Position::default(),
             end: Position {
-                line: doc.line_index.newlines.len().try_into()?,
+                line: doc.line_index.len(),
                 character: 0,
             },
         },

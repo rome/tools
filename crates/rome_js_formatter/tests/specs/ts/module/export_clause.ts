@@ -16,3 +16,7 @@ export   =   b;
 export  import  a  =   b;
 
 export  declare  class   E {  }
+
+export  type  *  from  "types";
+
+export  type  *  as  types   from  "types";

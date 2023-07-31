@@ -67,37 +67,41 @@ impl FormatNodeRule<TsInterfaceDeclaration> for FormatTsInterfaceDeclaration {
             Ok(())
         });
 
-        write![f, [interface_token.format(), space()]]?;
+        let content = format_with(|f| {
+            write![f, [interface_token.format(), space()]]?;
 
-        let id_has_trailing_comments = f.comments().has_trailing_comments(id.syntax());
-        if id_has_trailing_comments || extends_clause.is_some() {
-            if should_indent_extends_only {
+            let id_has_trailing_comments = f.comments().has_trailing_comments(id.syntax());
+            if id_has_trailing_comments || extends_clause.is_some() {
+                if should_indent_extends_only {
+                    write!(
+                        f,
+                        [group(&format_args!(format_id, indent(&format_extends)))]
+                    )?;
+                } else {
+                    write!(
+                        f,
+                        [group(&indent(&format_args!(format_id, format_extends)))]
+                    )?;
+                }
+            } else {
+                write!(f, [format_id, format_extends])?;
+            }
+
+            write!(f, [space(), l_curly_token.format()])?;
+
+            if members.is_empty() {
                 write!(
                     f,
-                    [group(&format_args!(format_id, indent(&format_extends)))]
+                    [format_dangling_comments(node.syntax()).with_block_indent()]
                 )?;
             } else {
-                write!(
-                    f,
-                    [group(&indent(&format_args!(format_id, format_extends)))]
-                )?;
+                write!(f, [block_indent(&members.format())])?;
             }
-        } else {
-            write!(f, [format_id, format_extends])?;
-        }
 
-        write!(f, [space(), l_curly_token.format()])?;
+            write!(f, [r_curly_token.format()])
+        });
 
-        if members.is_empty() {
-            write!(
-                f,
-                [format_dangling_comments(node.syntax()).with_block_indent()]
-            )?;
-        } else {
-            write!(f, [block_indent(&members.format())])?;
-        }
-
-        write!(f, [r_curly_token.format()])
+        write![f, [group(&content)]]
     }
 
     fn fmt_dangling_comments(

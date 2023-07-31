@@ -1,12 +1,12 @@
 use crate::prelude::*;
-use crate::utils::{needs_binary_like_parentheses, JsAnyBinaryLikeExpression};
+use crate::utils::{needs_binary_like_parentheses, AnyJsBinaryLikeExpression};
 
 use crate::parentheses::NeedsParentheses;
 use rome_js_syntax::{JsLogicalExpression, JsSyntaxNode};
 use rome_rowan::AstNode;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsLogicalExpression;
+pub(crate) struct FormatJsLogicalExpression;
 
 impl FormatNodeRule<JsLogicalExpression> for FormatJsLogicalExpression {
     fn fmt_fields(
@@ -14,7 +14,7 @@ impl FormatNodeRule<JsLogicalExpression> for FormatJsLogicalExpression {
         node: &JsLogicalExpression,
         formatter: &mut JsFormatter,
     ) -> FormatResult<()> {
-        JsAnyBinaryLikeExpression::JsLogicalExpression(node.clone()).fmt(formatter)
+        AnyJsBinaryLikeExpression::JsLogicalExpression(node.clone()).fmt(formatter)
     }
 
     fn needs_parentheses(&self, item: &JsLogicalExpression) -> bool {
@@ -27,7 +27,7 @@ impl NeedsParentheses for JsLogicalExpression {
         if let Some(parent) = JsLogicalExpression::cast(parent.clone()) {
             parent.operator() != self.operator()
         } else {
-            needs_binary_like_parentheses(&JsAnyBinaryLikeExpression::from(self.clone()), parent)
+            needs_binary_like_parentheses(&AnyJsBinaryLikeExpression::from(self.clone()), parent)
         }
     }
 }
@@ -36,7 +36,7 @@ impl NeedsParentheses for JsLogicalExpression {
 mod tests {
 
     use crate::{assert_needs_parentheses, assert_not_needs_parentheses};
-    use rome_js_syntax::{JsLogicalExpression, SourceType};
+    use rome_js_syntax::{JsFileSource, JsLogicalExpression};
 
     #[test]
     fn needs_parentheses() {
@@ -57,12 +57,12 @@ mod tests {
         assert_needs_parentheses!(
             "<test {...(a && b)} />",
             JsLogicalExpression,
-            SourceType::tsx()
+            JsFileSource::tsx()
         );
         assert_needs_parentheses!(
             "<test>{...(a && b)}</test>",
             JsLogicalExpression,
-            SourceType::tsx()
+            JsFileSource::tsx()
         );
 
         assert_needs_parentheses!("(a && b).member", JsLogicalExpression);

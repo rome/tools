@@ -7,7 +7,7 @@ use std::borrow::Cow;
 use crate::{TagKind, TextSize};
 #[cfg(target_pointer_width = "64")]
 use rome_rowan::static_assert;
-use rome_rowan::SyntaxTokenText;
+use rome_rowan::TokenText;
 use std::hash::{Hash, Hasher};
 use std::ops::Deref;
 use std::rc::Rc;
@@ -40,11 +40,11 @@ pub enum FormatElement {
 
     /// A token for a text that is taken as is from the source code (input text and formatted representation are identical).
     /// Implementing by taking a slice from a `SyntaxToken` to avoid allocating a new string.
-    SyntaxTokenTextSlice {
+    LocatedTokenText {
         /// The start position of the token in the unformatted source code
         source_position: TextSize,
         /// The token text
-        slice: SyntaxTokenText,
+        slice: TokenText,
     },
 
     /// Prevents that line suffixes move past this boundary. Forces the printer to print any pending
@@ -57,7 +57,7 @@ pub enum FormatElement {
 
     /// A list of different variants representing the same content. The printer picks the best fitting content.
     /// Line breaks inside of a best fitting don't propagate to parent groups.
-    BestFitting(BestFitting),
+    BestFitting(BestFittingElement),
 
     /// A [Tag] that marks the start/end of some content to which some special formatting is applied.
     Tag(Tag),
@@ -75,10 +75,9 @@ impl std::fmt::Debug for FormatElement {
             FormatElement::DynamicText { text, .. } => {
                 fmt.debug_tuple("DynamicText").field(text).finish()
             }
-            FormatElement::SyntaxTokenTextSlice { slice, .. } => fmt
-                .debug_tuple("SyntaxTokenTextSlice")
-                .field(slice)
-                .finish(),
+            FormatElement::LocatedTokenText { slice, .. } => {
+                fmt.debug_tuple("LocatedTokenText").field(slice).finish()
+            }
             FormatElement::LineSuffixBoundary => write!(fmt, "LineSuffixBoundary"),
             FormatElement::BestFitting(best_fitting) => {
                 fmt.debug_tuple("BestFitting").field(&best_fitting).finish()
@@ -224,7 +223,7 @@ impl FormatElement {
     pub const fn is_text(&self) -> bool {
         matches!(
             self,
-            FormatElement::SyntaxTokenTextSlice { .. }
+            FormatElement::LocatedTokenText { .. }
                 | FormatElement::DynamicText { .. }
                 | FormatElement::StaticText { .. }
         )
@@ -243,7 +242,7 @@ impl FormatElements for FormatElement {
             FormatElement::Line(line_mode) => matches!(line_mode, LineMode::Hard | LineMode::Empty),
             FormatElement::StaticText { text } => text.contains('\n'),
             FormatElement::DynamicText { text, .. } => text.contains('\n'),
-            FormatElement::SyntaxTokenTextSlice { slice, .. } => slice.contains('\n'),
+            FormatElement::LocatedTokenText { slice, .. } => slice.contains('\n'),
             FormatElement::Interned(interned) => interned.will_break(),
             // Traverse into the most flat version because the content is guaranteed to expand when even
             // the most flat version contains some content that forces a break.
@@ -279,14 +278,14 @@ impl FormatElements for FormatElement {
 ///
 /// Best fitting is defined as the variant that takes the most horizontal space but fits on the line.
 #[derive(Clone, Eq, PartialEq)]
-pub struct BestFitting {
+pub struct BestFittingElement {
     /// The different variants for this element.
     /// The first element is the one that takes up the most space horizontally (the most flat),
     /// The last element takes up the least space horizontally (but most horizontal space).
     variants: Box<[Box<[FormatElement]>]>,
 }
 
-impl BestFitting {
+impl BestFittingElement {
     /// Creates a new best fitting IR with the given variants. The method itself isn't unsafe
     /// but it is to discourage people from using it because the printer will panic if
     /// the slice doesn't contain at least the least and most expanded variants.
@@ -326,7 +325,7 @@ impl BestFitting {
     }
 }
 
-impl std::fmt::Debug for BestFitting {
+impl std::fmt::Debug for BestFittingElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_list().entries(&*self.variants).finish()
     }

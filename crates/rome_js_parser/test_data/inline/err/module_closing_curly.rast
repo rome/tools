@@ -18,7 +18,7 @@ JsModule {
                             },
                             semicolon_token: missing (optional),
                         },
-                        JsUnknownStatement {
+                        JsBogusStatement {
                             items: [
                                 COLON@26..28 ":" [] [Whitespace(" ")],
                                 JS_STRING_LITERAL@28..45 "\"troublesome-lib\"" [] [],
@@ -58,7 +58,7 @@ JsModule {
               0: JS_STRING_LITERAL_EXPRESSION@18..26
                 0: JS_STRING_LITERAL@18..26 "\"name\"" [Newline("\n"), Whitespace(" ")] []
               1: (empty)
-            1: JS_UNKNOWN_STATEMENT@26..96
+            1: JS_BOGUS_STATEMENT@26..96
               0: COLON@26..28 ":" [] [Whitespace(" ")]
               1: JS_STRING_LITERAL@28..45 "\"troublesome-lib\"" [] []
               2: COMMA@45..46 "," [] []

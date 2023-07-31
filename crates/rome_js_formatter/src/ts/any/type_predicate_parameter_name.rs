@@ -1,15 +1,15 @@
-//! Generated file, do not edit by hand, see `xtask/codegen`
+//! This is a generated file. Don't modify it by hand! Run 'cargo codegen formatter' to re-generate the file.
 
 use crate::prelude::*;
-use rome_js_syntax::TsAnyTypePredicateParameterName;
+use rome_js_syntax::AnyTsTypePredicateParameterName;
 #[derive(Debug, Clone, Default)]
-pub struct FormatTsAnyTypePredicateParameterName;
-impl FormatRule<TsAnyTypePredicateParameterName> for FormatTsAnyTypePredicateParameterName {
+pub(crate) struct FormatAnyTsTypePredicateParameterName;
+impl FormatRule<AnyTsTypePredicateParameterName> for FormatAnyTsTypePredicateParameterName {
     type Context = JsFormatContext;
-    fn fmt(&self, node: &TsAnyTypePredicateParameterName, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &AnyTsTypePredicateParameterName, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            TsAnyTypePredicateParameterName::JsReferenceIdentifier(node) => node.format().fmt(f),
-            TsAnyTypePredicateParameterName::TsThisType(node) => node.format().fmt(f),
+            AnyTsTypePredicateParameterName::JsReferenceIdentifier(node) => node.format().fmt(f),
+            AnyTsTypePredicateParameterName::TsThisType(node) => node.format().fmt(f),
         }
     }
 }

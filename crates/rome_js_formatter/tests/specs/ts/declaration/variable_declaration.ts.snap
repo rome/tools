@@ -1,11 +1,11 @@
 ---
-source: crates/rome_js_formatter/tests/spec_test.rs
-expression: variable_declaration.ts
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info: ts/declaration/variable_declaration.ts
 ---
 
 # Input
 
-```js
+```ts
 //break left-hand side layout
 const map: Map<Function, Map<string | void, { value: UnloadedDescriptor }>> =
     new Map();
@@ -107,11 +107,14 @@ let looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+JSX quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
+Semicolons: Always
+Arrow parentheses: Always
 -----
 
-```js
+```ts
 //break left-hand side layout
 const map: Map<
 	Function,
@@ -235,10 +238,10 @@ let looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
 	this<A & B>().ewqeqewqweqweqweqweqweqweqw;
 let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
 	this()[dsadsadsadsadsadsadsa]<{}>().ewqoewqoeiowqieopwqie;
+```
 
-
-## Lines exceeding width of 80 characters
-
+# Lines exceeding max width of 80 characters
+```
    71: 	fnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfn<number>();
    80: var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
    82: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =

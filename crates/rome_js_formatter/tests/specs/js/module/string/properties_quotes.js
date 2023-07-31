@@ -36,3 +36,8 @@ let { "_$_ff$_morning_not_quotes": test, "_$_ff$_morning_yes_quotes_@": test } =
 let { "_$_$_%": test } = value;
 
 let { "0197": test, "3n": test, "3p": test, "p9": test } = value;
+
+const x = {
+    '¾¾¾¾': 'test1',
+    '①': 'test2',
+};

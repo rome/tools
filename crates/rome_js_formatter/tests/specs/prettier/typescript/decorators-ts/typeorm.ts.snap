@@ -1,10 +1,11 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info: typescript/decorators-ts/typeorm.ts
 ---
 
 # Input
 
-```js
+```ts
 @Entity()
 export class Board {
 
@@ -27,6 +28,7 @@ export class Board {
     topics: Topic[]
 
 }
+
 ```
 
 
@@ -35,19 +37,22 @@ export class Board {
 ```diff
 --- Prettier
 +++ Rome
-@@ -15,6 +15,6 @@
+@@ -15,6 +15,9 @@
    @Column()
    description: string;
  
 -  @OneToMany((type) => Topic, (topic) => topic.board)
-+  @OneToMany(type => Topic, topic => topic.board)
++  @OneToMany(
++    (type) => Topic,
++    (topic) => topic.board,
++  )
    topics: Topic[];
  }
 ```
 
 # Output
 
-```js
+```ts
 @Entity()
 export class Board {
   @PrimaryGeneratedColumn()
@@ -65,10 +70,12 @@ export class Board {
   @Column()
   description: string;
 
-  @OneToMany(type => Topic, topic => topic.board)
+  @OneToMany(
+    (type) => Topic,
+    (topic) => topic.board,
+  )
   topics: Topic[];
 }
 ```
-
 
 

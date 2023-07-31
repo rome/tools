@@ -1,9 +1,9 @@
-use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Rule};
+use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, RefactorKind, Rule};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
-use rome_js_semantic::{AllReferencesExtensions, Reference};
+use rome_js_semantic::{Reference, ReferencesExtensions};
 use rome_js_syntax::{
-    JsAnyBinding, JsAnyBindingPattern, JsAnyExpression, JsIdentifierExpression,
+    AnyJsBinding, AnyJsBindingPattern, AnyJsExpression, JsIdentifierExpression,
     JsVariableDeclarator,
 };
 use rome_rowan::{BatchMutationExt, SyntaxNodeCast};
@@ -31,7 +31,7 @@ pub(crate) struct State {
     /// List of references to the variable
     references: Vec<Reference>,
     /// Initializer expression for the variable to be inlined
-    expression: JsAnyExpression,
+    expression: AnyJsExpression,
 }
 
 impl Rule for InlineVariable {
@@ -46,13 +46,27 @@ impl Rule for InlineVariable {
 
         let id = declarator.id().ok()?;
         let binding = match id {
-            JsAnyBindingPattern::JsAnyBinding(JsAnyBinding::JsIdentifierBinding(binding)) => {
+            AnyJsBindingPattern::AnyJsBinding(AnyJsBinding::JsIdentifierBinding(binding)) => {
                 binding
             }
-            JsAnyBindingPattern::JsAnyBinding(JsAnyBinding::JsUnknownBinding(_))
-            | JsAnyBindingPattern::JsArrayBindingPattern(_)
-            | JsAnyBindingPattern::JsObjectBindingPattern(_) => return None,
+            AnyJsBindingPattern::AnyJsBinding(AnyJsBinding::JsBogusBinding(_))
+            | AnyJsBindingPattern::JsArrayBindingPattern(_)
+            | AnyJsBindingPattern::JsObjectBindingPattern(_) => return None,
         };
+
+        // Do not inline if the initializer is not inlinable
+
+        let initializer = declarator.initializer()?;
+        let expr = initializer.expression().ok()?;
+        match expr {
+            AnyJsExpression::JsArrowFunctionExpression(_)
+            | AnyJsExpression::JsFunctionExpression(_)
+            | AnyJsExpression::JsClassExpression(_)
+            | AnyJsExpression::JsAssignmentExpression(_) => return None,
+            _ => {}
+        }
+
+        // Do not inline if there is a write
 
         let mut references = Vec::new();
         for reference in binding.all_references(semantic_model) {
@@ -63,7 +77,8 @@ impl Rule for InlineVariable {
             references.push(reference);
         }
 
-        let initializer = declarator.initializer()?;
+        // Inline variable
+
         let expression = initializer.expression().ok()?;
         Some(State {
             references,
@@ -83,18 +98,18 @@ impl Rule for InlineVariable {
 
         for reference in references {
             let node = reference
-                .node()
+                .syntax()
                 .parent()?
                 .cast::<JsIdentifierExpression>()?;
 
             mutation.replace_node(
-                JsAnyExpression::JsIdentifierExpression(node),
+                AnyJsExpression::JsIdentifierExpression(node),
                 expression.clone(),
             );
         }
 
         Some(JsRuleAction {
-            category: ActionCategory::Refactor,
+            category: ActionCategory::Refactor(RefactorKind::Inline),
             applicability: Applicability::Always,
             message: markup! { "Inline variable" }.to_owned(),
             mutation,

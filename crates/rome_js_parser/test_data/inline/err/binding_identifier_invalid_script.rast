@@ -7,7 +7,7 @@ JsScript {
                 kind: LET_KW@0..14 "let" [Comments("// SCRIPT"), Newline("\n")] [Whitespace(" ")],
                 declarators: JsVariableDeclaratorList [
                     JsVariableDeclarator {
-                        id: JsUnknownBinding {
+                        id: JsBogusBinding {
                             items: [
                                 IDENT@14..18 "let" [] [Whitespace(" ")],
                             ],
@@ -29,7 +29,7 @@ JsScript {
                 kind: CONST_KW@22..29 "const" [Newline("\n")] [Whitespace(" ")],
                 declarators: JsVariableDeclaratorList [
                     JsVariableDeclarator {
-                        id: JsUnknownBinding {
+                        id: JsBogusBinding {
                             items: [
                                 IDENT@29..33 "let" [] [Whitespace(" ")],
                             ],
@@ -59,7 +59,7 @@ JsScript {
         0: LET_KW@0..14 "let" [Comments("// SCRIPT"), Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATOR_LIST@14..21
           0: JS_VARIABLE_DECLARATOR@14..21
-            0: JS_UNKNOWN_BINDING@14..18
+            0: JS_BOGUS_BINDING@14..18
               0: IDENT@14..18 "let" [] [Whitespace(" ")]
             1: (empty)
             2: JS_INITIALIZER_CLAUSE@18..21
@@ -72,7 +72,7 @@ JsScript {
         0: CONST_KW@22..29 "const" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATOR_LIST@29..36
           0: JS_VARIABLE_DECLARATOR@29..36
-            0: JS_UNKNOWN_BINDING@29..33
+            0: JS_BOGUS_BINDING@29..33
               0: IDENT@29..33 "let" [] [Whitespace(" ")]
             1: (empty)
             2: JS_INITIALIZER_CLAUSE@33..36

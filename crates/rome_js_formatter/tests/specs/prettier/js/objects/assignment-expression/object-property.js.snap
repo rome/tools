@@ -1,5 +1,7 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+assertion_line: 212
+info: js/objects/assignment-expression/object-property.js
 ---
 
 # Input
@@ -8,6 +10,7 @@ source: crates/rome_js_formatter/tests/prettier_tests.rs
 a = {
   [this.resource = resource]: 1,
 }
+
 ```
 
 
@@ -30,6 +33,5 @@ a = {
   [this.resource = resource]: 1,
 };
 ```
-
 
 

@@ -584,7 +584,7 @@ impl<'a> SourceParentheses<'a> {
         match self {
             SourceParentheses::Empty => token.parent().unwrap(),
             SourceParentheses::SourceMap { map, .. } => {
-                debug_assert_eq!(&map.text()[parentheses_source_range], ")");
+                debug_assert_eq!(map.source().text_slice(parentheses_source_range), ")");
 
                 // How this works: We search the outer most node that, in the source document ends right after the `)`.
                 // The issue is, it is possible that multiple nodes end right after the `)`
@@ -639,15 +639,17 @@ mod tests {
         DecoratedComment, SourceComment,
     };
     use crate::{TextSize, TransformSourceMap, TransformSourceMapBuilder};
-    use rome_diagnostics::file::FileId;
-    use rome_js_parser::parse_module;
+    use rome_js_parser::{parse_module, JsParserOptions};
     use rome_js_syntax::{
         JsIdentifierExpression, JsLanguage, JsParameters, JsParenthesizedExpression,
         JsPropertyObjectMember, JsReferenceIdentifier, JsShorthandPropertyObjectMember,
         JsSyntaxKind, JsSyntaxNode, JsUnaryExpression,
     };
     use rome_rowan::syntax::SyntaxElementKey;
-    use rome_rowan::{AstNode, BatchMutation, SyntaxNode, SyntaxTriviaPieceComments, TextRange};
+    use rome_rowan::{
+        chain_trivia_pieces, AstNode, BatchMutation, SyntaxNode, SyntaxTriviaPieceComments,
+        TextRange,
+    };
     use std::cell::RefCell;
 
     #[test]
@@ -851,7 +853,7 @@ b;"#;
 
         let source_map = source_map_builder.finish();
 
-        let root = parse_module(source, FileId::zero()).syntax();
+        let root = parse_module(source, JsParserOptions::default()).syntax();
 
         // A lot of code that simply removes the parenthesized expression and moves the parens
         // trivia to the identifiers leading / trailing trivia.
@@ -875,22 +877,14 @@ b;"#;
 
         let identifier_token = reference_identifier.value_token().unwrap();
         let new_identifier_token = identifier_token
-            .with_leading_trivia_pieces(
-                l_paren
-                    .leading_trivia()
-                    .pieces()
-                    .chain(l_paren.trailing_trivia().pieces())
-                    .chain(identifier_token.leading_trivia().pieces())
-                    .collect::<Vec<_>>(),
-            )
-            .with_trailing_trivia_pieces(
-                identifier_token
-                    .trailing_trivia()
-                    .pieces()
-                    .chain(r_paren.leading_trivia().pieces())
-                    .chain(r_paren.trailing_trivia().pieces())
-                    .collect::<Vec<_>>(),
-            );
+            .prepend_trivia_pieces(chain_trivia_pieces(
+                l_paren.leading_trivia().pieces(),
+                l_paren.trailing_trivia().pieces(),
+            ))
+            .append_trivia_pieces(chain_trivia_pieces(
+                r_paren.leading_trivia().pieces(),
+                r_paren.trailing_trivia().pieces(),
+            ));
 
         let new_reference_identifier = reference_identifier.with_value_token(new_identifier_token);
 
@@ -1012,7 +1006,7 @@ b;"#;
         Vec<DecoratedComment<JsLanguage>>,
         CommentsMap<SyntaxElementKey, SourceComment<JsLanguage>>,
     ) {
-        let tree = parse_module(source, FileId::zero());
+        let tree = parse_module(source, JsParserOptions::default());
 
         let style = TestCommentStyle::default();
         let builder = CommentsBuilderVisitor::new(&style, source_map);

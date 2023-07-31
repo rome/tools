@@ -1,15 +1,18 @@
-use std::{cmp::Ordering, collections::BinaryHeap};
-
-use rome_diagnostics::file::FileId;
-use rome_rowan::{Language, TextRange};
-
 use crate::{
     AnalyzerOptions, AnalyzerSignal, Phases, QueryMatch, Rule, RuleFilter, RuleGroup, ServiceBag,
+    SuppressionCommentEmitter,
+};
+use rome_rowan::{Language, TextRange};
+use std::{
+    any::{Any, TypeId},
+    cmp::Ordering,
+    collections::BinaryHeap,
 };
 
 /// The [QueryMatcher] trait is responsible of running lint rules on
-/// [QueryMatch] instances emitted by the various [Visitor](crate::Visitor)
-/// and push signals wrapped in [SignalEntry] to the signal queue
+/// [QueryMatch](crate::QueryMatch) instances emitted by the various
+/// [Visitor](crate::Visitor) and push signals wrapped in [SignalEntry]
+/// to the signal queue
 pub trait QueryMatcher<L: Language> {
     /// Execute a single query match
     fn match_query(&mut self, params: MatchQueryParams<L>);
@@ -18,12 +21,52 @@ pub trait QueryMatcher<L: Language> {
 /// Parameters provided to [QueryMatcher::match_query] and require to run lint rules
 pub struct MatchQueryParams<'phase, 'query, L: Language> {
     pub phase: Phases,
-    pub file_id: FileId,
     pub root: &'phase L::Root,
-    pub query: QueryMatch<L>,
+    pub query: Query,
     pub services: &'phase ServiceBag,
     pub signal_queue: &'query mut BinaryHeap<SignalEntry<'phase, L>>,
-    pub options: &'query AnalyzerOptions,
+    pub apply_suppression_comment: SuppressionCommentEmitter<L>,
+    pub options: &'phase AnalyzerOptions,
+}
+
+/// Wrapper type for a [QueryMatch]
+///
+/// This type is functionally equivalent to `Box<dyn QueryMatch + Any>`, it
+/// emulates dynamic dispatch for both traits and allows downcasting to a
+/// reference or owned type.
+pub struct Query {
+    data: Box<dyn Any>,
+    read_text_range: fn(&dyn Any) -> TextRange,
+}
+
+impl Query {
+    /// Construct a new [Query] instance from a [QueryMatch]
+    pub fn new<T: QueryMatch>(data: T) -> Self {
+        Self {
+            data: Box::new(data),
+            read_text_range: |query| query.downcast_ref::<T>().unwrap().text_range(),
+        }
+    }
+
+    /// Attempt to downcast the query to an owned type.
+    pub fn downcast<T: QueryMatch>(self) -> Option<T> {
+        Some(*self.data.downcast::<T>().ok()?)
+    }
+
+    /// Attempt to downcast the query to a reference type.
+    pub fn downcast_ref<T: QueryMatch>(&self) -> Option<&T> {
+        self.data.downcast_ref::<T>()
+    }
+
+    /// Returns the [TypeId] of this query, equivalent to calling [Any::type_id].
+    pub(crate) fn type_id(&self) -> TypeId {
+        self.data.as_ref().type_id()
+    }
+
+    /// Returns the [TextRange] of this query, equivalent to calling [QueryMatch::text_range].
+    pub(crate) fn text_range(&self) -> TextRange {
+        (self.read_text_range)(self.data.as_ref())
+    }
 }
 
 /// Opaque identifier for a group of rule
@@ -56,7 +99,7 @@ pub struct RuleKey {
 }
 
 impl RuleKey {
-    pub(crate) fn new(group: &'static str, rule: &'static str) -> Self {
+    pub fn new(group: &'static str, rule: &'static str) -> Self {
         Self { group, rule }
     }
 
@@ -153,28 +196,26 @@ where
 
 #[cfg(test)]
 mod tests {
-    use rome_diagnostics::v2::{Diagnostic, Error, Severity};
-    use rome_diagnostics::{file::FileId, v2::category};
+    use super::MatchQueryParams;
+    use crate::{
+        signals::DiagnosticSignal, Analyzer, AnalyzerContext, AnalyzerSignal, ControlFlow,
+        MetadataRegistry, Never, Phases, QueryMatcher, RuleKey, ServiceBag, SignalEntry,
+        SyntaxVisitor,
+    };
+    use crate::{AnalyzerOptions, SuppressionKind};
+    use rome_diagnostics::{category, DiagnosticExt};
+    use rome_diagnostics::{Diagnostic, Severity};
     use rome_rowan::{
         raw_language::{RawLanguage, RawLanguageKind, RawLanguageRoot, RawSyntaxTreeBuilder},
-        AstNode, TextRange, TextSize, TriviaPiece, TriviaPieceKind,
+        AstNode, SyntaxNode, TextRange, TextSize, TriviaPiece, TriviaPieceKind,
     };
-
-    use crate::{
-        signals::DiagnosticSignal, Analyzer, AnalyzerContext, AnalyzerDiagnostic, AnalyzerOptions,
-        AnalyzerSignal, ControlFlow, MetadataRegistry, Never, Phases, QueryMatch, QueryMatcher,
-        RuleKey, ServiceBag, SignalEntry, SyntaxVisitor,
-    };
-
-    use super::MatchQueryParams;
+    use std::convert::Infallible;
 
     struct SuppressionMatcher;
 
     #[derive(Debug, Diagnostic)]
     #[diagnostic(category = "args/fileNotFound", message = "test_suppression")]
     struct TestDiagnostic {
-        #[location(resource)]
-        location: FileId,
         #[location(span)]
         span: TextRange,
     }
@@ -182,10 +223,7 @@ mod tests {
     impl QueryMatcher<RawLanguage> for SuppressionMatcher {
         /// Emits a warning diagnostic for all literal expressions
         fn match_query(&mut self, params: MatchQueryParams<RawLanguage>) {
-            let node = match params.query {
-                QueryMatch::Syntax(node) => node,
-                _ => unreachable!(),
-            };
+            let node = params.query.downcast::<SyntaxNode<RawLanguage>>().unwrap();
 
             if node.kind() != RawLanguageKind::LITERAL_EXPRESSION {
                 return;
@@ -193,12 +231,7 @@ mod tests {
 
             let span = node.text_trimmed_range();
             params.signal_queue.push(SignalEntry {
-                signal: Box::new(DiagnosticSignal::new(move || {
-                    AnalyzerDiagnostic::from_error(Error::from(TestDiagnostic {
-                        span,
-                        location: FileId::zero(),
-                    }))
-                })),
+                signal: Box::new(DiagnosticSignal::new(move || TestDiagnostic { span })),
                 rule: RuleKey::new("group", "rule"),
                 text_range: span,
             });
@@ -211,7 +244,7 @@ mod tests {
             let mut builder = RawSyntaxTreeBuilder::new();
 
             builder.start_node(RawLanguageKind::ROOT);
-            builder.start_node(RawLanguageKind::EXPRESSION_LIST);
+            builder.start_node(RawLanguageKind::SEPARATED_EXPRESSION_LIST);
 
             builder.start_node(RawLanguageKind::LITERAL_EXPRESSION);
             builder.token_with_trivia(
@@ -289,6 +322,16 @@ mod tests {
                 &[TriviaPiece::new(TriviaPieceKind::Newline, 1)],
             );
 
+            builder.token_with_trivia(
+                RawLanguageKind::SEMICOLON_TOKEN,
+                "//group/rule\n;\n",
+                &[
+                    TriviaPiece::new(TriviaPieceKind::SingleLineComment, 12),
+                    TriviaPiece::new(TriviaPieceKind::Newline, 1),
+                ],
+                &[TriviaPiece::new(TriviaPieceKind::Newline, 1)],
+            );
+
             builder.finish_node();
             builder.finish_node();
 
@@ -297,20 +340,23 @@ mod tests {
 
         let mut diagnostics = Vec::new();
         let mut emit_signal = |signal: &dyn AnalyzerSignal<RawLanguage>| -> ControlFlow<Never> {
-            let mut diag = signal.diagnostic().expect("diagnostic");
-            diag.set_severity(Severity::Warning);
-            let code = diag.category().expect("code");
+            let diag = signal.diagnostic().expect("diagnostic");
             let range = diag.get_span().expect("range");
+            let error = diag.with_severity(Severity::Warning);
+            let code = error.category().expect("code");
 
             diagnostics.push((code, range));
             ControlFlow::Continue(())
         };
 
-        fn parse_suppression_comment(comment: &str) -> Vec<Option<&str>> {
+        fn parse_suppression_comment(
+            comment: &'_ str,
+        ) -> Vec<Result<SuppressionKind<'_>, Infallible>> {
             comment
                 .trim_start_matches("//")
                 .split(' ')
-                .map(Some)
+                .map(SuppressionKind::Rule)
+                .map(Ok)
                 .collect()
         }
 
@@ -321,13 +367,13 @@ mod tests {
             &metadata,
             SuppressionMatcher,
             parse_suppression_comment,
+            |_| unreachable!(),
             &mut emit_signal,
         );
 
-        analyzer.add_visitor(Phases::Syntax, SyntaxVisitor::default());
+        analyzer.add_visitor(Phases::Syntax, Box::<SyntaxVisitor<RawLanguage>>::default());
 
         let ctx: AnalyzerContext<RawLanguage> = AnalyzerContext {
-            file_id: FileId::zero(),
             root,
             range: None,
             services: ServiceBag::default(),
@@ -355,6 +401,10 @@ mod tests {
                 (
                     category!("args/fileNotFound"),
                     TextRange::new(TextSize::from(97), TextSize::from(108))
+                ),
+                (
+                    category!("suppressions/unused"),
+                    TextRange::new(TextSize::from(110), TextSize::from(122))
                 ),
             ]
         );

@@ -3,6 +3,7 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -86,6 +87,7 @@ JsModule {
             r_curly_token: R_CURLY@73..74 "}" [] [],
         },
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@74..81 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -160,6 +162,7 @@ JsModule {
             r_curly_token: R_CURLY@144..145 "}" [] [],
         },
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@145..152 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -240,6 +243,7 @@ JsModule {
             r_curly_token: R_CURLY@222..223 "}" [] [],
         },
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@223..230 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -333,6 +337,7 @@ JsModule {
             r_curly_token: R_CURLY@304..305 "}" [] [],
         },
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@305..312 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -424,6 +429,7 @@ JsModule {
             r_curly_token: R_CURLY@389..390 "}" [] [],
         },
         JsClassDeclaration {
+            decorators: JsDecoratorList [],
             abstract_token: missing (optional),
             class_token: CLASS_KW@390..397 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -525,15 +531,16 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..478
     0: JS_CLASS_DECLARATION@0..74
-      0: (empty)
-      1: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@6..16
+      0: JS_DECORATOR_LIST@0..0
+      1: (empty)
+      2: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@6..16
         0: IDENT@6..16 "TestClass" [] [Whitespace(" ")]
-      3: (empty)
       4: (empty)
       5: (empty)
-      6: L_CURLY@16..18 "{" [] [Whitespace(" ")]
-      7: JS_CLASS_MEMBER_LIST@18..73
+      6: (empty)
+      7: L_CURLY@16..18 "{" [] [Whitespace(" ")]
+      8: JS_CLASS_MEMBER_LIST@18..73
         0: JS_PROPERTY_CLASS_MEMBER@18..34
           0: JS_PROPERTY_MODIFIER_LIST@18..18
           1: JS_PRIVATE_CLASS_MEMBER_NAME@18..26
@@ -584,17 +591,18 @@ JsModule {
                       2: R_PAREN@69..71 ")" [] [Whitespace(" ")]
                 1: (empty)
             3: R_CURLY@71..73 "}" [] [Whitespace(" ")]
-      8: R_CURLY@73..74 "}" [] []
+      9: R_CURLY@73..74 "}" [] []
     1: JS_CLASS_DECLARATION@74..145
-      0: (empty)
-      1: CLASS_KW@74..81 "class" [Newline("\n")] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@81..91
+      0: JS_DECORATOR_LIST@74..74
+      1: (empty)
+      2: CLASS_KW@74..81 "class" [Newline("\n")] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@81..91
         0: IDENT@81..91 "TestClass" [] [Whitespace(" ")]
-      3: (empty)
       4: (empty)
       5: (empty)
-      6: L_CURLY@91..93 "{" [] [Whitespace(" ")]
-      7: JS_CLASS_MEMBER_LIST@93..144
+      6: (empty)
+      7: L_CURLY@91..93 "{" [] [Whitespace(" ")]
+      8: JS_CLASS_MEMBER_LIST@93..144
         0: JS_PROPERTY_CLASS_MEMBER@93..109
           0: JS_PROPERTY_MODIFIER_LIST@93..93
           1: JS_PRIVATE_CLASS_MEMBER_NAME@93..101
@@ -639,17 +647,18 @@ JsModule {
                     2: R_BRACK@140..142 "]" [] [Whitespace(" ")]
                 1: (empty)
             3: R_CURLY@142..144 "}" [] [Whitespace(" ")]
-      8: R_CURLY@144..145 "}" [] []
+      9: R_CURLY@144..145 "}" [] []
     2: JS_CLASS_DECLARATION@145..223
-      0: (empty)
-      1: CLASS_KW@145..152 "class" [Newline("\n")] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@152..162
+      0: JS_DECORATOR_LIST@145..145
+      1: (empty)
+      2: CLASS_KW@145..152 "class" [Newline("\n")] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@152..162
         0: IDENT@152..162 "TestClass" [] [Whitespace(" ")]
-      3: (empty)
       4: (empty)
       5: (empty)
-      6: L_CURLY@162..164 "{" [] [Whitespace(" ")]
-      7: JS_CLASS_MEMBER_LIST@164..222
+      6: (empty)
+      7: L_CURLY@162..164 "{" [] [Whitespace(" ")]
+      8: JS_CLASS_MEMBER_LIST@164..222
         0: JS_PROPERTY_CLASS_MEMBER@164..180
           0: JS_PROPERTY_MODIFIER_LIST@164..164
           1: JS_PRIVATE_CLASS_MEMBER_NAME@164..172
@@ -698,17 +707,18 @@ JsModule {
                     2: R_CURLY@218..220 "}" [] [Whitespace(" ")]
                 1: (empty)
             3: R_CURLY@220..222 "}" [] [Whitespace(" ")]
-      8: R_CURLY@222..223 "}" [] []
+      9: R_CURLY@222..223 "}" [] []
     3: JS_CLASS_DECLARATION@223..305
-      0: (empty)
-      1: CLASS_KW@223..230 "class" [Newline("\n")] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@230..240
+      0: JS_DECORATOR_LIST@223..223
+      1: (empty)
+      2: CLASS_KW@223..230 "class" [Newline("\n")] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@230..240
         0: IDENT@230..240 "TestClass" [] [Whitespace(" ")]
-      3: (empty)
       4: (empty)
       5: (empty)
-      6: L_CURLY@240..242 "{" [] [Whitespace(" ")]
-      7: JS_CLASS_MEMBER_LIST@242..304
+      6: (empty)
+      7: L_CURLY@240..242 "{" [] [Whitespace(" ")]
+      8: JS_CLASS_MEMBER_LIST@242..304
         0: JS_PROPERTY_CLASS_MEMBER@242..258
           0: JS_PROPERTY_MODIFIER_LIST@242..242
           1: JS_PRIVATE_CLASS_MEMBER_NAME@242..250
@@ -768,17 +778,18 @@ JsModule {
                     2: R_PAREN@300..302 ")" [] [Whitespace(" ")]
                 1: (empty)
             3: R_CURLY@302..304 "}" [] [Whitespace(" ")]
-      8: R_CURLY@304..305 "}" [] []
+      9: R_CURLY@304..305 "}" [] []
     4: JS_CLASS_DECLARATION@305..390
-      0: (empty)
-      1: CLASS_KW@305..312 "class" [Newline("\n")] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@312..322
+      0: JS_DECORATOR_LIST@305..305
+      1: (empty)
+      2: CLASS_KW@305..312 "class" [Newline("\n")] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@312..322
         0: IDENT@312..322 "TestClass" [] [Whitespace(" ")]
-      3: (empty)
       4: (empty)
       5: (empty)
-      6: L_CURLY@322..324 "{" [] [Whitespace(" ")]
-      7: JS_CLASS_MEMBER_LIST@324..389
+      6: (empty)
+      7: L_CURLY@322..324 "{" [] [Whitespace(" ")]
+      8: JS_CLASS_MEMBER_LIST@324..389
         0: JS_PROPERTY_CLASS_MEMBER@324..340
           0: JS_PROPERTY_MODIFIER_LIST@324..324
           1: JS_PRIVATE_CLASS_MEMBER_NAME@324..332
@@ -836,17 +847,18 @@ JsModule {
                     2: R_PAREN@385..387 ")" [] [Whitespace(" ")]
                 1: (empty)
             3: R_CURLY@387..389 "}" [] [Whitespace(" ")]
-      8: R_CURLY@389..390 "}" [] []
+      9: R_CURLY@389..390 "}" [] []
     5: JS_CLASS_DECLARATION@390..478
-      0: (empty)
-      1: CLASS_KW@390..397 "class" [Newline("\n")] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@397..407
+      0: JS_DECORATOR_LIST@390..390
+      1: (empty)
+      2: CLASS_KW@390..397 "class" [Newline("\n")] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@397..407
         0: IDENT@397..407 "TestClass" [] [Whitespace(" ")]
-      3: (empty)
       4: (empty)
       5: (empty)
-      6: L_CURLY@407..409 "{" [] [Whitespace(" ")]
-      7: JS_CLASS_MEMBER_LIST@409..477
+      6: (empty)
+      7: L_CURLY@407..409 "{" [] [Whitespace(" ")]
+      8: JS_CLASS_MEMBER_LIST@409..477
         0: JS_PROPERTY_CLASS_MEMBER@409..425
           0: JS_PROPERTY_MODIFIER_LIST@409..409
           1: JS_PRIVATE_CLASS_MEMBER_NAME@409..417
@@ -906,5 +918,5 @@ JsModule {
                     2: R_PAREN@473..475 ")" [] [Whitespace(" ")]
                 1: (empty)
             3: R_CURLY@475..477 "}" [] [Whitespace(" ")]
-      8: R_CURLY@477..478 "}" [] []
+      9: R_CURLY@477..478 "}" [] []
   3: EOF@478..479 "" [Newline("\n")] []

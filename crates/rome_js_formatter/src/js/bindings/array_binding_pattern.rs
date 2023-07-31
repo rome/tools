@@ -5,7 +5,7 @@ use rome_js_syntax::JsArrayBindingPattern;
 use rome_js_syntax::JsArrayBindingPatternFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsArrayBindingPattern;
+pub(crate) struct FormatJsArrayBindingPattern;
 
 impl FormatNodeRule<JsArrayBindingPattern> for FormatJsArrayBindingPattern {
     fn fmt_fields(&self, node: &JsArrayBindingPattern, f: &mut JsFormatter) -> FormatResult<()> {

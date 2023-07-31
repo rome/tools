@@ -1,5 +1,7 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+assertion_line: 212
+info: js/destructuring/destructuring.js
 ---
 
 # Input
@@ -50,6 +52,7 @@ class A {
     return id + title;
   }
 }
+
 ```
 
 
@@ -133,6 +136,5 @@ class A {
   }
 }
 ```
-
 
 

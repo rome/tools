@@ -1,12 +1,14 @@
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyStatement, JsLanguage, JsModuleItemList, JsStatementList, JsVariableDeclaration,
-    JsVariableDeclarator, JsVariableDeclaratorList, JsVariableStatement, T,
+    inner_string_text, AnyJsStatement, JsLanguage, JsModuleItemList, JsStatementList, JsSyntaxNode,
+    JsVariableDeclaration, JsVariableDeclarator, JsVariableDeclaratorList, JsVariableStatement, T,
 };
-use rome_rowan::{AstNode, AstSeparatedList, BatchMutation};
+use rome_rowan::{AstNode, AstSeparatedList, BatchMutation, Direction, WalkEvent};
 use std::borrow::Cow;
+use std::iter;
 
 pub mod batch;
+pub mod case;
 pub mod escape;
 pub mod rename;
 #[cfg(test)]
@@ -129,7 +131,7 @@ pub fn to_camel_case(input: &str) -> Cow<str> {
 /// module item list, or by replacing the statement node with an empty statement
 pub(crate) fn remove_statement<N>(mutation: &mut BatchMutation<JsLanguage>, node: &N) -> Option<()>
 where
-    N: AstNode<Language = JsLanguage> + Into<JsAnyStatement>,
+    N: AstNode<Language = JsLanguage> + Into<AnyJsStatement>,
 {
     let parent = node.syntax().parent()?;
 
@@ -138,7 +140,7 @@ where
     } else {
         mutation.replace_node(
             node.clone().into(),
-            JsAnyStatement::JsEmptyStatement(make::js_empty_statement(make::token(T![;]))),
+            AnyJsStatement::JsEmptyStatement(make::js_empty_statement(make::token(T![;]))),
         );
     }
 
@@ -190,6 +192,48 @@ pub(crate) fn remove_declarator(
     }
 
     Some(())
+}
+
+/// Verifies that both nodes are equal by checking their descendants (nodes included) kinds
+/// and tokens (same kind and inner token text).
+pub(crate) fn is_node_equal(a_node: &JsSyntaxNode, b_node: &JsSyntaxNode) -> bool {
+    let a_tree = a_node.preorder_with_tokens(Direction::Next);
+    let b_tree = b_node.preorder_with_tokens(Direction::Next);
+
+    for (a_child, b_child) in iter::zip(a_tree, b_tree) {
+        let a_event = match a_child {
+            WalkEvent::Enter(event) => event,
+            WalkEvent::Leave(event) => event,
+        };
+
+        let b_event = match b_child {
+            WalkEvent::Enter(event) => event,
+            WalkEvent::Leave(event) => event,
+        };
+
+        if a_event.kind() != b_event.kind() {
+            return false;
+        }
+
+        let a_token = a_event.as_token();
+        let b_token = b_event.as_token();
+
+        match (a_token, b_token) {
+            // both are nodes
+            (None, None) => continue,
+            // one of them is a node
+            (None, Some(_)) | (Some(_), None) => return false,
+            // both are tokens
+            (Some(a), Some(b)) => {
+                if inner_string_text(a) != inner_string_text(b) {
+                    return false;
+                }
+                continue;
+            }
+        }
+    }
+
+    true
 }
 
 #[test]

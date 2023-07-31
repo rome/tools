@@ -1,23 +1,23 @@
-//! Generated file, do not edit by hand, see `xtask/codegen`
+//! This is a generated file. Don't modify it by hand! Run 'cargo codegen formatter' to re-generate the file.
 
 use crate::prelude::*;
-use rome_js_syntax::JsAnyObjectBindingPatternMember;
+use rome_js_syntax::AnyJsObjectBindingPatternMember;
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsAnyObjectBindingPatternMember;
-impl FormatRule<JsAnyObjectBindingPatternMember> for FormatJsAnyObjectBindingPatternMember {
+pub(crate) struct FormatAnyJsObjectBindingPatternMember;
+impl FormatRule<AnyJsObjectBindingPatternMember> for FormatAnyJsObjectBindingPatternMember {
     type Context = JsFormatContext;
-    fn fmt(&self, node: &JsAnyObjectBindingPatternMember, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &AnyJsObjectBindingPatternMember, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            JsAnyObjectBindingPatternMember::JsObjectBindingPatternProperty(node) => {
+            AnyJsObjectBindingPatternMember::JsObjectBindingPatternProperty(node) => {
                 node.format().fmt(f)
             }
-            JsAnyObjectBindingPatternMember::JsObjectBindingPatternRest(node) => {
+            AnyJsObjectBindingPatternMember::JsObjectBindingPatternRest(node) => {
                 node.format().fmt(f)
             }
-            JsAnyObjectBindingPatternMember::JsObjectBindingPatternShorthandProperty(node) => {
+            AnyJsObjectBindingPatternMember::JsObjectBindingPatternShorthandProperty(node) => {
                 node.format().fmt(f)
             }
-            JsAnyObjectBindingPatternMember::JsUnknownBinding(node) => node.format().fmt(f),
+            AnyJsObjectBindingPatternMember::JsBogusBinding(node) => node.format().fmt(f),
         }
     }
 }

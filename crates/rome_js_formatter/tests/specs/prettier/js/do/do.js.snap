@@ -1,7 +1,6 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
-info:
-  test_file: js/do/do.js
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info: js/do/do.js
 ---
 
 # Input
@@ -61,6 +60,21 @@ function foo() {
     obj[key];
   }
 };
+
+() => (    ) => do {
+  var obj = { foo: "bar", bar: "foo" };
+  for (var key in obj) {
+    obj[key];
+  }
+};
+
+a =>b=>     c => do {
+  var obj = { foo: "bar", bar: "foo" };
+  for (var key in obj) {
+    obj[key];
+  }
+};
+
 ```
 
 
@@ -69,7 +83,7 @@ function foo() {
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,55 +1,61 @@
+@@ -1,69 +1,77 @@
  const envSpecific = {
 -  domain: do {
 -    if (env === "production") "https://abc.mno.com/";
@@ -131,7 +145,7 @@ function foo() {
  }
  
 -(do {});
--(do {} + 1);
+-(do {}) + 1;
 -1 + do {};
 -() => do {};
 +(
@@ -159,6 +173,24 @@ function foo() {
  
 -() => do {
 +() =>
++do {
+   var obj = { foo: "bar", bar: "foo" };
+   for (var key in obj) {
+     obj[key];
+   }
+ };
+ 
+-() => () => do {
++() => (    ) =>
++do {
+   var obj = { foo: "bar", bar: "foo" };
+   for (var key in obj) {
+     obj[key];
+   }
+ };
+ 
+-(a) => (b) => (c) => do {
++a =>b=>     c =>
 +do {
    var obj = { foo: "bar", bar: "foo" };
    for (var key in obj) {
@@ -231,8 +263,23 @@ do {
     obj[key];
   }
 };
-```
 
+() => (    ) =>
+do {
+  var obj = { foo: "bar", bar: "foo" };
+  for (var key in obj) {
+    obj[key];
+  }
+};
+
+a =>b=>     c =>
+do {
+  var obj = { foo: "bar", bar: "foo" };
+  for (var key in obj) {
+    obj[key];
+  }
+};
+```
 
 # Errors
 ```
@@ -452,6 +499,28 @@ do.js:26:11 parse ━━━━━━━━━━━━━━━━━━━━�
   
   i Remove if
   
+do.js:31:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+  
+    29 │             <LoginButton />
+    30 │           }
+  > 31 │         }
+       │         ^
+    32 │       }
+    33 │     </nav>
+  
+do.js:32:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+  
+    30 │           }
+    31 │         }
+  > 32 │       }
+       │       ^
+    33 │     </nav>
+    34 │   );
+  
 do.js:37:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `)` but instead found `do`
@@ -623,30 +692,74 @@ do.js:54:2 parse ━━━━━━━━━━━━━━━━━━━━━
   > 54 │ };
        │  ^
     55 │ 
+    56 │ () => (    ) => do {
   
   i Remove ;
   
-do.js:31:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+do.js:56:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+  × expected a function body, or an expression but instead found 'do'
   
-    29 │             <LoginButton />
-    30 │           }
-  > 31 │         }
-       │         ^
-    32 │       }
-    33 │     </nav>
+    54 │ };
+    55 │ 
+  > 56 │ () => (    ) => do {
+       │                 ^^
+    57 │   var obj = { foo: "bar", bar: "foo" };
+    58 │   for (var key in obj) {
   
-do.js:32:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  i Expected a function body, or an expression here
+  
+    54 │ };
+    55 │ 
+  > 56 │ () => (    ) => do {
+       │                 ^^
+    57 │   var obj = { foo: "bar", bar: "foo" };
+    58 │   for (var key in obj) {
+  
+do.js:61:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+  × expected `while` but instead found `;`
   
-    30 │           }
-    31 │         }
-  > 32 │       }
-       │       ^
-    33 │     </nav>
-    34 │   );
+    59 │     obj[key];
+    60 │   }
+  > 61 │ };
+       │  ^
+    62 │ 
+    63 │ a =>b=>     c => do {
+  
+  i Remove ;
+  
+do.js:63:18 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected a function body, or an expression but instead found 'do'
+  
+    61 │ };
+    62 │ 
+  > 63 │ a =>b=>     c => do {
+       │                  ^^
+    64 │   var obj = { foo: "bar", bar: "foo" };
+    65 │   for (var key in obj) {
+  
+  i Expected a function body, or an expression here
+  
+    61 │ };
+    62 │ 
+  > 63 │ a =>b=>     c => do {
+       │                  ^^
+    64 │   var obj = { foo: "bar", bar: "foo" };
+    65 │   for (var key in obj) {
+  
+do.js:68:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `while` but instead found `;`
+  
+    66 │     obj[key];
+    67 │   }
+  > 68 │ };
+       │  ^
+    69 │ 
+  
+  i Remove ;
   
 
 ```

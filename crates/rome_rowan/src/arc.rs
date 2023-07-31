@@ -6,7 +6,7 @@ use std::{
     marker::PhantomData,
     mem::{self, ManuallyDrop},
     ops::Deref,
-    ptr,
+    ptr::{self, NonNull},
     sync::atomic::{
         self,
         Ordering::{Acquire, Relaxed, Release},
@@ -91,6 +91,13 @@ impl<T: ?Sized> Arc<T> {
 
     pub(crate) fn ptr(&self) -> *mut ArcInner<T> {
         self.p.as_ptr()
+    }
+
+    #[inline]
+    pub(crate) fn into_raw(self) -> NonNull<T> {
+        let ptr = NonNull::from(&self.inner().data);
+        mem::forget(self);
+        ptr
     }
 }
 

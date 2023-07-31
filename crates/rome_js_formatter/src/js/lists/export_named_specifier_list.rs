@@ -3,7 +3,7 @@ use crate::prelude::*;
 use rome_js_syntax::JsExportNamedSpecifierList;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsExportNamedSpecifierList;
+pub(crate) struct FormatJsExportNamedSpecifierList;
 
 impl FormatRule<JsExportNamedSpecifierList> for FormatJsExportNamedSpecifierList {
     type Context = JsFormatContext;

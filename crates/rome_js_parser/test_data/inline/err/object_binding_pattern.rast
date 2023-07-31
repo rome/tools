@@ -28,7 +28,7 @@ JsModule {
             },
             semicolon_token: missing (optional),
         },
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 R_CURLY@10..12 "}" [] [Whitespace(" ")],
                 EQ@12..14 "=" [] [Whitespace(" ")],
@@ -62,7 +62,7 @@ JsModule {
                             l_curly_token: L_CURLY@35..37 "{" [] [Whitespace(" ")],
                             properties: JsObjectBindingPatternPropertyList [
                                 JsObjectBindingPatternShorthandProperty {
-                                    identifier: JsUnknownBinding {
+                                    identifier: JsBogusBinding {
                                         items: [
                                             IDENT@37..42 "eval" [] [Whitespace(" ")],
                                         ],
@@ -216,7 +216,7 @@ JsModule {
             1: (empty)
             2: (empty)
       1: (empty)
-    1: JS_UNKNOWN_STATEMENT@10..14
+    1: JS_BOGUS_STATEMENT@10..14
       0: R_CURLY@10..12 "}" [] [Whitespace(" ")]
       1: EQ@12..14 "=" [] [Whitespace(" ")]
     2: JS_BLOCK_STATEMENT@14..29
@@ -241,7 +241,7 @@ JsModule {
               0: L_CURLY@35..37 "{" [] [Whitespace(" ")]
               1: JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST@37..42
                 0: JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY@37..42
-                  0: JS_UNKNOWN_BINDING@37..42
+                  0: JS_BOGUS_BINDING@37..42
                     0: IDENT@37..42 "eval" [] [Whitespace(" ")]
                   1: (empty)
               2: R_CURLY@42..44 "}" [] [Whitespace(" ")]

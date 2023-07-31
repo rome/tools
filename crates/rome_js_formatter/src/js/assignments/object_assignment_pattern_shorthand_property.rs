@@ -5,7 +5,7 @@ use rome_js_syntax::JsObjectAssignmentPatternShorthandProperty;
 use rome_js_syntax::JsObjectAssignmentPatternShorthandPropertyFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsObjectAssignmentPatternShorthandProperty;
+pub(crate) struct FormatJsObjectAssignmentPatternShorthandProperty;
 
 impl FormatNodeRule<JsObjectAssignmentPatternShorthandProperty>
     for FormatJsObjectAssignmentPatternShorthandProperty

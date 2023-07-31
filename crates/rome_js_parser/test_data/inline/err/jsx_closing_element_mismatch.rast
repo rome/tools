@@ -97,24 +97,24 @@ JsModule {
             semicolon_token: SEMICOLON@56..57 ";" [] [],
         },
         JsExpressionStatement {
-            expression: JsUnknownExpression {
+            expression: JsBogusExpression {
                 items: [
-                    JsUnknown {
+                    JsBogus {
                         items: [
                             JsxOpeningFragment {
                                 l_angle_token: L_ANGLE@57..59 "<" [Newline("\n")] [],
                                 r_angle_token: R_ANGLE@59..60 ">" [] [],
                             },
-                            JsUnknown {
+                            JsBogus {
                                 items: [
-                                    JsUnknown {
+                                    JsBogus {
                                         items: [
-                                            JsUnknown {
+                                            JsBogus {
                                                 items: [
                                                     L_ANGLE@60..61 "<" [] [],
-                                                    JsUnknown {
+                                                    JsBogus {
                                                         items: [
-                                                            JsUnknown {
+                                                            JsBogus {
                                                                 items: [
                                                                     JS_NUMBER_LITERAL@61..62 "5" [] [],
                                                                 ],
@@ -225,17 +225,17 @@ JsModule {
             3: R_ANGLE@55..56 ">" [] []
       1: SEMICOLON@56..57 ";" [] []
     3: JS_EXPRESSION_STATEMENT@57..74
-      0: JS_UNKNOWN_EXPRESSION@57..73
-        0: JS_UNKNOWN@57..73
+      0: JS_BOGUS_EXPRESSION@57..73
+        0: JS_BOGUS@57..73
           0: JSX_OPENING_FRAGMENT@57..60
             0: L_ANGLE@57..59 "<" [Newline("\n")] []
             1: R_ANGLE@59..60 ">" [] []
-          1: JS_UNKNOWN@60..70
-            0: JS_UNKNOWN@60..70
-              0: JS_UNKNOWN@60..63
+          1: JS_BOGUS@60..70
+            0: JS_BOGUS@60..70
+              0: JS_BOGUS@60..63
                 0: L_ANGLE@60..61 "<" [] []
-                1: JS_UNKNOWN@61..62
-                  0: JS_UNKNOWN@61..62
+                1: JS_BOGUS@61..62
+                  0: JS_BOGUS@61..62
                     0: JS_NUMBER_LITERAL@61..62 "5" [] []
                 2: R_ANGLE@62..63 ">" [] []
               1: JSX_CHILD_LIST@63..63

@@ -1,6 +1,6 @@
+import * as fs from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import * as fs from "node:fs";
 
 const ROMECLI_ROOT = resolve(fileURLToPath(import.meta.url), "../..");
 const PACKAGES_ROOT = resolve(ROMECLI_ROOT, "..");
@@ -24,11 +24,12 @@ function generateNativePackage(platform, arch) {
 	fs.mkdirSync(packageRoot);
 
 	// Generate the package.json manifest
-	const { version } = rootManifest;
+	const { version, license } = rootManifest;
 
 	const manifest = JSON.stringify({
 		name: packageName,
 		version,
+		license,
 		os: [platform],
 		cpu: [arch],
 	});
@@ -44,6 +45,7 @@ function generateNativePackage(platform, arch) {
 
 	console.log(`Copy binary ${binaryTarget}`);
 	fs.copyFileSync(binarySource, binaryTarget);
+	fs.chmodSync(binaryTarget, 0o755);
 }
 
 function updateWasmPackage(target) {
@@ -76,9 +78,7 @@ function writeManifest(packagePath) {
 	);
 
 	manifestData["version"] = rootManifest.version;
-	manifestData["optionalDependencies"] = Object.fromEntries(
-		nativePackages,
-	);
+	manifestData["optionalDependencies"] = Object.fromEntries(nativePackages);
 
 	console.log(`Update manifest ${manifestPath}`);
 	const content = JSON.stringify(manifestData);

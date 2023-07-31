@@ -6,7 +6,7 @@ use rome_js_syntax::JsImportCallExpressionFields;
 use rome_js_syntax::{JsImportCallExpression, JsSyntaxKind, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsImportCallExpression;
+pub(crate) struct FormatJsImportCallExpression;
 
 impl FormatNodeRule<JsImportCallExpression> for FormatJsImportCallExpression {
     fn fmt_fields(&self, node: &JsImportCallExpression, f: &mut JsFormatter) -> FormatResult<()> {
@@ -15,7 +15,7 @@ impl FormatNodeRule<JsImportCallExpression> for FormatJsImportCallExpression {
             arguments,
         } = node.as_fields();
 
-        write![f, [import_token.format(), arguments.format(),]]
+        write![f, [import_token.format(), arguments.format()]]
     }
 
     fn needs_parentheses(&self, item: &JsImportCallExpression) -> bool {

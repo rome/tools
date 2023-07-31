@@ -1,82 +1,163 @@
-use rome_js_semantic::{AllReferencesExtensions, SemanticModel};
+use rome_console::fmt::Formatter;
+use rome_console::markup;
+use rome_diagnostics::{Diagnostic, Location, Severity};
+use rome_js_semantic::{ReferencesExtensions, SemanticModel};
 use rome_js_syntax::{
-    JsIdentifierAssignment, JsIdentifierBinding, JsLanguage, JsReferenceIdentifier, JsSyntaxKind,
-    JsSyntaxNode, JsSyntaxToken,
+    binding_ext::AnyJsIdentifierBinding, JsIdentifierAssignment, JsIdentifierBinding, JsLanguage,
+    JsReferenceIdentifier, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken, TextRange,
+    TsIdentifierBinding,
 };
 use rome_rowan::{AstNode, BatchMutation, SyntaxNodeCast, TriviaPiece};
 use serde::{Deserialize, Serialize};
+use std::fmt;
 
 pub trait RenamableNode {
-    fn declaration(&self, model: &SemanticModel) -> Option<JsSyntaxNode>;
+    fn binding(&self, model: &SemanticModel) -> Option<JsSyntaxNode>;
 }
 
 impl RenamableNode for JsIdentifierBinding {
-    fn declaration(&self, _: &SemanticModel) -> Option<JsSyntaxNode> {
+    fn binding(&self, _: &SemanticModel) -> Option<JsSyntaxNode> {
+        Some(self.syntax().clone())
+    }
+}
+
+impl RenamableNode for TsIdentifierBinding {
+    fn binding(&self, _: &SemanticModel) -> Option<JsSyntaxNode> {
         Some(self.syntax().clone())
     }
 }
 
 impl RenamableNode for JsReferenceIdentifier {
-    fn declaration(&self, model: &SemanticModel) -> Option<JsSyntaxNode> {
-        Some(model.declaration(self)?.syntax().clone())
+    fn binding(&self, model: &SemanticModel) -> Option<JsSyntaxNode> {
+        Some(model.binding(self)?.syntax().clone())
     }
 }
 
 impl RenamableNode for JsIdentifierAssignment {
-    fn declaration(&self, model: &SemanticModel) -> Option<JsSyntaxNode> {
-        Some(model.declaration(self)?.syntax().clone())
+    fn binding(&self, model: &SemanticModel) -> Option<JsSyntaxNode> {
+        Some(model.binding(self)?.syntax().clone())
     }
 }
 
-pub enum JsAnyRenamableDeclaration {
+impl RenamableNode for AnyJsIdentifierBinding {
+    fn binding(&self, _: &SemanticModel) -> Option<JsSyntaxNode> {
+        Some(self.syntax().clone())
+    }
+}
+
+pub enum AnyJsRenamableDeclaration {
     JsIdentifierBinding(JsIdentifierBinding),
     JsReferenceIdentifier(JsReferenceIdentifier),
     JsIdentifierAssignment(JsIdentifierAssignment),
+    TsIdentifierBinding(TsIdentifierBinding),
 }
 
-impl RenamableNode for JsAnyRenamableDeclaration {
-    fn declaration(&self, model: &SemanticModel) -> Option<JsSyntaxNode> {
+impl RenamableNode for AnyJsRenamableDeclaration {
+    fn binding(&self, model: &SemanticModel) -> Option<JsSyntaxNode> {
         match self {
-            JsAnyRenamableDeclaration::JsIdentifierBinding(node) => {
-                RenamableNode::declaration(node, model)
+            AnyJsRenamableDeclaration::JsIdentifierBinding(node) => {
+                RenamableNode::binding(node, model)
             }
-            JsAnyRenamableDeclaration::JsReferenceIdentifier(node) => {
-                RenamableNode::declaration(node, model)
+            AnyJsRenamableDeclaration::JsReferenceIdentifier(node) => {
+                RenamableNode::binding(node, model)
             }
-            JsAnyRenamableDeclaration::JsIdentifierAssignment(node) => {
-                RenamableNode::declaration(node, model)
+            AnyJsRenamableDeclaration::JsIdentifierAssignment(node) => {
+                RenamableNode::binding(node, model)
+            }
+            AnyJsRenamableDeclaration::TsIdentifierBinding(node) => {
+                RenamableNode::binding(node, model)
             }
         }
     }
 }
 
-#[derive(Deserialize, Serialize)]
+#[derive(Deserialize, Serialize, Debug)]
 pub enum RenameError {
-    CannotFindDeclaration,
+    CannotFindDeclaration(String),
     CannotBeRenamed {
         original_name: String,
+        original_range: TextRange,
         new_name: String,
     },
 }
 
-impl TryFrom<JsSyntaxNode> for JsAnyRenamableDeclaration {
+impl std::fmt::Display for RenameError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            RenameError::CannotBeRenamed {
+                original_name,
+                new_name,
+                ..
+            } => {
+                write!(
+                    f,
+                    "encountered an error while renaming the symbol \"{}\" to \"{}\"",
+                    original_name, new_name
+                )
+            }
+            RenameError::CannotFindDeclaration(_) => {
+                write!(
+                    f,
+                    "encountered an error finding a declaration at the specified position"
+                )
+            }
+        }
+    }
+}
+
+impl Diagnostic for RenameError {
+    fn severity(&self) -> Severity {
+        Severity::Error
+    }
+
+    fn message(&self, fmt: &mut Formatter<'_>) -> std::io::Result<()> {
+        match self {
+            RenameError::CannotFindDeclaration(node) => {
+                fmt.write_markup(
+                    markup! { "Can't find the declaration. Found node "{{node}} }
+                )
+            }
+            RenameError::CannotBeRenamed { original_name, new_name, .. } => {
+                fmt.write_markup(
+                    markup! { "Can't rename from "<Emphasis>{{original_name}}</Emphasis>" to "<Emphasis>{{new_name}}</Emphasis>"" }
+                )
+            }
+        }
+    }
+
+    fn location(&self) -> Location<'_> {
+        let location = Location::builder();
+        if let RenameError::CannotBeRenamed { original_range, .. } = self {
+            location.span(original_range).build()
+        } else {
+            location.build()
+        }
+    }
+}
+
+impl TryFrom<JsSyntaxNode> for AnyJsRenamableDeclaration {
     type Error = RenameError;
 
     fn try_from(node: JsSyntaxNode) -> Result<Self, Self::Error> {
+        let node_name = node.text_trimmed().to_string();
         match node.kind() {
             JsSyntaxKind::JS_IDENTIFIER_BINDING => node
                 .cast::<JsIdentifierBinding>()
-                .map(JsAnyRenamableDeclaration::JsIdentifierBinding)
-                .ok_or(Self::Error::CannotFindDeclaration),
+                .map(AnyJsRenamableDeclaration::JsIdentifierBinding)
+                .ok_or(Self::Error::CannotFindDeclaration(node_name)),
             JsSyntaxKind::JS_REFERENCE_IDENTIFIER => node
                 .cast::<JsReferenceIdentifier>()
-                .map(JsAnyRenamableDeclaration::JsReferenceIdentifier)
-                .ok_or(Self::Error::CannotFindDeclaration),
+                .map(AnyJsRenamableDeclaration::JsReferenceIdentifier)
+                .ok_or(Self::Error::CannotFindDeclaration(node_name)),
             JsSyntaxKind::JS_IDENTIFIER_ASSIGNMENT => node
                 .cast::<JsIdentifierAssignment>()
-                .map(JsAnyRenamableDeclaration::JsIdentifierAssignment)
-                .ok_or(Self::Error::CannotFindDeclaration),
-            _ => Err(Self::Error::CannotFindDeclaration),
+                .map(AnyJsRenamableDeclaration::JsIdentifierAssignment)
+                .ok_or(Self::Error::CannotFindDeclaration(node_name)),
+            JsSyntaxKind::TS_IDENTIFIER_BINDING => node
+                .cast::<TsIdentifierBinding>()
+                .map(AnyJsRenamableDeclaration::TsIdentifierBinding)
+                .ok_or(Self::Error::CannotFindDeclaration(node_name)),
+            _ => Err(Self::Error::CannotFindDeclaration(node_name)),
         }
     }
 }
@@ -124,7 +205,7 @@ pub trait RenameSymbolExtensions {
     fn rename_any_renamable_node(
         &mut self,
         model: &SemanticModel,
-        node: JsAnyRenamableDeclaration,
+        node: AnyJsRenamableDeclaration,
         new_name: &str,
     ) -> bool {
         self.rename_node_declaration(model, node, new_name)
@@ -163,10 +244,7 @@ impl RenameSymbolExtensions for BatchMutation<JsLanguage> {
         node: impl RenamableNode,
         new_name: &str,
     ) -> bool {
-        let prev_binding = match node
-            .declaration(model)
-            .and_then(|node| node.cast::<JsIdentifierBinding>())
-        {
+        let prev_binding = match node.binding(model).and_then(AnyJsIdentifierBinding::cast) {
             Some(prev_binding) => prev_binding,
             None => return false,
         };
@@ -205,14 +283,14 @@ impl RenameSymbolExtensions for BatchMutation<JsLanguage> {
                 return false;
             }
 
-            let prev_token = match reference.node().kind() {
+            let prev_token = match reference.syntax().kind() {
                 JsSyntaxKind::JS_REFERENCE_IDENTIFIER => reference
-                    .node()
+                    .syntax()
                     .clone()
                     .cast::<JsReferenceIdentifier>()
                     .and_then(|node| node.value_token().ok()),
                 JsSyntaxKind::JS_IDENTIFIER_ASSIGNMENT => reference
-                    .node()
+                    .syntax()
                     .clone()
                     .cast::<JsIdentifierAssignment>()
                     .and_then(|node| node.name_token().ok()),
@@ -227,13 +305,14 @@ impl RenameSymbolExtensions for BatchMutation<JsLanguage> {
 
         // Now it is safe to push changes to the batch mutation
         // Rename binding
+        let Ok(prev_name_token) = prev_binding.name_token() else {
+            return false;
+        };
 
         let next_name_token = token_with_new_text(&name_token, new_name);
-        let next_binding = prev_binding.clone().with_name_token(next_name_token);
-        self.replace_node(prev_binding, next_binding);
+        self.replace_token(prev_name_token, next_name_token);
 
         // Rename all references
-
         for (prev_token, next_token) in changes {
             self.replace_token(prev_token, next_token);
         }
@@ -244,12 +323,18 @@ impl RenameSymbolExtensions for BatchMutation<JsLanguage> {
 
 #[cfg(test)]
 mod tests {
+    use crate::utils::rename::RenameError;
     use crate::{assert_rename_nok, assert_rename_ok};
+    use rome_diagnostics::{print_diagnostic_to_string, DiagnosticExt, Error};
+    use rome_js_syntax::TextRange;
 
     assert_rename_ok! {
         ok_rename_declaration,
             "let a;",
             "let b;",
+        ok_rename_declaration_with_multiple_declarators,
+            "let a1, a2;",
+            "let b1, b2;",
         ok_rename_declaration_inner_scope,
             "let b; if (true) { let a; }",
             "let b; if (true) { let b; }",
@@ -282,5 +367,39 @@ mod tests {
         nok_rename_write_reference, "let a; if (true) { let b; a = 1 }",
         nok_rename_read_reference_parent_scope_conflict, "function f() { let b; if(true) { console.log(a); } } var a;",
         nok_rename_function_conflict, "function a() {} function b() {}",
+    }
+
+    fn snap_diagnostic(test_name: &str, diagnostic: Error) {
+        let content = print_diagnostic_to_string(&diagnostic);
+
+        insta::with_settings!({
+            prepend_module_to_snapshot => false,
+        }, {
+            insta::assert_snapshot!(test_name, content);
+
+        });
+    }
+
+    #[test]
+    fn cannot_find_declaration() {
+        snap_diagnostic(
+            "cannot_find_declaration",
+            RenameError::CannotFindDeclaration("async".to_string()).with_file_path("example.js"),
+        )
+    }
+
+    #[test]
+    fn cannot_be_renamed() {
+        let source_code = "async function f() {}";
+        snap_diagnostic(
+            "cannot_be_renamed",
+            RenameError::CannotBeRenamed {
+                original_name: "async".to_string(),
+                original_range: TextRange::new(0.into(), 5.into()),
+                new_name: "await".to_string(),
+            }
+            .with_file_path("example.js")
+            .with_file_source_code(source_code),
+        )
     }
 }

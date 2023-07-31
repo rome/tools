@@ -35,7 +35,7 @@ JsModule {
             },
             semicolon_token: missing (optional),
         },
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 COMMA@31..33 "," [] [Whitespace(" ")],
             ],
@@ -91,7 +91,7 @@ JsModule {
                             },
                         },
                         missing separator,
-                        JsUnknownNamedImportSpecifier {
+                        JsBogusNamedImportSpecifier {
                             items: [
                                 PLUS@64..66 "+" [] [Whitespace(" ")],
                                 IDENT@66..68 "bb" [] [],
@@ -307,7 +307,7 @@ JsModule {
         5: (empty)
         6: (empty)
       2: (empty)
-    3: JS_UNKNOWN_STATEMENT@31..33
+    3: JS_BOGUS_STATEMENT@31..33
       0: COMMA@31..33 "," [] [Whitespace(" ")]
     4: JS_BLOCK_STATEMENT@33..42
       0: L_CURLY@33..35 "{" [] [Whitespace(" ")]
@@ -345,7 +345,7 @@ JsModule {
               1: JS_IDENTIFIER_BINDING@61..64
                 0: IDENT@61..64 "aa" [] [Whitespace(" ")]
             1: (empty)
-            2: JS_UNKNOWN_NAMED_IMPORT_SPECIFIER@64..68
+            2: JS_BOGUS_NAMED_IMPORT_SPECIFIER@64..68
               0: PLUS@64..66 "+" [] [Whitespace(" ")]
               1: IDENT@66..68 "bb" [] []
             3: COMMA@68..70 "," [] [Whitespace(" ")]

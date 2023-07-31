@@ -5,7 +5,7 @@ use rome_js_syntax::JsYieldArgument;
 use rome_js_syntax::JsYieldArgumentFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsYieldArgument;
+pub(crate) struct FormatJsYieldArgument;
 
 impl FormatNodeRule<JsYieldArgument> for FormatJsYieldArgument {
     fn fmt_fields(&self, node: &JsYieldArgument, f: &mut JsFormatter) -> FormatResult<()> {

@@ -8,10 +8,10 @@ expression: content
 {
   "linter": {
     "rules": {
-        "recommended": true,
-        "correctness": {
-            "recommended": false
-        }
+      "recommended": true,
+      "suspicious": {
+        "recommended": false
+      }
     }
   }
 }
@@ -20,20 +20,14 @@ expression: content
 ## `fix.js`
 
 ```js
-try {
-    !a && !b;
-} catch (err) {
-    err = 24;
-}
+1 >= -0;
 
 ```
 
 # Emitted Messages
 
 ```block
-Skipped 1 suggested fixes.
-If you wish to apply the suggested fixes, use the command rome check --apply-suggested
-
+Fixed 1 file(s) in <TIME>
 ```
 
 
