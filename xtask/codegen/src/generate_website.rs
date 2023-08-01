@@ -11,14 +11,6 @@ description: Notes about the Rome's VSCode extension
 ---
 "#;
 
-const CLI_FRONTMATTER: &str = r#"---
-title: CLI
-emoji: ⌨️
-category: reference
-description: Available commands and arguments in the Rome CLI.
----
-"#;
-
 const SCHEMA_TEMPLATE: &str = r#"// Run `ROME_VERSION=<version number> cargo codegen-website
 // to generate a new schema
 import {readFileSync} from "fs";
@@ -46,9 +38,29 @@ pub(crate) fn generate_files() -> Result<()> {
     if VERSION != "0.0.0" {
         let parser = rome_command();
         let markdown = parser.render_markdown("rome");
+        let markdown = markdown
+            .replace("\n### ", "\n#### ")
+            .replace("\n## ", "\n### ")
+            .replace("\n# ", "\n## ");
+        let mut cli_content = fs::read_to_string(project_root().join("website/src/pages/cli.mdx"))?;
+
+        let start = "\n[//]: # (Start-codegen)\n";
+        let end = "\n[//]: # (End-codegen)";
+
+        debug_assert!(cli_content.contains(start));
+        debug_assert!(cli_content.contains(end));
+
+        let start_index = cli_content
+            .find(start)
+            .expect("To contain start placeholder")
+            + start.len();
+        let end_index = cli_content.find(end).expect("To contain end placeholder");
+
+        cli_content.replace_range(start_index..end_index, &markdown);
+
         fs::write(
             project_root().join("website/src/pages/cli.mdx"),
-            format!("{CLI_FRONTMATTER}{markdown}"),
+            format!("{cli_content}"),
         )?;
         let schema_root_folder = project_root().join("website/src/pages/schemas");
         let schema_version_folder = schema_root_folder.join(VERSION);
