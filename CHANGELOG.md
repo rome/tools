@@ -7,51 +7,52 @@
 #### BREAKING CHANGES
 
 - The organize imports feature now groups import statements by "distance".
-  Modules that are "farther" from the user are put on the top, modules "closer" to the user are put on the bottom.
+  Modules "farther" from the user are put on the top, and modules "closer" to the user are placed on the bottom.
   Check the [documentation](https://docs.rome.tools/analyzer/) for more information about it.
 
 ### CLI
 
 #### BREAKING CHANGES
 
-- The CLI now exists with an error then there's an error inside the configuration.
+- The CLI now exists with an error when there's an error inside the configuration.
 
-	Previously, rome would raise warnings and continue the execution, by applying its defaults.
+  Previously, rome would raise warnings and continue the execution by applying its defaults.
 
-	This wasn't ideal for users, because this could have created false positives in linting, or formatted
-	code with a configuration that wasn't the of the user.
+  This could have been better for users because this could have created false positives in linting or formatted
+  code with a configuration that wasn't the user's.
 - The command `rome check` now shows formatter diagnostics when checking the code.
 
-	The presence of the diagnostics will result in an error code when the command finishes.
+  The diagnostics presence will result in an error code when the command finishes.
 
-	This is in line with semantic and behaviour meant for the command `rome check`.
+  This aligns with semantic and behaviour meant for the command `rome check`.
 
 #### Other changes
 
 - Fix [#4670](https://github.com/rome/tools/issues/4670), don't crash at empty default export.
 - Fix [#4556](https://github.com/rome/tools/issues/4556), which correctly handles new lines in the
-`.gitignore` file across OS.
+  `.gitignore` file across OS.
 - Add a new option to ignore unknown files `--files-ignore-unknown`:
 
-	```shell
-	rome format ./src --files-ignore-unknown
-	```
+    ```shell
+    rome format --files-ignore-unknown ./src
+    ```
 
-	Doing so, Rome won't emit diagnostics for files that doesn't know how to handle.
+  Doing so, Rome won't emit diagnostics for files that doesn't know how to handle.
 - Add a new option `--no-errors-on-unmatched`:
 
-	```shell
-	rome format ./src --no-errors-on-unmatched
-	```
+    ```shell
+    rome format --no-errors-on-unmatched ./src
+    ```
 
-	Rome won't exit with an error code in case no files were processed in the given paths.
+  Rome doesn't exit with an error code if no files were processed in the given paths.
 
 - Fixed the diagnostics emitted when running the `rome format` command;
 
-- Rome doesn't warn anymore when discovering (possibly infinite) symbolic links between directories.
+- Rome no longer warns when discovering (possibly infinite) symbolic links between directories.
   This fixes [#4193](https://github.com/rome/tools/issues/4193) which resulted in incorrect warnings
   when a single file or directory was pointed at by multiple symbolic links. Symbolic links to other
   symbolic links do still trigger warnings if they are too deeply nested.
+- Introduced a new command called `rome lint`, which will only run lint rules against the code base.
 
 ### Configuration
 
@@ -59,29 +60,29 @@
 
 - Add a new option to ignore unknown files:
 
-	```json
-	{
-		"files": {
-			"ignoreUnknown": true
-		}
-	}
-	```
-	Doing so, Rome won't emit diagnostics for file that it doesn't know how to handle.
+    ```json
+    {
+       "files": {
+          "ignoreUnknown": true
+       }
+    }
+    ```
+  Doing so, Rome won't emit diagnostics for file that it doesn't know how to handle.
 
 - Add a new `"javascript"` option to support the unsafe/experimental
-parameter decorators:
+  parameter decorators:
 
-	```json
-	{
-		"javascript": {
-			"parser": {
-				"unsafeParameterDecoratorsEnabled": true
-			}
-		}
-	}
-	```
+    ```json
+    {
+       "javascript": {
+          "parser": {
+             "unsafeParameterDecoratorsEnabled": true
+          }
+       }
+    }
+    ```
 - Add a new `"extends"` option, useful to split the configuration file in
-multiple files:
+  multiple files:
 
   ```json
   {
@@ -93,10 +94,10 @@ multiple files:
   resolve dependencies yet.
 
 - The commands `rome check` and `rome lint` now show the remaining diagnostics even when
-	`--apply-safe` or `--apply-unsafe` are passed.
+  `--apply-safe` or `--apply-unsafe` are passed.
 
 - Fix the commands `rome check` and `rome lint`, they won't exit with an error code
-if no error diagnostics are emitted.
+  if no error diagnostics are emitted.
 
 - Add a new option `--error-on-warnings`, which instructs Rome to exit with an error code when warnings are emitted.
 
@@ -120,17 +121,17 @@ if no error diagnostics are emitted.
 
 #### Other changes
 
-- The Rome LSP is now able to show diagnostics that belong to JSON lint rules.
-- Fix [#4564](https://github.com/rome/tools/issues/4564), now files too large don't emit errors.
-- The Rome LSP now sends client messages when files are ignored or too big.
+- The Rome LSP can now show diagnostics belonging to JSON lint rules.
+- Fix [#4564](https://github.com/rome/tools/issues/4564); files too large don't emit errors.
+- The Rome LSP sends client messages when files are ignored or too big.
 
 ### Formatter
 
-- Add a new option called `--jsx-quote-style` to the formatter. This option allows you to choose between single and double quotes for JSX attributes. [#4486](https://github.com/rome/tools/issues/4486)
+- Add a new option called `--jsx-quote-style` to the formatter. This option lets you choose between single and double quotes for JSX attributes. [#4486](https://github.com/rome/tools/issues/4486)
 
-- Add a new option called `--arrow-parentheses` to the formatter. This option allows you to set the parentheses style for arrow functions. [#4666](https://github.com/rome/tools/issues/4666)
+- Add an option called `--arrow-parentheses` to the formatter. This option allows you to set the parentheses style for arrow functions. [#4666](https://github.com/rome/tools/issues/4666)
 
-- The JSON formatter is now able to format `.json` files that have comments.
+- The JSON formatter can now format `.json` files with comments.
 
 ### Linter
 
@@ -170,19 +171,19 @@ if no error diagnostics are emitted.
 
 - Add [`noDuplicateJsonKeys`](https://docs.rome.tools/lint/rules/noDuplicateJsonKeys/)
 
-	This rule disallow duplicate keys in a JSON object.
+  This rule disallow duplicate keys in a JSON object.
 
 - Add [`noVoid`](https://docs.rome.tools/lint/rules/novoid/)
 
-	This rules disallow the use of `void`.
+  This rules disallow the use of `void`.
 
 - Add [`noNonoctalDecimalEscape`](https://docs.rome.tools/lint/rules/nononoctaldecimalescape/)
 
-	This rule disallows `\8` and `\9` escape sequences in string literals.
+  This rule disallows `\8` and `\9` escape sequences in string literals.
 
 - Add [`noUselessEmptyExport`](https://docs.rome.tools/lint/rules/noUselessEmptyExport/)
 
-	This rule disallows useless `export {}`.
+  This rule disallows useless `export {}`.
 
 - Add [`useIsArray`](https://docs.rome.tools/lint/rules/useIsArray/)
 
@@ -224,9 +225,9 @@ The following rules are now recommended:
 - Fix a crash in the [`NoParameterAssign`](https://docs.rome.tools/lint/rules/noparameterassign/) rule that occurred when there was a bogus binding. [#4323](https://github.com/rome/tools/issues/4323)
 
 - Fix [`useExhaustiveDependencies`](https://docs.rome.tools/lint/rules/useexhaustivedependencies/) rule in the following cases [#4330](https://github.com/rome/tools/issues/4330)
-  - when the first argument of hooks is a named function
-  - inside an export default function
-  - for React.use* hooks
+    - when the first argument of hooks is a named function
+    - inside an export default function
+    - for React.use* hooks
 
 - Fix [`noInvalidConstructorSuper`](https://docs.rome.tools/lint/rules/noinvalidconstructorsuper/) rule that erroneously reported generic parents [#4624](https://github.com/rome/tools/issues/4624).
 
@@ -302,8 +303,8 @@ The following rules are now recommended:
 
 - Relax [`useLiteralEnumMembers`](https://docs.rome.tools/lint/rules/useLiteralEnumMembers/)
 
-  Enum members that refers to previous enum members are now allowed.
-  This allows common pattern in enum flags like in the following example:
+  Enum members that refer to previous enum members are now allowed.
+  This allows a common pattern in enum flags like in the following example:
 
   ```ts
   enum FileAccess {
@@ -357,20 +358,20 @@ The following rules are now recommended:
 
   ```json
   {
-  	"linter": {
-  		"rules": {
-  			"nursery": {
-  				"useExhaustiveDependencies": {
-  					"level": "error",
-  					"options": {
-  						"hooks": [
-  							["useMyEffect", 0, 1]
-  						]
-  					}
-  				}
-  			}
-  		}
-  	}
+    "linter": {
+       "rules": {
+          "nursery": {
+             "useExhaustiveDependencies": {
+                "level": "error",
+                "options": {
+                   "hooks": [
+                      ["useMyEffect", 0, 1]
+                   ]
+                }
+             }
+          }
+       }
+    }
   }
   ```
 
@@ -378,30 +379,30 @@ The following rules are now recommended:
 
   ```json
   {
-  	"linter": {
-  		"rules": {
-  			"nursery": {
-  				"useExhaustiveDependencies": {
-  					"level": "error",
-  					"options": {
-  						"hooks": [
-  							{
-  								"name": "useMyEffect",
-  								"closureIndex": 0,
-  								"dependenciesIndex": 1
-  							}
-  						]
-  					}
-  				}
-  			}
-  		}
-  	}
+    "linter": {
+       "rules": {
+          "nursery": {
+             "useExhaustiveDependencies": {
+                "level": "error",
+                "options": {
+                   "hooks": [
+                      {
+                         "name": "useMyEffect",
+                         "closureIndex": 0,
+                         "dependenciesIndex": 1
+                      }
+                   ]
+                }
+             }
+          }
+       }
+    }
   }
   ```
 
 - [noRedundantUseStrict](https://docs.rome.tools/lint/rules/noredundantusestrict/) check only `'use strict'` directive to resolve false positive diagnostics.
 
-  React introduce new directives, "use client" and "use server".
+  React introduced new directives, "use client" and "use server".
   The rule raises false positive errors about these directives.
 
 - Fix false positive diagnostics ([#4483](https://github.com/rome/tools/issues/4483)) that  [`NoUnreachableSuper`](https://docs.rome.tools/lint/rules/nounreachablesuper/) caused to nested if statement.
@@ -429,26 +430,26 @@ The following rules are now recommended:
 
 - Add support for decorators in class method parameters, example:
 
-	```js
-	class AppController {
- 		get(@Param() id) {}
- 		//	^^^^^^^^ new supported syntax
- 	}
-	```
+    ```js
+    class AppController {
+       get(@Param() id) {}
+       // ^^^^^^^^ new supported syntax
+    }
+    ```
 
-	This syntax is only supported via configuration, because it's a non-standard
-	syntax.
+  This syntax is only supported via configuration, because it's a non-standard
+  syntax.
 
-	```json
-	{
-		"//": "rome.json file",
- 		"javascript": {
- 			"parser": {
-				"unsafeParameterDecoratorsEnabled": true
- 			}
- 		}
- 	}
-	```
+    ```json
+    {
+       "//": "rome.json file",
+       "javascript": {
+          "parser": {
+             "unsafeParameterDecoratorsEnabled": true
+          }
+       }
+    }
+    ```
 - Add for parsing comments inside JSON files:
 
   ```json
