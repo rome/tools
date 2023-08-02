@@ -68,7 +68,7 @@ declare_rule! {
  pub(crate) NoRedundantUseStrict {
      version: "11.0.0",
      name: "noRedundantUseStrict",
-     recommended: false,
+     recommended: true,
     }
 }
 

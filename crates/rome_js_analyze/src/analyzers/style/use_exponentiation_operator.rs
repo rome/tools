@@ -54,7 +54,7 @@ declare_rule! {
     pub(crate) UseExponentiationOperator {
         version: "11.0.0",
         name: "useExponentiationOperator",
-        recommended: false,
+        recommended: true,
     }
 }
 

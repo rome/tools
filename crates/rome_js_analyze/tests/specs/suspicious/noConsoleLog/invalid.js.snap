@@ -10,7 +10,7 @@ console.log("something")
 
 # Diagnostics
 ```
-invalid.js:1:1 lint/nursery/noConsoleLog ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:1:1 lint/suspicious/noConsoleLog ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Don't use console.log
   

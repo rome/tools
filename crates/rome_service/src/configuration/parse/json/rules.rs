@@ -132,6 +132,7 @@ impl VisitNode<JsonLanguage> for A11y {
                 "useAnchorContent",
                 "useAriaPropsForRole",
                 "useButtonType",
+                "useHeadingContent",
                 "useHtmlLang",
                 "useIframeTitle",
                 "useKeyWithClickEvents",
@@ -458,6 +459,29 @@ impl VisitNode<JsonLanguage> for A11y {
                     ));
                 }
             },
+            "useHeadingContent" => match value {
+                AnyJsonValue::JsonStringValue(_) => {
+                    let mut configuration = RuleConfiguration::default();
+                    self.map_to_known_string(&value, name_text, &mut configuration, diagnostics)?;
+                    self.use_heading_content = Some(configuration);
+                }
+                AnyJsonValue::JsonObjectValue(_) => {
+                    let mut rule_configuration = RuleConfiguration::default();
+                    rule_configuration.map_rule_configuration(
+                        &value,
+                        name_text,
+                        "useHeadingContent",
+                        diagnostics,
+                    )?;
+                    self.use_heading_content = Some(rule_configuration);
+                }
+                _ => {
+                    diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
+                        "object or string",
+                        value.range(),
+                    ));
+                }
+            },
             "useHtmlLang" => match value {
                 AnyJsonValue::JsonStringValue(_) => {
                     let mut configuration = RuleConfiguration::default();
@@ -660,6 +684,7 @@ impl VisitNode<JsonLanguage> for Complexity {
                 "recommended",
                 "all",
                 "noExtraBooleanCast",
+                "noForEach",
                 "noMultipleSpacesInRegularExpressionLiterals",
                 "noUselessCatch",
                 "noUselessConstructor",
@@ -670,7 +695,9 @@ impl VisitNode<JsonLanguage> for Complexity {
                 "noUselessTypeConstraint",
                 "noWith",
                 "useFlatMap",
+                "useLiteralKeys",
                 "useOptionalChain",
+                "useSimpleNumberKeys",
                 "useSimplifiedLogicExpression",
             ],
             diagnostics,
@@ -706,6 +733,29 @@ impl VisitNode<JsonLanguage> for Complexity {
                         diagnostics,
                     )?;
                     self.no_extra_boolean_cast = Some(rule_configuration);
+                }
+                _ => {
+                    diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
+                        "object or string",
+                        value.range(),
+                    ));
+                }
+            },
+            "noForEach" => match value {
+                AnyJsonValue::JsonStringValue(_) => {
+                    let mut configuration = RuleConfiguration::default();
+                    self.map_to_known_string(&value, name_text, &mut configuration, diagnostics)?;
+                    self.no_for_each = Some(configuration);
+                }
+                AnyJsonValue::JsonObjectValue(_) => {
+                    let mut rule_configuration = RuleConfiguration::default();
+                    rule_configuration.map_rule_configuration(
+                        &value,
+                        name_text,
+                        "noForEach",
+                        diagnostics,
+                    )?;
+                    self.no_for_each = Some(rule_configuration);
                 }
                 _ => {
                     diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
@@ -945,6 +995,29 @@ impl VisitNode<JsonLanguage> for Complexity {
                     ));
                 }
             },
+            "useLiteralKeys" => match value {
+                AnyJsonValue::JsonStringValue(_) => {
+                    let mut configuration = RuleConfiguration::default();
+                    self.map_to_known_string(&value, name_text, &mut configuration, diagnostics)?;
+                    self.use_literal_keys = Some(configuration);
+                }
+                AnyJsonValue::JsonObjectValue(_) => {
+                    let mut rule_configuration = RuleConfiguration::default();
+                    rule_configuration.map_rule_configuration(
+                        &value,
+                        name_text,
+                        "useLiteralKeys",
+                        diagnostics,
+                    )?;
+                    self.use_literal_keys = Some(rule_configuration);
+                }
+                _ => {
+                    diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
+                        "object or string",
+                        value.range(),
+                    ));
+                }
+            },
             "useOptionalChain" => match value {
                 AnyJsonValue::JsonStringValue(_) => {
                     let mut configuration = RuleConfiguration::default();
@@ -960,6 +1033,29 @@ impl VisitNode<JsonLanguage> for Complexity {
                         diagnostics,
                     )?;
                     self.use_optional_chain = Some(rule_configuration);
+                }
+                _ => {
+                    diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
+                        "object or string",
+                        value.range(),
+                    ));
+                }
+            },
+            "useSimpleNumberKeys" => match value {
+                AnyJsonValue::JsonStringValue(_) => {
+                    let mut configuration = RuleConfiguration::default();
+                    self.map_to_known_string(&value, name_text, &mut configuration, diagnostics)?;
+                    self.use_simple_number_keys = Some(configuration);
+                }
+                AnyJsonValue::JsonObjectValue(_) => {
+                    let mut rule_configuration = RuleConfiguration::default();
+                    rule_configuration.map_rule_configuration(
+                        &value,
+                        name_text,
+                        "useSimpleNumberKeys",
+                        diagnostics,
+                    )?;
+                    self.use_simple_number_keys = Some(rule_configuration);
                 }
                 _ => {
                     diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
@@ -1031,6 +1127,7 @@ impl VisitNode<JsonLanguage> for Correctness {
                 "noUnusedVariables",
                 "noVoidElementsWithChildren",
                 "noVoidTypeReturn",
+                "useIsNan",
                 "useValidForDirection",
                 "useYield",
             ],
@@ -1581,6 +1678,29 @@ impl VisitNode<JsonLanguage> for Correctness {
                     ));
                 }
             },
+            "useIsNan" => match value {
+                AnyJsonValue::JsonStringValue(_) => {
+                    let mut configuration = RuleConfiguration::default();
+                    self.map_to_known_string(&value, name_text, &mut configuration, diagnostics)?;
+                    self.use_is_nan = Some(configuration);
+                }
+                AnyJsonValue::JsonObjectValue(_) => {
+                    let mut rule_configuration = RuleConfiguration::default();
+                    rule_configuration.map_rule_configuration(
+                        &value,
+                        name_text,
+                        "useIsNan",
+                        diagnostics,
+                    )?;
+                    self.use_is_nan = Some(rule_configuration);
+                }
+                _ => {
+                    diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
+                        "object or string",
+                        value.range(),
+                    ));
+                }
+            },
             "useValidForDirection" => match value {
                 AnyJsonValue::JsonStringValue(_) => {
                     let mut configuration = RuleConfiguration::default();
@@ -1648,14 +1768,11 @@ impl VisitNode<JsonLanguage> for Nursery {
                 "noAriaUnsupportedElements",
                 "noBannedTypes",
                 "noConfusingArrow",
-                "noConsoleLog",
                 "noConstantCondition",
                 "noControlCharactersInRegex",
                 "noDuplicateJsonKeys",
-                "noDuplicateJsxProps",
                 "noExcessiveComplexity",
                 "noFallthroughSwitchClause",
-                "noForEach",
                 "noGlobalIsFinite",
                 "noGlobalIsNan",
                 "noNoninteractiveTabindex",
@@ -1671,15 +1788,11 @@ impl VisitNode<JsonLanguage> for Nursery {
                 "useCamelCase",
                 "useExhaustiveDependencies",
                 "useGroupedTypeImport",
-                "useHeadingContent",
                 "useHookAtTopLevel",
                 "useImportRestrictions",
                 "useIsArray",
-                "useIsNan",
                 "useLiteralEnumMembers",
-                "useLiteralKeys",
                 "useNamingConvention",
-                "useSimpleNumberKeys",
             ],
             diagnostics,
         )
@@ -1791,29 +1904,6 @@ impl VisitNode<JsonLanguage> for Nursery {
                     ));
                 }
             },
-            "noConsoleLog" => match value {
-                AnyJsonValue::JsonStringValue(_) => {
-                    let mut configuration = RuleConfiguration::default();
-                    self.map_to_known_string(&value, name_text, &mut configuration, diagnostics)?;
-                    self.no_console_log = Some(configuration);
-                }
-                AnyJsonValue::JsonObjectValue(_) => {
-                    let mut rule_configuration = RuleConfiguration::default();
-                    rule_configuration.map_rule_configuration(
-                        &value,
-                        name_text,
-                        "noConsoleLog",
-                        diagnostics,
-                    )?;
-                    self.no_console_log = Some(rule_configuration);
-                }
-                _ => {
-                    diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
-                        "object or string",
-                        value.range(),
-                    ));
-                }
-            },
             "noConstantCondition" => match value {
                 AnyJsonValue::JsonStringValue(_) => {
                     let mut configuration = RuleConfiguration::default();
@@ -1883,29 +1973,6 @@ impl VisitNode<JsonLanguage> for Nursery {
                     ));
                 }
             },
-            "noDuplicateJsxProps" => match value {
-                AnyJsonValue::JsonStringValue(_) => {
-                    let mut configuration = RuleConfiguration::default();
-                    self.map_to_known_string(&value, name_text, &mut configuration, diagnostics)?;
-                    self.no_duplicate_jsx_props = Some(configuration);
-                }
-                AnyJsonValue::JsonObjectValue(_) => {
-                    let mut rule_configuration = RuleConfiguration::default();
-                    rule_configuration.map_rule_configuration(
-                        &value,
-                        name_text,
-                        "noDuplicateJsxProps",
-                        diagnostics,
-                    )?;
-                    self.no_duplicate_jsx_props = Some(rule_configuration);
-                }
-                _ => {
-                    diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
-                        "object or string",
-                        value.range(),
-                    ));
-                }
-            },
             "noExcessiveComplexity" => match value {
                 AnyJsonValue::JsonStringValue(_) => {
                     let mut configuration = RuleConfiguration::default();
@@ -1944,29 +2011,6 @@ impl VisitNode<JsonLanguage> for Nursery {
                         diagnostics,
                     )?;
                     self.no_fallthrough_switch_clause = Some(rule_configuration);
-                }
-                _ => {
-                    diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
-                        "object or string",
-                        value.range(),
-                    ));
-                }
-            },
-            "noForEach" => match value {
-                AnyJsonValue::JsonStringValue(_) => {
-                    let mut configuration = RuleConfiguration::default();
-                    self.map_to_known_string(&value, name_text, &mut configuration, diagnostics)?;
-                    self.no_for_each = Some(configuration);
-                }
-                AnyJsonValue::JsonObjectValue(_) => {
-                    let mut rule_configuration = RuleConfiguration::default();
-                    rule_configuration.map_rule_configuration(
-                        &value,
-                        name_text,
-                        "noForEach",
-                        diagnostics,
-                    )?;
-                    self.no_for_each = Some(rule_configuration);
                 }
                 _ => {
                     diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
@@ -2320,29 +2364,6 @@ impl VisitNode<JsonLanguage> for Nursery {
                     ));
                 }
             },
-            "useHeadingContent" => match value {
-                AnyJsonValue::JsonStringValue(_) => {
-                    let mut configuration = RuleConfiguration::default();
-                    self.map_to_known_string(&value, name_text, &mut configuration, diagnostics)?;
-                    self.use_heading_content = Some(configuration);
-                }
-                AnyJsonValue::JsonObjectValue(_) => {
-                    let mut rule_configuration = RuleConfiguration::default();
-                    rule_configuration.map_rule_configuration(
-                        &value,
-                        name_text,
-                        "useHeadingContent",
-                        diagnostics,
-                    )?;
-                    self.use_heading_content = Some(rule_configuration);
-                }
-                _ => {
-                    diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
-                        "object or string",
-                        value.range(),
-                    ));
-                }
-            },
             "useHookAtTopLevel" => match value {
                 AnyJsonValue::JsonStringValue(_) => {
                     let mut configuration = RuleConfiguration::default();
@@ -2412,29 +2433,6 @@ impl VisitNode<JsonLanguage> for Nursery {
                     ));
                 }
             },
-            "useIsNan" => match value {
-                AnyJsonValue::JsonStringValue(_) => {
-                    let mut configuration = RuleConfiguration::default();
-                    self.map_to_known_string(&value, name_text, &mut configuration, diagnostics)?;
-                    self.use_is_nan = Some(configuration);
-                }
-                AnyJsonValue::JsonObjectValue(_) => {
-                    let mut rule_configuration = RuleConfiguration::default();
-                    rule_configuration.map_rule_configuration(
-                        &value,
-                        name_text,
-                        "useIsNan",
-                        diagnostics,
-                    )?;
-                    self.use_is_nan = Some(rule_configuration);
-                }
-                _ => {
-                    diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
-                        "object or string",
-                        value.range(),
-                    ));
-                }
-            },
             "useLiteralEnumMembers" => match value {
                 AnyJsonValue::JsonStringValue(_) => {
                     let mut configuration = RuleConfiguration::default();
@@ -2458,29 +2456,6 @@ impl VisitNode<JsonLanguage> for Nursery {
                     ));
                 }
             },
-            "useLiteralKeys" => match value {
-                AnyJsonValue::JsonStringValue(_) => {
-                    let mut configuration = RuleConfiguration::default();
-                    self.map_to_known_string(&value, name_text, &mut configuration, diagnostics)?;
-                    self.use_literal_keys = Some(configuration);
-                }
-                AnyJsonValue::JsonObjectValue(_) => {
-                    let mut rule_configuration = RuleConfiguration::default();
-                    rule_configuration.map_rule_configuration(
-                        &value,
-                        name_text,
-                        "useLiteralKeys",
-                        diagnostics,
-                    )?;
-                    self.use_literal_keys = Some(rule_configuration);
-                }
-                _ => {
-                    diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
-                        "object or string",
-                        value.range(),
-                    ));
-                }
-            },
             "useNamingConvention" => match value {
                 AnyJsonValue::JsonStringValue(_) => {
                     let mut configuration = RuleConfiguration::default();
@@ -2496,29 +2471,6 @@ impl VisitNode<JsonLanguage> for Nursery {
                         diagnostics,
                     )?;
                     self.use_naming_convention = Some(rule_configuration);
-                }
-                _ => {
-                    diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
-                        "object or string",
-                        value.range(),
-                    ));
-                }
-            },
-            "useSimpleNumberKeys" => match value {
-                AnyJsonValue::JsonStringValue(_) => {
-                    let mut configuration = RuleConfiguration::default();
-                    self.map_to_known_string(&value, name_text, &mut configuration, diagnostics)?;
-                    self.use_simple_number_keys = Some(configuration);
-                }
-                AnyJsonValue::JsonObjectValue(_) => {
-                    let mut rule_configuration = RuleConfiguration::default();
-                    rule_configuration.map_rule_configuration(
-                        &value,
-                        name_text,
-                        "useSimpleNumberKeys",
-                        diagnostics,
-                    )?;
-                    self.use_simple_number_keys = Some(rule_configuration);
                 }
                 _ => {
                     diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
@@ -3348,11 +3300,13 @@ impl VisitNode<JsonLanguage> for Suspicious {
                 "noCommentText",
                 "noCompareNegZero",
                 "noConfusingLabels",
+                "noConsoleLog",
                 "noConstEnum",
                 "noDebugger",
                 "noDoubleEquals",
                 "noDuplicateCase",
                 "noDuplicateClassMembers",
+                "noDuplicateJsxProps",
                 "noDuplicateObjectKeys",
                 "noDuplicateParameters",
                 "noEmptyInterface",
@@ -3574,6 +3528,29 @@ impl VisitNode<JsonLanguage> for Suspicious {
                     ));
                 }
             },
+            "noConsoleLog" => match value {
+                AnyJsonValue::JsonStringValue(_) => {
+                    let mut configuration = RuleConfiguration::default();
+                    self.map_to_known_string(&value, name_text, &mut configuration, diagnostics)?;
+                    self.no_console_log = Some(configuration);
+                }
+                AnyJsonValue::JsonObjectValue(_) => {
+                    let mut rule_configuration = RuleConfiguration::default();
+                    rule_configuration.map_rule_configuration(
+                        &value,
+                        name_text,
+                        "noConsoleLog",
+                        diagnostics,
+                    )?;
+                    self.no_console_log = Some(rule_configuration);
+                }
+                _ => {
+                    diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
+                        "object or string",
+                        value.range(),
+                    ));
+                }
+            },
             "noConstEnum" => match value {
                 AnyJsonValue::JsonStringValue(_) => {
                     let mut configuration = RuleConfiguration::default();
@@ -3681,6 +3658,29 @@ impl VisitNode<JsonLanguage> for Suspicious {
                         diagnostics,
                     )?;
                     self.no_duplicate_class_members = Some(rule_configuration);
+                }
+                _ => {
+                    diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
+                        "object or string",
+                        value.range(),
+                    ));
+                }
+            },
+            "noDuplicateJsxProps" => match value {
+                AnyJsonValue::JsonStringValue(_) => {
+                    let mut configuration = RuleConfiguration::default();
+                    self.map_to_known_string(&value, name_text, &mut configuration, diagnostics)?;
+                    self.no_duplicate_jsx_props = Some(configuration);
+                }
+                AnyJsonValue::JsonObjectValue(_) => {
+                    let mut rule_configuration = RuleConfiguration::default();
+                    rule_configuration.map_rule_configuration(
+                        &value,
+                        name_text,
+                        "noDuplicateJsxProps",
+                        diagnostics,
+                    )?;
+                    self.no_duplicate_jsx_props = Some(rule_configuration);
                 }
                 _ => {
                     diagnostics.push(DeserializationDiagnostic::new_incorrect_type(

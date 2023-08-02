@@ -5,6 +5,8 @@ parent: lint/rules/index
 
 # noRedundantUseStrict (since v11.0.0)
 
+> This rule is recommended by Rome.
+
 Prevents from having redundant `"use strict"`.
 
 ## Examples
@@ -20,7 +22,7 @@ function foo() {
 
 <pre class="language-text"><code class="language-text">suspicious/noRedundantUseStrict.js:3:3 <a href="https://docs.rome.tools/lint/rules/noRedundantUseStrict">lint/suspicious/noRedundantUseStrict</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Redundant </span><span style="color: Orange;"><strong>use strict</strong></span><span style="color: Orange;"> directive.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Redundant </span><span style="color: Tomato;"><strong>use strict</strong></span><span style="color: Tomato;"> directive.</span>
   
     <strong>1 │ </strong>&quot;use strict&quot;;
     <strong>2 │ </strong>function foo() {
@@ -57,7 +59,7 @@ function foo() {
 
 <pre class="language-text"><code class="language-text">suspicious/noRedundantUseStrict.js:2:1 <a href="https://docs.rome.tools/lint/rules/noRedundantUseStrict">lint/suspicious/noRedundantUseStrict</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Redundant </span><span style="color: Orange;"><strong>use strict</strong></span><span style="color: Orange;"> directive.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Redundant </span><span style="color: Tomato;"><strong>use strict</strong></span><span style="color: Tomato;"> directive.</span>
   
     <strong>1 │ </strong>&quot;use strict&quot;;
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>&quot;use strict&quot;;
@@ -90,7 +92,7 @@ function foo() {
 
 <pre class="language-text"><code class="language-text">suspicious/noRedundantUseStrict.js:3:1 <a href="https://docs.rome.tools/lint/rules/noRedundantUseStrict">lint/suspicious/noRedundantUseStrict</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Redundant </span><span style="color: Orange;"><strong>use strict</strong></span><span style="color: Orange;"> directive.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Redundant </span><span style="color: Tomato;"><strong>use strict</strong></span><span style="color: Tomato;"> directive.</span>
   
     <strong>1 │ </strong>function foo() {
     <strong>2 │ </strong>&quot;use strict&quot;;
@@ -127,7 +129,7 @@ class C1 {
 
 <pre class="language-text"><code class="language-text">suspicious/noRedundantUseStrict.js:3:3 <a href="https://docs.rome.tools/lint/rules/noRedundantUseStrict">lint/suspicious/noRedundantUseStrict</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Redundant </span><span style="color: Orange;"><strong>use strict</strong></span><span style="color: Orange;"> directive.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Redundant </span><span style="color: Tomato;"><strong>use strict</strong></span><span style="color: Tomato;"> directive.</span>
   
     <strong>1 │ </strong>class C1 {
     <strong>2 │ </strong>	test() {
@@ -170,7 +172,7 @@ const C2 = class {
 
 <pre class="language-text"><code class="language-text">suspicious/noRedundantUseStrict.js:3:3 <a href="https://docs.rome.tools/lint/rules/noRedundantUseStrict">lint/suspicious/noRedundantUseStrict</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Redundant </span><span style="color: Orange;"><strong>use strict</strong></span><span style="color: Orange;"> directive.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Redundant </span><span style="color: Tomato;"><strong>use strict</strong></span><span style="color: Tomato;"> directive.</span>
   
     <strong>1 │ </strong>const C2 = class {
     <strong>2 │ </strong>	test() {

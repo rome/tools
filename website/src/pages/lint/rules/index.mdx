@@ -105,6 +105,13 @@ Enforce that elements with ARIA roles must have all required ARIA attributes for
 Enforces the usage of the attribute <code>type</code> for the element <code>button</code>
 </section>
 <section class="rule">
+<h3 data-toc-exclude id="useHeadingContent">
+	<a href="/lint/rules/useHeadingContent">useHeadingContent</a>
+</h3>
+Enforce that heading elements (h1, h2, etc.) have content and that the content is accessible to screen readers.
+Accessible means that it is not hidden using the aria-hidden prop.
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="useHtmlLang">
 	<a href="/lint/rules/useHtmlLang">useHtmlLang</a>
 	<span class="recommended">recommended</span>
@@ -175,6 +182,12 @@ Rules that focus on inspecting complex code that could be simplified.
 Disallow unnecessary boolean casts
 </section>
 <section class="rule">
+<h3 data-toc-exclude id="noForEach">
+	<a href="/lint/rules/noForEach">noForEach</a>
+</h3>
+Prefer <code>for...of</code> statement instead of <code>Array.forEach</code>.
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="noMultipleSpacesInRegularExpressionLiterals">
 	<a href="/lint/rules/noMultipleSpacesInRegularExpressionLiterals">noMultipleSpacesInRegularExpressionLiterals</a>
 	<span class="recommended">recommended</span>
@@ -198,6 +211,7 @@ Disallow unnecessary constructors.
 <section class="rule">
 <h3 data-toc-exclude id="noUselessFragments">
 	<a href="/lint/rules/noUselessFragments">noUselessFragments</a>
+	<span class="recommended">recommended</span>
 </h3>
 Disallow unnecessary fragments
 </section>
@@ -244,11 +258,24 @@ Disallow <code>with</code> statements in non-strict contexts.
 Promotes the use of <code>.flatMap()</code> when <code>map().flat()</code> are used together.
 </section>
 <section class="rule">
+<h3 data-toc-exclude id="useLiteralKeys">
+	<a href="/lint/rules/useLiteralKeys">useLiteralKeys</a>
+	<span class="recommended">recommended</span>
+</h3>
+Enforce the usage of a literal access to properties over computed property access.
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="useOptionalChain">
 	<a href="/lint/rules/useOptionalChain">useOptionalChain</a>
 	<span class="recommended">recommended</span>
 </h3>
 Enforce using concise optional chain instead of chained logical expressions.
+</section>
+<section class="rule">
+<h3 data-toc-exclude id="useSimpleNumberKeys">
+	<a href="/lint/rules/useSimpleNumberKeys">useSimpleNumberKeys</a>
+</h3>
+Disallow number literal object member names which are not base10 or uses underscore as separator
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="useSimplifiedLogicExpression">
@@ -426,6 +453,13 @@ This rules prevents void elements (AKA self-closing elements) from having childr
 Disallow returning a value from a function with the return type 'void'
 </section>
 <section class="rule">
+<h3 data-toc-exclude id="useIsNan">
+	<a href="/lint/rules/useIsNan">useIsNan</a>
+	<span class="recommended">recommended</span>
+</h3>
+Require calls to <code>isNaN()</code> when checking for <code>NaN</code>.
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="useValidForDirection">
 	<a href="/lint/rules/useValidForDirection">useValidForDirection</a>
 	<span class="recommended">recommended</span>
@@ -597,6 +631,7 @@ Require that each enum member value be explicitly initialized.
 <section class="rule">
 <h3 data-toc-exclude id="useExponentiationOperator">
 	<a href="/lint/rules/useExponentiationOperator">useExponentiationOperator</a>
+	<span class="recommended">recommended</span>
 </h3>
 Disallow the use of <code>Math.pow</code> in favor of the <code>**</code> operator.
 </section>
@@ -719,6 +754,12 @@ Disallow comparing against <code>-0</code>
 Disallow labeled statements that are not loops.
 </section>
 <section class="rule">
+<h3 data-toc-exclude id="noConsoleLog">
+	<a href="/lint/rules/noConsoleLog">noConsoleLog</a>
+</h3>
+Disallow the use of <code>console.log</code>
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="noConstEnum">
 	<a href="/lint/rules/noConstEnum">noConstEnum</a>
 	<span class="recommended">recommended</span>
@@ -753,6 +794,13 @@ If a switch statement has duplicate test expressions in case clauses, it is like
 	<span class="recommended">recommended</span>
 </h3>
 Disallow duplicate class members.
+</section>
+<section class="rule">
+<h3 data-toc-exclude id="noDuplicateJsxProps">
+	<a href="/lint/rules/noDuplicateJsxProps">noDuplicateJsxProps</a>
+	<span class="recommended">recommended</span>
+</h3>
+Prevents JSX properties to be assigned multiple times.
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="noDuplicateObjectKeys">
@@ -828,6 +876,7 @@ Disallow variable, function, class, and type redeclarations in the same scope.
 <section class="rule">
 <h3 data-toc-exclude id="noRedundantUseStrict">
 	<a href="/lint/rules/noRedundantUseStrict">noRedundantUseStrict</a>
+	<span class="recommended">recommended</span>
 </h3>
 Prevents from having redundant <code>&quot;use strict&quot;</code>.
 </section>
@@ -921,12 +970,6 @@ Disallow primitive type aliases and misleading types.
 Disallow arrow functions where they could be confused with comparisons.
 </section>
 <section class="rule">
-<h3 data-toc-exclude id="noConsoleLog">
-	<a href="/lint/rules/noConsoleLog">noConsoleLog</a>
-</h3>
-Disallow the use of <code>console.log</code>
-</section>
-<section class="rule">
 <h3 data-toc-exclude id="noConstantCondition">
 	<a href="/lint/rules/noConstantCondition">noConstantCondition</a>
 </h3>
@@ -945,12 +988,6 @@ Prevents from having control characters and some escape sequences that match con
 Disallow two keys with the same name inside a JSON object.
 </section>
 <section class="rule">
-<h3 data-toc-exclude id="noDuplicateJsxProps">
-	<a href="/lint/rules/noDuplicateJsxProps">noDuplicateJsxProps</a>
-</h3>
-Prevents JSX properties to be assigned multiple times.
-</section>
-<section class="rule">
 <h3 data-toc-exclude id="noExcessiveComplexity">
 	<a href="/lint/rules/noExcessiveComplexity">noExcessiveComplexity</a>
 </h3>
@@ -961,12 +998,6 @@ Disallow functions that exceed a given complexity score.
 	<a href="/lint/rules/noFallthroughSwitchClause">noFallthroughSwitchClause</a>
 </h3>
 Disallow fallthrough of <code>switch</code> clauses.
-</section>
-<section class="rule">
-<h3 data-toc-exclude id="noForEach">
-	<a href="/lint/rules/noForEach">noForEach</a>
-</h3>
-Prefer <code>for...of</code> statement instead of <code>Array.forEach</code>.
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="noGlobalIsFinite">
@@ -1059,13 +1090,6 @@ Enforce all dependencies are correctly specified.
 Enforce the use of <code>import type</code> when an <code>import</code> only has specifiers with <code>type</code> qualifier.
 </section>
 <section class="rule">
-<h3 data-toc-exclude id="useHeadingContent">
-	<a href="/lint/rules/useHeadingContent">useHeadingContent</a>
-</h3>
-Enforce that heading elements (h1, h2, etc.) have content and that the content is accessible to screen readers.
-Accessible means that it is not hidden using the aria-hidden prop.
-</section>
-<section class="rule">
 <h3 data-toc-exclude id="useHookAtTopLevel">
 	<a href="/lint/rules/useHookAtTopLevel">useHookAtTopLevel</a>
 </h3>
@@ -1085,34 +1109,16 @@ Disallows package private imports.
 Use <code>Array.isArray()</code> instead of <code>instanceof Array</code>.
 </section>
 <section class="rule">
-<h3 data-toc-exclude id="useIsNan">
-	<a href="/lint/rules/useIsNan">useIsNan</a>
-</h3>
-Require calls to <code>isNaN()</code> when checking for <code>NaN</code>.
-</section>
-<section class="rule">
 <h3 data-toc-exclude id="useLiteralEnumMembers">
 	<a href="/lint/rules/useLiteralEnumMembers">useLiteralEnumMembers</a>
 </h3>
 Require all enum members to be literal values.
 </section>
 <section class="rule">
-<h3 data-toc-exclude id="useLiteralKeys">
-	<a href="/lint/rules/useLiteralKeys">useLiteralKeys</a>
-</h3>
-Enforce the usage of a literal access to properties over computed property access.
-</section>
-<section class="rule">
 <h3 data-toc-exclude id="useNamingConvention">
 	<a href="/lint/rules/useNamingConvention">useNamingConvention</a>
 </h3>
 Enforce naming conventions for everything across a codebase.
-</section>
-<section class="rule">
-<h3 data-toc-exclude id="useSimpleNumberKeys">
-	<a href="/lint/rules/useSimpleNumberKeys">useSimpleNumberKeys</a>
-</h3>
-Disallow number literal object member names which are not base10 or uses underscore as separator
 </section>
 
 </div>

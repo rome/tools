@@ -72,6 +72,7 @@ rome.json:6:13 deserialize ━━━━━━━━━━━━━━━━━�
   - noUnusedVariables
   - noVoidElementsWithChildren
   - noVoidTypeReturn
+  - useIsNan
   - useValidForDirection
   - useYield
   

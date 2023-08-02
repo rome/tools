@@ -44,7 +44,7 @@ declare_rule! {
     pub(crate) NoUselessFragments {
         version: "0.10.0",
         name: "noUselessFragments",
-        recommended: false,
+        recommended: true,
     }
 }
 

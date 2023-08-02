@@ -5,6 +5,8 @@ parent: lint/rules/index
 
 # useLiteralKeys (since v12.1.0)
 
+> This rule is recommended by Rome.
+
 Enforce the usage of a literal access to properties over computed property access.
 
 ## Examples
@@ -15,7 +17,7 @@ Enforce the usage of a literal access to properties over computed property acces
 a.b["c"];
 ```
 
-<pre class="language-text"><code class="language-text">nursery/useLiteralKeys.js:1:5 <a href="https://docs.rome.tools/lint/rules/useLiteralKeys">lint/nursery/useLiteralKeys</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">complexity/useLiteralKeys.js:1:5 <a href="https://docs.rome.tools/lint/rules/useLiteralKeys">lint/complexity/useLiteralKeys</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The computed expression can be simplified without the use of a string literal.</span>
   
@@ -35,7 +37,7 @@ a.b["c"];
 a.c[`d`]
 ```
 
-<pre class="language-text"><code class="language-text">nursery/useLiteralKeys.js:1:5 <a href="https://docs.rome.tools/lint/rules/useLiteralKeys">lint/nursery/useLiteralKeys</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">complexity/useLiteralKeys.js:1:5 <a href="https://docs.rome.tools/lint/rules/useLiteralKeys">lint/complexity/useLiteralKeys</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The computed expression can be simplified without the use of a string literal.</span>
   
@@ -55,7 +57,7 @@ a.c[`d`]
 a.c[`d`] = "something"
 ```
 
-<pre class="language-text"><code class="language-text">nursery/useLiteralKeys.js:1:5 <a href="https://docs.rome.tools/lint/rules/useLiteralKeys">lint/nursery/useLiteralKeys</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">complexity/useLiteralKeys.js:1:5 <a href="https://docs.rome.tools/lint/rules/useLiteralKeys">lint/complexity/useLiteralKeys</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The computed expression can be simplified without the use of a string literal.</span>
   
@@ -77,7 +79,7 @@ a = {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/useLiteralKeys.js:2:3 <a href="https://docs.rome.tools/lint/rules/useLiteralKeys">lint/nursery/useLiteralKeys</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">complexity/useLiteralKeys.js:2:3 <a href="https://docs.rome.tools/lint/rules/useLiteralKeys">lint/complexity/useLiteralKeys</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The computed expression can be simplified without the use of a string literal.</span>
   

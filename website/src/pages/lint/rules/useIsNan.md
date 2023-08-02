@@ -5,6 +5,8 @@ parent: lint/rules/index
 
 # useIsNan (since v12.0.0)
 
+> This rule is recommended by Rome.
+
 Require calls to `isNaN()` when checking for `NaN`.
 
 In JavaScript, `NaN` is a special value of the `Number` type.
@@ -32,7 +34,7 @@ Source: [use-isnan](https://eslint.org/docs/latest/rules/use-isnan).
 123 == NaN
 ```
 
-<pre class="language-text"><code class="language-text">nursery/useIsNan.js:1:1 <a href="https://docs.rome.tools/lint/rules/useIsNan">lint/nursery/useIsNan</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">correctness/useIsNan.js:1:1 <a href="https://docs.rome.tools/lint/rules/useIsNan">lint/correctness/useIsNan</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Use the Number.isNaN function to compare with NaN.</span>
   
@@ -46,7 +48,7 @@ Source: [use-isnan](https://eslint.org/docs/latest/rules/use-isnan).
 123 != NaN
 ```
 
-<pre class="language-text"><code class="language-text">nursery/useIsNan.js:1:1 <a href="https://docs.rome.tools/lint/rules/useIsNan">lint/nursery/useIsNan</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">correctness/useIsNan.js:1:1 <a href="https://docs.rome.tools/lint/rules/useIsNan">lint/correctness/useIsNan</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Use the Number.isNaN function to compare with NaN.</span>
   
@@ -60,7 +62,7 @@ Source: [use-isnan](https://eslint.org/docs/latest/rules/use-isnan).
 switch(foo) { case (NaN): break; }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/useIsNan.js:1:20 <a href="https://docs.rome.tools/lint/rules/useIsNan">lint/nursery/useIsNan</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">correctness/useIsNan.js:1:20 <a href="https://docs.rome.tools/lint/rules/useIsNan">lint/correctness/useIsNan</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">'case NaN' can never match. Use Number.isNaN before the switch.</span>
   
@@ -74,7 +76,7 @@ switch(foo) { case (NaN): break; }
 Number.NaN == "abc"
 ```
 
-<pre class="language-text"><code class="language-text">nursery/useIsNan.js:1:1 <a href="https://docs.rome.tools/lint/rules/useIsNan">lint/nursery/useIsNan</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">correctness/useIsNan.js:1:1 <a href="https://docs.rome.tools/lint/rules/useIsNan">lint/correctness/useIsNan</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Use the Number.isNaN function to compare with NaN.</span>
   

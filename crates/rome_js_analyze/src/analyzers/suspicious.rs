@@ -12,6 +12,7 @@ pub(crate) mod no_debugger;
 pub(crate) mod no_double_equals;
 pub(crate) mod no_duplicate_case;
 pub(crate) mod no_duplicate_class_members;
+pub(crate) mod no_duplicate_jsx_props;
 pub(crate) mod no_duplicate_object_keys;
 pub(crate) mod no_empty_interface;
 pub(crate) mod no_explicit_any;
@@ -40,6 +41,7 @@ declare_group! {
             self :: no_double_equals :: NoDoubleEquals ,
             self :: no_duplicate_case :: NoDuplicateCase ,
             self :: no_duplicate_class_members :: NoDuplicateClassMembers ,
+            self :: no_duplicate_jsx_props :: NoDuplicateJsxProps ,
             self :: no_duplicate_object_keys :: NoDuplicateObjectKeys ,
             self :: no_empty_interface :: NoEmptyInterface ,
             self :: no_explicit_any :: NoExplicitAny ,

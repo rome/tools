@@ -176,6 +176,25 @@ if no error diagnostics are emitted.
 
   This rule proposes using `Array.isArray()` instead of `instanceof Array`.
 
+#### Promoted rules
+
+New rules are promoted, please check [#4750](https://github.com/rome/tools/discussions/4750) for more details:
+
+- [`a11y/useHeadingContent`](https://docs.rome.tools/lint/rules/useHeadingContent/)
+- [`complexity/noForEach`](https://docs.rome.tools/lint/rules/noForEach/)
+- [`complexity/useLiteralKeys`](https://docs.rome.tools/lint/rules/useLiteralKeys/)
+- [`complexity/useSimpleNumberKeys`](https://docs.rome.tools/lint/rules/useSimpleNumberKeys/)
+- [`correctness/useIsNan`](https://docs.rome.tools/lint/rules/useIsNan/)
+- [`suspicious/noConsoleLog`](https://docs.rome.tools/lint/rules/noConsoleLog/)
+- [`suspicious/noDuplicateJsxProps`](https://docs.rome.tools/lint/rules/noDuplicateJsxProps/)
+
+The following rules are now recommended:
+
+- [`noUselessFragments`](https://docs.rome.tools/lint/rules/noUselessFragments/)
+- [`noRedundantUseStrict`](https://docs.rome.tools/lint/rules/noRedundantUseStrict/)
+- [`useExponentiationOperator`](https://docs.rome.tools/lint/rules/useExponentiationOperator/)
+
+
 #### Other changes
 
 - Add new TypeScript globals (`AsyncDisposable`, `Awaited`, `DecoratorContext`, and others) [4643](https://github.com/rome/tools/issues/4643).
