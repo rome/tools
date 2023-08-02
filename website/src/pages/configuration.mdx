@@ -91,6 +91,56 @@ If you have problems with resolving the physical file, you can use the one publi
 }
 ```
 
+## `extends`
+
+A list of paths to other JSON files that will extend the current configuration file.
+
+<CodeBlockHeader filename="rome.json" />
+
+```json
+{
+  "$schema": "https://docs.rome.tools/schemas/12.1.0/schema.json",
+  "extends": ["./formatter.json", "./linter.json"]
+}
+```
+<CodeBlockHeader filename="formatter.json" />
+
+```json
+{
+  "$schema": "https://docs.rome.tools/schemas/12.1.0/schema.json",
+  "formatter": {
+    "indentSize": 2
+  },
+  "javascript": {
+    "formatter": {
+      "semicolons": "asNeeded"
+    }
+  }
+}
+```
+<CodeBlockHeader filename="linter.json" />
+
+```json
+{
+  "$schema": "https://docs.rome.tools/schemas/12.1.0/schema.json",
+  "linter": {
+    "rules": {
+      "complexity": {
+        "noUselessConstructor": "off"
+      }
+    }
+  }
+}
+```
+
+The files defined in this array:
+- must exist in the file system;
+- are resolved from the path where the `rome.json` file is defined;
+- must be relative paths. Paths to libraries are not resolved;
+- must be reachable by Rome, e.g. symbolic links might not be resolved by Rome;
+- will be processed in order: from the first one to the last one;
+- can override the same properties, but ultimately only the last one will be applied;
+
 ## `files`
 
 ### `files.maxSize`
