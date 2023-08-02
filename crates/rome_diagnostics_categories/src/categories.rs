@@ -101,6 +101,7 @@ define_categories! {
     "lint/nursery/useArrowFunction": "https://docs.rome.tools/lint/rules/useArrowFunction",
     "lint/nursery/useCamelCase": "https://docs.rome.tools/lint/rules/useCamelCase",
     "lint/nursery/useExhaustiveDependencies": "https://docs.rome.tools/lint/rules/useExhaustiveDependencies",
+    "lint/nursery/useExportType": "https://docs.rome.tools/lint/rules/useExportType",
     "lint/nursery/useGroupedTypeImport": "https://docs.rome.tools/lint/rules/useGroupedTypeImport",
     "lint/nursery/useHeadingContent": "https://docs.rome.tools/lint/rules/useHeadingContent",
     "lint/nursery/useHookAtTopLevel": "https://docs.rome.tools/lint/rules/useHookAtTopLevel",

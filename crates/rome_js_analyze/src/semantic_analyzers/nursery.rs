@@ -11,6 +11,7 @@ pub(crate) mod no_global_is_nan;
 pub(crate) mod no_unsafe_declaration_merging;
 pub(crate) mod use_camel_case;
 pub(crate) mod use_exhaustive_dependencies;
+pub(crate) mod use_export_type;
 pub(crate) mod use_hook_at_top_level;
 pub(crate) mod use_is_array;
 pub(crate) mod use_is_nan;
@@ -29,6 +30,7 @@ declare_group! {
             self :: no_unsafe_declaration_merging :: NoUnsafeDeclarationMerging ,
             self :: use_camel_case :: UseCamelCase ,
             self :: use_exhaustive_dependencies :: UseExhaustiveDependencies ,
+            self :: use_export_type :: UseExportType ,
             self :: use_hook_at_top_level :: UseHookAtTopLevel ,
             self :: use_is_array :: UseIsArray ,
             self :: use_is_nan :: UseIsNan ,

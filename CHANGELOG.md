@@ -172,6 +172,10 @@ if no error diagnostics are emitted.
 
 	This rule disallows useless `export {}`.
 
+- Add [`useExportType`](https://docs.rome.tools/lint/rules/useExportType/)
+
+  This rule requires the usage of `export type` when the exported element is only a type.
+
 - Add [`useIsArray`](https://docs.rome.tools/lint/rules/useIsArray/)
 
   This rule proposes using `Array.isArray()` instead of `instanceof Array`.

@@ -1,5 +1,9 @@
-use crate::{inner_string_text, AnyJsImportClause, JsImport, JsModuleSource};
-use rome_rowan::{SyntaxResult, TokenText};
+use crate::{
+    inner_string_text, AnyJsBinding, AnyJsImportClause, AnyJsNamedImportSpecifier, JsImport,
+    JsImportNamedClause, JsModuleSource, JsNamedImportSpecifierList, JsNamedImportSpecifiers,
+    JsSyntaxToken,
+};
+use rome_rowan::{AstNode, SyntaxResult, TokenText};
 
 impl JsImport {
     /// It checks if the source of an import against the string `source_to_check`
@@ -43,5 +47,71 @@ impl JsModuleSource {
     /// ```
     pub fn inner_string_text(&self) -> SyntaxResult<TokenText> {
         Ok(inner_string_text(&self.value_token()?))
+    }
+}
+
+impl AnyJsImportClause {
+    pub fn type_token(&self) -> Option<JsSyntaxToken> {
+        match self {
+            AnyJsImportClause::JsImportBareClause(_) => None,
+            AnyJsImportClause::JsImportDefaultClause(clause) => clause.type_token(),
+            AnyJsImportClause::JsImportNamedClause(clause) => clause.type_token(),
+            AnyJsImportClause::JsImportNamespaceClause(clause) => clause.type_token(),
+        }
+    }
+}
+
+impl AnyJsNamedImportSpecifier {
+    pub fn type_token(&self) -> Option<JsSyntaxToken> {
+        match self {
+            AnyJsNamedImportSpecifier::JsBogusNamedImportSpecifier(_) => None,
+            AnyJsNamedImportSpecifier::JsNamedImportSpecifier(specifier) => specifier.type_token(),
+            AnyJsNamedImportSpecifier::JsShorthandNamedImportSpecifier(specifier) => {
+                specifier.type_token()
+            }
+        }
+    }
+
+    pub fn local_name(&self) -> Option<AnyJsBinding> {
+        match self {
+            AnyJsNamedImportSpecifier::JsBogusNamedImportSpecifier(_) => None,
+            AnyJsNamedImportSpecifier::JsNamedImportSpecifier(specifier) => {
+                specifier.local_name().ok()
+            }
+            AnyJsNamedImportSpecifier::JsShorthandNamedImportSpecifier(specifier) => {
+                specifier.local_name().ok()
+            }
+        }
+    }
+
+    /// Returns `true` if this import is an inline type import or an import part of an `import type`.
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use rome_js_syntax::{AnyJsNamedImportSpecifier, T};
+    /// use rome_js_factory::make;
+    ///
+    /// let specifier = make::js_shorthand_named_import_specifier(
+    ///     make::js_identifier_binding(make::ident("a")).into()
+    /// ).with_type_token(make::token(T![type])).build();
+    /// let export = AnyJsNamedImportSpecifier::from(specifier);
+    ///
+    /// assert!(export.is_type_only());
+    /// ```
+    pub fn is_type_only(&self) -> bool {
+        if self.type_token().is_some() {
+            return true;
+        }
+        if let Some(import) = self.parent::<JsNamedImportSpecifierList>() {
+            if let Some(import) = import.parent::<JsNamedImportSpecifiers>() {
+                if let Some(import) = import.parent::<JsImportNamedClause>() {
+                    if import.type_token().is_some() {
+                        return true;
+                    }
+                }
+            }
+        }
+        false
     }
 }

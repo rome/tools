@@ -632,6 +632,10 @@ export interface Nursery {
 	 */
 	useExhaustiveDependencies?: RuleConfiguration;
 	/**
+	 * Promotes the use of export type for type-only types.
+	 */
+	useExportType?: RuleConfiguration;
+	/**
 	 * Enforce the use of import type when an import only has specifiers with type qualifier.
 	 */
 	useGroupedTypeImport?: RuleConfiguration;
@@ -1203,6 +1207,7 @@ export type Category =
 	| "lint/nursery/useArrowFunction"
 	| "lint/nursery/useCamelCase"
 	| "lint/nursery/useExhaustiveDependencies"
+	| "lint/nursery/useExportType"
 	| "lint/nursery/useGroupedTypeImport"
 	| "lint/nursery/useHeadingContent"
 	| "lint/nursery/useHookAtTopLevel"

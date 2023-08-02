@@ -1670,6 +1670,7 @@ impl VisitNode<JsonLanguage> for Nursery {
                 "useArrowFunction",
                 "useCamelCase",
                 "useExhaustiveDependencies",
+                "useExportType",
                 "useGroupedTypeImport",
                 "useHeadingContent",
                 "useHookAtTopLevel",
@@ -2289,6 +2290,29 @@ impl VisitNode<JsonLanguage> for Nursery {
                         diagnostics,
                     )?;
                     self.use_exhaustive_dependencies = Some(rule_configuration);
+                }
+                _ => {
+                    diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
+                        "object or string",
+                        value.range(),
+                    ));
+                }
+            },
+            "useExportType" => match value {
+                AnyJsonValue::JsonStringValue(_) => {
+                    let mut configuration = RuleConfiguration::default();
+                    self.map_to_known_string(&value, name_text, &mut configuration, diagnostics)?;
+                    self.use_export_type = Some(configuration);
+                }
+                AnyJsonValue::JsonObjectValue(_) => {
+                    let mut rule_configuration = RuleConfiguration::default();
+                    rule_configuration.map_rule_configuration(
+                        &value,
+                        name_text,
+                        "useExportType",
+                        diagnostics,
+                    )?;
+                    self.use_export_type = Some(rule_configuration);
                 }
                 _ => {
                     diagnostics.push(DeserializationDiagnostic::new_incorrect_type(

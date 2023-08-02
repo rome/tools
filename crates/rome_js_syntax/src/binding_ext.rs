@@ -1,16 +1,17 @@
 use crate::{
-    JsArrowFunctionExpression, JsBogusNamedImportSpecifier, JsBogusParameter, JsCatchDeclaration,
-    JsClassDeclaration, JsClassExportDefaultDeclaration, JsClassExpression,
-    JsConstructorClassMember, JsConstructorParameterList, JsConstructorParameters,
-    JsDefaultImportSpecifier, JsFormalParameter, JsFunctionDeclaration,
-    JsFunctionExportDefaultDeclaration, JsFunctionExpression, JsIdentifierBinding,
-    JsImportDefaultClause, JsImportNamespaceClause, JsMethodClassMember, JsMethodObjectMember,
-    JsNamedImportSpecifier, JsNamespaceImportSpecifier, JsParameterList, JsParameters,
-    JsRestParameter, JsSetterClassMember, JsSetterObjectMember, JsShorthandNamedImportSpecifier,
-    JsSyntaxKind, JsSyntaxNode, JsSyntaxToken, JsVariableDeclarator, TsCallSignatureTypeMember,
-    TsConstructSignatureTypeMember, TsConstructorSignatureClassMember, TsConstructorType,
-    TsDeclareFunctionDeclaration, TsDeclareFunctionExportDefaultDeclaration, TsEnumDeclaration,
-    TsFunctionType, TsIdentifierBinding, TsImportEqualsDeclaration, TsIndexSignatureClassMember,
+    AnyJsImportClause, AnyJsNamedImportSpecifier, JsArrowFunctionExpression,
+    JsBogusNamedImportSpecifier, JsBogusParameter, JsCatchDeclaration, JsClassDeclaration,
+    JsClassExportDefaultDeclaration, JsClassExpression, JsConstructorClassMember,
+    JsConstructorParameterList, JsConstructorParameters, JsDefaultImportSpecifier,
+    JsFormalParameter, JsFunctionDeclaration, JsFunctionExportDefaultDeclaration,
+    JsFunctionExpression, JsIdentifierBinding, JsImportDefaultClause, JsImportNamespaceClause,
+    JsMethodClassMember, JsMethodObjectMember, JsNamedImportSpecifier, JsNamespaceImportSpecifier,
+    JsParameterList, JsParameters, JsRestParameter, JsSetterClassMember, JsSetterObjectMember,
+    JsShorthandNamedImportSpecifier, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken,
+    JsVariableDeclarator, TsCallSignatureTypeMember, TsConstructSignatureTypeMember,
+    TsConstructorSignatureClassMember, TsConstructorType, TsDeclareFunctionDeclaration,
+    TsDeclareFunctionExportDefaultDeclaration, TsEnumDeclaration, TsFunctionType,
+    TsIdentifierBinding, TsImportEqualsDeclaration, TsIndexSignatureClassMember,
     TsIndexSignatureParameter, TsInterfaceDeclaration, TsMethodSignatureClassMember,
     TsMethodSignatureTypeMember, TsModuleDeclaration, TsPropertyParameter,
     TsSetterSignatureClassMember, TsSetterSignatureTypeMember, TsTypeAliasDeclaration,
@@ -260,6 +261,26 @@ impl AnyJsIdentifierBinding {
 
     pub fn is_under_object_pattern_binding(&self) -> Option<bool> {
         is_under_object_pattern_binding(self.syntax())
+    }
+
+    /// Returns true if this binding is only a type and not a runtime value.
+    pub fn is_type_only(&self) -> bool {
+        match self {
+            AnyJsIdentifierBinding::JsIdentifierBinding(binding) => {
+                if let Some(specifier) = binding.parent::<AnyJsNamedImportSpecifier>() {
+                    return specifier.is_type_only();
+                }
+                if let Some(clause) = binding.parent::<AnyJsImportClause>() {
+                    return clause.type_token().is_some();
+                }
+            }
+            AnyJsIdentifierBinding::TsIdentifierBinding(binding) => {
+                // ignore TypeScript namespaces
+                return binding.parent::<TsModuleDeclaration>().is_none();
+            }
+            AnyJsIdentifierBinding::TsTypeParameterName(_) => {}
+        }
+        false
     }
 
     pub fn with_name_token(self, name_token: JsSyntaxToken) -> AnyJsIdentifierBinding {
