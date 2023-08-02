@@ -68,7 +68,6 @@ impl Rule for {rule_name_upper_camel} {{
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {{
         let binding = ctx.query();
         let model = ctx.model();
-
         binding.all_references(model).collect()
     }}
 
@@ -76,7 +75,7 @@ impl Rule for {rule_name_upper_camel} {{
         Some(
             RuleDiagnostic::new(
                 rule_category!(),
-                reference.syntax().text_trimmed_range(),
+                reference.range(),
                 markup! {{
                     "Variable is read here."
                 }},
