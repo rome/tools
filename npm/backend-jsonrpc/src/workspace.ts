@@ -178,7 +178,7 @@ export interface JavascriptFormatter {
 	 */
 	arrowParentheses?: ArrowParentheses;
 	/**
-	 * The style for JSX quotes. Defaults to double.
+	 * The type of quotes used in JSX. Defaults to double.
 	 */
 	jsxQuoteStyle?: QuoteStyle;
 	/**
@@ -186,7 +186,7 @@ export interface JavascriptFormatter {
 	 */
 	quoteProperties?: QuoteProperties;
 	/**
-	 * The style for quotes. Defaults to double.
+	 * The type of quotes used in JavaScript code. Defaults to double.
 	 */
 	quoteStyle?: QuoteStyle;
 	/**

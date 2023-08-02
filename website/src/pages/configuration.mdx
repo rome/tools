@@ -165,6 +165,20 @@ match these patterns.
 }
 ```
 
+ ### `files.allowUnknown`
+
+Rome won't emit diagnostics if it encounters files that can't handle.
+
+<CodeBlockHeader filename="rome.json" />
+
+```json
+{
+  "files": {
+    "allowUnknown": true
+  }
+}
+```
+
 ## `vcs`
 
 Set of properties to integrate Rome with a VCS software.
@@ -429,13 +443,11 @@ The type of quote used when representing string literals. It can be `single` or 
 
 > Default: `double`
 
-[//]: # (### `javascript.formatter.jsxQuoteStyle`)
+### `javascript.formatter.jsxQuoteStyle`
 
-[//]: # ()
-[//]: # (The type of quote used when representing jsx string literals. It can be `single` or `double`.)
+The type of quote used when representing jsx string literals. It can be `single` or `double`.
 
-[//]: # ()
-[//]: # (> Default: `double`)
+> Default: `double`
 
 ### `javascript.formatter.quoteProperties`
 
@@ -457,6 +469,14 @@ Print trailing commas wherever possible in multi-line comma-separated syntactic 
 It configures where the formatter prints semicolons:
 - `always`, the semicolons is always added at the end of each statement;
 - `asNeeded`, the semicolons are added only in places where it's needed, to protect from [ASI](https://en.wikibooks.org/wiki/JavaScript/Automatic_semicolon_insertion)
+
+> Default: `always`
+
+### `javascript.formatter.arrowParentheses`
+
+Whether to add non-necessary parentheses to arrow functions:
+- `always`, the parentheses are always added;
+- `asNeeded`, the parentheses are added only when they are needed;
 
 > Default: `always`
 
@@ -483,6 +503,22 @@ A list of global names that Rome should ignore (analyzer, linter, etc.)
 {
   "javascript": {
     "globals": ["$", "_", "externalVariable"]
+  }
+}
+```
+
+### `json.parser.allowComments`
+
+Enables the parsing of comments in JSON files.
+
+<CodeBlockHeader filename="rome.json" />
+
+```json
+{
+  "json": {
+    "parser": {
+      "allowComments": true
+    }
   }
 }
 ```

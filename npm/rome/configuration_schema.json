@@ -713,7 +713,7 @@
 					]
 				},
 				"jsxQuoteStyle": {
-					"description": "The style for JSX quotes. Defaults to double.",
+					"description": "The type of quotes used in JSX. Defaults to double.",
 					"anyOf": [{ "$ref": "#/definitions/QuoteStyle" }, { "type": "null" }]
 				},
 				"quoteProperties": {
@@ -724,7 +724,7 @@
 					]
 				},
 				"quoteStyle": {
-					"description": "The style for quotes. Defaults to double.",
+					"description": "The type of quotes used in JavaScript code. Defaults to double.",
 					"anyOf": [{ "$ref": "#/definitions/QuoteStyle" }, { "type": "null" }]
 				},
 				"semicolons": {

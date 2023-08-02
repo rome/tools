@@ -68,11 +68,11 @@ impl JavascriptConfiguration {
 #[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 #[serde(rename_all = "camelCase", default, deny_unknown_fields)]
 pub struct JavascriptFormatter {
-    /// The style for quotes. Defaults to double.
+    /// The type of quotes used in JavaScript code. Defaults to double.
     #[bpaf(long("quote-style"), argument("double|single"), optional)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub quote_style: Option<QuoteStyle>,
-    /// The style for JSX quotes. Defaults to double.
+    /// The type of quotes used in JSX. Defaults to double.
     #[bpaf(long("jsx-quote-style"), argument("double|single"), optional)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub jsx_quote_style: Option<QuoteStyle>,
