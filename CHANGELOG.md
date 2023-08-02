@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+### Analyzer
+
+#### BREAKING CHANGES
+
+- The organize imports feature now groups import statements by "distance".
+  Modules that are "farther" from the user are put on the top, modules "closer" to the user are put on the bottom.
+  Check the [documentation](https://docs.rome.tools/analyzer/) for more information about it.
+
 ### CLI
 
 #### BREAKING CHANGES
@@ -452,9 +460,7 @@ The following rules are now recommended:
     }
   }
   ```
-### VSCode
 
-### JavaScript APIs
 
 
 ## 12.1.3
