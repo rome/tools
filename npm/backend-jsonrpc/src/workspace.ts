@@ -632,10 +632,6 @@ export interface Nursery {
 	 */
 	useArrowFunction?: RuleConfiguration;
 	/**
-	 * Enforce camel case naming convention.
-	 */
-	useCamelCase?: RuleConfiguration;
-	/**
 	 * Enforce all dependencies are correctly specified.
 	 */
 	useExhaustiveDependencies?: RuleConfiguration;
@@ -1203,7 +1199,6 @@ export type Category =
 	| "lint/nursery/noVoid"
 	| "lint/nursery/useAriaPropTypes"
 	| "lint/nursery/useArrowFunction"
-	| "lint/nursery/useCamelCase"
 	| "lint/nursery/useExhaustiveDependencies"
 	| "lint/nursery/useGroupedTypeImport"
 	| "lint/nursery/useHookAtTopLevel"

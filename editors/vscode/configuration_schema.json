@@ -974,13 +974,6 @@
 						{ "type": "null" }
 					]
 				},
-				"useCamelCase": {
-					"description": "Enforce camel case naming convention.",
-					"anyOf": [
-						{ "$ref": "#/definitions/RuleConfiguration" },
-						{ "type": "null" }
-					]
-				},
 				"useExhaustiveDependencies": {
 					"description": "Enforce all dependencies are correctly specified.",
 					"anyOf": [

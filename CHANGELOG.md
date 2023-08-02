@@ -128,12 +128,16 @@ if no error diagnostics are emitted.
 
 - [`noDuplicateParameters`](https://docs.rome.tools/lint/rules/noduplicateparameters/): enhanced rule to manage constructor parameters.
 
-#### BREAKING CHANGES
+#### Removed rules
 
-- Remove `lint/complexity/noExtraSemicolon` ([#4553](https://github.com/rome/tools/issues/4553))
+- Remove `complexity/noExtraSemicolon` ([#4553](https://github.com/rome/tools/issues/4553))
 
   The _Rome_ formatter takes care of removing extra semicolons.
   Thus, there is no need for this rule.
+
+- Remove `useCamelCase`
+
+  Use [`useNamingConvention`](https://docs.rome.tools/lint/rules/useCamelCase/) instead.
 
 #### New rules
 
