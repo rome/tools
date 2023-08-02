@@ -53,6 +53,22 @@
   when a single file or directory was pointed at by multiple symbolic links. Symbolic links to other
   symbolic links do still trigger warnings if they are too deeply nested.
 - Introduced a new command called `rome lint`, which will only run lint rules against the code base.
+- Rome recognises known files as "JSON files with comments allowed":
+  - `typescript.json`;
+  - `tsconfig.json`;
+  - `jsconfig.json`;
+  - `tslint.json`;
+  - `babel.config.json`;
+  - `.babelrc.json`;
+  - `.ember-cli`;
+  - `typedoc.json`;
+  - `.eslintrc.json`;
+  - `.eslintrc`;
+  - `.jsfmtrc`;
+  - `.jshintrc`;
+  - `.swcrc`;
+  - `.hintrc`;
+  - `.babelrc`;
 
 ### Configuration
 
