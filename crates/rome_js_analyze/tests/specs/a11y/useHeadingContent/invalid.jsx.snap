@@ -27,7 +27,7 @@ expression: invalid.jsx
 
 # Diagnostics
 ```
-invalid.jsx:2:2 lint/nursery/useHeadingContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:2:2 lint/a11y/useHeadingContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Provide screen reader accessible content when using heading  elements.
   
@@ -43,7 +43,7 @@ invalid.jsx:2:2 lint/nursery/useHeadingContent ━━━━━━━━━━━
 ```
 
 ```
-invalid.jsx:3:2 lint/nursery/useHeadingContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:3:2 lint/a11y/useHeadingContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Provide screen reader accessible content when using heading  elements.
   
@@ -63,7 +63,7 @@ invalid.jsx:3:2 lint/nursery/useHeadingContent ━━━━━━━━━━━
 ```
 
 ```
-invalid.jsx:6:2 lint/nursery/useHeadingContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:6:2 lint/a11y/useHeadingContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Provide screen reader accessible content when using heading  elements.
   
@@ -80,7 +80,7 @@ invalid.jsx:6:2 lint/nursery/useHeadingContent ━━━━━━━━━━━
 ```
 
 ```
-invalid.jsx:7:2 lint/nursery/useHeadingContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:7:2 lint/a11y/useHeadingContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Provide screen reader accessible content when using heading  elements.
   
@@ -100,7 +100,7 @@ invalid.jsx:7:2 lint/nursery/useHeadingContent ━━━━━━━━━━━
 ```
 
 ```
-invalid.jsx:10:2 lint/nursery/useHeadingContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:10:2 lint/a11y/useHeadingContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Provide screen reader accessible content when using heading  elements.
   
@@ -117,7 +117,7 @@ invalid.jsx:10:2 lint/nursery/useHeadingContent ━━━━━━━━━━�
 ```
 
 ```
-invalid.jsx:11:2 lint/nursery/useHeadingContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:11:2 lint/a11y/useHeadingContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Provide screen reader accessible content when using heading  elements.
   
@@ -134,7 +134,7 @@ invalid.jsx:11:2 lint/nursery/useHeadingContent ━━━━━━━━━━�
 ```
 
 ```
-invalid.jsx:12:2 lint/nursery/useHeadingContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:12:2 lint/a11y/useHeadingContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Provide screen reader accessible content when using heading  elements.
   
@@ -151,7 +151,7 @@ invalid.jsx:12:2 lint/nursery/useHeadingContent ━━━━━━━━━━�
 ```
 
 ```
-invalid.jsx:13:2 lint/nursery/useHeadingContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:13:2 lint/a11y/useHeadingContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Provide screen reader accessible content when using heading  elements.
   
@@ -168,7 +168,7 @@ invalid.jsx:13:2 lint/nursery/useHeadingContent ━━━━━━━━━━�
 ```
 
 ```
-invalid.jsx:14:2 lint/nursery/useHeadingContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:14:2 lint/a11y/useHeadingContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Provide screen reader accessible content when using heading  elements.
   
@@ -185,7 +185,7 @@ invalid.jsx:14:2 lint/nursery/useHeadingContent ━━━━━━━━━━�
 ```
 
 ```
-invalid.jsx:15:2 lint/nursery/useHeadingContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:15:2 lint/a11y/useHeadingContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Provide screen reader accessible content when using heading  elements.
   
@@ -202,7 +202,7 @@ invalid.jsx:15:2 lint/nursery/useHeadingContent ━━━━━━━━━━�
 ```
 
 ```
-invalid.jsx:16:2 lint/nursery/useHeadingContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:16:2 lint/a11y/useHeadingContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Provide screen reader accessible content when using heading  elements.
   
@@ -219,7 +219,7 @@ invalid.jsx:16:2 lint/nursery/useHeadingContent ━━━━━━━━━━�
 ```
 
 ```
-invalid.jsx:17:2 lint/nursery/useHeadingContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:17:2 lint/a11y/useHeadingContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Provide screen reader accessible content when using heading  elements.
   

@@ -11,6 +11,7 @@ pub(crate) mod no_redundant_alt;
 pub(crate) mod no_svg_without_title;
 pub(crate) mod use_alt_text;
 pub(crate) mod use_anchor_content;
+pub(crate) mod use_heading_content;
 pub(crate) mod use_html_lang;
 pub(crate) mod use_iframe_title;
 pub(crate) mod use_key_with_click_events;
@@ -31,6 +32,7 @@ declare_group! {
             self :: no_svg_without_title :: NoSvgWithoutTitle ,
             self :: use_alt_text :: UseAltText ,
             self :: use_anchor_content :: UseAnchorContent ,
+            self :: use_heading_content :: UseHeadingContent ,
             self :: use_html_lang :: UseHtmlLang ,
             self :: use_iframe_title :: UseIframeTitle ,
             self :: use_key_with_click_events :: UseKeyWithClickEvents ,

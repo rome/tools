@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 96
 expression: invalid.js
 ---
 # Input
@@ -22,7 +21,7 @@ expression: invalid.js
 
 # Diagnostics
 ```
-invalid.js:1:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:1:4 lint/complexity/useSimpleNumberKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Bigint is not allowed here.
   
@@ -42,7 +41,7 @@ invalid.js:1:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━━━━━�
 ```
 
 ```
-invalid.js:2:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:2:4 lint/complexity/useSimpleNumberKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Hexadecimal number literal is not allowed here.
   
@@ -64,7 +63,7 @@ invalid.js:2:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━━━━━�
 ```
 
 ```
-invalid.js:3:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:3:4 lint/complexity/useSimpleNumberKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Octal number literal is not allowed here.
   
@@ -88,7 +87,7 @@ invalid.js:3:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━━━━━�
 ```
 
 ```
-invalid.js:4:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:4:4 lint/complexity/useSimpleNumberKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Binary number literal in is not allowed here.
   
@@ -112,7 +111,7 @@ invalid.js:4:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━━━━━�
 ```
 
 ```
-invalid.js:5:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:5:4 lint/complexity/useSimpleNumberKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Octal number literal is not allowed here.
   
@@ -136,7 +135,7 @@ invalid.js:5:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━━━━━�
 ```
 
 ```
-invalid.js:6:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:6:4 lint/complexity/useSimpleNumberKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Number literal with underscore is not allowed here.
   
@@ -160,7 +159,7 @@ invalid.js:6:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━━━━━�
 ```
 
 ```
-invalid.js:7:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:7:4 lint/complexity/useSimpleNumberKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Number literal with underscore is not allowed here.
   
@@ -184,7 +183,7 @@ invalid.js:7:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━━━━━�
 ```
 
 ```
-invalid.js:8:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:8:4 lint/complexity/useSimpleNumberKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Number literal with underscore is not allowed here.
   
@@ -208,7 +207,7 @@ invalid.js:8:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━━━━━�
 ```
 
 ```
-invalid.js:9:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:9:4 lint/complexity/useSimpleNumberKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Hexadecimal number literal is not allowed here.
   
@@ -232,7 +231,7 @@ invalid.js:9:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━━━━━�
 ```
 
 ```
-invalid.js:11:8 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:11:8 lint/complexity/useSimpleNumberKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Hexadecimal number literal is not allowed here.
   
@@ -256,7 +255,7 @@ invalid.js:11:8 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━━━━━
 ```
 
 ```
-invalid.js:12:8 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:12:8 lint/complexity/useSimpleNumberKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Hexadecimal number literal is not allowed here.
   

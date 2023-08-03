@@ -5,6 +5,8 @@ parent: lint/rules/index
 
 # noUselessFragments (since v0.10.0)
 
+> This rule is recommended by Rome.
+
 Disallow unnecessary fragments
 
 ## Examples
@@ -19,7 +21,7 @@ foo
 
 <pre class="language-text"><code class="language-text">complexity/noUselessFragments.js:1:1 <a href="https://docs.rome.tools/lint/rules/noUselessFragments">lint/complexity/noUselessFragments</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Avoid using unnecessary </span><span style="color: Orange;"><strong>Fragment</strong></span><span style="color: Orange;">.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Avoid using unnecessary </span><span style="color: Tomato;"><strong>Fragment</strong></span><span style="color: Tomato;">.</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>&lt;&gt;
    <strong>   │ </strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
@@ -47,7 +49,7 @@ foo
 
 <pre class="language-text"><code class="language-text">complexity/noUselessFragments.js:1:1 <a href="https://docs.rome.tools/lint/rules/noUselessFragments">lint/complexity/noUselessFragments</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Avoid using unnecessary </span><span style="color: Orange;"><strong>Fragment</strong></span><span style="color: Orange;">.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Avoid using unnecessary </span><span style="color: Tomato;"><strong>Fragment</strong></span><span style="color: Tomato;">.</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>&lt;React.Fragment&gt;
    <strong>   │ </strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
@@ -76,7 +78,7 @@ foo
 
 <pre class="language-text"><code class="language-text">complexity/noUselessFragments.js:2:5 <a href="https://docs.rome.tools/lint/rules/noUselessFragments">lint/complexity/noUselessFragments</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Avoid using unnecessary </span><span style="color: Orange;"><strong>Fragment</strong></span><span style="color: Orange;">.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Avoid using unnecessary </span><span style="color: Tomato;"><strong>Fragment</strong></span><span style="color: Tomato;">.</span>
   
     <strong>1 │ </strong>&lt;&gt;
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>    &lt;&gt;foo&lt;/&gt;
@@ -96,7 +98,7 @@ foo
 
 <pre class="language-text"><code class="language-text">complexity/noUselessFragments.js:1:1 <a href="https://docs.rome.tools/lint/rules/noUselessFragments">lint/complexity/noUselessFragments</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Avoid using unnecessary </span><span style="color: Orange;"><strong>Fragment</strong></span><span style="color: Orange;">.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Avoid using unnecessary </span><span style="color: Tomato;"><strong>Fragment</strong></span><span style="color: Tomato;">.</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>&lt;&gt;&lt;/&gt;
    <strong>   │ </strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>

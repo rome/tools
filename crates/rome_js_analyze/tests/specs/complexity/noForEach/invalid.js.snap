@@ -24,7 +24,7 @@ els['forEach']((el) => {
 
 # Diagnostics
 ```
-invalid.js:1:1 lint/nursery/noForEach ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:1:1 lint/complexity/noForEach ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Prefer for...of instead of Array.forEach
   
@@ -40,7 +40,7 @@ invalid.js:1:1 lint/nursery/noForEach ━━━━━━━━━━━━━━
 ```
 
 ```
-invalid.js:5:1 lint/nursery/noForEach ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:5:1 lint/complexity/noForEach ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Prefer for...of instead of Array.forEach
   
@@ -58,7 +58,7 @@ invalid.js:5:1 lint/nursery/noForEach ━━━━━━━━━━━━━━
 ```
 
 ```
-invalid.js:9:1 lint/nursery/noForEach ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:9:1 lint/complexity/noForEach ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Prefer for...of instead of Array.forEach
   
@@ -76,7 +76,7 @@ invalid.js:9:1 lint/nursery/noForEach ━━━━━━━━━━━━━━
 ```
 
 ```
-invalid.js:13:1 lint/nursery/noForEach ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:13:1 lint/complexity/noForEach ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Prefer for...of instead of Array.forEach
   

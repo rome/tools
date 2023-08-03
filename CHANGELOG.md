@@ -128,12 +128,16 @@ if no error diagnostics are emitted.
 
 - [`noDuplicateParameters`](https://docs.rome.tools/lint/rules/noduplicateparameters/): enhanced rule to manage constructor parameters.
 
-#### BREAKING CHANGES
+#### Removed rules
 
-- Remove `lint/complexity/noExtraSemicolon` ([#4553](https://github.com/rome/tools/issues/4553))
+- Remove `complexity/noExtraSemicolon` ([#4553](https://github.com/rome/tools/issues/4553))
 
   The _Rome_ formatter takes care of removing extra semicolons.
   Thus, there is no need for this rule.
+
+- Remove `useCamelCase`
+
+  Use [`useNamingConvention`](https://docs.rome.tools/lint/rules/useCamelCase/) instead.
 
 #### New rules
 
@@ -175,6 +179,25 @@ if no error diagnostics are emitted.
 - Add [`useIsArray`](https://docs.rome.tools/lint/rules/useIsArray/)
 
   This rule proposes using `Array.isArray()` instead of `instanceof Array`.
+
+#### Promoted rules
+
+New rules are promoted, please check [#4750](https://github.com/rome/tools/discussions/4750) for more details:
+
+- [`a11y/useHeadingContent`](https://docs.rome.tools/lint/rules/useHeadingContent/)
+- [`complexity/noForEach`](https://docs.rome.tools/lint/rules/noForEach/)
+- [`complexity/useLiteralKeys`](https://docs.rome.tools/lint/rules/useLiteralKeys/)
+- [`complexity/useSimpleNumberKeys`](https://docs.rome.tools/lint/rules/useSimpleNumberKeys/)
+- [`correctness/useIsNan`](https://docs.rome.tools/lint/rules/useIsNan/)
+- [`suspicious/noConsoleLog`](https://docs.rome.tools/lint/rules/noConsoleLog/)
+- [`suspicious/noDuplicateJsxProps`](https://docs.rome.tools/lint/rules/noDuplicateJsxProps/)
+
+The following rules are now recommended:
+
+- [`noUselessFragments`](https://docs.rome.tools/lint/rules/noUselessFragments/)
+- [`noRedundantUseStrict`](https://docs.rome.tools/lint/rules/noRedundantUseStrict/)
+- [`useExponentiationOperator`](https://docs.rome.tools/lint/rules/useExponentiationOperator/)
+
 
 #### Other changes
 

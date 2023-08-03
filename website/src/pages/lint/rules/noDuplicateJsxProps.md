@@ -5,6 +5,8 @@ parent: lint/rules/index
 
 # noDuplicateJsxProps (since v12.1.0)
 
+> This rule is recommended by Rome.
+
 Prevents JSX properties to be assigned multiple times.
 
 ## Examples
@@ -15,7 +17,7 @@ Prevents JSX properties to be assigned multiple times.
 <Hello name="John" name="John" />
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noDuplicateJsxProps.js:1:8 <a href="https://docs.rome.tools/lint/rules/noDuplicateJsxProps">lint/nursery/noDuplicateJsxProps</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">suspicious/noDuplicateJsxProps.js:1:8 <a href="https://docs.rome.tools/lint/rules/noDuplicateJsxProps">lint/suspicious/noDuplicateJsxProps</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This JSX property is assigned multiple times.</span>
   
@@ -35,7 +37,7 @@ Prevents JSX properties to be assigned multiple times.
 <label xml:lang="en-US" xml:lang="en-US"></label>
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noDuplicateJsxProps.js:1:8 <a href="https://docs.rome.tools/lint/rules/noDuplicateJsxProps">lint/nursery/noDuplicateJsxProps</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">suspicious/noDuplicateJsxProps.js:1:8 <a href="https://docs.rome.tools/lint/rules/noDuplicateJsxProps">lint/suspicious/noDuplicateJsxProps</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This JSX property is assigned multiple times.</span>
   

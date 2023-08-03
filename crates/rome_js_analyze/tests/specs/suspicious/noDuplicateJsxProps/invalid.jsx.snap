@@ -22,7 +22,7 @@ expression: invalid.jsx
 
 # Diagnostics
 ```
-invalid.jsx:2:8 lint/nursery/noDuplicateJsxProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:2:8 lint/suspicious/noDuplicateJsxProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This JSX property is assigned multiple times.
   
@@ -44,7 +44,7 @@ invalid.jsx:2:8 lint/nursery/noDuplicateJsxProps ━━━━━━━━━━�
 ```
 
 ```
-invalid.jsx:5:8 lint/nursery/noDuplicateJsxProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:5:8 lint/suspicious/noDuplicateJsxProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This JSX property is assigned multiple times.
   
@@ -66,7 +66,7 @@ invalid.jsx:5:8 lint/nursery/noDuplicateJsxProps ━━━━━━━━━━�
 ```
 
 ```
-invalid.jsx:8:8 lint/nursery/noDuplicateJsxProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:8:8 lint/suspicious/noDuplicateJsxProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This JSX property is assigned multiple times.
   
@@ -96,7 +96,7 @@ invalid.jsx:8:8 lint/nursery/noDuplicateJsxProps ━━━━━━━━━━�
 ```
 
 ```
-invalid.jsx:11:8 lint/nursery/noDuplicateJsxProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:11:8 lint/suspicious/noDuplicateJsxProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This JSX property is assigned multiple times.
   
@@ -118,7 +118,7 @@ invalid.jsx:11:8 lint/nursery/noDuplicateJsxProps ━━━━━━━━━━
 ```
 
 ```
-invalid.jsx:11:32 lint/nursery/noDuplicateJsxProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:11:32 lint/suspicious/noDuplicateJsxProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This JSX property is assigned multiple times.
   
@@ -140,7 +140,7 @@ invalid.jsx:11:32 lint/nursery/noDuplicateJsxProps ━━━━━━━━━�
 ```
 
 ```
-invalid.jsx:13:8 lint/nursery/noDuplicateJsxProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:13:8 lint/suspicious/noDuplicateJsxProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This JSX property is assigned multiple times.
   

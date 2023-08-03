@@ -164,6 +164,13 @@
 						{ "type": "null" }
 					]
 				},
+				"useHeadingContent": {
+					"description": "Enforce that heading elements (h1, h2, etc.) have content and that the content is accessible to screen readers. Accessible means that it is not hidden using the aria-hidden prop.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"useHtmlLang": {
 					"description": "Enforce that html element has lang attribute.",
 					"anyOf": [
@@ -233,6 +240,13 @@
 				},
 				"noExtraBooleanCast": {
 					"description": "Disallow unnecessary boolean casts",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
+				"noForEach": {
+					"description": "Prefer for...of statement instead of Array.forEach.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }
@@ -312,8 +326,22 @@
 						{ "type": "null" }
 					]
 				},
+				"useLiteralKeys": {
+					"description": "Enforce the usage of a literal access to properties over computed property access.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"useOptionalChain": {
 					"description": "Enforce using concise optional chain instead of chained logical expressions.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
+				"useSimpleNumberKeys": {
+					"description": "Disallow number literal object member names which are not base10 or uses underscore as separator",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }
@@ -514,6 +542,13 @@
 				"recommended": {
 					"description": "It enables the recommended rules for this group",
 					"type": ["boolean", "null"]
+				},
+				"useIsNan": {
+					"description": "Require calls to isNaN() when checking for NaN.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
 				},
 				"useValidForDirection": {
 					"description": "Enforce \"for\" loop update clause moving the counter in the right direction.",
@@ -816,13 +851,6 @@
 						{ "type": "null" }
 					]
 				},
-				"noConsoleLog": {
-					"description": "Disallow the use of console.log",
-					"anyOf": [
-						{ "$ref": "#/definitions/RuleConfiguration" },
-						{ "type": "null" }
-					]
-				},
 				"noConstantCondition": {
 					"description": "Disallow constant expressions in conditions",
 					"anyOf": [
@@ -844,13 +872,6 @@
 						{ "type": "null" }
 					]
 				},
-				"noDuplicateJsxProps": {
-					"description": "Prevents JSX properties to be assigned multiple times.",
-					"anyOf": [
-						{ "$ref": "#/definitions/RuleConfiguration" },
-						{ "type": "null" }
-					]
-				},
 				"noExcessiveComplexity": {
 					"description": "Disallow functions that exceed a given complexity score.",
 					"anyOf": [
@@ -860,13 +881,6 @@
 				},
 				"noFallthroughSwitchClause": {
 					"description": "Disallow fallthrough of switch clauses.",
-					"anyOf": [
-						{ "$ref": "#/definitions/RuleConfiguration" },
-						{ "type": "null" }
-					]
-				},
-				"noForEach": {
-					"description": "Prefer for...of statement instead of Array.forEach.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }
@@ -960,13 +974,6 @@
 						{ "type": "null" }
 					]
 				},
-				"useCamelCase": {
-					"description": "Enforce camel case naming convention.",
-					"anyOf": [
-						{ "$ref": "#/definitions/RuleConfiguration" },
-						{ "type": "null" }
-					]
-				},
 				"useExhaustiveDependencies": {
 					"description": "Enforce all dependencies are correctly specified.",
 					"anyOf": [
@@ -976,13 +983,6 @@
 				},
 				"useGroupedTypeImport": {
 					"description": "Enforce the use of import type when an import only has specifiers with type qualifier.",
-					"anyOf": [
-						{ "$ref": "#/definitions/RuleConfiguration" },
-						{ "type": "null" }
-					]
-				},
-				"useHeadingContent": {
-					"description": "Enforce that heading elements (h1, h2, etc.) have content and that the content is accessible to screen readers. Accessible means that it is not hidden using the aria-hidden prop.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }
@@ -1009,13 +1009,6 @@
 						{ "type": "null" }
 					]
 				},
-				"useIsNan": {
-					"description": "Require calls to isNaN() when checking for NaN.",
-					"anyOf": [
-						{ "$ref": "#/definitions/RuleConfiguration" },
-						{ "type": "null" }
-					]
-				},
 				"useLiteralEnumMembers": {
 					"description": "Require all enum members to be literal values.",
 					"anyOf": [
@@ -1023,22 +1016,8 @@
 						{ "type": "null" }
 					]
 				},
-				"useLiteralKeys": {
-					"description": "Enforce the usage of a literal access to properties over computed property access.",
-					"anyOf": [
-						{ "$ref": "#/definitions/RuleConfiguration" },
-						{ "type": "null" }
-					]
-				},
 				"useNamingConvention": {
 					"description": "Enforce naming conventions for everything across a codebase.",
-					"anyOf": [
-						{ "$ref": "#/definitions/RuleConfiguration" },
-						{ "type": "null" }
-					]
-				},
-				"useSimpleNumberKeys": {
-					"description": "Disallow number literal object member names which are not base10 or uses underscore as separator",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }
@@ -1479,6 +1458,13 @@
 						{ "type": "null" }
 					]
 				},
+				"noConsoleLog": {
+					"description": "Disallow the use of console.log",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"noConstEnum": {
 					"description": "Disallow TypeScript const enum",
 					"anyOf": [
@@ -1509,6 +1495,13 @@
 				},
 				"noDuplicateClassMembers": {
 					"description": "Disallow duplicate class members.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
+				"noDuplicateJsxProps": {
+					"description": "Prevents JSX properties to be assigned multiple times.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }

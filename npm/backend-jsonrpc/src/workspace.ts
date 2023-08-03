@@ -305,6 +305,10 @@ export interface A11y {
 	 */
 	useButtonType?: RuleConfiguration;
 	/**
+	 * Enforce that heading elements (h1, h2, etc.) have content and that the content is accessible to screen readers. Accessible means that it is not hidden using the aria-hidden prop.
+	 */
+	useHeadingContent?: RuleConfiguration;
+	/**
 	 * Enforce that html element has lang attribute.
 	 */
 	useHtmlLang?: RuleConfiguration;
@@ -350,6 +354,10 @@ export interface Complexity {
 	 */
 	noExtraBooleanCast?: RuleConfiguration;
 	/**
+	 * Prefer for...of statement instead of Array.forEach.
+	 */
+	noForEach?: RuleConfiguration;
+	/**
 	 * Disallow unclear usage of multiple space characters in regular expression literals
 	 */
 	noMultipleSpacesInRegularExpressionLiterals?: RuleConfiguration;
@@ -394,9 +402,17 @@ export interface Complexity {
 	 */
 	useFlatMap?: RuleConfiguration;
 	/**
+	 * Enforce the usage of a literal access to properties over computed property access.
+	 */
+	useLiteralKeys?: RuleConfiguration;
+	/**
 	 * Enforce using concise optional chain instead of chained logical expressions.
 	 */
 	useOptionalChain?: RuleConfiguration;
+	/**
+	 * Disallow number literal object member names which are not base10 or uses underscore as separator
+	 */
+	useSimpleNumberKeys?: RuleConfiguration;
 	/**
 	 * Discard redundant terms from logical expressions.
 	 */
@@ -507,6 +523,10 @@ export interface Correctness {
 	 */
 	recommended?: boolean;
 	/**
+	 * Require calls to isNaN() when checking for NaN.
+	 */
+	useIsNan?: RuleConfiguration;
+	/**
 	 * Enforce "for" loop update clause moving the counter in the right direction.
 	 */
 	useValidForDirection?: RuleConfiguration;
@@ -540,10 +560,6 @@ export interface Nursery {
 	 */
 	noConfusingArrow?: RuleConfiguration;
 	/**
-	 * Disallow the use of console.log
-	 */
-	noConsoleLog?: RuleConfiguration;
-	/**
 	 * Disallow constant expressions in conditions
 	 */
 	noConstantCondition?: RuleConfiguration;
@@ -556,10 +572,6 @@ export interface Nursery {
 	 */
 	noDuplicateJsonKeys?: RuleConfiguration;
 	/**
-	 * Prevents JSX properties to be assigned multiple times.
-	 */
-	noDuplicateJsxProps?: RuleConfiguration;
-	/**
 	 * Disallow functions that exceed a given complexity score.
 	 */
 	noExcessiveComplexity?: RuleConfiguration;
@@ -567,10 +579,6 @@ export interface Nursery {
 	 * Disallow fallthrough of switch clauses.
 	 */
 	noFallthroughSwitchClause?: RuleConfiguration;
-	/**
-	 * Prefer for...of statement instead of Array.forEach.
-	 */
-	noForEach?: RuleConfiguration;
 	/**
 	 * Use Number.isFinite instead of global isFinite.
 	 */
@@ -624,10 +632,6 @@ export interface Nursery {
 	 */
 	useArrowFunction?: RuleConfiguration;
 	/**
-	 * Enforce camel case naming convention.
-	 */
-	useCamelCase?: RuleConfiguration;
-	/**
 	 * Enforce all dependencies are correctly specified.
 	 */
 	useExhaustiveDependencies?: RuleConfiguration;
@@ -635,10 +639,6 @@ export interface Nursery {
 	 * Enforce the use of import type when an import only has specifiers with type qualifier.
 	 */
 	useGroupedTypeImport?: RuleConfiguration;
-	/**
-	 * Enforce that heading elements (h1, h2, etc.) have content and that the content is accessible to screen readers. Accessible means that it is not hidden using the aria-hidden prop.
-	 */
-	useHeadingContent?: RuleConfiguration;
 	/**
 	 * Enforce that all React hooks are being called from the Top Level component functions.
 	 */
@@ -652,25 +652,13 @@ export interface Nursery {
 	 */
 	useIsArray?: RuleConfiguration;
 	/**
-	 * Require calls to isNaN() when checking for NaN.
-	 */
-	useIsNan?: RuleConfiguration;
-	/**
 	 * Require all enum members to be literal values.
 	 */
 	useLiteralEnumMembers?: RuleConfiguration;
 	/**
-	 * Enforce the usage of a literal access to properties over computed property access.
-	 */
-	useLiteralKeys?: RuleConfiguration;
-	/**
 	 * Enforce naming conventions for everything across a codebase.
 	 */
 	useNamingConvention?: RuleConfiguration;
-	/**
-	 * Disallow number literal object member names which are not base10 or uses underscore as separator
-	 */
-	useSimpleNumberKeys?: RuleConfiguration;
 }
 /**
  * A list of rules that belong to this group
@@ -868,6 +856,10 @@ export interface Suspicious {
 	 */
 	noConfusingLabels?: RuleConfiguration;
 	/**
+	 * Disallow the use of console.log
+	 */
+	noConsoleLog?: RuleConfiguration;
+	/**
 	 * Disallow TypeScript const enum
 	 */
 	noConstEnum?: RuleConfiguration;
@@ -887,6 +879,10 @@ export interface Suspicious {
 	 * Disallow duplicate class members.
 	 */
 	noDuplicateClassMembers?: RuleConfiguration;
+	/**
+	 * Prevents JSX properties to be assigned multiple times.
+	 */
+	noDuplicateJsxProps?: RuleConfiguration;
 	/**
 	 * Prevents object literals having more than one property declaration for the same name. If an object property with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored, which is likely a mistake.
 	 */
@@ -1131,6 +1127,7 @@ export type Category =
 	| "lint/a11y/useAnchorContent"
 	| "lint/a11y/useAriaPropsForRole"
 	| "lint/a11y/useButtonType"
+	| "lint/a11y/useHeadingContent"
 	| "lint/a11y/useHtmlLang"
 	| "lint/a11y/useIframeTitle"
 	| "lint/a11y/useKeyWithClickEvents"
@@ -1140,6 +1137,7 @@ export type Category =
 	| "lint/a11y/useValidAriaProps"
 	| "lint/a11y/useValidLang"
 	| "lint/complexity/noExtraBooleanCast"
+	| "lint/complexity/noForEach"
 	| "lint/complexity/noMultipleSpacesInRegularExpressionLiterals"
 	| "lint/complexity/noUselessCatch"
 	| "lint/complexity/noUselessConstructor"
@@ -1150,7 +1148,9 @@ export type Category =
 	| "lint/complexity/noUselessTypeConstraint"
 	| "lint/complexity/noWith"
 	| "lint/complexity/useFlatMap"
+	| "lint/complexity/useLiteralKeys"
 	| "lint/complexity/useOptionalChain"
+	| "lint/complexity/useSimpleNumberKeys"
 	| "lint/complexity/useSimplifiedLogicExpression"
 	| "lint/correctness/noChildrenProp"
 	| "lint/correctness/noConstAssign"
@@ -1159,6 +1159,7 @@ export type Category =
 	| "lint/correctness/noGlobalObjectCalls"
 	| "lint/correctness/noInnerDeclarations"
 	| "lint/correctness/noInvalidConstructorSuper"
+	| "lint/correctness/useIsNan"
 	| "lint/correctness/noNewSymbol"
 	| "lint/correctness/noPrecisionLoss"
 	| "lint/correctness/noRenderReturnValue"
@@ -1181,14 +1182,11 @@ export type Category =
 	| "lint/nursery/noAriaUnsupportedElements"
 	| "lint/nursery/noBannedTypes"
 	| "lint/nursery/noConfusingArrow"
-	| "lint/nursery/noConsoleLog"
 	| "lint/nursery/noConstantCondition"
 	| "lint/nursery/noControlCharactersInRegex"
 	| "lint/nursery/noDuplicateJsonKeys"
-	| "lint/nursery/noDuplicateJsxProps"
 	| "lint/nursery/noExcessiveComplexity"
 	| "lint/nursery/noFallthroughSwitchClause"
-	| "lint/nursery/noForEach"
 	| "lint/nursery/noGlobalIsFinite"
 	| "lint/nursery/noGlobalIsNan"
 	| "lint/nursery/noNoninteractiveTabindex"
@@ -1201,18 +1199,13 @@ export type Category =
 	| "lint/nursery/noVoid"
 	| "lint/nursery/useAriaPropTypes"
 	| "lint/nursery/useArrowFunction"
-	| "lint/nursery/useCamelCase"
 	| "lint/nursery/useExhaustiveDependencies"
 	| "lint/nursery/useGroupedTypeImport"
-	| "lint/nursery/useHeadingContent"
 	| "lint/nursery/useHookAtTopLevel"
 	| "lint/nursery/useImportRestrictions"
 	| "lint/nursery/useIsArray"
-	| "lint/nursery/useIsNan"
 	| "lint/nursery/useLiteralEnumMembers"
-	| "lint/nursery/useLiteralKeys"
 	| "lint/nursery/useNamingConvention"
-	| "lint/nursery/useSimpleNumberKeys"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"
@@ -1250,11 +1243,13 @@ export type Category =
 	| "lint/suspicious/noCommentText"
 	| "lint/suspicious/noCompareNegZero"
 	| "lint/suspicious/noConfusingLabels"
+	| "lint/suspicious/noConsoleLog"
 	| "lint/suspicious/noConstEnum"
 	| "lint/suspicious/noDebugger"
 	| "lint/suspicious/noDoubleEquals"
 	| "lint/suspicious/noDuplicateCase"
 	| "lint/suspicious/noDuplicateClassMembers"
+	| "lint/suspicious/noDuplicateJsxProps"
 	| "lint/suspicious/noDuplicateObjectKeys"
 	| "lint/suspicious/noDuplicateParameters"
 	| "lint/suspicious/noEmptyInterface"
