@@ -6,14 +6,17 @@ use rome_js_formatter::context::{
 };
 use serde::{Deserialize, Serialize};
 
+/// A set of options applied to the JavaScript files
 #[derive(Default, Debug, Deserialize, Serialize, Eq, PartialEq, Clone, Bpaf)]
 #[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 #[serde(default, deny_unknown_fields)]
 pub struct JavascriptConfiguration {
+    /// Formatting options
     #[serde(skip_serializing_if = "Option::is_none")]
     #[bpaf(external(javascript_formatter), optional)]
     pub formatter: Option<JavascriptFormatter>,
 
+    /// Parsing options
     #[serde(skip_serializing_if = "Option::is_none")]
     #[bpaf(external(javascript_parser), optional)]
     pub parser: Option<JavascriptParser>,
@@ -64,6 +67,7 @@ impl JavascriptConfiguration {
     }
 }
 
+/// Formatting options specific to the JavaScript files
 #[derive(Default, Debug, Deserialize, Serialize, Eq, PartialEq, Clone, Bpaf)]
 #[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 #[serde(rename_all = "camelCase", default, deny_unknown_fields)]
@@ -133,6 +137,7 @@ impl MergeWith<JavascriptFormatter> for JavascriptFormatter {
 #[serde(default, deny_unknown_fields)]
 pub struct JavascriptOrganizeImports {}
 
+/// Options that changes how the JavaScript parser behaves
 #[derive(Default, Debug, Deserialize, Serialize, Eq, PartialEq, Clone, Bpaf)]
 #[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 #[serde(rename_all = "camelCase", default, deny_unknown_fields)]

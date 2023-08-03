@@ -9,6 +9,15 @@
 - The organize imports feature now groups import statements by "distance".
   Modules "farther" from the user are put on the top, and modules "closer" to the user are placed on the bottom.
   Check the [documentation](https://docs.rome.tools/analyzer/) for more information about it.
+- The organize imports tool is enabled by default. If you don't want to use it, you need to disable it explicitly:
+  ```json
+  {
+    "organizeImports": {
+      "enabled": false
+    }
+  }
+  ```
+
 
 ### CLI
 
