@@ -299,7 +299,7 @@ namespace MathExtra {
 
 The rule provides two options that are detailed in the following subsections.
 
-```
+```json
 {
     "//": "...",
     "options": {

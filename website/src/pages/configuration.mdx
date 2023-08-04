@@ -139,7 +139,7 @@ The files defined in this array:
 - must be relative paths. Paths to libraries are not resolved;
 - must be reachable by Rome, e.g. symbolic links might not be resolved by Rome;
 - will be processed in order: from the first one to the last one;
-- can override the same properties, but ultimately only the last one will be applied;
+- can override the same properties, but ultimately only the last one will be used by Rome;
 
 ## `files`
 
@@ -429,11 +429,11 @@ Allows to support the unsafe/experimental parameter decorators.
 
 ```json
 {
-	"javascript": {
-		"parser": {
-			"unsafeParameterDecoratorsEnabled": true
-		}
-	}
+  "javascript": {
+    "parser": {
+	    "unsafeParameterDecoratorsEnabled": true
+      }
+  }
 }
 ```
 

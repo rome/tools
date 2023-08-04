@@ -56,7 +56,7 @@ function tooComplex() {
 
 Allows to specify the maximum allowed complexity.
 
-```
+```json
 {
     "//": "...",
     "options": {
