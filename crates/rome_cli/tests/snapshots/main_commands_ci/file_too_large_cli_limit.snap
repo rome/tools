@@ -31,6 +31,14 @@ ci.js lint ━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
 ```block
+ci.js organizeImports ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Size of ci.js is 27 B which exceeds configured maximum of 16 B for this project. The file size limit exists to prevent us inadvertently slowing down and loading large files that we shouldn't.
+  
+
+```
+
+```block
 ci.js format ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Size of ci.js is 27 B which exceeds configured maximum of 16 B for this project. The file size limit exists to prevent us inadvertently slowing down and loading large files that we shouldn't.

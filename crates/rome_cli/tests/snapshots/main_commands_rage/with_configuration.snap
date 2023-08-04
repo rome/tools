@@ -35,7 +35,7 @@ Rome Configuration:
   Status:                       Loaded successfully
   Formatter disabled:           true
   Linter disabled:              false
-  Organize imports disabled:    true
+  Organize imports disabled:    false
   VCS disabled:                 true
 
 Server:

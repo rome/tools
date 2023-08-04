@@ -10,7 +10,7 @@ pub const CONFIG_FORMAT: &str = r#"{
 
 pub const CONFIG_INIT_DEFAULT: &str = r#"{
 	"organizeImports": {
-	 	 "enabled": false
+	 	 "enabled": true
 	},
 	"linter": {
 		"enabled": true,
@@ -24,7 +24,7 @@ pub const CONFIG_INIT_DEFAULT: &str = r#"{
 pub const CONFIG_INIT_DEFAULT_WHEN_INSTALLED: &str = r#"{
 	"$schema": "./node_modules/rome/configuration_schema.json",
     "organizeImports": {
-	 	 "enabled": false
+	 	 "enabled": true
 	},
 	"linter": {
 		"enabled": true,
