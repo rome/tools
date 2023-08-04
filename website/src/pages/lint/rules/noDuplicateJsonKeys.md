@@ -3,7 +3,7 @@ title: Lint Rule noDuplicateJsonKeys
 parent: lint/rules/index
 ---
 
-# noDuplicateJsonKeys (since vnext)
+# noDuplicateJsonKeys (since v13.0.0)
 
 Disallow two keys with the same name inside a JSON object.
 
