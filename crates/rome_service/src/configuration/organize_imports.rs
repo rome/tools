@@ -24,7 +24,7 @@ pub struct OrganizeImports {
 impl Default for OrganizeImports {
     fn default() -> Self {
         Self {
-            enabled: Some(false),
+            enabled: Some(true),
             ignore: None,
         }
     }

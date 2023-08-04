@@ -1051,7 +1051,7 @@
 			"properties": {
 				"enabled": {
 					"description": "Enables the organization of imports",
-					"default": false,
+					"default": true,
 					"type": ["boolean", "null"]
 				},
 				"ignore": {

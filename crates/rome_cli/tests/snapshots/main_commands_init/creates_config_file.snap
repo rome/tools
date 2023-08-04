@@ -7,7 +7,7 @@ expression: content
 ```json
 {
   "organizeImports": {
-    "enabled": false
+    "enabled": true
   },
   "linter": {
     "enabled": true,
