@@ -6,3 +6,5 @@ await using f;
 await using g = h, j;
 // TODO: await using [o] = p;
 export await using q = r;
+await let s;
+await const t = 1;

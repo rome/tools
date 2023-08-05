@@ -177,14 +177,65 @@ JsModule {
             },
             semicolon_token: SEMICOLON@147..148 ";" [] [],
         },
+        JsExpressionStatement {
+            expression: JsAwaitExpression {
+                await_token: AWAIT_KW@148..155 "await" [Newline("\n")] [Whitespace(" ")],
+                argument: JsBogusExpression {
+                    items: [
+                        JsBogus {
+                            items: [
+                                IDENT@155..159 "let" [] [Whitespace(" ")],
+                            ],
+                        },
+                    ],
+                },
+            },
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsIdentifierExpression {
+                name: JsReferenceIdentifier {
+                    value_token: IDENT@159..160 "s" [] [],
+                },
+            },
+            semicolon_token: SEMICOLON@160..161 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: JsAwaitExpression {
+                await_token: AWAIT_KW@161..168 "await" [Newline("\n")] [Whitespace(" ")],
+                argument: missing (required),
+            },
+            semicolon_token: missing (optional),
+        },
+        JsVariableStatement {
+            declaration: JsVariableDeclaration {
+                await_token: missing (optional),
+                kind: CONST_KW@168..174 "const" [] [Whitespace(" ")],
+                declarators: JsVariableDeclaratorList [
+                    JsVariableDeclarator {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@174..176 "t" [] [Whitespace(" ")],
+                        },
+                        variable_annotation: missing (optional),
+                        initializer: JsInitializerClause {
+                            eq_token: EQ@176..178 "=" [] [Whitespace(" ")],
+                            expression: JsNumberLiteralExpression {
+                                value_token: JS_NUMBER_LITERAL@178..179 "1" [] [],
+                            },
+                        },
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@179..180 ";" [] [],
+        },
     ],
-    eof_token: EOF@148..149 "" [Newline("\n")] [],
+    eof_token: EOF@180..181 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..149
+0: JS_MODULE@0..181
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..148
+  2: JS_MODULE_ITEM_LIST@0..180
     0: JS_VARIABLE_STATEMENT@0..8
       0: JS_VARIABLE_DECLARATION@0..7
         0: (empty)
@@ -304,7 +355,38 @@ JsModule {
                 0: JS_REFERENCE_IDENTIFIER@146..147
                   0: IDENT@146..147 "r" [] []
       1: SEMICOLON@147..148 ";" [] []
-  3: EOF@148..149 "" [Newline("\n")] []
+    9: JS_EXPRESSION_STATEMENT@148..159
+      0: JS_AWAIT_EXPRESSION@148..159
+        0: AWAIT_KW@148..155 "await" [Newline("\n")] [Whitespace(" ")]
+        1: JS_BOGUS_EXPRESSION@155..159
+          0: JS_BOGUS@155..159
+            0: IDENT@155..159 "let" [] [Whitespace(" ")]
+      1: (empty)
+    10: JS_EXPRESSION_STATEMENT@159..161
+      0: JS_IDENTIFIER_EXPRESSION@159..160
+        0: JS_REFERENCE_IDENTIFIER@159..160
+          0: IDENT@159..160 "s" [] []
+      1: SEMICOLON@160..161 ";" [] []
+    11: JS_EXPRESSION_STATEMENT@161..168
+      0: JS_AWAIT_EXPRESSION@161..168
+        0: AWAIT_KW@161..168 "await" [Newline("\n")] [Whitespace(" ")]
+        1: (empty)
+      1: (empty)
+    12: JS_VARIABLE_STATEMENT@168..180
+      0: JS_VARIABLE_DECLARATION@168..179
+        0: (empty)
+        1: CONST_KW@168..174 "const" [] [Whitespace(" ")]
+        2: JS_VARIABLE_DECLARATOR_LIST@174..179
+          0: JS_VARIABLE_DECLARATOR@174..179
+            0: JS_IDENTIFIER_BINDING@174..176
+              0: IDENT@174..176 "t" [] [Whitespace(" ")]
+            1: (empty)
+            2: JS_INITIALIZER_CLAUSE@176..179
+              0: EQ@176..178 "=" [] [Whitespace(" ")]
+              1: JS_NUMBER_LITERAL_EXPRESSION@178..179
+                0: JS_NUMBER_LITERAL@178..179 "1" [] []
+      1: SEMICOLON@179..180 ";" [] []
+  3: EOF@180..181 "" [Newline("\n")] []
 --
 using_declaration_statement_err.js:1:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -398,19 +480,82 @@ using_declaration_statement_err.js:8:8 parse ━━━━━━━━━━━�
 
   × expected a class, a function, or a variable declaration but instead found 'await'
   
-    6 │ await using g = h, j;
-    7 │ // TODO: await using [o] = p;
-  > 8 │ export await using q = r;
-      │        ^^^^^
-    9 │ 
+     6 │ await using g = h, j;
+     7 │ // TODO: await using [o] = p;
+   > 8 │ export await using q = r;
+       │        ^^^^^
+     9 │ await let s;
+    10 │ await const t = 1;
   
   i Expected a class, a function, or a variable declaration here
   
-    6 │ await using g = h, j;
-    7 │ // TODO: await using [o] = p;
-  > 8 │ export await using q = r;
-      │        ^^^^^
-    9 │ 
+     6 │ await using g = h, j;
+     7 │ // TODO: await using [o] = p;
+   > 8 │ export await using q = r;
+       │        ^^^^^
+     9 │ await let s;
+    10 │ await const t = 1;
+  
+--
+using_declaration_statement_err.js:9:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Illegal use of reserved keyword `let` as an identifier in strict mode
+  
+     7 │ // TODO: await using [o] = p;
+     8 │ export await using q = r;
+   > 9 │ await let s;
+       │       ^^^
+    10 │ await const t = 1;
+    11 │ 
+  
+--
+using_declaration_statement_err.js:9:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+     7 │ // TODO: await using [o] = p;
+     8 │ export await using q = r;
+   > 9 │ await let s;
+       │           ^
+    10 │ await const t = 1;
+    11 │ 
+  
+  i An explicit or implicit semicolon is expected here...
+  
+     7 │ // TODO: await using [o] = p;
+     8 │ export await using q = r;
+   > 9 │ await let s;
+       │           ^
+    10 │ await const t = 1;
+    11 │ 
+  
+  i ...Which is required to end this statement
+  
+     7 │ // TODO: await using [o] = p;
+     8 │ export await using q = r;
+   > 9 │ await let s;
+       │ ^^^^^^^^^^^
+    10 │ await const t = 1;
+    11 │ 
+  
+--
+using_declaration_statement_err.js:10:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected an unary expression but instead found 'const'
+  
+     8 │ export await using q = r;
+     9 │ await let s;
+  > 10 │ await const t = 1;
+       │       ^^^^^
+    11 │ 
+  
+  i Expected an unary expression here
+  
+     8 │ export await using q = r;
+     9 │ await let s;
+  > 10 │ await const t = 1;
+       │       ^^^^^
+    11 │ 
   
 --
 using a;
@@ -421,3 +566,5 @@ await using f;
 await using g = h, j;
 // TODO: await using [o] = p;
 export await using q = r;
+await let s;
+await const t = 1;

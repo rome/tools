@@ -207,8 +207,8 @@ pub(crate) fn parse_statement(p: &mut JsParser, context: StatementContext) -> Pa
         }
         T![var] => parse_variable_statement(p, context),
         T![const] => parse_variable_statement(p, context),
-        T![using] => parse_variable_statement(p, context),
-        T![await] if p.nth_at(1, T![using]) => parse_variable_statement(p, context),
+        T![using] if is_nth_at_using_declaration(p, 0) => parse_variable_statement(p, context),
+        T![await] if is_nth_at_using_declaration(p, 0) => parse_variable_statement(p, context),
         T![for] => parse_for_statement(p),
         T![do] => parse_do_statement(p),
         T![switch] => parse_switch_statement(p),
@@ -1017,11 +1017,24 @@ fn parse_while_statement(p: &mut JsParser) -> ParsedSyntax {
 
 pub(crate) fn is_nth_at_variable_declarations(p: &mut JsParser, n: usize) -> bool {
     match p.nth(n) {
-        T![var] | T![const] | T![using] => true,
-        T![await] if p.nth_at(n + 1, T![using]) => true,
+        T![var] | T![const] => true,
+        T![await] | T![using] if is_nth_at_using_declaration(p, n) => true,
         T![let] if is_nth_at_let_variable_statement(p, n) => true,
         _ => false,
     }
+}
+
+pub(crate) fn is_nth_at_using_declaration(p: &mut JsParser, n: usize) -> bool {
+    let (maybe_using, cursor) = match p.nth(n) {
+        T![using] => (true, n),
+        T![await] if p.nth_at(n + 1, T![using]) => (true, n + 1),
+        _ => (false, n),
+    };
+
+    maybe_using
+        && !p.has_nth_preceding_line_break(cursor + 1)
+        && !p.nth_at(cursor + 1, T![await])
+        && (matches!(p.nth(cursor + 1), T!['{'] | T!['[']) || is_nth_at_identifier(p, cursor + 1))
 }
 
 pub(crate) fn is_nth_at_let_variable_statement(p: &mut JsParser, n: usize) -> bool {
@@ -1049,13 +1062,11 @@ pub(crate) fn is_nth_at_let_variable_statement(p: &mut JsParser, n: usize) -> bo
 // using [j]
 // = k;
 // await using l = m;
-// await using
-// n = o;
 // await
-// using
-// p = q;
-// // TODO: await using ([s] = t);
-// // TODO: await (using [u] = v);
+// using p = q;
+// // TODO: await using[r];
+// await using ([s] = t);
+// await (using [u] = v);
 // using w = {};
 // using x = null;
 // using y = undefined;
@@ -1077,6 +1088,8 @@ pub(crate) fn is_nth_at_let_variable_statement(p: &mut JsParser, n: usize) -> bo
 // await using g = h, j;
 // // TODO: await using [o] = p;
 // export await using q = r;
+// await let s;
+// await const t = 1;
 pub(crate) fn parse_variable_statement(
     p: &mut JsParser,
     context: StatementContext,
