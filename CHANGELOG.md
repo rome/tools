@@ -3,6 +3,18 @@
 ## [Unreleased]
 
 ### Analyzer
+### CLI
+### Configuration
+### Editors
+### Formatter
+### JavaScript APIs
+### Linter
+### Parser
+### VSCode
+
+## 13.0.0
+
+### Analyzer
 
 #### BREAKING CHANGES
 

@@ -79,7 +79,7 @@ export interface FilesConfiguration {
 	maxSize?: number;
 }
 /**
- * Options applied to the formatter
+ * Generic options applied to all files
  */
 export interface FormatterConfiguration {
 	enabled?: boolean;

@@ -605,7 +605,7 @@
 			"additionalProperties": false
 		},
 		"FormatterConfiguration": {
-			"description": "Options applied to the formatter",
+			"description": "Generic options applied to all files",
 			"type": "object",
 			"properties": {
 				"enabled": { "default": true, "type": ["boolean", "null"] },
