@@ -1171,8 +1171,7 @@ pub(super) enum VariableDeclarationParent {
     Clause,
 }
 
-/// Parses a variable declaration that consist of a variable kind (`let`, `const`, `using` or `var` and a list
-/// of variable declarators).
+/// Parses and consume variable declarations like `var`/`let`/`const`/`using`/`await using`.
 /// Returns a tuple where
 /// * the first element is the marker to the not yet completed list
 /// * the second element is the range of all variable declarations except the first one. Is [None] if
