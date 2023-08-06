@@ -208,7 +208,13 @@ pub(crate) fn parse_statement(p: &mut JsParser, context: StatementContext) -> Pa
         T![var] => parse_variable_statement(p, context),
         T![const] => parse_variable_statement(p, context),
         T![using] if is_nth_at_using_declaration(p, 0) => parse_variable_statement(p, context),
-        T![await] if is_nth_at_using_declaration(p, 0) => parse_variable_statement(p, context),
+        T![await] => {
+            if is_nth_at_using_declaration(p, 0) {
+                parse_variable_statement(p, context)
+            } else {
+                parse_expression_statement(p)
+            }
+        }
         T![for] => parse_for_statement(p),
         T![do] => parse_do_statement(p),
         T![switch] => parse_switch_statement(p),
