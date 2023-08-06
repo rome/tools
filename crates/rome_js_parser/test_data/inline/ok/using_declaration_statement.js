@@ -6,7 +6,7 @@ using [j]
 await using l = m;
 await
 using p = q;
-// TODO: await using[r];
+await using[r];
 await using ([s] = t);
 await (using [u] = v);
 using w = {};

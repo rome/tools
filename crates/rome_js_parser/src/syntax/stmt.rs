@@ -1025,16 +1025,16 @@ pub(crate) fn is_nth_at_variable_declarations(p: &mut JsParser, n: usize) -> boo
 }
 
 pub(crate) fn is_nth_at_using_declaration(p: &mut JsParser, n: usize) -> bool {
-    let (maybe_using, cursor) = match p.nth(n) {
-        T![using] => (true, n),
-        T![await] if p.nth_at(n + 1, T![using]) => (true, n + 1),
-        _ => (false, n),
+    let (maybe_using, next_cursor) = match p.nth(n) {
+        T![using] => (true, n + 1),
+        T![await] if p.nth_at(n + 1, T![using]) => (true, n + 2),
+        _ => (false, n + 1),
     };
 
     maybe_using
-        && !p.has_nth_preceding_line_break(cursor + 1)
-        && !p.nth_at(cursor + 1, T![await])
-        && (matches!(p.nth(cursor + 1), T!['{'] | T!['[']) || is_nth_at_identifier(p, cursor + 1))
+        && !p.has_nth_preceding_line_break(next_cursor)
+        && !p.nth_at(next_cursor, T![await])
+        && is_nth_at_identifier(p, next_cursor)
 }
 
 pub(crate) fn is_nth_at_let_variable_statement(p: &mut JsParser, n: usize) -> bool {
@@ -1064,7 +1064,7 @@ pub(crate) fn is_nth_at_let_variable_statement(p: &mut JsParser, n: usize) -> bo
 // await using l = m;
 // await
 // using p = q;
-// // TODO: await using[r];
+// await using[r];
 // await using ([s] = t);
 // await (using [u] = v);
 // using w = {};
@@ -1086,7 +1086,7 @@ pub(crate) fn is_nth_at_let_variable_statement(p: &mut JsParser, n: usize) -> bo
 // export using m = n;
 // await using f;
 // await using g = h, j;
-// // TODO: await using [o] = p;
+// await using [o] = p;
 // export await using q = r;
 // await let s;
 // await const t = 1;
