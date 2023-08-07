@@ -130,6 +130,7 @@ JsModule {
         },
         JsVariableStatement {
             declaration: JsVariableDeclaration {
+                await_token: missing (optional),
                 kind: LET_KW@69..74 "let" [Newline("\n")] [Whitespace(" ")],
                 declarators: JsVariableDeclaratorList [
                     JsVariableDeclarator {
@@ -265,8 +266,9 @@ JsModule {
                   3: R_CURLY@68..69 "}" [] []
     2: JS_VARIABLE_STATEMENT@69..101
       0: JS_VARIABLE_DECLARATION@69..101
-        0: LET_KW@69..74 "let" [Newline("\n")] [Whitespace(" ")]
-        1: JS_VARIABLE_DECLARATOR_LIST@74..101
+        0: (empty)
+        1: LET_KW@69..74 "let" [Newline("\n")] [Whitespace(" ")]
+        2: JS_VARIABLE_DECLARATOR_LIST@74..101
           0: JS_VARIABLE_DECLARATOR@74..101
             0: JS_IDENTIFIER_BINDING@74..76
               0: IDENT@74..76 "a" [] [Whitespace(" ")]

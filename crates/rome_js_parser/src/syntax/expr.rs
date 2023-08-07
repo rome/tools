@@ -1242,7 +1242,6 @@ pub(crate) fn is_nth_at_expression(p: &mut JsParser, n: usize) -> bool {
         | T![...]
         | T![this]
         | T![yield]
-        | T![await]
         | T![function]
         | T![class]
         | T![import]

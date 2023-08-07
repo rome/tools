@@ -66,7 +66,7 @@ impl JsSyntaxKind {
     /// Returns `true` for any contextual (await) or non-contextual keyword
     #[inline]
     pub const fn is_keyword(self) -> bool {
-        (self as u16) <= (JsSyntaxKind::OUT_KW as u16)
+        (self as u16) <= (JsSyntaxKind::USING_KW as u16)
             && (self as u16) >= (JsSyntaxKind::BREAK_KW as u16)
     }
 
@@ -74,7 +74,7 @@ impl JsSyntaxKind {
     #[inline]
     pub const fn is_contextual_keyword(self) -> bool {
         (self as u16) >= (JsSyntaxKind::ABSTRACT_KW as u16)
-            && (self as u16) <= (JsSyntaxKind::OUT_KW as u16)
+            && (self as u16) <= (JsSyntaxKind::USING_KW as u16)
     }
 
     /// Returns true for all non-contextual keywords (includes future reserved keywords)

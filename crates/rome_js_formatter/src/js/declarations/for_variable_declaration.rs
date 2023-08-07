@@ -10,17 +10,31 @@ pub(crate) struct FormatJsForVariableDeclaration;
 impl FormatNodeRule<JsForVariableDeclaration> for FormatJsForVariableDeclaration {
     fn fmt_fields(&self, node: &JsForVariableDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
         let JsForVariableDeclarationFields {
+            await_token,
             kind_token,
             declarator,
         } = node.as_fields();
 
-        write![
-            f,
-            [group(&format_args![
-                kind_token.format(),
-                space(),
-                declarator.format()
-            ])]
-        ]
+        if let Some(await_token) = await_token {
+            write![
+                f,
+                [group(&format_args![
+                    await_token.format(),
+                    space(),
+                    kind_token.format(),
+                    space(),
+                    declarator.format()
+                ])]
+            ]
+        } else {
+            write![
+                f,
+                [group(&format_args![
+                    kind_token.format(),
+                    space(),
+                    declarator.format()
+                ])]
+            ]
+        }
     }
 }

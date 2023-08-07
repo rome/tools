@@ -8,6 +8,7 @@ JsScript {
             body: JsBogusStatement {
                 items: [
                     JsVariableDeclaration {
+                        await_token: missing (optional),
                         kind: LET_KW@13..16 "let" [] [],
                         declarators: JsVariableDeclaratorList [
                             JsVariableDeclarator {
@@ -47,8 +48,9 @@ JsScript {
       1: COLON@11..13 ":" [] [Whitespace(" ")]
       2: JS_BOGUS_STATEMENT@13..25
         0: JS_VARIABLE_DECLARATION@13..24
-          0: LET_KW@13..16 "let" [] []
-          1: JS_VARIABLE_DECLARATOR_LIST@16..24
+          0: (empty)
+          1: LET_KW@13..16 "let" [] []
+          2: JS_VARIABLE_DECLARATOR_LIST@16..24
             0: JS_VARIABLE_DECLARATOR@16..24
               0: JS_ARRAY_BINDING_PATTERN@16..21
                 0: L_BRACK@16..18 "[" [Newline("\n")] []

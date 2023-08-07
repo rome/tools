@@ -4,6 +4,7 @@ JsScript {
     statements: JsStatementList [
         JsVariableStatement {
             declaration: JsVariableDeclaration {
+                await_token: missing (optional),
                 kind: LET_KW@0..23 "let" [Comments("// SCRIPT"), Newline("\n")] [Whitespace(" "), Comments("// NO ASI")],
                 declarators: JsVariableDeclaratorList [
                     JsVariableDeclarator {
@@ -27,6 +28,7 @@ JsScript {
             await_token: AWAIT_KW@35..41 "await" [] [Whitespace(" ")],
             l_paren_token: L_PAREN@41..42 "(" [] [],
             initializer: JsForVariableDeclaration {
+                await_token: missing (optional),
                 kind_token: VAR_KW@42..46 "var" [] [Whitespace(" ")],
                 declarator: JsVariableDeclarator {
                     id: JsIdentifierBinding {
@@ -74,8 +76,9 @@ JsScript {
   2: JS_STATEMENT_LIST@0..72
     0: JS_VARIABLE_STATEMENT@0..30
       0: JS_VARIABLE_DECLARATION@0..29
-        0: LET_KW@0..23 "let" [Comments("// SCRIPT"), Newline("\n")] [Whitespace(" "), Comments("// NO ASI")]
-        1: JS_VARIABLE_DECLARATOR_LIST@23..29
+        0: (empty)
+        1: LET_KW@0..23 "let" [Comments("// SCRIPT"), Newline("\n")] [Whitespace(" "), Comments("// NO ASI")]
+        2: JS_VARIABLE_DECLARATOR_LIST@23..29
           0: JS_VARIABLE_DECLARATOR@23..29
             0: JS_IDENTIFIER_BINDING@23..26
               0: IDENT@23..26 "x" [Newline("\n")] [Whitespace(" ")]
@@ -90,8 +93,9 @@ JsScript {
       1: AWAIT_KW@35..41 "await" [] [Whitespace(" ")]
       2: L_PAREN@41..42 "(" [] []
       3: JS_FOR_VARIABLE_DECLARATION@42..48
-        0: VAR_KW@42..46 "var" [] [Whitespace(" ")]
-        1: JS_VARIABLE_DECLARATOR@46..48
+        0: (empty)
+        1: VAR_KW@42..46 "var" [] [Whitespace(" ")]
+        2: JS_VARIABLE_DECLARATOR@46..48
           0: JS_IDENTIFIER_BINDING@46..48
             0: IDENT@46..48 "x" [] [Whitespace(" ")]
           1: (empty)

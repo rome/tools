@@ -14,6 +14,7 @@ JsModule {
                 colon_token: COLON@16..18 ":" [] [Whitespace(" ")],
                 body: JsVariableStatement {
                     declaration: JsVariableDeclaration {
+                        await_token: missing (optional),
                         kind: VAR_KW@18..22 "var" [] [Whitespace(" ")],
                         declarators: JsVariableDeclaratorList [
                             JsVariableDeclarator {
@@ -54,8 +55,9 @@ JsModule {
         1: COLON@16..18 ":" [] [Whitespace(" ")]
         2: JS_VARIABLE_STATEMENT@18..29
           0: JS_VARIABLE_DECLARATION@18..28
-            0: VAR_KW@18..22 "var" [] [Whitespace(" ")]
-            1: JS_VARIABLE_DECLARATOR_LIST@22..28
+            0: (empty)
+            1: VAR_KW@18..22 "var" [] [Whitespace(" ")]
+            2: JS_VARIABLE_DECLARATOR_LIST@22..28
               0: JS_VARIABLE_DECLARATOR@22..28
                 0: JS_IDENTIFIER_BINDING@22..24
                   0: IDENT@22..24 "a" [] [Whitespace(" ")]

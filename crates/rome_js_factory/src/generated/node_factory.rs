@@ -1485,14 +1485,33 @@ impl JsForStatementBuilder {
 pub fn js_for_variable_declaration(
     kind_token_token: SyntaxToken,
     declarator: JsVariableDeclarator,
-) -> JsForVariableDeclaration {
-    JsForVariableDeclaration::unwrap_cast(SyntaxNode::new_detached(
-        JsSyntaxKind::JS_FOR_VARIABLE_DECLARATION,
-        [
-            Some(SyntaxElement::Token(kind_token_token)),
-            Some(SyntaxElement::Node(declarator.into_syntax())),
-        ],
-    ))
+) -> JsForVariableDeclarationBuilder {
+    JsForVariableDeclarationBuilder {
+        kind_token_token,
+        declarator,
+        await_token: None,
+    }
+}
+pub struct JsForVariableDeclarationBuilder {
+    kind_token_token: SyntaxToken,
+    declarator: JsVariableDeclarator,
+    await_token: Option<SyntaxToken>,
+}
+impl JsForVariableDeclarationBuilder {
+    pub fn with_await_token(mut self, await_token: SyntaxToken) -> Self {
+        self.await_token = Some(await_token);
+        self
+    }
+    pub fn build(self) -> JsForVariableDeclaration {
+        JsForVariableDeclaration::unwrap_cast(SyntaxNode::new_detached(
+            JsSyntaxKind::JS_FOR_VARIABLE_DECLARATION,
+            [
+                self.await_token.map(|token| SyntaxElement::Token(token)),
+                Some(SyntaxElement::Token(self.kind_token_token)),
+                Some(SyntaxElement::Node(self.declarator.into_syntax())),
+            ],
+        ))
+    }
 }
 pub fn js_formal_parameter(
     decorators: JsDecoratorList,
@@ -3377,14 +3396,33 @@ pub fn js_unary_expression(
 pub fn js_variable_declaration(
     kind_token: SyntaxToken,
     declarators: JsVariableDeclaratorList,
-) -> JsVariableDeclaration {
-    JsVariableDeclaration::unwrap_cast(SyntaxNode::new_detached(
-        JsSyntaxKind::JS_VARIABLE_DECLARATION,
-        [
-            Some(SyntaxElement::Token(kind_token)),
-            Some(SyntaxElement::Node(declarators.into_syntax())),
-        ],
-    ))
+) -> JsVariableDeclarationBuilder {
+    JsVariableDeclarationBuilder {
+        kind_token,
+        declarators,
+        await_token: None,
+    }
+}
+pub struct JsVariableDeclarationBuilder {
+    kind_token: SyntaxToken,
+    declarators: JsVariableDeclaratorList,
+    await_token: Option<SyntaxToken>,
+}
+impl JsVariableDeclarationBuilder {
+    pub fn with_await_token(mut self, await_token: SyntaxToken) -> Self {
+        self.await_token = Some(await_token);
+        self
+    }
+    pub fn build(self) -> JsVariableDeclaration {
+        JsVariableDeclaration::unwrap_cast(SyntaxNode::new_detached(
+            JsSyntaxKind::JS_VARIABLE_DECLARATION,
+            [
+                self.await_token.map(|token| SyntaxElement::Token(token)),
+                Some(SyntaxElement::Token(self.kind_token)),
+                Some(SyntaxElement::Node(self.declarators.into_syntax())),
+            ],
+        ))
+    }
 }
 pub fn js_variable_declaration_clause(
     declaration: JsVariableDeclaration,

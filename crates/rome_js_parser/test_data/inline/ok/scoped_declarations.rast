@@ -4,6 +4,7 @@ JsModule {
     items: JsModuleItemList [
         JsVariableStatement {
             declaration: JsVariableDeclaration {
+                await_token: missing (optional),
                 kind: LET_KW@0..4 "let" [] [Whitespace(" ")],
                 declarators: JsVariableDeclaratorList [
                     JsVariableDeclarator {
@@ -35,6 +36,7 @@ JsModule {
                                             statements: JsStatementList [
                                                 JsVariableStatement {
                                                     declaration: JsVariableDeclaration {
+                                                        await_token: missing (optional),
                                                         kind: LET_KW@20..29 "let" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
                                                         declarators: JsVariableDeclaratorList [
                                                             JsVariableDeclarator {
@@ -76,8 +78,9 @@ JsModule {
   2: JS_MODULE_ITEM_LIST@0..48
     0: JS_VARIABLE_STATEMENT@0..48
       0: JS_VARIABLE_DECLARATION@0..47
-        0: LET_KW@0..4 "let" [] [Whitespace(" ")]
-        1: JS_VARIABLE_DECLARATOR_LIST@4..47
+        0: (empty)
+        1: LET_KW@0..4 "let" [] [Whitespace(" ")]
+        2: JS_VARIABLE_DECLARATOR_LIST@4..47
           0: JS_VARIABLE_DECLARATOR@4..47
             0: JS_IDENTIFIER_BINDING@4..6
               0: IDENT@4..6 "a" [] [Whitespace(" ")]
@@ -104,8 +107,9 @@ JsModule {
                       2: JS_STATEMENT_LIST@20..41
                         0: JS_VARIABLE_STATEMENT@20..41
                           0: JS_VARIABLE_DECLARATION@20..40
-                            0: LET_KW@20..29 "let" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
-                            1: JS_VARIABLE_DECLARATOR_LIST@29..40
+                            0: (empty)
+                            1: LET_KW@20..29 "let" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+                            2: JS_VARIABLE_DECLARATOR_LIST@29..40
                               0: JS_VARIABLE_DECLARATOR@29..40
                                 0: JS_IDENTIFIER_BINDING@29..31
                                   0: IDENT@29..31 "a" [] [Whitespace(" ")]

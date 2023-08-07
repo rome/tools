@@ -12,6 +12,7 @@ JsModule {
             consequent: JsBogusStatement {
                 items: [
                     JsVariableDeclaration {
+                        await_token: missing (optional),
                         kind: LET_KW@10..14 "let" [] [Whitespace(" ")],
                         declarators: JsVariableDeclaratorList [
                             JsVariableDeclarator {
@@ -38,6 +39,7 @@ JsModule {
             body: JsBogusStatement {
                 items: [
                     JsVariableDeclaration {
+                        await_token: missing (optional),
                         kind: CONST_KW@30..36 "const" [] [Whitespace(" ")],
                         declarators: JsVariableDeclaratorList [
                             JsVariableDeclarator {
@@ -74,8 +76,9 @@ JsModule {
       3: R_PAREN@8..10 ")" [] [Whitespace(" ")]
       4: JS_BOGUS_STATEMENT@10..16
         0: JS_VARIABLE_DECLARATION@10..15
-          0: LET_KW@10..14 "let" [] [Whitespace(" ")]
-          1: JS_VARIABLE_DECLARATOR_LIST@14..15
+          0: (empty)
+          1: LET_KW@10..14 "let" [] [Whitespace(" ")]
+          2: JS_VARIABLE_DECLARATOR_LIST@14..15
             0: JS_VARIABLE_DECLARATOR@14..15
               0: JS_IDENTIFIER_BINDING@14..15
                 0: IDENT@14..15 "a" [] []
@@ -91,8 +94,9 @@ JsModule {
       3: R_PAREN@28..30 ")" [] [Whitespace(" ")]
       4: JS_BOGUS_STATEMENT@30..42
         0: JS_VARIABLE_DECLARATION@30..41
-          0: CONST_KW@30..36 "const" [] [Whitespace(" ")]
-          1: JS_VARIABLE_DECLARATOR_LIST@36..41
+          0: (empty)
+          1: CONST_KW@30..36 "const" [] [Whitespace(" ")]
+          2: JS_VARIABLE_DECLARATOR_LIST@36..41
             0: JS_VARIABLE_DECLARATOR@36..41
               0: JS_IDENTIFIER_BINDING@36..38
                 0: IDENT@36..38 "b" [] [Whitespace(" ")]

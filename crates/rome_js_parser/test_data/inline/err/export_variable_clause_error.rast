@@ -7,6 +7,7 @@ JsModule {
             export_token: EXPORT_KW@0..7 "export" [] [Whitespace(" ")],
             export_clause: JsVariableDeclarationClause {
                 declaration: JsVariableDeclaration {
+                    await_token: missing (optional),
                     kind: LET_KW@7..11 "let" [] [Whitespace(" ")],
                     declarators: JsVariableDeclaratorList [
                         JsVariableDeclarator {
@@ -29,6 +30,7 @@ JsModule {
             export_token: EXPORT_KW@16..24 "export" [Newline("\n")] [Whitespace(" ")],
             export_clause: JsVariableDeclarationClause {
                 declaration: JsVariableDeclaration {
+                    await_token: missing (optional),
                     kind: CONST_KW@24..30 "const" [] [Whitespace(" ")],
                     declarators: JsVariableDeclaratorList [
                         JsVariableDeclarator {
@@ -48,6 +50,7 @@ JsModule {
             export_token: EXPORT_KW@32..40 "export" [Newline("\n")] [Whitespace(" ")],
             export_clause: JsVariableDeclarationClause {
                 declaration: JsVariableDeclaration {
+                    await_token: missing (optional),
                     kind: LET_KW@40..44 "let" [] [Whitespace(" ")],
                     declarators: JsVariableDeclaratorList [
                         JsVariableDeclarator {
@@ -83,8 +86,9 @@ JsModule {
       1: EXPORT_KW@0..7 "export" [] [Whitespace(" ")]
       2: JS_VARIABLE_DECLARATION_CLAUSE@7..16
         0: JS_VARIABLE_DECLARATION@7..15
-          0: LET_KW@7..11 "let" [] [Whitespace(" ")]
-          1: JS_VARIABLE_DECLARATOR_LIST@11..15
+          0: (empty)
+          1: LET_KW@7..11 "let" [] [Whitespace(" ")]
+          2: JS_VARIABLE_DECLARATOR_LIST@11..15
             0: JS_VARIABLE_DECLARATOR@11..15
               0: JS_IDENTIFIER_BINDING@11..13
                 0: IDENT@11..13 "a" [] [Whitespace(" ")]
@@ -98,8 +102,9 @@ JsModule {
       1: EXPORT_KW@16..24 "export" [Newline("\n")] [Whitespace(" ")]
       2: JS_VARIABLE_DECLARATION_CLAUSE@24..32
         0: JS_VARIABLE_DECLARATION@24..31
-          0: CONST_KW@24..30 "const" [] [Whitespace(" ")]
-          1: JS_VARIABLE_DECLARATOR_LIST@30..31
+          0: (empty)
+          1: CONST_KW@24..30 "const" [] [Whitespace(" ")]
+          2: JS_VARIABLE_DECLARATOR_LIST@30..31
             0: JS_VARIABLE_DECLARATOR@30..31
               0: JS_IDENTIFIER_BINDING@30..31
                 0: IDENT@30..31 "b" [] []
@@ -111,8 +116,9 @@ JsModule {
       1: EXPORT_KW@32..40 "export" [Newline("\n")] [Whitespace(" ")]
       2: JS_VARIABLE_DECLARATION_CLAUSE@40..49
         0: JS_VARIABLE_DECLARATION@40..48
-          0: LET_KW@40..44 "let" [] [Whitespace(" ")]
-          1: JS_VARIABLE_DECLARATOR_LIST@44..48
+          0: (empty)
+          1: LET_KW@40..44 "let" [] [Whitespace(" ")]
+          2: JS_VARIABLE_DECLARATOR_LIST@44..48
             0: JS_VARIABLE_DECLARATOR@44..45
               0: JS_IDENTIFIER_BINDING@44..45
                 0: IDENT@44..45 "d" [] []
@@ -146,7 +152,7 @@ export_variable_clause_error.js:1:16 parse ━━━━━━━━━━━━�
 --
 export_variable_clause_error.js:2:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Const var declarations must have an initialized value
+  × Const declarations must have an initialized value
   
     1 │ export let a = ;
   > 2 │ export const b;

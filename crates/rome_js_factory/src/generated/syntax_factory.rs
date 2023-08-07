@@ -2237,10 +2237,17 @@ impl SyntaxFactory for JsSyntaxFactory {
             }
             JS_FOR_VARIABLE_DECLARATION => {
                 let mut elements = (&children).into_iter();
-                let mut slots: RawNodeSlots<2usize> = RawNodeSlots::default();
+                let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if matches!(element.kind(), T![var] | T![let] | T![const]) {
+                    if element.kind() == T![await] {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
+                if let Some(element) = &current_element {
+                    if matches!(element.kind(), T![var] | T![let] | T![const] | T![using]) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -5173,10 +5180,17 @@ impl SyntaxFactory for JsSyntaxFactory {
             }
             JS_VARIABLE_DECLARATION => {
                 let mut elements = (&children).into_iter();
-                let mut slots: RawNodeSlots<2usize> = RawNodeSlots::default();
+                let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if matches!(element.kind(), T![var] | T![const] | T![let]) {
+                    if element.kind() == T![await] {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
+                if let Some(element) = &current_element {
+                    if matches!(element.kind(), T![var] | T![const] | T![let] | T![using]) {
                         slots.mark_present();
                         current_element = elements.next();
                     }

@@ -2658,15 +2658,17 @@ impl JsForVariableDeclaration {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> JsForVariableDeclarationFields {
         JsForVariableDeclarationFields {
+            await_token: self.await_token(),
             kind_token: self.kind_token(),
             declarator: self.declarator(),
         }
     }
+    pub fn await_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn kind_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 0usize)
+        support::required_token(&self.syntax, 1usize)
     }
     pub fn declarator(&self) -> SyntaxResult<JsVariableDeclarator> {
-        support::required_node(&self.syntax, 1usize)
+        support::required_node(&self.syntax, 2usize)
     }
 }
 #[cfg(feature = "serde")]
@@ -2680,6 +2682,7 @@ impl Serialize for JsForVariableDeclaration {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsForVariableDeclarationFields {
+    pub await_token: Option<SyntaxToken>,
     pub kind_token: SyntaxResult<SyntaxToken>,
     pub declarator: SyntaxResult<JsVariableDeclarator>,
 }
@@ -6335,14 +6338,16 @@ impl JsVariableDeclaration {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> JsVariableDeclarationFields {
         JsVariableDeclarationFields {
+            await_token: self.await_token(),
             kind: self.kind(),
             declarators: self.declarators(),
         }
     }
+    pub fn await_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn kind(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 0usize)
+        support::required_token(&self.syntax, 1usize)
     }
-    pub fn declarators(&self) -> JsVariableDeclaratorList { support::list(&self.syntax, 1usize) }
+    pub fn declarators(&self) -> JsVariableDeclaratorList { support::list(&self.syntax, 2usize) }
 }
 #[cfg(feature = "serde")]
 impl Serialize for JsVariableDeclaration {
@@ -6355,6 +6360,7 @@ impl Serialize for JsVariableDeclaration {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsVariableDeclarationFields {
+    pub await_token: Option<SyntaxToken>,
     pub kind: SyntaxResult<SyntaxToken>,
     pub declarators: JsVariableDeclaratorList,
 }
@@ -17436,6 +17442,10 @@ impl AstNode for JsForVariableDeclaration {
 impl std::fmt::Debug for JsForVariableDeclaration {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("JsForVariableDeclaration")
+            .field(
+                "await_token",
+                &support::DebugOptionalElement(self.await_token()),
+            )
             .field("kind_token", &support::DebugSyntaxResult(self.kind_token()))
             .field("declarator", &support::DebugSyntaxResult(self.declarator()))
             .finish()
@@ -20383,6 +20393,10 @@ impl AstNode for JsVariableDeclaration {
 impl std::fmt::Debug for JsVariableDeclaration {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("JsVariableDeclaration")
+            .field(
+                "await_token",
+                &support::DebugOptionalElement(self.await_token()),
+            )
             .field("kind", &support::DebugSyntaxResult(self.kind()))
             .field("declarators", &self.declarators())
             .finish()

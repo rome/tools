@@ -7,6 +7,7 @@ JsModule {
             export_token: EXPORT_KW@0..7 "export" [] [Whitespace(" ")],
             export_clause: JsVariableDeclarationClause {
                 declaration: JsVariableDeclaration {
+                    await_token: missing (optional),
                     kind: LET_KW@7..11 "let" [] [Whitespace(" ")],
                     declarators: JsVariableDeclaratorList [
                         JsVariableDeclarator {
@@ -26,6 +27,7 @@ JsModule {
             export_token: EXPORT_KW@13..21 "export" [Newline("\n")] [Whitespace(" ")],
             export_clause: JsVariableDeclarationClause {
                 declaration: JsVariableDeclaration {
+                    await_token: missing (optional),
                     kind: CONST_KW@21..27 "const" [] [Whitespace(" ")],
                     declarators: JsVariableDeclaratorList [
                         JsVariableDeclarator {
@@ -50,6 +52,7 @@ JsModule {
             export_token: EXPORT_KW@33..41 "export" [Newline("\n")] [Whitespace(" ")],
             export_clause: JsVariableDeclarationClause {
                 declaration: JsVariableDeclaration {
+                    await_token: missing (optional),
                     kind: VAR_KW@41..45 "var" [] [Whitespace(" ")],
                     declarators: JsVariableDeclaratorList [
                         JsVariableDeclarator {
@@ -98,8 +101,9 @@ JsModule {
       1: EXPORT_KW@0..7 "export" [] [Whitespace(" ")]
       2: JS_VARIABLE_DECLARATION_CLAUSE@7..13
         0: JS_VARIABLE_DECLARATION@7..12
-          0: LET_KW@7..11 "let" [] [Whitespace(" ")]
-          1: JS_VARIABLE_DECLARATOR_LIST@11..12
+          0: (empty)
+          1: LET_KW@7..11 "let" [] [Whitespace(" ")]
+          2: JS_VARIABLE_DECLARATOR_LIST@11..12
             0: JS_VARIABLE_DECLARATOR@11..12
               0: JS_IDENTIFIER_BINDING@11..12
                 0: IDENT@11..12 "a" [] []
@@ -111,8 +115,9 @@ JsModule {
       1: EXPORT_KW@13..21 "export" [Newline("\n")] [Whitespace(" ")]
       2: JS_VARIABLE_DECLARATION_CLAUSE@21..33
         0: JS_VARIABLE_DECLARATION@21..32
-          0: CONST_KW@21..27 "const" [] [Whitespace(" ")]
-          1: JS_VARIABLE_DECLARATOR_LIST@27..32
+          0: (empty)
+          1: CONST_KW@21..27 "const" [] [Whitespace(" ")]
+          2: JS_VARIABLE_DECLARATOR_LIST@27..32
             0: JS_VARIABLE_DECLARATOR@27..32
               0: JS_IDENTIFIER_BINDING@27..29
                 0: IDENT@27..29 "b" [] [Whitespace(" ")]
@@ -127,8 +132,9 @@ JsModule {
       1: EXPORT_KW@33..41 "export" [Newline("\n")] [Whitespace(" ")]
       2: JS_VARIABLE_DECLARATION_CLAUSE@41..57
         0: JS_VARIABLE_DECLARATION@41..56
-          0: VAR_KW@41..45 "var" [] [Whitespace(" ")]
-          1: JS_VARIABLE_DECLARATOR_LIST@45..56
+          0: (empty)
+          1: VAR_KW@41..45 "var" [] [Whitespace(" ")]
+          2: JS_VARIABLE_DECLARATOR_LIST@45..56
             0: JS_VARIABLE_DECLARATOR@45..46
               0: JS_IDENTIFIER_BINDING@45..46
                 0: IDENT@45..46 "c" [] []
