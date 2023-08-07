@@ -98,6 +98,7 @@ define_categories! {
     "lint/nursery/noStaticOnlyClass": "https://docs.rome.tools/lint/rules/noStaticOnlyClass",
     "lint/nursery/noUnsafeDeclarationMerging": "https://docs.rome.tools/lint/rules/noUnsafeDeclarationMerging",
     "lint/nursery/noUselessEmptyExport": "https://docs.rome.tools/lint/rules/noUselessEmptyExport",
+    "lint/nursery/noUselessThisAlias": "https://docs.rome.tools/lint/rules/noUselessThisAlias",
     "lint/nursery/noVoid": "https://docs.rome.tools/lint/rules/noVoid",
     "lint/nursery/useAriaPropTypes": "https://docs.rome.tools/lint/rules/useAriaPropTypes",
     "lint/nursery/useArrowFunction": "https://docs.rome.tools/lint/rules/useArrowFunction",

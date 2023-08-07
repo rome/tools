@@ -616,6 +616,10 @@ export interface Nursery {
 	 */
 	noUselessEmptyExport?: RuleConfiguration;
 	/**
+	 * Disallow useless this aliasing.
+	 */
+	noUselessThisAlias?: RuleConfiguration;
+	/**
 	 * Disallow the use of void operators, which is not a familiar operator.
 	 */
 	noVoid?: RuleConfiguration;
@@ -1196,6 +1200,7 @@ export type Category =
 	| "lint/nursery/noStaticOnlyClass"
 	| "lint/nursery/noUnsafeDeclarationMerging"
 	| "lint/nursery/noUselessEmptyExport"
+	| "lint/nursery/noUselessThisAlias"
 	| "lint/nursery/noVoid"
 	| "lint/nursery/useAriaPropTypes"
 	| "lint/nursery/useArrowFunction"
