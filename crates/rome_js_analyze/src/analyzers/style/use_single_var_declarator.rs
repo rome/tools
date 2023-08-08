@@ -37,6 +37,7 @@ declare_rule! {
 impl Rule for UseSingleVarDeclarator {
     type Query = Ast<JsVariableStatement>;
     type State = (
+        Option<JsSyntaxToken>,
         JsSyntaxToken,
         JsVariableDeclaratorList,
         Option<JsSyntaxToken>,
@@ -53,7 +54,7 @@ impl Rule for UseSingleVarDeclarator {
         } = node.as_fields();
 
         let JsVariableDeclarationFields {
-            await_token: _,
+            await_token,
             kind,
             declarators,
         } = declaration.ok()?.as_fields();
@@ -64,7 +65,7 @@ impl Rule for UseSingleVarDeclarator {
             return None;
         }
 
-        Some((kind, declarators, semicolon_token))
+        Some((await_token, kind, declarators, semicolon_token))
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
@@ -87,7 +88,7 @@ impl Rule for UseSingleVarDeclarator {
             return None;
         }
 
-        let (kind, declarators, semicolon_token) = state;
+        let (await_token, kind, declarators, semicolon_token) = state;
 
         let index = prev_parent
             .children()
@@ -198,13 +199,17 @@ impl Rule for UseSingleVarDeclarator {
                         )
                     };
 
-                    let mut builder = make::js_variable_statement(
-                        make::js_variable_declaration(
-                            kind,
-                            make::js_variable_declarator_list([declarator], []),
-                        )
-                        .build(),
+                    let mut variable_declaration = make::js_variable_declaration(
+                        kind,
+                        make::js_variable_declarator_list([declarator], []),
                     );
+
+                    if let Some(await_token) = await_token {
+                        variable_declaration =
+                            variable_declaration.with_await_token(await_token.clone());
+                    }
+
+                    let mut builder = make::js_variable_statement(variable_declaration.build());
 
                     let semicolon_token = if index + 1 == declarators_len {
                         last_semicolon_token

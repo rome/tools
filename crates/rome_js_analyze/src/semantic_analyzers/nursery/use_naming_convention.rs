@@ -607,6 +607,7 @@ enum Named {
     LocalConst,
     LocalLet,
     LocalVar,
+    LocalUsing,
     Namespace,
     ObjectGetter,
     ObjectMethod,
@@ -828,9 +829,11 @@ impl Named {
             (JsVariableKind::Const, false) => Named::LocalConst,
             (JsVariableKind::Let, false) => Named::LocalLet,
             (JsVariableKind::Var, false) => Named::LocalVar,
+            (JsVariableKind::Using, false) => Named::LocalUsing,
             (JsVariableKind::Const, true) => Named::TopLevelConst,
             (JsVariableKind::Let, true) => Named::TopLevelLet,
             (JsVariableKind::Var, true) => Named::TopLevelVar,
+            (JsVariableKind::Using, true) => Named::LocalUsing,
         })
     }
 
@@ -881,6 +884,7 @@ impl Named {
             | Named::LocalConst
             | Named::LocalLet
             | Named::LocalVar
+            | Named::LocalUsing
             | Named::ObjectGetter
             | Named::ObjectMethod
             | Named::ObjectProperty
@@ -938,6 +942,7 @@ impl std::fmt::Display for Named {
             Named::LocalConst => "local const",
             Named::LocalLet => "local let",
             Named::LocalVar => "local var",
+            Named::LocalUsing => "local using",
             Named::Namespace => "namespace",
             Named::ObjectGetter => "object getter",
             Named::ObjectMethod => "object method",
