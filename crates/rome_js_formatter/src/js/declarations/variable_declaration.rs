@@ -16,25 +16,16 @@ impl FormatNodeRule<JsVariableDeclaration> for FormatJsVariableDeclaration {
         } = node.as_fields();
 
         if let Some(await_token) = await_token {
-            write![
-                f,
-                [group(&format_args![
-                    await_token.format(),
-                    space(),
-                    kind.format(),
-                    space(),
-                    declarators.format()
-                ])]
-            ]
-        } else {
-            write![
-                f,
-                [group(&format_args![
-                    kind.format(),
-                    space(),
-                    declarators.format()
-                ])]
-            ]
+            write!(f, [await_token.format(), space()])?;
         }
+
+        write![
+            f,
+            [group(&format_args![
+                kind.format(),
+                space(),
+                declarators.format()
+            ])]
+        ]
     }
 }

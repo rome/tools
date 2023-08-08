@@ -35,6 +35,7 @@ pub enum JsVariableKind {
     Const,
     Let,
     Var,
+    Using,
 }
 
 impl JsVariableDeclaration {
@@ -60,6 +61,7 @@ impl JsVariableDeclaration {
             T![const] => JsVariableKind::Const,
             T![let] => JsVariableKind::Let,
             T![var] => JsVariableKind::Var,
+            T![using] => JsVariableKind::Using,
             _ => unreachable!(),
         })
     }
@@ -88,6 +90,7 @@ impl JsForVariableDeclaration {
             T![const] => JsVariableKind::Const,
             T![let] => JsVariableKind::Let,
             T![var] => JsVariableKind::Var,
+            T![using] => JsVariableKind::Using,
             _ => unreachable!(),
         })
     }
@@ -98,21 +101,6 @@ declare_node_union! {
 }
 
 impl AnyJsVariableDeclaration {
-    /// Whether the declaration is a const declaration
-    pub fn is_const(&self) -> bool {
-        self.variable_kind() == Ok(JsVariableKind::Const)
-    }
-
-    /// Whether the declaration is a let declaration
-    pub fn is_let(&self) -> bool {
-        self.variable_kind() == Ok(JsVariableKind::Let)
-    }
-
-    /// Whether the declaration is a var declaration
-    pub fn is_var(&self) -> bool {
-        self.variable_kind() == Ok(JsVariableKind::Var)
-    }
-
     pub fn variable_kind(&self) -> SyntaxResult<JsVariableKind> {
         match self {
             AnyJsVariableDeclaration::JsForVariableDeclaration(decl) => decl.variable_kind(),
