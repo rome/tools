@@ -6,7 +6,7 @@ documentation     = "https://rustdocs.rome.tools/rome_diagnostics/index.html"
 edition.workspace = true
 license.workspace = true
 name              = "rome_diagnostics"
-version           = "0.0.1"
+version           = "0.2.0"
 
 [[example]]
 name = "cli"

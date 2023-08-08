@@ -6,7 +6,7 @@ edition.workspace    = true
 license.workspace    = true
 name                 = "rome_js_semantic"
 repository.workspace = true
-version              = "0.1.0"
+version              = "0.2.0"
 
 [dependencies]
 rome_js_syntax = { workspace = true }
