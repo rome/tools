@@ -489,7 +489,7 @@ The following rules are now recommended:
        }
     }
     ```
-- Add for parsing comments inside JSON files:
+- Add support for parsing comments inside JSON files:
 
   ```json
   {
@@ -500,7 +500,11 @@ The following rules are now recommended:
     }
   }
   ```
+- Add support for the new `using` syntax
 
+  ```js
+  const using = resource.lock();
+  ```
 
 
 ## 12.1.3
