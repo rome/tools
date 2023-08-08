@@ -102,6 +102,7 @@ define_categories! {
     "lint/nursery/useAriaPropTypes": "https://docs.rome.tools/lint/rules/useAriaPropTypes",
     "lint/nursery/useArrowFunction": "https://docs.rome.tools/lint/rules/useArrowFunction",
     "lint/nursery/useExhaustiveDependencies": "https://docs.rome.tools/lint/rules/useExhaustiveDependencies",
+    "lint/nursery/useGetterReturn": "https://docs.rome.tools/lint/rules/useGetterReturn",
     "lint/nursery/useGroupedTypeImport": "https://docs.rome.tools/lint/rules/useGroupedTypeImport",
     "lint/nursery/useHookAtTopLevel": "https://docs.rome.tools/lint/rules/useHookAtTopLevel",
     "lint/nursery/useImportRestrictions": "https://docs.rome.tools/lint/rules/useImportRestrictions",

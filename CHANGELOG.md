@@ -9,6 +9,20 @@
 ### Formatter
 ### JavaScript APIs
 ### Linter
+
+### New rules
+
+- Add [`useGetterReturn`](https://docs.rome.tools/lint/rules/useGetterReturn/)
+
+  This rule enforces the presence of non-empty return statements in getters.
+  This makes the following code incorrect:
+
+  ```js
+  class Person {
+      get firstName() {}
+  }
+  ```
+
 ### Parser
 ### VSCode
 
