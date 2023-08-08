@@ -187,6 +187,8 @@
 
 #### New rules
 
+- Add [`noExcessiveComplexity`](https://docs.rome.tools/lint/rules/noExcessiveComplexity/)
+- Add [`useImportRestrictions`](https://docs.rome.tools/lint/rules/useImportRestrictions/)
 - Add [`noFallthroughSwitchClause`](https://docs.rome.tools/lint/rules/noFallthroughSwitchClause/)
 
 - Add [`noGlobalIsFinite`](https://docs.rome.tools/lint/rules/noglobalisfinite/)
