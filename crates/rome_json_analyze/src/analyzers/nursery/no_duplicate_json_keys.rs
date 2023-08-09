@@ -27,7 +27,7 @@ declare_rule! {
     /// }
     /// ```
     pub(crate) NoDuplicateJsonKeys {
-        version: "13.0.0",
+        version: "next",
         name: "noDuplicateJsonKeys",
         recommended: true,
     }

@@ -20,7 +20,7 @@ declare_rule! {
     /// ```
     ///
     pub(crate) NoVoid {
-        version: "13.0.0",
+        version: "next",
         name: "noVoid",
         recommended: false,
     }

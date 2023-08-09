@@ -3,7 +3,7 @@ title: Lint Rule noGlobalIsNan
 parent: lint/rules/index
 ---
 
-# noGlobalIsNan (since v13.0.0)
+# noGlobalIsNan (since vnext)
 
 Use `Number.isNaN` instead of global `isNaN`.
 

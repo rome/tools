@@ -42,7 +42,7 @@ declare_rule! {
     /// ```
     ///
     pub(crate) NoUselessEmptyExport {
-        version: "13.0.0",
+        version: "next",
         name: "noUselessEmptyExport",
         recommended: true,
     }

@@ -3,7 +3,7 @@ title: Lint Rule noUnsafeDeclarationMerging
 parent: lint/rules/index
 ---
 
-# noUnsafeDeclarationMerging (since v13.0.0)
+# noUnsafeDeclarationMerging (since vnext)
 
 Disallow unsafe declaration merging between interfaces and classes.
 

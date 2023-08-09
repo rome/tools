@@ -3,7 +3,7 @@ title: Lint Rule useIsArray
 parent: lint/rules/index
 ---
 
-# useIsArray (since v13.0.0)
+# useIsArray (since vnext)
 
 Use `Array.isArray()` instead of `instanceof Array`.
 

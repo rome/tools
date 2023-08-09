@@ -3,7 +3,7 @@ title: Lint Rule noFallthroughSwitchClause
 parent: lint/rules/index
 ---
 
-# noFallthroughSwitchClause (since v13.0.0)
+# noFallthroughSwitchClause (since vnext)
 
 Disallow fallthrough of `switch` clauses.
 
