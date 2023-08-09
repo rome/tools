@@ -244,15 +244,14 @@ Here's a sample of the headings:
 ```markdown
 ## [Unreleased]
 
-### Analyzer
 ### CLI
 ### Configuration
 ### Editors
 ### Formatter
-### JavaScript APIs
 ### Linter
 ### Parser
 ### VSCode
+### JavaScript APIs
 ```
 
 When you edit a blank section:

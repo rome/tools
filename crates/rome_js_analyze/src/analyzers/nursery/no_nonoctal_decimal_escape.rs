@@ -52,7 +52,7 @@ declare_rule! {
     /// ```
     ///
     pub(crate) NoNonoctalDecimalEscape {
-        version: "13.0.0",
+        version: "next",
         name: "noNonoctalDecimalEscape",
         recommended: true,
     }

@@ -37,7 +37,7 @@ declare_rule! {
     /// ```
     ///
     pub(crate) UseIsArray {
-        version: "13.0.0",
+        version: "next",
         name: "useIsArray",
         recommended: true,
     }

@@ -3,7 +3,7 @@ title: Lint Rule noUselessEmptyExport
 parent: lint/rules/index
 ---
 
-# noUselessEmptyExport (since v13.0.0)
+# noUselessEmptyExport (since vnext)
 
 Disallow empty exports that don't change anything in a module file.
 

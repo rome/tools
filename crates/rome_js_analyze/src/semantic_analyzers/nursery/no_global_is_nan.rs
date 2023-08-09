@@ -29,7 +29,7 @@ declare_rule! {
     /// ```
     ///
     pub(crate) NoGlobalIsNan {
-        version: "13.0.0",
+        version: "next",
         name: "noGlobalIsNan",
         recommended: true,
     }

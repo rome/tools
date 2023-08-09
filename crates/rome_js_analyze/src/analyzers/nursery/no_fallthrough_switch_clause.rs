@@ -40,7 +40,7 @@ declare_rule! {
     /// ```
     ///
     pub(crate) NoFallthroughSwitchClause {
-        version: "13.0.0",
+        version: "next",
         name: "noFallthroughSwitchClause",
         recommended: false,
     }

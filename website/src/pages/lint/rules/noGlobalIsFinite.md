@@ -3,7 +3,7 @@ title: Lint Rule noGlobalIsFinite
 parent: lint/rules/index
 ---
 
-# noGlobalIsFinite (since v13.0.0)
+# noGlobalIsFinite (since vnext)
 
 Use `Number.isFinite` instead of global `isFinite`.
 

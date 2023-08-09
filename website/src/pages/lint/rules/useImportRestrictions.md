@@ -3,7 +3,7 @@ title: Lint Rule useImportRestrictions
 parent: lint/rules/index
 ---
 
-# useImportRestrictions (since v13.0.0)
+# useImportRestrictions (since vnext)
 
 Disallows package private imports.
 
