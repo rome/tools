@@ -1,4 +1,8 @@
 use rome_cli::rome_command;
+use rome_js_formatter::context::JsFormatOptions;
+use rome_js_formatter::format_node;
+use rome_js_parser::{parse_module, JsParserOptions};
+use rome_js_syntax::JsFileSource;
 use rome_service::VERSION;
 use std::fs;
 use xtask::{project_root, Result};
@@ -38,10 +42,6 @@ pub(crate) fn generate_files() -> Result<()> {
     if VERSION != "0.0.0" {
         let parser = rome_command();
         let markdown = parser.render_markdown("rome");
-        let markdown = markdown
-            .replace("\n### ", "\n#### ")
-            .replace("\n## ", "\n### ")
-            .replace("\n# ", "\n## ");
         let mut cli_content = fs::read_to_string(project_root().join("website/src/pages/cli.mdx"))?;
 
         let start = "\n[//]: # (Start-codegen)\n";
@@ -70,7 +70,13 @@ pub(crate) fn generate_files() -> Result<()> {
             fs::remove_dir(schema_version_folder.clone())?;
         }
         fs::create_dir(schema_version_folder.clone())?;
-        fs::write(schema_js_file.clone(), SCHEMA_TEMPLATE)?;
+        let node = parse_module(&SCHEMA_TEMPLATE, JsParserOptions::default());
+        let result = format_node(
+            JsFormatOptions::new(JsFileSource::js_module()),
+            &node.syntax(),
+        )
+        .unwrap();
+        fs::write(schema_js_file.clone(), result.print().unwrap().as_code())?;
     }
 
     Ok(())
