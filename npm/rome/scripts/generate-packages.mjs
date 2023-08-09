@@ -100,4 +100,4 @@ for (const platform of PLATFORMS) {
 }
 
 writeManifest("rome");
-// writeManifest("backend-jsonrpc");
+writeManifest("backend-jsonrpc");
