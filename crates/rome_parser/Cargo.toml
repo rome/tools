@@ -1,7 +1,7 @@
 [package]
 authors.workspace    = true
 description          = "Shared infrastructure for Rome's parser"
-documentation        = "https://rustdocs.rome.tools/rome_parser/index.html"
+documentation        = "https://docs.rs/rome_parser"
 edition.workspace    = true
 license.workspace    = true
 name                 = "rome_parser"

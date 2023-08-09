@@ -1,7 +1,7 @@
 [package]
 authors.workspace    = true
 description          = "SyntaxKind and common rowan definitions for rome_css_parser"
-documentation        = "https://rustdocs.rome.tools/rome_css_parser/index.html"
+documentation        = "https://docs.rs/rome_css_parser"
 edition.workspace    = true
 license.workspace    = true
 name                 = "rome_css_syntax"

@@ -32,5 +32,5 @@
 
 # `rome_json_formatter`
 
-Rome's JSON formatter implementation. Follow the [documentation](https://docs.rs/rome_json_formatter/latest/).
+Rome's JSON formatter implementation. Follow the [documentation](https://docs.rs/rome_json_formatter/).
 

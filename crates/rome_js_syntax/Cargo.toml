@@ -1,7 +1,7 @@
 [package]
 authors.workspace    = true
 description          = "SyntaxKind and common rowan definitions for rome_js_parser"
-documentation        = "https://rustdocs.rome.tools/rome_js_syntax/index.html"
+documentation        = "https://docs.rs/rome_js_syntax"
 edition.workspace    = true
 license.workspace    = true
 name                 = "rome_js_syntax"

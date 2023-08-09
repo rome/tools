@@ -1,7 +1,7 @@
 [package]
 authors.workspace    = true
 description          = "Semantic model for the JavaScript language"
-documentation        = "https://rustdocs.rome.tools/rome_js_semantic/index.html"
+documentation        = "https://docs.rs/rome_js_semantic"
 edition.workspace    = true
 license.workspace    = true
 name                 = "rome_js_semantic"

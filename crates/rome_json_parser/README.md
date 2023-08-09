@@ -32,5 +32,5 @@
 
 # `rome_json_parser`
 
-Rome's JSON parser implementation. Follow the [documentation](https://docs.rs/rome_json_parser/latest/).
+Rome's JSON parser implementation. Follow the [documentation](https://docs.rs/rome_json_parser/).
 

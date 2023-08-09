@@ -1,7 +1,7 @@
 [package]
 authors.workspace    = true
 description          = "Utilities to create JavaScript AST for rome_js_parser"
-documentation        = "https://rustdocs.rome.tools/rome_js_factory/index.html"
+documentation        = "https://docs.rs/rome_js_factory"
 edition.workspace    = true
 license.workspace    = true
 name                 = "rome_js_factory"

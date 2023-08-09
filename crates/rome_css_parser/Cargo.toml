@@ -2,7 +2,7 @@
 authors.workspace    = true
 categories           = ["parser-implementations", "development-tools"]
 description          = "An extremely fast CSS parser"
-documentation        = "https://rustdocs.rome.tools/rome_css_parser/index.html"
+documentation        = "https://docs.rs/rome_css_parser"
 edition.workspace    = true
 homepage.workspace   = true
 license.workspace    = true
