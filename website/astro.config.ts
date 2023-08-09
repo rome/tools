@@ -3,7 +3,7 @@ import path from "node:path";
 import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 import type { AstroIntegration } from "astro";
-import compress from "astro-compress";
+import compress from "@otterlord/astro-compress";
 import { defineConfig } from "astro/config";
 import { globby } from "globby";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
