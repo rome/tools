@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 91
+assertion_line: 80
 expression: valid-declaration-merging.ts
 ---
 # Input
@@ -75,6 +75,18 @@ export enum Orientation {
 export namespace Orientation {
 	export function f(): void {}
 }
+
+// variable and namespace merging
+declare namespace bodyParser {
+	interface BodyParser {
+		/** @deprecated */
+		(): void
+	}
+	interface Options {
+		inflate?: boolean | undefined
+	}
+}
+declare const bodyParser: bodyParser.BodyParser
 
 // namespace merging
 export namespace X {

@@ -69,6 +69,18 @@ export namespace Orientation {
 	export function f(): void {}
 }
 
+// variable and namespace merging
+declare namespace bodyParser {
+	interface BodyParser {
+		/** @deprecated */
+		(): void
+	}
+	interface Options {
+		inflate?: boolean | undefined
+	}
+}
+declare const bodyParser: bodyParser.BodyParser
+
 // namespace merging
 export namespace X {
 	export function f(): void {}
