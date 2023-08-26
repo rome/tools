@@ -163,7 +163,7 @@ Run various checks on a set of files.
 
   If Rome can't find the configuration, it will attempt to use the current working directory. If no current working directory can't be found, Rome won't use the VCS integration, and a diagnostic will be emitted
 - **`    --files-max-size`**=_`NUMBER`_ &mdash; 
-  The maximum allowed size for source code files in bytes. Files above this limit will be ignored for performance reason. Defaults to 1 MiB
+  The maximum allowed size for source code files in bytes. Files above this limit will be ignored for performance reasons. Defaults to 1 MiB
 - **`    --files-ignore-unknown`**=_`<true|false>`_ &mdash; 
   Tells Rome to not emit diagnostics when handling files that doesn't know
 - **`    --indent-style`**=_`<tab|space>`_ &mdash; 
@@ -248,7 +248,7 @@ Run various checks on a set of files.
 
   If Rome can't find the configuration, it will attempt to use the current working directory. If no current working directory can't be found, Rome won't use the VCS integration, and a diagnostic will be emitted
 - **`    --files-max-size`**=_`NUMBER`_ &mdash; 
-  The maximum allowed size for source code files in bytes. Files above this limit will be ignored for performance reason. Defaults to 1 MiB
+  The maximum allowed size for source code files in bytes. Files above this limit will be ignored for performance reasons. Defaults to 1 MiB
 - **`    --files-ignore-unknown`**=_`<true|false>`_ &mdash; 
   Tells Rome to not emit diagnostics when handling files that doesn't know
 - **`    --indent-style`**=_`<tab|space>`_ &mdash; 
@@ -343,7 +343,7 @@ Run the formatter on a set of files.
 
 **The configuration of the filesystem**
 - **`    --files-max-size`**=_`NUMBER`_ &mdash; 
-  The maximum allowed size for source code files in bytes. Files above this limit will be ignored for performance reason. Defaults to 1 MiB
+  The maximum allowed size for source code files in bytes. Files above this limit will be ignored for performance reasons. Defaults to 1 MiB
 - **`    --files-ignore-unknown`**=_`<true|false>`_ &mdash; 
   Tells Rome to not emit diagnostics when handling files that doesn't know
 
@@ -412,7 +412,7 @@ Command to use in CI environments. Run various checks of a set of files.
 
   If Rome can't find the configuration, it will attempt to use the current working directory. If no current working directory can't be found, Rome won't use the VCS integration, and a diagnostic will be emitted
 - **`    --files-max-size`**=_`NUMBER`_ &mdash; 
-  The maximum allowed size for source code files in bytes. Files above this limit will be ignored for performance reason. Defaults to 1 MiB
+  The maximum allowed size for source code files in bytes. Files above this limit will be ignored for performance reasons. Defaults to 1 MiB
 - **`    --files-ignore-unknown`**=_`<true|false>`_ &mdash; 
   Tells Rome to not emit diagnostics when handling files that doesn't know
 - **`    --indent-style`**=_`<tab|space>`_ &mdash; 
