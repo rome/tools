@@ -15,20 +15,20 @@ impl FormatNodeRule<JsDefaultClause> for FormatJsDefaultClause {
             consequent,
         } = node.as_fields();
 
-        let first_child_is_block_stmt = matches!(
+        write!(f, [default_token.format(), colon_token.format()])?;
+
+        let is_first_child_block_stmt = matches!(
             consequent.iter().next(),
             Some(AnyJsStatement::JsBlockStatement(_))
         );
 
-        write!(f, [default_token.format(), colon_token.format()])?;
-
-        if f.comments().has_dangling_comments(node.syntax()) {
-            write!(f, [space(), format_dangling_comments(node.syntax())])?;
-        }
+        //if f.comments().has_dangling_comments(node.syntax()) {
+        //    write!(f, [space(), format_dangling_comments(node.syntax())])?;
+        //}
 
         if consequent.is_empty() {
             write!(f, [hard_line_break()])
-        } else if first_child_is_block_stmt {
+        } else if is_first_child_block_stmt {
             write!(f, [space(), consequent.format()])
         } else {
             // no line break needed after because it is added by the indent in the switch statement
@@ -42,8 +42,8 @@ impl FormatNodeRule<JsDefaultClause> for FormatJsDefaultClause {
         }
     }
 
-    fn fmt_dangling_comments(&self, _: &JsDefaultClause, _: &mut JsFormatter) -> FormatResult<()> {
-        // Handled inside of `fmt_fields`
-        Ok(())
-    }
+    //fn fmt_dangling_comments(&self, _: &JsDefaultClause, _: &mut JsFormatter) -> FormatResult<()> {
+    //    // Handled inside of `fmt_fields`
+    //    Ok(())
+    //}
 }

@@ -33,7 +33,7 @@ impl FormatNodeRule<JsCaseClause> for FormatJsCaseClause {
         );
 
         if consequent.is_empty() {
-            // Skip inserting an indent block is the consequent is empty to print
+            // Skip inserting an indent block if the consequent is empty to print
             // the trailing comments for the case clause inline if there is no
             // block to push them into
             write!(f, [hard_line_break()])
