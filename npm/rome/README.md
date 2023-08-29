@@ -1,9 +1,9 @@
 
 > [!IMPORTANT]
-> Welcome to [Biome]([https://github.com/biomejs/biome](https://biomejs.dev/blog/annoucing-biome)), the community successor of Rome Tools!
+> Welcome to [Biome](https://github.com/biomejs/biome](https://biomejs.dev/blog/annoucing-biome), the community successor of Rome Tools!
 
 > [!WARNING]
-> Rome Tools is no longer maintained.
+> As such, Rome Tools is no longer maintained.
 
 <p align="center">
 	<picture>
