@@ -1,3 +1,10 @@
+
+> [!IMPORTANT]
+> Welcome to [Biome]([https://github.com/biomejs/biome](https://biomejs.dev/blog/annoucing-biome)), the community successor of Rome Tools!
+
+> [!WARNING]
+> Rome Tools is no longer maintained.
+
 <p align="center">
 	<picture>
 		<source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/rome/brand/main/PNG/logo_white_yellow_transparent.png" width="700">
