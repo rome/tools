@@ -216,6 +216,11 @@ pub trait FileSystemExt: FileSystem {
         )
     }
 
+    /// Opens a file with read options
+    fn read(&self, path: &Path) -> io::Result<Box<dyn File>> {
+        self.open_with_options(path, OpenOptions::default().read(true))
+    }
+
     /// Opens a file with the `read`, `write` and `create_new` options
     ///
     /// Equivalent to [std::fs::File::create_new]
@@ -230,7 +235,7 @@ pub trait FileSystemExt: FileSystem {
     }
 }
 
-impl<T: ?Sized> FileSystemExt for T where T: FileSystem {}
+impl<T: FileSystem + ?Sized> FileSystemExt for T {}
 
 type BoxedTraversal<'fs, 'scope> = Box<dyn FnOnce(&dyn TraversalScope<'scope>) + Send + 'fs>;
 

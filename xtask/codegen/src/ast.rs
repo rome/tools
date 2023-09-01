@@ -21,6 +21,7 @@ use crate::{
     generate_macros::generate_macros,
     generate_nodes::generate_nodes,
     generate_syntax_kinds::generate_syntax_kinds,
+    generate_v8::generate_v8,
     kinds_src::{AstEnumSrc, AstNodeSrc, JS_KINDS_SRC},
     update, LanguageKind,
 };
@@ -78,6 +79,9 @@ pub(crate) fn generate_syntax(ast: AstSrc, mode: &Mode, language_kind: LanguageK
         .join("crates")
         .join(language_kind.factory_crate_name())
         .join("src/generated");
+    let v8_bindings_generated_path = project_root()
+        .join("crates/rome_v8/src/bindings")
+        .join(language_kind.v8_bindings_create_name());
 
     let kind_src = match language_kind {
         LanguageKind::Js => JS_KINDS_SRC,
@@ -94,7 +98,7 @@ pub(crate) fn generate_syntax(ast: AstSrc, mode: &Mode, language_kind: LanguageK
     update(ast_nodes_mut_file.as_path(), &contents, mode)?;
 
     let syntax_kinds_file = syntax_generated_path.join("kind.rs");
-    let contents = generate_syntax_kinds(kind_src, language_kind)?;
+    let contents = generate_syntax_kinds(&kind_src, language_kind)?;
     update(syntax_kinds_file.as_path(), &contents, mode)?;
 
     let syntax_factory_file = factory_generated_path.join("syntax_factory.rs");
@@ -108,6 +112,10 @@ pub(crate) fn generate_syntax(ast: AstSrc, mode: &Mode, language_kind: LanguageK
     let ast_macros_file = syntax_generated_path.join("macros.rs");
     let contents = generate_macros(&ast, language_kind)?;
     update(ast_macros_file.as_path(), &contents, mode)?;
+
+    let ast_v8_file = project_root().join(v8_bindings_generated_path);
+    let contents = generate_v8(&kind_src, &ast, language_kind)?;
+    update(ast_v8_file.as_path(), &contents, mode)?;
 
     Ok(())
 }

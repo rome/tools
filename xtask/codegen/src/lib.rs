@@ -11,6 +11,7 @@ mod generate_nodes;
 mod generate_nodes_mut;
 mod generate_syntax_factory;
 mod generate_syntax_kinds;
+mod generate_v8;
 mod json_kinds_src;
 mod kinds_src;
 mod parser_tests;
@@ -156,6 +157,14 @@ impl LanguageKind {
             LanguageKind::Json => "rome_json_factory",
         }
     }
+
+    pub fn v8_bindings_create_name(self) -> &'static str {
+        match self {
+            LanguageKind::Js => "js.rs",
+            LanguageKind::Css => "css.rs",
+            LanguageKind::Json => "json.rs",
+        }
+    }
 }
 
 /// A helper to update file on disk if it has changed.
@@ -173,6 +182,7 @@ pub fn update(path: &Path, contents: &str, mode: &Mode) -> Result<UpdateResult> 
     }
 
     eprintln!("updating {}", path.display());
+    fs2::remove_file(path)?;
     fs2::write(path, contents)?;
     Ok(UpdateResult::Updated)
 }
