@@ -1,3 +1,10 @@
+
+> [!IMPORTANT]
+> # Welcome to [Biome](https://biomejs.dev/blog/annoucing-biome), the community successor of Rome!
+
+> [!WARNING]
+> # Rome won't be maintained anymore by the same people that maintained it so far. Biome will provide new features and fixes.
+
 <p align="center">
 	<picture>
 		<source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/rome/brand/main/PNG/logo_white_yellow_transparent.png" width="700">
