@@ -37,7 +37,7 @@
 				"@uiw/react-codemirror": "^4.20.2",
 				"@vitejs/plugin-react": "^2.1.0",
 				"astro": "^2.3.4",
-				"@otterlord/astro-compress": "^1.1.48",
+				"astro-compress": "^2.0.8",
 				"autoprefixer": "^10.4.12",
 				"codemirror-lang-rome-ast": "0.0.6",
 				"fast-diff": "^1.2.0",
