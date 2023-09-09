@@ -91,5 +91,7 @@ pub(crate) fn ci(mut session: CliSession, payload: CiCommandPayload) -> Result<(
         session,
         &payload.cli_options,
         payload.paths,
+        // we never process changed files in CI
+        vec![],
     )
 }

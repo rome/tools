@@ -219,6 +219,7 @@ pub(crate) fn execute_mode(
     session: CliSession,
     cli_options: &CliOptions,
     paths: Vec<OsString>,
+    changed_files: Vec<String>,
 ) -> Result<(), CliDiagnostic> {
     if cli_options.max_diagnostics > MAXIMUM_DISPLAYABLE_DIAGNOSTICS {
         return Err(CliDiagnostic::overflown_argument(
@@ -228,6 +229,17 @@ pub(crate) fn execute_mode(
     }
 
     mode.max_diagnostics = cli_options.max_diagnostics;
+
+    // At this point, we should already have checked if the configuration has already enabled the VCS support
+    // let changed_files = if cli_options.changed && !mode.is_ci() {
+    //     if let Some(vcs) = vcs {
+    //         vcs.changed_files()?
+    //     } else {
+    //         vec![]
+    //     }
+    // } else {
+    //     vec![]
+    // };
 
     // don't do any traversal if there's some content coming from stdin
     if let Some((path, content)) = mode.as_stdin_file() {
@@ -240,6 +252,6 @@ pub(crate) fn execute_mode(
     {
         migrate::run(session, write, configuration_path, cli_options.verbose)
     } else {
-        traverse(mode, session, cli_options, paths)
+        traverse(mode, session, cli_options, paths, changed_files)
     }
 }

@@ -1,5 +1,6 @@
 use std::collections::hash_map::Entry;
 use std::collections::{hash_map::IntoIter, HashMap};
+use std::ffi::OsString;
 use std::io;
 use std::panic::AssertUnwindSafe;
 use std::path::{Path, PathBuf};
@@ -219,7 +220,12 @@ pub struct MemoryTraversalScope<'scope> {
 }
 
 impl<'scope> TraversalScope<'scope> for MemoryTraversalScope<'scope> {
-    fn spawn(&self, ctx: &'scope dyn TraversalContext, base: PathBuf) {
+    fn spawn(
+        &self,
+        ctx: &'scope dyn TraversalContext,
+        base: PathBuf,
+        _changed_files: &'scope [String],
+    ) {
         // Traversal is implemented by iterating on all keys, and matching on
         // those that are prefixed with the provided `base` path
         {
@@ -470,9 +476,10 @@ mod tests {
             visited: Mutex::default(),
         };
 
+        let changed_files = vec![];
         // Traverse a directory
         fs.traversal(Box::new(|scope| {
-            scope.spawn(&ctx, PathBuf::from("dir1"));
+            scope.spawn(&ctx, PathBuf::from("dir1"), changed_files.as_slice());
         }));
 
         let mut visited = Vec::new();
@@ -484,7 +491,7 @@ mod tests {
 
         // Traverse a single file
         fs.traversal(Box::new(|scope| {
-            scope.spawn(&ctx, PathBuf::from("dir2/file2"));
+            scope.spawn(&ctx, PathBuf::from("dir2/file2"), changed_files.as_slice());
         }));
 
         let mut visited = Vec::new();

@@ -1,4 +1,8 @@
+use crate::vcs::create_vcs_client;
+use crate::CliDiagnostic;
 use bpaf::Bpaf;
+use rome_console::markup;
+use rome_service::Configuration;
 use std::str::FromStr;
 
 /// Global options applied to all commands
@@ -44,6 +48,37 @@ pub struct CliOptions {
     /// Reports information using the JSON format
     #[bpaf(long("json"), switch, hide_usage)]
     pub json: bool,
+
+    /// Only runs the operation on files that have changed. VCS support needs to be enabled. Doesn't work when running `rome ci`.
+    #[bpaf(long("changed"), switch)]
+    pub changed: bool,
+}
+
+impl CliOptions {
+    /// It validates the current CLI options against. If not errors are found, it calls the VCS client
+    /// via [std::process::Command] and returns a list of changed files
+    ///
+    /// ## Errors
+    /// - `--changed` is passed and the VCS support is disabled
+    /// - errors are raised when calling the VCS client via [std::process::Command]
+    pub(crate) fn compute_changed_files(
+        &self,
+        configuration: &Configuration,
+    ) -> Result<Vec<String>, CliDiagnostic> {
+        if let Some(vcs) = configuration.vcs.as_ref() {
+            if vcs.is_disabled() && self.changed {
+                return Err(CliDiagnostic::incompatible_end_configuration(markup! {
+                    "You provided the "<Emphasis>"--changed"</Emphasis>" argument, but you haven't enabled VCS support. This is an error."
+                }));
+            }
+            if let Some(client_kind) = vcs.client_kind.as_ref() {
+                let vcs_client = create_vcs_client(client_kind);
+                return vcs_client.changed_files();
+            }
+        }
+
+        Ok(vec![])
+    }
 }
 
 #[derive(Debug, Clone)]

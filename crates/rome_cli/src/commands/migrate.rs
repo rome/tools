@@ -26,6 +26,7 @@ pub(crate) fn migrate(
             session,
             &cli_options,
             vec![],
+            vec![],
         )
     } else {
         Err(CliDiagnostic::MigrateError(MigrationDiagnostic {

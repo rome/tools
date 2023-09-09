@@ -52,6 +52,8 @@ pub(crate) fn lint(
 
     fs_configuration.merge_with(configuration);
 
+    let changed_files = cli_options.compute_changed_files(&fs_configuration)?;
+
     // check if support of git ignore files is enabled
     let vcs_base_path = configuration_path.or(session.app.fs.working_directory());
     store_path_to_ignore_from_vcs(
@@ -90,5 +92,6 @@ pub(crate) fn lint(
         session,
         &cli_options,
         paths,
+        changed_files,
     )
 }

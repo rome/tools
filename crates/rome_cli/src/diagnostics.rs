@@ -1,4 +1,4 @@
-use rome_console::fmt::Formatter;
+use rome_console::fmt::{Display, Formatter};
 use rome_console::markup;
 use rome_diagnostics::adapters::{BpafError, IoError};
 use rome_diagnostics::{
@@ -219,7 +219,7 @@ pub struct ServerNotRunning;
     )
 )]
 pub struct IncompatibleEndConfiguration {
-    reason: String,
+    reason: MessageAndDescription,
 }
 
 #[derive(Debug, Diagnostic)]
@@ -430,9 +430,9 @@ impl CliDiagnostic {
     /// results in a combination of options that doesn't allow to run the command correctly.
     ///
     /// A reason needs to be provided
-    pub fn incompatible_end_configuration(reason: impl Into<String>) -> Self {
+    pub fn incompatible_end_configuration(reason: impl Display) -> Self {
         Self::IncompatibleEndConfiguration(IncompatibleEndConfiguration {
-            reason: reason.into(),
+            reason: MessageAndDescription::from(markup! {{reason}}.to_owned()),
         })
     }
 

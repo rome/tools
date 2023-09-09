@@ -9,6 +9,8 @@ use rome_service::configuration::FilesConfiguration;
 use rome_service::{Configuration, WorkspaceError};
 use std::path::PathBuf;
 
+mod git;
+
 /// This function will check if the configuration is set to use the VCS integration and try to
 /// read the ignored files.
 pub(crate) fn store_path_to_ignore_from_vcs(
@@ -97,4 +99,14 @@ pub(crate) fn read_vcs_ignore_file(
     }
 
     Ok(vec![])
+}
+
+pub(crate) trait VcsClient {
+    fn changed_files(&self) -> Result<Vec<String>, CliDiagnostic>;
+}
+
+pub(crate) fn create_vcs_client(client_kind: &VcsClientKind) -> Box<dyn VcsClient> {
+    Box::new(match client_kind {
+        VcsClientKind::Git => git::Git,
+    })
 }

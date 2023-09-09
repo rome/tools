@@ -52,6 +52,8 @@ Global options applied to all commands
                               during the execution of the command.
         --error-on-warnings   Tell Rome to exit with an error code if some diagnostics emit warnings.
         --json                Reports information using the JSON format
+        --changed             Only runs the operation on files that have changed. VCS support needs to
+                              be enabled. Doesn't work when running `rome ci`.
 
 Available positional items:
     PATH                      Single file, single path or list of paths

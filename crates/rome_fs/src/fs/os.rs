@@ -8,6 +8,7 @@ use crate::{
 use rayon::{scope, Scope};
 use rome_diagnostics::{adapters::IoError, DiagnosticExt, Error, Severity};
 use std::fs::{DirEntry, FileType};
+use std::path::Component;
 use std::{
     env,
     ffi::OsStr,
@@ -106,7 +107,12 @@ impl<'scope> OsTraversalScope<'scope> {
 }
 
 impl<'scope> TraversalScope<'scope> for OsTraversalScope<'scope> {
-    fn spawn(&self, ctx: &'scope dyn TraversalContext, mut path: PathBuf) {
+    fn spawn(
+        &self,
+        ctx: &'scope dyn TraversalContext,
+        mut path: PathBuf,
+        changed_files: &'scope [String],
+    ) {
         let mut file_type = match path.metadata() {
             Ok(meta) => meta.file_type(),
             Err(err) => {
@@ -129,15 +135,23 @@ impl<'scope> TraversalScope<'scope> for OsTraversalScope<'scope> {
         let _ = ctx.interner().intern_path(path.clone());
 
         if file_type.is_file() {
-            self.scope.spawn(move |_| {
-                ctx.handle_file(&path);
-            });
+            if !changed_files.is_empty() {
+                if path_is_in_changed_flles(&path, changed_files) {
+                    self.scope.spawn(move |_| {
+                        ctx.handle_file(&path);
+                    });
+                }
+            } else {
+                self.scope.spawn(move |_| {
+                    ctx.handle_file(&path);
+                });
+            }
             return;
         }
 
         if file_type.is_dir() {
             self.scope.spawn(move |scope| {
-                handle_dir(scope, ctx, &path, None);
+                handle_dir(scope, ctx, &path, None, changed_files);
             });
             return;
         }
@@ -161,6 +175,7 @@ fn handle_dir<'scope>(
     path: &Path,
     // The unresolved origin path in case the directory is behind a symbolic link
     origin_path: Option<PathBuf>,
+    changed_files: &'scope [String],
 ) {
     if let Some(file_name) = path.file_name().and_then(OsStr::to_str) {
         if DEFAULT_IGNORE.contains(&file_name) {
@@ -178,7 +193,7 @@ fn handle_dir<'scope>(
 
     for entry in iter {
         match entry {
-            Ok(entry) => handle_dir_entry(scope, ctx, entry, origin_path.clone()),
+            Ok(entry) => handle_dir_entry(scope, ctx, entry, origin_path.clone(), changed_files),
             Err(err) => {
                 ctx.push_diagnostic(IoError::from(err).with_file_path(path.display().to_string()));
             }
@@ -194,6 +209,7 @@ fn handle_dir_entry<'scope>(
     entry: DirEntry,
     // The unresolved origin path in case the directory is behind a symbolic link
     mut origin_path: Option<PathBuf>,
+    changed_files: &'scope [String],
 ) {
     let mut path = entry.path();
 
@@ -232,7 +248,7 @@ fn handle_dir_entry<'scope>(
     if file_type.is_dir() {
         if ctx.can_handle(&RomePath::new(path.clone())) {
             scope.spawn(move |scope| {
-                handle_dir(scope, ctx, &path, origin_path);
+                handle_dir(scope, ctx, &path, origin_path, changed_files);
             });
         }
         return;
@@ -273,9 +289,17 @@ fn handle_dir_entry<'scope>(
             return;
         }
 
-        scope.spawn(move |_| {
-            ctx.handle_file(&path);
-        });
+        if !changed_files.is_empty() {
+            if path_is_in_changed_flles(&path, changed_files) {
+                scope.spawn(move |_| {
+                    ctx.handle_file(&path);
+                });
+            }
+        } else {
+            scope.spawn(move |_| {
+                ctx.handle_file(&path);
+            });
+        }
         return;
     }
 
@@ -370,4 +394,29 @@ impl From<fs::FileType> for ErrorKind {
     fn from(_: fs::FileType) -> Self {
         Self::UnknownFileType
     }
+}
+
+fn path_is_in_changed_flles(current_path: &Path, changed_files: &[String]) -> bool {
+    'changed_files: for changed_file in changed_files {
+        let mut matches = false;
+        let mut components = current_path.components().rev();
+        while let Some(component) = components.next() {
+            match component {
+                Component::Normal(name) => {
+                    if changed_file.contains(name.to_str().unwrap()) {
+                        matches = true;
+                    } else {
+                        continue 'changed_files;
+                    }
+                }
+                _ => {}
+            }
+        }
+        if matches {
+            return true;
+        } else {
+            continue 'changed_files;
+        }
+    }
+    false
 }
