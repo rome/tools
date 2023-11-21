@@ -18,5 +18,13 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout PR Branch
+        uses: actions/checkout@v3
+        with:
+          submodules: false
+      - name: List ci
+        working-directory: ci
+        run: ls -la
       - name: Publish Container
-        run: ./ci/publish.sh
+        working-directory: ci
+        run: ./publish.sh
